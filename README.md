@@ -163,4 +163,4 @@ Thanks to [Dominick Baier](https://github.com/leastprivilege) and [Brock Allen](
 # Contact and suggestion
 
 - I am happy to share my attempt of implementation the administration for IdentityServer4 and Asp.Net Core Identity
-- Any feedback is welcomed - feel free to create an issue or send me mail - [jan@skoruba.com](mailto:jan@skoruba.com) - Thanks ☺
+- Any feedback is welcomed - feel free to create an issue or send me mail - [jan@skoruba.com](mailto:jan@skoruba.com) - Thanks :blush:
