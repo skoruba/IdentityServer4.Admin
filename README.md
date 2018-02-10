@@ -134,7 +134,7 @@
 
 # Plan & Vision:
 
-- Add more unit and integration tests ☺
+- Add more unit and integration tests :blush:
 - Extend administration for another protocols
 
 # Licence
