@@ -1,0 +1,31 @@
+﻿.picker {
+
+	.button {
+		&__add {
+			margin-top: 5px;
+			margin-bottom: 5px;
+			margin-right: 5px;
+			white-space: normal
+		}
+
+		&__delete {
+			margin-top: 5px;
+			margin-bottom: 5px;
+			margin-right: 5px;
+			white-space: normal
+		}
+	}
+
+	.block {
+		&__buttons {
+			&__add {
+				margin-top: 4px;
+			}
+		}
+	}
+
+	.search-title {
+		color: gray;
+		font-size: 12px;
+	}
+}

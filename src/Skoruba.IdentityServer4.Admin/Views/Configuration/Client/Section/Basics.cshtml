@@ -1,0 +1,166 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
+@model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientDto
+@inject IViewLocalizer Localizer
+<!--Hidden -->
+<input type="hidden" asp-for="Id" />
+
+<div class="panel panel-default">
+	<div class="panel-heading">@Localizer["PanelTitle"]</div>
+	<div class="panel-body">
+
+		<!--Checkbox-->
+		<div class="form-group">
+			<label asp-for="Enabled" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "Enabled")
+			</label>
+			<div class="col-sm-9">
+				<toggle-button>
+					<input asp-for="Enabled" type="checkbox">
+				</toggle-button>
+			</div>
+		</div>
+
+		<!--Input - text -->
+		<div class="form-group">
+			<label asp-for="Description" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "Description")
+			</label>
+			<div class="col-sm-9">
+				<input type="text" class="form-control" asp-for="Description">
+			</div>
+		</div>
+		
+		<!--Select-->
+		<div class="form-group">
+			<label asp-for="ProtocolType" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "ProtocolType")
+			</label>
+			<div class="col-sm-9">
+				<select asp-for="ProtocolType" asp-items="@Model.ProtocolTypes" class="form-control single-select"></select>
+			</div>
+		</div>
+
+		<!--Checkbox-->
+		<div class="form-group">
+			<label asp-for="RequireClientSecret" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "RequireClientSecret")
+			</label>
+			<div class="col-sm-9">
+				<toggle-button>
+					<input asp-for="RequireClientSecret" type="checkbox">
+				</toggle-button>
+			</div>
+		</div>
+
+		<!--Checkbox-->
+		<div class="form-group">
+			<label asp-for="RequirePkce" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "RequirePkce")
+			</label>
+			<div class="col-sm-9">
+				<toggle-button>
+					<input asp-for="RequirePkce" type="checkbox">
+				</toggle-button>
+			</div>
+		</div>
+
+		<!--Checkbox-->
+		<div class="form-group">
+			<label asp-for="AllowPlainTextPkce" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "AllowPlainTextPkce")
+			</label>
+			<div class="col-sm-9">
+				<toggle-button>
+					<input asp-for="AllowPlainTextPkce" type="checkbox">
+				</toggle-button>
+			</div>
+		</div>
+
+		<!--Checkbox-->
+		<div class="form-group">
+			<label asp-for="AllowOfflineAccess" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "AllowOfflineAccess")
+			</label>
+			<div class="col-sm-9">
+				<toggle-button>
+					<input asp-for="AllowOfflineAccess" type="checkbox">
+				</toggle-button>
+			</div>
+		</div>
+
+		<!--Checkbox-->
+		<div class="form-group">
+			<label asp-for="AllowAccessTokensViaBrowser" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "AllowAccessTokensViaBrowser")
+			</label>
+			<div class="col-sm-9">
+				<toggle-button>
+					<input asp-for="AllowAccessTokensViaBrowser" type="checkbox">
+				</toggle-button>
+			</div>
+		</div>
+
+		<!--Select with tags-->
+		<div class="form-group">
+			<label asp-for="AllowedScopes" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "AllowedScopes")
+			</label>
+			<div class="col-sm-9">
+				<picker id="AllowedScopesItems" multiple-select="true" min-search-text="2"
+				        selected-items="@Model.AllowedScopes" url="/Configuration/SearchScopes?scope"
+				        search-input-placeholder="Enter 2 and more characters" selected-items-title="Selected: ">
+				</picker>
+			</div>
+		</div>
+
+
+		<!--Select with tags-->
+		<div class="form-group">
+			<label asp-for="RedirectUris" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "RedirectUris")
+			</label>
+			<div class="col-sm-9">
+				<picker id="RedirectUrisItems" multiple-select="true" min-search-text="2"
+				        selected-items="@Model.RedirectUris" search-input-placeholder="Enter 2 and more characters" 
+						selected-items-title="Selected: ">
+				</picker>
+			</div>
+		</div>
+
+		<!--Select with tags-->
+		<div class="form-group">
+			<label asp-for="AllowedGrantTypes" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "AllowedGrantTypes")
+			</label>
+			<div class="col-sm-9">
+				<picker id="AllowedGrantTypesItems" multiple-select="true" min-search-text="2"
+						url="/Configuration/SearchGrantTypes?grant"
+				        selected-items="@Model.AllowedGrantTypes" search-input-placeholder="Enter 2 and more characters" 
+				        selected-items-title="Selected: ">
+				</picker>
+			</div>
+		</div>
+
+		<!--Button-->
+		<div class="form-group">
+			<label asp-for="ClientSecrets" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "ClientSecrets")
+			</label>
+			<div class="col-sm-9">
+				<a asp-action="ClientSecrets" asp-route-id="@Model.Id" target="_blank" class="btn btn-info"><span class="glyphicon glyphicon glyphicon-lock" aria-hidden="true"></span> @Localizer["ButtonManageClientSecrets"]</a>
+			</div>
+		</div>
+
+
+		<!--Button-->
+		<div class="form-group">
+			<label asp-for="Properties" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "Properties")
+			</label>
+			<div class="col-sm-9">
+				<a asp-action="ClientProperties" asp-route-id="@Model.Id" target="_blank" class="btn btn-info"><span class="glyphicon glyphicon glyphicon-lock" aria-hidden="true"></span> @Localizer["ButtonManageClientProperties"]</a>
+			</div>
+		</div>
+	</div>
+</div>

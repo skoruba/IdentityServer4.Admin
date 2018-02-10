@@ -1,0 +1,54 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
+@model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientDto
+@inject IViewLocalizer Localizer
+
+<div class="panel panel-default">
+	<div class="panel-heading">@Localizer["PageTitle"]</div>
+	<div class="panel-body">
+
+		<!--Checkbox-->
+		<div class="form-group">
+			<label asp-for="RequireConsent" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "RequireConsent")
+			</label>
+			<div class="col-sm-9">
+				<toggle-button>
+					<input asp-for="RequireConsent" type="checkbox">
+				</toggle-button>
+			</div>
+		</div>
+
+		<!--Checkbox-->
+		<div class="form-group">
+			<label asp-for="AllowRememberConsent" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "AllowRememberConsent")
+			</label>
+			<div class="col-sm-9">
+				<toggle-button>
+					<input asp-for="AllowRememberConsent" type="checkbox">
+				</toggle-button>
+			</div>
+		</div>
+
+		<!--Input - text -->
+		<div class="form-group">
+			<label asp-for="ClientUri" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "ClientUri")
+			</label>
+			<div class="col-sm-9">
+				<input type="text" class="form-control" asp-for="ClientUri">
+			</div>
+		</div>
+
+		<!--Input - text -->
+		<div class="form-group">
+			<label asp-for="LogoUri" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "LogoUri")
+			</label>
+			<div class="col-sm-9">
+				<input type="text" class="form-control" asp-for="LogoUri">
+			</div>
+		</div>
+	</div>
+</div>

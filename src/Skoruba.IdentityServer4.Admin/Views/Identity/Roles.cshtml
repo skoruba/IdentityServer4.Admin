@@ -1,0 +1,43 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Common
+@using Skoruba.IdentityServer4.Admin.ViewModels.Identity
+@model Skoruba.IdentityServer4.Admin.ViewModels.Identity.RolesDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}	
+
+<h2>@Localizer["PageTitle"]</h2>
+
+<a asp-action="Role" class="btn btn-success col-m-b-15 col-m-t-15">@Localizer["ButtonAddRole"]</a>
+
+<div class="row">
+	@Html.Partial("Common/Search", new Search() { Action = "Roles", Controller = "Identity" })
+</div>
+
+<div class="row table-responsive">
+	<table class="table table-striped">
+		<thead>
+		<tr>
+			<th></th>
+			<th>@Localizer["TableName"]</th>
+		</tr>
+		</thead>
+
+		<tbody>
+		@foreach (var role in Model.Roles)
+		{
+			<tr>
+				<th scope="row"><a class="btn btn-info" asp-action="Role" asp-route-id="@role.Id">@Localizer["TableButtonEdit"]</a></th>
+				<td>@role.Name</td>
+			</tr>
+		}
+		</tbody>
+	</table>
+</div>
+
+<div class="row">
+	@Html.Partial("Common/Pager", new Pager() { Action = "Roles", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
+</div>

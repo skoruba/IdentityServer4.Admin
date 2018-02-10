@@ -1,0 +1,86 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Common
+@using Skoruba.IdentityServer4.Admin.ViewModels.Identity
+@model Skoruba.IdentityServer4.Admin.ViewModels.Identity.UserRolesDto
+@inject IViewLocalizer Localizer
+	
+@{
+	ViewBag.Title = Localizer["Title"];
+	Layout = "_Layout";
+}	
+
+<form class="form-horizontal" asp-controller="Identity" asp-action="UserRoles" Method="post">
+	<div class="row">
+		<div class="col-md-12">
+			<h3>@Localizer["Title"]</h3>
+			
+			<div asp-validation-summary="All" class="text-danger"></div>
+
+			<a asp-action="User" asp-route-id="@Model.UserId" class="btn btn-info col-m-b-15">@Localizer["ActionBackUser"]</a>
+
+			<!--Hidden -->
+			<input type="hidden" asp-for="UserId" />
+
+			<div class="panel panel-default">
+				<div class="panel-heading">@Localizer["SubTitle"]</div>
+				<div class="panel-body">
+
+					<!--Select-->
+					<div class="form-group">
+						<label asp-for="RoleId" class="col-sm-3 control-label">
+							@Html.Partial("User/Section/Label", "RolesList")
+						</label>
+						<div class="col-sm-9">
+							<select asp-for="RoleId" asp-items="@Model.RolesList" class="form-control single-select"></select>
+						</div>
+					</div>
+
+					<!--Button-->
+					<div class="form-group">
+						<label class="col-sm-3 control-label">
+						</label>
+						<div class="col-sm-9">
+							<button type="submit" class="btn btn-info"><span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span> @Localizer["ActionAddRole"]</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</form>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">@Localizer["TitleRoles"]</div>
+			<div class="panel-body">
+
+				<div class="row table-responsive">
+					<table class="table table-striped">
+						<thead>
+						<tr>
+							<th>@Localizer["RoleName"]</th>
+							<th></th>
+						</tr>
+						</thead>
+
+						<tbody>
+						@foreach (var role in Model.Roles)
+						{
+							<tr>
+								<td>@role.Name</td>
+								<td><a asp-action="UserRolesDelete" asp-route-roleId="@role.Id" asp-route-id="@Model.UserId" class="btn btn-danger">@Localizer["ActionRemoveRole"]</a></td>
+							</tr>
+						}
+						</tbody>
+					</table>
+				</div>	
+				
+				<div class="row">
+					@Html.Partial("Common/Pager", new Pager() { Action = "UserRoles", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

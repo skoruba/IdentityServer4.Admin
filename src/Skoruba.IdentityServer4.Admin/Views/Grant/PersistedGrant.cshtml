@@ -1,0 +1,54 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.Helpers
+@using Skoruba.IdentityServer4.Admin.ViewModels.Common
+@using Skoruba.IdentityServer4.Admin.ViewModels.Grant
+@model Skoruba.IdentityServer4.Admin.ViewModels.Grant.PersistedGrantsDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}
+
+<h2>@Localizer["PageTitle"]</h2>
+
+<form id="client-form" class="form-horizontal" asp-controller="Grant" asp-action="PersistedGrantsDelete" Method="post">
+
+	<button class="btn btn-danger">@Localizer["ButtonDeleteAll"] @Model.PersistedGrants?[0].SubjectId</button>
+
+	<!--Hidden -->
+	<input type="hidden" asp-for="SubjectId" />
+
+	<div class="row table-responsive">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>@Localizer["TableSubjectId"]</th>
+					<th>@Localizer["TableType"]</th>
+					<th>@Localizer["TableExpiration"]</th>
+					<th>@Localizer["TableData"]</th>
+					<th>@Localizer["TableClient"]</th>
+					<th></th>
+				</tr>
+			</thead>
+
+			<tbody>
+				@foreach (var persistedGrant in Model.PersistedGrants)
+				{
+					<tr>
+						<td>@persistedGrant.SubjectId</td>
+						<td>@persistedGrant.Type</td>
+						<td>@persistedGrant.Expiration</td>
+						<td>@persistedGrant.Data</td>
+						<td>@persistedGrant.ClientId</td>
+						<th scope="row"><a class="btn btn-danger" asp-action="PersistedGrantDelete" asp-route-id="@UrlHelpers.QueryStringSafeHash(persistedGrant.Key)">@Localizer["TableButtonDelete"]</a></th>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+
+	<div class="row">
+		@Html.Partial("Common/Pager", new Pager() { Action = "PersistedGrant", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
+	</div>
+</form>

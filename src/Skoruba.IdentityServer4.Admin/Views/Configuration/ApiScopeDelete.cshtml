@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
+@model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ApiScopesDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}	
+
+<h2>@Localizer["PageTitle"]</h2>
+
+<form asp-action="ApiScopeDelete" method="post" class="form-horizontal">
+	<!--Hidden -->
+	<input type="hidden" asp-for="ApiScopeId" />
+	
+	<!--Hidden -->
+	<input type="hidden" asp-for="ApiResourceId" />
+
+	<div class="panel panel-default">
+		<div class="panel-heading">@Localizer["PanelTitle"]</div>
+		<div class="panel-body">
+
+			<!--Input - text -->
+			<div class="form-group">
+				<label asp-for="Name" class="col-sm-3 control-label">
+					@Html.Partial("ApiResource/Section/Label", "Name")
+				</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" disabled="disabled" asp-for="Name">
+				</div>
+			</div>
+
+			<!--Button-->
+			<div class="form-group">
+				<label class="col-sm-3 control-label">
+				</label>
+				<div class="col-sm-9">
+					<button type="submit" class="btn btn-danger">@Localizer["ButtonDeleteApiScope"]</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</form>

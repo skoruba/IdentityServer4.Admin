@@ -1,0 +1,34 @@
+﻿[
+  {
+    "outputFile": "wwwroot/css/controls/validationsummary.css",
+    "inputFile": "wwwroot/css/controls/validationsummary.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/web.css",
+    "inputFile": "wwwroot/css/web.scss"
+  },
+  {
+    "outputFile": "wwwroot/js/site.es5.js",
+    "inputFile": "wwwroot/js/site.js"
+  },
+  {
+    "outputFile": "wwwroot/js/web.es5.js",
+    "inputFile": "wwwroot/js/web.js"
+  },
+  {
+    "outputFile": "wwwroot/css/common/padding.css",
+    "inputFile": "wwwroot/css/common/padding.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/common/margin.css",
+    "inputFile": "wwwroot/css/common/margin.scss"
+  },
+  {
+    "outputFile": "Styles/web.css",
+    "inputFile": "Styles/web.scss"
+  },
+  {
+    "outputFile": "wwwroot/js/bundle.es5.js",
+    "inputFile": "wwwroot/js/bundle.js"
+  }
+]

@@ -1,0 +1,14 @@
+{
+	"version": "1.0.0",
+	"name": "skoruba-identity-server-4-admin",
+	"private": true,
+	"dependencies": {
+		"jquery": "2.2.4",
+		"jquery-validation": "1.14.0",
+		"jquery-validation-unobtrusive": "3.2.6",
+		"bootstrap": "3.3.6",
+		"knockout": "3.4.2",
+		"toastr": "2.1.4",
+		"eonasdan-bootstrap-datetimepicker": "4.17.45"
+	}
+}

@@ -1,0 +1,71 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Identity
+@model Skoruba.IdentityServer4.Admin.ViewModels.Identity.UserProviderDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = @Localizer["PageTitle"];
+	Layout = "_Layout";
+}
+
+<form class="form-horizontal" asp-controller="Identity" asp-action="UserProvidersDelete" Method="post">
+	<div class="row">
+		<div class="col-md-12">
+			<h3>@Localizer["PageTitle"]</h3>
+
+			<a asp-action="User" asp-route-id="@Model.UserId" class="btn btn-info col-m-b-15">@Localizer["ButtonBackUser"]</a>
+
+			<!--Hidden -->
+			<input type="hidden" asp-for="UserId" />
+
+			<div class="panel panel-default">
+				<div class="panel-heading">@Localizer["PanelTitle"]</div>
+				<div class="panel-body">
+
+					<!--Input - text -->
+					<div class="form-group">
+						<label asp-for="LoginProvider" class="col-sm-3 control-label">
+							@Html.Partial("User/Section/Label", "UserProviderLoginProvider")
+						</label>
+						<div class="col-sm-9">
+							<!--Hidden -->
+							<input type="hidden" asp-for="LoginProvider" />
+							<input type="text" disabled="disabled" class="form-control" asp-for="LoginProvider">
+						</div>
+					</div>
+
+					<!--Input - text -->
+					<div class="form-group">
+						<label asp-for="ProviderKey" class="col-sm-3 control-label">
+							@Html.Partial("User/Section/Label", "UserProviderProviderKey")
+						</label>
+						<div class="col-sm-9">
+							<!--Hidden -->
+							<input type="hidden" asp-for="ProviderKey" />
+							<input type="text" disabled="disabled" class="form-control" asp-for="ProviderKey">
+						</div>
+					</div>
+
+					<!--Input - text -->
+					<div class="form-group">
+						<label asp-for="ProviderDisplayName" class="col-sm-3 control-label">
+							@Html.Partial("User/Section/Label", "UserProviderProviderDisplayName")
+						</label>
+						<div class="col-sm-9">
+							<input type="text" disabled="disabled" class="form-control" asp-for="ProviderDisplayName">
+						</div>
+					</div>
+
+					<!--Button-->
+					<div class="form-group">
+						<label class="col-sm-3 control-label">
+						</label>
+						<div class="col-sm-9">
+							<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span> @Localizer["ButtonDeleteUserProvider"]</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>

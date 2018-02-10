@@ -1,0 +1,180 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
+@model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientDto
+@inject IViewLocalizer Localizer
+
+<div class="panel panel-default">
+	<div class="panel-heading">@Localizer["PanelTitle"]</div>
+	<div class="panel-body">
+		<!--Input - number -->
+		<div class="form-group">
+			<label asp-for="IdentityTokenLifetime" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "IdentityTokenLifetime")
+			</label>
+			<div class="col-sm-9">
+				<input type="number" class="form-control" asp-for="IdentityTokenLifetime">
+			</div>
+		</div>
+
+		<!--Input - number -->
+		<div class="form-group">
+			<label asp-for="AccessTokenLifetime" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "AccessTokenLifetime")
+			</label>
+			<div class="col-sm-9">
+				<input type="number" class="form-control" asp-for="AccessTokenLifetime">
+			</div>
+		</div>
+
+		<!--Select-->
+		<div class="form-group">
+			<label asp-for="AccessTokenTypes" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "AccessTokenTypes")
+			</label>
+			<div class="col-sm-9">
+				<select asp-for="AccessTokenType" asp-items="@Model.AccessTokenTypes" class="form-control single-select"></select>
+			</div>
+		</div>
+
+		<!--Input - number -->
+		<div class="form-group">
+			<label asp-for="AuthorizationCodeLifetime" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "AuthorizationCodeLifetime")
+			</label>
+			<div class="col-sm-9">
+				<input type="number" class="form-control" asp-for="AuthorizationCodeLifetime">
+			</div>
+		</div>
+
+		<!--Input - number-->
+		<div class="form-group">
+			<label asp-for="AbsoluteRefreshTokenLifetime" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "AbsoluteRefreshTokenLifetime")
+			</label>
+			<div class="col-sm-9">
+				<input type="number" class="form-control" asp-for="AbsoluteRefreshTokenLifetime">
+			</div>
+		</div>
+
+		<!--Input - number -->
+		<div class="form-group">
+			<label asp-for="SlidingRefreshTokenLifetime" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "SlidingRefreshTokenLifetime")
+			</label>
+			<div class="col-sm-9">
+				<input type="number" class="form-control" asp-for="SlidingRefreshTokenLifetime">
+			</div>
+		</div>
+
+		<!--Select-->
+		<div class="form-group">
+			<label asp-for="RefreshTokenUsage" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "RefreshTokenUsage")
+			</label>
+			<div class="col-sm-9">
+				<select asp-for="RefreshTokenUsage" asp-items="@Model.RefreshTokenUsages" class="form-control single-select"></select>
+			</div>
+		</div>
+
+		<!--Select-->
+		<div class="form-group">
+			<label asp-for="RefreshTokenExpiration" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "RefreshTokenExpiration")
+			</label>
+			<div class="col-sm-9">
+				<select asp-for="RefreshTokenExpiration" asp-items="@Model.RefreshTokenExpirations" class="form-control single-select"></select>
+			</div>
+		</div>
+
+		<!--Select with tags-->
+		<div class="form-group">
+			<label asp-for="AllowedCorsOrigins" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "AllowedCorsOrigins")
+			</label>
+			<div class="col-sm-9">
+				<picker id="AllowedCorsOriginsItems" multiple-select="true" min-search-text="2"
+				        selected-items="@Model.AllowedCorsOrigins" search-input-placeholder="Enter 2 and more characters" 
+				        selected-items-title="Selected: ">
+				</picker>
+			</div>
+		</div>
+
+		<!--Checkbox-->
+		<div class="form-group">
+			<label asp-for="UpdateAccessTokenClaimsOnRefresh" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "UpdateAccessTokenClaimsOnRefresh")
+			</label>
+			<div class="col-sm-9">
+				<toggle-button>
+					<input asp-for="UpdateAccessTokenClaimsOnRefresh" type="checkbox">
+				</toggle-button>
+			</div>
+		</div>
+
+		<!--Checkbox-->
+		<div class="form-group">
+			<label asp-for="IncludeJwtId" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "IncludeJwtId")
+			</label>
+			<div class="col-sm-9">
+				<toggle-button>
+					<input asp-for="IncludeJwtId" type="checkbox">
+				</toggle-button>
+			</div>
+		</div>
+
+		<!--Checkbox-->
+		<div class="form-group">
+			<label asp-for="AlwaysSendClientClaims" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "AlwaysSendClientClaims")
+			</label>
+			<div class="col-sm-9">
+				<toggle-button>
+					<input asp-for="AlwaysSendClientClaims" type="checkbox">
+				</toggle-button>
+			</div>
+		</div>
+
+		<!--Checkbox-->
+		<div class="form-group">
+			<label asp-for="AlwaysIncludeUserClaimsInIdToken" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "AlwaysIncludeUserClaimsInIdToken")
+			</label>
+			<div class="col-sm-9">
+				<toggle-button>
+					<input asp-for="AlwaysIncludeUserClaimsInIdToken" type="checkbox">
+				</toggle-button>
+			</div>
+		</div>
+
+		<!--Input - text -->
+		<div class="form-group">
+			<label asp-for="ClientClaimsPrefix" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "ClientClaimsPrefix")
+			</label>
+			<div class="col-sm-9">
+				<input type="text" class="form-control" asp-for="ClientClaimsPrefix">
+			</div>
+		</div>
+
+		<!--Input - text -->
+		<div class="form-group">
+			<label asp-for="PairWiseSubjectSalt" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "PairWiseSubjectSalt")
+			</label>
+			<div class="col-sm-9">
+				<input type="text" class="form-control" asp-for="PairWiseSubjectSalt">
+			</div>
+		</div>
+
+		<!--Button-->
+		<div class="form-group">
+			<label asp-for="Claims" class="col-sm-3 control-label">
+				@Html.Partial("Client/Section/Label", "Claims")
+			</label>
+			<div class="col-sm-9">
+				<a asp-action="ClientClaims" asp-route-id="@Model.Id" target="_blank" class="btn btn-info"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> @Localizer["ButtonManageClientClaims"]</a>
+			</div>
+		</div>
+	</div>
+</div>

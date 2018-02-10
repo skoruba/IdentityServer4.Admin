@@ -1,0 +1,163 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
+@model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientCloneDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}
+
+<h2>@Localizer["PageTitle"] - @Model.ClientIdOriginal (@Model.ClientNameOriginal)</h2>
+
+<form id="client-form" class="form-horizontal" asp-controller="Configuration" asp-action="ClientClone" Method="post">
+
+	<div asp-validation-summary="All" class="text-danger"></div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">@Localizer["PanelTitle"]</div>
+		<div class="panel-body">
+
+			<input type="hidden" asp-for="Id" />
+
+			<!--Label-->
+			<div class="form-group">
+				<div class="col-md-12">
+					<div class="alert alert-warning" role="alert">
+						<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+						<span class="sr-only">@Localizer["InfoTitle"]</span>
+						@Localizer["InfoDescription"]
+					</div>
+				</div>
+			</div>
+
+			<!--Input - text -->
+			<div class="form-group">
+				<label asp-for="ClientId" class="col-sm-3 control-label">
+					@Html.Partial("Client/Section/Label", "ClientId")
+				</label>
+				<div class="col-sm-9">
+					<input type="text" required class="form-control" asp-for="ClientId">
+					<span asp-validation-for="ClientId" class="text-danger"></span>
+				</div>
+			</div>
+
+			<!--Input - text -->
+			<div class="form-group">
+				<label asp-for="ClientName" class="col-sm-3 control-label">
+					@Html.Partial("Client/Section/Label", "ClientName")
+				</label>
+				<div class="col-sm-9">
+					<input type="text" required class="form-control" asp-for="ClientName">
+					<span asp-validation-for="ClientName" class="text-danger"></span>
+				</div>
+			</div>
+
+			<!--Checkbox-->
+			<div class="form-group">
+				<label asp-for="CloneClientGrantTypes" class="col-sm-3 control-label">
+					@Localizer["LabelCloneClientGrantTypes"]
+				</label>
+				<div class="col-sm-9">
+					<toggle-button>
+						<input asp-for="CloneClientGrantTypes" type="checkbox">
+					</toggle-button>
+				</div>
+			</div>
+
+			<!--Checkbox-->
+			<div class="form-group">
+				<label asp-for="CloneClientRedirectUris" class="col-sm-3 control-label">
+					@Localizer["LabelCloneClientRedirectUris"]
+				</label>
+				<div class="col-sm-9">
+					<toggle-button>
+						<input asp-for="CloneClientRedirectUris" type="checkbox">
+					</toggle-button>
+				</div>
+			</div>
+
+			<!--Checkbox-->
+			<div class="form-group">
+				<label asp-for="CloneClientScopes" class="col-sm-3 control-label">
+					@Localizer["LabelCloneClientScopes"]
+				</label>
+				<div class="col-sm-9">
+					<toggle-button>
+						<input asp-for="CloneClientScopes" type="checkbox">
+					</toggle-button>
+				</div>
+			</div>
+
+			<!--Checkbox-->
+			<div class="form-group">
+				<label asp-for="CloneClientClaims" class="col-sm-3 control-label">
+					@Localizer["LabelCloneClientClaims"]
+				</label>
+				<div class="col-sm-9">
+					<toggle-button>
+						<input asp-for="CloneClientClaims" type="checkbox">
+					</toggle-button>
+				</div>
+			</div>
+
+
+			<!--Checkbox-->
+			<div class="form-group">
+				<label asp-for="CloneClientCorsOrigins" class="col-sm-3 control-label">
+					@Localizer["CloneClientCorsOrigins"]
+				</label>
+				<div class="col-sm-9">
+					<toggle-button>
+						<input asp-for="CloneClientCorsOrigins" type="checkbox">
+					</toggle-button>
+				</div>
+			</div>
+
+			<!--Checkbox-->
+			<div class="form-group">
+				<label asp-for="CloneClientPostLogoutRedirectUris" class="col-sm-3 control-label">
+					@Localizer["LabelCloneClientPostLogoutRedirectUris"]
+				</label>
+				<div class="col-sm-9">
+					<toggle-button>
+						<input asp-for="CloneClientPostLogoutRedirectUris" type="checkbox">
+					</toggle-button>
+				</div>
+			</div>
+
+			<!--Checkbox-->
+			<div class="form-group">
+				<label asp-for="CloneClientIdPRestrictions" class="col-sm-3 control-label">
+					@Localizer["LabelCloneClientIdPRestrictions"]
+				</label>
+				<div class="col-sm-9">
+					<toggle-button>
+						<input asp-for="CloneClientIdPRestrictions" type="checkbox">
+					</toggle-button>
+				</div>
+			</div>
+			
+			<!--Checkbox-->
+			<div class="form-group">
+				<label asp-for="CloneClientProperties" class="col-sm-3 control-label">
+					@Localizer["LabelCloneClientProperties"]
+				</label>
+				<div class="col-sm-9">
+					<toggle-button>
+						<input asp-for="CloneClientProperties" type="checkbox">
+					</toggle-button>
+				</div>
+			</div>
+
+			<!--Button-->
+			<div class="form-group">
+				<label class="col-sm-3 control-label">
+				</label>
+				<div class="col-sm-9">
+					<button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> @Localizer["ButtonClone"]</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>

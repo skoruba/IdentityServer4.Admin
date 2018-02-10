@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Identity
+@model Skoruba.IdentityServer4.Admin.ViewModels.Identity.RoleDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["Title"];
+	Layout = "_Layout";
+}	
+
+<h2>@Localizer["Title"]</h2>
+
+<form id="client-form" class="form-horizontal" asp-controller="Identity" asp-action="Role" Method="post">
+	
+	<div asp-validation-summary="All" class="text-danger"></div>
+
+	@if (Model.Id != 0)
+	{
+	<!--Button-->
+		<div class="form-group">
+			<label class="col-sm-3 control-label">
+			</label>
+			<div class="col-sm-9">
+				<a asp-action="RoleClaims" asp-route-id="@Model.Id" class="btn btn-info"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> @Localizer["ActionAddClaims"]</a>
+				<a asp-action="RoleDelete" asp-route-id="@Model.Id" class="btn btn-danger"><span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span> @Localizer["ActionDeleteRole"]</a>
+			</div>
+		</div>
+	}
+
+	<!--Hidden -->
+	<input type="hidden" asp-for="Id" />
+
+	<!--Input - text -->
+	<div class="form-group">
+		<label asp-for="Name" class="col-sm-3 control-label">
+			@Html.Partial("Role/Section/Label", "RoleName")
+		</label>
+		<div class="col-sm-9">
+			<input type="text" required class="form-control" asp-for="Name">
+			<span asp-validation-for="Name" class="text-danger"></span>
+		</div>
+	</div>
+
+	<!--Button-->
+	<div class="form-group">
+		<label class="col-sm-3 control-label">
+		</label>
+		<div class="col-sm-9">
+			<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span> @Localizer["ActionSaveRole"]</button>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,121 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Common
+@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
+@model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientClaimsDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}
+
+<form class="form-horizontal" id="client-claims-form" asp-controller="Configuration" asp-action="ClientClaims" Method="post">
+	<div class="row">
+		<div class="col-md-12">
+			<h3>@Localizer["PageTitle"] - @Model.ClientName</h3>
+
+			<div asp-validation-summary="All" class="text-danger"></div>
+
+			<a asp-action="Client" asp-route-id="@Model.ClientId" class="btn btn-info col-m-b-15">@Localizer["ButtonBackClient"]</a>
+
+			<!--Hidden -->
+			<input type="hidden" asp-for="ClientId" />
+
+			<!--Hidden -->
+			<input type="hidden" asp-for="ClientName" />
+
+			<div class="panel panel-default">
+				<div class="panel-heading">@Localizer["PanelNewTitle"]</div>
+				<div class="panel-body">
+
+					<!--Select with tags-->
+					<div class="form-group">
+						<label asp-for="Type" class="col-sm-3 control-label">
+							@Html.Partial("Client/Section/Label", "Type")
+						</label>
+						<div class="col-sm-9">
+							<picker id="Type" multiple-select="false" min-search-text="2"
+									selected-item="@Model.Type" url="/Configuration/SearchClaims?claim"
+									search-input-placeholder="Enter 2 and more characters" selected-items-title="Selected: "
+									required="true" required-message="The Type is required.">
+							</picker>
+
+							<span asp-validation-for="Type" class="text-danger"></span>
+						</div>
+					</div>
+
+					<!--Input - text -->
+					<div class="form-group">
+						<label asp-for="Value" class="col-sm-3 control-label">
+							@Html.Partial("Client/Section/Label", "Value")
+						</label>
+						<div class="col-sm-9">
+							<input type="text" required class="form-control" asp-for="Value">
+							<span asp-validation-for="Value" class="text-danger"></span>
+						</div>
+					</div>
+
+					<!--Button-->
+					<div class="form-group">
+						<label class="col-sm-3 control-label">
+						</label>
+						<div class="col-sm-9">
+							<button type="submit" id="client-claims-button" class="btn btn-info"><span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span> @Localizer["ButtonAddNewClaim"]</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</form>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">@Localizer["PanelTitle"]</div>
+			<div class="panel-body">
+
+				<div class="row table-responsive">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>@Localizer["TableType"]</th>
+								<th>@Localizer["TableValue"]</th>
+								<th></th>
+							</tr>
+						</thead>
+
+						<tbody>
+							@foreach (var client in Model.ClientClaims)
+							{
+								<tr>
+									<td>@client.Type</td>
+									<td>@client.Value</td>
+									<td><a asp-action="ClientClaimDelete" asp-route-id="@client.Id" class="btn btn-danger">@Localizer["TableButtonRemove"]</a></td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+
+				<div class="row">
+					@Html.Partial("Common/Pager", new Pager() { Action = "ClientClaims", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts
+	{
+	<script>
+		$(function () {
+			//Disable enter for this form
+			FormMvc.disableEnter($('#client-claims-form'));
+
+			//Allow validate hidden field
+			FormMvc.allowValidateHiddenField($('#client-claims-form'));
+		});
+	</script>
+}

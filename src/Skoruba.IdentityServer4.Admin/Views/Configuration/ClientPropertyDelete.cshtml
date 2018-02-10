@@ -1,0 +1,58 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
+@model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientPropertiesDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}
+
+<form class="form-horizontal" asp-controller="Configuration" asp-action="ClientPropertyDelete" Method="post">
+	<div class="row">
+		<div class="col-md-12">
+			<h3>@Localizer["PageTitle"]</h3>
+
+			<a asp-action="Client" asp-route-id="@Model.ClientId" class="btn btn-info col-m-b-15">@Localizer["ButtonBackClient"]</a>
+
+			<!--Hidden -->
+			<input type="hidden" asp-for="ClientId" />
+			<input type="hidden" asp-for="ClientPropertyId" />
+
+			<div class="panel panel-default">
+				<div class="panel-heading">@Localizer["PanelTitle"]</div>
+				<div class="panel-body">
+
+					<!--Input - text -->
+					<div class="form-group">
+						<label asp-for="Key" class="col-sm-3 control-label">
+							@Html.Partial("Client/Section/Label", "PropertyKey")
+						</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" disabled="disabled" asp-for="Key">
+						</div>
+					</div>
+
+					<!--Input - text -->
+					<div class="form-group">
+						<label asp-for="Value" class="col-sm-3 control-label">
+							@Html.Partial("Client/Section/Label", "PropertyValue")
+						</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" disabled="disabled" asp-for="Value">
+						</div>
+					</div>
+
+					<!--Button-->
+					<div class="form-group">
+						<label class="col-sm-3 control-label">
+						</label>
+						<div class="col-sm-9">
+							<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span> @Localizer["ButtonDeleteProperty"]</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>

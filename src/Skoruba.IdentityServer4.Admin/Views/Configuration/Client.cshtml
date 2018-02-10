@@ -1,0 +1,38 @@
+﻿@using Newtonsoft.Json
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
+@model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}
+
+<form id="client-form" class="form-horizontal" asp-controller="Configuration" asp-action="Client" Method="post">
+	@if (Model.Id != 0)
+	{
+		<h2>@Localizer["Title"] @Model.ClientId</h2>
+	}
+
+	<div asp-validation-summary="All" class="text-danger"></div>
+
+	@if (Model.Id != 0)
+	{
+		@Html.Partial("Client/Section/ActionButtons")
+	}
+
+	@Html.Partial("Client/Settings")
+	@Html.Partial("Client/Section/ActionButtons")
+</form>
+
+@section scripts
+	{
+	<script>
+		$(function () {
+
+			//Disable enter for this form
+			FormMvc.disableEnter($('#client-form'));			
+		});
+	</script>
+}

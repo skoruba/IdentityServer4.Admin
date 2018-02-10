@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Identity
+@model Skoruba.IdentityServer4.Admin.ViewModels.Identity.UserDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}	
+
+<form id="client-form" class="form-horizontal" asp-controller="Identity" asp-action="UserDelete" Method="post">
+
+	<h2>@Localizer["PageTitle"]</h2>
+
+	<!--Hidden -->
+	<input type="hidden" asp-for="Id" />
+
+	<!--Input - text -->
+	<div class="form-group">
+		<label asp-for="UserName" class="col-sm-3 control-label">
+			@Html.Partial("User/Section/Label", "UserUserName")
+		</label>
+		<div class="col-sm-9">
+			<input type="text" class="form-control" disabled="disabled" asp-for="UserName">
+		</div>
+	</div>
+
+	<!--Button-->
+	<div class="form-group">
+		<label class="col-sm-3 control-label">
+		</label>
+		<div class="col-sm-9">
+			<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> @Localizer["ButtonDeleteUser"]</button>
+		</div>
+	</div>
+</form>
+

@@ -1,0 +1,32 @@
+﻿@using Skoruba.IdentityServer4.Admin.ViewModels.Common
+@model Skoruba.IdentityServer4.Admin.ViewModels.Common.Pager
+
+<nav aria-label="Page navigation" class="text-center">
+	<ul class="pagination">
+		@for (var i = 1; i <= (int)Math.Ceiling((double)Model.TotalCount / Model.PageSize); i++)
+		{
+			if (Model.EnableSearch)
+			{
+				if (Context.Request.Query["page"] == i.ToString() || (string.IsNullOrEmpty(Context.Request.Query["page"]) && i == 1))
+				{
+					<li class="active"><a asp-action="@Model.Action" asp-route-page="@i" asp-route-search="@Model.Search">@i</a></li>
+				}
+				else
+				{
+					<li><a asp-action="@Model.Action" asp-route-page="@i" asp-route-search="@Model.Search">@i</a></li>
+				}
+			}
+			else
+			{
+				if (Context.Request.Query["page"] == i.ToString() || (string.IsNullOrEmpty(Context.Request.Query["page"]) && i == 1))
+				{
+					<li class="active"><a asp-action="@Model.Action" asp-route-page="@i">@i</a></li>
+				}
+				else
+				{
+					<li><a asp-action="@Model.Action" asp-route-page="@i">@i</a></li>
+				}
+			}
+		}
+	</ul>
+</nav>

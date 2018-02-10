@@ -1,0 +1,49 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Common
+@using Skoruba.IdentityServer4.Admin.ViewModels.Identity
+@model Skoruba.IdentityServer4.Admin.ViewModels.Identity.UsersDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["Title"];
+	Layout = "_Layout";
+}
+
+<h2>@Localizer["Title"]</h2>
+
+<a asp-action="User" class="btn btn-success col-m-b-15 col-m-t-15">@Localizer["ActionAddUser"]</a>
+
+<div class="row">
+	@Html.Partial("Common/Search", new Search() { Action = "Users", Controller = "Identity" })
+</div>
+
+<div class="row table-responsive">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th></th>
+				<th>@Localizer["UserId"]</th>
+				<th>@Localizer["UserName"]</th>
+				<th>@Localizer["Email"]</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			@foreach (var user in Model.Users)
+			{
+				<tr>
+					<th scope="row"><a class="btn btn-info" asp-action="User" asp-route-id="@user.Id">@Localizer["ActionEditUser"]</a></th>
+					<td>@user.Id</td>
+					<td>@user.UserName</td>
+					<td>@user.Email</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+
+
+</div>
+
+<div class="row">
+	@Html.Partial("Common/Pager", new Pager() { Action = "Users", PageSize = Model.PageSize, TotalCount = Model.TotalCount, EnableSearch = true, Search = ViewBag.Search})
+</div>

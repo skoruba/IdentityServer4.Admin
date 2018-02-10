@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Common
+@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
+@model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ApiResourcesDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}
+
+<div class="row">
+
+	<div class="col-md-12">
+
+		<h2>@Localizer["PageTitle"]</h2>
+
+		<a asp-action="ApiResource" class="btn btn-success">@Localizer["ButtonAddResource"]</a>
+
+		<div class="row">
+			@Html.Partial("Common/Search", new Search() { Action = "ApiResources", Controller = "Configuration" })
+		</div>
+
+		<div class="row table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th></th>
+						<th>@Localizer["TableName"]</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					@foreach (var api in Model.ApiResources)
+					{
+						<tr>
+							<th scope="row"><a class="btn btn-info" asp-action="ApiResource" asp-route-id="@api.Id">@Localizer["TableButtonEdit"]</a></th>
+							<td>@api.Name</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+		<div class="row">
+			@Html.Partial("Common/Pager", new Pager() { Action = "ApiResources", PageSize = Model.PageSize, TotalCount = Model.TotalCount, EnableSearch = true, Search = @ViewBag.Search })
+		</div>
+	</div>
+</div>

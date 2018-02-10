@@ -1,0 +1,73 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}
+
+<div class="row">
+	<div class="col-md-12">
+		<h1>@Localizer["PageTitle"]</h1>
+		
+		<h3>@Localizer["PageTitleManageClients"]</h3>
+		
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<a asp-controller="Configuration" asp-action="Clients" class="btn btn-lg btn-info">
+					<span class="glyphicon glyphicon-user" aria-hidden="true"></span> @Localizer["ButtonClients"]
+				</a>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<a asp-controller="Configuration" asp-action="IdentityResources" class="btn btn-lg btn-info">
+					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> @Localizer["ButtonIdentityClients"]
+				</a>
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<a asp-controller="Configuration" asp-action="ApiResources" class="btn btn-lg btn-info">
+					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> @Localizer["ButtonApiResources"]
+				</a>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<a asp-controller="Grant" asp-action="PersistedGrants" class="btn btn-lg btn-info">
+					<span class="glyphicon glyphicon-lock" aria-hidden="true"></span> @Localizer["ButtonPersistedGrants"]
+				</a>
+			</div>
+		</div>
+
+		<h3>@Localizer["PageTitleManageUsers"]</h3>
+
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<a asp-controller="Identity" asp-action="Users" class="btn btn-lg btn-info">
+					<span class="glyphicon glyphicon-user" aria-hidden="true"></span> @Localizer["ButtonUsers"]
+				</a>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<a asp-controller="Identity" asp-action="Roles" class="btn btn-lg btn-info">
+					<span class="glyphicon glyphicon-tag" aria-hidden="true"></span> @Localizer["ButtonRoles"]
+				</a>
+			</div>
+		</div>
+
+		<h3>@Localizer["PageTitleLogs"]</h3>
+
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<a asp-controller="Log" asp-action="ErrorsLog" class="btn btn-lg btn-info">
+					<span class="glyphicon glyphicon-fire" aria-hidden="true"></span> @Localizer["ButtonErrorLogs"]
+				</a>
+			</div>
+		</div>
+	</div>
+</div>

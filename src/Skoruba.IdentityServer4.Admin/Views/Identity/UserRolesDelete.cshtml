@@ -1,0 +1,50 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Identity
+@model Skoruba.IdentityServer4.Admin.ViewModels.Identity.UserRolesDto
+@inject IViewLocalizer Localizer
+	
+@{
+	ViewBag.Title = Localizer["Title"];
+	Layout = "_Layout";
+}	
+
+<form class="form-horizontal" asp-controller="Identity" asp-action="UserRolesDelete" Method="post">
+	<div class="row">
+		<div class="col-md-12">
+			
+			<h3>@Localizer["Title"]</h3>
+
+			<!--Hidden -->
+			<input type="hidden" asp-for="UserId"/>
+
+			<!--Hidden -->
+			<input type="hidden" asp-for="RoleId"/>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">@Localizer["SubTitle"]</div>
+				<div class="panel-body">
+
+					<!--Select-->
+					<div class="form-group">
+						<label asp-for="RoleId" class="col-sm-3 control-label">
+							@Html.Partial("User/Section/Label", "RolesList")
+						</label>
+						<div class="col-sm-9">
+							<select asp-for="RoleId" disabled="disabled" asp-items="@Model.RolesList" class="form-control single-select"></select>
+						</div>
+					</div>
+
+					<!--Button-->
+					<div class="form-group">
+						<label class="col-sm-3 control-label">
+						</label>
+						<div class="col-sm-9">
+							<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span> @Localizer["ActionDeleteRole"]</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</form>

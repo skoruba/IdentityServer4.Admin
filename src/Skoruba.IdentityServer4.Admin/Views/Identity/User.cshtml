@@ -1,0 +1,156 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Identity
+@model Skoruba.IdentityServer4.Admin.ViewModels.Identity.UserDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}
+
+<form id="client-form" class="form-horizontal" asp-controller="Identity" asp-action="User" Method="post">
+
+	<h2>@Localizer["PageTitle"]</h2>
+
+	<div asp-validation-summary="All" class="text-danger"></div>
+
+	@if (Model.Id != 0)
+	{
+		<!--Button-->
+		<div class="form-group">
+			<div class="col-md-12 col-m-b-10  col-m-t-10">
+				<a asp-action="UserClaims" asp-route-id="@Model.Id" class="btn btn-info"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> @Localizer["ButtonManageUserClaims"]</a>
+				<a asp-action="UserRoles" asp-route-id="@Model.Id" class="btn btn-info"><span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span> @Localizer["ButtonManageUserRoles"]</a>
+				<a asp-action="UserProviders" asp-route-id="@Model.Id" class="btn btn-primary"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> @Localizer["ButtonManageUserExternalProviders"]</a>
+				<a asp-action="UserChangePassword" asp-route-id="@Model.Id" class="btn btn-warning"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> @Localizer["ButtonChangePassword"]</a>
+				<a asp-action="UserDelete" asp-route-id="@Model.Id" class="btn btn-danger"><span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["ButtonDeleteUser"]</a>
+			</div>
+		</div>
+	}
+
+	<!--Hidden -->
+	<input type="hidden" asp-for="Id" />
+
+	<!--Input - text -->
+	<div class="form-group">
+		<label asp-for="UserName" class="col-sm-3 control-label">
+			@Html.Partial("User/Section/Label", "UserUserName")
+		</label>
+		<div class="col-sm-9">
+			<input type="text" required class="form-control" asp-for="UserName">
+			<span asp-validation-for="UserName" class="text-danger"></span>
+		</div>
+	</div>
+
+	<!--Input - text -->
+	<div class="form-group">
+		<label asp-for="Email" class="col-sm-3 control-label">
+			@Html.Partial("User/Section/Label", "UserEmail")
+		</label>
+		<div class="col-sm-9">
+			<input type="email" required class="form-control" asp-for="Email">
+			<span asp-validation-for="Email" class="text-danger"></span>
+		</div>
+	</div>
+
+	<!--Checkbox-->
+	<div class="form-group">
+		<label asp-for="EmailConfirmed" class="col-sm-3 control-label">
+			@Html.Partial("User/Section/Label", "UserEmailConfirmed")
+		</label>
+		<div class="col-sm-9">
+			<toggle-button>
+				<input asp-for="EmailConfirmed" type="checkbox">
+			</toggle-button>
+		</div>
+	</div>
+
+	<!--Input - text -->
+	<div class="form-group">
+		<label asp-for="PhoneNumber" class="col-sm-3 control-label">
+			@Html.Partial("User/Section/Label", "UserPhoneNumber")
+		</label>
+		<div class="col-sm-9">
+			<input type="text" class="form-control" asp-for="PhoneNumber">
+		</div>
+	</div>
+
+	<!--Checkbox-->
+	<div class="form-group">
+		<label asp-for="PhoneNumberConfirmed" class="col-sm-3 control-label">
+			@Html.Partial("User/Section/Label", "UserPhoneNumberConfirmed")
+		</label>
+		<div class="col-sm-9">
+			<toggle-button>
+				<input asp-for="PhoneNumberConfirmed" type="checkbox">
+			</toggle-button>
+		</div>
+	</div>
+
+	<!--Checkbox-->
+	<div class="form-group">
+		<label asp-for="LockoutEnabled" class="col-sm-3 control-label">
+			@Html.Partial("User/Section/Label", "UserLockoutEnabled")
+		</label>
+		<div class="col-sm-9">
+			<toggle-button>
+				<input asp-for="LockoutEnabled" type="checkbox">
+			</toggle-button>
+		</div>
+	</div>
+
+	<!--Checkbox-->
+	<div class="form-group">
+		<label asp-for="TwoFactorEnabled" class="col-sm-3 control-label">
+			@Html.Partial("User/Section/Label", "UserTwoFactorEnabled")
+		</label>
+		<div class="col-sm-9">
+			<toggle-button>
+				<input asp-for="TwoFactorEnabled" type="checkbox">
+			</toggle-button>
+		</div>
+	</div>
+
+	<!--Input - text -->
+	<div class="form-group">
+		<label asp-for="AccessFailedCount" class="col-sm-3 control-label">
+			@Html.Partial("User/Section/Label", "UserAccessFailedCount")
+		</label>
+		<div class="col-sm-9">
+			<input type="text" class="form-control" asp-for="AccessFailedCount">
+		</div>
+	</div>
+
+	<!--Input - text -->
+	<div class="form-group">
+		<label asp-for="LockoutEnd" class="col-sm-3 control-label">
+			@Html.Partial("User/Section/Label", "UserLockoutEnd")
+		</label>
+		<div class="col-sm-9">
+			<div class="input-group date" id="logoutend-picker">
+				<input asp-for="LockoutEnd" type="text" class="form-control">
+				<span class="input-group-addon">
+					<span class="glyphicon glyphicon-calendar"></span>
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<!--Button-->
+	<div class="form-group">
+		<label class="col-sm-3 control-label">
+		</label>
+		<div class="col-sm-9">
+			<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> @Localizer["ButtonSaveUser"]</button>
+		</div>
+	</div>
+</form>
+
+@section scripts
+	{
+	<script type="text/javascript">
+		$(function () {
+			$('#logoutend-picker').datetimepicker();
+		});
+	</script>
+}

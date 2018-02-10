@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Common
+@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
+@model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientsDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}
+
+<h2>@Localizer["PageTitle"]</h2>
+
+<a asp-action="Client" class="btn btn-success col-m-b-15 col-m-t-15">@Localizer["ButtonAddNewClient"]</a>
+
+<div class="row">
+	@Html.Partial("Common/Search", new Search() { Action = "Clients", Controller = "Configuration" })
+</div>
+
+<div class="row table-responsive">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th></th>
+				<th>@Localizer["TableClientId"]</th>
+				<th>@Localizer["TableClientName"]</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			@foreach (var client in Model.Clients)
+			{
+				<tr>
+					<th scope="row"><a class="btn btn-info" asp-action="Client" asp-route-id="@client.Id">@Localizer["TableButtonEdit"]</a></th>
+					<td>@client.ClientId</td>
+					<td>@client.ClientName</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+<div class="row">
+	@Html.Partial("Common/Pager", new Pager() { Action = "Clients", PageSize = Model.PageSize, TotalCount = Model.TotalCount, Search = ViewBag.Search, EnableSearch = true })
+</div>

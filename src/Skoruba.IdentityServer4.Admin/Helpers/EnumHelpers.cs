@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Skoruba.IdentityServer4.Admin.ViewModels.Common;
+
+namespace Skoruba.IdentityServer4.Admin.Helpers
+{
+	public class EnumHelpers
+	{
+		public static List<SelectItem> ToSelectList<T>() where T : struct, IComparable
+		{
+			var selectItems = Enum.GetValues(typeof(T))
+				.Cast<T>()
+				.Select(x => new SelectItem(Convert.ToInt16(x).ToString(), x.ToString())).ToList();
+
+			return selectItems;
+		}
+	}
+}

@@ -1,0 +1,161 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Common
+@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
+@model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ApiScopesDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}
+
+<h2>@Localizer["PageTitle"] - @Model.ResourceName</h2>
+
+<form asp-action="ApiScopes" asp-route-scope="@Model.ApiScopeId" id="api-scope-form" method="post" class="form-horizontal">
+
+	<div asp-validation-summary="All" class="text-danger"></div>
+
+	<a asp-action="ApiResource" asp-route-id="@Model.ApiResourceId" class="btn btn-info col-m-b-15">@Localizer["ButtonBackApiResource"]</a>
+
+	<!--Hidden -->
+	<input type="hidden" asp-for="ApiScopeId" />
+
+	<!--Hidden -->
+	<input type="hidden" asp-for="ApiResourceId" />
+
+	<div class="panel panel-default">
+		<div class="panel-heading">@Localizer["PanelTitle"]</div>
+		<div class="panel-body">
+
+			<!--Input - text -->
+			<div class="form-group">
+				<label asp-for="Name" class="col-sm-3 control-label">
+					@Html.Partial("ApiResource/Section/Label", "Name")
+				</label>
+				<div class="col-sm-9">
+					<input type="text" required class="form-control" asp-for="Name">
+					<span asp-validation-for="Name" class="text-danger"></span>
+				</div>
+			</div>
+
+			<!--Input - text -->
+			<div class="form-group">
+				<label asp-for="DisplayName" class="col-sm-3 control-label">
+					@Html.Partial("ApiResource/Section/Label", "DisplayName")
+				</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" asp-for="DisplayName">
+				</div>
+			</div>
+
+			<!--Input - text -->
+			<div class="form-group">
+				<label asp-for="Description" class="col-sm-3 control-label">
+					@Html.Partial("ApiResource/Section/Label", "Description")
+				</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" asp-for="Description">
+				</div>
+			</div>
+
+			<!--Checkbox-->
+			<div class="form-group">
+				<label asp-for="Required" class="col-sm-3 control-label">
+					@Html.Partial("IdentityResource/Section/Label", "Required")
+				</label>
+				<div class="col-sm-9">
+					<toggle-button>
+						<input asp-for="Required" type="checkbox">
+					</toggle-button>
+				</div>
+			</div>
+
+			<!--Checkbox-->
+			<div class="form-group">
+				<label asp-for="Emphasize" class="col-sm-3 control-label">
+					@Html.Partial("IdentityResource/Section/Label", "Emphasize")
+				</label>
+				<div class="col-sm-9">
+					<toggle-button>
+						<input asp-for="Emphasize" type="checkbox">
+					</toggle-button>
+				</div>
+			</div>
+
+			<!--Select with tags-->
+			<div class="form-group">
+				<label asp-for="UserClaims" class="col-sm-3 control-label">
+					@Html.Partial("ApiResource/Section/Label", "UserClaims")
+				</label>
+				<div class="col-sm-9">
+					<picker id="UserClaimsItems" multiple-select="true" min-search-text="2"
+							selected-items="@Model.UserClaims" url="/Configuration/SearchClaims?claim"
+							search-input-placeholder="Enter 2 and more characters" selected-items-title="Selected: ">
+					</picker>
+				</div>
+			</div>
+
+			<!--Button-->
+			<div class="form-group">
+				<label class="col-sm-3 control-label">
+				</label>
+				<div class="col-sm-9">
+					<button type="submit" asp-action="ApiScopes" id="api-scope-save-button" class="btn btn-success">@Localizer["ButtonAddApiScope"]</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</form>
+
+@if (Model.ApiScopeId == 0)
+{
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">Api Scopes</div>
+				<div class="panel-body">
+
+					<div class="row table-responsive">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>@Localizer["TableName"]</th>
+									<th></th>
+									<th></th>
+								</tr>
+							</thead>
+
+							<tbody>
+								@foreach (var scope in Model.Scopes)
+								{
+									<tr>
+										<td>@scope.Name</td>
+										<td><a asp-action="ApiScopes" asp-route-scope="@scope.Id" class="btn btn-info">@Localizer["TableButtonEdit"]</a></td>
+										<td><a asp-action="ApiScopeDelete" asp-route-id="@Model.ApiResourceId" asp-route-scope="@scope.Id" class="btn btn-danger">@Localizer["TableButtonRemove"]</a></td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+
+					<div class="row">
+						@Html.Partial("Common/Pager", new Pager() { Action = "ApiScopes", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+}
+
+@section scripts
+	{
+	<script>
+		$(function () {
+			//Disable enter for this form
+			FormMvc.disableEnter($('#api-scope-form'));
+		});
+	</script>
+}

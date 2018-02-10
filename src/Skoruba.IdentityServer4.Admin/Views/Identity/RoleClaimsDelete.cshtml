@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Identity
+@model Skoruba.IdentityServer4.Admin.ViewModels.Identity.RoleClaimsDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}
+
+<form class="form-horizontal" asp-controller="Identity" asp-action="RoleClaimsDelete" Method="post">
+	<div class="row">
+		<div class="col-md-12">
+			<h3>@Localizer["PageTitle"]</h3>
+
+			<a asp-action="Role" asp-route-id="@Model.RoleId" class="btn btn-info col-m-b-15">@Localizer["ButtonBackUser"]</a>
+
+			<!--Hidden -->
+			<input type="hidden" asp-for="RoleId" />
+			
+			<!--Hidden -->
+			<input type="hidden" asp-for="ClaimId" />
+
+			<div class="panel panel-default">
+				<div class="panel-heading">@Localizer["PanelTitle"]</div>
+				<div class="panel-body">
+
+					<!--Input - text -->
+					<div class="form-group">
+						<label asp-for="ClaimType" class="col-sm-3 control-label">
+							@Html.Partial("Role/Section/Label", "Type")
+						</label>
+						<div class="col-sm-9">
+							<input type="text" disabled="disabled" class="form-control" asp-for="ClaimType">
+						</div>
+					</div>
+
+					<!--Input - text -->
+					<div class="form-group">
+						<label asp-for="ClaimValue" class="col-sm-3 control-label">
+							@Html.Partial("Role/Section/Label", "Value")
+						</label>
+						<div class="col-sm-9">
+							<input type="text" disabled="disabled" class="form-control" asp-for="ClaimValue">
+						</div>
+					</div>
+
+					<!--Button-->
+					<div class="form-group">
+						<label class="col-sm-3 control-label">
+						</label>
+						<div class="col-sm-9">
+							<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span> @Localizer["ButtonDeleteRoleClaim"]</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</form>

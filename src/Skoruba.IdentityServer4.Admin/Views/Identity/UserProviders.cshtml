@@ -1,0 +1,43 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Identity
+@model Skoruba.IdentityServer4.Admin.ViewModels.Identity.UserProvidersDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}	
+
+<form>
+	<div class="row">
+		<div class="col-md-12">
+			<h3>@Localizer["PageTitle"]</h3>
+			<a asp-action="User" asp-route-id="@Model.UserId" class="btn btn-info col-m-b-15">@Localizer["ButtonBackUser"]</a>
+
+			<div class="row table-responsive">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>@Localizer["TableLoginProvider"]</th>
+							<th>@Localizer["TableProviderDisplayName"]</th>
+							<th>@Localizer["TableProviderKey"]</th>
+							<th></th>
+						</tr>
+					</thead>
+
+					<tbody>
+						@foreach (var provider in Model.Providers)
+						{
+							<tr>
+								<td>@provider.LoginProvider</td>
+								<td>@provider.ProviderDisplayName</td>
+								<td>@provider.ProviderKey</td>
+								<td><a asp-action="UserProvidersDelete" asp-route-providerKey="@provider.ProviderKey" asp-route-id="@Model.UserId" class="btn btn-danger">@Localizer["TableButtonRemove"]</a></td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</form>

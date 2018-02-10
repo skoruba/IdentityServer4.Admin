@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
+@model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientDto
+@inject IViewLocalizer Localizer
+
+<div class="row">
+	<div class="col-md-12">
+		<h3>@Localizer["Title"]</h3>
+
+		@Html.Partial("Client/Section/Name")
+
+		@if (Model.Id != 0)
+		{
+			@Html.Partial("Client/Section/Basics")
+			@Html.Partial("Client/Section/Authentication")
+			@Html.Partial("Client/Section/Token")
+			@Html.Partial("Client/Section/Consent")
+		}
+	</div>
+</div>
