@@ -2,9 +2,6 @@
 
 ### The administration of the IdentityServer4 and Asp.Net Core Identity
 
-[![pipeline status](https://gitlab.com/Skoruba/identity-server4-admin/badges/master/pipeline.svg)](https://gitlab.com/Skoruba/identity-server4-admin/commits/master)
-
-
 ### Project status
 - This is currently in **beta version**
 
@@ -75,7 +72,7 @@
 
 - The admin contains sections:
 
-    ![Skoruba.IdentityServer4.Admin App](https://gitlab.com/Skoruba/identity-server4-admin/raw/master/Docs/Images/Skoruba.IdentityServer4.Admin-Solution.png)
+    ![Skoruba.IdentityServer4.Admin App](https://github.com/skoruba/IdentityServer4.Admin/blob/master/docs/Images/Skoruba.IdentityServer4.Admin-Solution.png?raw=true)
 
     ### IdentityServer4:
     
@@ -128,11 +125,11 @@
 
 # UI Diagram
 
-![Skoruba.IdentityServer4.Admin Diagram](https://gitlab.com/Skoruba/identity-server4-admin/raw/master/Docs/Images/Skoruba.IdentityServer4.Admin-UI.png)
+![Skoruba.IdentityServer4.Admin Diagram](https://github.com/skoruba/IdentityServer4.Admin/blob/master/docs/Images/Skoruba.IdentityServer4.Admin-UI.png?raw=true)
 
 # Application Diagram
 
-![Skoruba.IdentityServer4.Admin Diagram](https://gitlab.com/Skoruba/identity-server4-admin/raw/master/Docs/Images/Skoruba.IdentityServer4.Admin-App-Diagram.png)
+![Skoruba.IdentityServer4.Admin Diagram](https://github.com/skoruba/IdentityServer4.Admin/blob/master/docs/Images/Skoruba.IdentityServer4.Admin-App-Diagram.png?raw=true)
 
 
 # Plan & Vision:
@@ -166,4 +163,4 @@ Thanks to [Dominick Baier](https://github.com/leastprivilege) and [Brock Allen](
 # Contact and suggestion
 
 - I am happy to share my attempt of implementation the administration for IdentityServer4 and Asp.Net Core Identity
-- Any feedback is welcomed - feel free to create an issue or send me mail - [jan@skoruba.com](mailto:jan@skoruba.com) - Thanks
+- Any feedback is welcomed - feel free to create an issue or send me mail - [jan@skoruba.com](mailto:jan@skoruba.com) - Thanks ☺
