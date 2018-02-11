@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.Helpers
+@using Skoruba.IdentityServer4.Admin.ViewModels.Common
+@model Skoruba.IdentityServer4.Admin.ViewModels.Log.LogsDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}
+
+<h2>@Localizer["PageTitle"]</h2>
+
+<div class="row">
+	@Html.Partial("Common/Search", new Search { Action = "ErrorsLog", Controller = "Log" })
+</div>
+
+
+<div class="row table-responsive">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th></th>
+				<th>@Localizer["TableLevel"]</th>
+				<th>@Localizer["TableLogged"]</th>
+				<th>@Localizer["TableMessage"]</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var client in Model.Logs)
+			{
+				<tr>
+					<td><a href="#" data-error-id="@client.Id" class="btn btn-info btn-error-detail">@Localizer["TableShowDetail"]</a></td>
+					<td>@client.Level</td>
+					<td>
+						<span class="local-datetime" title="@client.TimeStamp" data-utc="@client.TimeStamp.GetEpochTicks()" data-toggle="tooltip" data-placement="top">
+							@client.TimeStamp
+						</span>
+						<span title="@client.TimeStamp" class="glyphicon glyphicon-time" data-toggle="tooltip" data-placement="top"></span>
+					</td>
+					<td>@client.Message</td>
+				</tr>
+				<tr class="row-error-detail hidden" data-error-id="@client.Id">
+					<td colspan="4" data-error-json="@client.LogEvent"></td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+<div class="row">
+	@Html.Partial("Common/Pager", new Pager() { Action = "ErrorsLog", PageSize = Model.PageSize, TotalCount = Model.TotalCount, EnableSearch = true, Search = ViewBag.Search })
+</div>
