@@ -66,7 +66,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
             var clientDto = ClientDtoMock.GenerateRandomClient(0);
-            var result = await controller.Client(clientDto, 0);
+            var result = await controller.Client(clientDto);
 
             // Assert            
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
@@ -99,7 +99,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             dbContext.Entry(clientToAdd).State = EntityState.Detached;
 
             var clientDto = ClientDtoMock.GenerateRandomClient(clientToAdd.Id);
-            var result = await controller.Client(clientDto, clientToAdd.Id);
+            var result = await controller.Client(clientDto);
 
             // Assert            
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
@@ -408,7 +408,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             controller.ModelState.AddModelError("ClientName", "Required");
 
             //Action
-            var result = await controller.Client(clientDto, 0);
+            var result = await controller.Client(clientDto);
 
             // Assert            
             var viewResult = Assert.IsType<ViewResult>(result);

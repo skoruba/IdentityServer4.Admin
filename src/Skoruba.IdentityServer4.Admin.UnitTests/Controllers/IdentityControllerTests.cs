@@ -40,7 +40,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             // Get controller
             var controller = PrepareIdentityController(serviceProvider);
             var userDto = IdentityDtoMock.GenerateRandomUser(0);
-            var result = await controller.User(userDto);
+            var result = await controller.UserSave(userDto);
 
             // Assert            
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
@@ -80,7 +80,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var user = await dbContext.Users.Where(x => x.Id == userDto.Id).SingleOrDefaultAsync();
             user.Should().BeNull();
         }
-        
+
         [Fact]
         public async Task UpdateUser()
         {
@@ -99,12 +99,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var updatedUserDto = IdentityDtoMock.GenerateRandomUser(userId);
 
-            var result = await controller.User(updatedUserDto);
+            var result = await controller.UserSave(updatedUserDto);
 
             // Assert            
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("Users");
-            
+
             var updatedUser = await identityService.GetUserAsync(updatedUserDto);
 
             updatedUserDto.ShouldBeEquivalentTo(updatedUser, opts => opts.Excluding(x => x.Id));
@@ -129,7 +129,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var userId = await dbContext.Users.Where(x => x.UserName == userDto.UserName).Select(x => x.Id).SingleOrDefaultAsync();
 
             //Try call controller action
-            var result = await controller.User(userId);
+            var result = await controller.UserEdit(userId);
 
             // Assert            
             var viewResult = Assert.IsType<ViewResult>(result);
@@ -179,21 +179,22 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             // Get controller
             var controller = PrepareIdentityController(serviceProvider);
             var roleDto = IdentityDtoMock.GenerateRandomRole(0);
-            var result = await controller.Role(roleDto);
+
+            await identityService.CreateRoleAsync(roleDto);
+
+            var roleId = await dbContext.Roles.Where(x => x.Name == roleDto.Name).Select(x => x.Id).SingleOrDefaultAsync();
+            roleDto.Id = roleId;
+
+            var result = await controller.RoleDelete(roleDto);
 
             // Assert            
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("Roles");
 
             var role = await dbContext.Roles.Where(x => x.Name == roleDto.Name).SingleOrDefaultAsync();
-            roleDto.Id = role.Id;
-
-            var addedRole = await identityService.GetRoleAsync(roleDto);
-
-            roleDto.ShouldBeEquivalentTo(addedRole, opts => opts.Excluding(x => x.Id));
+            role.Should().BeNull();
         }
-
-
+        
         [Fact]
         public async Task UpdateRole()
         {
@@ -216,7 +217,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             // Assert            
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("Roles");
-            
+
             var updatedRole = await identityService.GetRoleAsync(updatedRoleDto);
 
             updatedRoleDto.ShouldBeEquivalentTo(updatedRole, opts => opts.Excluding(x => x.Id));

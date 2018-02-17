@@ -34,9 +34,11 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Client(int? id)
+        [Route("[controller]/[action]")]
+        [Route("[controller]/[action]/{id:int}")]
+        public async Task<IActionResult> Client(int id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 var clientDto = _clientService.BuildClientViewModel();
                 return View(clientDto);
@@ -50,7 +52,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Client(ClientDto client, int id)
+        public async Task<IActionResult> Client(ClientDto client)
         {
             client = _clientService.BuildClientViewModel(client);
 
@@ -78,6 +80,8 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ClientClone(int id)
         {
+            if (id == 0) return NotFound();
+
             var clientDto = await _clientService.GetClientAsync(id);
             var client = _clientService.BuildClientCloneViewModel(id, clientDto);
 
@@ -102,6 +106,8 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ClientDelete(int id)
         {
+            if (id == 0) return NotFound();
+
             var client = await _clientService.GetClientAsync(id);
 
             return View(client);
@@ -121,6 +127,8 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ClientClaims(int id, int? page)
         {
+            if (id == 0) return NotFound();
+
             var claims = await _clientService.GetClientClaimsAsync(id, page ?? 1);
 
             return View(claims);
@@ -129,6 +137,8 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ClientProperties(int id, int? page)
         {
+            if (id == 0) return NotFound();
+
             var properties = await _clientService.GetClientPropertiesAsync(id, page ?? 1);
 
             return View(properties);
@@ -167,6 +177,8 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ClientClaimDelete(int id)
         {
+            if (id == 0) return NotFound();
+
             var clientClaim = await _clientService.GetClientClaimAsync(id);
 
             return View(nameof(ClientClaimDelete), clientClaim);
@@ -175,6 +187,8 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ClientPropertyDelete(int id)
         {
+            if (id == 0) return NotFound();
+
             var clientProperty = await _clientService.GetClientPropertyAsync(id);
 
             return View(nameof(ClientPropertyDelete), clientProperty);
@@ -202,6 +216,8 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ClientSecrets(int id, int? page)
         {
+            if (id == 0) return NotFound();
+
             var clientSecrets = await _clientService.GetClientSecretsAsync(id, page ?? 1);
             _clientService.BuildClientSecretsViewModel(clientSecrets);
 
@@ -221,6 +237,8 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ClientSecretDelete(int id)
         {
+            if (id == 0) return NotFound();
+
             var clientSecret = await _clientService.GetClientSecretAsync(id);
 
             return View(nameof(ClientSecretDelete), clientSecret);
@@ -270,6 +288,8 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> IdentityResourceDelete(int id)
         {
+            if (id == 0) return NotFound();
+
             var identityResource = await _identityResourceService.GetIdentityResourceAsync(id);
 
             return View(identityResource);
@@ -326,6 +346,8 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ApiResourceDelete(int id)
         {
+            if (id == 0) return NotFound();
+
             var apiResource = await _apiResourceService.GetApiResourceAsync(id);
 
             return View(apiResource);
@@ -342,6 +364,8 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         }
 
         [HttpGet]
+        [Route("[controller]/[action]")]
+        [Route("[controller]/[action]/{id:int}")]
         public async Task<IActionResult> ApiResource(int id)
         {
             if (id == 0)
@@ -358,6 +382,8 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ApiSecrets(int id, int? page)
         {
+            if (id == 0) return NotFound();
+
             var apiSecrets = await _apiResourceService.GetApiSecretsAsync(id, page ?? 1);
             _apiResourceService.BuildApiSecretsViewModel(apiSecrets);
 
@@ -382,6 +408,8 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ApiScopes(int id, int? page, int? scope)
         {
+            if (id == 0 || !ModelState.IsValid) return NotFound();
+
             if (scope == null)
             {
                 var apiScopesDto = await _apiResourceService.GetApiScopesAsync(id, page ?? 1);
@@ -417,6 +445,8 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ApiScopeDelete(int id, int scope)
         {
+            if (id == 0 || scope == 0) return NotFound();
+
             var apiScope = await _apiResourceService.GetApiScopeAsync(id, scope);
 
             return View(nameof(ApiScopeDelete), apiScope);
@@ -453,6 +483,8 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ApiSecretDelete(int id)
         {
+            if (id == 0) return NotFound();
+
             var clientSecret = await _apiResourceService.GetApiSecretAsync(id);
 
             return View(nameof(ApiSecretDelete), clientSecret);
@@ -469,6 +501,8 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         }
 
         [HttpGet]
+        [Route("[controller]/[action]")]
+        [Route("[controller]/[action]/{id:int}")]
         public async Task<IActionResult> IdentityResource(int id)
         {
             if (id == 0)
