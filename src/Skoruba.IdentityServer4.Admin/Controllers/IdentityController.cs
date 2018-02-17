@@ -64,7 +64,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
                 await _identityService.UpdateRoleAsync(role);
             }
             
-            SuccessNotification(string.Format(_localizer["SuccessClientDelete"], role.Name), _localizer["SuccessTitle"]);
+            SuccessNotification(string.Format(_localizer["SuccessCreateRole"], role.Name), _localizer["SuccessTitle"]);
             
             return RedirectToAction(nameof(Roles));
         }

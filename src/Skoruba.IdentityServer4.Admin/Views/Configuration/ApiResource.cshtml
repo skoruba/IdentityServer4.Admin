@@ -105,10 +105,10 @@
 				<label class="col-sm-3 control-label">
 				</label>
 				<div class="col-sm-9">
-					<button type="submit" id="api-resource-save-button" class="btn btn-success">@Localizer["ButtonSaveApiResource"]</button>
+					<button type="submit" id="api-resource-save-button" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> @Localizer["ButtonSaveApiResource"]</button>
 					@if (Model.Id != 0)
 					{
-						<a class="btn btn-danger" asp-action="ApiResourceDelete" asp-route-id="@Model.Id">@Localizer["ButtonDeleteApiResource"]</a>
+						<a class="btn btn-danger" asp-action="ApiResourceDelete" asp-route-id="@Model.Id"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["ButtonDeleteApiResource"]</a>
 					}
 				</div>
 			</div>

@@ -40,7 +40,7 @@
 						<label class="col-sm-3 control-label">
 						</label>
 						<div class="col-sm-9">
-							<button type="submit" class="btn btn-info"><span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span> @Localizer["ActionAddRole"]</button>
+							<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> @Localizer["ActionAddRole"]</button>
 						</div>
 					</div>
 				</div>
@@ -70,7 +70,7 @@
 						{
 							<tr>
 								<td>@role.Name</td>
-								<td><a asp-action="UserRolesDelete" asp-route-roleId="@role.Id" asp-route-id="@Model.UserId" class="btn btn-danger">@Localizer["ActionRemoveRole"]</a></td>
+								<td><a asp-action="UserRolesDelete" asp-route-roleId="@role.Id" asp-route-id="@Model.UserId" class="btn btn-danger"><span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["ActionRemoveRole"]</a></td>
 							</tr>
 						}
 						</tbody>

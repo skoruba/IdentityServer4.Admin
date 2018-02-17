@@ -18,7 +18,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var efServiceProvider = new ServiceCollection().AddEntityFrameworkInMemoryDatabase().BuildServiceProvider();
 
             var services = new ServiceCollection();
-            services.AddDbContext<AdminDbContext>(b => b.UseInMemoryDatabase("IdentityServer4Admin").UseInternalServiceProvider(efServiceProvider));
+            services.AddDbContext<AdminDbContext>(b => b.UseInMemoryDatabase(Guid.NewGuid().ToString()).UseInternalServiceProvider(efServiceProvider));
             services.AddLogging();
 
             _serviceProvider = services.BuildServiceProvider();

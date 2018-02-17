@@ -27,7 +27,7 @@ namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Tests
             var response = await _client.GetAsync("/log/errorslog");
 
             // Assert           
-            response.StatusCode.Should().Be(HttpStatusCode.Found);
+            response.StatusCode.Should().Be(HttpStatusCode.Redirect);
 
             //The redirect to login
             response.Headers.Location.ToString().Should().Contain(AuthorizationConsts.AccountLoginPage);

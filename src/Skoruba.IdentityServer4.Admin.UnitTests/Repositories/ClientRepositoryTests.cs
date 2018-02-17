@@ -429,7 +429,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 //Assert new client
                 clientEntity.ShouldBeEquivalentTo(client, options => options.Excluding(o => o.Id));
 
-                //Generate random new Client claim
+                //Generate random client claim
                 var clientClaim = ClientMock.GenerateRandomClientClaim(0);
 
                 //Add new client claim

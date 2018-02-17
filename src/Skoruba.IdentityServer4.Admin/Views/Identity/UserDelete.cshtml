@@ -6,7 +6,7 @@
 @{
 	ViewBag.Title = Localizer["PageTitle"];
 	Layout = "_Layout";
-}	
+}
 
 <form id="client-form" class="form-horizontal" asp-controller="Identity" asp-action="UserDelete" Method="post">
 
@@ -14,23 +14,29 @@
 
 	<!--Hidden -->
 	<input type="hidden" asp-for="Id" />
+	<div class="panel panel-default">
+		<div class="panel-heading">@Localizer["PageTitle"]</div>
+		<div class="panel-body">
 
-	<!--Input - text -->
-	<div class="form-group">
-		<label asp-for="UserName" class="col-sm-3 control-label">
-			@Html.Partial("User/Section/Label", "UserUserName")
-		</label>
-		<div class="col-sm-9">
-			<input type="text" class="form-control" disabled="disabled" asp-for="UserName">
-		</div>
-	</div>
+			<!--Input - text -->
+			<div class="form-group">
+				<label asp-for="UserName" class="col-sm-3 control-label">
+					@Html.Partial("User/Section/Label", "UserUserName")
+				</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" disabled="disabled" asp-for="UserName">
+				</div>
+			</div>
 
-	<!--Button-->
-	<div class="form-group">
-		<label class="col-sm-3 control-label">
-		</label>
-		<div class="col-sm-9">
-			<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> @Localizer["ButtonDeleteUser"]</button>
+			<!--Button-->
+			<div class="form-group">
+				<label class="col-sm-3 control-label">
+				</label>
+				<div class="col-sm-9">
+					<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["ButtonDeleteUser"]</button>
+				</div>
+			</div>
+
 		</div>
 	</div>
 </form>

@@ -60,7 +60,7 @@
 						<label class="col-sm-3 control-label">
 						</label>
 						<div class="col-sm-9">
-							<button type="submit" id="client-claims-button" class="btn btn-info"><span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span> @Localizer["ButtonAddNewClaim"]</button>
+							<button type="submit" id="client-claims-button" class="btn btn-success"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> @Localizer["ButtonAddNewClaim"]</button>
 						</div>
 					</div>
 				</div>
@@ -92,7 +92,7 @@
 								<tr>
 									<td>@client.Type</td>
 									<td>@client.Value</td>
-									<td><a asp-action="ClientClaimDelete" asp-route-id="@client.Id" class="btn btn-danger">@Localizer["TableButtonRemove"]</a></td>
+									<td><a asp-action="ClientClaimDelete" asp-route-id="@client.Id" class="btn btn-danger"><span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["TableButtonRemove"]</a></td>
 								</tr>
 							}
 						</tbody>
