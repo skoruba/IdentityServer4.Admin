@@ -24,7 +24,7 @@ namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Common
                 "ApiResource/1",
                 "ApiSecrets/1",
                 "ApiScopes/1",
-                "ApiScopeDelete/1",
+                "ApiScopeDelete/1?scope=1",
                 "ApiResourceDelete/1",
                 "ApiResources",
                 "ApiSecretDelete/1"

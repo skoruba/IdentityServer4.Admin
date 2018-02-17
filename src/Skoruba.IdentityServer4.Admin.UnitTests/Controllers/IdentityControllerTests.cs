@@ -133,7 +133,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             // Assert            
             var viewResult = Assert.IsType<ViewResult>(result);
-            viewResult.ViewName.Should().BeNullOrEmpty();
+            viewResult.ViewName.Should().Be("User");
             viewResult.ViewData.Should().NotBeNull();
 
             var viewModel = Assert.IsType<UserDto>(viewResult.ViewData.Model);
