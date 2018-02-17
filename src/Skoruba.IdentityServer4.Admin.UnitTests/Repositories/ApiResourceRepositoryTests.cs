@@ -123,10 +123,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 //Detached the added item
                 context.Entry(newApiResource).State = EntityState.Detached;
 
-                //Generete new client with added item id
+                //Generete new api resource with added item id
                 var updatedApiResource = ApiResourceMock.GenerateRandomApiResource(newApiResource.Id);
 
-                //Update client
+                //Update api resource
                 await apiResourceRepository.UpdateApiResourceAsync(updatedApiResource);
 
                 //Get updated api resource
@@ -148,18 +148,18 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
 
                 //Add new api resource
-                await apiResourceRepository.AddApiResourceAsync(apiResource);                
+                await apiResourceRepository.AddApiResourceAsync(apiResource);
 
-                //Generate random new api resource
+                //Generate random new api scope
                 var apiScope = ApiResourceMock.GenerateRandomApiScope(0);
 
-                //Add new api resource
+                //Add new api scope
                 await apiResourceRepository.AddApiScopeAsync(apiResource.Id, apiScope);
 
-                //Get new api resource
+                //Get new api scope
                 var newApiScopes = await context.ApiScopes.Where(x => x.Id == apiScope.Id).SingleAsync();
 
-                //Assert new api resource
+                //Assert new api scope
                 newApiScopes.ShouldBeEquivalentTo(apiScope, options => options.Excluding(o => o.Id));
             }
         }
@@ -186,25 +186,25 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 //Detached the added item
                 context.Entry(newApiResource).State = EntityState.Detached;
 
-                //Generate random new api resource
+                //Generate random new api scope
                 var apiScope = ApiResourceMock.GenerateRandomApiScope(0);
 
-                //Add new api resource
+                //Add new api scope
                 await apiResourceRepository.AddApiScopeAsync(apiResource.Id, apiScope);
 
                 //Detached the added item
                 context.Entry(apiScope).State = EntityState.Detached;
 
-                //Generete new client with added item id
+                //Generete new api scope with added item id
                 var updatedApiScope = ApiResourceMock.GenerateRandomApiScope(apiScope.Id);
 
                 //Update api scope
                 await apiResourceRepository.UpdateApiScopeAsync(apiResource.Id, updatedApiScope);
 
-                //Get updated api resource
+                //Get updated api scope
                 var updatedApiScopeEntity = await context.ApiScopes.Where(x => x.Id == updatedApiScope.Id).SingleAsync();
 
-                //Assert updated api resource
+                //Assert updated api scope
                 updatedApiScope.ShouldBeEquivalentTo(updatedApiScopeEntity);
             }
         }

@@ -11,7 +11,7 @@
 
 <h2>@Localizer["Title"]</h2>
 
-<a asp-action="User" class="btn btn-success col-m-b-15 col-m-t-15">@Localizer["ActionAddUser"]</a>
+<a asp-action="User" class="btn btn-success col-m-b-15 col-m-t-15"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> @Localizer["ActionAddUser"]</a>
 
 <div class="row">
 	@Html.Partial("Common/Search", new Search() { Action = "Users", Controller = "Identity" })
@@ -25,18 +25,25 @@
 				<th>@Localizer["UserId"]</th>
 				<th>@Localizer["UserName"]</th>
 				<th>@Localizer["Email"]</th>
+				<th></th>
 			</tr>
 		</thead>
 
 		<tbody>
 			@foreach (var user in Model.Users)
 			{
-				<tr>
-					<th scope="row"><a class="btn btn-info" asp-action="User" asp-route-id="@user.Id">@Localizer["ActionEditUser"]</a></th>
-					<td>@user.Id</td>
-					<td>@user.UserName</td>
-					<td>@user.Email</td>
-				</tr>
+			<tr>
+				<td>
+					<a class="btn btn-info" asp-action="User" asp-route-id="@user.Id"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> @Localizer["ActionEditUser"]</a>
+				</td>
+
+				<td>@user.Id</td>
+				<td>@user.UserName</td>
+				<td>@user.Email</td>
+				<td>
+					<a class="btn btn-danger" asp-action="UserDelete" asp-route-id="@user.Id"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+				</td>
+			</tr>
 			}
 		</tbody>
 	</table>

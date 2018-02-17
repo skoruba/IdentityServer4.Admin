@@ -260,16 +260,17 @@ namespace Skoruba.IdentityServer4.Admin
                     configuration.SelfSrc = true;
                     configuration.CustomSources = allowCspUrls;
                 });
-                options.DefaultSources(configuration =>
+                options.ScriptSources(configuration =>
                 {
                     configuration.SelfSrc = true;
-                    configuration.CustomSources = allowCspUrls;
+                    configuration.UnsafeInlineSrc = true;
+                    configuration.UnsafeEvalSrc = true;
                 });
-                options.ScriptSources(configuration => configuration.SelfSrc = true);
                 options.StyleSources(configuration =>
                 {
                     configuration.SelfSrc = true;
                     configuration.CustomSources = allowCspUrls;
+                    configuration.UnsafeInlineSrc = true;
                 });
             });
         }

@@ -55,7 +55,7 @@
 						<label class="col-sm-3 control-label">
 						</label>
 						<div class="col-sm-9">
-							<button type="submit" class="btn btn-info"><span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span> @Localizer["ButtonAddProperty"]</button>
+							<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> @Localizer["ButtonAddProperty"]</button>
 						</div>
 					</div>
 				</div>
@@ -87,7 +87,7 @@
 								<tr>
 									<td>@client.Key</td>
 									<td>@client.Value</td>
-									<td><a asp-action="ClientPropertyDelete" asp-route-id="@client.Id" class="btn btn-danger">@Localizer["TableButtonRemove"]</a></td>
+									<td><a asp-action="ClientPropertyDelete" asp-route-id="@client.Id" class="btn btn-danger"><span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["TableButtonRemove"]</a></td>
 								</tr>
 							}
 						</tbody>

@@ -8,11 +8,11 @@ using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Tests
 {
-    public class ConfigureControllerTests : IClassFixture<TestFixture>
+    public class ConfigurationControllerTests : IClassFixture<TestFixture>
     {
         private readonly HttpClient _client;
 
-        public ConfigureControllerTests(TestFixture fixture)
+        public ConfigurationControllerTests(TestFixture fixture)
         {
             _client = fixture.Client;
         }
@@ -46,7 +46,7 @@ namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Tests
                 var response = await _client.GetAsync($"/Configuration/{route}");
 
                 // Assert           
-                response.StatusCode.Should().Be(HttpStatusCode.Found);
+                response.StatusCode.Should().Be(HttpStatusCode.Redirect);
 
                 //The redirect to login
                 response.Headers.Location.ToString().Should().Contain(AuthorizationConsts.AccountLoginPage);
