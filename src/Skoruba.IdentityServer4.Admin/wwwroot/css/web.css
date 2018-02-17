@@ -384,13 +384,15 @@ input:checked + .slider:before {
   margin-top: 5px;
   margin-bottom: 5px;
   margin-right: 5px;
-  white-space: normal; }
+  white-space: normal;
+  text-transform: none; }
 
 .picker .button__delete {
   margin-top: 5px;
   margin-bottom: 5px;
   margin-right: 5px;
-  white-space: normal; }
+  white-space: normal;
+  text-transform: none; }
 
 .picker .block__buttons__add {
   margin-top: 4px; }

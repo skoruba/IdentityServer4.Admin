@@ -37,11 +37,13 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Role(int? id)
+        [Route("[controller]/[action]")]
+        [Route("[controller]/[action]/{id:int}")]
+        public async Task<IActionResult> Role(int id)
         {
-            if (id == null) return View(new RoleDto());
+            if (id == 0) return View(new RoleDto());
 
-            var role = await _identityService.GetRoleAsync(new RoleDto { Id = id.Value });
+            var role = await _identityService.GetRoleAsync(new RoleDto { Id = id });
 
             return View(role);
         }
@@ -63,9 +65,9 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             {
                 await _identityService.UpdateRoleAsync(role);
             }
-            
+
             SuccessNotification(string.Format(_localizer["SuccessCreateRole"], role.Name), _localizer["SuccessTitle"]);
-            
+
             return RedirectToAction(nameof(Roles));
         }
 
@@ -80,7 +82,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> User(UserDto user)
+        public async Task<IActionResult> UserSave(UserDto user)
         {
             if (!ModelState.IsValid)
             {
@@ -95,25 +97,29 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             {
                 await _identityService.UpdateUserAsync(user);
             }
-            
+
             SuccessNotification(string.Format(_localizer["SuccessCreateUser"], user.UserName), _localizer["SuccessTitle"]);
-            
+
             return RedirectToAction(nameof(Users));
         }
 
         [HttpGet]
-        public async Task<IActionResult> User(int? id)
+        [Route("[controller]/User")]
+        public IActionResult UserAdd()
         {
-            if (id == null)
-            {
-                var newUser = new UserDto();
-                return View(newUser);
-            }
+            var newUser = new UserDto();
 
-            var user = await _identityService.GetUserAsync(new UserDto() { Id = id.Value });
+            return View("User", newUser);
+        }
+
+        [HttpGet]
+        [Route("[controller]/User/{id:int}")]
+        public async Task<IActionResult> UserEdit(int id)
+        {
+            var user = await _identityService.GetUserAsync(new UserDto { Id = id });
             if (user == null) return NotFound();
 
-            return View(user);
+            return View("User", user);
         }
 
         [HttpGet]
@@ -124,7 +130,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             var userRoles = await _identityService.BuildUserRolesViewModel(id, page);
 
             return View(userRoles);
-        }       
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -132,7 +138,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         {
             await _identityService.CreateUserRoleAsync(role);
             SuccessNotification(_localizer["SuccessCreateUserRole"], _localizer["SuccessTitle"]);
-            
+
             return RedirectToAction(nameof(UserRoles), new { Id = role.UserId });
         }
 
@@ -160,10 +166,10 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         {
             await _identityService.DeleteUserRoleAsync(role);
             SuccessNotification(_localizer["SuccessDeleteUserRole"], _localizer["SuccessTitle"]);
-            
+
             return RedirectToAction(nameof(UserRoles), new { Id = role.UserId });
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UserClaims(UserClaimsDto claim)
@@ -173,7 +179,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
                 return View(claim);
             }
 
-            await _identityService.CreateUserClaimsAsync(claim);            
+            await _identityService.CreateUserClaimsAsync(claim);
             SuccessNotification(string.Format(_localizer["SuccessCreateUserClaims"], claim.ClaimType, claim.ClaimValue), _localizer["SuccessTitle"]);
 
             return RedirectToAction(nameof(UserClaims), new { Id = claim.UserId });
@@ -207,7 +213,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         {
             await _identityService.DeleteUserClaimsAsync(claim);
             SuccessNotification(_localizer["SuccessDeleteUserClaims"], _localizer["SuccessTitle"]);
-            
+
             return RedirectToAction(nameof(UserClaims), new { Id = claim.UserId });
         }
 
@@ -238,7 +244,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         {
             await _identityService.DeleteUserProvidersAsync(provider);
             SuccessNotification(_localizer["SuccessDeleteUserProviders"], _localizer["SuccessTitle"]);
-            
+
             return RedirectToAction(nameof(UserProviders), new { Id = provider.UserId });
         }
 
@@ -267,8 +273,8 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             if (!identityResult.Errors.Any())
             {
                 SuccessNotification(_localizer["SuccessUserChangePassword"], _localizer["SuccessTitle"]);
-                
-                return RedirectToAction(nameof(User), new { Id = userPassword.UserId });
+
+                return RedirectToAction("UserEdit", new { Id = userPassword.UserId });
             }
 
             foreach (var error in identityResult.Errors)
@@ -288,7 +294,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
                 return View(claim);
             }
 
-            await _identityService.CreateRoleClaimsAsync(claim);            
+            await _identityService.CreateRoleClaimsAsync(claim);
             SuccessNotification(string.Format(_localizer["SuccessCreateRoleClaims"], claim.ClaimType, claim.ClaimValue), _localizer["SuccessTitle"]);
 
             return RedirectToAction(nameof(RoleClaims), new { Id = claim.RoleId });
@@ -319,12 +325,12 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RoleClaimsDelete(RoleClaimsDto claim)
         {
-            await _identityService.DeleteRoleClaimsAsync(claim);            
+            await _identityService.DeleteRoleClaimsAsync(claim);
             SuccessNotification(_localizer["SuccessDeleteRoleClaims"], _localizer["SuccessTitle"]);
 
             return RedirectToAction(nameof(RoleClaims), new { Id = claim.RoleId });
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> RoleDelete(int id)
         {
@@ -342,7 +348,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         {
             await _identityService.DeleteRoleAsync(role);
             SuccessNotification(_localizer["SuccessDeleteRole"], _localizer["SuccessTitle"]);
-            
+
             return RedirectToAction(nameof(Roles));
         }
 
@@ -352,7 +358,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         {
             await _identityService.DeleteUserAsync(user);
             SuccessNotification(_localizer["SuccessDeleteUser"], _localizer["SuccessTitle"]);
-            
+
             return RedirectToAction(nameof(Users));
         }
 
