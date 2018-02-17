@@ -118,13 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonDeleteAll" xml:space="preserve">
-    <value>Delete all persisted grants for Subject Id</value>
+    <value>Delete all</value>
+  </data>
+  <data name="DeleteDialogMessage" xml:space="preserve">
+    <value>Are you sure? All persisted grants for this subject will be deleted.</value>
+  </data>
+  <data name="DeleteDialogNo" xml:space="preserve">
+    <value>No - close</value>
+  </data>
+  <data name="DeleteDialogTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="DeleteDialogYes" xml:space="preserve">
+    <value>Yes - delete</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Persisted Grant</value>
-  </data>
-  <data name="TableButtonDelete" xml:space="preserve">
-    <value>Delete</value>
   </data>
   <data name="TableClient" xml:space="preserve">
     <value>Client</value>

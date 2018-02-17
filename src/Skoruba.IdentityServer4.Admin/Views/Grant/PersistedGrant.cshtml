@@ -14,7 +14,7 @@
 
 <form id="client-form" class="form-horizontal" asp-controller="Grant" asp-action="PersistedGrantsDelete" Method="post">
 
-	<button class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["ButtonDeleteAll"] @Model.PersistedGrants?[0].SubjectId</button>
+	<a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deletePersistedGrantsModal"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["ButtonDeleteAll"]</a>
 
 	<!--Hidden -->
 	<input type="hidden" asp-for="SubjectId" />
@@ -41,7 +41,7 @@
 						<td>@persistedGrant.Expiration</td>
 						<td>@persistedGrant.Data</td>
 						<td>@persistedGrant.ClientId</td>
-						<th scope="row"><a class="btn btn-danger" asp-action="PersistedGrantDelete" asp-route-id="@UrlHelpers.QueryStringSafeHash(persistedGrant.Key)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["TableButtonDelete"]</a></th>
+						<td><a class="btn btn-danger" asp-action="PersistedGrantDelete" asp-route-id="@UrlHelpers.QueryStringSafeHash(persistedGrant.Key)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
 					</tr>
 				}
 			</tbody>
@@ -50,5 +50,24 @@
 
 	<div class="row">
 		@Html.Partial("Common/Pager", new Pager() { Action = "PersistedGrant", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
+	</div>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="deletePersistedGrantsModal" tabindex="-1" role="dialog" aria-labelledby="deletePersistedGrantsModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="deletePersistedGrantsModalLabel">@Localizer["DeleteDialogTitle"]</h4>
+				</div>
+				<div class="modal-body">
+					@Localizer["DeleteDialogMessage"]
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-danger">@Localizer["DeleteDialogYes"]</button>
+					<button type="button" class="btn btn-info" data-dismiss="modal">@Localizer["DeleteDialogNo"]</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </form>
