@@ -8,7 +8,7 @@ using Skoruba.IdentityServer4.Admin.ViewModels.Configuration;
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 {
     public static class ClientDtoMock
-    {            
+    {
         public static ClientDto GenerateRandomClient(int id)
         {
             var clientFaker = ClientFaker(id);
@@ -34,6 +34,20 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             var clientPropertyTesting = clientPropertyFaker.Generate();
 
             return clientPropertyTesting;
+        }
+
+        public static ClientCloneDto GenerateClientCloneDto(int id, bool cloneClientClaims = true,
+            bool cloneClientCorsOrigins = true, bool cloneClientGrantTypes = true, bool cloneClientIdPRestrictions = true,
+            bool cloneClientPostLogoutRedirectUris = true, bool cloneClientProperties = true,
+            bool cloneClientRedirectUris = true, bool cloneClientScopes = true)
+        {
+            var clientCloneFaker = ClientCloneFaker(id, cloneClientClaims, cloneClientCorsOrigins,
+                cloneClientGrantTypes, cloneClientIdPRestrictions, cloneClientPostLogoutRedirectUris,
+                cloneClientProperties, cloneClientRedirectUris, cloneClientScopes);
+
+            var clientCloneDto = clientCloneFaker.Generate();
+
+            return clientCloneDto;
         }
 
         public static ClientSecretsDto GenerateRandomClientSecret(int id, int clientId)
@@ -127,10 +141,30 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
                 .StrictMode(false)
                 .RuleFor(o => o.ClientPropertyId, id)
                 .RuleFor(o => o.Key, f => Guid.NewGuid().ToString())
-                .RuleFor(o => o.Value, f => Guid.NewGuid().ToString())                
+                .RuleFor(o => o.Value, f => Guid.NewGuid().ToString())
                 .RuleFor(o => o.ClientId, clientId);
 
             return clientPropertyFaker;
+        }
+
+        public static Faker<ClientCloneDto> ClientCloneFaker(int id, bool cloneClientClaims,
+        bool cloneClientCorsOrigins, bool cloneClientGrantTypes, bool cloneClientIdPRestrictions,
+        bool cloneClientPostLogoutRedirectUris, bool cloneClientProperties,
+        bool cloneClientRedirectUris, bool cloneClientScopes)
+        {
+            var clientCloneDto = new Faker<ClientCloneDto>()
+                .StrictMode(false)
+                .RuleFor(o => o.Id, id)
+                .RuleFor(o => o.CloneClientClaims, cloneClientClaims)
+                .RuleFor(o => o.CloneClientCorsOrigins, cloneClientCorsOrigins)
+                .RuleFor(o => o.CloneClientGrantTypes, cloneClientGrantTypes)
+                .RuleFor(o => o.CloneClientIdPRestrictions, cloneClientIdPRestrictions)
+                .RuleFor(o => o.CloneClientPostLogoutRedirectUris, cloneClientPostLogoutRedirectUris)
+                .RuleFor(o => o.CloneClientProperties, cloneClientProperties)
+                .RuleFor(o => o.CloneClientRedirectUris, cloneClientRedirectUris)
+                .RuleFor(o => o.CloneClientScopes, cloneClientScopes);
+
+            return clientCloneDto;
         }
     }
 }

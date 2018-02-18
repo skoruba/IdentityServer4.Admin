@@ -18,7 +18,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
                 .RuleFor(o => o.TwoFactorEnabled, f => f.Random.Bool())
                 .RuleFor(o => o.LockoutEnd, f => f.Date.Future())
                 .RuleFor(o => o.LockoutEnabled, f => true)
-                .RuleFor(o => o.PhoneNumber, f => f.Random.Number().ToString());                
+                .RuleFor(o => o.PhoneNumber, f => f.Random.Number().ToString());
 
             return userFaker;
         }
@@ -30,6 +30,23 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
                 .RuleFor(o => o.Name, f => Guid.NewGuid().ToString());
 
             return roleFaker;
+        }
+
+        public static Faker<UserChangePasswordDto> GetUserChangePasswordFaker(int id, string password)
+        {
+            var roleFaker = new Faker<UserChangePasswordDto>()
+                .RuleFor(o => o.UserId, id)
+                .RuleFor(o => o.Password, f => password)
+                .RuleFor(o => o.ConfirmPassword, f => password);
+
+            return roleFaker;
+        }
+
+        public static UserChangePasswordDto GenerateRandomUserChangePassword(int id, string password)
+        {
+            var userChangePassword = GetUserChangePasswordFaker(id, password).Generate();
+
+            return userChangePassword;
         }
 
         public static UserDto GenerateRandomUser(int id)

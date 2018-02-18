@@ -194,7 +194,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var role = await dbContext.Roles.Where(x => x.Name == roleDto.Name).SingleOrDefaultAsync();
             role.Should().BeNull();
         }
-        
+
         [Fact]
         public async Task UpdateRole()
         {
@@ -254,6 +254,80 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         }
 
         [Fact]
+        public async Task AddUserRole()
+        {
+            //Get Services
+            var serviceProvider = GetServices();
+            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
+            var identityService = serviceProvider.GetRequiredService<IIdentityService>();
+
+            // Get controller
+            var controller = PrepareIdentityController(serviceProvider);
+            var userDto = IdentityDtoMock.GenerateRandomUser(0);
+            await identityService.CreateUserAsync(userDto);
+
+            var roleDto = IdentityDtoMock.GenerateRandomRole(0);
+            await identityService.CreateRoleAsync(roleDto);
+
+            var user = await dbContext.Users.Where(x => x.UserName == userDto.UserName).SingleOrDefaultAsync();
+            userDto.Id = user.Id;
+
+            var role = await dbContext.Roles.Where(x => x.Name == roleDto.Name).SingleOrDefaultAsync();
+            roleDto.Id = role.Id;
+
+            var userRoleDto = IdentityDtoMock.GenerateRandomUserRole(roleDto.Id, user.Id);
+            var result = await controller.UserRoles(userRoleDto);
+
+            // Assert            
+            var viewResult = Assert.IsType<RedirectToActionResult>(result);
+            viewResult.ActionName.Should().Be("UserRoles");
+
+            var userRole = await dbContext.UserRoles.Where(x => x.RoleId == roleDto.Id && x.UserId == userDto.Id).SingleOrDefaultAsync();
+
+            userRoleDto.ShouldBeEquivalentTo(userRole, opts => opts.Excluding(x => x.Roles)
+                                                                   .Excluding(x => x.RolesList)
+                                                                   .Excluding(x => x.PageSize)
+                                                                   .Excluding(x => x.TotalCount));
+        }
+
+        [Fact]
+        public async Task DeleteUserRole()
+        {
+            //Get Services
+            var serviceProvider = GetServices();
+            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
+            var identityService = serviceProvider.GetRequiredService<IIdentityService>();
+
+            // Get controller
+            var controller = PrepareIdentityController(serviceProvider);
+            var userDto = IdentityDtoMock.GenerateRandomUser(0);
+            await identityService.CreateUserAsync(userDto);
+
+            var roleDto = IdentityDtoMock.GenerateRandomRole(0);
+            await identityService.CreateRoleAsync(roleDto);
+
+            var user = await dbContext.Users.Where(x => x.UserName == userDto.UserName).SingleOrDefaultAsync();
+            userDto.Id = user.Id;
+
+            var role = await dbContext.Roles.Where(x => x.Name == roleDto.Name).SingleOrDefaultAsync();
+            roleDto.Id = role.Id;
+
+            var userRoleDto = IdentityDtoMock.GenerateRandomUserRole(roleDto.Id, user.Id);
+
+            await identityService.CreateUserRoleAsync(userRoleDto);
+
+            var result = await controller.UserRolesDelete(userRoleDto);
+
+            // Assert            
+            var viewResult = Assert.IsType<RedirectToActionResult>(result);
+            viewResult.ActionName.Should().Be("UserRoles");
+
+            var userRole = await dbContext.UserRoles.Where(x => x.RoleId == roleDto.Id && x.UserId == userDto.Id).SingleOrDefaultAsync();
+
+            userRole.Should().BeNull();
+        }
+
+        [Fact]
         public async Task DeleteUserClaim()
         {
             //Get Services
@@ -285,6 +359,96 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             userClaim.Should().BeNull();
         }
 
+        [Fact]
+        public async Task AddRoleClaim()
+        {
+            //Get Services
+            var serviceProvider = GetServices();
+            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
+            var identityService = serviceProvider.GetRequiredService<IIdentityService>();
+
+            // Get controller
+            var controller = PrepareIdentityController(serviceProvider);
+            var roleDto = IdentityDtoMock.GenerateRandomRole(0);
+            await identityService.CreateRoleAsync(roleDto);
+
+            var role = await dbContext.Roles.Where(x => x.Name == roleDto.Name).SingleOrDefaultAsync();
+            roleDto.Id = role.Id;
+
+            var roleClaimsDto = IdentityDtoMock.GenerateRandomRoleClaim(0, role.Id);
+            var result = await controller.RoleClaims(roleClaimsDto);
+
+            // Assert            
+            var viewResult = Assert.IsType<RedirectToActionResult>(result);
+            viewResult.ActionName.Should().Be("RoleClaims");
+
+            var roleClaim = await dbContext.RoleClaims.Where(x => x.ClaimValue == roleClaimsDto.ClaimValue).SingleOrDefaultAsync();
+
+            var addedRoleClaim = await identityService.GetRoleClaimAsync(role.Id, roleClaim.Id);
+
+            roleClaimsDto.ShouldBeEquivalentTo(addedRoleClaim, opts => opts.Excluding(x => x.ClaimId));
+        }
+
+        [Fact]
+        public async Task DeleteRoleClaim()
+        {
+            //Get Services
+            var serviceProvider = GetServices();
+            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
+            var identityService = serviceProvider.GetRequiredService<IIdentityService>();
+
+            // Get controller
+            var controller = PrepareIdentityController(serviceProvider);
+            var roleDto = IdentityDtoMock.GenerateRandomRole(0);
+            await identityService.CreateRoleAsync(roleDto);
+
+            var role = await dbContext.Roles.Where(x => x.Name == roleDto.Name).SingleOrDefaultAsync();
+            roleDto.Id = role.Id;
+
+            var roleClaimsDto = IdentityDtoMock.GenerateRandomRoleClaim(0, role.Id);
+            await identityService.CreateRoleClaimsAsync(roleClaimsDto);
+            var newRoleClaim = await dbContext.RoleClaims.Where(x => x.ClaimValue == roleClaimsDto.ClaimValue).SingleOrDefaultAsync();
+            roleClaimsDto.ClaimId = newRoleClaim.Id;
+
+            var result = await controller.RoleClaimsDelete(roleClaimsDto);
+
+            // Assert            
+            var viewResult = Assert.IsType<RedirectToActionResult>(result);
+            viewResult.ActionName.Should().Be("RoleClaims");
+
+            var roleClaim = await dbContext.RoleClaims.Where(x => x.ClaimValue == roleClaimsDto.ClaimValue).SingleOrDefaultAsync();
+
+            roleClaim.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task UserChangePassword()
+        {
+            //Get Services
+            var serviceProvider = GetServices();
+            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
+            var identityService = serviceProvider.GetRequiredService<IIdentityService>();
+
+            // Get controller
+            var controller = PrepareIdentityController(serviceProvider);
+            var userDto = IdentityDtoMock.GenerateRandomUser(0);
+
+            await identityService.CreateUserAsync(userDto);
+
+            var userId = await dbContext.Users.Where(x => x.UserName == userDto.UserName).Select(x => x.Id).SingleOrDefaultAsync();
+
+            var changePassword = IdentityDtoMock.GenerateRandomUserChangePassword(userId, "IdentityServer4!");
+
+            var result = await controller.UserChangePassword(changePassword);
+
+            // Assert            
+            var viewResult = Assert.IsType<RedirectToActionResult>(result);
+            viewResult.ActionName.Should().Be("UserEdit");
+
+            var user = await dbContext.Users.Where(x => x.UserName == userDto.UserName).SingleOrDefaultAsync();
+            user.PasswordHash.Should().NotBeNull();
+        }
+        
         private IdentityController PrepareIdentityController(IServiceProvider serviceProvider)
         {
             // Arrange
