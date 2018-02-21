@@ -36,6 +36,7 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
                 .Include(x => x.Claims)
                 .Include(x => x.IdentityProviderRestrictions)
                 .Include(x => x.AllowedCorsOrigins)
+                .Include(x => x.Properties)
                 .Where(x => x.Id == clientId)
                 .SingleOrDefaultAsync();
 

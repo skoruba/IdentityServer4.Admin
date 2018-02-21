@@ -32,7 +32,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             return providers;
         }
 
-        public static Faker<Client> ClientFaker(int id)
+        public static Faker<Client> ClientFaker(int id, bool generateClaims = false, bool generateProperties = false, bool generateSecrets = false)
         {
             var clientFaker = new Faker<Client>()
                .StrictMode(true)
@@ -52,7 +52,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
                .RuleFor(o => o.AlwaysIncludeUserClaimsInIdToken, f => f.Random.Bool())
                .RuleFor(o => o.Enabled, f => f.Random.Bool())
                .RuleFor(o => o.ProtocolType, f => f.PickRandom(ClientConsts.GetProtocolTypes().Select(x => x.Id)))
-               .RuleFor(o => o.ClientSecrets, f => new List<ClientSecret>()) //Client Secrets are managed with seperate method
+               .RuleFor(o => o.ClientSecrets, f => generateSecrets ? ClientSecretFaker(0).Generate(f.Random.Number(10)) : new List<ClientSecret>()) //Client Secrets are managed with seperate method
                .RuleFor(o => o.RequireClientSecret, f => f.Random.Bool())
                .RuleFor(o => o.Description, f => f.Random.Words(f.Random.Number(1, 7)))
                .RuleFor(o => o.ClientUri, f => f.Internet.Url())
@@ -76,9 +76,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
                .RuleFor(o => o.ClientClaimsPrefix, f => Guid.NewGuid().ToString())
                .RuleFor(o => o.IncludeJwtId, f => f.Random.Bool())
                .RuleFor(o => o.PairWiseSubjectSalt, f => Guid.NewGuid().ToString())
-               .RuleFor(o => o.Claims, f => new List<ClientClaim>()) //Client Claims are managed with seperate method
+               .RuleFor(o => o.Claims, f => generateClaims ? ClientClaimFaker(0).Generate(f.Random.Number(10)) : new List<ClientClaim>()) //Client Claims are managed with seperate method
                .RuleFor(o => o.IdentityProviderRestrictions, f => ClientIdPRescrictionFaker().Generate(1))
-               .RuleFor(o => o.Properties, f => new List<ClientProperty>()) //Client Properties are managed with seperate method
+               .RuleFor(o => o.Properties, f => generateProperties ? ClientPropertyFaker(0).Generate(f.Random.Number(10)) : new List<ClientProperty>()) //Client Properties are managed with seperate method
                .RuleFor(o => o.LogoUri, f => f.Internet.Url());
 
             return clientFaker;
@@ -92,8 +92,17 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             return fakerClientCorsOrigin;
         }
 
-        public static Client GenerateRandomClient(int id)
-        {   
+        public static Client GenerateRandomClient(int id, bool generateClaims = false, bool generateProperties = false, bool generateSecrets = false)
+        {
+            var clientFaker = ClientFaker(id, generateClaims, generateProperties, generateSecrets);
+
+            var clientTesting = clientFaker.Generate();
+
+            return clientTesting;
+        }
+
+        public static Client GenerateRandomClientToClone(int id)
+        {
             var clientFaker = ClientFaker(id);
 
             var clientTesting = clientFaker.Generate();
@@ -142,7 +151,15 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
         {
             var fakerClientGrantTypes = new Faker<ClientGrantType>()
                 .RuleFor(o => o.GrantType, f => f.PickRandom(ClientConsts.GetGrantTypes()));
+
             return fakerClientGrantTypes;
+        }
+
+        public static ClientGrantType GenerateRandomClientGrantType()
+        {
+            var clientGrantType = ClientGrantTypesFaker().Generate();
+
+            return clientGrantType;
         }
 
         public static ClientSecret GenerateRandomClientSecret(int id)
@@ -190,7 +207,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             var clientClaimFaker = new Faker<ClientClaim>()
                 .StrictMode(false)
                 .RuleFor(o => o.Id, id)
-                .RuleFor(o => o.Type, f => f.PickRandom(ClientConsts.GetSecretTypes()))                
+                .RuleFor(o => o.Type, f => f.PickRandom(ClientConsts.GetStandardClaims()))
                 .RuleFor(o => o.Value, f => Guid.NewGuid().ToString());
 
             return clientClaimFaker;
