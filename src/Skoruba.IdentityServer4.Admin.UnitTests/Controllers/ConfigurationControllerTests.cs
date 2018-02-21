@@ -439,6 +439,35 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         }
 
         [Fact]
+        public async Task DeleteIdentityResource()
+        {
+            //Get Services
+            var serviceProvider = GetServices();
+            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
+            var identityResourceService = serviceProvider.GetRequiredService<IIdentityResourceService>();
+
+            // Get controller
+            var controller = PrepareConfigurationController(serviceProvider);
+            var identityResourceDto = IdentityResourceDtoMock.GenerateRandomIdentityResource(0);
+            await identityResourceService.AddIdentityResourceAsync(identityResourceDto);
+
+            var identityResourceId = await dbContext.IdentityResources.Where(x => x.Name == identityResourceDto.Name).Select(x => x.Id).SingleOrDefaultAsync();
+
+            identityResourceId.Should().NotBe(0);
+
+            identityResourceDto.Id = identityResourceId;
+            
+            var result = await controller.IdentityResourceDelete(identityResourceDto);
+
+            // Assert
+            var viewResult = Assert.IsType<RedirectToActionResult>(result);
+            viewResult.ActionName.Should().Be("IdentityResources");
+
+            var identityResource = await dbContext.IdentityResources.Where(x => x.Id == identityResourceDto.Id).SingleOrDefaultAsync();
+            identityResource.Should().BeNull();
+        }
+
+        [Fact]
         public async Task AddApiResource()
         {
             //Get Services
@@ -459,6 +488,33 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var addedApiResource = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
             apiResourceDto.ShouldBeEquivalentTo(addedApiResource, opts => opts.Excluding(x => x.Id));
+        }
+
+        [Fact]
+        public async Task DeleteApiResource()
+        {
+            //Get Services
+            var serviceProvider = GetServices();
+            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
+            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService>();
+
+            // Get controller
+            var controller = PrepareConfigurationController(serviceProvider);
+            var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+            await apiResourceService.AddApiResourceAsync(apiResourceDto);
+            var apiResourceId = await dbContext.ApiResources.Where(x => x.Name == apiResourceDto.Name).Select(x=> x.Id).SingleOrDefaultAsync();
+
+            apiResourceId.Should().NotBe(0);
+
+            apiResourceDto.Id = apiResourceId;
+            var result = await controller.ApiResourceDelete(apiResourceDto);
+
+            // Assert
+            var viewResult = Assert.IsType<RedirectToActionResult>(result);
+            viewResult.ActionName.Should().Be("ApiResources");
+
+            var apiResource = await dbContext.ApiResources.Where(x => x.Id == apiResourceDto.Id).SingleOrDefaultAsync();
+            apiResource.Should().BeNull();
         }
 
         [Fact]
@@ -489,6 +545,144 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         }
 
         [Fact]
+        public async Task GetApiScopes()
+        {
+            //Get Services
+            var serviceProvider = GetServices();
+            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
+            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService>();
+
+            // Get controller
+            var controller = PrepareConfigurationController(serviceProvider);
+
+            var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+            await apiResourceService.AddApiResourceAsync(apiResourceDto);
+
+            var resource = await dbContext.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
+
+            const int generateScopes = 5;
+
+            // Add Api Scopes
+            for (var i = 0; i < generateScopes; i++)
+            {
+                var apiScopeDto = ApiResourceDtoMock.GenerateRandomApiScope(0, resource.Id);
+                await apiResourceService.AddApiScopeAsync(apiScopeDto);
+            }
+            
+            var result = await controller.ApiScopes(resource.Id, 1, null);
+            
+            // Assert
+            var viewResult = Assert.IsType<ViewResult>(result);
+            viewResult.ViewName.Should().BeNullOrEmpty();
+            viewResult.ViewData.Should().NotBeNull();
+
+            var viewModel = Assert.IsType<ApiScopesDto>(viewResult.ViewData.Model);
+            viewModel.Scopes.Count.Should().Be(generateScopes);
+        }
+
+        [Fact]
+        public async Task UpdateApiScope()
+        {
+            //Get Services
+            var serviceProvider = GetServices();
+            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
+            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService>();
+
+            // Get controller
+            var controller = PrepareConfigurationController(serviceProvider);
+            var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+            await apiResourceService.AddApiResourceAsync(apiResourceDto);
+            var resource = await dbContext.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
+            var apiScopeDto = ApiResourceDtoMock.GenerateRandomApiScope(0, resource.Id);
+
+            await apiResourceService.AddApiScopeAsync(apiScopeDto);
+            var apiScopeAdded = await dbContext.ApiScopes.Where(x => x.Name == apiScopeDto.Name).SingleOrDefaultAsync();
+
+            dbContext.Entry(apiScopeAdded).State = EntityState.Detached;
+
+            apiScopeAdded.Should().NotBeNull();
+
+            var updatedApiScopeDto = ApiResourceDtoMock.GenerateRandomApiScope(apiScopeAdded.Id, resource.Id);
+            var result = await controller.ApiScopes(updatedApiScopeDto);
+
+            // Assert
+            var viewResult = Assert.IsType<RedirectToActionResult>(result);
+            viewResult.ActionName.Should().Be("ApiScopes");
+
+            var apiScope = await dbContext.ApiScopes.Where(x => x.Id == apiScopeAdded.Id).SingleOrDefaultAsync();
+            var addedApiScope = await apiResourceService.GetApiScopeAsync(resource.Id, apiScope.Id);
+
+            updatedApiScopeDto.ShouldBeEquivalentTo(addedApiScope, opts => opts.Excluding(x => x.ApiResourceId)
+                .Excluding(x => x.ResourceName)
+                .Excluding(x => x.ApiScopeId));
+        }
+
+        [Fact]
+        public async Task DeleteApiScope()
+        {
+            //Get Services
+            var serviceProvider = GetServices();
+            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
+            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService>();
+
+            // Get controller
+            var controller = PrepareConfigurationController(serviceProvider);
+            var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+            await apiResourceService.AddApiResourceAsync(apiResourceDto);
+            var resource = await dbContext.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
+            var apiScopeDto = ApiResourceDtoMock.GenerateRandomApiScope(0, resource.Id);
+            await apiResourceService.AddApiScopeAsync(apiScopeDto);
+            
+            var apiScopeId = await dbContext.ApiScopes.Where(x => x.Name == apiScopeDto.Name).Select(x => x.Id).SingleOrDefaultAsync();
+
+            apiScopeId.Should().NotBe(0);
+
+            apiScopeDto.ApiScopeId = apiScopeId;
+
+            var result = await controller.ApiScopeDelete(apiScopeDto);
+
+            // Assert
+            var viewResult = Assert.IsType<RedirectToActionResult>(result);
+            viewResult.ActionName.Should().Be("ApiScopes");
+
+            var apiScope = await dbContext.ApiScopes.Where(x => x.Id == apiScopeDto.ApiScopeId).SingleOrDefaultAsync();
+            apiScope.Should().BeNull(); 
+        }
+
+        [Fact]
+        public async Task GetApiSecrets()
+        {
+            //Get Services
+            var serviceProvider = GetServices();
+            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
+            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService>();
+
+            // Get controller
+            var controller = PrepareConfigurationController(serviceProvider);
+            var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+            await apiResourceService.AddApiResourceAsync(apiResourceDto);
+            var resource = await dbContext.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
+
+            const int generateApiSecrets = 5;
+
+            for (var i = 0; i < generateApiSecrets; i++)
+            {
+                var apiSecretsDto = ApiResourceDtoMock.GenerateRandomApiSecret(0, resource.Id);
+                await apiResourceService.AddApiSecretAsync(apiSecretsDto);
+            }
+            
+            var result = await controller.ApiSecrets(resource.Id, 1);
+
+            // Assert
+            var viewResult = Assert.IsType<ViewResult>(result);
+            viewResult.ViewName.Should().BeNullOrEmpty();
+            viewResult.ViewData.Should().NotBeNull();
+
+            var viewModel = Assert.IsType<ApiSecretsDto>(viewResult.ViewData.Model);
+            viewModel.ApiSecrets.Count.Should().Be(generateApiSecrets);
+        }
+
+        [Fact]
         public async Task AddApiSecret()
         {
             //Get Services
@@ -513,6 +707,38 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var addedApiScope = await apiResourceService.GetApiSecretAsync(apiSecret.Id);
 
             apiSecretsDto.ShouldBeEquivalentTo(addedApiScope, opts => opts.Excluding(x => x.ApiResourceId).Excluding(x=> x.ApiResourceName).Excluding(x => x.ApiSecretId));
+        }
+
+        [Fact]
+        public async Task DeleteApiSecret()
+        {
+            //Get Services
+            var serviceProvider = GetServices();
+            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
+            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService>();
+
+            // Get controller
+            var controller = PrepareConfigurationController(serviceProvider);
+            var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+            await apiResourceService.AddApiResourceAsync(apiResourceDto);
+            var resource = await dbContext.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
+            var apiSecretsDto = ApiResourceDtoMock.GenerateRandomApiSecret(0, resource.Id);
+            await apiResourceService.AddApiSecretAsync(apiSecretsDto);
+
+            var apiSecretId = await dbContext.ApiSecrets.Where(x => x.Value == apiSecretsDto.Value).Select(x => x.Id)
+                .SingleOrDefaultAsync();
+
+            apiSecretId.Should().NotBe(0);
+
+            apiSecretsDto.ApiSecretId = apiSecretId;
+            var result = await controller.ApiSecretDelete(apiSecretsDto);
+
+            // Assert
+            var viewResult = Assert.IsType<RedirectToActionResult>(result);
+            viewResult.ActionName.Should().Be("ApiSecrets");
+
+            var apiSecret = await dbContext.ApiSecrets.Where(x => x.Id == apiSecretsDto.ApiSecretId).SingleOrDefaultAsync();
+            apiSecret.Should().BeNull();
         }
 
         private ConfigurationController PrepareConfigurationController(IServiceProvider serviceProvider)

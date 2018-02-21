@@ -2,8 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
+using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
+using Skoruba.IdentityServer4.Admin.Data.Constants;
 using Skoruba.IdentityServer4.Admin.Data.DbContexts;
 using Skoruba.IdentityServer4.Admin.Data.Repositories;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
@@ -154,12 +156,37 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task CloneClientAsync()
         {
-            int clonedClientId;
-
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
                 //Generate random new client
-                var client = ClientMock.GenerateRandomClient(0);
+                var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
+
+                IClientRepository clientRepository = new ClientRepository(context);
+
+                //Add new client
+                await clientRepository.AddClientAsync(client);
+
+                var clientToClone = await context.Clients.Where(x => x.Id == client.Id).SingleOrDefaultAsync();
+
+                //Try clone it - all client collections without secrets
+                var clonedClientId = await clientRepository.CloneClientAsync(clientToClone);
+
+                var cloneClientEntity = await clientRepository.GetClientAsync(clonedClientId);
+                var clientToCompare = await clientRepository.GetClientAsync(clientToClone.Id);
+
+                ClientCloneCompare(cloneClientEntity, clientToCompare);
+            }
+        }
+
+        
+
+        [Fact]
+        public async Task CloneClientWithoutCorsAsync()
+        {
+            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            {
+                //Generate random new client
+                var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
 
                 IClientRepository clientRepository = new ClientRepository(context);
 
@@ -169,89 +196,187 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 var clientToClone = await context.Clients.Where(x => x.Id == client.Id).SingleOrDefaultAsync();
 
                 //Try clone it
-                clonedClientId = await clientRepository.CloneClientAsync(clientToClone);
+                var clonedClientId = await clientRepository.CloneClientAsync(clientToClone, cloneClientCorsOrigins: false);
 
-                var cloneClientEntity = await context.Clients
-                    .Include(x => x.AllowedGrantTypes)
-                    .Include(x => x.RedirectUris)
-                    .Include(x => x.PostLogoutRedirectUris)
-                    .Include(x => x.AllowedScopes)
-                    .Include(x => x.ClientSecrets)
-                    .Include(x => x.Claims)
-                    .Include(x => x.IdentityProviderRestrictions)
-                    .Include(x => x.AllowedCorsOrigins)
-                    .Include(x => x.Properties)
-                    .Where(x => x.Id == clonedClientId).SingleOrDefaultAsync();
+                var cloneClientEntity = await clientRepository.GetClientAsync(clonedClientId);
+                var clientToCompare = await clientRepository.GetClientAsync(clientToClone.Id);
 
-                var clientToCompare = await context.Clients
-                    .Include(x => x.AllowedGrantTypes)
-                    .Include(x => x.RedirectUris)
-                    .Include(x => x.PostLogoutRedirectUris)
-                    .Include(x => x.AllowedScopes)
-                    .Include(x => x.ClientSecrets)
-                    .Include(x => x.Claims)
-                    .Include(x => x.IdentityProviderRestrictions)
-                    .Include(x => x.AllowedCorsOrigins)
-                    .Include(x => x.Properties)
-                    .Where(x => x.Id == clientToClone.Id).SingleOrDefaultAsync();
+                ClientCloneCompare(cloneClientEntity, clientToCompare, cloneClientCorsOrigins: false);
+            }
+        }
 
-                //Assert cloned client
-                cloneClientEntity.ShouldBeEquivalentTo(clientToCompare,
-                    options => options.Excluding(o => o.Id)
-                        .Excluding(o => o.ClientSecrets)
-                        .Excluding(o => o.ClientId)
-                        .Excluding(o => o.ClientName)
+        [Fact]
+        public async Task CloneClientWithoutClaimsAsync()
+        {
+            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            {
+                //Generate random new client
+                var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
 
-                        //Skip the collections because is not possible ignore property in list :-(
-                        //Note: I've found the solution above - try ignore property of the list using SelectedMemberPath                        
-                        .Excluding(o => o.AllowedGrantTypes)
-                        .Excluding(o => o.RedirectUris)
-                        .Excluding(o => o.PostLogoutRedirectUris)
-                        .Excluding(o => o.AllowedScopes)
-                        .Excluding(o => o.ClientSecrets)
-                        .Excluding(o => o.Claims)
-                        .Excluding(o => o.IdentityProviderRestrictions)
-                        .Excluding(o => o.AllowedCorsOrigins)
-                        .Excluding(o => o.Properties)
-                );
+                IClientRepository clientRepository = new ClientRepository(context);
 
+                //Add new client
+                await clientRepository.AddClientAsync(client);
 
-                //New client relations have new id's and client relations therefore is required ignore them
-                cloneClientEntity.AllowedGrantTypes.ShouldBeEquivalentTo(clientToCompare.AllowedGrantTypes,
-                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
-                        .Excluding(x => x.SelectedMemberPath.EndsWith("Client")));
+                var clientToClone = await context.Clients.Where(x => x.Id == client.Id).SingleOrDefaultAsync();
 
-                cloneClientEntity.AllowedCorsOrigins.ShouldBeEquivalentTo(clientToCompare.AllowedCorsOrigins,
-                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
-                                    .Excluding(x => x.SelectedMemberPath.EndsWith("Client")));
+                //Try clone it
+                var clonedClientId = await clientRepository.CloneClientAsync(clientToClone, cloneClientClaims: false);
 
-                cloneClientEntity.RedirectUris.ShouldBeEquivalentTo(clientToCompare.RedirectUris,
-                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
-                        .Excluding(x => x.SelectedMemberPath.EndsWith("Client")));
+                var cloneClientEntity = await clientRepository.GetClientAsync(clonedClientId);
+                var clientToCompare = await clientRepository.GetClientAsync(clientToClone.Id);
 
-                cloneClientEntity.PostLogoutRedirectUris.ShouldBeEquivalentTo(clientToCompare.PostLogoutRedirectUris,
-                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
-                        .Excluding(x => x.SelectedMemberPath.EndsWith("Client")));
+                ClientCloneCompare(cloneClientEntity, clientToCompare, cloneClientClaims: false);
+            }
+        }
 
-                cloneClientEntity.AllowedScopes.ShouldBeEquivalentTo(clientToCompare.AllowedScopes,
-                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
-                        .Excluding(x => x.SelectedMemberPath.EndsWith("Client")));
+        [Fact]
+        public async Task CloneClientWithoutPropertiesAsync()
+        {
+            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            {
+                //Generate random new client
+                var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
 
-                cloneClientEntity.ClientSecrets.ShouldBeEquivalentTo(clientToCompare.ClientSecrets,
-                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
-                        .Excluding(x => x.SelectedMemberPath.EndsWith("Client")));
+                IClientRepository clientRepository = new ClientRepository(context);
 
-                cloneClientEntity.Claims.ShouldBeEquivalentTo(clientToCompare.Claims,
-                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
-                        .Excluding(x => x.SelectedMemberPath.EndsWith("Client")));
+                //Add new client
+                await clientRepository.AddClientAsync(client);
 
-                cloneClientEntity.IdentityProviderRestrictions.ShouldBeEquivalentTo(clientToCompare.IdentityProviderRestrictions,
-                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
-                        .Excluding(x => x.SelectedMemberPath.EndsWith("Client")));
+                var clientToClone = await context.Clients.Where(x => x.Id == client.Id).SingleOrDefaultAsync();
 
-                cloneClientEntity.Properties.ShouldBeEquivalentTo(clientToCompare.Properties,
-                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
-                        .Excluding(x => x.SelectedMemberPath.EndsWith("Client")));
+                //Try clone it
+                var clonedClientId = await clientRepository.CloneClientAsync(clientToClone, cloneClientProperties: false);
+
+                var cloneClientEntity = await clientRepository.GetClientAsync(clonedClientId);
+                var clientToCompare = await clientRepository.GetClientAsync(clientToClone.Id);
+
+                ClientCloneCompare(cloneClientEntity, clientToCompare, cloneClientProperties: false);
+            }
+        }
+
+        [Fact]
+        public async Task CloneClientWithoutGrantTypesAsync()
+        {
+            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            {
+                //Generate random new client
+                var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
+
+                IClientRepository clientRepository = new ClientRepository(context);
+
+                //Add new client
+                await clientRepository.AddClientAsync(client);
+
+                var clientToClone = await context.Clients.Where(x => x.Id == client.Id).SingleOrDefaultAsync();
+
+                //Try clone it
+                var clonedClientId = await clientRepository.CloneClientAsync(clientToClone, cloneClientGrantTypes: false);
+
+                var cloneClientEntity = await clientRepository.GetClientAsync(clonedClientId);
+                var clientToCompare = await clientRepository.GetClientAsync(clientToClone.Id);
+
+                ClientCloneCompare(cloneClientEntity, clientToCompare, cloneClientGrantTypes: false);
+            }
+        }
+
+        [Fact]
+        public async Task CloneClientWithoutIdPRestrictionsAsync()
+        {
+            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            {
+                //Generate random new client
+                var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
+
+                IClientRepository clientRepository = new ClientRepository(context);
+
+                //Add new client
+                await clientRepository.AddClientAsync(client);
+
+                var clientToClone = await context.Clients.Where(x => x.Id == client.Id).SingleOrDefaultAsync();
+
+                //Try clone it
+                var clonedClientId = await clientRepository.CloneClientAsync(clientToClone, cloneClientIdPRestrictions: false);
+
+                var cloneClientEntity = await clientRepository.GetClientAsync(clonedClientId);
+                var clientToCompare = await clientRepository.GetClientAsync(clientToClone.Id);
+
+                ClientCloneCompare(cloneClientEntity, clientToCompare, cloneClientIdPRestrictions: false);
+            }
+        }
+
+        [Fact]
+        public async Task CloneClientWithoutPostLogoutRedirectUrisAsync()
+        {
+            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            {
+                //Generate random new client
+                var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
+
+                IClientRepository clientRepository = new ClientRepository(context);
+
+                //Add new client
+                await clientRepository.AddClientAsync(client);
+
+                var clientToClone = await context.Clients.Where(x => x.Id == client.Id).SingleOrDefaultAsync();
+
+                //Try clone it
+                var clonedClientId = await clientRepository.CloneClientAsync(clientToClone, cloneClientPostLogoutRedirectUris: false);
+
+                var cloneClientEntity = await clientRepository.GetClientAsync(clonedClientId);
+                var clientToCompare = await clientRepository.GetClientAsync(clientToClone.Id);
+
+                ClientCloneCompare(cloneClientEntity, clientToCompare, cloneClientPostLogoutRedirectUris: false);
+            }
+        }
+
+        [Fact]
+        public async Task CloneClientWithoutRedirectUrisAsync()
+        {
+            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            {
+                //Generate random new client
+                var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
+
+                IClientRepository clientRepository = new ClientRepository(context);
+
+                //Add new client
+                await clientRepository.AddClientAsync(client);
+
+                var clientToClone = await context.Clients.Where(x => x.Id == client.Id).SingleOrDefaultAsync();
+
+                //Try clone it
+                var clonedClientId = await clientRepository.CloneClientAsync(clientToClone, cloneClientRedirectUris: false);
+
+                var cloneClientEntity = await clientRepository.GetClientAsync(clonedClientId);
+                var clientToCompare = await clientRepository.GetClientAsync(clientToClone.Id);
+
+                ClientCloneCompare(cloneClientEntity, clientToCompare, cloneClientRedirectUris: false);
+            }
+        }
+
+        [Fact]
+        public async Task CloneClientWithoutScopesAsync()
+        {
+            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            {
+                //Generate random new client
+                var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
+
+                IClientRepository clientRepository = new ClientRepository(context);
+
+                //Add new client
+                await clientRepository.AddClientAsync(client);
+
+                var clientToClone = await context.Clients.Where(x => x.Id == client.Id).SingleOrDefaultAsync();
+
+                //Try clone it
+                var clonedClientId = await clientRepository.CloneClientAsync(clientToClone, cloneClientScopes: false);
+
+                var cloneClientEntity = await clientRepository.GetClientAsync(clonedClientId);
+                var clientToCompare = await clientRepository.GetClientAsync(clientToClone.Id);
+
+                ClientCloneCompare(cloneClientEntity, clientToCompare, cloneClientScopes: false);
             }
         }
 
@@ -605,6 +730,186 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 //Assert updated client
                 updatedClientEntity.ShouldBeEquivalentTo(updatedClient);
             }
+        }
+
+        [Fact]
+        public void GetGrantTypes()
+        {
+            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            {
+                IClientRepository clientRepository = new ClientRepository(context);
+
+                //Try get some existing grant
+                var randomClientGrantType = ClientMock.GenerateRandomClientGrantType();
+
+                var grantTypes = clientRepository.GetGrantTypes(randomClientGrantType.GrantType);
+                grantTypes[0].Should().Be(randomClientGrantType.GrantType);
+            }
+        }
+
+        [Fact]
+        public void GetStandardClaims()
+        {
+            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            {
+                IClientRepository clientRepository = new ClientRepository(context);
+
+                //Try get some existing grant
+                var randomClientClaim = ClientMock.GenerateRandomClientClaim(0);
+
+                var grantTypes = clientRepository.GetStandardClaims(randomClientClaim.Type);
+                grantTypes[0].Should().Be(randomClientClaim.Type);
+            }
+        }
+
+        [Fact]
+        public async Task GetScopesIdentityResourceAsync()
+        {
+            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            {
+                IClientRepository clientRepository = new ClientRepository(context);
+                IIdentityResourceRepository identityResourceRepository = new IdentityResourceRepository(context);
+                
+
+                var identityResource = IdentityResourceMock.GenerateRandomIdentityResource(0);
+                await identityResourceRepository.AddIdentityResourceAsync(identityResource);
+                
+                var identityScopes = await clientRepository.GetScopesAsync(identityResource.Name);
+
+                identityScopes[0].Should().Be(identityResource.Name);
+            }
+        }
+
+        [Fact]
+        public async Task GetScopesApiResourceAsync()
+        {
+            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            {
+                IClientRepository clientRepository = new ClientRepository(context);
+                IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
+                
+                var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
+                await apiResourceRepository.AddApiResourceAsync(apiResource);
+
+                var apiScopes = await clientRepository.GetScopesAsync(apiResource.Name);
+
+                apiScopes[0].Should().Be(apiResource.Name);
+            }
+        }
+        
+        private void ClientCloneCompare(Client cloneClientEntity, Client clientToCompare, bool cloneClientCorsOrigins = true, bool cloneClientGrantTypes = true, bool cloneClientIdPRestrictions = true, bool cloneClientPostLogoutRedirectUris = true, bool cloneClientScopes = true, bool cloneClientRedirectUris = true, bool cloneClientClaims = true, bool cloneClientProperties = true)
+        {
+            //Assert cloned client
+            cloneClientEntity.ShouldBeEquivalentTo(clientToCompare,
+                options => options.Excluding(o => o.Id)
+                    .Excluding(o => o.ClientSecrets)
+                    .Excluding(o => o.ClientId)
+                    .Excluding(o => o.ClientName)
+
+                    //Skip the collections because is not possible ignore property in list :-(
+                    //Note: I've found the solution above - try ignore property of the list using SelectedMemberPath                        
+                    .Excluding(o => o.AllowedGrantTypes)
+                    .Excluding(o => o.RedirectUris)
+                    .Excluding(o => o.PostLogoutRedirectUris)
+                    .Excluding(o => o.AllowedScopes)
+                    .Excluding(o => o.ClientSecrets)
+                    .Excluding(o => o.Claims)
+                    .Excluding(o => o.IdentityProviderRestrictions)
+                    .Excluding(o => o.AllowedCorsOrigins)
+                    .Excluding(o => o.Properties)
+            );
+
+
+            //New client relations have new id's and client relations therefore is required ignore them
+            if (cloneClientGrantTypes)
+            {
+                cloneClientEntity.AllowedGrantTypes.ShouldBeEquivalentTo(clientToCompare.AllowedGrantTypes,
+                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
+                        .Excluding(x => x.SelectedMemberPath.EndsWith("Client")));
+            }
+            else
+            {
+                cloneClientEntity.AllowedGrantTypes.Should().BeEmpty();
+            }
+
+            if (cloneClientCorsOrigins)
+            {
+                cloneClientEntity.AllowedCorsOrigins.ShouldBeEquivalentTo(clientToCompare.AllowedCorsOrigins,
+                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
+                        .Excluding(x => x.SelectedMemberPath.EndsWith("Client")));
+            }
+            else
+            {
+                cloneClientEntity.AllowedCorsOrigins.Should().BeEmpty();
+            }
+
+            if (cloneClientRedirectUris)
+            {
+                cloneClientEntity.RedirectUris.ShouldBeEquivalentTo(clientToCompare.RedirectUris,
+                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
+                        .Excluding(x => x.SelectedMemberPath.EndsWith("Client")));
+            }
+            else
+            {
+                cloneClientEntity.RedirectUris.Should().BeEmpty();
+            }
+
+            if (cloneClientPostLogoutRedirectUris)
+            {
+                cloneClientEntity.PostLogoutRedirectUris.ShouldBeEquivalentTo(clientToCompare.PostLogoutRedirectUris,
+                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
+                        .Excluding(x => x.SelectedMemberPath.EndsWith("Client")));
+            }
+            else
+            {
+                cloneClientEntity.PostLogoutRedirectUris.Should().BeEmpty();
+            }
+
+            if (cloneClientScopes)
+            {
+                cloneClientEntity.AllowedScopes.ShouldBeEquivalentTo(clientToCompare.AllowedScopes,
+                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
+                        .Excluding(x => x.SelectedMemberPath.EndsWith("Client")));
+            }
+            else
+            {
+                cloneClientEntity.AllowedScopes.Should().BeEmpty();
+            }
+
+            if (cloneClientClaims)
+            {
+                cloneClientEntity.Claims.ShouldBeEquivalentTo(clientToCompare.Claims,
+                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
+                        .Excluding(x => x.SelectedMemberPath.EndsWith("Client")));
+            }
+            else
+            {
+                cloneClientEntity.Claims.Should().BeEmpty();
+            }
+
+            if (cloneClientIdPRestrictions)
+            {
+                cloneClientEntity.IdentityProviderRestrictions.ShouldBeEquivalentTo(clientToCompare.IdentityProviderRestrictions,
+                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
+                        .Excluding(x => x.SelectedMemberPath.EndsWith("Client")));
+            }
+            else
+            {
+                cloneClientEntity.IdentityProviderRestrictions.Should().BeEmpty();
+            }
+
+            if (cloneClientProperties)
+            {
+                cloneClientEntity.Properties.ShouldBeEquivalentTo(clientToCompare.Properties,
+                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
+                        .Excluding(x => x.SelectedMemberPath.EndsWith("Client")));
+            }
+            else
+            {
+                cloneClientEntity.Properties.Should().BeEmpty();
+            }
+
+            cloneClientEntity.ClientSecrets.Should().BeEmpty();
         }
     }
 }
