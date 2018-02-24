@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Skoruba.IdentityServer4.Admin\Skoruba.IdentityServer4.Admin.csproj" />
+    <ProjectReference Include="..\..\src\Skoruba.IdentityServer4.Admin\Skoruba.IdentityServer4.Admin.csproj" />
   </ItemGroup>
 
 	<!-- https://github.com/NuGet/Home/issues/4412 -->

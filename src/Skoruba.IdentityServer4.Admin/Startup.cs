@@ -287,7 +287,7 @@ namespace Skoruba.IdentityServer4.Admin
 
             // Do include the log event data as JSON.
             columnOptions.Store.Add(StandardColumn.LogEvent);
-
+            
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.MSSqlServer(Configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey),
                     ConfigurationConsts.LoggingTableName,
