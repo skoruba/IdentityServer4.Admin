@@ -1,21 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{588205D4-3A30-4DA4-849D-C7422C396DAA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0BC0CC4E-A0F1-45E8-B41A-AE0FA76BF3E5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin", "Skoruba.IdentityServer4.Admin\Skoruba.IdentityServer4.Admin.csproj", "{E3713598-3375-4E81-9EC7-58DC090789BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin", "src\Skoruba.IdentityServer4.Admin\Skoruba.IdentityServer4.Admin.csproj", "{E3713598-3375-4E81-9EC7-58DC090789BD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.IntegrationTests", "Skoruba.IdentityServer4.Admin.IntegrationTests\Skoruba.IdentityServer4.Admin.IntegrationTests.csproj", "{BFF10ECC-B02A-4660-A82B-AADFDE0C0EBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.IntegrationTests", "tests\Skoruba.IdentityServer4.Admin.IntegrationTests\Skoruba.IdentityServer4.Admin.IntegrationTests.csproj", "{BFF10ECC-B02A-4660-A82B-AADFDE0C0EBF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.UnitTests", "Skoruba.IdentityServer4.Admin.UnitTests\Skoruba.IdentityServer4.Admin.UnitTests.csproj", "{92405E00-759C-4A20-A736-E21E7EF771C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.UnitTests", "tests\Skoruba.IdentityServer4.Admin.UnitTests\Skoruba.IdentityServer4.Admin.UnitTests.csproj", "{92405E00-759C-4A20-A736-E21E7EF771C2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "host", "host", "{63D44665-AC4C-45F4-A2C7-A7DB394F44C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skoruba.IdentityServer4", "Skoruba.IdentityServer4\Skoruba.IdentityServer4.csproj", "{26112C1E-A965-410B-A86F-B236155A4F21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4", "src\Skoruba.IdentityServer4\Skoruba.IdentityServer4.csproj", "{26112C1E-A965-410B-A86F-B236155A4F21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

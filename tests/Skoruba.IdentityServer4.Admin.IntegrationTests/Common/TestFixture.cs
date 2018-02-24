@@ -27,7 +27,7 @@ namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Common
         private string GetContentRootPath()
         {
             var testProjectPath = PlatformServices.Default.Application.ApplicationBasePath;
-            const string relativePathToWebProject = @"../../../../Skoruba.IdentityServer4.Admin";
+            const string relativePathToWebProject = @"../../../../../src/Skoruba.IdentityServer4.Admin/";
 
             return Path.Combine(testProjectPath, relativePathToWebProject);
         }
