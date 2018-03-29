@@ -3,13 +3,12 @@
 @model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientDto
 @inject IViewLocalizer Localizer
 
-<div class="panel panel-default">
-	<div class="panel-heading">@Localizer["PageTitle"]</div>
-	<div class="panel-body">
-
+<div class="card mt-3">
+	<h5 class="card-header">@Localizer["PageTitle"]</h5>
+	<div class="card-body">
 		<!--Checkbox-->
-		<div class="form-group">
-			<label asp-for="RequireConsent" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="RequireConsent" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "RequireConsent")
 			</label>
 			<div class="col-sm-9">
@@ -20,8 +19,8 @@
 		</div>
 
 		<!--Checkbox-->
-		<div class="form-group">
-			<label asp-for="AllowRememberConsent" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="AllowRememberConsent" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "AllowRememberConsent")
 			</label>
 			<div class="col-sm-9">
@@ -32,8 +31,8 @@
 		</div>
 
 		<!--Input - text -->
-		<div class="form-group">
-			<label asp-for="ClientUri" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="ClientUri" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "ClientUri")
 			</label>
 			<div class="col-sm-9">
@@ -42,8 +41,8 @@
 		</div>
 
 		<!--Input - text -->
-		<div class="form-group">
-			<label asp-for="LogoUri" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="LogoUri" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "LogoUri")
 			</label>
 			<div class="col-sm-9">

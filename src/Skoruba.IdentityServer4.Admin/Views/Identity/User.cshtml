@@ -16,12 +16,12 @@
 	@if (Model.Id != 0)
 	{
 		<!--Button-->
-		<div class="form-group">
+		<div class="form-group row">
 			<div class="col-md-12 col-m-b-10  col-m-t-10">
-				<a asp-action="UserClaims" asp-route-id="@Model.Id" class="btn btn-info"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> @Localizer["ButtonManageUserClaims"]</a>
-				<a asp-action="UserRoles" asp-route-id="@Model.Id" class="btn btn-info"><span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span> @Localizer["ButtonManageUserRoles"]</a>
-				<a asp-action="UserProviders" asp-route-id="@Model.Id" class="btn btn-primary"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> @Localizer["ButtonManageUserExternalProviders"]</a>
-				<a asp-action="UserChangePassword" asp-route-id="@Model.Id" class="btn btn-warning"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> @Localizer["ButtonChangePassword"]</a>
+				<a asp-action="UserClaims" asp-route-id="@Model.Id" class="btn btn-outline-primary"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> @Localizer["ButtonManageUserClaims"]</a>
+				<a asp-action="UserRoles" asp-route-id="@Model.Id" class="btn btn-outline-primary"><span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span> @Localizer["ButtonManageUserRoles"]</a>
+				<a asp-action="UserProviders" asp-route-id="@Model.Id" class="btn btn-outline-primary"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> @Localizer["ButtonManageUserExternalProviders"]</a>
+				<a asp-action="UserChangePassword" asp-route-id="@Model.Id" class="btn btn-dark"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> @Localizer["ButtonChangePassword"]</a>
 				<a asp-action="UserDelete" asp-route-id="@Model.Id" class="btn btn-danger"><span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["ButtonDeleteUser"]</a>
 			</div>
 		</div>
@@ -30,13 +30,13 @@
 	<!--Hidden -->
 	<input type="hidden" asp-for="Id" />
 
-	<div class="panel panel-default">
-		<div class="panel-heading">@Localizer["PageTitle"]</div>
-		<div class="panel-body">
+	<div class="card mt-3">
+		<h5 class="card-header">@Localizer["PanelTitle"]</h5>
+		<div class="card-body">
 
 			<!--Input - text -->
-			<div class="form-group">
-				<label asp-for="UserName" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="UserName" class="col-sm-3 col-form-label">
 					@Html.Partial("User/Section/Label", "UserUserName")
 				</label>
 				<div class="col-sm-9">
@@ -46,8 +46,8 @@
 			</div>
 
 			<!--Input - text -->
-			<div class="form-group">
-				<label asp-for="Email" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="Email" class="col-sm-3 col-form-label">
 					@Html.Partial("User/Section/Label", "UserEmail")
 				</label>
 				<div class="col-sm-9">
@@ -57,8 +57,8 @@
 			</div>
 
 			<!--Checkbox-->
-			<div class="form-group">
-				<label asp-for="EmailConfirmed" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="EmailConfirmed" class="col-sm-3 col-form-label">
 					@Html.Partial("User/Section/Label", "UserEmailConfirmed")
 				</label>
 				<div class="col-sm-9">
@@ -69,8 +69,8 @@
 			</div>
 
 			<!--Input - text -->
-			<div class="form-group">
-				<label asp-for="PhoneNumber" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="PhoneNumber" class="col-sm-3 col-form-label">
 					@Html.Partial("User/Section/Label", "UserPhoneNumber")
 				</label>
 				<div class="col-sm-9">
@@ -79,8 +79,8 @@
 			</div>
 
 			<!--Checkbox-->
-			<div class="form-group">
-				<label asp-for="PhoneNumberConfirmed" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="PhoneNumberConfirmed" class="col-sm-3 col-form-label">
 					@Html.Partial("User/Section/Label", "UserPhoneNumberConfirmed")
 				</label>
 				<div class="col-sm-9">
@@ -91,8 +91,8 @@
 			</div>
 
 			<!--Checkbox-->
-			<div class="form-group">
-				<label asp-for="LockoutEnabled" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="LockoutEnabled" class="col-sm-3 col-form-label">
 					@Html.Partial("User/Section/Label", "UserLockoutEnabled")
 				</label>
 				<div class="col-sm-9">
@@ -103,8 +103,8 @@
 			</div>
 
 			<!--Checkbox-->
-			<div class="form-group">
-				<label asp-for="TwoFactorEnabled" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="TwoFactorEnabled" class="col-sm-3 col-form-label">
 					@Html.Partial("User/Section/Label", "UserTwoFactorEnabled")
 				</label>
 				<div class="col-sm-9">
@@ -115,8 +115,8 @@
 			</div>
 
 			<!--Input - text -->
-			<div class="form-group">
-				<label asp-for="AccessFailedCount" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="AccessFailedCount" class="col-sm-3 col-form-label">
 					@Html.Partial("User/Section/Label", "UserAccessFailedCount")
 				</label>
 				<div class="col-sm-9">
@@ -125,8 +125,8 @@
 			</div>
 
 			<!--Input - text -->
-			<div class="form-group">
-				<label asp-for="LockoutEnd" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="LockoutEnd" class="col-sm-3 col-form-label">
 					@Html.Partial("User/Section/Label", "UserLockoutEnd")
 				</label>
 				<div class="col-sm-9">
@@ -140,11 +140,11 @@
 			</div>
 
 			<!--Button-->
-			<div class="form-group">
-				<label class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label class="col-sm-3 col-form-label">
 				</label>
 				<div class="col-sm-9">
-					<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> @Localizer["ButtonSaveUser"]</button>
+					<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> @Localizer["ButtonSaveUser"]</button>
 				</div>
 			</div>
 		</div>

@@ -4,12 +4,15 @@
 @inject IViewLocalizer Localizer
 
 <form asp-controller="@Model.Controller" asp-action="@Model.Action" method="get">
-
-	<div class="col-xs-12 col-sm-12 col-md-10 col-m-b-20">
-		<input name="search" value="@ViewBag.Search" type="text" placeholder="@Localizer["InputSearchPlaceHolder"]" class="form-control" />
+	<div class="form-row">
+		<div class="col-12 mb-3">
+			<input name="search" value="@ViewBag.Search" type="text" placeholder="@Localizer["InputSearchPlaceHolder"]" class="form-control" />
+		</div>
 	</div>
 
-	<div class="col-xs-12 col-sm-12 col-md-2">
-		<input type="submit" class="btn btn-info" value="@Localizer["ButtonSearch"]" />
+	<div class="form-row">
+		<div class="col-12 mb-3">
+			<input type="submit" class="btn btn-primary" value="@Localizer["ButtonSearch"]" />
+		</div>
 	</div>
 </form>

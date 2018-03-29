@@ -11,29 +11,35 @@
 
 <h2>@Localizer["PageTitle"]</h2>
 
-<div class="row table-responsive">
-	<table class="table table-striped">
-		<thead>
-		<tr>
-			<th></th>
-			<th>@Localizer["TableSubjectId"]</th>
-			<th>@Localizer["TableSubjectName"]</th>
-		</tr>
-		</thead>
+<div class="row">
+	<div class="col-12">
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th></th>
+						<th>@Localizer["TableSubjectId"]</th>
+						<th>@Localizer["TableSubjectName"]</th>
+					</tr>
+				</thead>
 
-		<tbody>
-		@foreach (var persistedGrant in Model.PersistedGrants)
-		{
-			<tr>
-				<th scope="row"><a class="btn btn-info" asp-action="PersistedGrant" asp-route-id="@persistedGrant.SubjectId">@Localizer["TableButtonDetail"]</a></th>
-				<td>@persistedGrant.SubjectId</td>
-				<td>@persistedGrant.SubjectName</td>
-			</tr>
-		}
-		</tbody>
-	</table>
+				<tbody>
+					@foreach (var persistedGrant in Model.PersistedGrants)
+					{
+						<tr>
+							<th scope="row"><a class="btn btn-primary" asp-action="PersistedGrant" asp-route-id="@persistedGrant.SubjectId">@Localizer["TableButtonDetail"]</a></th>
+							<td>@persistedGrant.SubjectId</td>
+							<td>@persistedGrant.SubjectName</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
 
 <div class="row">
-	@Html.Partial("Common/Pager", new Pager() { Action = "PersistedGrants", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
+	<div class="col-12">
+		@Html.Partial("Common/Pager", new Pager() { Action = "PersistedGrants", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
+	</div>
 </div>

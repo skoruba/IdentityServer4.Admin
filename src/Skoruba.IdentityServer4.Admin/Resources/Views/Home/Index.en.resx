@@ -130,7 +130,7 @@
     <value>Identity Resources</value>
   </data>
   <data name="ButtonPersistedGrants" xml:space="preserve">
-    <value>Persisted Grants &lt;br /&gt;(Token management)</value>
+    <value>Persisted Grants</value>
   </data>
   <data name="ButtonRoles" xml:space="preserve">
     <value>Roles</value>

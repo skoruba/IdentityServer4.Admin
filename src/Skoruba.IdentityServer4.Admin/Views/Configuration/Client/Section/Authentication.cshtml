@@ -3,12 +3,12 @@
 @model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientDto
 @inject IViewLocalizer Localizer
 
-<div class="panel panel-default">
-	<div class="panel-heading">@Localizer["PanelTitle"]</div>
-	<div class="panel-body">
+<div class="card mt-3">
+	<h5 class="card-header">@Localizer["PanelTitle"]</h5>
+	<div class="card-body">
 		<!--Input - text -->
-		<div class="form-group">
-			<label asp-for="FrontChannelLogoutUri" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="FrontChannelLogoutUri" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "FrontChannelLogoutUri")
 			</label>
 			<div class="col-sm-9">
@@ -17,8 +17,8 @@
 		</div>
 
 		<!--Checkbox-->
-		<div class="form-group">
-			<label asp-for="FrontChannelLogoutSessionRequired" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="FrontChannelLogoutSessionRequired" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "FrontChannelLogoutSessionRequired")
 			</label>
 			<div class="col-sm-9">
@@ -29,8 +29,8 @@
 		</div>
 
 		<!--Input - text -->
-		<div class="form-group">
-			<label asp-for="BackChannelLogoutUri" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="BackChannelLogoutUri" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "BackChannelLogoutUri")
 			</label>
 			<div class="col-sm-9">
@@ -39,8 +39,8 @@
 		</div>
 
 		<!--Checkbox-->
-		<div class="form-group">
-			<label asp-for="BackChannelLogoutSessionRequired" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="BackChannelLogoutSessionRequired" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "BackChannelLogoutSessionRequired")
 			</label>
 			<div class="col-sm-9">
@@ -51,8 +51,8 @@
 		</div>
 
 		<!--Checkbox-->
-		<div class="form-group">
-			<label asp-for="EnableLocalLogin" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="EnableLocalLogin" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "EnableLocalLogin")
 			</label>
 			<div class="col-sm-9">
@@ -63,21 +63,21 @@
 		</div>
 
 		<!--Select with tags-->
-		<div class="form-group">
-			<label asp-for="PostLogoutRedirectUris" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="PostLogoutRedirectUris" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "PostLogoutRedirectUris")
 			</label>
 			<div class="col-sm-9">
 				<picker id="PostLogoutRedirectUrisItems" multiple-select="true" min-search-text="2"
-				        selected-items="@Model.PostLogoutRedirectUris" search-input-placeholder="Enter 2 and more characters" 
-				        selected-items-title="Selected: ">
+						selected-items="@Model.PostLogoutRedirectUris" search-input-placeholder="Enter 2 and more characters"
+						selected-items-title="Selected: ">
 				</picker>
 			</div>
 		</div>
 
 		<!--Select with tags-->
-		<div class="form-group">
-			<label asp-for="IdentityProviderRestrictions" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="IdentityProviderRestrictions" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "IdentityProviderRestrictions")
 			</label>
 			<div class="col-sm-9">

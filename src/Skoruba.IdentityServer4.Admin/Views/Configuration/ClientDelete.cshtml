@@ -6,22 +6,21 @@
 @{
 	ViewBag.Title = Localizer["PageTitle"];
 	Layout = "_Layout";
-}	
+}
 
 <form id="client-form" class="form-horizontal" asp-controller="Configuration" asp-action="ClientDelete" Method="post">
-	
+
 	<!--Hidden -->
 	<input type="hidden" asp-for="Id" />
-	
+
 	<h2>@Localizer["PageTitle"]</h2>
 
-	<div class="panel panel-default">
-		<div class="panel-heading">@Localizer["PageTitle"]</div>
-		<div class="panel-body">
-
+	<div class="card mt-3">
+		<h5 class="card-header">@Localizer["PageTitle"]</h5>
+		<div class="card-body">
 			<!--Input - text -->
-			<div class="form-group">
-				<label asp-for="ClientId" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="ClientId" class="col-sm-3 col-form-label">
 					@Html.Partial("Client/Section/Label", "ClientId")
 				</label>
 				<div class="col-sm-9">
@@ -30,23 +29,23 @@
 			</div>
 
 			<!--Input - text -->
-			<div class="form-group">
-				<label asp-for="ClientName" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="ClientName" class="col-sm-3 col-form-label">
 					@Html.Partial("Client/Section/Label", "ClientName")
 				</label>
 				<div class="col-sm-9">
 					<input type="text" class="form-control" disabled="disabled" asp-for="ClientName" />
 				</div>
 			</div>
-			
+
 			<!--Button-->
-			<div class="form-group">
-				<label class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label class="col-sm-3 col-form-label">
 				</label>
 				<div class="col-sm-9">
 					<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["ButtonDelete"]</button>
 				</div>
 			</div>
 		</div>
-	</div>	
+	</div>
 </form>

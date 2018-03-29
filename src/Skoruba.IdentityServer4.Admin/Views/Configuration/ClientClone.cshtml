@@ -14,14 +14,13 @@
 
 	<div asp-validation-summary="All" class="text-danger"></div>
 
-	<div class="panel panel-default">
-		<div class="panel-heading">@Localizer["PanelTitle"]</div>
-		<div class="panel-body">
-
+	<div class="card mt-3">
+		<h5 class="card-header">@Localizer["PanelTitle"]</h5>
+		<div class="card-body">
 			<input type="hidden" asp-for="Id" />
 
 			<!--Label-->
-			<div class="form-group">
+			<div class="form-group row">
 				<div class="col-md-12">
 					<div class="alert alert-warning" role="alert">
 						<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -32,8 +31,8 @@
 			</div>
 
 			<!--Input - text -->
-			<div class="form-group">
-				<label asp-for="ClientId" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="ClientId" class="col-sm-3 col-form-label">
 					@Html.Partial("Client/Section/Label", "ClientId")
 				</label>
 				<div class="col-sm-9">
@@ -43,8 +42,8 @@
 			</div>
 
 			<!--Input - text -->
-			<div class="form-group">
-				<label asp-for="ClientName" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="ClientName" class="col-sm-3 col-form-label">
 					@Html.Partial("Client/Section/Label", "ClientName")
 				</label>
 				<div class="col-sm-9">
@@ -54,8 +53,8 @@
 			</div>
 
 			<!--Checkbox-->
-			<div class="form-group">
-				<label asp-for="CloneClientGrantTypes" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="CloneClientGrantTypes" class="col-sm-3 col-form-label">
 					@Localizer["LabelCloneClientGrantTypes"]
 				</label>
 				<div class="col-sm-9">
@@ -66,8 +65,8 @@
 			</div>
 
 			<!--Checkbox-->
-			<div class="form-group">
-				<label asp-for="CloneClientRedirectUris" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="CloneClientRedirectUris" class="col-sm-3 col-form-label">
 					@Localizer["LabelCloneClientRedirectUris"]
 				</label>
 				<div class="col-sm-9">
@@ -78,8 +77,8 @@
 			</div>
 
 			<!--Checkbox-->
-			<div class="form-group">
-				<label asp-for="CloneClientScopes" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="CloneClientScopes" class="col-sm-3 col-form-label">
 					@Localizer["LabelCloneClientScopes"]
 				</label>
 				<div class="col-sm-9">
@@ -90,8 +89,8 @@
 			</div>
 
 			<!--Checkbox-->
-			<div class="form-group">
-				<label asp-for="CloneClientClaims" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="CloneClientClaims" class="col-sm-3 col-form-label">
 					@Localizer["LabelCloneClientClaims"]
 				</label>
 				<div class="col-sm-9">
@@ -103,8 +102,8 @@
 
 
 			<!--Checkbox-->
-			<div class="form-group">
-				<label asp-for="CloneClientCorsOrigins" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="CloneClientCorsOrigins" class="col-sm-3 col-form-label">
 					@Localizer["CloneClientCorsOrigins"]
 				</label>
 				<div class="col-sm-9">
@@ -115,8 +114,8 @@
 			</div>
 
 			<!--Checkbox-->
-			<div class="form-group">
-				<label asp-for="CloneClientPostLogoutRedirectUris" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="CloneClientPostLogoutRedirectUris" class="col-sm-3 col-form-label">
 					@Localizer["LabelCloneClientPostLogoutRedirectUris"]
 				</label>
 				<div class="col-sm-9">
@@ -127,8 +126,8 @@
 			</div>
 
 			<!--Checkbox-->
-			<div class="form-group">
-				<label asp-for="CloneClientIdPRestrictions" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="CloneClientIdPRestrictions" class="col-sm-3 col-form-label">
 					@Localizer["LabelCloneClientIdPRestrictions"]
 				</label>
 				<div class="col-sm-9">
@@ -137,10 +136,10 @@
 					</toggle-button>
 				</div>
 			</div>
-			
+
 			<!--Checkbox-->
-			<div class="form-group">
-				<label asp-for="CloneClientProperties" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="CloneClientProperties" class="col-sm-3 col-form-label">
 					@Localizer["LabelCloneClientProperties"]
 				</label>
 				<div class="col-sm-9">
@@ -151,11 +150,11 @@
 			</div>
 
 			<!--Button-->
-			<div class="form-group">
-				<label class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label class="col-sm-3 col-form-label">
 				</label>
 				<div class="col-sm-9">
-					<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> @Localizer["ButtonClone"]</button>
+					<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> @Localizer["ButtonClone"]</button>
 				</div>
 			</div>
 		</div>

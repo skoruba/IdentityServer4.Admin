@@ -14,7 +14,7 @@
 
 <form id="client-form" class="form-horizontal" asp-controller="Grant" asp-action="PersistedGrantsDelete" Method="post">
 
-	<a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deletePersistedGrantsModal"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["ButtonDeleteAll"]</a>
+	<a href="#" class="btn btn-danger mb-3" data-toggle="modal" data-target="#deletePersistedGrantsModal"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["ButtonDeleteAll"]</a>
 
 	<!--Hidden -->
 	<input type="hidden" asp-for="SubjectId" />
@@ -41,7 +41,7 @@
 						<td>@persistedGrant.Expiration</td>
 						<td>@persistedGrant.Data</td>
 						<td>@persistedGrant.ClientId</td>
-						<td><a class="btn btn-danger" asp-action="PersistedGrantDelete" asp-route-id="@UrlHelpers.QueryStringSafeHash(persistedGrant.Key)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+						<td><a class="btn btn-danger" asp-action="PersistedGrantDelete" asp-route-id="@UrlHelpers.QueryStringSafeHash(persistedGrant.Key)"><span class="oi oi-x"></span></a></td>
 					</tr>
 				}
 			</tbody>
@@ -49,16 +49,18 @@
 	</div>
 
 	<div class="row">
-		@Html.Partial("Common/Pager", new Pager() { Action = "PersistedGrant", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
+		<div class="col-12">
+			@Html.Partial("Common/Pager", new Pager() { Action = "PersistedGrant", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
+		</div>
 	</div>
-	
+
 	<!-- Modal -->
 	<div class="modal fade" id="deletePersistedGrantsModal" tabindex="-1" role="dialog" aria-labelledby="deletePersistedGrantsModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h4 class="modal-title" id="deletePersistedGrantsModalLabel">@Localizer["DeleteDialogTitle"]</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				</div>
 				<div class="modal-body">
 					@Localizer["DeleteDialogMessage"]

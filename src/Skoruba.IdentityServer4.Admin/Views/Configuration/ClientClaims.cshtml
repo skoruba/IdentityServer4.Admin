@@ -16,7 +16,7 @@
 
 			<div asp-validation-summary="All" class="text-danger"></div>
 
-			<a asp-action="Client" asp-route-id="@Model.ClientId" class="btn btn-info col-m-b-15">@Localizer["ButtonBackClient"]</a>
+			<a asp-action="Client" asp-route-id="@Model.ClientId" class="btn btn-outline-primary col-m-b-15">@Localizer["ButtonBackClient"]</a>
 
 			<!--Hidden -->
 			<input type="hidden" asp-for="ClientId" />
@@ -24,13 +24,13 @@
 			<!--Hidden -->
 			<input type="hidden" asp-for="ClientName" />
 
-			<div class="panel panel-default">
-				<div class="panel-heading">@Localizer["PanelNewTitle"]</div>
-				<div class="panel-body">
+			<div class="card mt-3">
+				<h5 class="card-header">@Localizer["PanelNewTitle"]</h5>
+				<div class="card-body">
 
 					<!--Select with tags-->
-					<div class="form-group">
-						<label asp-for="Type" class="col-sm-3 control-label">
+					<div class="form-group row">
+						<label asp-for="Type" class="col-sm-3 col-form-label">
 							@Html.Partial("Client/Section/Label", "Type")
 						</label>
 						<div class="col-sm-9">
@@ -45,8 +45,8 @@
 					</div>
 
 					<!--Input - text -->
-					<div class="form-group">
-						<label asp-for="Value" class="col-sm-3 control-label">
+					<div class="form-group row">
+						<label asp-for="Value" class="col-sm-3 col-form-label">
 							@Html.Partial("Client/Section/Label", "Value")
 						</label>
 						<div class="col-sm-9">
@@ -56,11 +56,11 @@
 					</div>
 
 					<!--Button-->
-					<div class="form-group">
-						<label class="col-sm-3 control-label">
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label">
 						</label>
 						<div class="col-sm-9">
-							<button type="submit" id="client-claims-button" class="btn btn-success"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> @Localizer["ButtonAddNewClaim"]</button>
+							<button type="submit" id="client-claims-button" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> @Localizer["ButtonAddNewClaim"]</button>
 						</div>
 					</div>
 				</div>
@@ -72,9 +72,9 @@
 
 <div class="row">
 	<div class="col-md-12">
-		<div class="panel panel-default">
-			<div class="panel-heading">@Localizer["PanelTitle"]</div>
-			<div class="panel-body">
+		<div class="card mt-3">
+			<h5 class="card-header">@Localizer["PanelTitle"]</h5>
+			<div class="card-body">
 
 				<div class="row table-responsive">
 					<table class="table table-striped">
@@ -100,7 +100,9 @@
 				</div>
 
 				<div class="row">
-					@Html.Partial("Common/Pager", new Pager() { Action = "ClientClaims", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
+					<div class="col-12">
+						@Html.Partial("Common/Pager", new Pager() { Action = "ClientClaims", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
+					</div>
 				</div>
 			</div>
 		</div>
