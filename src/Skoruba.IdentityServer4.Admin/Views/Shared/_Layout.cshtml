@@ -29,9 +29,9 @@
 </head>
 <body>
 
-	<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+	<div class="menu d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
 		<!--Site name -->
-		<h3 class="my-0 mr-md-auto font-weight-normal"><a class="logo" asp-area="" asp-controller="Home" asp-action="Index">IdentityServer4 Admin</a></h3>
+		<h3 class="menu-logo my-0 mr-md-auto font-weight-normal"><a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["PageTitle"]</a></h3>
 
 		<!--Menu item -->
 		<div class="menu-item my-2 my-md-0 mr-md-3 dropdown">
@@ -80,8 +80,8 @@
 		<footer class="pt-4 my-md-5 pt-md-5 border-top">
 			<div class="row">
 				<div class="col-12 col-md">
-					IdentityServer4 Admin
-					<small class="d-block mb-3 text-muted">&copy; 2018</small>
+					@Localizer["FooterTitle"]
+					<small class="d-block mb-3 text-muted">@Localizer["FooterCopyright"]</small>
 				</div>
 			</div>
 		</footer>

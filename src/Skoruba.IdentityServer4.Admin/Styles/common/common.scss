@@ -1,11 +1,24 @@
-﻿
-@media (max-width: 767px) {
+﻿@media (max-width: 767px) {
+	.menu {
+		text-align: center;
+
+		&-logo{
+			font-size: 1.2em;
+		}
+	}
+
 	.menu-item {
 		display: none;
 	}
 
 	.menu-button {
 		display: block;
+	}
+
+	.welcome-block{
+		h1{
+			font-size: 2em;
+		}
 	}
 }
 
@@ -31,7 +44,7 @@
 	box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
 }
 
-.pricing-header {
+.welcome-block {
 	max-width: 700px;
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -22,19 +23,24 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<PagedList<PersistedGrantDataView>> GetPersitedGrantsByUsers(int page = 1, int pageSize = 10)
+        public async Task<PagedList<PersistedGrantDataView>> GetPersitedGrantsByUsers(string search, int page = 1, int pageSize = 10)
         {
             var pagedList = new PagedList<PersistedGrantDataView>();
 
             var persistedGrantByUsers = (from pe in _dbContext.PersistedGrants
                                          join us in _dbContext.Users on Convert.ToInt32(pe.SubjectId) equals us.Id into per
                                          from us in per.DefaultIfEmpty()
-                                         select new PersistedGrantDataView { SubjectId = pe.SubjectId, SubjectName = us == null ? string.Empty : us.UserName })
-                                        .GroupBy(x => new { x.SubjectId })
-                                        .Select(grp => grp.First());
+                                         select new PersistedGrantDataView
+                                         {
+                                             SubjectId = pe.SubjectId,
+                                             SubjectName = us == null ? string.Empty : us.UserName
+                                         })
+                .Distinct();
 
-            var persistedGrantsData = await persistedGrantByUsers.PageBy(x => x.SubjectId, page, pageSize).ToListAsync();
-            var persistedGrantsDataCount = await persistedGrantByUsers.CountAsync();
+            Expression<Func<PersistedGrantDataView, bool>> searchCondition = x => x.SubjectId.Contains(search) || x.SubjectName.Contains(search);
+
+            var persistedGrantsData = await persistedGrantByUsers.WhereIf(!string.IsNullOrEmpty(search), searchCondition).PageBy(x => x.SubjectId, page, pageSize).ToListAsync();
+            var persistedGrantsDataCount = await persistedGrantByUsers.WhereIf(!string.IsNullOrEmpty(search), searchCondition).CountAsync();
 
             pagedList.Data.AddRange(persistedGrantsData);
             pagedList.TotalCount = persistedGrantsDataCount;
@@ -56,7 +62,7 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
                 Data = x.Data,
                 Expiration = x.Expiration,
                 CreationTime = x.CreationTime
-            }).PageBy(x=> x.SubjectId, page, pageSize).ToListAsync();
+            }).PageBy(x => x.SubjectId, page, pageSize).ToListAsync();
 
             var persistedGrantsCount = await _dbContext.PersistedGrants.Where(x => x.SubjectId == subjectId).CountAsync();
 

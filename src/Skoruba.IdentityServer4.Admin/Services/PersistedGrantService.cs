@@ -19,9 +19,9 @@ namespace Skoruba.IdentityServer4.Admin.Services
             _localizer = localizer;
         }
 
-        public async Task<PersistedGrantsDto> GetPersitedGrantsByUsers(int page = 1, int pageSize = 10)
+        public async Task<PersistedGrantsDto> GetPersitedGrantsByUsers(string search, int page = 1, int pageSize = 10)
         {
-            var pagedList = await _persistedGrantRepository.GetPersitedGrantsByUsers(page, pageSize);
+            var pagedList = await _persistedGrantRepository.GetPersitedGrantsByUsers(search, page, pageSize);
             var persistedGrantsDto = pagedList.ToModel();
 
             return persistedGrantsDto;

@@ -28,9 +28,10 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> PersistedGrants(int? page)
+        public async Task<IActionResult> PersistedGrants(int? page, string search)
         {
-            var persistedGrants = await _persistedGrantService.GetPersitedGrantsByUsers(page ?? 1);
+            ViewBag.Search = search;
+            var persistedGrants = await _persistedGrantService.GetPersitedGrantsByUsers(search, page ?? 1);
 
             return View(persistedGrants);
         }
