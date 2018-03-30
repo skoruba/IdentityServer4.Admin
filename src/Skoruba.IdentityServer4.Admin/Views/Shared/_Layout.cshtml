@@ -9,19 +9,11 @@
 	<title>@ViewData["Title"] - @Localizer["PageTitle"]</title>
 
 	<environment include="Development">
-		<link href="~/css/bootstrap/css/bootstrap.css" rel="stylesheet" />
-		<link href="~/css/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet" />
-		<link href="~/css/toastr/toastr.css" rel="stylesheet" />
-		<link href="~/css/font-awesome/css/font-awesome.css" rel="stylesheet" />
-		<link href="~/css/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.css" rel="stylesheet" />
+		<link href="~/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
 		<link href="~/css/web.css" asp-append-version="true" rel="stylesheet" />
 	</environment>
 	<environment exclude="Development">
-		<link href="~/css/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-		<link href="~/css/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet" />
-		<link href="~/css/toastr/toastr.min.css" rel="stylesheet" />
-		<link href="~/css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-		<link href="~/css/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+		<link href="~/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
 		<link href="~/css/web.min.css" asp-append-version="true" rel="stylesheet" />
 	</environment>
 

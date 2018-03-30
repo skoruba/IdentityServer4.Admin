@@ -22,18 +22,6 @@
 		]
 	},
 	{
-		"outputFileName": "wwwroot/css/bundle.css",
-		"inputFiles": [
-			//"node_modules/bootstrap/dist/css/bootstrap.css",
-			"node_modules/toastr/build/toastr.css",
-			"node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css"
-		],
-		"minify": {
-			"enabled": true,
-			"adjustRelativePaths": false
-		}
-	},
-	{
 		"outputFileName": "wwwroot/css/web.css",
 		"inputFiles": [
 			"Styles/web.css",

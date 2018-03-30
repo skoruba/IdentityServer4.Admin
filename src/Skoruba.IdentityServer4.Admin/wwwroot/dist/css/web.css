@@ -1,4 +1,7 @@
-﻿/*Common*/
+/*Common*/
+@import url(https://fonts.googleapis.com/css?family=Lato);
+@import url(https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900);
+@import url(https://fonts.googleapis.com/css?family=Muli);
 @media (max-width: 767px) {
   .menu {
     text-align: center; }
@@ -458,4 +461,3 @@ label > input:checked + img {
 
 label > h3, label > h4 {
   cursor: pointer; }
-
