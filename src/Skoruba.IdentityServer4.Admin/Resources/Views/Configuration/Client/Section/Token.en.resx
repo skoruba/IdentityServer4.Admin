@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonManageClientClaims" xml:space="preserve">
-    <value>Manage client claims</value>
+    <value>Manage Client Claims</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
     <value>Token</value>

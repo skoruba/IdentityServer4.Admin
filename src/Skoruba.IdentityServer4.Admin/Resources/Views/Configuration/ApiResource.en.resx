@@ -118,21 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonDeleteApiResource" xml:space="preserve">
-    <value>Delete api resource</value>
+    <value>Delete Api Resource</value>
   </data>
   <data name="ButtonManageScopes" xml:space="preserve">
-    <value>Manage scopes</value>
+    <value>Manage Api Scopes</value>
   </data>
   <data name="ButtonManageSecrets" xml:space="preserve">
-    <value>Manage secrets</value>
+    <value>Manage Api Secrets</value>
   </data>
   <data name="ButtonSaveApiResource" xml:space="preserve">
-    <value>Save api resource</value>
+    <value>Save Api Resource</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Api Resource</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
-    <value>Add Api Resource</value>
+    <value>Api Resource</value>
   </data>
 </root>

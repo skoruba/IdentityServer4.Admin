@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonDeleteUser" xml:space="preserve">
-    <value>Delete user</value>
+    <value>Delete User</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Delete User</value>

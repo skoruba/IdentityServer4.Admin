@@ -9,17 +9,17 @@
 
 <h2>@Localizer["PageTitle"]</h2>
 
-<form asp-action="IdentityResourceDelete" method="post" class="form-horizontal">
+<form asp-action="IdentityResourceDelete" method="post">
 	<!--Hidden -->
 	<input type="hidden" asp-for="Id" />
 
-	<div class="panel panel-default">
-		<div class="panel-heading">@Localizer["PanelTitle"]</div>
-		<div class="panel-body">
+	<div class="card mt-3">
+		<h5 class="card-header">@Localizer["PanelTitle"]</h5>
+		<div class="card-body">
 
 			<!--Input - text -->
-			<div class="form-group">
-				<label asp-for="Name" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="Name" class="col-sm-3 col-form-label">
 					@Html.Partial("IdentityResource/Section/Label", "Name")
 				</label>
 				<div class="col-sm-9">
@@ -28,8 +28,8 @@
 			</div>
 
 			<!--Button-->
-			<div class="form-group">
-				<label class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label class="col-sm-3 col-form-label">
 				</label>
 				<div class="col-sm-9">
 					<button type="submit" class="btn btn-danger">@Localizer["ButtonDelete"]</button>

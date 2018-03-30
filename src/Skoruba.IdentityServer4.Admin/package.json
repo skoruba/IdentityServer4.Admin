@@ -9,9 +9,12 @@
 		"bootstrap": "4.0.0",
 		"knockout": "3.4.2",
 		"toastr": "2.1.4",
-		"eonasdan-bootstrap-datetimepicker": "4.17.45",
+		"tempusdominus-bootstrap-4": "5.0.0-alpha18",
 		"popper.js": "1.12.9",
 		"holderjs": "2.9.4",
-		"open-iconic": "1.1.1"
+		"open-iconic": "1.1.1",
+		"moment": "2.21.0",
+		"moment-timezone": "0.5.14",
+		"tempusdominus-core": "5.0.0-alpha17"
 	}
 }

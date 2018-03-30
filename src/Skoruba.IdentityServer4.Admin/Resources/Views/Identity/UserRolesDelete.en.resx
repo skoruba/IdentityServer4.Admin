@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ActionDeleteRole" xml:space="preserve">
-    <value>Delete role</value>
+    <value>Delete Role</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
     <value>Delete Role</value>

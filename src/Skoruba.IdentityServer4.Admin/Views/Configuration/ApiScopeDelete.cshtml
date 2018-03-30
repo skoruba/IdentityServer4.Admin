@@ -10,6 +10,10 @@
 <h2>@Localizer["PageTitle"]</h2>
 
 <form asp-action="ApiScopeDelete" method="post">
+
+
+	<a asp-action="ApiScopes" asp-route-id="@Model.ApiResourceId" class="btn btn-outline-primary mt-3 mb-3">@Localizer["ButtonBackApiScope"]</a>
+
 	<!--Hidden -->
 	<input type="hidden" asp-for="ApiScopeId" />
 

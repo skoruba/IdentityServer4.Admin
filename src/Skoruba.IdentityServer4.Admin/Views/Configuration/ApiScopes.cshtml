@@ -127,7 +127,7 @@
 								{
 									<tr>
 										<td>@scope.Name</td>
-										<td><a asp-action="ApiScopes" asp-route-scope="@scope.Id" class="btn btn-primary">@Localizer["TableButtonRemove"]</a></td>
+										<td><a asp-action="ApiScopes" asp-route-scope="@scope.Id" class="btn btn-primary">@Localizer["TableButtonEdit"]</a> <a asp-action="ApiScopeDelete" asp-route-id="@Model.ApiResourceId" asp-route-scope="@scope.Id" class="btn btn-danger">@Localizer["TableButtonRemove"]</a></td>						
 									</tr>
 								}
 							</tbody>

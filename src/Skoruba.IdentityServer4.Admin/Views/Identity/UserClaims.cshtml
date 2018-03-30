@@ -87,7 +87,7 @@
 								<tr>
 									<td>@client.ClaimType</td>
 									<td>@client.ClaimValue</td>
-									<td><a asp-action="UserClaimsDelete" asp-route-claimId="@client.ClaimId" asp-route-id="@Model.UserId" class="btn btn-danger"><span class="oi oi-x"></span> @Localizer["TableButtonRemove"]</a></td>
+									<td><a asp-action="UserClaimsDelete" asp-route-claimId="@client.ClaimId" asp-route-id="@Model.UserId" class="btn btn-danger">@Localizer["TableButtonRemove"]</a></td>
 								</tr>
 							}
 						</tbody>
