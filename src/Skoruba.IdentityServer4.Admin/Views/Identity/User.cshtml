@@ -130,8 +130,11 @@
 					@Html.Partial("User/Section/Label", "UserLockoutEnd")
 				</label>
 				<div class="col-sm-9">
-					<div class="input-group date" id="logoutend-picker">
+					<div class="input-group date" id="logoutend-picker" data-target-input="nearest">
 						<input asp-for="LockoutEnd" type="text" class="form-control">
+						<div class="input-group-append" data-target="#logoutend-picker" data-toggle="datetimepicker">
+							<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+						</div>
 					</div>
 				</div>
 			</div>

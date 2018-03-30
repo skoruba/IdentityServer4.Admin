@@ -11,7 +11,7 @@
 			"node_modules/knockout/build/output/knockout-latest.js",
 			"node_modules/toastr/toastr.js",
 			"node_modules/moment/min/moment.min.js",
-			"node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js",
+			"node_modules/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.js",
 			"Scripts/App/components/Menu.js",
 			"Scripts/App/components/Picker.es5.js",
 			"Scripts/App/components/Theme.js",
