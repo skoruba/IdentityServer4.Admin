@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
 @model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientCloneDto
 @inject IViewLocalizer Localizer
 
@@ -10,7 +9,7 @@
 
 <h2>@Localizer["PageTitle"] - @Model.ClientIdOriginal (@Model.ClientNameOriginal)</h2>
 
-<form id="client-form" class="form-horizontal" asp-controller="Configuration" asp-action="ClientClone" Method="post">
+<form id="client-form" asp-controller="Configuration" asp-action="ClientClone" Method="post">
 
 	<div asp-validation-summary="All" class="text-danger"></div>
 
@@ -23,7 +22,6 @@
 			<div class="form-group row">
 				<div class="col-md-12">
 					<div class="alert alert-warning" role="alert">
-						<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 						<span class="sr-only">@Localizer["InfoTitle"]</span>
 						@Localizer["InfoDescription"]
 					</div>
@@ -100,7 +98,6 @@
 				</div>
 			</div>
 
-
 			<!--Checkbox-->
 			<div class="form-group row">
 				<label asp-for="CloneClientCorsOrigins" class="col-sm-3 col-form-label">
@@ -154,7 +151,7 @@
 				<label class="col-sm-3 col-form-label">
 				</label>
 				<div class="col-sm-9">
-					<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> @Localizer["ButtonClone"]</button>
+					<button type="submit" class="btn btn-primary">@Localizer["ButtonClone"]</button>
 				</div>
 			</div>
 		</div>

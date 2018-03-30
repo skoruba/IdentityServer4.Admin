@@ -1,6 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.ViewModels.Common
-@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
 @model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientClaimsDto
 @inject IViewLocalizer Localizer
 
@@ -9,14 +8,14 @@
 	Layout = "_Layout";
 }
 
-<form class="form-horizontal" id="client-claims-form" asp-controller="Configuration" asp-action="ClientClaims" Method="post">
+<form id="client-claims-form" asp-controller="Configuration" asp-action="ClientClaims" Method="post">
 	<div class="row">
 		<div class="col-md-12">
 			<h3>@Localizer["PageTitle"] - @Model.ClientName</h3>
 
 			<div asp-validation-summary="All" class="text-danger"></div>
 
-			<a asp-action="Client" asp-route-id="@Model.ClientId" class="btn btn-outline-primary col-m-b-15">@Localizer["ButtonBackClient"]</a>
+			<a asp-action="Client" asp-route-id="@Model.ClientId" class="btn btn-outline-primary mb-3">@Localizer["ButtonBackClient"]</a>
 
 			<!--Hidden -->
 			<input type="hidden" asp-for="ClientId" />
@@ -60,12 +59,11 @@
 						<label class="col-sm-3 col-form-label">
 						</label>
 						<div class="col-sm-9">
-							<button type="submit" id="client-claims-button" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> @Localizer["ButtonAddNewClaim"]</button>
+							<button type="submit" id="client-claims-button" class="btn btn-primary">@Localizer["ButtonAddNewClaim"]</button>
 						</div>
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </form>
@@ -92,7 +90,7 @@
 								<tr>
 									<td>@client.Type</td>
 									<td>@client.Value</td>
-									<td><a asp-action="ClientClaimDelete" asp-route-id="@client.Id" class="btn btn-danger"><span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["TableButtonRemove"]</a></td>
+									<td><a asp-action="ClientClaimDelete" asp-route-id="@client.Id" class="btn btn-danger">@Localizer["TableButtonRemove"]</a></td>
 								</tr>
 							}
 						</tbody>
@@ -101,7 +99,7 @@
 
 				<div class="row">
 					<div class="col-12">
-						@Html.Partial("Common/Pager", new Pager() { Action = "ClientClaims", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
+						@Html.Partial("Common/Pager", new Pager { Action = "ClientClaims", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
 					</div>
 				</div>
 			</div>

@@ -1,32 +1,31 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.Admin.ViewModels.Identity
 @model Skoruba.IdentityServer4.Admin.ViewModels.Identity.UserRolesDto
 @inject IViewLocalizer Localizer
-	
+
 @{
 	ViewBag.Title = Localizer["Title"];
 	Layout = "_Layout";
-}	
+}
 
-<form class="form-horizontal" asp-controller="Identity" asp-action="UserRolesDelete" Method="post">
+<form asp-controller="Identity" asp-action="UserRolesDelete" Method="post">
 	<div class="row">
 		<div class="col-md-12">
-			
+
 			<h3>@Localizer["Title"]</h3>
 
 			<!--Hidden -->
-			<input type="hidden" asp-for="UserId"/>
+			<input type="hidden" asp-for="UserId" />
 
 			<!--Hidden -->
-			<input type="hidden" asp-for="RoleId"/>
+			<input type="hidden" asp-for="RoleId" />
 
-			<div class="panel panel-default">
-				<div class="panel-heading">@Localizer["SubTitle"]</div>
-				<div class="panel-body">
+			<div class="card mt-3">
+				<h5 class="card-header">@Localizer["SubTitle"]</h5>
+				<div class="card-body">
 
 					<!--Select-->
-					<div class="form-group">
-						<label asp-for="RoleId" class="col-sm-3 control-label">
+					<div class="form-group row">
+						<label asp-for="RoleId" class="col-sm-3 col-form-label">
 							@Html.Partial("User/Section/Label", "RolesList")
 						</label>
 						<div class="col-sm-9">
@@ -35,16 +34,15 @@
 					</div>
 
 					<!--Button-->
-					<div class="form-group">
-						<label class="col-sm-3 control-label">
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label">
 						</label>
 						<div class="col-sm-9">
-							<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["ActionDeleteRole"]</button>
+							<button type="submit" class="btn btn-danger">@Localizer["ActionDeleteRole"]</button>
 						</div>
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </form>

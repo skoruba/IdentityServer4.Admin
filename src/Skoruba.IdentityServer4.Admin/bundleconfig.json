@@ -13,12 +13,12 @@
 			"node_modules/moment/min/moment.min.js",
 			"node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js",
 			"Scripts/App/components/Menu.js",
-			"Scripts/App/components/Picker.js",
+			"Scripts/App/components/Picker.es5.js",
 			"Scripts/App/components/Theme.js",
 			"Scripts/App/helpers/FormMvcHelpers.js",
 			"Scripts/App/helpers/jsontree.min.js",
 			"Scripts/App/helpers/DateTimeHelpers.js",
-			"Scripts/App/pages/ErrorsLog.js"
+			"Scripts/App/pages/ErrorsLog.es5.js"
 		]
 	},
 	{

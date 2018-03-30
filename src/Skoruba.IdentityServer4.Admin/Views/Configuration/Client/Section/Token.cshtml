@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
 @model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientDto
 @inject IViewLocalizer Localizer
 
@@ -173,7 +172,7 @@
 				@Html.Partial("Client/Section/Label", "Claims")
 			</label>
 			<div class="col-sm-9">
-				<a asp-action="ClientClaims" asp-route-id="@Model.Id" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> @Localizer["ButtonManageClientClaims"]</a>
+				<a asp-action="ClientClaims" asp-route-id="@Model.Id" target="_blank" class="btn btn-primary">@Localizer["ButtonManageClientClaims"]</a>
 			</div>
 		</div>
 	</div>

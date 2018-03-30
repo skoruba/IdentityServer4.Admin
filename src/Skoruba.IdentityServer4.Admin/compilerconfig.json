@@ -30,5 +30,13 @@
   {
     "outputFile": "wwwroot/js/bundle.es5.js",
     "inputFile": "wwwroot/js/bundle.js"
+  },
+  {
+    "outputFile": "Scripts/App/components/Picker.es5.js",
+    "inputFile": "Scripts/App/components/Picker.js"
+  },
+  {
+    "outputFile": "Scripts/App/pages/ErrorsLog.es5.js",
+    "inputFile": "Scripts/App/pages/ErrorsLog.js"
   }
 ]

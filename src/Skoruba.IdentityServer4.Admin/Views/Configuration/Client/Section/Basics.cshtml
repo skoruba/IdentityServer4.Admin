@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
 @model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientDto
 @inject IViewLocalizer Localizer
 <!--Hidden -->
@@ -147,7 +146,7 @@
 				@Html.Partial("Client/Section/Label", "ClientSecrets")
 			</label>
 			<div class="col-sm-9">
-				<a asp-action="ClientSecrets" asp-route-id="@Model.Id" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon-lock" aria-hidden="true"></span> @Localizer["ButtonManageClientSecrets"]</a>
+				<a asp-action="ClientSecrets" asp-route-id="@Model.Id" target="_blank" class="btn btn-primary">@Localizer["ButtonManageClientSecrets"]</a>
 			</div>
 		</div>
 
@@ -158,7 +157,7 @@
 				@Html.Partial("Client/Section/Label", "Properties")
 			</label>
 			<div class="col-sm-9">
-				<a asp-action="ClientProperties" asp-route-id="@Model.Id" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> @Localizer["ButtonManageClientProperties"]</a>
+				<a asp-action="ClientProperties" asp-route-id="@Model.Id" target="_blank" class="btn btn-primary">@Localizer["ButtonManageClientProperties"]</a>
 			</div>
 		</div>
 	</div>

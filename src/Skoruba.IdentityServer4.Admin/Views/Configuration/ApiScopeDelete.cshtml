@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
 @model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ApiScopesDto
 @inject IViewLocalizer Localizer
 
@@ -10,7 +9,7 @@
 
 <h2>@Localizer["PageTitle"]</h2>
 
-<form asp-action="ApiScopeDelete" method="post" class="form-horizontal">
+<form asp-action="ApiScopeDelete" method="post">
 	<!--Hidden -->
 	<input type="hidden" asp-for="ApiScopeId" />
 
@@ -37,7 +36,7 @@
 				<label class="col-sm-3 col-form-label">
 				</label>
 				<div class="col-sm-9">
-					<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["ButtonDeleteApiScope"]</button>
+					<button type="submit" class="btn btn-danger">@Localizer["ButtonDeleteApiScope"]</button>
 				</div>
 			</div>
 		</div>

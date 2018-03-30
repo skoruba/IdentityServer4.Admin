@@ -22098,14 +22098,16 @@ var Menu = {
 };
 
 Menu.init();
+"use strict";
+
 ko.components.register('picker', {
-	viewModel: function (params) {
+	viewModel: function viewModel(params) {
 
 		var self = this;
 
 		//Constants
-		const minSearchSelecteConst = 2;
-		const inputSearchDelay = 500;
+		var minSearchSelecteConst = 2;
+		var inputSearchDelay = 500;
 
 		//Input
 		this.textTerm = ko.observable("").extend({ rateLimit: inputSearchDelay });
@@ -22113,7 +22115,7 @@ ko.components.register('picker', {
 		this.multipleSelect = ko.observable(params.multipleSelect || false);
 
 		//Labels
-		this.searchInputPlaceholder = ko.observable(params.searchInputPlaceholder || `Enter ${this.minSearchText()} or more characters`);
+		this.searchInputPlaceholder = ko.observable(params.searchInputPlaceholder || "Enter " + this.minSearchText() + " or more characters");
 		this.selectedItemsTitle = ko.observable(params.selectedItemsTitle || "Selected: ");
 
 		//Collections
@@ -22124,18 +22126,18 @@ ko.components.register('picker', {
 		this.loading = ko.observable(false);
 
 		//Sync selected items to hiddenField for server-side
-		const selectedItems = ko.toJSON(this.selectedResult);
+		var selectedItems = ko.toJSON(this.selectedResult);
 		if (this.multipleSelect() === true) {
 			if (this.selectedResult().length === 0) {
-				$(`#${params.hiddenId}`).val("");
+				$("#" + params.hiddenId).val("");
 			} else {
-				$(`#${params.hiddenId}`).val(selectedItems);
+				$("#" + params.hiddenId).val(selectedItems);
 			}
 		} else {
 			if (this.selectedResult().length === 0) {
-				$(`#${params.hiddenId}`).val("");
+				$("#" + params.hiddenId).val("");
 			} else {
-				$(`#${params.hiddenId}`).val(this.selectedResult()[0]);
+				$("#" + params.hiddenId).val(this.selectedResult()[0]);
 			}
 		}
 
@@ -22155,18 +22157,17 @@ ko.components.register('picker', {
 					self.loading(true);
 
 					//make ajax request and result add to search result
-					$.get(`${params.url}=${searchTerm}`,
-						function (data) {
+					$.get(params.url + "=" + searchTerm, function (data) {
 
-							if (data.indexOf(searchTerm) === -1) {
-								data.push(searchTerm);
-							}
+						if (data.indexOf(searchTerm) === -1) {
+							data.push(searchTerm);
+						}
 
-							self.searchResult(data);
+						self.searchResult(data);
 
-							//stop loading
-							self.loading(false);
-						});
+						//stop loading
+						self.loading(false);
+					});
 				} else {
 					self.searchResult([searchTerm]);
 				}
@@ -22193,52 +22194,48 @@ ko.components.register('picker', {
 			}
 			//Multiple select
 			else if (this.multipleSelect() === true) {
-				this.selectedResult.push(item);
-				this.clear();
-				this.sync();
-			}
-		}
-
+					this.selectedResult.push(item);
+					this.clear();
+					this.sync();
+				}
+		};
 
 		//Clear search input and search result
 		this.clear = function () {
 			this.textTerm("");
 			self.searchResult([]);
-		}
+		};
 
 		//Remove selected item
 		this.remove = function (item) {
 			this.selectedResult.remove(item);
 			this.sync();
-		}
+		};
 
 		//Synchronize the selected items to hidden field for server-side part
 		this.sync = function () {
-			const selectedItems = ko.toJSON(this.selectedResult);
+			var selectedItems = ko.toJSON(this.selectedResult);
 			if (this.multipleSelect() === true) {
 				if (this.selectedResult().length === 0) {
-					$(`#${params.hiddenId}`).val("");
+					$("#" + params.hiddenId).val("");
 				} else {
-					$(`#${params.hiddenId}`).val(selectedItems);
+					$("#" + params.hiddenId).val(selectedItems);
 				}
 			} else {
 				if (this.selectedResult().length === 0) {
-					$(`#${params.hiddenId}`).val("");
+					$("#" + params.hiddenId).val("");
 				} else {
-					$(`#${params.hiddenId}`).val(this.selectedResult()[0]);
+					$("#" + params.hiddenId).val(this.selectedResult()[0]);
 				}
 			}
-		}
+		};
 	},
-	template: '<input class="form-control" data-bind="textInput: textTerm, attr: {placeholder: searchInputPlaceholder}" />' +
-	'<div class="block__buttons__add" data-bind="foreach: searchResult"><input type="button" class="btn button__add" data-bind="value: $data, click: function() { $parent.add($data); }"></div>' +
-	'<img data-bind="visible: loading()" src="/images/loading.gif" alt="Loading.." />' +
-	'<hr data-bind="visible: selectedResult().length > 0" />' +
-	'<div data-bind="visible: selectedResult().length > 0, text: selectedItemsTitle" class="search-title"></div>' +
-	'<div data-bind="foreach: selectedResult"><button class="btn button__delete" data-bind="click: function() { $parent.remove($data); }"><span data-bind="text: $data"></span> <span class="glyphicon glyphicon-remove"></span></button></div>'
+	template: '<input class="form-control" data-bind="textInput: textTerm, attr: {placeholder: searchInputPlaceholder}" />' + '<div class="block__buttons__add" data-bind="foreach: searchResult"><input type="button" class="btn btn-primary button__add" data-bind="value: $data, click: function() { $parent.add($data); }"></div>' + '<img data-bind="visible: loading()" src="/images/loading.gif" alt="Loading.." />' + '<hr data-bind="visible: selectedResult().length > 0" />' + '<div data-bind="visible: selectedResult().length > 0, text: selectedItemsTitle" class="search-title"></div>' + '<div data-bind="foreach: selectedResult"><button class="btn btn-outline-primary button__delete" data-bind="click: function() { $parent.remove($data); }"><span data-bind="text: $data"></span> <span class="oi oi-x"></span></button></div>'
 });
 
 ko.applyBindings();
+
+
 Holder.addTheme('thumb', {
 	bg: '#55595c',
 	fg: '#eceeef',
@@ -22290,12 +22287,14 @@ $(function () {
 	$('[data-toggle="tooltip"]').tooltip();
 
 });
+"use strict";
+
 $(function () {
 
 	$(".row-error-detail>td").each(function () {
 
-		const json = $(this).data("error-json");
-		const result = JSONTree.create(JSON.parse(json));
+		var json = $(this).data("error-json");
+		var result = JSONTree.create(JSON.parse(json));
 
 		$(this).html(result);
 	});
@@ -22306,13 +22305,12 @@ $(function () {
 
 		var errorId = $(this).data("error-id");
 
-		if ($(`.row-error-detail[data-error-id=${errorId}]`).is(":visible")) {
-			$(`.row-error-detail[data-error-id=${errorId}]`).addClass('hidden');
+		if ($(".row-error-detail[data-error-id=" + errorId + "]").is(":visible")) {
+			$(".row-error-detail[data-error-id=" + errorId + "]").addClass('d-none');
 		} else {
-			$(`.row-error-detail[data-error-id=${errorId}]`).removeClass('hidden');
+			$(".row-error-detail[data-error-id=" + errorId + "]").removeClass('d-none');
 		}
 
 		return false;
 	});
-
 });

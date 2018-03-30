@@ -1,11 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
 @using Skoruba.IdentityServer4.Admin.ViewModels.Enums
 @model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientDto
 @inject IViewLocalizer Localizer
 	
-
-
 <div class="card">
 	<h5 class="card-header">@Localizer["PanelTitle"]</h5>
 	<div class="card-body">
@@ -64,7 +61,6 @@
 			</div>
 
 			<div class="row text-center m-4">
-
 				<div class="col-md-4">
 					<label>
 						<input type="radio" asp-for="ClientType" value="@((int)ClientType.Spa)" />

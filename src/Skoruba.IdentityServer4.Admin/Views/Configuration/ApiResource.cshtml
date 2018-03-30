@@ -1,6 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Newtonsoft.Json
-@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
 @model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ApiResourceDto
 @inject IViewLocalizer Localizer
 
@@ -11,7 +9,7 @@
 
 <h2>@Localizer["PageTitle"]</h2>
 
-<form asp-action="ApiResource" method="post" id="api-resource-form" class="form-horizontal">
+<form asp-action="ApiResource" method="post" id="api-resource-form">
 
 	<div asp-validation-summary="All" class="text-danger"></div>
 
@@ -73,7 +71,7 @@
 						@Html.Partial("ApiResource/Section/Label", "Scopes")
 					</label>
 					<div class="col-sm-9">
-						<a asp-action="ApiScopes" asp-route-id="@Model.Id" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span> @Localizer["ButtonManageScopes"]</a>
+						<a asp-action="ApiScopes" asp-route-id="@Model.Id" class="btn btn-primary">@Localizer["ButtonManageScopes"]</a>
 					</div>
 				</div>
 				<!--Button-->
@@ -82,7 +80,7 @@
 						@Html.Partial("ApiResource/Section/Label", "Secrets")
 					</label>
 					<div class="col-sm-9">
-						<a asp-action="ApiSecrets" asp-route-id="@Model.Id" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon-lock" aria-hidden="true"></span> @Localizer["ButtonManageSecrets"]</a>
+						<a asp-action="ApiSecrets" asp-route-id="@Model.Id" class="btn btn-primary">@Localizer["ButtonManageSecrets"]</a>
 					</div>
 				</div>
 			}
@@ -105,10 +103,10 @@
 				<label class="col-sm-3 col-form-label">
 				</label>
 				<div class="col-sm-9">
-					<button type="submit" id="api-resource-save-button" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> @Localizer["ButtonSaveApiResource"]</button>
+					<button type="submit" id="api-resource-save-button" class="btn btn-primary">@Localizer["ButtonSaveApiResource"]</button>
 					@if (Model.Id != 0)
 					{
-						<a class="btn btn-danger" asp-action="ApiResourceDelete" asp-route-id="@Model.Id"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["ButtonDeleteApiResource"]</a>
+						<a class="btn btn-danger" asp-action="ApiResourceDelete" asp-route-id="@Model.Id">@Localizer["ButtonDeleteApiResource"]</a>
 					}
 				</div>
 			</div>

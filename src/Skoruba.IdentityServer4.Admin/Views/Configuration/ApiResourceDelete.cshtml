@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
 @model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ApiResourceDto
 @inject IViewLocalizer Localizer
 
@@ -10,7 +9,7 @@
 
 <h2>@Localizer["PageTitle"]</h2>
 
-<form asp-action="ApiResourceDelete" method="post" id="api-resource-form" class="form-horizontal">
+<form asp-action="ApiResourceDelete" method="post" id="api-resource-form">
 	
 	<!--Hidden -->
 	<input type="hidden" asp-for="Id"/>
@@ -34,10 +33,9 @@
 				<label class="col-sm-3 control-label">
 				</label>
 				<div class="col-sm-9">
-					<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["ButtonDeleteApiResource"]</button>
+					<button type="submit" class="btn btn-danger">@Localizer["ButtonDeleteApiResource"]</button>
 				</div>
 			</div>
 		</div>
 	</div>
-
 </form>

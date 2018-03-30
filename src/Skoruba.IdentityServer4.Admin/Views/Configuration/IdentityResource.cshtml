@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
 @model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.IdentityResourceDto
 @inject IViewLocalizer Localizer
 
@@ -10,7 +9,7 @@
 
 <h2>@Localizer["PageTitle"]</h2>
 
-<form asp-action="IdentityResource" method="post" id="identity-resource-form" class="form-horizontal">
+<form asp-action="IdentityResource" method="post" id="identity-resource-form">
 
 	<div asp-validation-summary="All" class="text-danger"></div>
 
@@ -117,10 +116,10 @@
 				<label class="col-sm-3 col-form-label">
 				</label>
 				<div class="col-sm-9">
-					<button type="submit" asp-action="IdentityResource" id="identity-resource-save-button" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon-ok" aria-hidden="true"></span> @Localizer["ButtonSave"]</button>
+					<button type="submit" asp-action="IdentityResource" id="identity-resource-save-button" class="btn btn-primary">@Localizer["ButtonSave"]</button>
 					@if (Model.Id != 0)
 					{
-						<a class="btn btn-danger" asp-action="IdentityResourceDelete" asp-route-id="@Model.Id"><span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["ButtonDelete"]</a>
+						<a class="btn btn-danger" asp-action="IdentityResourceDelete" asp-route-id="@Model.Id">@Localizer["ButtonDelete"]</a>
 					}
 				</div>
 			</div>

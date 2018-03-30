@@ -1,6 +1,4 @@
-﻿@using Newtonsoft.Json
-@using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
+﻿@using Microsoft.AspNetCore.Mvc.Localization
 @model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientDto
 @inject IViewLocalizer Localizer
 
@@ -9,7 +7,7 @@
 	Layout = "_Layout";
 }
 
-<form id="client-form" class="form-horizontal" asp-controller="Configuration" asp-action="Client" Method="post">
+<form id="client-form" asp-controller="Configuration" asp-action="Client" Method="post">
 	@if (Model.Id != 0)
 	{
 		<h2>@Localizer["Title"] @Model.ClientId</h2>
@@ -30,7 +28,6 @@
 	{
 	<script>
 		$(function () {
-
 			//Disable enter for this form
 			FormMvc.disableEnter($('#client-form'));			
 		});

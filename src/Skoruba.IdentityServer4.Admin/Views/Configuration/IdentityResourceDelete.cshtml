@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
 @model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.IdentityResourceDto
 @inject IViewLocalizer Localizer
 
@@ -33,7 +32,7 @@
 				<label class="col-sm-3 control-label">
 				</label>
 				<div class="col-sm-9">
-					<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["ButtonDelete"]</button>
+					<button type="submit" class="btn btn-danger">@Localizer["ButtonDelete"]</button>
 				</div>
 			</div>
 		</div>

@@ -1,7 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.Helpers
 @using Skoruba.IdentityServer4.Admin.ViewModels.Common
-@using Skoruba.IdentityServer4.Admin.ViewModels.Grant
 @model Skoruba.IdentityServer4.Admin.ViewModels.Grant.PersistedGrantsDto
 @inject IViewLocalizer Localizer
 
@@ -12,9 +11,9 @@
 
 <h2>@Localizer["PageTitle"]</h2>
 
-<form id="client-form" class="form-horizontal" asp-controller="Grant" asp-action="PersistedGrantsDelete" Method="post">
+<form id="client-form" asp-controller="Grant" asp-action="PersistedGrantsDelete" Method="post">
 
-	<a href="#" class="btn btn-danger mb-3" data-toggle="modal" data-target="#deletePersistedGrantsModal"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["ButtonDeleteAll"]</a>
+	<a href="#" class="btn btn-danger mb-3" data-toggle="modal" data-target="#deletePersistedGrantsModal">@Localizer["ButtonDeleteAll"]</a>
 
 	<!--Hidden -->
 	<input type="hidden" asp-for="SubjectId" />
@@ -50,7 +49,7 @@
 
 	<div class="row">
 		<div class="col-12">
-			@Html.Partial("Common/Pager", new Pager() { Action = "PersistedGrant", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
+			@Html.Partial("Common/Pager", new Pager { Action = "PersistedGrant", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
 		</div>
 	</div>
 
