@@ -1,3 +1,4 @@
+[<img align="left" src="https://github.com/skoruba/IdentityServer4.Admin/blob/dev/docs/Images/Skoruba.IdentityServer4.Admin-Logo-ReadMe.png?raw=true" />](https://dotnetfoundation.org)
 # Skoruba.IdentityServer4.Admin
 
 ### The administration of the IdentityServer4 and Asp.Net Core Identity
