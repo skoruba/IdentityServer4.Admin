@@ -3,6 +3,11 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var sass = require('gulp-sass');
 var minifyCSS = require('gulp-minify-css');
+var del = require('del');
+
+var distFolder = './wwwroot/dist/';
+var jsFolder = `${distFolder}js/`;
+var cssFolder = `${distFolder}css/`;
 
 gulp.task('scripts', function () {
 	gulp
@@ -27,7 +32,7 @@ gulp.task('scripts', function () {
 		])
 		.pipe(concat('bundle.min.js'))
 		.pipe(uglify())
-		.pipe(gulp.dest('./wwwroot/js/'));
+		.pipe(gulp.dest(jsFolder));
 });
 
 gulp.task('styles', ['sass', 'sass:min'], function () {
@@ -42,7 +47,13 @@ gulp.task('styles', ['sass', 'sass:min'], function () {
 		])
 		.pipe(minifyCSS())
 		.pipe(concat('bundle.min.css'))
-		.pipe(gulp.dest('./wwwroot/css/'));
+		.pipe(gulp.dest(cssFolder));
+});
+
+gulp.task('fonts', function () {
+	return gulp.src([
+		'./node_modules/font-awesome/fonts/**', './node_modules/open-iconic/font/fonts/**'])
+		.pipe(gulp.dest(`${distFolder}fonts/`));
 });
 
 gulp.task('sass:min', function () {
@@ -51,18 +62,18 @@ gulp.task('sass:min', function () {
 		.pipe(sass().on('error', sass.logError))
 		.pipe(minifyCSS())
 		.pipe(concat('web.min.css'))
-		.pipe(gulp.dest('./wwwroot/css/'));
+		.pipe(gulp.dest(cssFolder));
 });
 
 gulp.task('sass', function () {
 	gulp
 		.src('Styles/web.scss')
 		.pipe(sass().on('error', sass.logError))
-		.pipe(gulp.dest('./wwwroot/css/'));
+		.pipe(gulp.dest(cssFolder));
 });
 
 gulp.task('clean', function () {
-	console.log("cleanup");
+	return del(`${distFolder}**`, { force: true });
 });
 
 gulp.task('build', ['styles', 'scripts']);
