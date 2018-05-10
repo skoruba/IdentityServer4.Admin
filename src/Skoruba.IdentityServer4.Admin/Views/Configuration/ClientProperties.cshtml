@@ -1,6 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.ViewModels.Common
-@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
 @model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientPropertiesDto
 @inject IViewLocalizer Localizer
 
@@ -9,28 +8,28 @@
 	Layout = "_Layout";
 }
 
-<form class="form-horizontal" asp-controller="Configuration" asp-action="ClientProperties" Method="post">
+<form asp-controller="Configuration" asp-action="ClientProperties" Method="post">
 	<div class="row">
 		<div class="col-md-12">
 			<h3>@Localizer["PageTitle"] - @Model.ClientName</h3>
-			
+
 			<div asp-validation-summary="All" class="text-danger"></div>
 
-			<a asp-action="Client" asp-route-id="@Model.ClientId" class="btn btn-info col-m-b-15">@Localizer["ButtonBackClient"]</a>
+			<a asp-action="Client" asp-route-id="@Model.ClientId" class="btn btn-outline-primary mb-3">@Localizer["ButtonBackClient"]</a>
 
 			<!--Hidden -->
 			<input type="hidden" asp-for="ClientId" />
-			
+
 			<!--Hidden -->
 			<input type="hidden" asp-for="ClientName" />
 
-			<div class="panel panel-default">
-				<div class="panel-heading">@Localizer["PanelTitleNew"]</div>
-				<div class="panel-body">
+			<div class="card mt-3">
+				<h5 class="card-header">@Localizer["PanelTitleNew"]</h5>
+				<div class="card-body">
 
 					<!--Input - text -->
-					<div class="form-group">
-						<label asp-for="Key" class="col-sm-3 control-label">
+					<div class="form-group row">
+						<label asp-for="Key" class="col-sm-3 col-form-label">
 							@Html.Partial("Client/Section/Label", "PropertyKey")
 						</label>
 						<div class="col-sm-9">
@@ -40,8 +39,8 @@
 					</div>
 
 					<!--Input - text -->
-					<div class="form-group">
-						<label asp-for="Value" class="col-sm-3 control-label">
+					<div class="form-group row">
+						<label asp-for="Value" class="col-sm-3 col-form-label">
 							@Html.Partial("Client/Section/Label", "PropertyValue")
 						</label>
 						<div class="col-sm-9">
@@ -51,26 +50,24 @@
 					</div>
 
 					<!--Button-->
-					<div class="form-group">
-						<label class="col-sm-3 control-label">
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label">
 						</label>
 						<div class="col-sm-9">
-							<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> @Localizer["ButtonAddProperty"]</button>
+							<button type="submit" class="btn btn-primary">@Localizer["ButtonAddProperty"]</button>
 						</div>
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </form>
 
 <div class="row">
 	<div class="col-md-12">
-		<div class="panel panel-default">
-			<div class="panel-heading">@Localizer["PanelTitle"]</div>
-			<div class="panel-body">
-
+		<div class="card mt-3">
+			<h5 class="card-header">@Localizer["PanelTitle"]</h5>
+			<div class="card-body">
 				<div class="row table-responsive">
 					<table class="table table-striped">
 						<thead>
@@ -80,14 +77,13 @@
 								<th></th>
 							</tr>
 						</thead>
-
 						<tbody>
 							@foreach (var client in Model.ClientProperties)
 							{
 								<tr>
 									<td>@client.Key</td>
 									<td>@client.Value</td>
-									<td><a asp-action="ClientPropertyDelete" asp-route-id="@client.Id" class="btn btn-danger"><span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["TableButtonRemove"]</a></td>
+									<td><a asp-action="ClientPropertyDelete" asp-route-id="@client.Id" class="btn btn-danger">@Localizer["TableButtonRemove"]</a></td>
 								</tr>
 							}
 						</tbody>
@@ -95,11 +91,11 @@
 				</div>
 
 				<div class="row">
-					@Html.Partial("Common/Pager", new Pager() { Action = "ClientProperties", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
+					<div class="col-12">
+						@Html.Partial("Common/Pager", new Pager { Action = "ClientProperties", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
+					</div>
 				</div>
-
 			</div>
 		</div>
-
 	</div>
 </div>

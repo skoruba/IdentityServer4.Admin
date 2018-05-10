@@ -1,14 +1,13 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
 @model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientDto
 @inject IViewLocalizer Localizer
 
-<div class="panel panel-default">
-	<div class="panel-heading">@Localizer["PanelTitle"]</div>
-	<div class="panel-body">
+<div class="card mt-3">
+	<h5 class="card-header">@Localizer["PanelTitle"]</h5>
+	<div class="card-body">
 		<!--Input - number -->
-		<div class="form-group">
-			<label asp-for="IdentityTokenLifetime" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="IdentityTokenLifetime" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "IdentityTokenLifetime")
 			</label>
 			<div class="col-sm-9">
@@ -17,8 +16,8 @@
 		</div>
 
 		<!--Input - number -->
-		<div class="form-group">
-			<label asp-for="AccessTokenLifetime" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="AccessTokenLifetime" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "AccessTokenLifetime")
 			</label>
 			<div class="col-sm-9">
@@ -27,8 +26,8 @@
 		</div>
 
 		<!--Select-->
-		<div class="form-group">
-			<label asp-for="AccessTokenTypes" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="AccessTokenTypes" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "AccessTokenTypes")
 			</label>
 			<div class="col-sm-9">
@@ -37,8 +36,8 @@
 		</div>
 
 		<!--Input - number -->
-		<div class="form-group">
-			<label asp-for="AuthorizationCodeLifetime" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="AuthorizationCodeLifetime" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "AuthorizationCodeLifetime")
 			</label>
 			<div class="col-sm-9">
@@ -47,8 +46,8 @@
 		</div>
 
 		<!--Input - number-->
-		<div class="form-group">
-			<label asp-for="AbsoluteRefreshTokenLifetime" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="AbsoluteRefreshTokenLifetime" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "AbsoluteRefreshTokenLifetime")
 			</label>
 			<div class="col-sm-9">
@@ -57,8 +56,8 @@
 		</div>
 
 		<!--Input - number -->
-		<div class="form-group">
-			<label asp-for="SlidingRefreshTokenLifetime" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="SlidingRefreshTokenLifetime" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "SlidingRefreshTokenLifetime")
 			</label>
 			<div class="col-sm-9">
@@ -67,8 +66,8 @@
 		</div>
 
 		<!--Select-->
-		<div class="form-group">
-			<label asp-for="RefreshTokenUsage" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="RefreshTokenUsage" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "RefreshTokenUsage")
 			</label>
 			<div class="col-sm-9">
@@ -77,8 +76,8 @@
 		</div>
 
 		<!--Select-->
-		<div class="form-group">
-			<label asp-for="RefreshTokenExpiration" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="RefreshTokenExpiration" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "RefreshTokenExpiration")
 			</label>
 			<div class="col-sm-9">
@@ -87,21 +86,21 @@
 		</div>
 
 		<!--Select with tags-->
-		<div class="form-group">
-			<label asp-for="AllowedCorsOrigins" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="AllowedCorsOrigins" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "AllowedCorsOrigins")
 			</label>
 			<div class="col-sm-9">
 				<picker id="AllowedCorsOriginsItems" multiple-select="true" min-search-text="2"
-				        selected-items="@Model.AllowedCorsOrigins" search-input-placeholder="Enter 2 and more characters" 
-				        selected-items-title="Selected: ">
+						selected-items="@Model.AllowedCorsOrigins" search-input-placeholder="Enter 2 and more characters"
+						selected-items-title="Selected: ">
 				</picker>
 			</div>
 		</div>
 
 		<!--Checkbox-->
-		<div class="form-group">
-			<label asp-for="UpdateAccessTokenClaimsOnRefresh" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="UpdateAccessTokenClaimsOnRefresh" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "UpdateAccessTokenClaimsOnRefresh")
 			</label>
 			<div class="col-sm-9">
@@ -112,8 +111,8 @@
 		</div>
 
 		<!--Checkbox-->
-		<div class="form-group">
-			<label asp-for="IncludeJwtId" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="IncludeJwtId" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "IncludeJwtId")
 			</label>
 			<div class="col-sm-9">
@@ -124,8 +123,8 @@
 		</div>
 
 		<!--Checkbox-->
-		<div class="form-group">
-			<label asp-for="AlwaysSendClientClaims" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="AlwaysSendClientClaims" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "AlwaysSendClientClaims")
 			</label>
 			<div class="col-sm-9">
@@ -136,8 +135,8 @@
 		</div>
 
 		<!--Checkbox-->
-		<div class="form-group">
-			<label asp-for="AlwaysIncludeUserClaimsInIdToken" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="AlwaysIncludeUserClaimsInIdToken" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "AlwaysIncludeUserClaimsInIdToken")
 			</label>
 			<div class="col-sm-9">
@@ -148,8 +147,8 @@
 		</div>
 
 		<!--Input - text -->
-		<div class="form-group">
-			<label asp-for="ClientClaimsPrefix" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="ClientClaimsPrefix" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "ClientClaimsPrefix")
 			</label>
 			<div class="col-sm-9">
@@ -158,8 +157,8 @@
 		</div>
 
 		<!--Input - text -->
-		<div class="form-group">
-			<label asp-for="PairWiseSubjectSalt" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="PairWiseSubjectSalt" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "PairWiseSubjectSalt")
 			</label>
 			<div class="col-sm-9">
@@ -168,12 +167,12 @@
 		</div>
 
 		<!--Button-->
-		<div class="form-group">
-			<label asp-for="Claims" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="Claims" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "Claims")
 			</label>
 			<div class="col-sm-9">
-				<a asp-action="ClientClaims" asp-route-id="@Model.Id" target="_blank" class="btn btn-info"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> @Localizer["ButtonManageClientClaims"]</a>
+				<a asp-action="ClientClaims" asp-route-id="@Model.Id" target="_blank" class="btn btn-primary">@Localizer["ButtonManageClientClaims"]</a>
 			</div>
 		</div>
 	</div>

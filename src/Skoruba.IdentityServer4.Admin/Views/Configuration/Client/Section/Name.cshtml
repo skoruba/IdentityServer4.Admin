@@ -1,16 +1,15 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
 @using Skoruba.IdentityServer4.Admin.ViewModels.Enums
 @model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientDto
 @inject IViewLocalizer Localizer
-
-<div class="panel panel-default">
-	<div class="panel-heading">@Localizer["PanelTitle"]</div>
-	<div class="panel-body">
+	
+<div class="card">
+	<h5 class="card-header">@Localizer["PanelTitle"]</h5>
+	<div class="card-body">
 
 		<!--Input - text -->
-		<div class="form-group">
-			<label asp-for="ClientId" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="ClientId" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "ClientId")
 			</label>
 			<div class="col-sm-9">
@@ -20,8 +19,8 @@
 		</div>
 
 		<!--Input - text -->
-		<div class="form-group">
-			<label asp-for="ClientName" class="col-sm-3 control-label">
+		<div class="form-group row">
+			<label asp-for="ClientName" class="col-sm-3 col-form-label">
 				@Html.Partial("Client/Section/Label", "ClientName")				
 			</label>
 			<div class="col-sm-9">
@@ -32,7 +31,7 @@
 
 		@if (Model.Id == 0)
 		{
-			<div class="col-md-12 text-center col-m-b-15 col-m-t-15">
+			<div class="row text-center m-4">
 
 				<div class="col-md-4">
 					<label>
@@ -61,8 +60,7 @@
 				</div>
 			</div>
 
-			<div class="col-md-12 text-center col-m-b-15 col-m-t-15">
-
+			<div class="row text-center m-4">
 				<div class="col-md-4">
 					<label>
 						<input type="radio" asp-for="ClientType" value="@((int)ClientType.Spa)" />

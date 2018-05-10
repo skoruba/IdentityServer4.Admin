@@ -6,36 +6,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Content Include="Scripts\App\components\Picker.js" />
-		<Content Include="Scripts\App\helpers\FormMvcHelpers.js" />
-		<Content Include="Styles\common\common.scss" />
-		<Content Include="Styles\common\fonts.scss" />
-		<Content Include="Styles\common\margin.css" />
-		<Content Include="Styles\common\margin.min.css" />
-		<Content Include="Styles\common\margin.scss" />
-		<Content Include="Styles\common\padding.css" />
-		<Content Include="Styles\common\padding.min.css" />
-		<Content Include="Styles\common\padding.scss" />
-		<Content Include="Styles\common\_all.scss" />
-		<Content Include="Styles\controls\checkbox.scss" />
-		<Content Include="Styles\controls\navbar.scss" />
-		<Content Include="Styles\controls\picker.scss" />
-		<Content Include="Styles\controls\validation.summary.css" />
-		<Content Include="Styles\controls\validation.summary.min.css" />
-		<Content Include="Styles\controls\validation.summary.scss" />
-		<Content Include="Styles\controls\_all.scss" />
-		<Content Include="Styles\pages\client.scss" />
-		<Content Include="Styles\pages\_all.scss" />
-		<Content Include="Styles\theme\new-age.css" />
-		<Content Include="Styles\theme\new-age.min.css" />
-		<Content Include="Styles\web.css" />
-		<Content Include="Styles\web.min.css" />
-		<Content Include="Styles\web.scss" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="6.2.2" />
-		<PackageReference Include="BuildBundlerMinifier" Version="2.6.362" />
 		<PackageReference Include="IdentityServer4.EntityFramework" Version="2.1.1" />
 		<PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
@@ -49,11 +20,6 @@
 	<ItemGroup>
 		<DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
 		<DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Data\Migrations\" />
-	  <Folder Include="wwwroot\js\" />
 	</ItemGroup>
 
 </Project>

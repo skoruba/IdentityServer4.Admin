@@ -1,3 +1,4 @@
+[<img align="left" src="https://github.com/skoruba/IdentityServer4.Admin/blob/dev/docs/Images/Skoruba.IdentityServer4.Admin-Logo-ReadMe.png?raw=true" />](https://dotnetfoundation.org)
 # Skoruba.IdentityServer4.Admin
 
 ### The administration of the IdentityServer4 and Asp.Net Core Identity
@@ -23,10 +24,12 @@
 
 ### Bundling and minification
 
-- In the project is used following budling and minification - https://docs.microsoft.com/en-us/aspnet/core/client-side/bundling-and-minification?tabs=visual-studio%2Caspnetcore2x
-- In the solution is used the package: `BuildBundlerMinifier` which is allow to minified on build in the Visual Studio
-- For generation Css files from Sass is used - https://github.com/madskristensen/WebCompiler - this is an extension into Visual Studio 2017, that generates following configuration file: `compilerconfig.json`
-
+- In the project is used the Gulp:
+- `gulp fonts` - copy fonts to dist folder
+- `gulp styles` - minify css, generate sass to css
+- `gulp scripts` - bundle and minify js
+- `gulp clean` - remove dist folder
+- `gulp build` - run styles and scripts tasks
 
 ### ConnectionStrings & Secrets
 

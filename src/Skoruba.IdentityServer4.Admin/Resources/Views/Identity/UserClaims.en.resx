@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonAddClaim" xml:space="preserve">
-    <value>Add new claim</value>
+    <value>Add User Claim</value>
   </data>
   <data name="ButtonBackUser" xml:space="preserve">
-    <value>Back User Profile</value>
+    <value>Back to User</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
     <value>User Claims</value>
@@ -130,10 +130,10 @@
     <value>User Claims</value>
   </data>
   <data name="PanelTitleNew" xml:space="preserve">
-    <value>New Claim</value>
+    <value>User Claim</value>
   </data>
   <data name="TableButtonRemove" xml:space="preserve">
-    <value>Remove</value>
+    <value>Delete</value>
   </data>
   <data name="TableType" xml:space="preserve">
     <value>Type</value>

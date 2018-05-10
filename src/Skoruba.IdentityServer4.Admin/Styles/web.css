@@ -1,14 +1,37 @@
 ﻿/*Common*/
-@import url(https://fonts.googleapis.com/css?family=Lato);
-@import url(https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900);
-@import url(https://fonts.googleapis.com/css?family=Muli);
-body {
-  padding-top: 50px;
-  padding-bottom: 20px; }
+@media (max-width: 767px) {
+  .menu {
+    text-align: center; }
+    .menu-logo {
+      font-size: 1.2em; }
+  .menu-item {
+    display: none; }
+  .menu-button {
+    display: block; }
+  .welcome-block h1 {
+    font-size: 2em; } }
 
-.body-content {
-  padding-left: 15px;
-  padding-right: 15px; }
+@media (min-width: 768px) {
+  .menu-item {
+    display: block; }
+  .menu-button {
+    display: none; } }
+
+.border-top {
+  border-top: 1px solid #e5e5e5; }
+
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5; }
+
+.box-shadow {
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05); }
+
+.welcome-block {
+  max-width: 700px; }
+
+.logo, .logo:hover {
+  color: black;
+  text-decoration: none; }
 
 .col-m-5 {
   margin: 5px; }
@@ -310,6 +333,14 @@ body {
 .col-p-r-50 {
   padding-right: 50px; }
 
+.col-form-label {
+  text-align: right;
+  font-weight: bold; }
+
+@media (max-width: 575px) {
+  .col-form-label {
+    text-align: left; } }
+
 /*Controls*/
 .navbar-brand > img {
   max-height: 31px; }
@@ -369,7 +400,7 @@ body {
   width: 20px; }
 
 input:checked + .slider {
-  background-color: #00aeef; }
+  background-color: #007bff; }
 
 input:checked + .slider:before {
   transform: translateX(26px); }
@@ -400,6 +431,11 @@ input:checked + .slider:before {
 .picker .search-title {
   color: gray;
   font-size: 12px; }
+
+#toast-container > div {
+  opacity: 1;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  filter: alpha(opacity=100); }
 
 /*Pages*/
 .client .action-butons {

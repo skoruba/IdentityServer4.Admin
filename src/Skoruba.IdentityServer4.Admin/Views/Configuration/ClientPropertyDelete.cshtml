@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.Admin.ViewModels.Configuration
 @model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientPropertiesDto
 @inject IViewLocalizer Localizer
 
@@ -8,24 +7,23 @@
 	Layout = "_Layout";
 }
 
-<form class="form-horizontal" asp-controller="Configuration" asp-action="ClientPropertyDelete" Method="post">
+<form asp-controller="Configuration" asp-action="ClientPropertyDelete" Method="post">
 	<div class="row">
 		<div class="col-md-12">
 			<h3>@Localizer["PageTitle"]</h3>
 
-			<a asp-action="Client" asp-route-id="@Model.ClientId" class="btn btn-info col-m-b-15">@Localizer["ButtonBackClient"]</a>
+			<a asp-action="Client" asp-route-id="@Model.ClientId" class="btn btn-outline-primary mb-3 mt-3">@Localizer["ButtonBackClient"]</a>
 
 			<!--Hidden -->
 			<input type="hidden" asp-for="ClientId" />
 			<input type="hidden" asp-for="ClientPropertyId" />
 
-			<div class="panel panel-default">
-				<div class="panel-heading">@Localizer["PanelTitle"]</div>
-				<div class="panel-body">
-
+			<div class="card mt-3">
+				<h5 class="card-header">@Localizer["PanelTitle"]</h5>
+				<div class="card-body">
 					<!--Input - text -->
-					<div class="form-group">
-						<label asp-for="Key" class="col-sm-3 control-label">
+					<div class="form-group row">
+						<label asp-for="Key" class="col-sm-3 col-form-label">
 							@Html.Partial("Client/Section/Label", "PropertyKey")
 						</label>
 						<div class="col-sm-9">
@@ -34,8 +32,8 @@
 					</div>
 
 					<!--Input - text -->
-					<div class="form-group">
-						<label asp-for="Value" class="col-sm-3 control-label">
+					<div class="form-group row">
+						<label asp-for="Value" class="col-sm-3 col-form-label">
 							@Html.Partial("Client/Section/Label", "PropertyValue")
 						</label>
 						<div class="col-sm-9">
@@ -44,11 +42,11 @@
 					</div>
 
 					<!--Button-->
-					<div class="form-group">
-						<label class="col-sm-3 control-label">
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label">
 						</label>
 						<div class="col-sm-9">
-							<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["ButtonDeleteProperty"]</button>
+							<button type="submit" class="btn btn-danger">@Localizer["ButtonDeleteProperty"]</button>
 						</div>
 					</div>
 				</div>

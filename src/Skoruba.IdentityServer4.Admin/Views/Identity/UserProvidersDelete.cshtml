@@ -1,19 +1,18 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.Admin.ViewModels.Identity
 @model Skoruba.IdentityServer4.Admin.ViewModels.Identity.UserProviderDto
 @inject IViewLocalizer Localizer
 
 @{
-	ViewBag.Title = @Localizer["PageTitle"];
+	ViewBag.Title = Localizer["PageTitle"];
 	Layout = "_Layout";
 }
 
-<form class="form-horizontal" asp-controller="Identity" asp-action="UserProvidersDelete" Method="post">
+<form asp-controller="Identity" asp-action="UserProvidersDelete" Method="post">
 	<div class="row">
 		<div class="col-md-12">
 			<h3>@Localizer["PageTitle"]</h3>
 
-			<a asp-action="User" asp-route-id="@Model.UserId" class="btn btn-info col-m-b-15">@Localizer["ButtonBackUser"]</a>
+			<a asp-action="UserEdit" asp-route-id="@Model.UserId" class="btn btn-outline-primary mb-3">@Localizer["ButtonBackUser"]</a>
 
 			<!--Hidden -->
 			<input type="hidden" asp-for="UserId" />
@@ -61,7 +60,7 @@
 						<label class="col-sm-3 control-label">
 						</label>
 						<div class="col-sm-9">
-							<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["ButtonDeleteUserProvider"]</button>
+							<button type="submit" class="btn btn-danger">@Localizer["ButtonDeleteUserProvider"]</button>
 						</div>
 					</div>
 				</div>

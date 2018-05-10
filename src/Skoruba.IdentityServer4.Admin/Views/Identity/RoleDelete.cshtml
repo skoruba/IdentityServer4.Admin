@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.Admin.ViewModels.Identity
 @model Skoruba.IdentityServer4.Admin.ViewModels.Identity.RoleDto
 @inject IViewLocalizer Localizer
 
@@ -10,17 +9,18 @@
 
 <h2>@Localizer["PageTitle"]</h2>
 
-<form id="client-form" class="form-horizontal" asp-controller="Identity" asp-action="RoleDelete" Method="post">
+<form id="client-form" asp-controller="Identity" asp-action="RoleDelete" Method="post">
 
 	<!--Hidden -->
 	<input type="hidden" asp-for="Id" />
 
-	<div class="panel panel-default">
-		<div class="panel-heading">@Localizer["PageTitle"]</div>
-		<div class="panel-body">
+	<div class="card mt-3">
+		<h5 class="card-header">@Localizer["PageTitle"]</h5>
+		<div class="card-body">
+
 			<!--Input - text -->
-			<div class="form-group">
-				<label asp-for="Name" class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label asp-for="Name" class="col-sm-3 col-form-label">
 					@Html.Partial("User/Section/Label", "RoleName")
 				</label>
 				<div class="col-sm-9">
@@ -29,11 +29,11 @@
 			</div>
 
 			<!--Button-->
-			<div class="form-group">
-				<label class="col-sm-3 control-label">
+			<div class="form-group row">
+				<label class="col-sm-3 col-form-label">
 				</label>
 				<div class="col-sm-9">
-					<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span> @Localizer["ButtonDeleteRole"]</button>
+					<button type="submit" class="btn btn-danger">@Localizer["ButtonDeleteRole"]</button>
 				</div>
 			</div>
 		</div>

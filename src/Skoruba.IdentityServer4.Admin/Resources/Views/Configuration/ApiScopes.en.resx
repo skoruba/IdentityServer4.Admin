@@ -118,22 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonAddApiScope" xml:space="preserve">
-    <value>Save</value>
+    <value>Save Api Scope</value>
   </data>
   <data name="ButtonBackApiResource" xml:space="preserve">
-    <value>Back Api Resource Setting</value>
+    <value>Back to Api Resource</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Api Scopes</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
-    <value>Add Api Scope</value>
+    <value>Api Scope</value>
   </data>
   <data name="TableButtonEdit" xml:space="preserve">
     <value>Edit</value>
   </data>
   <data name="TableButtonRemove" xml:space="preserve">
-    <value>Remove</value>
+    <value>Delete</value>
   </data>
   <data name="TableName" xml:space="preserve">
     <value>Name</value>

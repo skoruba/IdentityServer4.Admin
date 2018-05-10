@@ -118,15 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonBackUser" xml:space="preserve">
-    <value>Back User Profile</value>
+    <value>Back to User</value>
   </data>
   <data name="ButtonDeleteUserClaim" xml:space="preserve">
-    <value>Delete user claim</value>
+    <value>Delete User Claim</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Delete User Claim</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
-    <value>Delete Claim</value>
+    <value>Delete User Claim</value>
   </data>
 </root>

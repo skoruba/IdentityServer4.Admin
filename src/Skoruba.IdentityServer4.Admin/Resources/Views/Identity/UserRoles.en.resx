@@ -118,19 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ActionAddRole" xml:space="preserve">
-    <value>Add role</value>
+    <value>Add Role</value>
   </data>
   <data name="ActionBackUser" xml:space="preserve">
-    <value>Back User Profile</value>
+    <value>Back to User</value>
   </data>
   <data name="ActionRemoveRole" xml:space="preserve">
-    <value>Remove</value>
+    <value>Delete</value>
   </data>
   <data name="RoleName" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
-    <value>New Role</value>
+    <value>User Role</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>User Roles</value>

@@ -131,11 +131,11 @@
 		}
 	},
 	template: '<input class="form-control" data-bind="textInput: textTerm, attr: {placeholder: searchInputPlaceholder}" />' +
-	'<div class="block__buttons__add" data-bind="foreach: searchResult"><input type="button" class="btn button__add" data-bind="value: $data, click: function() { $parent.add($data); }"></div>' +
+	'<div class="block__buttons__add" data-bind="foreach: searchResult"><input type="button" class="btn btn-primary button__add" data-bind="value: $data, click: function() { $parent.add($data); }"></div>' +
 	'<img data-bind="visible: loading()" src="/images/loading.gif" alt="Loading.." />' +
 	'<hr data-bind="visible: selectedResult().length > 0" />' +
 	'<div data-bind="visible: selectedResult().length > 0, text: selectedItemsTitle" class="search-title"></div>' +
-	'<div data-bind="foreach: selectedResult"><button class="btn button__delete" data-bind="click: function() { $parent.remove($data); }"><span data-bind="text: $data"></span> <span class="glyphicon glyphicon-remove"></span></button></div>'
+	'<div data-bind="foreach: selectedResult"><button class="btn btn-outline-primary button__delete" data-bind="click: function() { $parent.remove($data); }"><span data-bind="text: $data"></span> <span class="oi oi-x"></span></button></div>'
 });
 
 ko.applyBindings();
