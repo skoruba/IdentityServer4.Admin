@@ -2,7 +2,7 @@
 	"version": "1.0.0",
 	"name": "skoruba-identity-server-4-admin",
 	"description": "The administration for the IdentityServer4 v2 and Asp.Net Core Identity",
-	"author": "Jan Škoruba & jan@skoruba.com",
+	"author": "Jan Skoruba & jan@skoruba.com",
 	"license": "MIT",
 	"private": true,
 	"dependencies": {
@@ -26,6 +26,7 @@
 		"gulp-concat": "2.6.1",
 		"gulp-uglify": "3.0.0",
 		"gulp-sass": "3.1.0",
-		"gulp-minify-css": "1.2.4"
+		"gulp-minify-css": "1.2.4",
+		"del": "3.0.0"
 	}
 }

@@ -9,12 +9,12 @@
 	<title>@ViewData["Title"] - @Localizer["PageTitle"]</title>
 
 	<environment include="Development">
-		<link href="~/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
-		<link href="~/css/web.css" asp-append-version="true" rel="stylesheet" />
+		<link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
+		<link href="~/dist/css/web.css" asp-append-version="true" rel="stylesheet" />
 	</environment>
 	<environment exclude="Development">
-		<link href="~/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
-		<link href="~/css/web.min.css" asp-append-version="true" rel="stylesheet" />
+		<link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
+		<link href="~/dist/css/web.min.css" asp-append-version="true" rel="stylesheet" />
 	</environment>
 
 	@RenderSection("styles", required: false)
@@ -80,10 +80,10 @@
 	</div>
 
 	<environment include="Development">
-		<script src="~/js/bundle.js" asp-append-version="true"></script>
+		<script src="~/dist/js/bundle.min.js" asp-append-version="true"></script>
 	</environment>
 	<environment exclude="Development">
-		<script src="~/js/bundle.min.js" asp-append-version="true"></script>
+		<script src="~/dist/js/bundle.min.js" asp-append-version="true"></script>
 	</environment>
 
 	@Html.Partial("Common/Notification")
