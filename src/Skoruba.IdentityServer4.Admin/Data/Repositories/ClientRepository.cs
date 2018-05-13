@@ -25,9 +25,9 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<Client> GetClientAsync(int clientId)
+        public Task<Client> GetClientAsync(int clientId)
         {
-            var client = await _dbContext.Clients
+            return _dbContext.Clients
                 .Include(x => x.AllowedGrantTypes)
                 .Include(x => x.RedirectUris)
                 .Include(x => x.PostLogoutRedirectUris)
@@ -39,8 +39,6 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
                 .Include(x => x.Properties)
                 .Where(x => x.Id == clientId)
                 .SingleOrDefaultAsync();
-
-            return client;
         }
 
         public async Task<PagedList<Client>> GetClientsAsync(string search = "", int page = 1, int pageSize = 10)

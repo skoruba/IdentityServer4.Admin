@@ -117,10 +117,6 @@
             - Role Claims
 
 
-# UI Diagram
-
-![Skoruba.IdentityServer4.Admin Diagram](https://github.com/skoruba/IdentityServer4.Admin/blob/master/docs/Images/Skoruba.IdentityServer4.Admin-UI.png?raw=true)
-
 # Application Diagram
 
 ![Skoruba.IdentityServer4.Admin Diagram](https://github.com/skoruba/IdentityServer4.Admin/blob/master/docs/Images/Skoruba.IdentityServer4.Admin-App-Diagram.png?raw=true)
