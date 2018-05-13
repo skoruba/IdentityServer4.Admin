@@ -32,18 +32,14 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
             _roleManager = roleManager;
         }
 
-        public async Task<bool> ExistsUserAsync(int userId)
+        public Task<bool> ExistsUserAsync(int userId)
         {
-            var exists = await _dbContext.Users.AnyAsync(x => x.Id == userId);
-
-            return exists;
+            return _dbContext.Users.AnyAsync(x => x.Id == userId);
         }
 
-        public async Task<bool> ExistsRoleAsync(int roleId)
+        public Task<bool> ExistsRoleAsync(int roleId)
         {
-            var exists = await _dbContext.Roles.AnyAsync(x => x.Id == roleId);
-
-            return exists;
+            return _dbContext.Roles.AnyAsync(x => x.Id == roleId);
         }
 
         public async Task<PagedList<UserIdentity>> GetUsersAsync(string search, int page = 1, int pageSize = 10)
@@ -60,11 +56,9 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
             return pagedList;
         }
         
-        public async Task<List<UserIdentityRole>> GetRolesAsync()
+        public Task<List<UserIdentityRole>> GetRolesAsync()
         {
-            var roles = await _roleManager.Roles.ToListAsync();
-            
-            return roles;
+            return _roleManager.Roles.ToListAsync();
         }
 
         public async Task<PagedList<UserIdentityRole>> GetRolesAsync(string search, int page = 1, int pageSize = 10)
@@ -81,49 +75,39 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
             return pagedList;
         }
 
-        public async Task<UserIdentityRole> GetRoleAsync(UserIdentityRole role)
+        public Task<UserIdentityRole> GetRoleAsync(UserIdentityRole role)
         {
-            var existsRole = await _roleManager.Roles.Where(x => x.Id == role.Id).SingleOrDefaultAsync();
-
-            return existsRole;
+            return _roleManager.Roles.Where(x => x.Id == role.Id).SingleOrDefaultAsync();            
         }
 
-        public async Task<IdentityResult> CreateRoleAsync(UserIdentityRole role)
+        public Task<IdentityResult> CreateRoleAsync(UserIdentityRole role)
         {
-            var identityResult = await _roleManager.CreateAsync(role);
-
-            return identityResult;
+            return _roleManager.CreateAsync(role);
         }
 
         public async Task<IdentityResult> UpdateRoleAsync(UserIdentityRole role)
         {
             var thisRole = await _roleManager.FindByIdAsync(role.Id.ToString());
             thisRole.Name = role.Name;
-            var identityResult = await _roleManager.UpdateAsync(thisRole);
 
-            return identityResult;
+            return await _roleManager.UpdateAsync(thisRole);            
         }
 
         public async Task<IdentityResult> DeleteRoleAsync(UserIdentityRole role)
         {
             var thisRole = await _roleManager.FindByIdAsync(role.Id.ToString());
-            var identityResult = await _roleManager.DeleteAsync(thisRole);
 
-            return identityResult;
+            return await _roleManager.DeleteAsync(thisRole);
         }
 
-        public async Task<UserIdentity> GetUserAsync(UserIdentity user)
+        public Task<UserIdentity> GetUserAsync(UserIdentity user)
         {
-            var userIdentity = await _userManager.FindByIdAsync(user.Id.ToString());
-            
-            return userIdentity;
+            return _userManager.FindByIdAsync(user.Id.ToString());
         }
 
-        public async Task<IdentityResult> CreateUserAsync(UserIdentity user)
+        public Task<IdentityResult> CreateUserAsync(UserIdentity user)
         {
-            var userIdentity = await _userManager.CreateAsync(user);
-
-            return userIdentity;
+            return _userManager.CreateAsync(user);            
         }
 
         public async Task<IdentityResult> UpdateUserAsync(UserIdentity user)
@@ -133,9 +117,7 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
 
             userIdentity.MapTo(user);
 
-            var identityResult = await _userManager.UpdateAsync(userIdentity);
-
-            return identityResult;
+            return await _userManager.UpdateAsync(userIdentity);            
         }
 
         public async Task<IdentityResult> CreateUserRoleAsync(int userId, int roleId)
@@ -143,9 +125,7 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
             var user = await _userManager.FindByIdAsync(userId.ToString());
             var selectRole = await _roleManager.FindByIdAsync(roleId.ToString());
 
-            var identityResult = await _userManager.AddToRoleAsync(user, selectRole.Name);
-
-            return identityResult;
+            return await _userManager.AddToRoleAsync(user, selectRole.Name);            
         }
 
         public async Task<PagedList<UserIdentityRole>> GetUserRolesAsync(int userId, int page = 1, int pageSize = 10)
@@ -172,9 +152,7 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
             var role = await _roleManager.FindByIdAsync(roleId.ToString());
             var user = await _userManager.FindByIdAsync(userId.ToString());
 
-            var identityResult = await _userManager.RemoveFromRoleAsync(user, role.Name);
-
-            return identityResult;
+            return await _userManager.RemoveFromRoleAsync(user, role.Name);
         }
 
         public async Task<PagedList<UserIdentityUserClaim>> GetUserClaimsAsync(int userId, int page, int pageSize)
@@ -205,37 +183,28 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
             return pagedList;
         }
 
-        public async Task<UserIdentityUserClaim> GetUserClaimAsync(int userId, int claimId)
+        public Task<UserIdentityUserClaim> GetUserClaimAsync(int userId, int claimId)
         {
-            var claim = await _dbContext.UserClaims.Where(x => x.UserId == userId && x.Id == claimId)                
+            return _dbContext.UserClaims.Where(x => x.UserId == userId && x.Id == claimId)                
                 .SingleOrDefaultAsync();
-
-            return claim;
         }
 
-        public async Task<UserIdentityRoleClaim> GetRoleClaimAsync(int roleId, int claimId)
+        public Task<UserIdentityRoleClaim> GetRoleClaimAsync(int roleId, int claimId)
         {
-            var claim = await _dbContext.RoleClaims.Where(x => x.RoleId == roleId && x.Id == claimId)                
+            return _dbContext.RoleClaims.Where(x => x.RoleId == roleId && x.Id == claimId)                
                 .SingleOrDefaultAsync();
-
-            return claim;
         }
 
         public async Task<IdentityResult> CreateUserClaimsAsync(UserIdentityUserClaim claims)
         {
             var user = await _userManager.FindByIdAsync(claims.UserId.ToString());
-            var identityResult = await _userManager.AddClaimAsync(user, new Claim(claims.ClaimType, claims.ClaimValue));
-
-            return identityResult;
+            return await _userManager.AddClaimAsync(user, new Claim(claims.ClaimType, claims.ClaimValue));
         }
 
         public async Task<IdentityResult> CreateRoleClaimsAsync(UserIdentityRoleClaim claims)
         {
             var role = await _roleManager.FindByIdAsync(claims.RoleId.ToString());
-            var identityResult =
-                await _roleManager.AddClaimAsync(role, new Claim(claims.ClaimType, claims.ClaimValue));
-
-            return identityResult;
+            return await _roleManager.AddClaimAsync(role, new Claim(claims.ClaimType, claims.ClaimValue));
         }
 
         public async Task<int> DeleteUserClaimsAsync(int userId, int claimId)
@@ -260,26 +229,21 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
             var userLoginInfos = await _userManager.GetLoginsAsync(user);
-            var userProviders = userLoginInfos.ToList();
 
-            return userProviders;
+            return userLoginInfos.ToList();
         }
 
-        public async Task<UserIdentityUserLogin> GetUserProviderAsync(int userId, string providerKey)
+        public Task<UserIdentityUserLogin> GetUserProviderAsync(int userId, string providerKey)
         {
-            var login = await _dbContext.UserLogins.Where(x => x.UserId == userId && x.ProviderKey == providerKey)
+            return _dbContext.UserLogins.Where(x => x.UserId == userId && x.ProviderKey == providerKey)
                 .SingleOrDefaultAsync();
-            
-            return login;
         }
 
         public async Task<IdentityResult> DeleteUserProvidersAsync(int userId, string providerKey, string loginProvider)
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
             var login = await _dbContext.UserLogins.Where(x => x.UserId == userId && x.ProviderKey == providerKey && x.LoginProvider == loginProvider).SingleOrDefaultAsync();
-            var identityResult = await _userManager.RemoveLoginAsync(user, login.LoginProvider, login.ProviderKey);
-
-            return identityResult;
+            return await _userManager.RemoveLoginAsync(user, login.LoginProvider, login.ProviderKey);            
         }
 
         public async Task<IdentityResult> UserChangePasswordAsync(int userId, string password)
@@ -287,18 +251,14 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
             var user = await _userManager.FindByIdAsync(userId.ToString());
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            var passwordChangedResult = await _userManager.ResetPasswordAsync(user, token, password);
-
-            return passwordChangedResult;
+            return await _userManager.ResetPasswordAsync(user, token, password);
         }
 
         public async Task<IdentityResult> DeleteUserAsync(UserIdentity user)
         {
             var userIdentity = await _userManager.FindByIdAsync(user.Id.ToString());
 
-            var identityResult = await _userManager.DeleteAsync(userIdentity);
-
-            return identityResult;
+            return await _userManager.DeleteAsync(userIdentity);
         }
 
         private async Task<int> AutoSaveChangesAsync()

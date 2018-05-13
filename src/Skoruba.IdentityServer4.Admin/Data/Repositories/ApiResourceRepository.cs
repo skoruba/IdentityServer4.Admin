@@ -37,14 +37,12 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
             return pagedList;
         }
 
-        public async Task<ApiResource> GetApiResourceAsync(int apiResourceId)
+        public Task<ApiResource> GetApiResourceAsync(int apiResourceId)
         {
-            var apiResource = await _dbContext.ApiResources
+            return _dbContext.ApiResources
                 .Include(x => x.UserClaims)
                 .Where(x => x.Id == apiResourceId)
                 .SingleOrDefaultAsync();
-
-            return apiResource;
         }
 
         public async Task<bool> CanInsertApiResourceAsync(ApiResource apiResource)
@@ -124,15 +122,13 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
             return pagedList;
         }
 
-        public async Task<ApiScope> GetApiScopeAsync(int apiResourceId, int apiScopeId)
+        public Task<ApiScope> GetApiScopeAsync(int apiResourceId, int apiScopeId)
         {
-            var apiScope = await _dbContext.ApiScopes
+            return _dbContext.ApiScopes
                 .Include(x => x.UserClaims)
                 .Include(x => x.ApiResource)
                 .Where(x => x.Id == apiScopeId && x.ApiResource.Id == apiResourceId)
                 .SingleOrDefaultAsync();
-
-            return apiScope;
         }
 
         public async Task<int> AddApiScopeAsync(int apiResourceId, ApiScope apiScope)
@@ -186,14 +182,12 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
             return pagedList;
         }
 
-        public async Task<ApiSecret> GetApiSecretAsync(int apiSecretId)
+        public Task<ApiSecret> GetApiSecretAsync(int apiSecretId)
         {
-            var apiSecret = await _dbContext.ApiSecrets
+            return _dbContext.ApiSecrets
                 .Include(x => x.ApiResource)
                 .Where(x => x.Id == apiSecretId)
                 .SingleOrDefaultAsync();
-
-            return apiSecret;
         }
 
         public async Task<int> AddApiSecretAsync(int apiResourceId, ApiSecret apiSecret)

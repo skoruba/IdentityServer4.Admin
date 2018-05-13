@@ -37,14 +37,12 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
             return pagedList;
         }
 
-        public async Task<IdentityResource> GetIdentityResourceAsync(int identityResourceId)
+        public Task<IdentityResource> GetIdentityResourceAsync(int identityResourceId)
         {
-            var identityResource = await _dbContext.IdentityResources
+            return _dbContext.IdentityResources
                 .Include(x => x.UserClaims)
                 .Where(x => x.Id == identityResourceId)
                 .SingleOrDefaultAsync();
-
-            return identityResource;
         }
 
         public async Task<int> AddIdentityResourceAsync(IdentityResource identityResource)

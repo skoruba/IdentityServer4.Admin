@@ -73,11 +73,9 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
             return pagedList;
         }
 
-        public async Task<PersistedGrant> GetPersitedGrantAsync(string key)
+        public Task<PersistedGrant> GetPersitedGrantAsync(string key)
         {
-            var persistedGrant = await _dbContext.PersistedGrants.SingleOrDefaultAsync(x => x.Key == key);
-
-            return persistedGrant;
+            return _dbContext.PersistedGrants.SingleOrDefaultAsync(x => x.Key == key);
         }
 
         public async Task<int> DeletePersistedGrantAsync(string key)
@@ -89,11 +87,9 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
             return await AutoSaveChangesAsync();
         }
 
-        public async Task<bool> ExistsPersistedGrantsAsync(string subjectId)
+        public Task<bool> ExistsPersistedGrantsAsync(string subjectId)
         {
-            var exists = await _dbContext.PersistedGrants.AnyAsync(x => x.SubjectId == subjectId);
-
-            return exists;
+            return _dbContext.PersistedGrants.AnyAsync(x => x.SubjectId == subjectId);
         }
 
         public async Task<int> DeletePersistedGrantsAsync(int userId)
