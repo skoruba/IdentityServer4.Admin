@@ -9,10 +9,6 @@
 - The application is written in the **Asp.Net Core MVC - using .NET Core 2.0**
     - works only with **IdentityServer4 version 2.0 and higher**
 
-## Demo - preview
-
-#### [https://admin.skoruba.com](https://admin.skoruba.com)
-
 # Installation
 
 - `git clone https://github.com/skoruba/IdentityServer4.Admin`
@@ -31,18 +27,6 @@
 - `gulp clean` - remove dist folder
 - `gulp build` - run styles and scripts tasks
 
-### ConnectionStrings & Secrets
-
-- Use for development the `Secret Manager` - https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?tabs=visual-studio
-- Or AppSettings json files according enviroment - `appsettings.json` and  `appsettings.production.json` that is not part of repository, because it is ignored in `.gitignore`:
-
-```json
-{
-    "ConnectionStrings": {
-	    "AdminConnection": ""
-    }
-}
-```
 
 ### EF Core & data access
 - Run entity framework migrations - for instance from Visual Studio command line:
@@ -132,10 +116,6 @@
         - Entities:
             - Role Claims
 
-
-# UI Diagram
-
-![Skoruba.IdentityServer4.Admin Diagram](https://github.com/skoruba/IdentityServer4.Admin/blob/master/docs/Images/Skoruba.IdentityServer4.Admin-UI.png?raw=true)
 
 # Application Diagram
 

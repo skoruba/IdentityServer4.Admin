@@ -196,12 +196,11 @@ namespace Skoruba.IdentityServer4.Admin.Services
             return clonedClientId;
         }
 
-        public async Task<bool> CanInsertClientAsync(ClientDto client, bool isCloned = false)
+        public Task<bool> CanInsertClientAsync(ClientDto client, bool isCloned = false)
         {
             var clientEntity = client.ToEntity();
-            var saved = await _clientRepository.CanInsertClientAsync(clientEntity, isCloned);
 
-            return saved;
+            return _clientRepository.CanInsertClientAsync(clientEntity, isCloned);
         }
 
         public async Task<ClientDto> GetClientAsync(int clientId)
