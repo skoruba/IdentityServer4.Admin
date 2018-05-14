@@ -134,14 +134,12 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
             return AutoSaveChanges ? await _dbContext.SaveChangesAsync() : (int)SavedStatus.WillBeSavedExplicitly;
         }
 
-        public async Task<ClientProperty> GetClientPropertyAsync(int clientPropertyId)
+        public Task<ClientProperty> GetClientPropertyAsync(int clientPropertyId)
         {
-            var clientProperty = await _dbContext.ClientProperties
+            return _dbContext.ClientProperties
                 .Include(x => x.Client)
                 .Where(x => x.Id == clientPropertyId)
-                .SingleOrDefaultAsync();
-
-            return clientProperty;
+                .SingleOrDefaultAsync();            
         }
 
         public async Task<int> AddClientClaimAsync(int clientId, ClientClaim clientClaim)
@@ -190,14 +188,12 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
             return pagedList;
         }
 
-        public async Task<ClientSecret> GetClientSecretAsync(int clientSecretId)
+        public Task<ClientSecret> GetClientSecretAsync(int clientSecretId)
         {
-            var clientSecret = await _dbContext.ClientSecrets
+            return _dbContext.ClientSecrets
                 .Include(x => x.Client)
                 .Where(x => x.Id == clientSecretId)
                 .SingleOrDefaultAsync();
-
-            return clientSecret;
         }
 
         public async Task<PagedList<ClientClaim>> GetClientClaimsAsync(int clientId, int page = 1, int pageSize = 10)
@@ -228,14 +224,12 @@ namespace Skoruba.IdentityServer4.Admin.Data.Repositories
             return pagedList;
         }
 
-        public async Task<ClientClaim> GetClientClaimAsync(int clientClaimId)
+        public Task<ClientClaim> GetClientClaimAsync(int clientClaimId)
         {
-            var clientClaim = await _dbContext.ClientClaims
+            return _dbContext.ClientClaims
                 .Include(x => x.Client)
                 .Where(x => x.Id == clientClaimId)
                 .SingleOrDefaultAsync();
-
-            return clientClaim;
         }
 
         public async Task<int> DeleteClientSecretAsync(ClientSecret clientSecret)
