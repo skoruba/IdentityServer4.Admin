@@ -49,16 +49,12 @@ namespace Skoruba.IdentityServer4.Admin.Services
 
         public async Task<int> DeletePersistedGrantAsync(string key)
         {
-            var saved = await _persistedGrantRepository.DeletePersistedGrantAsync(key);
-
-            return saved;
+            return await _persistedGrantRepository.DeletePersistedGrantAsync(key);
         }
 
         public async Task<int> DeletePersistedGrantsAsync(int userId)
         {
-            var saved = await _persistedGrantRepository.DeletePersistedGrantsAsync(userId);
-
-            return saved;
+            return await _persistedGrantRepository.DeletePersistedGrantsAsync(userId);
         }
     }
 }

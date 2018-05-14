@@ -146,9 +146,8 @@ namespace Skoruba.IdentityServer4.Admin.Services
 
             PrepareClientTypeForNewClient(client);
             var clientEntity = client.ToEntity();
-            var clientId = await _clientRepository.AddClientAsync(clientEntity);
 
-            return clientId;
+            return await _clientRepository.AddClientAsync(clientEntity);
         }
 
         public async Task<int> UpdateClientAsync(ClientDto client)
@@ -160,17 +159,15 @@ namespace Skoruba.IdentityServer4.Admin.Services
             }
 
             var clientEntity = client.ToEntity();
-            var saved = await _clientRepository.UpdateClientAsync(clientEntity);
 
-            return saved;
+            return await _clientRepository.UpdateClientAsync(clientEntity);
         }
 
         public async Task<int> RemoveClientAsync(ClientDto client)
         {
             var clientEntity = client.ToEntity();
-            var saved = await _clientRepository.RemoveClientAsync(clientEntity);
 
-            return saved;
+            return await _clientRepository.RemoveClientAsync(clientEntity);
         }
 
         public async Task<int> CloneClientAsync(ClientCloneDto client)
@@ -290,17 +287,14 @@ namespace Skoruba.IdentityServer4.Admin.Services
             HashClientSharedSecret(clientSecret);
 
             var clientSecretEntity = clientSecret.ToEntity();
-            var saved = await _clientRepository.AddClientSecretAsync(clientSecret.ClientId, clientSecretEntity);
-
-            return saved;
+            return await _clientRepository.AddClientSecretAsync(clientSecret.ClientId, clientSecretEntity);            
         }
 
         public async Task<int> DeleteClientSecretAsync(ClientSecretsDto clientSecret)
         {
             var clientSecretEntity = clientSecret.ToEntity();
-            var saved = await _clientRepository.DeleteClientSecretAsync(clientSecretEntity);
 
-            return saved;
+            return await _clientRepository.DeleteClientSecretAsync(clientSecretEntity);
         }
 
         public async Task<ClientSecretsDto> GetClientSecretsAsync(int clientId, int page = 1, int pageSize = 10)
@@ -375,33 +369,29 @@ namespace Skoruba.IdentityServer4.Admin.Services
         public async Task<int> AddClientClaimAsync(ClientClaimsDto clientClaim)
         {
             var clientClaimEntity = clientClaim.ToEntity();
-            var saved = await _clientRepository.AddClientClaimAsync(clientClaim.ClientId, clientClaimEntity);
 
-            return saved;
+            return await _clientRepository.AddClientClaimAsync(clientClaim.ClientId, clientClaimEntity);
         }
 
         public async Task<int> AddClientPropertyAsync(ClientPropertiesDto clientProperties)
         {
             var clientProperty = clientProperties.ToEntity();
-            var saved = await _clientRepository.AddClientPropertyAsync(clientProperties.ClientId, clientProperty);
 
-            return saved;
+            return await _clientRepository.AddClientPropertyAsync(clientProperties.ClientId, clientProperty);
         }
 
         public async Task<int> DeleteClientClaimAsync(ClientClaimsDto clientClaim)
         {
             var clientClaimEntity = clientClaim.ToEntity();
-            var saved = await _clientRepository.DeleteClientClaimAsync(clientClaimEntity);
 
-            return saved;
+            return await _clientRepository.DeleteClientClaimAsync(clientClaimEntity);
         }
 
         public async Task<int> DeleteClientPropertyAsync(ClientPropertiesDto clientProperty)
         {
             var clientPropertyEntity = clientProperty.ToEntity();
-            var saved = await _clientRepository.DeleteClientPropertyAsync(clientPropertyEntity);
 
-            return saved;
+            return await _clientRepository.DeleteClientPropertyAsync(clientPropertyEntity);
         }
     }
 }

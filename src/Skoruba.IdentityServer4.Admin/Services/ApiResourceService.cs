@@ -74,9 +74,8 @@ namespace Skoruba.IdentityServer4.Admin.Services
             }
 
             var resource = apiResource.ToEntity();
-            var saved = await _apiResourceRepository.AddApiResourceAsync(resource);
 
-            return saved;
+            return await _apiResourceRepository.AddApiResourceAsync(resource);
         }
 
         public async Task<int> UpdateApiResourceAsync(ApiResourceDto apiResource)
@@ -88,25 +87,22 @@ namespace Skoruba.IdentityServer4.Admin.Services
             }
 
             var resource = apiResource.ToEntity();
-            var saved = await _apiResourceRepository.UpdateApiResourceAsync(resource);
 
-            return saved;
+            return await _apiResourceRepository.UpdateApiResourceAsync(resource);
         }
 
         public async Task<int> DeleteApiResourceAsync(ApiResourceDto apiResource)
         {
             var resource = apiResource.ToEntity();
-            var saved = await _apiResourceRepository.DeleteApiResourceAsync(resource);
 
-            return saved;
+            return await _apiResourceRepository.DeleteApiResourceAsync(resource);
         }
 
         public async Task<bool> CanInsertApiResourceAsync(ApiResourceDto apiResource)
         {
             var resource = apiResource.ToEntity();
-            var saved = await _apiResourceRepository.CanInsertApiResourceAsync(resource);
 
-            return saved;
+            return await _apiResourceRepository.CanInsertApiResourceAsync(resource);
         }
 
         public async Task<ApiScopesDto> GetApiScopesAsync(int apiResourceId, int page = 1, int pageSize = 10)
@@ -147,9 +143,8 @@ namespace Skoruba.IdentityServer4.Admin.Services
             }
 
             var scope = apiScope.ToEntity();
-            var saved = await _apiResourceRepository.AddApiScopeAsync(apiScope.ApiResourceId, scope);
 
-            return saved;
+            return await _apiResourceRepository.AddApiScopeAsync(apiScope.ApiResourceId, scope);
         }
 
         public ApiScopesDto BuildApiScopeViewModel(ApiScopesDto apiScope)
@@ -179,17 +174,15 @@ namespace Skoruba.IdentityServer4.Admin.Services
             }
 
             var scope = apiScope.ToEntity();
-            var saved = await _apiResourceRepository.UpdateApiScopeAsync(apiScope.ApiResourceId, scope);
 
-            return saved;
+            return await _apiResourceRepository.UpdateApiScopeAsync(apiScope.ApiResourceId, scope);
         }
 
         public async Task<int> DeleteApiScopeAsync(ApiScopesDto apiScope)
         {
             var scope = apiScope.ToEntity();
-            var saved = await _apiResourceRepository.DeleteApiScopeAsync(scope);
 
-            return saved;
+            return await _apiResourceRepository.DeleteApiScopeAsync(scope);
         }
 
         public async Task<ApiSecretsDto> GetApiSecretsAsync(int apiResourceId, int page = 1, int pageSize = 10)
@@ -211,9 +204,8 @@ namespace Skoruba.IdentityServer4.Admin.Services
             HashApiSharedSecret(apiSecret);
 
             var secret = apiSecret.ToEntity();
-            var saved = await _apiResourceRepository.AddApiSecretAsync(apiSecret.ApiResourceId, secret);
-
-            return saved;
+            
+            return await _apiResourceRepository.AddApiSecretAsync(apiSecret.ApiResourceId, secret);
         }
 
         public async Task<ApiSecretsDto> GetApiSecretAsync(int apiSecretId)
@@ -228,24 +220,20 @@ namespace Skoruba.IdentityServer4.Admin.Services
         public async Task<int> DeleteApiSecretAsync(ApiSecretsDto apiSecret)
         {
             var secret = apiSecret.ToEntity();
-            var saved = await _apiResourceRepository.DeleteApiSecretAsync(secret);
 
-            return saved;
+            return await _apiResourceRepository.DeleteApiSecretAsync(secret);
         }
 
         public async Task<bool> CanInsertApiScopeAsync(ApiScopesDto apiScopes)
         {
             var apiScope = apiScopes.ToEntity();
-            var canInsert = await _apiResourceRepository.CanInsertApiScopeAsync(apiScope);
 
-            return canInsert;
+            return await _apiResourceRepository.CanInsertApiScopeAsync(apiScope);
         }
 
         public async Task<string> GetApiResourceNameAsync(int apiResourceId)
         {
-            var apiResourceName = await _apiResourceRepository.GetApiResourceNameAsync(apiResourceId);
-
-            return apiResourceName;
+            return await _apiResourceRepository.GetApiResourceNameAsync(apiResourceId);
         }
     }
 }

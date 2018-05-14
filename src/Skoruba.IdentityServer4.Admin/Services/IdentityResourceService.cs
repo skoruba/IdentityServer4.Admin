@@ -41,9 +41,8 @@ namespace Skoruba.IdentityServer4.Admin.Services
         public async Task<bool> CanInsertIdentityResourceAsync(IdentityResourceDto identityResource)
         {
             var resource = identityResource.ToEntity();
-            var canInsert = await _identityResourceRepository.CanInsertIdentityResourceAsync(resource);
 
-            return canInsert;
+            return await _identityResourceRepository.CanInsertIdentityResourceAsync(resource);
         }
 
         public async Task<int> AddIdentityResourceAsync(IdentityResourceDto identityResource)
@@ -55,9 +54,8 @@ namespace Skoruba.IdentityServer4.Admin.Services
             }
 
             var resource = identityResource.ToEntity();
-            var saved = await _identityResourceRepository.AddIdentityResourceAsync(resource);
 
-            return saved;
+            return await _identityResourceRepository.AddIdentityResourceAsync(resource);
         }
 
         public async Task<int> UpdateIdentityResourceAsync(IdentityResourceDto identityResource)
@@ -69,17 +67,15 @@ namespace Skoruba.IdentityServer4.Admin.Services
             }
 
             var resource = identityResource.ToEntity();
-            var saved = await _identityResourceRepository.UpdateIdentityResourceAsync(resource);
 
-            return saved;
+            return await _identityResourceRepository.UpdateIdentityResourceAsync(resource);
         }
 
         public async Task<int> DeleteIdentityResourceAsync(IdentityResourceDto identityResource)
         {
             var resource = identityResource.ToEntity();
-            var saved = await _identityResourceRepository.DeleteIdentityResourceAsync(resource);
 
-            return saved;
+            return await _identityResourceRepository.DeleteIdentityResourceAsync(resource);
         }
 
         public IdentityResourceDto BuildIdentityResourceViewModel(IdentityResourceDto identityResource)
