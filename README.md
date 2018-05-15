@@ -5,6 +5,8 @@
 
 ## Project Status
 
+[![Build status](https://ci.appveyor.com/api/projects/status/ipl73vgf2mlbrs6a?svg=true)](https://ci.appveyor.com/project/JanSkoruba/identityserver4-admin)
+
 This is currently in **beta version**
 
 The application is written in the **Asp.Net Core MVC - using .NET Core 2.0** - works only with **IdentityServer4 version 2.0+**
