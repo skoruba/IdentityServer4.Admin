@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Mappers;
-using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Skoruba.IdentityServer4.Admin.Configuration;
@@ -13,12 +11,28 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 {
     public static class DbMigrationHelpers
     {
-        public static void MigrateDbContexts(IApplicationBuilder app)
+        /// <summary>
+        /// Generate migrations before running this method, you can use command bellow:
+        /// Add-Migration DbInit -context AdminDbContext -output Data/Migrations
+        /// </summary>
+        /// <param name="host"></param>
+        public static void EnsureSeedData(IWebHost host)
         {
-            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            using (var serviceScope = host.Services.CreateScope())
             {
-                serviceScope.ServiceProvider.GetService<AdminDbContext>().Database.Migrate();
-                EnsureSeedData(serviceScope.ServiceProvider.GetService<AdminDbContext>());
+                var services = serviceScope.ServiceProvider;
+
+                EnsureSeedData(services);
+            }
+        }
+
+        public static void EnsureSeedData(IServiceProvider serviceProvider)
+        {
+            using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<AdminDbContext>();
+                context.Database.Migrate();
+                EnsureSeedData(context);
             }
         }
 

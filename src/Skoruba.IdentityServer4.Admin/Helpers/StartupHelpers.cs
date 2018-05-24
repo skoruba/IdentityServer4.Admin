@@ -87,7 +87,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                     configuration.CustomSources = allowCspUrls;
                 });
 
-                // consider remove unsafe sources
+                //TODO: consider remove unsafe sources - currently using for toastr inline scripts in Notification.cshtml
                 options.ScriptSources(configuration =>
                 {
                     configuration.SelfSrc = true;

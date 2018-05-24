@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Serilog;
+using Skoruba.IdentityServer4.Admin.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin
 {
@@ -8,7 +9,11 @@ namespace Skoruba.IdentityServer4.Admin
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            var host = BuildWebHost(args);
+
+            //DbMigrationHelpers.EnsureSeedData(host);
+
+            host.Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
@@ -16,6 +21,6 @@ namespace Skoruba.IdentityServer4.Admin
                    .UseKestrel(c => c.AddServerHeader = false)
                    .UseStartup<Startup>()
                    .UseSerilog()
-                   .Build();
+                   .Build();        
     }
 }
