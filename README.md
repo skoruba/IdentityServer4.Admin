@@ -47,7 +47,7 @@ Migrations are not a part of the repository - they are ignored in `.gitignore`.
 
 We suggest to use seed data:
 
-- In `Startup.cs` -> `Configure`, uncomment `MigrateDbContexts(app)`
+- In `Program.cs` -> `Main`, uncomment `DbMigrationHelpers.EnsureSeedData(host)`
 - The `Clients` and `Resources` files in `Configuration` are the initial data, based on a sample from IdentityServer4
 
 ## Authentication and Authorization
