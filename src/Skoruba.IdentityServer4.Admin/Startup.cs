@@ -56,9 +56,7 @@ namespace Skoruba.IdentityServer4.Admin
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            
-            //DbMigrationHelpers.MigrateDbContexts(app);
-
+                        
             app.UseSecurityHeaders();
             app.UseStaticFiles();
             app.ConfigureAuthentification(env);
