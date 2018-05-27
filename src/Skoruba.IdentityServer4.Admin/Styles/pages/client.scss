@@ -4,25 +4,3 @@
 .client .action-butons {
 	margin: 20px 0 20px 0;
 }
-
-label > input {
-	visibility: hidden;
-	position: absolute;
-}
-
-label > input + img {
-	cursor: pointer;
-	border: 2px solid transparent;
-}
-
-label > input:checked + img {
-	background-color: royalblue;
-	padding: 5px;
-	-ms-border-radius: 15px;
-	border-radius: 15px;
-	border: 2px solid cornflowerblue;
-}
-
-label > h3, label > h4 {
-	cursor: pointer;
-}

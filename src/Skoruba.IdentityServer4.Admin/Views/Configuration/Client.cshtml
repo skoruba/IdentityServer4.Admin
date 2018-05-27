@@ -29,7 +29,12 @@
 	<script>
 		$(function () {
 			//Disable enter for this form
-			FormMvc.disableEnter($('#client-form'));			
+			FormMvc.disableEnter($('#client-form'));
+
+			//Radio image
+			$("label.radio-img>img").click(function () {
+				$(this).parent().find("input:radio").click();
+			});
 		});
 	</script>
 }
