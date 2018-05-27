@@ -3,6 +3,7 @@ using IdentityServer4.EntityFramework.Extensions;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Skoruba.IdentityServer4.Admin.Data.Constants;
 using Skoruba.IdentityServer4.Admin.Data.Entities;
 using Skoruba.IdentityServer4.Admin.Data.Entities.Identity;
 
@@ -72,14 +73,14 @@ namespace Skoruba.IdentityServer4.Admin.Data.DbContexts
 
         private void ConfigureIdentityContext(ModelBuilder builder)
         {
-            builder.Entity<UserIdentityRole>().ToTable("Roles");
-            builder.Entity<UserIdentityRoleClaim>().ToTable("RoleClaims");
-            builder.Entity<UserIdentityUserRole>().ToTable("UserRoles");
+            builder.Entity<UserIdentityRole>().ToTable(TableConsts.IdentityRoles);
+            builder.Entity<UserIdentityRoleClaim>().ToTable(TableConsts.IdentityRoleClaims);
+            builder.Entity<UserIdentityUserRole>().ToTable(TableConsts.IdentityUserRoles);
 
-            builder.Entity<UserIdentity>().ToTable("Users");
-            builder.Entity<UserIdentityUserLogin>().ToTable("UserLogins");
-            builder.Entity<UserIdentityUserClaim>().ToTable("UserClaims");
-            builder.Entity<UserIdentityUserToken>().ToTable("UserTokens");
+            builder.Entity<UserIdentity>().ToTable(TableConsts.IdentityUsers);
+            builder.Entity<UserIdentityUserLogin>().ToTable(TableConsts.IdentityUserLogins);
+            builder.Entity<UserIdentityUserClaim>().ToTable(TableConsts.IdentityUserClaims);
+            builder.Entity<UserIdentityUserToken>().ToTable(TableConsts.IdentityUserTokens);
         }
     }
 }

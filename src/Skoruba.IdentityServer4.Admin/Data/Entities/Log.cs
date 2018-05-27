@@ -2,11 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Xml.Linq;
-using Skoruba.IdentityServer4.Admin.Constants;
+using Skoruba.IdentityServer4.Admin.Data.Constants;
 
 namespace Skoruba.IdentityServer4.Admin.Data.Entities
 {
-    [Table(ConfigurationConsts.LoggingTableName)]
+    [Table(TableConsts.Logging)]
     public class Log
     {
         [Key]

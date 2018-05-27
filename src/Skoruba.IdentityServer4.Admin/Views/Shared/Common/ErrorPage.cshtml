@@ -1,10 +1,12 @@
-﻿@using Newtonsoft.Json
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Newtonsoft.Json
 @using Skoruba.IdentityServer4.Admin.Helpers
+@inject IViewLocalizer Localizer
 @{
 	ViewData["Title"] = "Error";
 }
 
-<h1 class="text-danger">Error</h1>
+<h1 class="text-danger">@Localizer["PageTitle"]</h1>
 
 @if (ViewBag.Notifications != null)
 {
@@ -17,6 +19,6 @@
 
 	foreach (NotificationHelpers.Alert notification in obj)
 	{
-	<h2 class="text-danger">@notification.Message</h2>
+		<h2 class="text-danger">@notification.Message</h2>
 	}
 }

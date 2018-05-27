@@ -20,10 +20,9 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 throw new ArgumentNullException(nameof(query));
             }
 
-            //it is necessary order before paging it - it is one of EF warrnings
+            // It is necessary sort items before it
             query = orderByDescending ? query.OrderByDescending(orderBy) : query.OrderBy(orderBy);
-
-            //Pagining according page and page size
+            
             return query.Skip((page - 1) * pageSize).Take(pageSize);
         }
     }
