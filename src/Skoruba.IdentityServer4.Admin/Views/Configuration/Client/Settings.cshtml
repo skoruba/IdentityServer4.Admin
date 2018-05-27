@@ -5,15 +5,39 @@
 <div class="row">
 	<div class="col-md-12">
 		<h3>@Localizer["Title"]</h3>
+		<nav>
+			<div class="nav nav-tabs mt-3" id="nav-tab" role="tablist">
+				<a class="nav-item nav-link active" id="nav-name-tab" data-toggle="tab" href="#nav-name" role="tab" aria-controls="nav-name" aria-selected="true">@Localizer["NavName"]</a>
+				@if (Model.Id != 0)
+				{
+					<a class="nav-item nav-link" id="nav-basics-tab" data-toggle="tab" href="#nav-basics" role="tab" aria-controls="nav-basics" aria-selected="false">@Localizer["NavBasics"]</a>
+					<a class="nav-item nav-link" id="nav-authentication-tab" data-toggle="tab" href="#nav-authentication" role="tab" aria-controls="nav-authentication" aria-selected="false">@Localizer["NavAuthentication"]</a>
+					<a class="nav-item nav-link" id="nav-token-tab" data-toggle="tab" href="#nav-token" role="tab" aria-controls="nav-token" aria-selected="false">@Localizer["NavToken"]</a>
+					<a class="nav-item nav-link" id="nav-consent-tab" data-toggle="tab" href="#nav-consent" role="tab" aria-controls="nav-consent" aria-selected="false">@Localizer["NavConsent"]</a>
+				}
+			</div>
+		</nav>
+		<div class="tab-content" id="nav-tabContent">
+			<div class="tab-pane fade show active" id="nav-name" role="tabpanel" aria-labelledby="nav-name-tab">
+				@Html.Partial("Client/Section/Name")
+			</div>
 
-		@Html.Partial("Client/Section/Name")
+			@if (Model.Id != 0)
+			{
+				<div class="tab-pane fade" id="nav-basics" role="tabpanel" aria-labelledby="nav-basics-tab">
+					@Html.Partial("Client/Section/Basics")
+				</div>
 
-		@if (Model.Id != 0)
-		{
-			@Html.Partial("Client/Section/Basics")
-			@Html.Partial("Client/Section/Authentication")
-			@Html.Partial("Client/Section/Token")
-			@Html.Partial("Client/Section/Consent")
-		}
+				<div class="tab-pane fade" id="nav-authentication" role="tabpanel" aria-labelledby="nav-authentication-tab">
+					@Html.Partial("Client/Section/Authentication")
+				</div>
+				<div class="tab-pane fade" id="nav-token" role="tabpanel" aria-labelledby="nav-token-tab">
+					@Html.Partial("Client/Section/Token")
+				</div>
+				<div class="tab-pane fade" id="nav-consent" role="tabpanel" aria-labelledby="nav-consent-tab">
+					@Html.Partial("Client/Section/Consent")
+				</div>
+			}
+		</div>
 	</div>
 </div>
