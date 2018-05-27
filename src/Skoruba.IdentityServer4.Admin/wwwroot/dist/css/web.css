@@ -451,7 +451,8 @@ label.radio-img > input:checked + img {
   border-radius: 15px; }
 
 label.radio-img > input:checked ~ h3, label.radio-img > input:checked ~ h4 {
-  color: #007bff; }
+  color: #007bff;
+  text-decoration: underline; }
 
 label.radio-img > h3, label > h4 {
   cursor: pointer; }
