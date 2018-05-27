@@ -6,9 +6,7 @@
 
         public const string NLogConfigurationVariable = "connectionString";
 
-        public const string LoggingSectionKey = "Logging";
-
-        public const string LoggingTableName = "Log";
+        public const string LoggingSectionKey = "Logging";        
 
         public const string ResourcesPath = "Resources";
     }

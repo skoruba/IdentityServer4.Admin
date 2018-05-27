@@ -7,25 +7,10 @@ namespace Skoruba.IdentityServer4.Admin.Constants
         public const string AdministrationPolicy = "RequireAdministratorRole";
         public const string AdministrationRole = "SkorubaIdentityAdminAdministrator";
 
-        public const string IdentityAdminCookieName = "IdentityServerAdmin";
-
-#if DEBUG
+        public const string IdentityAdminCookieName = "IdentityServerAdmin";        
         public const string IdentityAdminRedirectUri = "http://localhost:9000/signin-oidc";
-#else
-		public const string IdentityAdminRedirectUri = "https://admin.skoruba.net/signin-oidc";
-#endif
-
-#if DEBUG
         public const string IdentityServerBaseUrl = "http://localhost:5000";
-#else
-		public const string IdentityServerBaseUrl = "https://id.skoruba.com";
-#endif
-
-#if DEBUG
         public const string IdentityAdminBaseUrl = "http://localhost:9000";
-#else
-		public const string IdentityAdminBaseUrl = "https://id.skoruba.com";
-#endif
 
         public const string UserNameClaimType = "name";
         public const string SignInScheme = "Cookies";

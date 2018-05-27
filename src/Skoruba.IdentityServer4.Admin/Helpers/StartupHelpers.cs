@@ -25,6 +25,7 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
 using Skoruba.IdentityServer4.Admin.Constants;
+using Skoruba.IdentityServer4.Admin.Data.Constants;
 using Skoruba.IdentityServer4.Admin.Data.DbContexts;
 using Skoruba.IdentityServer4.Admin.Data.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.Data.Repositories;
@@ -135,7 +136,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.MSSqlServer(configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey),
-                    ConfigurationConsts.LoggingTableName,
+                    TableConsts.Logging,
                     columnOptions: columnOptions,
                     restrictedToMinimumLevel: LogEventLevel.Error)
                 .CreateLogger();

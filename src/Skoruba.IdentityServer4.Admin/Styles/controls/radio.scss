@@ -19,6 +19,7 @@ label.radio-img > input:checked + img {
 
 label.radio-img > input:checked ~ h3, label.radio-img > input:checked ~ h4 {
 	color: $radioColor;
+	text-decoration: underline;
 }
 
 label.radio-img > h3, label > h4 {

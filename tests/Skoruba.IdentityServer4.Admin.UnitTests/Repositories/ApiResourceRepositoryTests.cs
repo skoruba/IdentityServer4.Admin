@@ -237,7 +237,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 //Try delete it
                 await apiResourceRepository.DeleteApiScopeAsync(newApiScopes);
 
-                //Get new api resource
+                //Get new api scope
                 var deletedApiScopes = await context.ApiScopes.Where(x => x.Id == newApiScopes.Id).SingleOrDefaultAsync();
 
                 //Assert if it exist
@@ -258,13 +258,13 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 //Add new api resource
                 await apiResourceRepository.AddApiResourceAsync(apiResource);
 
-                //Generate random new api resource
+                //Generate random new api scope
                 var apiScope = ApiResourceMock.GenerateRandomApiScope(0);
 
-                //Add new api resource
+                //Add new api scope
                 await apiResourceRepository.AddApiScopeAsync(apiResource.Id, apiScope);
 
-                //Get new api resource
+                //Get new api scope
                 var newApiScopes = await apiResourceRepository.GetApiScopeAsync(apiResource.Id, apiScope.Id);
 
                 //Assert new api resource
@@ -285,16 +285,16 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 //Add new api resource
                 await apiResourceRepository.AddApiResourceAsync(apiResource);
 
-                //Generate random new api resource
+                //Generate random new api secret
                 var apiSecret = ApiResourceMock.GenerateRandomApiSecret(0);
 
                 //Add new api secret
                 await apiResourceRepository.AddApiSecretAsync(apiResource.Id, apiSecret);
 
-                //Get new api resource
+                //Get new api secret
                 var newApiSecret = await context.ApiSecrets.Where(x => x.Id == apiSecret.Id).SingleAsync();
 
-                //Assert new api resource
+                //Assert new api secret
                 newApiSecret.ShouldBeEquivalentTo(apiSecret, options => options.Excluding(o => o.Id));
             }
         }
@@ -354,10 +354,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 //Add new api secret
                 await apiResourceRepository.AddApiSecretAsync(apiResource.Id, apiSecret);
 
-                //Get new api resource
+                //Get new api secret
                 var newApiSecret = await apiResourceRepository.GetApiSecretAsync(apiSecret.Id);
 
-                //Assert new api resource
+                //Assert new api secret
                 newApiSecret.ShouldBeEquivalentTo(apiSecret, options => options.Excluding(o => o.Id));
             }
         }

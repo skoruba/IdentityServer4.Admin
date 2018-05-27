@@ -11,7 +11,6 @@ using Skoruba.IdentityServer4.Admin.Data.Mappers;
 using Skoruba.IdentityServer4.Admin.Data.Repositories;
 using Skoruba.IdentityServer4.Admin.Services;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
-using Skoruba.IdentityServer4.Admin.ViewModels.Configuration;
 using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
