@@ -10,13 +10,13 @@
 <h2>@Localizer["PageTitle"]</h2>
 
 <form asp-action="ApiResourceDelete" method="post" id="api-resource-form">
-	
-	<!--Hidden -->
-	<input type="hidden" asp-for="Id"/>
 
-	<div class="panel panel-default">
-		<div class="panel-heading">@Localizer["PanelTitle"]</div>
-		<div class="panel-body">
+	<!--Hidden -->
+	<input type="hidden" asp-for="Id" />
+
+	<div class="card mt-3">
+		<h5 class="card-header">@Localizer["PanelTitle"]</h5>
+		<div class="card-body">
 
 			<!--Input - text -->
 			<div class="form-group">
