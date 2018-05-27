@@ -620,7 +620,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
 
                 var clients = await clientRepository.GetClientsAsync();
 
-                //Assert that it is count correct
+                //Assert clients count
                 clients.Data.Count.Should().Be(randomClients.Count);
 
                 //Assert that clients are same
@@ -754,7 +754,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
             {
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                //Try get some existing grant
+                //Try get some existing claims
                 var randomClientClaim = ClientMock.GenerateRandomClientClaim(0);
 
                 var grantTypes = clientRepository.GetStandardClaims(randomClientClaim.Type);

@@ -175,7 +175,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 //Generete new api resuorce with added item id
                 var updatedApiResource = ApiResourceDtoMock.GenerateRandomApiResource(apiResource.Id);
 
-                //Update api resuorce
+                //Update api resource
                 await apiResourceService.UpdateApiResourceAsync(updatedApiResource);
                 
                 var updatedApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
