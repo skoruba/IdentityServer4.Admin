@@ -1,17 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>netcoreapp2.0</TargetFramework>
+		<TargetFramework>netcoreapp2.1</TargetFramework>
 		<PreserveCompilationContext>true</PreserveCompilationContext>
 		<IsPackable>false</IsPackable>
 		<DebugType>Full</DebugType>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="coverlet.msbuild" Version="1.2.0" />
-		<PackageReference Include="FluentAssertions" Version="5.3.0" />
-		<PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.0.3" />
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
+		<PackageReference Include="coverlet.msbuild" Version="2.0.0" />
+		<PackageReference Include="FluentAssertions" Version="5.3.2" />
+		<PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.1.0" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.2" />
 		<PackageReference Include="xunit" Version="2.3.1" />
 		<PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
 		<DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
@@ -20,13 +20,5 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Skoruba.IdentityServer4.Admin\Skoruba.IdentityServer4.Admin.csproj" />
 	</ItemGroup>
-
-	<!-- https://github.com/NuGet/Home/issues/4412 -->
-	<Target Name="CopyDepsFiles" AfterTargets="Build" Condition="'$(TargetFramework)'!=''">
-		<ItemGroup>
-			<DepsFilePaths Include="$([System.IO.Path]::ChangeExtension('%(_ResolvedProjectReferencePaths.FullPath)', '.deps.json'))" />
-		</ItemGroup>
-		<Copy SourceFiles="%(DepsFilePaths.FullPath)" DestinationFolder="$(OutputPath)" Condition="Exists('%(DepsFilePaths.FullPath)')" />
-	</Target>
 
 </Project>
