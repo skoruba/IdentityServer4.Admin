@@ -5,7 +5,7 @@
 
 ## Project Status
 
-[![Build status](https://ci.appveyor.com/api/projects/status/5yg59bn70399hn6s?svg=true)](https://ci.appveyor.com/project/JanSkoruba/identityserver4-admin)
+[![Build status](https://ci.appveyor.com/api/projects/status/5yg59bn70399hn6s/branch/master?svg=true)](https://ci.appveyor.com/project/JanSkoruba/identityserver4-admin/branch/master)
 
 This is currently in **beta version**
 
