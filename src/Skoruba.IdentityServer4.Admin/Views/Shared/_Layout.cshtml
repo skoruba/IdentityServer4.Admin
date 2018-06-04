@@ -86,7 +86,7 @@
 		<script src="~/dist/js/bundle.min.js" asp-append-version="true"></script>
 	</environment>
 
-	@Html.Partial("Common/Notification")
+	@await Html.PartialAsync("Common/Notification")
 
 	@RenderSection("scripts", required: false)
 </body>

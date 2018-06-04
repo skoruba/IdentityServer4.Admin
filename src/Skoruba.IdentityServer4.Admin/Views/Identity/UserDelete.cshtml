@@ -20,7 +20,7 @@
 			<!--Input - text -->
 			<div class="form-group row">
 				<label asp-for="UserName" class="col-sm-3 col-form-label">
-					@Html.Partial("User/Section/Label", "UserUserName")
+					@await Html.PartialAsync("User/Section/Label", "UserUserName")
 				</label>
 				<div class="col-sm-9">
 					<input type="text" class="form-control" disabled="disabled" asp-for="UserName">

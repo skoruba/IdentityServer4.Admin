@@ -13,7 +13,7 @@
 
 <div class="row">
 	<div class="col-12">
-		@Html.Partial("Common/Search", new Search { Action = "ErrorsLog", Controller = "Log" })
+		@await Html.PartialAsync("Common/Search", new Search { Action = "ErrorsLog", Controller = "Log" })
 	</div>
 </div>
 
@@ -55,6 +55,6 @@
 
 <div class="row">
 	<div class="col-12">
-		@Html.Partial("Common/Pager", new Pager { Action = "ErrorsLog", PageSize = Model.PageSize, TotalCount = Model.TotalCount, EnableSearch = true, Search = ViewBag.Search })
+		@await Html.PartialAsync("Common/Pager", new Pager { Action = "ErrorsLog", PageSize = Model.PageSize, TotalCount = Model.TotalCount, EnableSearch = true, Search = ViewBag.Search })
 	</div>
 </div>

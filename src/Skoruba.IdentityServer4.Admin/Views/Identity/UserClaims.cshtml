@@ -27,7 +27,7 @@
 					<!--Select with tags-->
 					<div class="form-group row">
 						<label asp-for="ClaimType" class="col-sm-3 col-form-label">
-							@Html.Partial("User/Section/Label", "Type")
+							@await Html.PartialAsync("User/Section/Label", "Type")
 						</label>
 						<div class="col-sm-9">
 							<picker id="ClaimType" multiple-select="false" min-search-text="2"
@@ -43,7 +43,7 @@
 					<!--Input - text -->
 					<div class="form-group row">
 						<label asp-for="ClaimValue" class="col-sm-3 col-form-label">
-							@Html.Partial("User/Section/Label", "Value")
+							@await Html.PartialAsync("User/Section/Label", "Value")
 						</label>
 						<div class="col-sm-9">
 							<input type="text" required class="form-control" asp-for="ClaimValue">
@@ -95,7 +95,7 @@
 				</div>
 				<div class="row">
 					<div class="col-12">
-						@Html.Partial("Common/Pager", new Pager {Action = "UserClaims", PageSize = Model.PageSize, TotalCount = Model.TotalCount})
+						@await Html.PartialAsync("Common/Pager", new Pager {Action = "UserClaims", PageSize = Model.PageSize, TotalCount = Model.TotalCount})
 					</div>
 				</div>
 			</div>

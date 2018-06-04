@@ -19,23 +19,23 @@
 		</nav>
 		<div class="tab-content" id="nav-tabContent">
 			<div class="tab-pane show active" id="nav-name" role="tabpanel" aria-labelledby="nav-name-tab">
-				@Html.Partial("Client/Section/Name")
+				@await Html.PartialAsync("Client/Section/Name")
 			</div>
 
 			@if (Model.Id != 0)
 			{
 				<div class="tab-pane" id="nav-basics" role="tabpanel" aria-labelledby="nav-basics-tab">
-					@Html.Partial("Client/Section/Basics")
+					@await Html.PartialAsync("Client/Section/Basics")
 				</div>
 
 				<div class="tab-pane" id="nav-authentication" role="tabpanel" aria-labelledby="nav-authentication-tab">
-					@Html.Partial("Client/Section/Authentication")
+					@await Html.PartialAsync("Client/Section/Authentication")
 				</div>
 				<div class="tab-pane" id="nav-token" role="tabpanel" aria-labelledby="nav-token-tab">
-					@Html.Partial("Client/Section/Token")
+					@await Html.PartialAsync("Client/Section/Token")
 				</div>
 				<div class="tab-pane" id="nav-consent" role="tabpanel" aria-labelledby="nav-consent-tab">
-					@Html.Partial("Client/Section/Consent")
+					@await Html.PartialAsync("Client/Section/Consent")
 				</div>
 			}
 		</div>

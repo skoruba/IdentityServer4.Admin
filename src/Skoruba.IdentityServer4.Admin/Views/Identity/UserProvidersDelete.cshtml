@@ -24,7 +24,7 @@
 					<!--Input - text -->
 					<div class="form-group">
 						<label asp-for="LoginProvider" class="col-sm-3 control-label">
-							@Html.Partial("User/Section/Label", "UserProviderLoginProvider")
+							@await Html.PartialAsync("User/Section/Label", "UserProviderLoginProvider")
 						</label>
 						<div class="col-sm-9">
 							<!--Hidden -->
@@ -36,7 +36,7 @@
 					<!--Input - text -->
 					<div class="form-group">
 						<label asp-for="ProviderKey" class="col-sm-3 control-label">
-							@Html.Partial("User/Section/Label", "UserProviderProviderKey")
+							@await Html.PartialAsync("User/Section/Label", "UserProviderProviderKey")
 						</label>
 						<div class="col-sm-9">
 							<!--Hidden -->
@@ -48,7 +48,7 @@
 					<!--Input - text -->
 					<div class="form-group">
 						<label asp-for="ProviderDisplayName" class="col-sm-3 control-label">
-							@Html.Partial("User/Section/Label", "UserProviderProviderDisplayName")
+							@await Html.PartialAsync("User/Section/Label", "UserProviderProviderDisplayName")
 						</label>
 						<div class="col-sm-9">
 							<input type="text" disabled="disabled" class="form-control" asp-for="ProviderDisplayName">

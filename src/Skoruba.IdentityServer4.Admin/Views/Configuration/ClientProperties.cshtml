@@ -30,7 +30,7 @@
 					<!--Input - text -->
 					<div class="form-group row">
 						<label asp-for="Key" class="col-sm-3 col-form-label">
-							@Html.Partial("Client/Section/Label", "PropertyKey")
+							@await Html.PartialAsync("Client/Section/Label", "PropertyKey")
 						</label>
 						<div class="col-sm-9">
 							<input type="text" required class="form-control" asp-for="Key">
@@ -41,7 +41,7 @@
 					<!--Input - text -->
 					<div class="form-group row">
 						<label asp-for="Value" class="col-sm-3 col-form-label">
-							@Html.Partial("Client/Section/Label", "PropertyValue")
+							@await Html.PartialAsync("Client/Section/Label", "PropertyValue")
 						</label>
 						<div class="col-sm-9">
 							<input type="text" required class="form-control" asp-for="Value">
@@ -92,7 +92,7 @@
 
 				<div class="row">
 					<div class="col-12">
-						@Html.Partial("Common/Pager", new Pager { Action = "ClientProperties", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
+						@await Html.PartialAsync("Common/Pager", new Pager { Action = "ClientProperties", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
 					</div>
 				</div>
 			</div>

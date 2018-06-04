@@ -37,7 +37,7 @@
 			<!--Input - text -->
 			<div class="form-group row">
 				<label asp-for="UserName" class="col-sm-3 col-form-label">
-					@Html.Partial("User/Section/Label", "UserUserName")
+					@await Html.PartialAsync("User/Section/Label", "UserUserName")
 				</label>
 				<div class="col-sm-9">
 					<input type="text" required class="form-control" asp-for="UserName">
@@ -48,7 +48,7 @@
 			<!--Input - text -->
 			<div class="form-group row">
 				<label asp-for="Email" class="col-sm-3 col-form-label">
-					@Html.Partial("User/Section/Label", "UserEmail")
+					@await Html.PartialAsync("User/Section/Label", "UserEmail")
 				</label>
 				<div class="col-sm-9">
 					<input type="email" required class="form-control" asp-for="Email">
@@ -59,7 +59,7 @@
 			<!--Checkbox-->
 			<div class="form-group row">
 				<label asp-for="EmailConfirmed" class="col-sm-3 col-form-label">
-					@Html.Partial("User/Section/Label", "UserEmailConfirmed")
+					@await Html.PartialAsync("User/Section/Label", "UserEmailConfirmed")
 				</label>
 				<div class="col-sm-9">
 					<toggle-button>
@@ -71,7 +71,7 @@
 			<!--Input - text -->
 			<div class="form-group row">
 				<label asp-for="PhoneNumber" class="col-sm-3 col-form-label">
-					@Html.Partial("User/Section/Label", "UserPhoneNumber")
+					@await Html.PartialAsync("User/Section/Label", "UserPhoneNumber")
 				</label>
 				<div class="col-sm-9">
 					<input type="text" class="form-control" asp-for="PhoneNumber">
@@ -81,7 +81,7 @@
 			<!--Checkbox-->
 			<div class="form-group row">
 				<label asp-for="PhoneNumberConfirmed" class="col-sm-3 col-form-label">
-					@Html.Partial("User/Section/Label", "UserPhoneNumberConfirmed")
+					@await Html.PartialAsync("User/Section/Label", "UserPhoneNumberConfirmed")
 				</label>
 				<div class="col-sm-9">
 					<toggle-button>
@@ -93,7 +93,7 @@
 			<!--Checkbox-->
 			<div class="form-group row">
 				<label asp-for="LockoutEnabled" class="col-sm-3 col-form-label">
-					@Html.Partial("User/Section/Label", "UserLockoutEnabled")
+					@await Html.PartialAsync("User/Section/Label", "UserLockoutEnabled")
 				</label>
 				<div class="col-sm-9">
 					<toggle-button>
@@ -105,7 +105,7 @@
 			<!--Checkbox-->
 			<div class="form-group row">
 				<label asp-for="TwoFactorEnabled" class="col-sm-3 col-form-label">
-					@Html.Partial("User/Section/Label", "UserTwoFactorEnabled")
+					@await Html.PartialAsync("User/Section/Label", "UserTwoFactorEnabled")
 				</label>
 				<div class="col-sm-9">
 					<toggle-button>
@@ -117,7 +117,7 @@
 			<!--Input - text -->
 			<div class="form-group row">
 				<label asp-for="AccessFailedCount" class="col-sm-3 col-form-label">
-					@Html.Partial("User/Section/Label", "UserAccessFailedCount")
+					@await Html.PartialAsync("User/Section/Label", "UserAccessFailedCount")
 				</label>
 				<div class="col-sm-9">
 					<input type="text" class="form-control" asp-for="AccessFailedCount">
@@ -127,7 +127,7 @@
 			<!--Input - text -->
 			<div class="form-group row">
 				<label asp-for="LockoutEnd" class="col-sm-3 col-form-label">
-					@Html.Partial("User/Section/Label", "UserLockoutEnd")
+					@await Html.PartialAsync("User/Section/Label", "UserLockoutEnd")
 				</label>
 				<div class="col-sm-9">
 					<div class="input-group date" id="logoutend-picker" data-target-input="nearest">
