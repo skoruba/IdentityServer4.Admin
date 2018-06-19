@@ -142,7 +142,7 @@ It is possible to define the configuration according the client type - by defaul
 
 ## Licence
 
-This repository is licensed under the terms of the **MIT license**.
+This repository is licensed under the terms of the [**MIT license**](LICENSE.md).
 
 ## Acknowledgements
 
