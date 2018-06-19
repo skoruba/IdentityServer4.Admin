@@ -1,5 +1,7 @@
-﻿using IdentityServer4.EntityFramework.Entities;
+﻿using System.Threading.Tasks;
+using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Extensions;
+using IdentityServer4.EntityFramework.Interfaces;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +11,8 @@ using Skoruba.IdentityServer4.Admin.Data.Entities.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.Data.DbContexts
 {
-    public class AdminDbContext : IdentityDbContext<UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>
+    public class AdminDbContext : IdentityDbContext<UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>,
+        IConfigurationDbContext, IPersistedGrantDbContext
     {
         private readonly ConfigurationStoreOptions _storeOptions;
         private readonly OperationalStoreOptions _operationalOptions;
@@ -60,6 +63,11 @@ namespace Skoruba.IdentityServer4.Admin.Data.DbContexts
         public DbSet<PersistedGrant> PersistedGrants { get; set; }
 
         public DbSet<Log> Logs { get; set; }
+
+        public Task<int> SaveChangesAsync()
+        {
+            return base.SaveChangesAsync();
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
