@@ -9,7 +9,7 @@
 
 This is currently in **beta version**
 
-The application is written in the **Asp.Net Core MVC - using .NET Core 2.0** - works only with **IdentityServer4 version 2.0+**
+The application is written in the **Asp.Net Core MVC - using .NET Core 2.1** - works only with **IdentityServer4 version 2.0+**
 
 ## Cloning
 
