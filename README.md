@@ -11,6 +11,8 @@ This is currently in **beta version**
 
 The application is written in the **Asp.Net Core MVC - using .NET Core 2.1** - works only with **IdentityServer4 version 2.0+**
 
+- [Install](https://www.microsoft.com/net/download/windows#/current) the latest .NET Core 2.x SDK
+
 ## Cloning
 
 ```sh
