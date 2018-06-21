@@ -809,6 +809,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             services.AddSession();
             services.AddMvc()
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
             .AddViewLocalization(
                 LanguageViewLocationExpanderFormat.Suffix,
                 opts => { opts.ResourcesPath = "Resources"; })

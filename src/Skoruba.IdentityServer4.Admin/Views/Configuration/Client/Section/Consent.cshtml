@@ -8,7 +8,7 @@
 		<!--Checkbox-->
 		<div class="form-group row">
 			<label asp-for="RequireConsent" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "RequireConsent")
+				@await Html.PartialAsync("Client/Section/Label", "RequireConsent")
 			</label>
 			<div class="col-sm-9">
 				<toggle-button>
@@ -20,7 +20,7 @@
 		<!--Checkbox-->
 		<div class="form-group row">
 			<label asp-for="AllowRememberConsent" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "AllowRememberConsent")
+				@await Html.PartialAsync("Client/Section/Label", "AllowRememberConsent")
 			</label>
 			<div class="col-sm-9">
 				<toggle-button>
@@ -32,7 +32,7 @@
 		<!--Input - text -->
 		<div class="form-group row">
 			<label asp-for="ClientUri" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "ClientUri")
+				@await Html.PartialAsync("Client/Section/Label", "ClientUri")
 			</label>
 			<div class="col-sm-9">
 				<input type="text" class="form-control" asp-for="ClientUri">
@@ -42,7 +42,7 @@
 		<!--Input - text -->
 		<div class="form-group row">
 			<label asp-for="LogoUri" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "LogoUri")
+				@await Html.PartialAsync("Client/Section/Label", "LogoUri")
 			</label>
 			<div class="col-sm-9">
 				<input type="text" class="form-control" asp-for="LogoUri">

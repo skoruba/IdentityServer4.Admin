@@ -21,7 +21,7 @@
 			<!--Input - text -->
 			<div class="form-group">
 				<label asp-for="Name" class="col-sm-3 control-label">
-					@Html.Partial("ApiResource/Section/Label", "Name")
+					@await Html.PartialAsync("ApiResource/Section/Label", "Name")
 				</label>
 				<div class="col-sm-9">
 					<input type="text" class="form-control" disabled="disabled" asp-for="Name">

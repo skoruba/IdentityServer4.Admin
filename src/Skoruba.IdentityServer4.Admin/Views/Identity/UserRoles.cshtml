@@ -27,7 +27,7 @@
 					<!--Select-->
 					<div class="form-group row">
 						<label asp-for="RoleId" class="col-sm-3 col-form-label">
-							@Html.Partial("User/Section/Label", "RolesList")
+							@await Html.PartialAsync("User/Section/Label", "RolesList")
 						</label>
 						<div class="col-sm-9">
 							<select asp-for="RoleId" asp-items="@Model.RolesList" class="form-control single-select"></select>
@@ -77,7 +77,7 @@
 
 				<div class="row">
 					<div class="col-12">
-						@Html.Partial("Common/Pager", new Pager { Action = "UserRoles", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
+						@await Html.PartialAsync("Common/Pager", new Pager { Action = "UserRoles", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
 					</div>
 				</div>
 			</div>

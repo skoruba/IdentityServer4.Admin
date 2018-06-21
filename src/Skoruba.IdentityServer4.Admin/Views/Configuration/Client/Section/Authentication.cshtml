@@ -8,7 +8,7 @@
 		<!--Input - text -->
 		<div class="form-group row">
 			<label asp-for="FrontChannelLogoutUri" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "FrontChannelLogoutUri")
+				@await Html.PartialAsync("Client/Section/Label", "FrontChannelLogoutUri")
 			</label>
 			<div class="col-sm-9">
 				<input type="text" class="form-control" asp-for="FrontChannelLogoutUri">
@@ -18,7 +18,7 @@
 		<!--Checkbox-->
 		<div class="form-group row">
 			<label asp-for="FrontChannelLogoutSessionRequired" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "FrontChannelLogoutSessionRequired")
+				@await Html.PartialAsync("Client/Section/Label", "FrontChannelLogoutSessionRequired")
 			</label>
 			<div class="col-sm-9">
 				<toggle-button>
@@ -30,7 +30,7 @@
 		<!--Input - text -->
 		<div class="form-group row">
 			<label asp-for="BackChannelLogoutUri" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "BackChannelLogoutUri")
+				@await Html.PartialAsync("Client/Section/Label", "BackChannelLogoutUri")
 			</label>
 			<div class="col-sm-9">
 				<input type="text" class="form-control" asp-for="BackChannelLogoutUri">
@@ -40,7 +40,7 @@
 		<!--Checkbox-->
 		<div class="form-group row">
 			<label asp-for="BackChannelLogoutSessionRequired" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "BackChannelLogoutSessionRequired")
+				@await Html.PartialAsync("Client/Section/Label", "BackChannelLogoutSessionRequired")
 			</label>
 			<div class="col-sm-9">
 				<toggle-button>
@@ -52,7 +52,7 @@
 		<!--Checkbox-->
 		<div class="form-group row">
 			<label asp-for="EnableLocalLogin" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "EnableLocalLogin")
+				@await Html.PartialAsync("Client/Section/Label", "EnableLocalLogin")
 			</label>
 			<div class="col-sm-9">
 				<toggle-button>
@@ -64,7 +64,7 @@
 		<!--Select with tags-->
 		<div class="form-group row">
 			<label asp-for="PostLogoutRedirectUris" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "PostLogoutRedirectUris")
+				@await Html.PartialAsync("Client/Section/Label", "PostLogoutRedirectUris")
 			</label>
 			<div class="col-sm-9">
 				<picker id="PostLogoutRedirectUrisItems" multiple-select="true" min-search-text="2"
@@ -77,7 +77,7 @@
 		<!--Select with tags-->
 		<div class="form-group row">
 			<label asp-for="IdentityProviderRestrictions" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "IdentityProviderRestrictions")
+				@await Html.PartialAsync("Client/Section/Label", "IdentityProviderRestrictions")
 			</label>
 			<div class="col-sm-9">
 				<picker id="IdentityProviderRestrictionsItems" multiple-select="true" min-search-text="2"

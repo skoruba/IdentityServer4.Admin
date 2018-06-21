@@ -10,7 +10,7 @@
 		<!--Checkbox-->
 		<div class="form-group row">
 			<label asp-for="Enabled" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "Enabled")
+				@await Html.PartialAsync("Client/Section/Label", "Enabled")
 			</label>
 			<div class="col-sm-9">
 				<toggle-button>
@@ -22,7 +22,7 @@
 		<!--Input - text -->
 		<div class="form-group row">
 			<label asp-for="Description" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "Description")
+				@await Html.PartialAsync("Client/Section/Label", "Description")
 			</label>
 			<div class="col-sm-9">
 				<input type="text" class="form-control" asp-for="Description">
@@ -32,7 +32,7 @@
 		<!--Select-->
 		<div class="form-group row">
 			<label asp-for="ProtocolType" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "ProtocolType")
+				@await Html.PartialAsync("Client/Section/Label", "ProtocolType")
 			</label>
 			<div class="col-sm-9">
 				<select asp-for="ProtocolType" asp-items="@Model.ProtocolTypes" class="form-control single-select"></select>
@@ -42,7 +42,7 @@
 		<!--Checkbox-->
 		<div class="form-group row">
 			<label asp-for="RequireClientSecret" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "RequireClientSecret")
+				@await Html.PartialAsync("Client/Section/Label", "RequireClientSecret")
 			</label>
 			<div class="col-sm-9">
 				<toggle-button>
@@ -54,7 +54,7 @@
 		<!--Checkbox-->
 		<div class="form-group row">
 			<label asp-for="RequirePkce" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "RequirePkce")
+				@await Html.PartialAsync("Client/Section/Label", "RequirePkce")
 			</label>
 			<div class="col-sm-9">
 				<toggle-button>
@@ -66,7 +66,7 @@
 		<!--Checkbox-->
 		<div class="form-group row">
 			<label asp-for="AllowPlainTextPkce" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "AllowPlainTextPkce")
+				@await Html.PartialAsync("Client/Section/Label", "AllowPlainTextPkce")
 			</label>
 			<div class="col-sm-9">
 				<toggle-button>
@@ -78,7 +78,7 @@
 		<!--Checkbox-->
 		<div class="form-group row">
 			<label asp-for="AllowOfflineAccess" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "AllowOfflineAccess")
+				@await Html.PartialAsync("Client/Section/Label", "AllowOfflineAccess")
 			</label>
 			<div class="col-sm-9">
 				<toggle-button>
@@ -90,7 +90,7 @@
 		<!--Checkbox-->
 		<div class="form-group row">
 			<label asp-for="AllowAccessTokensViaBrowser" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "AllowAccessTokensViaBrowser")
+				@await Html.PartialAsync("Client/Section/Label", "AllowAccessTokensViaBrowser")
 			</label>
 			<div class="col-sm-9">
 				<toggle-button>
@@ -102,7 +102,7 @@
 		<!--Select with tags-->
 		<div class="form-group row">
 			<label asp-for="AllowedScopes" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "AllowedScopes")
+				@await Html.PartialAsync("Client/Section/Label", "AllowedScopes")
 			</label>
 			<div class="col-sm-9">
 				<picker id="AllowedScopesItems" multiple-select="true" min-search-text="2"
@@ -116,7 +116,7 @@
 		<!--Select with tags-->
 		<div class="form-group row">
 			<label asp-for="RedirectUris" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "RedirectUris")
+				@await Html.PartialAsync("Client/Section/Label", "RedirectUris")
 			</label>
 			<div class="col-sm-9">
 				<picker id="RedirectUrisItems" multiple-select="true" min-search-text="2"
@@ -129,7 +129,7 @@
 		<!--Select with tags-->
 		<div class="form-group row">
 			<label asp-for="AllowedGrantTypes" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "AllowedGrantTypes")
+				@await Html.PartialAsync("Client/Section/Label", "AllowedGrantTypes")
 			</label>
 			<div class="col-sm-9">
 				<picker id="AllowedGrantTypesItems" multiple-select="true" min-search-text="2"
@@ -143,7 +143,7 @@
 		<!--Button-->
 		<div class="form-group row">
 			<label asp-for="ClientSecrets" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "ClientSecrets")
+				@await Html.PartialAsync("Client/Section/Label", "ClientSecrets")
 			</label>
 			<div class="col-sm-9">
 				<a asp-action="ClientSecrets" asp-route-id="@Model.Id" target="_blank" class="btn btn-primary">@Localizer["ButtonManageClientSecrets"]</a>
@@ -154,7 +154,7 @@
 		<!--Button-->
 		<div class="form-group row">
 			<label asp-for="Properties" class="col-sm-3 col-form-label">
-				@Html.Partial("Client/Section/Label", "Properties")
+				@await Html.PartialAsync("Client/Section/Label", "Properties")
 			</label>
 			<div class="col-sm-9">
 				<a asp-action="ClientProperties" asp-route-id="@Model.Id" target="_blank" class="btn btn-primary">@Localizer["ButtonManageClientProperties"]</a>

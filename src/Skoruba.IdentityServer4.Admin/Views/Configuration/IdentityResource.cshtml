@@ -22,7 +22,7 @@
 			<!--Input - text -->
 			<div class="form-group row">
 				<label asp-for="Name" class="col-sm-3 col-form-label">
-					@Html.Partial("IdentityResource/Section/Label", "Name")
+					@await Html.PartialAsync("IdentityResource/Section/Label", "Name")
 				</label>
 				<div class="col-sm-9">
 					<input type="text" required class="form-control" asp-for="Name">
@@ -33,7 +33,7 @@
 			<!--Input - text -->
 			<div class="form-group row">
 				<label asp-for="DisplayName" class="col-sm-3 col-form-label">
-					@Html.Partial("IdentityResource/Section/Label", "DisplayName")
+					@await Html.PartialAsync("IdentityResource/Section/Label", "DisplayName")
 				</label>
 				<div class="col-sm-9">
 					<input type="text" class="form-control" asp-for="DisplayName">
@@ -43,7 +43,7 @@
 			<!--Input - text -->
 			<div class="form-group row">
 				<label asp-for="Description" class="col-sm-3 col-form-label">
-					@Html.Partial("IdentityResource/Section/Label", "Description")
+					@await Html.PartialAsync("IdentityResource/Section/Label", "Description")
 				</label>
 				<div class="col-sm-9">
 					<input type="text" class="form-control" asp-for="Description">
@@ -53,7 +53,7 @@
 			<!--Checkbox-->
 			<div class="form-group row">
 				<label asp-for="Enabled" class="col-sm-3 col-form-label">
-					@Html.Partial("IdentityResource/Section/Label", "Enabled")
+					@await Html.PartialAsync("IdentityResource/Section/Label", "Enabled")
 				</label>
 				<div class="col-sm-9">
 					<toggle-button>
@@ -65,7 +65,7 @@
 			<!--Checkbox-->
 			<div class="form-group row">
 				<label asp-for="ShowInDiscoveryDocument" class="col-sm-3 col-form-label">
-					@Html.Partial("IdentityResource/Section/Label", "ShowInDiscoveryDocument")
+					@await Html.PartialAsync("IdentityResource/Section/Label", "ShowInDiscoveryDocument")
 				</label>
 				<div class="col-sm-9">
 					<toggle-button>
@@ -77,7 +77,7 @@
 			<!--Checkbox-->
 			<div class="form-group row">
 				<label asp-for="Required" class="col-sm-3 col-form-label">
-					@Html.Partial("IdentityResource/Section/Label", "Required")
+					@await Html.PartialAsync("IdentityResource/Section/Label", "Required")
 				</label>
 				<div class="col-sm-9">
 					<toggle-button>
@@ -89,7 +89,7 @@
 			<!--Checkbox-->
 			<div class="form-group row">
 				<label asp-for="Emphasize" class="col-sm-3 col-form-label">
-					@Html.Partial("IdentityResource/Section/Label", "Emphasize")
+					@await Html.PartialAsync("IdentityResource/Section/Label", "Emphasize")
 				</label>
 				<div class="col-sm-9">
 					<toggle-button>
@@ -101,7 +101,7 @@
 			<!--Select with tags-->
 			<div class="form-group row">
 				<label asp-for="UserClaims" class="col-sm-3 col-form-label">
-					@Html.Partial("IdentityResource/Section/Label", "UserClaims")
+					@await Html.PartialAsync("IdentityResource/Section/Label", "UserClaims")
 				</label>
 				<div class="col-sm-9">
 					<picker id="UserClaimsItems" multiple-select="true" min-search-text="2"

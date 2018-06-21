@@ -33,7 +33,7 @@
 			<!--Input - text -->
 			<div class="form-group row">
 				<label asp-for="Name" class="col-sm-3 col-form-label">
-					@Html.Partial("Role/Section/Label", "RoleName")
+					@await Html.PartialAsync("Role/Section/Label", "RoleName")
 				</label>
 				<div class="col-sm-9">
 					<input type="text" required class="form-control" asp-for="Name">
