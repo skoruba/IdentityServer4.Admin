@@ -121,7 +121,7 @@
     <value>Add Role Claims</value>
   </data>
   <data name="ActionDeleteRole" xml:space="preserve">
-    <value>Delele Role</value>
+    <value>Delete Role</value>
   </data>
   <data name="ActionSaveRole" xml:space="preserve">
     <value>Save Role</value>
