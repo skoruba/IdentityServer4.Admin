@@ -2,13 +2,13 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.Constants;
 using Skoruba.IdentityServer4.Admin.ExceptionHandling;
-using Skoruba.IdentityServer4.Admin.Services;
-using Skoruba.IdentityServer4.Admin.ViewModels.Identity;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
 
 namespace Skoruba.IdentityServer4.Admin.Controllers
 {
@@ -80,9 +80,9 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             return View(usersDto);
         }
 
-        [HttpPost]
+        [HttpPost(Name = "User")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UserSave(UserDto user)
+        public async Task<IActionResult> User(UserDto user)
         {
             if (!ModelState.IsValid)
             {
@@ -105,7 +105,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         [HttpGet]
         [Route("[controller]/User")]
-        public IActionResult UserAdd()
+        public IActionResult User()
         {
             var newUser = new UserDto();
 
@@ -114,7 +114,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         [HttpGet]
         [Route("[controller]/User/{id:int}")]
-        public async Task<IActionResult> UserEdit(int id)
+        public async Task<IActionResult> User(int id)
         {
             var user = await _identityService.GetUserAsync(new UserDto { Id = id });
             if (user == null) return NotFound();
@@ -153,7 +153,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             var rolesDto = new UserRolesDto
             {
                 UserId = id,
-                RolesList = new SelectList(roles, "Id", "Name"),
+                RolesList = roles.Select(x=> new SelectItem(x.Id.ToString(), x.Name)).ToList(),
                 RoleId = roleId
             };
 
@@ -274,7 +274,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             {
                 SuccessNotification(_localizer["SuccessUserChangePassword"], _localizer["SuccessTitle"]);
 
-                return RedirectToAction("UserEdit", new { Id = userPassword.UserId });
+                return RedirectToAction("User", new { Id = userPassword.UserId });
             }
 
             foreach (var error in identityResult.Errors)

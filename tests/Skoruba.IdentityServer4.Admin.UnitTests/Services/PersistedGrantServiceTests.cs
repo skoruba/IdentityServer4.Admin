@@ -5,9 +5,10 @@ using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Moq;
-using Skoruba.IdentityServer4.Admin.Data.Repositories;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
-using Skoruba.IdentityServer4.Admin.Services;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Xunit;
 
@@ -38,7 +39,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             {
                 IPersistedGrantRepository persistedGrantRepository = new PersistedGrantRepository(context);
 
-                var localizerMock = new Mock<IStringLocalizer<PersistedGrantService>>();
+                var localizerMock = new Mock<IPersistedGrantServiceResources>();
                 var localizer = localizerMock.Object;
 
                 var persistedGrantService = new PersistedGrantService(persistedGrantRepository, localizer);
@@ -66,7 +67,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             {
                 IPersistedGrantRepository persistedGrantRepository = new PersistedGrantRepository(context);
 
-                var localizerMock = new Mock<IStringLocalizer<PersistedGrantService>>();
+                var localizerMock = new Mock<IPersistedGrantServiceResources>();
                 var localizer = localizerMock.Object;
 
                 var persistedGrantService = new PersistedGrantService(persistedGrantRepository, localizer);
@@ -96,7 +97,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             {
                 IPersistedGrantRepository persistedGrantRepository = new PersistedGrantRepository(context);
 
-                var localizerMock = new Mock<IStringLocalizer<PersistedGrantService>>();
+                var localizerMock = new Mock<IPersistedGrantServiceResources>();
                 var localizer = localizerMock.Object;
 
                 var persistedGrantService = new PersistedGrantService(persistedGrantRepository, localizer);

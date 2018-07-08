@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Bogus;
-using Skoruba.IdentityServer4.Admin.Data.Constants;
-using Skoruba.IdentityServer4.Admin.ViewModels.Configuration;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Constants;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 {

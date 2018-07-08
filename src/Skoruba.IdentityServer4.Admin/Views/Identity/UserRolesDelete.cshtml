@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@model Skoruba.IdentityServer4.Admin.ViewModels.Identity.UserRolesDto
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity.UserRolesDto
 @inject IViewLocalizer Localizer
 
 @{
@@ -29,7 +29,7 @@
 							@await Html.PartialAsync("User/Section/Label", "RolesList")
 						</label>
 						<div class="col-sm-9">
-							<select asp-for="RoleId" disabled="disabled" asp-items="@Model.RolesList" class="form-control single-select"></select>
+							<select asp-for="RoleId" disabled="disabled" asp-items="@(new SelectList(Model.RolesList,"Id","Text"))" class="form-control single-select"></select>
 						</div>
 					</div>
 

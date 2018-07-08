@@ -10,6 +10,5 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         {
             return dateTime.Subtract(Epoch).TotalMilliseconds;
         }
-
     }
 }

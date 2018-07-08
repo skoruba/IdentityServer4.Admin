@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@model Skoruba.IdentityServer4.Admin.ViewModels.Identity.UserDto
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity.UserDto
 @inject IViewLocalizer Localizer
 
 @{
@@ -7,7 +7,7 @@
 	Layout = "_Layout";
 }
 
-<form id="client-form" asp-controller="Identity" asp-action="UserSave" Method="post">
+<form id="client-form" asp-controller="Identity" asp-action="User" Method="post">
 
 	<h2>@Localizer["PageTitle"]</h2>
 

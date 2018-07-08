@@ -6,10 +6,11 @@ using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Moq;
-using Skoruba.IdentityServer4.Admin.Data.Mappers;
-using Skoruba.IdentityServer4.Admin.Data.Repositories;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
-using Skoruba.IdentityServer4.Admin.Services;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Xunit;
 
@@ -41,10 +42,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
                 IClientRepository clientRepository = new ClientRepository(context);
                 
-                var localizerApiResourceMock = new Mock<IStringLocalizer<ApiResourceService>>();
+                var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
                 var localizerApiResource = localizerApiResourceMock.Object;
 
-                var localizerClientResourceMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerClientResourceMock = new Mock<IClientServiceResources>();
                 var localizerClientResource = localizerClientResourceMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizerClientResource);
@@ -73,10 +74,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerApiResourceMock = new Mock<IStringLocalizer<ApiResourceService>>();
+                var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
                 var localizerApiResource = localizerApiResourceMock.Object;
 
-                var localizerClientResourceMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerClientResourceMock = new Mock<IClientServiceResources>();
                 var localizerClientResource = localizerClientResourceMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizerClientResource);
@@ -105,10 +106,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerApiResourceMock = new Mock<IStringLocalizer<ApiResourceService>>();
+                var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
                 var localizerApiResource = localizerApiResourceMock.Object;
 
-                var localizerClientResourceMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerClientResourceMock = new Mock<IClientServiceResources>();
                 var localizerClientResource = localizerClientResourceMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizerClientResource);
@@ -147,10 +148,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerApiResourceMock = new Mock<IStringLocalizer<ApiResourceService>>();
+                var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
                 var localizerApiResource = localizerApiResourceMock.Object;
 
-                var localizerClientResourceMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerClientResourceMock = new Mock<IClientServiceResources>();
                 var localizerClientResource = localizerClientResourceMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizerClientResource);
@@ -193,10 +194,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerApiResourceMock = new Mock<IStringLocalizer<ApiResourceService>>();
+                var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
                 var localizerApiResource = localizerApiResourceMock.Object;
 
-                var localizerClientResourceMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerClientResourceMock = new Mock<IClientServiceResources>();
                 var localizerClientResource = localizerClientResourceMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizerClientResource);
@@ -244,10 +245,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerApiResourceMock = new Mock<IStringLocalizer<ApiResourceService>>();
+                var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
                 var localizerApiResource = localizerApiResourceMock.Object;
 
-                var localizerClientResourceMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerClientResourceMock = new Mock<IClientServiceResources>();
                 var localizerClientResource = localizerClientResourceMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizerClientResource);
@@ -295,10 +296,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerApiResourceMock = new Mock<IStringLocalizer<ApiResourceService>>();
+                var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
                 var localizerApiResource = localizerApiResourceMock.Object;
 
-                var localizerClientResourceMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerClientResourceMock = new Mock<IClientServiceResources>();
                 var localizerClientResource = localizerClientResourceMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizerClientResource);
@@ -359,10 +360,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerApiResourceMock = new Mock<IStringLocalizer<ApiResourceService>>();
+                var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
                 var localizerApiResource = localizerApiResourceMock.Object;
 
-                var localizerClientResourceMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerClientResourceMock = new Mock<IClientServiceResources>();
                 var localizerClientResource = localizerClientResourceMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizerClientResource);
@@ -419,10 +420,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerApiResourceMock = new Mock<IStringLocalizer<ApiResourceService>>();
+                var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
                 var localizerApiResource = localizerApiResourceMock.Object;
 
-                var localizerClientResourceMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerClientResourceMock = new Mock<IClientServiceResources>();
                 var localizerClientResource = localizerClientResourceMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizerClientResource);
@@ -470,10 +471,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerApiResourceMock = new Mock<IStringLocalizer<ApiResourceService>>();
+                var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
                 var localizerApiResource = localizerApiResourceMock.Object;
 
-                var localizerClientResourceMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerClientResourceMock = new Mock<IClientServiceResources>();
                 var localizerClientResource = localizerClientResourceMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizerClientResource);

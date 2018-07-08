@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
-using Skoruba.IdentityServer4.Admin.ViewModels.Common;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -25,11 +25,6 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 	        if (selectedValue == null) return;
 
 	        value = selectedValue;
-	    }
-
-        public static SelectList GetData(List<SelectItem> data)
-	    {
-	        return new SelectList(data, "Id", "Text");
 	    }
     }
 }

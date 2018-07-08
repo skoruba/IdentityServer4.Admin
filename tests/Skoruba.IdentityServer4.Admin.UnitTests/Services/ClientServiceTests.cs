@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Localization;
 using Moq;
-using Skoruba.IdentityServer4.Admin.Data.Mappers;
-using Skoruba.IdentityServer4.Admin.Data.Repositories;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
-using Skoruba.IdentityServer4.Admin.Services;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Xunit;
 
@@ -40,7 +40,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             {
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizer);
@@ -73,7 +73,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizer);
@@ -183,7 +183,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             {
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizer);
@@ -229,7 +229,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             {
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizer);
@@ -271,7 +271,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             {
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizer);
@@ -299,7 +299,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             {
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizer);
@@ -346,7 +346,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             {
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizer);
@@ -402,7 +402,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             {
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizer);
@@ -449,7 +449,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             {
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizer);
@@ -496,7 +496,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             {
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizer);
@@ -543,7 +543,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             {
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizer);
@@ -599,7 +599,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             {
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizer);
@@ -646,7 +646,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             {
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizer);
@@ -693,7 +693,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             {
                 IClientRepository clientRepository = new ClientRepository(context);
 
-                var localizerMock = new Mock<IStringLocalizer<ClientService>>();
+                var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
                 IClientService clientService = new ClientService(clientRepository, localizer);

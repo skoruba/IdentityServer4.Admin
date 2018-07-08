@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.Admin.ViewModels.Common
-@model Skoruba.IdentityServer4.Admin.ViewModels.Identity.UserClaimsDto
+@using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity.UserClaimsDto
 @inject IViewLocalizer Localizer
 
 @{
@@ -15,7 +15,7 @@
 
 			<div asp-validation-summary="All" class="text-danger"></div>
 
-			<a asp-action="UserEdit" asp-route-id="@Model.UserId" class="btn btn-outline-primary mb-3">@Localizer["ButtonBackUser"]</a>
+			<a asp-action="User" asp-route-id="@Model.UserId" class="btn btn-outline-primary mb-3">@Localizer["ButtonBackUser"]</a>
 
 			<!--Hidden -->
 			<input type="hidden" asp-for="UserId" />

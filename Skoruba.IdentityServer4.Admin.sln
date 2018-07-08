@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skoruba.IdentityServer4.Admin.EntityFramework", "src\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.IdentityServer4.Admin.EntityFramework.csproj", "{D9F5B8B1-01F5-4996-8E75-A41532CF32CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skoruba.IdentityServer4.Admin.BusinessLogic", "src\Skoruba.IdentityServer4.Admin.BusinessLogic\Skoruba.IdentityServer4.Admin.BusinessLogic.csproj", "{491B30A8-D4A1-42E8-8DEE-4093E0E45C36}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{D9F5B8B1-01F5-4996-8E75-A41532CF32CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9F5B8B1-01F5-4996-8E75-A41532CF32CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9F5B8B1-01F5-4996-8E75-A41532CF32CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{491B30A8-D4A1-42E8-8DEE-4093E0E45C36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{491B30A8-D4A1-42E8-8DEE-4093E0E45C36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{491B30A8-D4A1-42E8-8DEE-4093E0E45C36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{491B30A8-D4A1-42E8-8DEE-4093E0E45C36}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{92405E00-759C-4A20-A736-E21E7EF771C2} = {0BC0CC4E-A0F1-45E8-B41A-AE0FA76BF3E5}
 		{26112C1E-A965-410B-A86F-B236155A4F21} = {63D44665-AC4C-45F4-A2C7-A7DB394F44C4}
 		{D9F5B8B1-01F5-4996-8E75-A41532CF32CD} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
+		{491B30A8-D4A1-42E8-8DEE-4093E0E45C36} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B3166EDE-037B-4C68-BEBA-5DE9C5E3DB82}

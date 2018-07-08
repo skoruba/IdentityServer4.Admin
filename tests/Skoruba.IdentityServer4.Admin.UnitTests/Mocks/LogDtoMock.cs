@@ -1,5 +1,5 @@
 ﻿using Bogus;
-using Skoruba.IdentityServer4.Admin.ViewModels.Log;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Log;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 {
