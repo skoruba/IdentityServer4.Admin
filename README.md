@@ -75,6 +75,7 @@ We suggest to use seed data:
 - Solution structure:
 	- `Skoruba.IdentityServer4` - Quickstart UI for an in-memory IdentityServer4 v2 (for development) - (https://github.com/IdentityServer/IdentityServer4.Quickstart.UI)
 	- `Skoruba.IdentityServer4.Admin` - ASP.NET Core MVC application that contains Admin UI
+    - `Skoruba.IdentityServer4.Admin.BusinessLogic` - project that contains Dtos, Repositories, Services and Mappers
 	- `Skoruba.IdentityServer4.Admin.EntityFramework` - EF Core data layer that contains AdminDbContext and Entities
 	- `Skoruba.IdentityServer4.Admin.IntegrationTests` - xUnit project that contains the integration tests
 	- `Skoruba.IdentityServer4.Admin.UnitTests` - xUnit project that contains the unit tests
