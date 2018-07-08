@@ -5,11 +5,11 @@ using IdentityServer4.EntityFramework.Interfaces;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Skoruba.IdentityServer4.Admin.Data.Constants;
-using Skoruba.IdentityServer4.Admin.Data.Entities;
-using Skoruba.IdentityServer4.Admin.Data.Entities.Identity;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Constants;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
 
-namespace Skoruba.IdentityServer4.Admin.Data.DbContexts
+namespace Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts
 {
     public class AdminDbContext : IdentityDbContext<UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>,
         IConfigurationDbContext, IPersistedGrantDbContext

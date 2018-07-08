@@ -7,7 +7,7 @@ using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.Models;
 using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.Data.Constants;
-using Skoruba.IdentityServer4.Admin.Data.DbContexts;
+using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.Helpers;
 using Skoruba.IdentityServer4.Admin.ViewModels.Common;
 using Skoruba.IdentityServer4.Admin.ViewModels.Enums;

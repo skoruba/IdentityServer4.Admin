@@ -1,4 +1,4 @@
-﻿namespace Skoruba.IdentityServer4.Admin.Data.Entities
+﻿namespace Skoruba.IdentityServer4.Admin.EntityFramework.Entities
 {
     public class PersistedGrantDataView
     {

@@ -1,4 +1,4 @@
-﻿namespace Skoruba.IdentityServer4.Admin.Data.Constants
+﻿namespace Skoruba.IdentityServer4.Admin.EntityFramework.Constants
 {
     public static class TableConsts
     {

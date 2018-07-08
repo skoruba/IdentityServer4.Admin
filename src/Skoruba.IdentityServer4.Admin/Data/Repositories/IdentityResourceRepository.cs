@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Entities;
 using Microsoft.EntityFrameworkCore;
-using Skoruba.IdentityServer4.Admin.Data.DbContexts;
+using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.Helpers;
 using Skoruba.IdentityServer4.Admin.ViewModels.Common;
 using Skoruba.IdentityServer4.Admin.ViewModels.Enums;

@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using Skoruba.IdentityServer4.Admin.Data.Entities.Identity;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.ViewModels.Common;
 using Skoruba.IdentityServer4.Admin.ViewModels.Identity;

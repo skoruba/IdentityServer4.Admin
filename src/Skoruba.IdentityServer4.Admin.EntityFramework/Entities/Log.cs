@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Xml.Linq;
-using Skoruba.IdentityServer4.Admin.Data.Constants;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Constants;
 
-namespace Skoruba.IdentityServer4.Admin.Data.Entities
+namespace Skoruba.IdentityServer4.Admin.EntityFramework.Entities
 {
     [Table(TableConsts.Logging)]
     public class Log

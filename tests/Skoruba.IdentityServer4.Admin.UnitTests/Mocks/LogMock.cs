@@ -1,5 +1,5 @@
 ﻿using Bogus;
-using Skoruba.IdentityServer4.Admin.Data.Entities;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 {

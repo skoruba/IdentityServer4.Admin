@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using IdentityServer4.EntityFramework.Entities;
-using Skoruba.IdentityServer4.Admin.Data.Entities;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.ViewModels.Common;
 using Skoruba.IdentityServer4.Admin.ViewModels.Grant;
 

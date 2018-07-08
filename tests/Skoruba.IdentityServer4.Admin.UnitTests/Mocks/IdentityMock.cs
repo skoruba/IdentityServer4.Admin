@@ -1,6 +1,6 @@
 ﻿using System;
 using Bogus;
-using Skoruba.IdentityServer4.Admin.Data.Entities.Identity;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 {

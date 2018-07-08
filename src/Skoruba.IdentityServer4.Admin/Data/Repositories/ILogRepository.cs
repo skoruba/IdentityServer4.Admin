@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Skoruba.IdentityServer4.Admin.Data.Entities;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.ViewModels.Common;
 
 namespace Skoruba.IdentityServer4.Admin.Data.Repositories

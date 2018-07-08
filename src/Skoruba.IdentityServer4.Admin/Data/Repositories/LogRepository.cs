@@ -2,8 +2,8 @@
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Skoruba.IdentityServer4.Admin.Data.DbContexts;
-using Skoruba.IdentityServer4.Admin.Data.Entities;
+using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.Helpers;
 using Skoruba.IdentityServer4.Admin.ViewModels.Common;
 
