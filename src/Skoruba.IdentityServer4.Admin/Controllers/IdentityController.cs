@@ -82,7 +82,9 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         [HttpPost(Name = "User")]
         [ValidateAntiForgeryToken]
+#pragma warning disable CS0108
         public async Task<IActionResult> User(UserDto user)
+#pragma warning restore CS0108
         {
             if (!ModelState.IsValid)
             {
@@ -105,7 +107,9 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         [HttpGet]
         [Route("[controller]/User")]
+#pragma warning disable CS0108
         public IActionResult User()
+#pragma warning restore CS0108
         {
             var newUser = new UserDto();
 
@@ -114,7 +118,9 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         [HttpGet]
         [Route("[controller]/User/{id:int}")]
+#pragma warning disable CS0108
         public async Task<IActionResult> User(int id)
+#pragma warning restore CS0108
         {
             var user = await _identityService.GetUserAsync(new UserDto { Id = id });
             if (user == null) return NotFound();
@@ -153,7 +159,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             var rolesDto = new UserRolesDto
             {
                 UserId = id,
-                RolesList = roles.Select(x=> new SelectItem(x.Id.ToString(), x.Name)).ToList(),
+                RolesList = roles.Select(x => new SelectItem(x.Id.ToString(), x.Name)).ToList(),
                 RoleId = roleId
             };
 

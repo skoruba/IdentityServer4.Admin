@@ -1,29 +1,28 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers
 {
 	public static class ComboBoxHelpers
 	{
-		public static void PopulateValuesToList(string values, List<string> list)
+		public static void PopulateValuesToList(string jsonValues, List<string> list)
 		{
-			if (string.IsNullOrEmpty(values)) return;
+			if (string.IsNullOrEmpty(jsonValues)) return;
 
-			var listValues = JsonConvert.DeserializeObject<List<string>>(values);
+			var listValues = JsonConvert.DeserializeObject<List<string>>(jsonValues);
 			if (listValues == null) return;
 
 			list.AddRange(listValues);
 		}
 
-	    public static void PopulateValue(string value)
+	    public static void PopulateValue(string jsonValue)
 	    {
-	        if (string.IsNullOrEmpty(value)) return;
+	        if (string.IsNullOrEmpty(jsonValue)) return;
 
-	        var selectedValue = JsonConvert.DeserializeObject<string>(value);
+	        var selectedValue = JsonConvert.DeserializeObject<string>(jsonValue);
 	        if (selectedValue == null) return;
 
-	        value = selectedValue;
+	        jsonValue = selectedValue;
 	    }
     }
 }
