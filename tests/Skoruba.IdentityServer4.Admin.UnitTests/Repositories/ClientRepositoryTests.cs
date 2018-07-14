@@ -5,9 +5,8 @@ using FluentAssertions;
 using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
-using Skoruba.IdentityServer4.Admin.Data.Constants;
-using Skoruba.IdentityServer4.Admin.Data.DbContexts;
-using Skoruba.IdentityServer4.Admin.Data.Repositories;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
+using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Xunit;
 

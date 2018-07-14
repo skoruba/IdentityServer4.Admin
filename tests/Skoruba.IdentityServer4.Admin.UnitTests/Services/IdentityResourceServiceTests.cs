@@ -6,9 +6,10 @@ using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Moq;
-using Skoruba.IdentityServer4.Admin.Data.DbContexts;
-using Skoruba.IdentityServer4.Admin.Data.Repositories;
-using Skoruba.IdentityServer4.Admin.Services;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
+using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Xunit;
 
@@ -39,7 +40,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             {
                 IIdentityResourceRepository identityResourceRepository = new IdentityResourceRepository(context);
 
-                var localizerIdentityResourceMock = new Mock<IStringLocalizer<IdentityResourceService>>();
+                var localizerIdentityResourceMock = new Mock<IIdentityResourceServiceResources>();
                 var localizerIdentityResource = localizerIdentityResourceMock.Object;
 
                 IIdentityResourceService identityResourceService = new IdentityResourceService(identityResourceRepository, localizerIdentityResource);
@@ -66,7 +67,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             {
                 IIdentityResourceRepository identityResourceRepository = new IdentityResourceRepository(context);
 
-                var localizerIdentityResourceMock = new Mock<IStringLocalizer<IdentityResourceService>>();
+                var localizerIdentityResourceMock = new Mock<IIdentityResourceServiceResources>();
                 var localizerIdentityResource = localizerIdentityResourceMock.Object;
 
                 IIdentityResourceService identityResourceService = new IdentityResourceService(identityResourceRepository, localizerIdentityResource);
@@ -93,7 +94,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             {
                 IIdentityResourceRepository identityResourceRepository = new IdentityResourceRepository(context);
 
-                var localizerIdentityResourceMock = new Mock<IStringLocalizer<IdentityResourceService>>();
+                var localizerIdentityResourceMock = new Mock<IIdentityResourceServiceResources>();
                 var localizerIdentityResource = localizerIdentityResourceMock.Object;
 
                 IIdentityResourceService identityResourceService = new IdentityResourceService(identityResourceRepository, localizerIdentityResource);
@@ -130,7 +131,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             {
                 IIdentityResourceRepository identityResourceRepository = new IdentityResourceRepository(context);
 
-                var localizerIdentityResourceMock = new Mock<IStringLocalizer<IdentityResourceService>>();
+                var localizerIdentityResourceMock = new Mock<IIdentityResourceServiceResources>();
                 var localizerIdentityResource = localizerIdentityResourceMock.Object;
 
                 IIdentityResourceService identityResourceService = new IdentityResourceService(identityResourceRepository, localizerIdentityResource);

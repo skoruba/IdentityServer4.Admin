@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientDto
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.ClientDto
 @inject IViewLocalizer Localizer
 
 <div class="card mt-3">
@@ -31,7 +31,7 @@
 				@await Html.PartialAsync("Client/Section/Label", "AccessTokenTypes")
 			</label>
 			<div class="col-sm-9">
-				<select asp-for="AccessTokenType" asp-items="@Model.AccessTokenTypes" class="form-control single-select"></select>
+				<select asp-for="AccessTokenType" asp-items="@(new SelectList(Model.AccessTokenTypes,"Id","Text"))" class="form-control single-select"></select>
 			</div>
 		</div>
 
@@ -71,7 +71,7 @@
 				@await Html.PartialAsync("Client/Section/Label", "RefreshTokenUsage")
 			</label>
 			<div class="col-sm-9">
-				<select asp-for="RefreshTokenUsage" asp-items="@Model.RefreshTokenUsages" class="form-control single-select"></select>
+				<select asp-for="RefreshTokenUsage" asp-items="@(new SelectList(Model.RefreshTokenUsages,"Id","Text"))" class="form-control single-select"></select>
 			</div>
 		</div>
 
@@ -81,7 +81,7 @@
 				@await Html.PartialAsync("Client/Section/Label", "RefreshTokenExpiration")
 			</label>
 			<div class="col-sm-9">
-				<select asp-for="RefreshTokenExpiration" asp-items="@Model.RefreshTokenExpirations" class="form-control single-select"></select>
+				<select asp-for="RefreshTokenExpiration" asp-items="@(new SelectList(Model.RefreshTokenExpirations,"Id","Text"))" class="form-control single-select"></select>
 			</div>
 		</div>
 

@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@model Skoruba.IdentityServer4.Admin.ViewModels.Identity.UserProvidersDto
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity.UserProvidersDto
 @inject IViewLocalizer Localizer
 
 @{
@@ -10,7 +10,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<h3>@Localizer["PageTitle"]</h3>
-		<a asp-action="UserEdit" asp-route-id="@Model.UserId" class="btn btn-outline-primary mb-3 mt-3">@Localizer["ButtonBackUser"]</a>
+		<a asp-action="UserProfile" asp-route-id="@Model.UserId" class="btn btn-outline-primary mb-3 mt-3">@Localizer["ButtonBackUser"]</a>
 
 		<div class="row table-responsive">
 			<table class="table table-striped">

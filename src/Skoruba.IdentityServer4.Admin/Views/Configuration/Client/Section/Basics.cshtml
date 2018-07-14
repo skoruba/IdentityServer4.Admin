@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@model Skoruba.IdentityServer4.Admin.ViewModels.Configuration.ClientDto
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.ClientDto
 @inject IViewLocalizer Localizer
 <!--Hidden -->
 <input type="hidden" asp-for="Id" />
@@ -35,7 +35,7 @@
 				@await Html.PartialAsync("Client/Section/Label", "ProtocolType")
 			</label>
 			<div class="col-sm-9">
-				<select asp-for="ProtocolType" asp-items="@Model.ProtocolTypes" class="form-control single-select"></select>
+				<select asp-for="ProtocolType" asp-items="@(new SelectList(Model.ProtocolTypes,"Id","Text"))" class="form-control single-select"></select>
 			</div>
 		</div>
 

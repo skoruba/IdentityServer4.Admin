@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.Admin.ViewModels.Common
-@model Skoruba.IdentityServer4.Admin.ViewModels.Identity.UsersDto
+@using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity.UsersDto
 @inject IViewLocalizer Localizer
 
 @{
@@ -10,7 +10,7 @@
 
 <h2>@Localizer["Title"]</h2>
 
-<a asp-action="UserAdd" class="btn btn-outline-primary mb-3 mt-3"><span class="oi oi-plus"></span> @Localizer["ActionAddUser"]</a>
+<a asp-action="UserProfile" class="btn btn-outline-primary mb-3 mt-3"><span class="oi oi-plus"></span> @Localizer["ActionAddUser"]</a>
 
 <div class="row">
 	<div class="col-12">
@@ -37,7 +37,7 @@
 					{
 						<tr>
 							<td>
-								<a class="btn btn-primary" asp-action="UserEdit" asp-route-id="@user.Id">@Localizer["ActionEditUser"]</a>
+								<a class="btn btn-primary" asp-action="UserProfile" asp-route-id="@user.Id">@Localizer["ActionEditUser"]</a>
 							</td>
 
 							<td>@user.Id</td>

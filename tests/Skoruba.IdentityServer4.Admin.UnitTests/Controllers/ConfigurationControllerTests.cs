@@ -16,12 +16,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
 using Skoruba.IdentityServer4.Admin.Controllers;
-using Skoruba.IdentityServer4.Admin.Data.DbContexts;
-using Skoruba.IdentityServer4.Admin.Data.Repositories;
-using Skoruba.IdentityServer4.Admin.Services;
+using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
-using Skoruba.IdentityServer4.Admin.ViewModels.Configuration;
+using Skoruba.IdentityServer4.Admin.Helpers;
 using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
@@ -791,21 +791,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             services.AddSingleton<ConfigurationStoreOptions>();
             services.AddSingleton<OperationalStoreOptions>();
 
-            //Repositories
-            services.AddTransient<IClientRepository, ClientRepository>();
-            services.AddTransient<IIdentityResourceRepository, IdentityResourceRepository>();
-            services.AddTransient<IIdentityRepository, IdentityRepository>();
-            services.AddTransient<IApiResourceRepository, ApiResourceRepository>();
-            services.AddTransient<IPersistedGrantRepository, PersistedGrantRepository>();
-            services.AddTransient<ILogRepository, LogRepository>();
-
-            //Services
-            services.AddTransient<ILogService, LogService>();
-            services.AddTransient<IClientService, ClientService>();
-            services.AddTransient<IApiResourceService, ApiResourceService>();
-            services.AddTransient<IIdentityResourceService, IdentityResourceService>();
-            services.AddTransient<IPersistedGrantService, PersistedGrantService>();
-            services.AddTransient<IIdentityService, IdentityService>();
+            //Add Admin services
+            services.AddServices();
 
             services.AddSession();
             services.AddMvc()

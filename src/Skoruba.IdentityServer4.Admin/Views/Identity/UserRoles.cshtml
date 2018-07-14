@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.Admin.ViewModels.Common
-@model Skoruba.IdentityServer4.Admin.ViewModels.Identity.UserRolesDto
+@using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity.UserRolesDto
 @inject IViewLocalizer Localizer
 
 @{
@@ -15,7 +15,7 @@
 
 			<div asp-validation-summary="All" class="text-danger"></div>
 
-			<a asp-action="UserEdit" asp-route-id="@Model.UserId" class="btn btn-outline-primary mb-3">@Localizer["ActionBackUser"]</a>
+			<a asp-action="UserProfile" asp-route-id="@Model.UserId" class="btn btn-outline-primary mb-3">@Localizer["ActionBackUser"]</a>
 
 			<!--Hidden -->
 			<input type="hidden" asp-for="UserId" />
@@ -30,7 +30,7 @@
 							@await Html.PartialAsync("User/Section/Label", "RolesList")
 						</label>
 						<div class="col-sm-9">
-							<select asp-for="RoleId" asp-items="@Model.RolesList" class="form-control single-select"></select>
+							<select asp-for="RoleId" asp-items="@(new SelectList(Model.RolesList,"Id","Text"))" class="form-control single-select"></select>
 						</div>
 					</div>
 

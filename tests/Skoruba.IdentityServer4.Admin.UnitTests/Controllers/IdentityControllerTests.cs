@@ -16,13 +16,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.Controllers;
-using Skoruba.IdentityServer4.Admin.Data.DbContexts;
-using Skoruba.IdentityServer4.Admin.Data.Entities.Identity;
-using Skoruba.IdentityServer4.Admin.Data.Repositories;
-using Skoruba.IdentityServer4.Admin.Services;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
+using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
-using Skoruba.IdentityServer4.Admin.ViewModels.Identity;
+using Skoruba.IdentityServer4.Admin.Helpers;
 using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
@@ -40,7 +40,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             // Get controller
             var controller = PrepareIdentityController(serviceProvider);
             var userDto = IdentityDtoMock.GenerateRandomUser(0);
-            var result = await controller.UserSave(userDto);
+            var result = await controller.UserProfile(userDto);
 
             // Assert            
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
@@ -99,7 +99,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var updatedUserDto = IdentityDtoMock.GenerateRandomUser(userId);
 
-            var result = await controller.UserSave(updatedUserDto);
+            var result = await controller.UserProfile(updatedUserDto);
 
             // Assert            
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
@@ -129,11 +129,11 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var userId = await dbContext.Users.Where(x => x.UserName == userDto.UserName).Select(x => x.Id).SingleOrDefaultAsync();
 
             //Try call controller action
-            var result = await controller.UserEdit(userId);
+            var result = await controller.UserProfile(userId);
 
             // Assert            
             var viewResult = Assert.IsType<ViewResult>(result);
-            viewResult.ViewName.Should().Be("User");
+            viewResult.ViewName.Should().Be("UserProfile");
             viewResult.ViewData.Should().NotBeNull();
 
             var viewModel = Assert.IsType<UserDto>(viewResult.ViewData.Model);
@@ -471,7 +471,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             // Assert            
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
-            viewResult.ActionName.Should().Be("UserEdit");
+            viewResult.ActionName.Should().Be("UserProfile");
 
             var user = await dbContext.Users.Where(x => x.UserName == userDto.UserName).SingleOrDefaultAsync();
             user.PasswordHash.Should().NotBeNull();
@@ -548,21 +548,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             services.AddSingleton<ConfigurationStoreOptions>();
             services.AddSingleton<OperationalStoreOptions>();
 
-            //Repositories
-            services.AddTransient<IClientRepository, ClientRepository>();
-            services.AddTransient<IIdentityResourceRepository, IdentityResourceRepository>();
-            services.AddTransient<IIdentityRepository, IdentityRepository>();
-            services.AddTransient<IApiResourceRepository, ApiResourceRepository>();
-            services.AddTransient<IPersistedGrantRepository, PersistedGrantRepository>();
-            services.AddTransient<ILogRepository, LogRepository>();
-
-            //Services
-            services.AddTransient<ILogService, LogService>();
-            services.AddTransient<IClientService, ClientService>();
-            services.AddTransient<IApiResourceService, ApiResourceService>();
-            services.AddTransient<IIdentityResourceService, IdentityResourceService>();
-            services.AddTransient<IPersistedGrantService, PersistedGrantService>();
-            services.AddTransient<IIdentityService, IdentityService>();
+            //Add Admin services
+            services.AddServices();
 
             services.AddIdentity<UserIdentity, UserIdentityRole>()
                 .AddEntityFrameworkStores<AdminDbContext>()

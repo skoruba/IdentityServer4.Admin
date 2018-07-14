@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -25,14 +24,15 @@ using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
 using Skoruba.IdentityServer4.Admin.Constants;
-using Skoruba.IdentityServer4.Admin.Data.Constants;
-using Skoruba.IdentityServer4.Admin.Data.DbContexts;
-using Skoruba.IdentityServer4.Admin.Data.Entities.Identity;
-using Skoruba.IdentityServer4.Admin.Data.Repositories;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Constants;
+using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Middlewares;
-using Skoruba.IdentityServer4.Admin.Services;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -181,6 +181,13 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             services.AddTransient<IIdentityResourceService, IdentityResourceService>();
             services.AddTransient<IPersistedGrantService, PersistedGrantService>();
             services.AddTransient<IIdentityService, IdentityService>();
+
+            //Resources
+            services.AddScoped<IApiResourceServiceResources, ApiResourceServiceResources>();
+            services.AddScoped<IClientServiceResources, ClientServiceResources>();
+            services.AddScoped<IIdentityResourceServiceResources, IdentityResourceServiceResources>();
+            services.AddScoped<IIdentityServiceResources, IdentityServiceResources>();
+            services.AddScoped<IPersistedGrantServiceResources, PersistedGrantServiceResources>();
 
             //Exception handling
             services.AddScoped<ControllerExceptionFilterAttribute>();

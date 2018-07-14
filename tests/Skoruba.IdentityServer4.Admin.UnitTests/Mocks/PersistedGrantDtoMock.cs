@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Bogus;
-using Skoruba.IdentityServer4.Admin.ViewModels.Grant;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Grant;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 {

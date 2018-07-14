@@ -7,8 +7,8 @@ using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.Constants;
 using Skoruba.IdentityServer4.Admin.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Helpers;
-using Skoruba.IdentityServer4.Admin.Services;
-using Skoruba.IdentityServer4.Admin.ViewModels.Grant;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Grant;
 
 namespace Skoruba.IdentityServer4.Admin.Controllers
 {
