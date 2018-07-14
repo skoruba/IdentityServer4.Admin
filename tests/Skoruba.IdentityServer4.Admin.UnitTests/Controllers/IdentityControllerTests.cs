@@ -40,7 +40,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             // Get controller
             var controller = PrepareIdentityController(serviceProvider);
             var userDto = IdentityDtoMock.GenerateRandomUser(0);
-            var result = await controller.User(userDto);
+            var result = await controller.UserProfile(userDto);
 
             // Assert            
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
@@ -99,7 +99,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var updatedUserDto = IdentityDtoMock.GenerateRandomUser(userId);
 
-            var result = await controller.User(updatedUserDto);
+            var result = await controller.UserProfile(updatedUserDto);
 
             // Assert            
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
@@ -129,11 +129,11 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var userId = await dbContext.Users.Where(x => x.UserName == userDto.UserName).Select(x => x.Id).SingleOrDefaultAsync();
 
             //Try call controller action
-            var result = await controller.User(userId);
+            var result = await controller.UserProfile(userId);
 
             // Assert            
             var viewResult = Assert.IsType<ViewResult>(result);
-            viewResult.ViewName.Should().Be("User");
+            viewResult.ViewName.Should().Be("UserProfile");
             viewResult.ViewData.Should().NotBeNull();
 
             var viewModel = Assert.IsType<UserDto>(viewResult.ViewData.Model);
@@ -471,7 +471,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             // Assert            
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
-            viewResult.ActionName.Should().Be("User");
+            viewResult.ActionName.Should().Be("UserProfile");
 
             var user = await dbContext.Users.Where(x => x.UserName == userDto.UserName).SingleOrDefaultAsync();
             user.PasswordHash.Should().NotBeNull();

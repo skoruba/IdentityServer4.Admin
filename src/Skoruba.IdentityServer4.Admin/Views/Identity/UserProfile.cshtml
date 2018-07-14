@@ -7,7 +7,7 @@
 	Layout = "_Layout";
 }
 
-<form id="client-form" asp-controller="Identity" asp-action="User" Method="post">
+<form id="client-form" asp-controller="Identity" asp-action="UserProfile" Method="post">
 
 	<h2>@Localizer["PageTitle"]</h2>
 
@@ -152,7 +152,6 @@
 </form>
 
 @section scripts
-
 	{
 	<script type="text/javascript">
 		$(function () {

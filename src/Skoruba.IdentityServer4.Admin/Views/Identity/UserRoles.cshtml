@@ -15,7 +15,7 @@
 
 			<div asp-validation-summary="All" class="text-danger"></div>
 
-			<a asp-action="User" asp-route-id="@Model.UserId" class="btn btn-outline-primary mb-3">@Localizer["ActionBackUser"]</a>
+			<a asp-action="UserProfile" asp-route-id="@Model.UserId" class="btn btn-outline-primary mb-3">@Localizer["ActionBackUser"]</a>
 
 			<!--Hidden -->
 			<input type="hidden" asp-for="UserId" />

@@ -80,11 +80,9 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             return View(usersDto);
         }
 
-        [HttpPost(Name = "User")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-#pragma warning disable CS0108
-        public async Task<IActionResult> User(UserDto user)
-#pragma warning restore CS0108
+        public async Task<IActionResult> UserProfile(UserDto user)
         {
             if (!ModelState.IsValid)
             {
@@ -106,26 +104,21 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         }
 
         [HttpGet]
-        [Route("[controller]/User")]
-#pragma warning disable CS0108
-        public IActionResult User()
-#pragma warning restore CS0108
+        public IActionResult UserProfile()
         {
             var newUser = new UserDto();
 
-            return View("User", newUser);
+            return View("UserProfile", newUser);
         }
 
         [HttpGet]
-        [Route("[controller]/User/{id:int}")]
-#pragma warning disable CS0108
-        public async Task<IActionResult> User(int id)
-#pragma warning restore CS0108
+        [Route("[controller]/UserProfile/{id:int}")]
+        public async Task<IActionResult> UserProfile(int id)
         {
             var user = await _identityService.GetUserAsync(new UserDto { Id = id });
             if (user == null) return NotFound();
 
-            return View("User", user);
+            return View("UserProfile", user);
         }
 
         [HttpGet]
@@ -280,7 +273,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             {
                 SuccessNotification(_localizer["SuccessUserChangePassword"], _localizer["SuccessTitle"]);
 
-                return RedirectToAction("User", new { Id = userPassword.UserId });
+                return RedirectToAction("UserProfile", new { Id = userPassword.UserId });
             }
 
             foreach (var error in identityResult.Errors)
