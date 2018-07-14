@@ -40,7 +40,7 @@ namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Common
                 "Roles",
                 "Role/1",
                 "Users",
-                "User/1",
+                "UserProfile/1",
                 "UserRoles/1",
                 "UserRolesDelete/1?roleId=1",
                 "UserClaims/1",
