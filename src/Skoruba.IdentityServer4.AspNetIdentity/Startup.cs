@@ -77,7 +77,10 @@ namespace Skoruba.IdentityServer4.AspNetIdentity
 
                     // this enables automatic token cleanup. this is optional.
                     options.EnableTokenCleanup = true;
-                    // options.TokenCleanupInterval = 15; // frequency in seconds to cleanup stale grants. 15 is useful during debugging
+
+#if DEBUG
+                    options.TokenCleanupInterval = 15; // frequency in seconds to cleanup stale grants. 15 is useful during debugging
+#endif                
                 });
 
             if (Environment.IsDevelopment())
