@@ -148,6 +148,7 @@ It is possible to define the configuration according the client type - by defaul
 
 - Add more unit and integration tests :blush:
 - Extend administration for another protocols
+- Create separate UI using Razor Class Library and Business Logic & EF layers - available as a nuget package
 
 ## Licence
 
