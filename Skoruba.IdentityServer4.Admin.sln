@@ -17,9 +17,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "host", "host", "{63D44665-A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4", "src\Skoruba.IdentityServer4\Skoruba.IdentityServer4.csproj", "{26112C1E-A965-410B-A86F-B236155A4F21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skoruba.IdentityServer4.Admin.EntityFramework", "src\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.IdentityServer4.Admin.EntityFramework.csproj", "{D9F5B8B1-01F5-4996-8E75-A41532CF32CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.EntityFramework", "src\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.IdentityServer4.Admin.EntityFramework.csproj", "{D9F5B8B1-01F5-4996-8E75-A41532CF32CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skoruba.IdentityServer4.Admin.BusinessLogic", "src\Skoruba.IdentityServer4.Admin.BusinessLogic\Skoruba.IdentityServer4.Admin.BusinessLogic.csproj", "{491B30A8-D4A1-42E8-8DEE-4093E0E45C36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.BusinessLogic", "src\Skoruba.IdentityServer4.Admin.BusinessLogic\Skoruba.IdentityServer4.Admin.BusinessLogic.csproj", "{491B30A8-D4A1-42E8-8DEE-4093E0E45C36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skoruba.IdentityServer4.AspNetIdentity", "src\Skoruba.IdentityServer4.AspNetIdentity\Skoruba.IdentityServer4.AspNetIdentity.csproj", "{72F17B1A-88D9-47FD-AA35-1C700E51CD0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{491B30A8-D4A1-42E8-8DEE-4093E0E45C36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{491B30A8-D4A1-42E8-8DEE-4093E0E45C36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{491B30A8-D4A1-42E8-8DEE-4093E0E45C36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72F17B1A-88D9-47FD-AA35-1C700E51CD0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72F17B1A-88D9-47FD-AA35-1C700E51CD0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72F17B1A-88D9-47FD-AA35-1C700E51CD0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72F17B1A-88D9-47FD-AA35-1C700E51CD0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{26112C1E-A965-410B-A86F-B236155A4F21} = {63D44665-AC4C-45F4-A2C7-A7DB394F44C4}
 		{D9F5B8B1-01F5-4996-8E75-A41532CF32CD} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
 		{491B30A8-D4A1-42E8-8DEE-4093E0E45C36} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
+		{72F17B1A-88D9-47FD-AA35-1C700E51CD0E} = {63D44665-AC4C-45F4-A2C7-A7DB394F44C4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B3166EDE-037B-4C68-BEBA-5DE9C5E3DB82}

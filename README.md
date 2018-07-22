@@ -26,16 +26,6 @@ cd src/Skoruba.IdentityServer4.Admin
 npm install
 ```
 
-## Bundling and Minification
-
-The following Gulp commands are available:
-
-- `gulp fonts` - copy fonts to the `dist` folder
-- `gulp styles` - minify CSS, compile SASS to CSS
-- `gulp scripts` - bundle and minify JS
-- `gulp clean` - remove the `dist` folder
-- `gulp build` - run the `styles` and `scripts` tasks
-
 ## EF Core & Data Access
 
 - Run entity framework migrations - for instance from Visual Studio command line:
@@ -51,6 +41,21 @@ We suggest to use seed data:
 
 - In `Program.cs` -> `Main`, uncomment `DbMigrationHelpers.EnsureSeedData(host)`
 - The `Clients` and `Resources` files in `Configuration` are the initial data, based on a sample from IdentityServer4
+
+## Bundling and Minification
+
+The following Gulp commands are available:
+
+- `gulp fonts` - copy fonts to the `dist` folder
+- `gulp styles` - minify CSS, compile SASS to CSS
+- `gulp scripts` - bundle and minify JS
+- `gulp clean` - remove the `dist` folder
+- `gulp build` - run the `styles` and `scripts` tasks
+- `gulp fonts` - copy fonts to the `dist` folder
+- `gulp styles` - minify CSS, compile SASS to CSS
+- `gulp scripts` - bundle and minify JS
+- `gulp clean` - remove the `dist` folder
+- `gulp build` - run the `styles` and `scripts` tasks
 
 ### Using other database engines - PostgreSQL, SQLite etc.
 
@@ -73,7 +78,8 @@ We suggest to use seed data:
 ## Overview
 
 - Solution structure:
-	- `Skoruba.IdentityServer4` - Quickstart UI for an in-memory IdentityServer4 v2 (for development) - (https://github.com/IdentityServer/IdentityServer4.Quickstart.UI)
+	- `Skoruba.IdentityServer4` - Quickstart UI for an in-memory IdentityServer4 (for development) - (https://github.com/IdentityServer/IdentityServer4.Quickstart.UI)
+	- `Skoruba.IdentityServer4.AspNetIdentity` - [Quickstart UI for the IdentityServer4 with Asp.Net Core Identity and EF Core storage](https://github.com/IdentityServer/IdentityServer4.Samples/tree/release/Quickstarts/Combined_AspNetIdentity_and_EntityFrameworkStorage)
 	- `Skoruba.IdentityServer4.Admin` - ASP.NET Core MVC application that contains Admin UI
     - `Skoruba.IdentityServer4.Admin.BusinessLogic` - project that contains Dtos, Repositories, Services and Mappers
 	- `Skoruba.IdentityServer4.Admin.EntityFramework` - EF Core data layer that contains AdminDbContext and Entities
@@ -147,6 +153,7 @@ It is possible to define the configuration according the client type - by defaul
 
 - Add more unit and integration tests :blush:
 - Extend administration for another protocols
+- Create separate UI using Razor Class Library and Business Logic & EF layers - available as a nuget package
 
 ## Licence
 
