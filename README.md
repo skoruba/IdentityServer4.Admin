@@ -26,16 +26,6 @@ cd src/Skoruba.IdentityServer4.Admin
 npm install
 ```
 
-## Bundling and Minification
-
-The following Gulp commands are available:
-
-- `gulp fonts` - copy fonts to the `dist` folder
-- `gulp styles` - minify CSS, compile SASS to CSS
-- `gulp scripts` - bundle and minify JS
-- `gulp clean` - remove the `dist` folder
-- `gulp build` - run the `styles` and `scripts` tasks
-
 ## EF Core & Data Access
 
 - Run entity framework migrations - for instance from Visual Studio command line:
@@ -51,6 +41,16 @@ We suggest to use seed data:
 
 - In `Program.cs` -> `Main`, uncomment `DbMigrationHelpers.EnsureSeedData(host)`
 - The `Clients` and `Resources` files in `Configuration` are the initial data, based on a sample from IdentityServer4
+
+## Bundling and Minification
+
+The following Gulp commands are available:
+
+- `gulp fonts` - copy fonts to the `dist` folder
+- `gulp styles` - minify CSS, compile SASS to CSS
+- `gulp scripts` - bundle and minify JS
+- `gulp clean` - remove the `dist` folder
+- `gulp build` - run the `styles` and `scripts` tasks
 
 ### Using other database engines - PostgreSQL, SQLite etc.
 
