@@ -51,6 +51,11 @@ The following Gulp commands are available:
 - `gulp scripts` - bundle and minify JS
 - `gulp clean` - remove the `dist` folder
 - `gulp build` - run the `styles` and `scripts` tasks
+- `gulp fonts` - copy fonts to the `dist` folder
+- `gulp styles` - minify CSS, compile SASS to CSS
+- `gulp scripts` - bundle and minify JS
+- `gulp clean` - remove the `dist` folder
+- `gulp build` - run the `styles` and `scripts` tasks
 
 ### Using other database engines - PostgreSQL, SQLite etc.
 
