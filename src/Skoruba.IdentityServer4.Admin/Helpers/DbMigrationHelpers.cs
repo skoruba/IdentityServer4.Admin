@@ -50,8 +50,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             RoleManager<UserIdentityRole> roleManager)
         {
             // Create admin role
-            if (!roleManager.RoleExistsAsync
-                  (AuthorizationConsts.AdministrationRole).Result)
+            if (!roleManager.RoleExistsAsync(AuthorizationConsts.AdministrationRole).Result)
             {
                 var role = new UserIdentityRole { Name = AuthorizationConsts.AdministrationRole };
 
