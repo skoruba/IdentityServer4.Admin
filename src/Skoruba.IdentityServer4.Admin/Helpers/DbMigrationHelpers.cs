@@ -58,20 +58,16 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             }
 
             // Create admin user
-            const string defaultAdminUserName = "bob";
-            const string defaultAdminPassword = "Pa$$word123";
-            const string defaultAdminEmail = "BobSmith@email.com";
-
-            if (userManager.FindByNameAsync(defaultAdminUserName).Result != null) return;
+            if (userManager.FindByNameAsync(Users.AdminUserName).Result != null) return;
 
             var user = new UserIdentity
             {
-                UserName = defaultAdminUserName,
-                Email = defaultAdminEmail,
+                UserName = Users.AdminUserName,
+                Email = Users.AdminEmail,
                 EmailConfirmed = true
             };
 
-            var result = userManager.CreateAsync(user, defaultAdminPassword).Result;
+            var result = userManager.CreateAsync(user, Users.AdminPassword).Result;
 
             if (result.Succeeded)
             {
