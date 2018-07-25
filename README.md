@@ -47,10 +47,11 @@ Update-Database -context AdminDbContext
 
 Migrations are not a part of the repository - they are ignored in `.gitignore`.
 
-We suggest to use seed data:
+### We suggest to use seed data:
 
 - In `Program.cs` -> `Main`, uncomment `DbMigrationHelpers.EnsureSeedData(host)`
 - The `Clients` and `Resources` files in `Configuration` are the initial data, based on a sample from IdentityServer4
+- The `Users` file in `Configuration` contains the default admin username and password for the first login
 
 ### Using other database engines - PostgreSQL, SQLite etc.
 
