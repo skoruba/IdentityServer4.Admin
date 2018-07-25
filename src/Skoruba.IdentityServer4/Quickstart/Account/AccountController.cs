@@ -18,6 +18,7 @@ using IdentityServer4.Test;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Skoruba.IdentityServer4.Settings;
 
 namespace Skoruba.IdentityServer4.Quickstart.Account
 {
@@ -44,7 +45,7 @@ namespace Skoruba.IdentityServer4.Quickstart.Account
         {
             // if the TestUserStore is not in DI, then we'll just use the global users collection
             // this is where you would plug in your own custom identity management library (e.g. ASP.NET Identity)
-            _users = users ?? new TestUserStore(TestUsers.Users);
+            _users = users ?? new TestUserStore(Config.GetUsers());
 
             _interaction = interaction;
             _clientStore = clientStore;

@@ -69,7 +69,7 @@ namespace Skoruba.IdentityServer4.Settings
                 {
                     SubjectId = "1",
                     Username = "bob",
-                    Password = "password",
+                    Password = "Pa$$word123",
 
                     Claims = new List<Claim>
                     {

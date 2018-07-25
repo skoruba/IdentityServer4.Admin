@@ -2,10 +2,13 @@
 using System.Linq;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Skoruba.IdentityServer4.Admin.Configuration;
+using Skoruba.IdentityServer4.Admin.Constants;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -31,12 +34,56 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<AdminDbContext>();
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<UserIdentity>>();
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<UserIdentityRole>>();
+
                 context.Database.Migrate();
-                EnsureSeedData(context);
+                EnsureSeedIdentityServerData(context);
+                EnsureSeedIdentityData(userManager, roleManager);
             }
         }
 
-        private static void EnsureSeedData(AdminDbContext context)
+        /// <summary>
+        /// Generate default admin user / role
+        /// </summary>
+        private static void EnsureSeedIdentityData(UserManager<UserIdentity> userManager,
+            RoleManager<UserIdentityRole> roleManager)
+        {
+            // Create admin role
+            if (!roleManager.RoleExistsAsync
+                  (AuthorizationConsts.AdministrationRole).Result)
+            {
+                var role = new UserIdentityRole { Name = AuthorizationConsts.AdministrationRole };
+
+                roleManager.CreateAsync(role).Wait();
+            }
+
+            // Create admin user
+            const string defaultAdminUserName = "bob";
+            const string defaultAdminPassword = "Pa$$word123";
+            const string defaultAdminEmail = "BobSmith@email.com";
+
+            if (userManager.FindByNameAsync(defaultAdminUserName).Result != null) return;
+
+            var user = new UserIdentity
+            {
+                UserName = defaultAdminUserName,
+                Email = defaultAdminEmail,
+                EmailConfirmed = true
+            };
+
+            var result = userManager.CreateAsync(user, defaultAdminPassword).Result;
+
+            if (result.Succeeded)
+            {
+                userManager.AddToRoleAsync(user, AuthorizationConsts.AdministrationRole).Wait();
+            }
+        }
+
+        /// <summary>
+        /// Generate default clients, identity and api resources
+        /// </summary>
+        private static void EnsureSeedIdentityServerData(AdminDbContext context)
         {
             if (!context.Clients.Any())
             {
