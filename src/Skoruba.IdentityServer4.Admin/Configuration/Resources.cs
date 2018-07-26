@@ -18,8 +18,8 @@ namespace Skoruba.IdentityServer4.Admin.Configuration
                 // custom identity resource with some consolidated claims
                 new IdentityResource("custom.profile", new[] { JwtClaimTypes.Name, JwtClaimTypes.Email, "location" }),
 
-                //add additional identity resource
-                new IdentityResource("roles", new[] { "role" })
+                // add additional identity resource
+                new IdentityResource("roles", "Roles", new[] { "role" })
             };
         }
 

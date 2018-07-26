@@ -68,12 +68,12 @@ namespace Skoruba.IdentityServer4.Settings
                 new TestUser
                 {
                     SubjectId = "1",
-                    Username = "bob",
-                    Password = "password",
+                    Username = IdentityServerConsts.AdminUserName,
+                    Password = IdentityServerConsts.AdminPassword,
 
                     Claims = new List<Claim>
                     {
-                        new Claim("name", "Bob"),
+                        new Claim("name", IdentityServerConsts.AdminUserName),
                         new Claim("role", IdentityServerConsts.AdministrationRole)
                     }
                 }
