@@ -12,6 +12,7 @@ namespace Skoruba.IdentityServer4.Admin
         {
             var host = BuildWebHost(args);
 
+            //NOTE: Uncomment the line below to use seed data
             //await DbMigrationHelpers.EnsureSeedData(host);
 
             host.Run();
