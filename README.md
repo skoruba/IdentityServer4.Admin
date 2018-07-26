@@ -110,7 +110,7 @@ It is possible to define the configuration according the client type - by defaul
     - Client Scopes
     - Client Secrets
 
-- **API Resources**
+**API Resources**
 
 - Actions: Add, Update, Remove
 - Entities: 
@@ -119,7 +119,7 @@ It is possible to define the configuration according the client type - by defaul
     - Api Scope Claims
     - Api Secrets
 
-- **Identity Resources**
+**Identity Resources**
 
 - Actions: Add, Update, Remove
 - Entities:
