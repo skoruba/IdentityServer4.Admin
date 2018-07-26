@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -19,17 +20,17 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// Add-Migration DbInit -context AdminDbContext -output Data/Migrations
         /// </summary>
         /// <param name="host"></param>
-        public static void EnsureSeedData(IWebHost host)
+        public static async Task EnsureSeedData(IWebHost host)
         {
             using (var serviceScope = host.Services.CreateScope())
             {
                 var services = serviceScope.ServiceProvider;
 
-                EnsureSeedData(services);
+                await EnsureSeedData(services);
             }
         }
 
-        public static void EnsureSeedData(IServiceProvider serviceProvider)
+        public static async Task EnsureSeedData(IServiceProvider serviceProvider)
         {
             using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
@@ -38,27 +39,27 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<UserIdentityRole>>();
 
                 context.Database.Migrate();
-                EnsureSeedIdentityServerData(context);
-                EnsureSeedIdentityData(userManager, roleManager);
+                await EnsureSeedIdentityServerData(context);
+                await EnsureSeedIdentityData(userManager, roleManager);
             }
         }
 
         /// <summary>
         /// Generate default admin user / role
         /// </summary>
-        private static void EnsureSeedIdentityData(UserManager<UserIdentity> userManager,
+        private static async Task EnsureSeedIdentityData(UserManager<UserIdentity> userManager,
             RoleManager<UserIdentityRole> roleManager)
         {
             // Create admin role
-            if (!roleManager.RoleExistsAsync(AuthorizationConsts.AdministrationRole).Result)
+            if (!await roleManager.RoleExistsAsync(AuthorizationConsts.AdministrationRole))
             {
                 var role = new UserIdentityRole { Name = AuthorizationConsts.AdministrationRole };
 
-                roleManager.CreateAsync(role).Wait();
+                await roleManager.CreateAsync(role);
             }
 
             // Create admin user
-            if (userManager.FindByNameAsync(Users.AdminUserName).Result != null) return;
+            if (await userManager.FindByNameAsync(Users.AdminUserName) != null) return;
 
             var user = new UserIdentity
             {
@@ -67,26 +68,27 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 EmailConfirmed = true
             };
 
-            var result = userManager.CreateAsync(user, Users.AdminPassword).Result;
+            var result = await userManager.CreateAsync(user, Users.AdminPassword);
 
             if (result.Succeeded)
             {
-                userManager.AddToRoleAsync(user, AuthorizationConsts.AdministrationRole).Wait();
+                await userManager.AddToRoleAsync(user, AuthorizationConsts.AdministrationRole);
             }
         }
 
         /// <summary>
         /// Generate default clients, identity and api resources
         /// </summary>
-        private static void EnsureSeedIdentityServerData(AdminDbContext context)
+        private static async Task EnsureSeedIdentityServerData(AdminDbContext context)
         {
             if (!context.Clients.Any())
             {
                 foreach (var client in Clients.GetAdminClient().ToList())
                 {
-                    context.Clients.Add(client.ToEntity());
+                    await context.Clients.AddAsync(client.ToEntity());
                 }
-                context.SaveChanges();
+
+                await context.SaveChangesAsync();
             }
 
             if (!context.IdentityResources.Any())
@@ -95,18 +97,20 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
                 foreach (var resource in identityResources)
                 {
-                    context.IdentityResources.Add(resource.ToEntity());
+                    await context.IdentityResources.AddAsync(resource.ToEntity());
                 }
-                context.SaveChanges();
+
+                await context.SaveChangesAsync();
             }
 
             if (!context.ApiResources.Any())
             {
                 foreach (var resource in ClientResources.GetApiResources().ToList())
                 {
-                    context.ApiResources.Add(resource.ToEntity());
+                    await context.ApiResources.AddAsync(resource.ToEntity());
                 }
-                context.SaveChanges();
+
+                await context.SaveChangesAsync();
             }
         }
     }

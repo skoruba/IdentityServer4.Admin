@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Serilog;
 using Skoruba.IdentityServer4.Admin.Helpers;
@@ -7,11 +8,11 @@ namespace Skoruba.IdentityServer4.Admin
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var host = BuildWebHost(args);
 
-            //DbMigrationHelpers.EnsureSeedData(host);
+            //await DbMigrationHelpers.EnsureSeedData(host);
 
             host.Run();
         }
