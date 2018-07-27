@@ -6,8 +6,8 @@ using IdentityServer4.EntityFramework.Entities;
 using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Enums;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
-using Skoruba.IdentityServer4.Admin.Helpers;
 using ApiResource = IdentityServer4.EntityFramework.Entities.ApiResource;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
@@ -113,7 +113,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 
             var apiScopes = await _dbContext.ApiScopes
                 .Include(x => x.ApiResource)
-                .Where(x => x.ApiResource.Id == apiResourceId).PageBy(x=> x.Name, page, pageSize).ToListAsync();
+                .Where(x => x.ApiResource.Id == apiResourceId).PageBy(x => x.Name, page, pageSize).ToListAsync();
 
             pagedList.Data.AddRange(apiScopes);
             pagedList.TotalCount = await _dbContext.ApiScopes.Where(x => x.ApiResource.Id == apiResourceId).CountAsync();
@@ -173,7 +173,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
         public async Task<PagedList<ApiSecret>> GetApiSecretsAsync(int apiResourceId, int page = 1, int pageSize = 10)
         {
             var pagedList = new PagedList<ApiSecret>();
-            var apiSecrets = await _dbContext.ApiSecrets.Where(x => x.ApiResource.Id == apiResourceId).PageBy(x=> x.Id, page, pageSize).ToListAsync();
+            var apiSecrets = await _dbContext.ApiSecrets.Where(x => x.ApiResource.Id == apiResourceId).PageBy(x => x.Id, page, pageSize).ToListAsync();
 
             pagedList.Data.AddRange(apiSecrets);
             pagedList.TotalCount = await _dbContext.ApiSecrets.Where(x => x.ApiResource.Id == apiResourceId).CountAsync();

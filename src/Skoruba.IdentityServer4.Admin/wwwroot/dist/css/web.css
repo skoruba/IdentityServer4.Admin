@@ -411,6 +411,9 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%; }
 
+.picker hr {
+  margin-bottom: 5px; }
+
 .picker .button__add {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -419,6 +422,13 @@ input:checked + .slider:before {
   text-transform: none; }
 
 .picker .button__delete {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  white-space: normal;
+  text-transform: none; }
+
+.picker .button__show-all {
   margin-top: 5px;
   margin-bottom: 5px;
   margin-right: 5px;
