@@ -131,7 +131,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 //Remove api resource
                 await apiResourceService.DeleteApiResourceAsync(newApiResourceDto);
 
-                //Try Get Removed client
+                //Try get removed api resource
                 var removeApiResource = await context.ApiResources.Where(x => x.Id == apiResource.Id)
                     .SingleOrDefaultAsync();
 
