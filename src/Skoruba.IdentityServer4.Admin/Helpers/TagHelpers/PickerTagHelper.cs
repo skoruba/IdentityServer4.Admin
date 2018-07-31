@@ -50,6 +50,9 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.TagHelpers
         [HtmlAttributeName("allow-suggested-items")]
         public bool AllowSuggestedItems { get; set; } = true;
 
+        [HtmlAttributeName("top-suggested-items")]
+        public int TopSuggestedItems { get; set; } = 5;
+
         [HtmlAttributeName("required")]
         public bool Required { get; set; }
 
@@ -80,7 +83,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.TagHelpers
                 Url + "\", selectedItemsTitle: \"" + SelectedItemsTitle + "\", allowSuggestedItems: " + AllowSuggestedItems.ToString().ToLower() + ", searchResultTitle: \"" +
                 SearchResultTitle + "\", suggestedItemsTitle: \"" + SuggestedItemsTitle + "\", noItemSelectedTitle: \"" +
                 NoItemSelectedTitle + "\", searchInputPlaceholder: \"" + SearchInputPlaceholder + "\", showAllItemsTitle: \"" + ShowAllItemsTitle + "\", selectedItems: " + selectedItems + ", minSearchText: " + MinSearchText +
-                ", multipleSelect: " + MultipleSelect.ToString().ToLower() + " }}'></div>");
+                ", topSuggestedItems: " + TopSuggestedItems + " ,multipleSelect: " + MultipleSelect.ToString().ToLower() + " }}'></div>");
 
             output.Content.AppendHtml(rawPickerHtml);
         }

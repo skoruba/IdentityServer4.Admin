@@ -8,6 +8,7 @@ ko.components.register('picker', {
 		//Constants
 		var minSearchSelectConst = 2;
 		var inputSearchDelay = 500;
+		var topSuggestedItemsConst = 5;
 
 		//Input
 		this.textTerm = ko.observable("").extend({ rateLimit: inputSearchDelay });
@@ -23,6 +24,7 @@ ko.components.register('picker', {
 		this.noItemSelectedTitle = ko.observable(params.noItemSelectedTitle || "No item/s selected");
 		this.showAllItemsTitle = ko.observable(params.showAllItemsTitle || "more");
 		this.allowSuggestedItems = ko.observable(params.allowSuggestedItems && params.url || false);
+		this.topSuggestedItems = ko.observable(params.topSuggestedItems || topSuggestedItemsConst);
 
 		//Collections
 		this.searchResult = ko.observableArray([]);
@@ -107,7 +109,7 @@ ko.components.register('picker', {
 				}
 		};
 
-		//Get suggested items - for example top 5 items
+		//Get suggested items - by default 5 items
 		this.getSuggestedItems = function () {
 
 			if (self.allowSuggestedItems() === false) return;
@@ -117,7 +119,7 @@ ko.components.register('picker', {
 				self.loading(true);
 
 				//make ajax request and result add to search result
-				$.get(params.url + "=" + "&limit=5", function (data) {
+				$.get(params.url + "=" + "&limit=" + self.topSuggestedItems(), function (data) {
 
 					self.suggestedResult(data);
 
