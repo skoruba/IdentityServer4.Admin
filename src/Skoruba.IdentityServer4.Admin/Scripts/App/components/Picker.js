@@ -117,8 +117,11 @@
 				//start loading
 				self.loading(true);
 
-				//make ajax request and result add to search result
-				$.get(`${params.url}=${""}&limit=${self.topSuggestedItems()}`,
+				//make ajax request and result add to suggested result
+				$.get(params.url,
+					{
+						limit: self.topSuggestedItems()
+					},
 					function (data) {
 
 						self.suggestedResult(data);
