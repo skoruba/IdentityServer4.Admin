@@ -255,25 +255,25 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> SearchScopes(string scope)
+        public async Task<IActionResult> SearchScopes(string scope, int limit = 0)
         {
-            var scopes = await _clientService.GetScopesAsync(scope);
+            var scopes = await _clientService.GetScopesAsync(scope, limit);
 
             return Ok(scopes);
         }
 
         [HttpGet]
-        public IActionResult SearchClaims(string claim)
+        public IActionResult SearchClaims(string claim, int limit = 0)
         {
-            var claims = _clientService.GetStandardClaims(claim);
+            var claims = _clientService.GetStandardClaims(claim, limit);
 
             return Ok(claims);
         }
 
         [HttpGet]
-        public IActionResult SearchGrantTypes(string grant)
+        public IActionResult SearchGrantTypes(string grant, int limit = 0)
         {
-            var grants = _clientService.GetGrantTypes(grant);
+            var grants = _clientService.GetGrantTypes(grant, limit);
 
             return Ok(grants);
         }

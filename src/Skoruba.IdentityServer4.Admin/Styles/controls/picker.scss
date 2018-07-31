@@ -1,5 +1,9 @@
 ﻿.picker {
 
+	hr {
+		margin-bottom: 5px;
+	}
+
 	.button {
 		&__add {
 			margin-top: 5px;
@@ -10,6 +14,14 @@
 		}
 
 		&__delete {
+			margin-top: 5px;
+			margin-bottom: 5px;
+			margin-right: 5px;
+			white-space: normal;
+			text-transform: none;
+		}
+
+		&__show-all {
 			margin-top: 5px;
 			margin-bottom: 5px;
 			margin-right: 5px;

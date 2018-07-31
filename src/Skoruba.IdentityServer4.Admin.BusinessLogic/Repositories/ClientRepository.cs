@@ -11,7 +11,6 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Enums;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
-using Skoruba.IdentityServer4.Admin.Helpers;
 using Client = IdentityServer4.EntityFramework.Entities.Client;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
@@ -55,21 +54,29 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             return pagedList;
         }
 
-        public async Task<List<string>> GetScopesAsync(string scope)
+        public async Task<List<string>> GetScopesAsync(string scope, int limit = 0)
         {
-            var identityResources = await _dbContext.IdentityResources.Where(x => x.Name.Contains(scope)).Select(x => x.Name).ToListAsync();
-            var apiResources = await _dbContext.ApiResources.Where(x => x.Name.Contains(scope)).Select(x => x.Name).ToListAsync();
+            var identityResources = await _dbContext.IdentityResources
+                .WhereIf(!string.IsNullOrEmpty(scope), x => x.Name.Contains(scope))
+                .TakeIf(x => x.Id, limit > 0, limit)
+                .Select(x => x.Name).ToListAsync();
 
-            var scopes = identityResources.Concat(apiResources).ToList();
+            var apiResources = await _dbContext.ApiResources
+                .WhereIf(!string.IsNullOrEmpty(scope), x => x.Name.Contains(scope))
+                .TakeIf(x => x.Id, limit > 0, limit)
+                .Select(x => x.Name).ToListAsync();
+
+            var scopes = identityResources.Concat(apiResources).TakeIf(x => x, limit > 0, limit).ToList();
 
             return scopes;
         }
 
-        public List<string> GetGrantTypes(string grant)
+        public List<string> GetGrantTypes(string grant, int limit = 0)
         {
-            if (string.IsNullOrWhiteSpace(grant)) return new List<string>();
-
-            var filteredGrants = ClientConsts.GetGrantTypes().Where(x => x.Contains(grant)).ToList();
+            var filteredGrants = ClientConsts.GetGrantTypes()
+                .WhereIf(!string.IsNullOrWhiteSpace(grant), x => x.Contains(grant))
+                .TakeIf(x => x, limit > 0, limit)
+                .ToList();
 
             return filteredGrants;
         }
@@ -87,11 +94,12 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             return secrets;
         }
 
-        public List<string> GetStandardClaims(string claim)
+        public List<string> GetStandardClaims(string claim, int limit = 0)
         {
-            if (string.IsNullOrWhiteSpace(claim)) return new List<string>();
-
-            var filteredClaims = ClientConsts.GetStandardClaims().Where(x => x.Contains(claim)).ToList();
+            var filteredClaims = ClientConsts.GetStandardClaims()
+                .WhereIf(!string.IsNullOrWhiteSpace(claim), x => x.Contains(claim))
+                .TakeIf(x => x, limit > 0, limit)
+                .ToList();
 
             return filteredClaims;
         }
@@ -140,7 +148,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             return _dbContext.ClientProperties
                 .Include(x => x.Client)
                 .Where(x => x.Id == clientPropertyId)
-                .SingleOrDefaultAsync();            
+                .SingleOrDefaultAsync();
         }
 
         public async Task<int> AddClientClaimAsync(int clientId, ClientClaim clientClaim)
@@ -201,7 +209,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
         {
             var pagedList = new PagedList<ClientClaim>();
 
-            var claims = await _dbContext.ClientClaims.Where(x => x.Client.Id == clientId).PageBy(x=> x.Id, page, pageSize)
+            var claims = await _dbContext.ClientClaims.Where(x => x.Client.Id == clientId).PageBy(x => x.Id, page, pageSize)
                 .ToListAsync();
 
             pagedList.Data.AddRange(claims);
@@ -215,7 +223,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
         {
             var pagedList = new PagedList<ClientProperty>();
 
-            var properties = await _dbContext.ClientProperties.Where(x => x.Client.Id == clientId).PageBy(x=> x.Id, page, pageSize)
+            var properties = await _dbContext.ClientProperties.Where(x => x.Client.Id == clientId).PageBy(x => x.Id, page, pageSize)
                 .ToListAsync();
 
             pagedList.Data.AddRange(properties);

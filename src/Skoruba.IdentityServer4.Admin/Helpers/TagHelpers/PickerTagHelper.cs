@@ -23,17 +23,35 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.TagHelpers
         [HtmlAttributeName("search-input-placeholder")]
         public string SearchInputPlaceholder { get; set; }
 
+        [HtmlAttributeName("search-result-title")]
+        public string SearchResultTitle { get; set; }
+
+        [HtmlAttributeName("suggested-items-title")]
+        public string SuggestedItemsTitle { get; set; }
+
+        [HtmlAttributeName("no-item-selected-title")]
+        public string NoItemSelectedTitle { get; set; }
+
         [HtmlAttributeName("selected-items")]
         public List<string> SelectedItems { get; set; }
 
         [HtmlAttributeName("selected-item")]
         public string SelectedItem { get; set; }
 
+        [HtmlAttributeName("show-all-items-title")]
+        public string ShowAllItemsTitle { get; set; }
+
         [HtmlAttributeName("min-search-text")]
         public int MinSearchText { get; set; }
 
         [HtmlAttributeName("multiple-select")]
         public bool MultipleSelect { get; set; }
+
+        [HtmlAttributeName("allow-suggested-items")]
+        public bool AllowSuggestedItems { get; set; } = true;
+
+        [HtmlAttributeName("top-suggested-items")]
+        public int TopSuggestedItems { get; set; } = 5;
 
         [HtmlAttributeName("required")]
         public bool Required { get; set; }
@@ -62,9 +80,10 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.TagHelpers
 
             var rawPickerHtml = new HtmlString(
                 "<div data-bind='component: { name: \"picker\", params: { search: \"\", hiddenId: \"" + Id + "\", url: \"" +
-                Url + "\", selectedItemsTitle: \"" + SelectedItemsTitle + "\", searchInputPlaceholder: \"" +
-                SearchInputPlaceholder + "\", selectedItems: " + selectedItems + ", minSearchText: " + MinSearchText +
-                ", multipleSelect: " + MultipleSelect.ToString().ToLower() + " }}'></div>");
+                Url + "\", selectedItemsTitle: \"" + SelectedItemsTitle + "\", allowSuggestedItems: " + AllowSuggestedItems.ToString().ToLower() + ", searchResultTitle: \"" +
+                SearchResultTitle + "\", suggestedItemsTitle: \"" + SuggestedItemsTitle + "\", noItemSelectedTitle: \"" +
+                NoItemSelectedTitle + "\", searchInputPlaceholder: \"" + SearchInputPlaceholder + "\", showAllItemsTitle: \"" + ShowAllItemsTitle + "\", selectedItems: " + selectedItems + ", minSearchText: " + MinSearchText +
+                ", topSuggestedItems: " + TopSuggestedItems + " ,multipleSelect: " + MultipleSelect.ToString().ToLower() + " }}'></div>");
 
             output.Content.AppendHtml(rawPickerHtml);
         }

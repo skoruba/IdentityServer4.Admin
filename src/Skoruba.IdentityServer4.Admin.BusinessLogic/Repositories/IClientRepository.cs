@@ -31,9 +31,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 
         Task<PagedList<Client>> GetClientsAsync(string search = "", int page = 1, int pageSize = 10);
 
-		Task<List<string>> GetScopesAsync(string scope);
+		Task<List<string>> GetScopesAsync(string scope, int limit = 0);
 
-	    List<string> GetGrantTypes(string grant);
+	    List<string> GetGrantTypes(string grant, int limit = 0);
 
 	    List<SelectItem> GetProtocolTypes();
 
@@ -47,7 +47,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 
 	    List<SelectItem> GetSecretTypes();
 
-	    List<string> GetStandardClaims(string claim);
+	    List<string> GetStandardClaims(string claim, int limit = 0);
 
         Task<int> AddClientSecretAsync(int clientId, ClientSecret clientSecret);
 

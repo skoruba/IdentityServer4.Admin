@@ -757,7 +757,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 var randomClientClaim = ClientMock.GenerateRandomClientClaim(0);
 
                 var grantTypes = clientRepository.GetStandardClaims(randomClientClaim.Type);
-                grantTypes[0].Should().Be(randomClientClaim.Type);
+                grantTypes.Contains(randomClientClaim.Type).Should().Be(true);
             }
         }
 

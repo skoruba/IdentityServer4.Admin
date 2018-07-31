@@ -104,7 +104,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             return clientSecrets;
         }
-        
+
         public ClientDto BuildClientViewModel(ClientDto client = null)
         {
             if (client == null)
@@ -219,16 +219,16 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return clientsDto;
         }
 
-        public async Task<List<string>> GetScopesAsync(string scope)
+        public async Task<List<string>> GetScopesAsync(string scope, int limit = 0)
         {
-            var scopes = await _clientRepository.GetScopesAsync(scope);
+            var scopes = await _clientRepository.GetScopesAsync(scope, limit);
 
             return scopes;
         }
 
-        public List<string> GetGrantTypes(string grant)
+        public List<string> GetGrantTypes(string grant, int limit = 0)
         {
-            var grantTypes = _clientRepository.GetGrantTypes(grant);
+            var grantTypes = _clientRepository.GetGrantTypes(grant, limit);
 
             return grantTypes;
         }
@@ -275,9 +275,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return protocolTypes;
         }
 
-        public List<string> GetStandardClaims(string claim)
+        public List<string> GetStandardClaims(string claim, int limit = 0)
         {
-            var standardClaims = _clientRepository.GetStandardClaims(claim);
+            var standardClaims = _clientRepository.GetStandardClaims(claim, limit);
 
             return standardClaims;
         }
@@ -287,7 +287,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             HashClientSharedSecret(clientSecret);
 
             var clientSecretEntity = clientSecret.ToEntity();
-            return await _clientRepository.AddClientSecretAsync(clientSecret.ClientId, clientSecretEntity);            
+            return await _clientRepository.AddClientSecretAsync(clientSecret.ClientId, clientSecretEntity);
         }
 
         public async Task<int> DeleteClientSecretAsync(ClientSecretsDto clientSecret)

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Skoruba.IdentityServer4.Admin.Helpers
+namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers
 {
     public static class QueryableExtensions
     {
@@ -10,6 +10,16 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         {
             return condition
                 ? query.Where(predicate)
+                : query;
+        }
+
+        public static IQueryable<T> TakeIf<T, TKey>(this IQueryable<T> query, Expression<Func<T, TKey>> orderBy, bool condition, int limit, bool orderByDescending = true)
+        {
+            // It is necessary sort items before it
+            query = orderByDescending ? query.OrderByDescending(orderBy) : query.OrderBy(orderBy);
+
+            return condition
+                ? query.Take(limit)
                 : query;
         }
 
@@ -22,7 +32,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
             // It is necessary sort items before it
             query = orderByDescending ? query.OrderByDescending(orderBy) : query.OrderBy(orderBy);
-            
+
             return query.Skip((page - 1) * pageSize).Take(pageSize);
         }
     }

@@ -12,7 +12,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
         ClientSecretsDto BuildClientSecretsViewModel(ClientSecretsDto clientSecrets);
 
         ClientCloneDto BuildClientCloneViewModel(int id, ClientDto clientDto);
-        
+
         Task<int> AddClientAsync(ClientDto client);
 
         Task<int> UpdateClientAsync(ClientDto client);
@@ -27,9 +27,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
         Task<ClientsDto> GetClientsAsync(string search, int page = 1, int pageSize = 10);
 
-        Task<List<string>> GetScopesAsync(string scope);
+        Task<List<string>> GetScopesAsync(string scope, int limit = 0);
 
-        List<string> GetGrantTypes(string grant);
+        List<string> GetGrantTypes(string grant, int limit = 0);
 
         List<SelectItem> GetAccessTokenTypes();
 
@@ -41,7 +41,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
         List<SelectItem> GetSecretTypes();
 
-        List<string> GetStandardClaims(string claim);
+        List<string> GetStandardClaims(string claim, int limit = 0);
 
         Task<int> AddClientSecretAsync(ClientSecretsDto clientSecret);
 
