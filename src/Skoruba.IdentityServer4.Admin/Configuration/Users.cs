@@ -2,8 +2,8 @@
 {
     public class Users
     {
-        public const string AdminUserName = "bob";
+        public const string AdminUserName = "admin";
         public const string AdminPassword = "Pa$$word123";
-        public const string AdminEmail = "bob@example.com";
+        public const string AdminEmail = "admin@example.com";
     }
 }
