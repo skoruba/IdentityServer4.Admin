@@ -18,10 +18,8 @@ namespace Skoruba.IdentityServer4.Admin
 
             var host = BuildWebHost(args);
 
-            //NOTE: Uncomment the line below to use seed data
-            //await DbMigrationHelpers.EnsureSeedData(host);
-
-            //Eventually use seed via command - dotnet run /seed
+            // Uncomment this to seed upon startup, alternatively pass in `dotnet run /seed` to seed using CLI
+            // await DbMigrationHelpers.EnsureSeedData(host);
             if (seed)
             {
                 await DbMigrationHelpers.EnsureSeedData(host);

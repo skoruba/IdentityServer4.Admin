@@ -35,6 +35,10 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.TagHelpers
 
         public bool MultipleSelect { get; set; }
 
+        public bool AllowItemAlreadySelectedNotification { get; set; } = true;
+
+        public string ItemAlreadySelectedTitle { get; set; }
+        
         public bool AllowSuggestedItems { get; set; } = true;
 
         public int TopSuggestedItems { get; set; } = 5;
@@ -60,27 +64,69 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.TagHelpers
 
         private void AddComponent(TagHelperOutput output)
         {
-            var selectedItems = GetSelectedItemsToJsonString();
+            var selectedItems = GetSelectedItems();
 
-            var rawPickerHtml = new HtmlString($"<div data-bind=\'component: {{ name: \"picker\", params: {{ search: \"\", hiddenId: \"{Id}\", url: \"{Url}\", selectedItemsTitle: \"{SelectedItemsTitle}\", allowSuggestedItems: {AllowSuggestedItems.ToString().ToLower()}, searchResultTitle: \"{SearchResultTitle}\", suggestedItemsTitle: \"{SuggestedItemsTitle}\", noItemSelectedTitle: \"{NoItemSelectedTitle}\", searchInputPlaceholder: \"{SearchInputPlaceholder}\", showAllItemsTitle: \"{ShowAllItemsTitle}\", selectedItems: {selectedItems}, minSearchText: {MinSearchText}, topSuggestedItems: {TopSuggestedItems} ,multipleSelect: {MultipleSelect.ToString().ToLower()} }}}}\'></div>");
+            var component = new
+            {
+                name = "picker",
+                @params = new
+                {
+                    search = "",
+                    hiddenId = Id,
+                    url = Url,
+                    selectedItemsTitle = SelectedItemsTitle,
+                    allowSuggestedItems = AllowSuggestedItems,
+                    searchResultTitle = SearchResultTitle,
+                    suggestedItemsTitle = SuggestedItemsTitle,
+                    noItemSelectedTitle = NoItemSelectedTitle,
+                    searchInputPlaceholder = SearchInputPlaceholder,
+                    showAllItemsTitle = ShowAllItemsTitle,
+                    selectedItems,
+                    minSearchText = MinSearchText,
+                    topSuggestedItems = TopSuggestedItems,
+                    multipleSelect = MultipleSelect,
+                    allowItemAlreadySelectedNotification = AllowItemAlreadySelectedNotification,
+                    itemAlreadySelectedTitle = ItemAlreadySelectedTitle
+                }
+            };
+
+            var rawPickerHtml = new HtmlString($"<div data-bind='component: {JsonConvert.SerializeObject(component)}'></div>");
 
             output.Content.AppendHtml(rawPickerHtml);
         }
 
         /// <summary>
-        /// Get Selected Items to JSON string - with removed quotes
+        /// Get Selected Items
         /// </summary>
         /// <returns></returns>
-        private string GetSelectedItemsToJsonString()
+        private List<string> GetSelectedItems()
+        {
+            return MultipleSelect ? GetSelectedItemsWithRemovedQuotes() : GetSelectedItemWithRemovedQuotes();
+        }
+
+        /// <summary>
+        /// Get Selected Items - with removed quotes
+        /// </summary>
+        /// <returns></returns>
+        private List<string> GetSelectedItemsWithRemovedQuotes()
         {
             for (var i = 0; i < SelectedItems?.Count; i++)
             {
                 SelectedItems[i] = SelectedItems[i].Replace("'", "").Replace("\"", "");
             }
 
-            var selectedItems = MultipleSelect ? JsonConvert.SerializeObject(SelectedItems ?? new List<string>()) : JsonConvert.SerializeObject(SelectedItem);
+            return SelectedItems;
+        }
 
-            return selectedItems;
+        /// <summary>
+        /// Get Selected Item - with removed quotes, the picker component expect the collection of items, therefore it is used the list for single value as well
+        /// </summary>
+        /// <returns></returns>
+        private List<string> GetSelectedItemWithRemovedQuotes()
+        {
+            SelectedItem = SelectedItem.Replace("'", "").Replace("\"", "");
+
+            return string.IsNullOrWhiteSpace(SelectedItem) ? new List<string>() : new List<string> { SelectedItem };
         }
 
         private void AddHiddenField(TagHelperOutput output)

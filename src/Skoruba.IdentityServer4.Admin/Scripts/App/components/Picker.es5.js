@@ -25,6 +25,8 @@ ko.components.register('picker', {
 		this.showAllItemsTitle = ko.observable(params.showAllItemsTitle || "more");
 		this.allowSuggestedItems = ko.observable(params.allowSuggestedItems && params.url || false);
 		this.topSuggestedItems = ko.observable(params.topSuggestedItems || topSuggestedItemsConst);
+		this.allowItemAlreadySelectedNotification = ko.observable(params.allowItemAlreadySelectedNotification || true);
+		this.itemAlreadySelectedTitle = ko.observable(params.itemAlreadySelectedTitle || "item already selected");
 
 		//Collections
 		this.searchResult = ko.observableArray([]);
@@ -83,6 +85,12 @@ ko.components.register('picker', {
 			}
 		});
 
+		this.notify = function (item) {
+			toastr.options.closeButton = true;
+			toastr.options.preventDuplicates = true;
+			toastr.info(item + " " + this.itemAlreadySelectedTitle());
+		};
+
 		//Action methods
 		this.add = function (item) {
 
@@ -91,6 +99,11 @@ ko.components.register('picker', {
 
 			//Check if selected item is exists in selected items array
 			if (this.selectedResult.indexOf(item) > -1) {
+
+				if (this.allowItemAlreadySelectedNotification() === true) {
+					this.notify(item);
+				}
+
 				return;
 			}
 

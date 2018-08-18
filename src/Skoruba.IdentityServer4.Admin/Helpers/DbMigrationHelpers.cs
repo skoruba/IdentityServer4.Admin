@@ -17,7 +17,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
     {
         /// <summary>
         /// Generate migrations before running this method, you can use command bellow:
-        /// Add-Migration DbInit -context AdminDbContext -output Data/Migrations
+        /// Nuget package manager: Add-Migration DbInit -context AdminDbContext -output Data/Migrations
+        /// Dotnet CLI: dotnet ef migrations add DbInit -c AdminDbContext -o Data/Migrations
         /// </summary>
         /// <param name="host"></param>
         public static async Task EnsureSeedData(IWebHost host)
