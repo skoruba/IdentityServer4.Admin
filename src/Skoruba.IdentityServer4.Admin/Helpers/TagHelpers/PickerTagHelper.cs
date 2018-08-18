@@ -10,53 +10,41 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.TagHelpers
     [HtmlTargetElement("picker")]
     public class PickerTagHelper : TagHelper
     {
-        [HtmlAttributeName("url")]
         public string Url { get; set; }
 
         [Required]
-        [HtmlAttributeName("id")]
         public string Id { get; set; }
 
-        [HtmlAttributeName("selected-items-title")]
         public string SelectedItemsTitle { get; set; }
 
-        [HtmlAttributeName("search-input-placeholder")]
         public string SearchInputPlaceholder { get; set; }
 
-        [HtmlAttributeName("search-result-title")]
         public string SearchResultTitle { get; set; }
 
-        [HtmlAttributeName("suggested-items-title")]
         public string SuggestedItemsTitle { get; set; }
 
-        [HtmlAttributeName("no-item-selected-title")]
         public string NoItemSelectedTitle { get; set; }
 
-        [HtmlAttributeName("selected-items")]
         public List<string> SelectedItems { get; set; }
 
-        [HtmlAttributeName("selected-item")]
         public string SelectedItem { get; set; }
 
-        [HtmlAttributeName("show-all-items-title")]
         public string ShowAllItemsTitle { get; set; }
 
-        [HtmlAttributeName("min-search-text")]
         public int MinSearchText { get; set; }
 
-        [HtmlAttributeName("multiple-select")]
         public bool MultipleSelect { get; set; }
 
-        [HtmlAttributeName("allow-suggested-items")]
+        public bool AllowItemAlreadySelectedNotification { get; set; } = true;
+
+        public string ItemAlreadySelectedTitle { get; set; }
+        
         public bool AllowSuggestedItems { get; set; } = true;
 
-        [HtmlAttributeName("top-suggested-items")]
         public int TopSuggestedItems { get; set; } = 5;
 
-        [HtmlAttributeName("required")]
         public bool Required { get; set; }
 
-        [HtmlAttributeName("required-message")]
         public string RequiredMessage { get; set; }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
@@ -76,32 +64,69 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.TagHelpers
 
         private void AddComponent(TagHelperOutput output)
         {
-            var selectedItems = GetSelectedItemsToJsonString();
+            var selectedItems = GetSelectedItems();
 
-            var rawPickerHtml = new HtmlString(
-                "<div data-bind='component: { name: \"picker\", params: { search: \"\", hiddenId: \"" + Id + "\", url: \"" +
-                Url + "\", selectedItemsTitle: \"" + SelectedItemsTitle + "\", allowSuggestedItems: " + AllowSuggestedItems.ToString().ToLower() + ", searchResultTitle: \"" +
-                SearchResultTitle + "\", suggestedItemsTitle: \"" + SuggestedItemsTitle + "\", noItemSelectedTitle: \"" +
-                NoItemSelectedTitle + "\", searchInputPlaceholder: \"" + SearchInputPlaceholder + "\", showAllItemsTitle: \"" + ShowAllItemsTitle + "\", selectedItems: " + selectedItems + ", minSearchText: " + MinSearchText +
-                ", topSuggestedItems: " + TopSuggestedItems + " ,multipleSelect: " + MultipleSelect.ToString().ToLower() + " }}'></div>");
+            var component = new
+            {
+                name = "picker",
+                @params = new
+                {
+                    search = "",
+                    hiddenId = Id,
+                    url = Url,
+                    selectedItemsTitle = SelectedItemsTitle,
+                    allowSuggestedItems = AllowSuggestedItems,
+                    searchResultTitle = SearchResultTitle,
+                    suggestedItemsTitle = SuggestedItemsTitle,
+                    noItemSelectedTitle = NoItemSelectedTitle,
+                    searchInputPlaceholder = SearchInputPlaceholder,
+                    showAllItemsTitle = ShowAllItemsTitle,
+                    selectedItems,
+                    minSearchText = MinSearchText,
+                    topSuggestedItems = TopSuggestedItems,
+                    multipleSelect = MultipleSelect,
+                    allowItemAlreadySelectedNotification = AllowItemAlreadySelectedNotification,
+                    itemAlreadySelectedTitle = ItemAlreadySelectedTitle
+                }
+            };
+
+            var rawPickerHtml = new HtmlString($"<div data-bind='component: {JsonConvert.SerializeObject(component)}'></div>");
 
             output.Content.AppendHtml(rawPickerHtml);
         }
 
         /// <summary>
-        /// Get Selected Items to JSON string - with removed quotes
+        /// Get Selected Items
         /// </summary>
         /// <returns></returns>
-        private string GetSelectedItemsToJsonString()
+        private List<string> GetSelectedItems()
+        {
+            return MultipleSelect ? GetSelectedItemsWithRemovedQuotes() : GetSelectedItemWithRemovedQuotes();
+        }
+
+        /// <summary>
+        /// Get Selected Items - with removed quotes
+        /// </summary>
+        /// <returns></returns>
+        private List<string> GetSelectedItemsWithRemovedQuotes()
         {
             for (var i = 0; i < SelectedItems?.Count; i++)
             {
                 SelectedItems[i] = SelectedItems[i].Replace("'", "").Replace("\"", "");
             }
 
-            var selectedItems = MultipleSelect ? JsonConvert.SerializeObject(SelectedItems ?? new List<string>()) : JsonConvert.SerializeObject(SelectedItem);
+            return SelectedItems;
+        }
 
-            return selectedItems;
+        /// <summary>
+        /// Get Selected Item - with removed quotes, the picker component expect the collection of items, therefore it is used the list for single value as well
+        /// </summary>
+        /// <returns></returns>
+        private List<string> GetSelectedItemWithRemovedQuotes()
+        {
+            SelectedItem = SelectedItem.Replace("'", "").Replace("\"", "");
+
+            return string.IsNullOrWhiteSpace(SelectedItem) ? new List<string>() : new List<string> { SelectedItem };
         }
 
         private void AddHiddenField(TagHelperOutput output)

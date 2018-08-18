@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
+﻿@using IdentityServer4.Extensions
+@using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 <!DOCTYPE html>
 <html>
@@ -57,7 +58,7 @@
 		<!--Menu item -->
 		@if (User.Identity.IsAuthenticated)
 		{
-			<a class="menu-item my-2 btn btn-outline-primary" asp-action="Logout" asp-controller="Account">@Localizer["LinkLogout"]</a>
+			<a class="menu-item my-2 btn btn-outline-primary" asp-action="Logout" asp-controller="Account">@User.GetDisplayName() - @Localizer["LinkLogout"]</a>
 		}
 
 		<!--Menu button - show in < MD -->

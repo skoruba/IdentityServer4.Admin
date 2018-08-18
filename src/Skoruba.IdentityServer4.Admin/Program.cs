@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Serilog;
@@ -8,12 +9,21 @@ namespace Skoruba.IdentityServer4.Admin
 {
     public class Program
     {
+        private const string SeedArgs = "/seed";
+
         public static async Task Main(string[] args)
         {
+            var seed = args.Any(x => x == SeedArgs);
+            if (seed) args = args.Except(new[] { SeedArgs }).ToArray();
+
             var host = BuildWebHost(args);
 
-            //NOTE: Uncomment the line below to use seed data
-            //await DbMigrationHelpers.EnsureSeedData(host);
+            // Uncomment this to seed upon startup, alternatively pass in `dotnet run /seed` to seed using CLI
+            // await DbMigrationHelpers.EnsureSeedData(host);
+            if (seed)
+            {
+                await DbMigrationHelpers.EnsureSeedData(host);
+            }
 
             host.Run();
         }
@@ -23,6 +33,6 @@ namespace Skoruba.IdentityServer4.Admin
                    .UseKestrel(c => c.AddServerHeader = false)
                    .UseStartup<Startup>()
                    .UseSerilog()
-                   .Build();        
+                   .Build();
     }
 }
