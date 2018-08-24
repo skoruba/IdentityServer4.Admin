@@ -2,14 +2,14 @@
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity
 {
-    public class UserClaimsDto : UserClaimDto
+    public class UserClaimsDto<TUserDtoKey, TClaimDtoKey> : UserClaimDto<TUserDtoKey, TClaimDtoKey>
     {
         public UserClaimsDto()
         {
-            Claims = new List<UserClaimDto>();
+            Claims = new List<UserClaimDto<TUserDtoKey, TClaimDtoKey>>();
         }
         
-        public List<UserClaimDto> Claims { get; set; }
+        public List<UserClaimDto<TUserDtoKey, TClaimDtoKey>> Claims { get; set; }
 
         public int TotalCount { get; set; }
 

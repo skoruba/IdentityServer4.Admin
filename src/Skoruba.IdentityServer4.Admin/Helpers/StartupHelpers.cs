@@ -24,6 +24,7 @@ using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
 using Skoruba.IdentityServer4.Admin.Constants;
@@ -164,31 +165,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             });
         }
 
-        public static void AddServices(this IServiceCollection services)
+        public static void AddMvcExceptionFilters(this IServiceCollection services)
         {
-            //Repositories
-            services.AddTransient<IClientRepository, ClientRepository>();
-            services.AddTransient<IIdentityResourceRepository, IdentityResourceRepository>();
-            services.AddTransient<IIdentityRepository, IdentityRepository>();
-            services.AddTransient<IApiResourceRepository, ApiResourceRepository>();
-            services.AddTransient<IPersistedGrantRepository, PersistedGrantRepository>();
-            services.AddTransient<ILogRepository, LogRepository>();
-
-            //Services
-            services.AddTransient<ILogService, LogService>();
-            services.AddTransient<IClientService, ClientService>();
-            services.AddTransient<IApiResourceService, ApiResourceService>();
-            services.AddTransient<IIdentityResourceService, IdentityResourceService>();
-            services.AddTransient<IPersistedGrantService, PersistedGrantService>();
-            services.AddTransient<IIdentityService, IdentityService>();
-
-            //Resources
-            services.AddScoped<IApiResourceServiceResources, ApiResourceServiceResources>();
-            services.AddScoped<IClientServiceResources, ClientServiceResources>();
-            services.AddScoped<IIdentityResourceServiceResources, IdentityResourceServiceResources>();
-            services.AddScoped<IIdentityServiceResources, IdentityServiceResources>();
-            services.AddScoped<IPersistedGrantServiceResources, PersistedGrantServiceResources>();
-
             //Exception handling
             services.AddScoped<ControllerExceptionFilterAttribute>();
         }

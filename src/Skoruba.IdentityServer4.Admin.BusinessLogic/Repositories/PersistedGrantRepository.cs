@@ -28,14 +28,14 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             var pagedList = new PagedList<PersistedGrantDataView>();
 
             var persistedGrantByUsers = (from pe in _dbContext.PersistedGrants
-                                         join us in _dbContext.Users on Convert.ToInt32(pe.SubjectId) equals us.Id into per
+                                         join us in _dbContext.Users on pe.SubjectId equals us.Id.ToString() into per
                                          from us in per.DefaultIfEmpty()
                                          select new PersistedGrantDataView
                                          {
                                              SubjectId = pe.SubjectId,
                                              SubjectName = us == null ? string.Empty : us.UserName
                                          })
-                .Distinct();
+                                        .Distinct();
 
             Expression<Func<PersistedGrantDataView, bool>> searchCondition = x => x.SubjectId.Contains(search) || x.SubjectName.Contains(search);
 

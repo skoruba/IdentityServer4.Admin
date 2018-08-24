@@ -1,9 +1,9 @@
 ﻿namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity.Base
 {
-    public class BaseUserRolesDto<TUserId, TRoleId>
+    public class BaseUserRolesDto<TUserDtoKey, TRoleDtoKey>
     {
-        public TUserId UserId { get; set; }
+        public TUserDtoKey UserId { get; set; }
 
-        public TRoleId RoleId { get; set; }
+        public TRoleDtoKey RoleId { get; set; }
     }
 }
