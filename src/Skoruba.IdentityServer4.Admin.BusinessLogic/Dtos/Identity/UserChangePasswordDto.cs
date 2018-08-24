@@ -3,7 +3,7 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity.Base;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity
 {
-    public class UserChangePasswordDto : BaseUserChangePasswordDto<int>
+    public class UserChangePasswordDto<TUserDtoKey> : BaseUserChangePasswordDto<TUserDtoKey>
     {        
         public string UserName { get; set; }
 

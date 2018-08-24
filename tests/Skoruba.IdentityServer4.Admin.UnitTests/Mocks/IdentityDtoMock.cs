@@ -4,11 +4,11 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 {
-    public class IdentityDtoMock
+    public class IdentityDtoMock<TKey, TClaimKey>
     {
-        public static Faker<UserDto> GetUserFaker(int id)
+        public static Faker<UserDto<TKey>> GetUserFaker(TKey id)
         {
-            var userFaker = new Faker<UserDto>()
+            var userFaker = new Faker<UserDto<TKey>>()
                 .RuleFor(o => o.Id, id)
                 .RuleFor(o => o.UserName, f => Guid.NewGuid().ToString())
                 .RuleFor(o => o.Email, f => f.Internet.Email())
@@ -23,18 +23,18 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             return userFaker;
         }
 
-        public static Faker<RoleDto> GetRoleFaker(int id)
+        public static Faker<RoleDto<TKey>> GetRoleFaker(TKey id)
         {
-            var roleFaker = new Faker<RoleDto>()
+            var roleFaker = new Faker<RoleDto<TKey>>()
                 .RuleFor(o => o.Id, id)
                 .RuleFor(o => o.Name, f => Guid.NewGuid().ToString());
 
             return roleFaker;
         }
 
-        public static Faker<UserChangePasswordDto> GetUserChangePasswordFaker(int id, string password)
+        public static Faker<UserChangePasswordDto<TKey>> GetUserChangePasswordFaker(TKey id, string password)
         {
-            var roleFaker = new Faker<UserChangePasswordDto>()
+            var roleFaker = new Faker<UserChangePasswordDto<TKey>>()
                 .RuleFor(o => o.UserId, id)
                 .RuleFor(o => o.Password, f => password)
                 .RuleFor(o => o.ConfirmPassword, f => password);
@@ -42,30 +42,30 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             return roleFaker;
         }
 
-        public static UserChangePasswordDto GenerateRandomUserChangePassword(int id, string password)
+        public static UserChangePasswordDto<TKey> GenerateRandomUserChangePassword(TKey id, string password)
         {
             var userChangePassword = GetUserChangePasswordFaker(id, password).Generate();
 
             return userChangePassword;
         }
 
-        public static UserDto GenerateRandomUser(int id)
+        public static UserDto<TKey> GenerateRandomUser(TKey id)
         {
             var user = GetUserFaker(id).Generate();
 
             return user;
         }
 
-        public static RoleDto GenerateRandomRole(int id)
+        public static RoleDto<TKey> GenerateRandomRole(TKey id)
         {
             var role = GetRoleFaker(id).Generate();
 
             return role;
         }
 
-        public static Faker<UserClaimsDto> GetUserClaimsFaker(int id, int userId)
+        public static Faker<UserClaimsDto<TKey, TClaimKey>> GetUserClaimsFaker(TClaimKey id, TKey userId)
         {
-            var userClaimFaker = new Faker<UserClaimsDto>()
+            var userClaimFaker = new Faker<UserClaimsDto<TKey, TClaimKey>>()
                 .RuleFor(o => o.ClaimId, id)
                 .RuleFor(o => o.ClaimType, f => Guid.NewGuid().ToString())
                 .RuleFor(o => o.ClaimValue, f => Guid.NewGuid().ToString())
@@ -74,32 +74,32 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             return userClaimFaker;
         }
 
-        public static UserClaimsDto GenerateRandomUserClaim(int id, int userId)
+        public static UserClaimsDto<TKey, TClaimKey> GenerateRandomUserClaim(TClaimKey id, TKey userId)
         {
             var userClaim = GetUserClaimsFaker(id, userId).Generate();
 
             return userClaim;
         }
 
-        public static Faker<UserRolesDto> GetUserRoleFaker(int id, int userId)
+        public static Faker<UserRolesDto<TRoleDto, TKey, TKey>> GetUserRoleFaker<TRoleDto>(TKey id, TKey userId)
         {
-            var userRoleFaker = new Faker<UserRolesDto>()
+            var userRoleFaker = new Faker<UserRolesDto<TRoleDto, TKey, TKey>>()
                 .RuleFor(o => o.RoleId, id)
                 .RuleFor(o => o.UserId, userId);
 
             return userRoleFaker;
         }
 
-        public static UserRolesDto GenerateRandomUserRole(int id, int userId)
+        public static UserRolesDto<TRoleDto, TKey, TKey> GenerateRandomUserRole<TRoleDto>(TKey id, TKey userId)
         {
-            var userRole = GetUserRoleFaker(id, userId).Generate();
+            var userRole = GetUserRoleFaker<TRoleDto>(id, userId).Generate();
 
             return userRole;
         }
 
-        public static Faker<UserProvidersDto> GetUserProvidersFaker(string key, string loginProvider, int userId)
+        public static Faker<UserProvidersDto<TKey>> GetUserProvidersFaker(string key, string loginProvider, TKey userId)
         {
-            var userProvidersFaker = new Faker<UserProvidersDto>()
+            var userProvidersFaker = new Faker<UserProvidersDto<TKey>>()
                 .RuleFor(o => o.LoginProvider, f => loginProvider)
                 .RuleFor(o => o.ProviderKey, f => key)
                 .RuleFor(o => o.ProviderDisplayName, f => Guid.NewGuid().ToString())
@@ -108,16 +108,16 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             return userProvidersFaker;
         }
 
-        public static UserProvidersDto GenerateRandomUserProviders(string key, string loginProvider, int userId)
+        public static UserProvidersDto<TKey> GenerateRandomUserProviders(string key, string loginProvider, TKey userId)
         {
             var provider = GetUserProvidersFaker(key, loginProvider, userId).Generate();
 
             return provider;
         }
 
-        public static Faker<RoleClaimsDto> GetRoleClaimFaker(int id, int roleId)
+        public static Faker<RoleClaimsDto<TKey, TKey>> GetRoleClaimFaker(TKey id, TKey roleId)
         {
-            var roleClaimFaker = new Faker<RoleClaimsDto>()
+            var roleClaimFaker = new Faker<RoleClaimsDto<TKey, TKey>>()
                 .RuleFor(o => o.ClaimType, f => Guid.NewGuid().ToString())
                 .RuleFor(o => o.ClaimValue, f => Guid.NewGuid().ToString())
                 .RuleFor(o => o.RoleId, roleId)
@@ -126,7 +126,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             return roleClaimFaker;
         }
 
-        public static RoleClaimsDto GenerateRandomRoleClaim(int id, int roleId)
+        public static RoleClaimsDto<TKey, TKey> GenerateRandomRoleClaim(TKey id, TKey roleId)
         {
             var roleClaim = GetRoleClaimFaker(id, roleId).Generate();
 

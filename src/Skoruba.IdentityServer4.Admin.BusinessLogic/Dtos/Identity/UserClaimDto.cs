@@ -3,7 +3,7 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity.Base;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity
 {
-    public class UserClaimDto : BaseUserClaimDto<int, int>
+    public class UserClaimDto<TUserDtoKey, TClaimDtoKey> : BaseUserClaimDto<TUserDtoKey, TClaimDtoKey>
     {
         [Required]
         public string ClaimType { get; set; }

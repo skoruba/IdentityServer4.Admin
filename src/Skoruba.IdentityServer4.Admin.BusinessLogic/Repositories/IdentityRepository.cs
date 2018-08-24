@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Enums;
@@ -15,57 +18,102 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 {
-    public class IdentityRepository : IIdentityRepository
+    public class IdentityRepository<TIdentityDbContext, TUserKey, TRoleKey, TClaimKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
+        : IIdentityRepository<TIdentityDbContext, TUserKey, TRoleKey, TClaimKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
+        where TIdentityDbContext : IdentityUserContext<TUser, TKey, TUserClaim, TUserLogin, TUserToken>
+        where TUser : IdentityUser<TKey> 
+        where TRole : IdentityRole<TKey> 
+        where TKey : IEquatable<TKey> 
+        where TUserClaim : IdentityUserClaim<TKey> 
+        where TUserRole : IdentityUserRole<TKey> 
+        where TUserLogin : IdentityUserLogin<TKey> 
+        where TRoleClaim : IdentityRoleClaim<TKey> 
+        where TUserToken : IdentityUserToken<TKey>
     {
-        private readonly AdminDbContext _dbContext;
-        private readonly UserManager<UserIdentity> _userManager;
-        private readonly RoleManager<UserIdentityRole> _roleManager;
+        private readonly TIdentityDbContext _dbContext;
+        private readonly UserManager<TUser> _userManager;
+        private readonly RoleManager<TRole> _roleManager;
+        private readonly IMapper _mapper;
 
         public bool AutoSaveChanges { get; set; } = true;
 
-        public IdentityRepository(AdminDbContext dbContext,
-            UserManager<UserIdentity> userManager,
-            RoleManager<UserIdentityRole> roleManager)
+        public IdentityRepository(TIdentityDbContext dbContext,
+            UserManager<TUser> userManager,
+            RoleManager<TRole> roleManager,
+            IMapper mapper)
         {
             _dbContext = dbContext;
             _userManager = userManager;
             _roleManager = roleManager;
+            _mapper = mapper;
         }
 
-        public Task<bool> ExistsUserAsync(int userId)
+        public virtual TUserKey ConvertUserKeyFromString(string id)
         {
-            return _dbContext.Users.AnyAsync(x => x.Id == userId);
+            if (id == null)
+            {
+                return default(TUserKey);
+            }
+            return (TUserKey)TypeDescriptor.GetConverter(typeof(TUserKey)).ConvertFromInvariantString(id);
         }
 
-        public Task<bool> ExistsRoleAsync(int roleId)
+        public virtual TClaimKey ConvertClaimKeyFromString(string id)
         {
-            return _dbContext.Roles.AnyAsync(x => x.Id == roleId);
+            if (id == null)
+            {
+                return default(TClaimKey);
+            }
+            return (TClaimKey)TypeDescriptor.GetConverter(typeof(TUserKey)).ConvertFromInvariantString(id);
         }
 
-        public async Task<PagedList<UserIdentity>> GetUsersAsync(string search, int page = 1, int pageSize = 10)
+        public virtual TRoleKey ConvertRoleKeyFromString(string id)
         {
-            var pagedList = new PagedList<UserIdentity>();
-            Expression<Func<UserIdentity, bool>> searchCondition = x => x.UserName.Contains(search) || x.Email.Contains(search);
+            if (id == null)
+            {
+                return default(TRoleKey);
+            }
+            return (TRoleKey)TypeDescriptor.GetConverter(typeof(TUserKey)).ConvertFromInvariantString(id);
+        }
 
-            var users = await _dbContext.Users.WhereIf(!string.IsNullOrEmpty(search), searchCondition).PageBy(x=> x.Id, page, pageSize).ToListAsync();
+        public Task<bool> ExistsUserAsync(string userId)
+        {
+            var id = ConvertUserKeyFromString(userId);
 
+            return _userManager.Users.AnyAsync(x => x.Id.Equals(id));
+        }
+
+        public Task<bool> ExistsRoleAsync(string roleId)
+        {
+            var id = ConvertRoleKeyFromString(roleId);
+            
+            return _roleManager.Roles.AnyAsync(x => x.Id.Equals(id));
+        }
+
+        public async Task<PagedList<TUser>> GetUsersAsync(string search, int page = 1, int pageSize = 10)
+        {
+            var pagedList = new PagedList<TUser>();
+            Expression<Func<TUser, bool>> searchCondition = x => x.UserName.Contains(search) || x.Email.Contains(search);
+            
+            var users = await _userManager.Users.WhereIf(!string.IsNullOrEmpty(search), searchCondition).PageBy(x=> x.Id, page, pageSize).ToListAsync();
+            
             pagedList.Data.AddRange(users);
-            pagedList.TotalCount = await _dbContext.Users.WhereIf(!string.IsNullOrEmpty(search), searchCondition).CountAsync();
+
+            pagedList.TotalCount = await _userManager.Users.WhereIf(!string.IsNullOrEmpty(search), searchCondition).CountAsync();
             pagedList.PageSize = pageSize;
             
             return pagedList;
         }
         
-        public Task<List<UserIdentityRole>> GetRolesAsync()
+        public Task<List<TRole>> GetRolesAsync()
         {
             return _roleManager.Roles.ToListAsync();
         }
 
-        public async Task<PagedList<UserIdentityRole>> GetRolesAsync(string search, int page = 1, int pageSize = 10)
+        public async Task<PagedList<TRole>> GetRolesAsync(string search, int page = 1, int pageSize = 10)
         {
-            var pagedList = new PagedList<UserIdentityRole>();
+            var pagedList = new PagedList<TRole>();
 
-            Expression<Func<UserIdentityRole, bool>> searchCondition = x=> x.Name.Contains(search);
+            Expression<Func<TRole, bool>> searchCondition = x=> x.Name.Contains(search);
             var roles = await _roleManager.Roles.WhereIf(!string.IsNullOrEmpty(search), searchCondition).PageBy(x=> x.Id, page, pageSize).ToListAsync();
 
             pagedList.Data.AddRange(roles);
@@ -75,17 +123,17 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             return pagedList;
         }
 
-        public Task<UserIdentityRole> GetRoleAsync(UserIdentityRole role)
+        public Task<TRole> GetRoleAsync(TRole role)
         {
-            return _roleManager.Roles.Where(x => x.Id == role.Id).SingleOrDefaultAsync();            
+            return _roleManager.Roles.Where(x => x.Id.Equals(role.Id)).SingleOrDefaultAsync();            
         }
 
-        public Task<IdentityResult> CreateRoleAsync(UserIdentityRole role)
+        public Task<IdentityResult> CreateRoleAsync(TRole role)
         {
             return _roleManager.CreateAsync(role);
         }
 
-        public async Task<IdentityResult> UpdateRoleAsync(UserIdentityRole role)
+        public async Task<IdentityResult> UpdateRoleAsync(TRole role)
         {
             var thisRole = await _roleManager.FindByIdAsync(role.Id.ToString());
             thisRole.Name = role.Name;
@@ -93,49 +141,50 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             return await _roleManager.UpdateAsync(thisRole);            
         }
 
-        public async Task<IdentityResult> DeleteRoleAsync(UserIdentityRole role)
+        public async Task<IdentityResult> DeleteRoleAsync(TRole role)
         {
             var thisRole = await _roleManager.FindByIdAsync(role.Id.ToString());
 
             return await _roleManager.DeleteAsync(thisRole);
         }
 
-        public Task<UserIdentity> GetUserAsync(UserIdentity user)
+        public Task<TUser> GetUserAsync(string userId)
         {
-            return _userManager.FindByIdAsync(user.Id.ToString());
+            return _userManager.FindByIdAsync(userId);
         }
 
-        public Task<IdentityResult> CreateUserAsync(UserIdentity user)
+        public Task<IdentityResult> CreateUserAsync(TUser user)
         {
             return _userManager.CreateAsync(user);            
         }
 
-        public async Task<IdentityResult> UpdateUserAsync(UserIdentity user)
+        public async Task<IdentityResult> UpdateUserAsync(TUser user)
         {
             var userIdentity = await _userManager.FindByIdAsync(user.Id.ToString());
             if (userIdentity == null) return IdentityResult.Failed(new IdentityError() { Description = "User doesn't exists" });
 
-            userIdentity.MapTo(user);
+            _mapper.Map(user, userIdentity);
 
             return await _userManager.UpdateAsync(userIdentity);            
         }
 
-        public async Task<IdentityResult> CreateUserRoleAsync(int userId, int roleId)
+        public async Task<IdentityResult> CreateUserRoleAsync(string userId, string roleId)
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString());
-            var selectRole = await _roleManager.FindByIdAsync(roleId.ToString());
+            var user = await _userManager.FindByIdAsync(userId);
+            var selectRole = await _roleManager.FindByIdAsync(roleId);
 
             return await _userManager.AddToRoleAsync(user, selectRole.Name);            
         }
 
-        public async Task<PagedList<UserIdentityRole>> GetUserRolesAsync(int userId, int page = 1, int pageSize = 10)
+        public async Task<PagedList<TRole>> GetUserRolesAsync(string userId, int page = 1, int pageSize = 10)
         {
-            var pagedList = new PagedList<UserIdentityRole>();
-            var roles = from r in _dbContext.Roles
-                               join ur in _dbContext.UserRoles on r.Id equals ur.RoleId
-                               where ur.UserId == userId
-                              
-                               select new UserIdentityRole { Id = r.Id, Name = r.Name };
+            var id = ConvertUserKeyFromString(userId);
+
+            var pagedList = new PagedList<TRole>();
+            var roles = from r in _dbContext.Set<TRole>()
+                        join ur in _dbContext.Set<TUserRole>() on r.Id equals ur.RoleId
+                               where ur.UserId.Equals(id)
+                               select r;
 
             var userIdentityRoles = await roles.PageBy(x=> x.Id, page, pageSize)
                 .ToListAsync();
@@ -147,116 +196,133 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             return pagedList;
         }
 
-        public async Task<IdentityResult> DeleteUserRoleAsync(int userId, int roleId)
+        public async Task<IdentityResult> DeleteUserRoleAsync(string userId, string roleId)
         {
-            var role = await _roleManager.FindByIdAsync(roleId.ToString());
-            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var role = await _roleManager.FindByIdAsync(roleId);
+            var user = await _userManager.FindByIdAsync(userId);
 
             return await _userManager.RemoveFromRoleAsync(user, role.Name);
         }
 
-        public async Task<PagedList<UserIdentityUserClaim>> GetUserClaimsAsync(int userId, int page, int pageSize)
+        public async Task<PagedList<TUserClaim>> GetUserClaimsAsync(string userId, int page, int pageSize)
         {
-            var pagedList = new PagedList<UserIdentityUserClaim>();
-            var claims = await _dbContext.UserClaims.Where(x => x.UserId == userId)
+            var id = ConvertUserKeyFromString(userId);
+            var pagedList = new PagedList<TUserClaim>();
+
+            var claims = await _dbContext.Set<TUserClaim>().Where(x => x.UserId.Equals(id))
                 .PageBy(x=> x.Id, page, pageSize)
                 .ToListAsync();
-
+            
             pagedList.Data.AddRange(claims);
-            pagedList.TotalCount = await _dbContext.UserClaims.Where(x => x.UserId == userId).CountAsync();
+            pagedList.TotalCount = await _dbContext.Set<TUserClaim>().Where(x => x.UserId.Equals(id)).CountAsync();
             pagedList.PageSize = pageSize;
 
             return pagedList;
         }
 
-        public async Task<PagedList<UserIdentityRoleClaim>> GetRoleClaimsAsync(int roleId, int page = 1, int pageSize = 10)
+        public async Task<PagedList<TRoleClaim>> GetRoleClaimsAsync(string roleId, int page = 1, int pageSize = 10)
         {
-            var pagedList = new PagedList<UserIdentityRoleClaim>();
-            var claims = await _dbContext.RoleClaims.Where(x => x.RoleId == roleId)
+            var id = ConvertRoleKeyFromString(roleId);
+            var pagedList = new PagedList<TRoleClaim>();
+            var claims = await _dbContext.Set<TRoleClaim>().Where(x => x.RoleId.Equals(id))
                 .PageBy(x => x.Id, page, pageSize)
                 .ToListAsync();
 
             pagedList.Data.AddRange(claims);
-            pagedList.TotalCount = await _dbContext.RoleClaims.Where(x => x.RoleId == roleId).CountAsync();
+            pagedList.TotalCount = await _dbContext.Set<TRoleClaim>().Where(x => x.RoleId.Equals(id)).CountAsync();
             pagedList.PageSize = pageSize;
 
             return pagedList;
         }
 
-        public Task<UserIdentityUserClaim> GetUserClaimAsync(int userId, int claimId)
+        public Task<TUserClaim> GetUserClaimAsync(string userId, string claimId)
         {
-            return _dbContext.UserClaims.Where(x => x.UserId == userId && x.Id == claimId)                
+            var userIdConverted = ConvertUserKeyFromString(userId);
+            var claimIdConverted = ConvertClaimKeyFromString(claimId);
+
+            return _dbContext.Set<TUserClaim>().Where(x => x.UserId.Equals(userIdConverted) && x.Id.Equals(claimIdConverted))
                 .SingleOrDefaultAsync();
         }
 
-        public Task<UserIdentityRoleClaim> GetRoleClaimAsync(int roleId, int claimId)
+        public Task<TRoleClaim> GetRoleClaimAsync(string roleId, string claimId)
         {
-            return _dbContext.RoleClaims.Where(x => x.RoleId == roleId && x.Id == claimId)                
+            var roleIdConverted = ConvertRoleKeyFromString(roleId);
+            var claimIdConverted = ConvertClaimKeyFromString(claimId);
+
+            return _dbContext.Set<TRoleClaim>().Where(x => x.RoleId.Equals(roleIdConverted) && x.Id.Equals(claimIdConverted))
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<IdentityResult> CreateUserClaimsAsync(UserIdentityUserClaim claims)
+        public async Task<IdentityResult> CreateUserClaimsAsync(TUserClaim claims)
         {
             var user = await _userManager.FindByIdAsync(claims.UserId.ToString());
             return await _userManager.AddClaimAsync(user, new Claim(claims.ClaimType, claims.ClaimValue));
         }
 
-        public async Task<IdentityResult> CreateRoleClaimsAsync(UserIdentityRoleClaim claims)
+        public async Task<IdentityResult> CreateRoleClaimsAsync(TRoleClaim claims)
         {
             var role = await _roleManager.FindByIdAsync(claims.RoleId.ToString());
             return await _roleManager.AddClaimAsync(role, new Claim(claims.ClaimType, claims.ClaimValue));
         }
 
-        public async Task<int> DeleteUserClaimsAsync(int userId, int claimId)
+        public async Task<int> DeleteUserClaimsAsync(string userId, string claimId)
         {
-            var userClaim = await _dbContext.UserClaims.Where(x => x.Id == claimId).SingleOrDefaultAsync();
+            var claimIdConverted = ConvertClaimKeyFromString(claimId);
+
+            var userClaim = await _dbContext.Set<TUserClaim>().Where(x => x.Id.Equals(claimIdConverted)).SingleOrDefaultAsync();
 
             _dbContext.UserClaims.Remove(userClaim);
 
             return await AutoSaveChangesAsync();
         }
 
-        public async Task<int> DeleteRoleClaimsAsync(int roleId, int claimId)
+        public async Task<int> DeleteRoleClaimsAsync(string roleId, string claimId)
         {
-            var roleClaim = await _dbContext.RoleClaims.Where(x => x.Id == claimId).SingleOrDefaultAsync();
+            var claimIdConverted = ConvertClaimKeyFromString(claimId);
 
-            _dbContext.RoleClaims.Remove(roleClaim);
+            var roleClaim = await _dbContext.Set<TRoleClaim>().Where(x => x.Id.Equals(claimIdConverted)).SingleOrDefaultAsync();
+
+            _dbContext.Set<TRoleClaim>().Remove(roleClaim);
 
             return await AutoSaveChangesAsync();
         }
 
-        public async Task<List<UserLoginInfo>> GetUserProvidersAsync(int userId)
+        public async Task<List<UserLoginInfo>> GetUserProvidersAsync(string userId)
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var user = await _userManager.FindByIdAsync(userId);
             var userLoginInfos = await _userManager.GetLoginsAsync(user);
 
             return userLoginInfos.ToList();
         }
 
-        public Task<UserIdentityUserLogin> GetUserProviderAsync(int userId, string providerKey)
+        public Task<TUserLogin> GetUserProviderAsync(string userId, string providerKey)
         {
-            return _dbContext.UserLogins.Where(x => x.UserId == userId && x.ProviderKey == providerKey)
+            var userIdConverted = ConvertUserKeyFromString(userId);
+
+            return _dbContext.Set<TUserLogin>().Where(x => x.UserId.Equals(userIdConverted) && x.ProviderKey == providerKey)
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<IdentityResult> DeleteUserProvidersAsync(int userId, string providerKey, string loginProvider)
+        public async Task<IdentityResult> DeleteUserProvidersAsync(string userId, string providerKey, string loginProvider)
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString());
-            var login = await _dbContext.UserLogins.Where(x => x.UserId == userId && x.ProviderKey == providerKey && x.LoginProvider == loginProvider).SingleOrDefaultAsync();
+            var userIdConverted = ConvertUserKeyFromString(userId);
+
+            var user = await _userManager.FindByIdAsync(userId);
+            var login = await _dbContext.Set<TUserLogin>().Where(x => x.UserId.Equals(userIdConverted) && x.ProviderKey == providerKey && x.LoginProvider == loginProvider).SingleOrDefaultAsync();
             return await _userManager.RemoveLoginAsync(user, login.LoginProvider, login.ProviderKey);            
         }
 
-        public async Task<IdentityResult> UserChangePasswordAsync(int userId, string password)
+        public async Task<IdentityResult> UserChangePasswordAsync(string userId, string password)
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var user = await _userManager.FindByIdAsync(userId);
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
             return await _userManager.ResetPasswordAsync(user, token, password);
         }
 
-        public async Task<IdentityResult> DeleteUserAsync(UserIdentity user)
+        public async Task<IdentityResult> DeleteUserAsync(string userId)
         {
-            var userIdentity = await _userManager.FindByIdAsync(user.Id.ToString());
+            var userIdentity = await _userManager.FindByIdAsync(userId);
 
             return await _userManager.DeleteAsync(userIdentity);
         }

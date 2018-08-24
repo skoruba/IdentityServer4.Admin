@@ -2,7 +2,7 @@
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity
 {
-    public class UserProviderDto : BaseUserProviderDto<int>
+    public class UserProviderDto<TUserDtoKey> : BaseUserProviderDto<TUserDtoKey>
     {
         public string ProviderKey { get; set; }
 
