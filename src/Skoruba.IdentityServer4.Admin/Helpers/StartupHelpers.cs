@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -33,6 +34,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Middlewares;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
+using Skoruba.IdentityServer4.Admin.Common.Settings;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -155,12 +157,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             }
         }
 
-        public static void AddAuthorizationPolicies(this IServiceCollection services)
+        public static void AddAuthorizationPolicies(this IServiceCollection services, IAdminAppSettings settings)
         {
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(AuthorizationConsts.AdministrationPolicy,
-                    policy => policy.RequireRole(AuthorizationConsts.AdministrationRole));
+                    policy => policy.RequireRole(settings.AdministrationRole));
             });
         }
 
@@ -221,85 +223,20 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 });
         }
 
-        public static void AddAuthentication(this IServiceCollection services, IHostingEnvironment hostingEnvironment)
+
+        public static IServiceCollection ConfigureSettingsRoot(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddIdentity<UserIdentity, UserIdentityRole>()
-                .AddEntityFrameworkStores<AdminDbContext>()
-                .AddDefaultTokenProviders();
+            // AddOptions - Dependency from Microsoft.Extensions.Options
+            services.AddOptions();
 
-            //For integration tests use only cookie middleware
-            if (hostingEnvironment.IsStaging())
-            {
-                services.AddAuthentication(options =>
-                {
-                    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            // Configure - Dependency from  Microsoft.Extensions.Options.ConfigurationExtensions
+            services.Configure<AdminAppSettings>(configuration.GetSection("AppSettings"));
+            services.Configure<LoggingSettings>(configuration.GetSection("SerilogLogging"));
+            // TBD:
+            //services.Configure<FeatureFlags>(configuration.GetSection("FeatureFlags"));
 
-                    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    options.DefaultForbidScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                })
-                    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-                        options => { options.Cookie.Name = AuthorizationConsts.IdentityAdminCookieName; });
-            }
-            else
-            {
-                services.AddAuthentication(options =>
-                {
-                    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = AuthorizationConsts.OidcAuthenticationScheme;
-
-                    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    options.DefaultForbidScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                })
-                    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-                        options => { options.Cookie.Name = AuthorizationConsts.IdentityAdminCookieName; })
-                    .AddOpenIdConnect(AuthorizationConsts.OidcAuthenticationScheme, options =>
-                    {
-                        options.Authority = AuthorizationConsts.IdentityServerBaseUrl;
-                        options.RequireHttpsMetadata = false;
-
-                        options.ClientId = AuthorizationConsts.OidcClientId;
-
-                        options.Scope.Clear();
-                        options.Scope.Add(AuthorizationConsts.ScopeOpenId);
-                        options.Scope.Add(AuthorizationConsts.ScopeProfile);
-                        options.Scope.Add(AuthorizationConsts.ScopeEmail);
-                        options.Scope.Add(AuthorizationConsts.ScopeRoles);
-
-                        options.SaveTokens = true;
-
-                        options.TokenValidationParameters = new TokenValidationParameters
-                        {
-                            NameClaimType = JwtClaimTypes.Name,
-                            RoleClaimType = JwtClaimTypes.Role,
-                        };
-
-                        options.Events = new OpenIdConnectEvents
-                        {
-                            OnMessageReceived = OnMessageReceived,
-                            OnRedirectToIdentityProvider = OnRedirectToIdentityProvider
-                        };
-                    });
-            }
-        }
-
-        private static Task OnMessageReceived(MessageReceivedContext context)
-        {
-            context.Properties.IsPersistent = true;
-            context.Properties.ExpiresUtc = new DateTimeOffset(DateTime.Now.AddHours(12));
-
-            return Task.FromResult(0);
-        }
-
-        private static Task OnRedirectToIdentityProvider(RedirectContext n)
-        {
-            n.ProtocolMessage.RedirectUri = AuthorizationConsts.IdentityAdminRedirectUri;
-
-            return Task.FromResult(0);
+            services.TryAddSingleton<ISettingsRoot, SettingsRoot>();
+            return services;
         }
     }
 }
