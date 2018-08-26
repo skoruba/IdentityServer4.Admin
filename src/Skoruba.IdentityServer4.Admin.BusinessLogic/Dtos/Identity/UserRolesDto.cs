@@ -5,6 +5,7 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity.Base;
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity
 {
     public class UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey> : BaseUserRolesDto<TUserDtoKey, TRoleDtoKey>
+        where TRoleDto : RoleDto<TRoleDtoKey>
     {
         public UserRolesDto()
         {
