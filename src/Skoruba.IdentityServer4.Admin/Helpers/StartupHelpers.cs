@@ -35,6 +35,7 @@ using Skoruba.IdentityServer4.Admin.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Middlewares;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
 using Skoruba.IdentityServer4.Admin.Common.Settings;
+using Skoruba.IdentityServer4.Admin.Setup;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -117,6 +118,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 app.UseMiddleware<AuthenticatedTestRequestMiddleware>();
             }
         }
+        public static void AddAuthentication(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IAdminAppSettings settings)
+        {
+            new AuthenticationSetup(services, hostingEnvironment, settings).AddAuthentication();
+        }
+
+
 
         public static void ConfigureLocalization(this IApplicationBuilder app)
         {
@@ -226,10 +233,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
         public static IServiceCollection ConfigureSettingsRoot(this IServiceCollection services, IConfiguration configuration)
         {
-            // AddOptions - Dependency from Microsoft.Extensions.Options
             services.AddOptions();
 
-            // Configure - Dependency from  Microsoft.Extensions.Options.ConfigurationExtensions
             services.Configure<AdminAppSettings>(configuration.GetSection("AppSettings"));
             services.Configure<LoggingSettings>(configuration.GetSection("SerilogLogging"));
             // TBD:

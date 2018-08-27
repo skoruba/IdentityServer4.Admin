@@ -45,8 +45,7 @@ namespace Skoruba.IdentityServer4.Admin
 
             services.AddDbContexts(HostingEnvironment, Configuration);
 
-            //services.AddAuthentication(HostingEnvironment);
-            new AuthenticationSetup(services, HostingEnvironment, settingsRoot.AppSettings).AddAuthentication();
+            services.AddAuthentication(HostingEnvironment, settingsRoot.AppSettings);
             services.AddAuthorizationPolicies(settingsRoot.AppSettings);
 
             services.AddServices();
@@ -56,7 +55,6 @@ namespace Skoruba.IdentityServer4.Admin
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-
 
             app.AddLogging(loggerFactory, Configuration);
 
