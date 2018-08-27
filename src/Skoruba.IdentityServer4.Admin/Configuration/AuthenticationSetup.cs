@@ -14,7 +14,7 @@ using Skoruba.IdentityServer4.Admin.Constants;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
 
-namespace Skoruba.IdentityServer4.Admin.Setup
+namespace Skoruba.IdentityServer4.Admin.Configuration
 {
     public class AuthenticationSetup
     {
@@ -29,7 +29,7 @@ namespace Skoruba.IdentityServer4.Admin.Setup
             _settings = settings;
         }
 
-        public  void AddAuthentication()
+        public void AddAuthentication()
         {
             _services.AddIdentity<UserIdentity, UserIdentityRole>()
                 .AddEntityFrameworkStores<AdminDbContext>()
@@ -95,7 +95,7 @@ namespace Skoruba.IdentityServer4.Admin.Setup
             }
         }
 
-        private  Task OnMessageReceived(MessageReceivedContext context)
+        private Task OnMessageReceived(MessageReceivedContext context)
         {
             context.Properties.IsPersistent = true;
             context.Properties.ExpiresUtc = new DateTimeOffset(DateTime.Now.AddHours(12));
@@ -103,7 +103,7 @@ namespace Skoruba.IdentityServer4.Admin.Setup
             return Task.FromResult(0);
         }
 
-        private  Task OnRedirectToIdentityProvider(RedirectContext n)
+        private Task OnRedirectToIdentityProvider(RedirectContext n)
         {
             n.ProtocolMessage.RedirectUri = _settings.IdentityAdminRedirectUri;
 

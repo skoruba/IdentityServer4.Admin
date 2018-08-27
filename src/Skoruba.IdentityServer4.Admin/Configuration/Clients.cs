@@ -2,7 +2,6 @@
 using IdentityServer4;
 using IdentityServer4.Models;
 using Skoruba.IdentityServer4.Admin.Common.Settings;
-using Skoruba.IdentityServer4.Admin.Constants;
 
 namespace Skoruba.IdentityServer4.Admin.Configuration
 
