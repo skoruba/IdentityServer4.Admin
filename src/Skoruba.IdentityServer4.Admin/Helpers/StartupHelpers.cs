@@ -28,6 +28,7 @@ using Skoruba.IdentityServer4.Admin.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Middlewares;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
 using Skoruba.IdentityServer4.Admin.Common.Settings;
+using Skoruba.IdentityServer4.Admin.Configuration;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -228,9 +229,6 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             services.AddOptions();
 
             services.Configure<AdminAppSettings>(configuration.GetSection("AppSettings"));
-            services.Configure<LoggingSettings>(configuration.GetSection("SerilogLogging"));
-            // TBD:
-            //services.Configure<FeatureFlags>(configuration.GetSection("FeatureFlags"));
 
             services.TryAddSingleton<ISettingsRoot, SettingsRoot>();
             return services;
