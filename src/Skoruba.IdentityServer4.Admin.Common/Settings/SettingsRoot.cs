@@ -4,16 +4,11 @@ namespace Skoruba.IdentityServer4.Admin.Common.Settings
 {
     public class SettingsRoot : ISettingsRoot
     {
-        public SettingsRoot(
-            IOptions<AdminAppSettings> appSettings,
-            IOptions<LoggingSettings> logging
-            )
+        public SettingsRoot(IOptions<AdminAppSettings> appSettings)
         {
             AppSettings = appSettings.Value;
-            Logging = logging.Value;
         }
 
         public IAdminAppSettings AppSettings { get; set; }
-        public ILoggingSettings Logging { get; set; }
     }
 }

@@ -3,6 +3,5 @@
     public interface ISettingsRoot
     {
         IAdminAppSettings AppSettings { get; }
-        ILoggingSettings Logging { get; }
     }
 }
