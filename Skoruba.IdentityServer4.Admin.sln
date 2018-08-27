@@ -19,6 +19,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Adm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.Common", "src\Skoruba.IdentityServer4.Admin.Common\Skoruba.IdentityServer4.Admin.Common.csproj", "{8B160EE4-5786-46AF-89E9-DF1742FAA6F1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "host", "host", "{D4D5B32A-8022-45F7-ACAA-278951D75285}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.AspNetIdentity", "src\Skoruba.IdentityServer4.AspNetIdentity\Skoruba.IdentityServer4.AspNetIdentity.csproj", "{7EE89812-36CE-4CC4-B25E-2C2621B7E6C8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4", "src\Skoruba.IdentityServer4\Skoruba.IdentityServer4.csproj", "{A0F0C82E-7C07-44EE-91FC-5B77C9110260}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +55,14 @@ Global
 		{8B160EE4-5786-46AF-89E9-DF1742FAA6F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B160EE4-5786-46AF-89E9-DF1742FAA6F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B160EE4-5786-46AF-89E9-DF1742FAA6F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EE89812-36CE-4CC4-B25E-2C2621B7E6C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EE89812-36CE-4CC4-B25E-2C2621B7E6C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EE89812-36CE-4CC4-B25E-2C2621B7E6C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EE89812-36CE-4CC4-B25E-2C2621B7E6C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0F0C82E-7C07-44EE-91FC-5B77C9110260}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0F0C82E-7C07-44EE-91FC-5B77C9110260}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0F0C82E-7C07-44EE-91FC-5B77C9110260}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0F0C82E-7C07-44EE-91FC-5B77C9110260}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +74,8 @@ Global
 		{D9F5B8B1-01F5-4996-8E75-A41532CF32CD} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
 		{491B30A8-D4A1-42E8-8DEE-4093E0E45C36} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
 		{8B160EE4-5786-46AF-89E9-DF1742FAA6F1} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
+		{7EE89812-36CE-4CC4-B25E-2C2621B7E6C8} = {D4D5B32A-8022-45F7-ACAA-278951D75285}
+		{A0F0C82E-7C07-44EE-91FC-5B77C9110260} = {D4D5B32A-8022-45F7-ACAA-278951D75285}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B3166EDE-037B-4C68-BEBA-5DE9C5E3DB82}
