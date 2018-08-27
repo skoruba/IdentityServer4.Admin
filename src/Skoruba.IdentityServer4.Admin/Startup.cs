@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Skoruba.IdentityServer4.Admin.Common.Settings;
 using Skoruba.IdentityServer4.Admin.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin
@@ -19,6 +20,8 @@ namespace Skoruba.IdentityServer4.Admin
                     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                     .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                     .AddEnvironmentVariables();
+
+
 
             if (env.IsDevelopment())
             {
@@ -36,15 +39,22 @@ namespace Skoruba.IdentityServer4.Admin
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureSettingsRoot(Configuration);
+            var settingsRoot = services.BuildServiceProvider().GetService<ISettingsRoot>();
+
             services.AddDbContexts(HostingEnvironment, Configuration);
-            services.AddAuthentication(HostingEnvironment);
+
+            services.AddAuthentication(HostingEnvironment, settingsRoot.AppSettings);
+            services.AddAuthorizationPolicies(settingsRoot.AppSettings);
+
             services.AddServices();
             services.AddMvcLocalization();
-            services.AddAuthorizationPolicies();
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+
             app.AddLogging(loggerFactory, Configuration);
 
             if (env.IsDevelopment())

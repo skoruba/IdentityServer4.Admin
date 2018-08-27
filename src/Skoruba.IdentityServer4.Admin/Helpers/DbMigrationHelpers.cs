@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Skoruba.IdentityServer4.Admin.Common.Settings;
 using Skoruba.IdentityServer4.Admin.Configuration;
-using Skoruba.IdentityServer4.Admin.Constants;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
 
@@ -38,10 +38,10 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 var context = scope.ServiceProvider.GetRequiredService<AdminDbContext>();
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<UserIdentity>>();
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<UserIdentityRole>>();
-
+                var settings = scope.ServiceProvider.GetRequiredService<ISettingsRoot>();
                 context.Database.Migrate();
-                await EnsureSeedIdentityServerData(context);
-                await EnsureSeedIdentityData(userManager, roleManager);
+                await EnsureSeedIdentityServerData(context, settings.AppSettings);
+                await EnsureSeedIdentityData(userManager, roleManager, settings.AppSettings);
             }
         }
 
@@ -49,12 +49,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// Generate default admin user / role
         /// </summary>
         private static async Task EnsureSeedIdentityData(UserManager<UserIdentity> userManager,
-            RoleManager<UserIdentityRole> roleManager)
+            RoleManager<UserIdentityRole> roleManager,IAdminAppSettings settings)
         {
             // Create admin role
-            if (!await roleManager.RoleExistsAsync(AuthorizationConsts.AdministrationRole))
+            if (!await roleManager.RoleExistsAsync(settings.AdministrationRole))
             {
-                var role = new UserIdentityRole { Name = AuthorizationConsts.AdministrationRole };
+                var role = new UserIdentityRole { Name = settings.AdministrationRole };
 
                 await roleManager.CreateAsync(role);
             }
@@ -73,18 +73,18 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
             if (result.Succeeded)
             {
-                await userManager.AddToRoleAsync(user, AuthorizationConsts.AdministrationRole);
+                await userManager.AddToRoleAsync(user, settings.AdministrationRole);
             }
         }
 
         /// <summary>
         /// Generate default clients, identity and api resources
         /// </summary>
-        private static async Task EnsureSeedIdentityServerData(AdminDbContext context)
+        private static async Task EnsureSeedIdentityServerData(AdminDbContext context,IAdminAppSettings settings)
         {
             if (!context.Clients.Any())
             {
-                foreach (var client in Clients.GetAdminClient().ToList())
+                foreach (var client in new Clients(settings).GetAdminClient().ToList())
                 {
                     await context.Clients.AddAsync(client.ToEntity());
                 }
