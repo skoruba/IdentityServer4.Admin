@@ -70,3 +70,5 @@ public string Properties { get; set; }
 ```
 
 and remove the `[Column]` attribute. As MySQL and MariaDB don't know about a XML data type.
+
+**Don't forget to update your connection string in appsettings.json and (re)generate migrations for new database**
