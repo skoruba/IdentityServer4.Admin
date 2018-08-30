@@ -1,8 +1,28 @@
-﻿@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common.Pager
+﻿@using Skoruba.IdentityServer4.Admin.Helpers
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common.Pager
+
+@{
+	var totalCount = PagerHelpers.GetTotalPages(Model.PageSize, Model.TotalCount);
+	var minPage = PagerHelpers.GetMinPageToRender(Model.MaxPages, totalCount, Context.Request.Query["page"]);
+	var maxPage = PagerHelpers.GetMaxPageToRender(Model.MaxPages, totalCount, Context.Request.Query["page"]);
+}
 
 <nav aria-label="Page navigation">
 	<ul class="pagination justify-content-center">
-		@for (var i = 1; i <= (int)Math.Ceiling((double)Model.TotalCount / Model.PageSize); i++)
+
+		@if (PagerHelpers.ShowLeftPagerButton(Model.MaxPages, totalCount, Context.Request.Query["page"]))
+		{
+			if (Model.EnableSearch)
+			{
+				<li class="page-item"><a class="page-link" asp-action="@Model.Action" asp-route-page="@(minPage - 1)" asp-route-search="@Model.Search">...</a></li>
+			}
+			else
+			{
+				<li class="page-item"><a class="page-link" asp-action="@Model.Action" asp-route-page="@(minPage - 1)">...</a></li>
+			}
+		}
+
+		@for (var i = minPage; i <= maxPage; i++)
 		{
 			if (Model.EnableSearch)
 			{
@@ -25,6 +45,18 @@
 				{
 					<li class="page-item"><a class="page-link" asp-action="@Model.Action" asp-route-page="@i">@i</a></li>
 				}
+			}
+		}
+
+		@if (PagerHelpers.ShowRightPagerButton(Model.MaxPages, totalCount, Context.Request.Query["page"]))
+		{
+			if (Model.EnableSearch)
+			{
+				<li class="page-item"><a class="page-link" asp-action="@Model.Action" asp-route-page="@(maxPage + 1)" asp-route-search="@Model.Search">...</a></li>
+			}
+			else
+			{
+				<li class="page-item"><a class="page-link" asp-action="@Model.Action" asp-route-page="@(maxPage + 1)">...</a></li>
 			}
 		}
 	</ul>
