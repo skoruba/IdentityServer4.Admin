@@ -1,6 +1,7 @@
-﻿@using Skoruba.IdentityServer4.Admin.Helpers
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.Helpers
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common.Pager
-
+@inject IViewLocalizer Localizer
 @{
 	var currentPage = PagerHelpers.GetCurrentPage(Context.Request.Query["page"]);
 	var totalCount = PagerHelpers.GetTotalPages(Model.PageSize, Model.TotalCount);
@@ -12,6 +13,15 @@
 {
 	<nav aria-label="Page navigation">
 		<ul class="pagination justify-content-center">
+
+			@if (Model.EnableSearch)
+			{
+				<li class="page-item"><a class="page-link" asp-action="@Model.Action" asp-route-page="1" asp-route-search="@Model.Search">@Localizer["FirstButtonText"]</a></li>
+			}
+			else
+			{
+				<li class="page-item"><a class="page-link" asp-action="@Model.Action" asp-route-page="1">@Localizer["FirstButtonText"]</a></li>
+			}
 
 			@if (PagerHelpers.ShowLeftPagerButton(Model.MaxPages, totalCount, currentPage))
 			{
@@ -61,6 +71,15 @@
 				{
 					<li class="page-item"><a class="page-link" asp-action="@Model.Action" asp-route-page="@(maxPage + 1)">...</a></li>
 				}
+			}
+
+			@if (Model.EnableSearch)
+			{
+				<li class="page-item"><a class="page-link" asp-action="@Model.Action" asp-route-page="@totalCount" asp-route-search="@Model.Search">@Localizer["LastButtonText"]</a></li>
+			}
+			else
+			{
+				<li class="page-item"><a class="page-link" asp-action="@Model.Action" asp-route-page="@totalCount">@Localizer["LastButtonText"]</a></li>
 			}
 		</ul>
 	</nav>
