@@ -4,7 +4,9 @@ using FluentAssertions;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Xunit;
 
@@ -28,13 +30,19 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         private readonly ConfigurationStoreOptions _storeOptions;
         private readonly OperationalStoreOptions _operationalStore;
 
+        private IPersistedGrantRepository<AdminDbContext, UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> GetPersistedGrantRepository(AdminDbContext context)
+        {
+            var persistedGrantRepository = new PersistedGrantRepository<AdminDbContext, UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>(context);
+
+            return persistedGrantRepository;
+        }
 
         [Fact]
         public async Task GetPersitedGrantAsync()
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                var persistedGrantRepository = new PersistedGrantRepository(context);
+                var persistedGrantRepository = GetPersistedGrantRepository(context);
 
                 //Generate persisted grant
                 var persistedGrantKey = Guid.NewGuid().ToString();
@@ -57,7 +65,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                var persistedGrantRepository = new PersistedGrantRepository(context);
+                var persistedGrantRepository = GetPersistedGrantRepository(context);
 
                 //Generate persisted grant
                 var persistedGrantKey = Guid.NewGuid().ToString();
@@ -82,7 +90,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                var persistedGrantRepository = new PersistedGrantRepository(context);
+                var persistedGrantRepository = GetPersistedGrantRepository(context);
 
                 var subjectId = 1;
 

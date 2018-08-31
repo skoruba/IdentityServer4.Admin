@@ -5,17 +5,17 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
 
-namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
+namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces
 {
 	public interface IIdentityRepository<TIdentityDbContext, TUserKey, TRoleKey, TClaimKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
-	    where TIdentityDbContext : IdentityUserContext<TUser, TKey, TUserClaim, TUserLogin, TUserToken>
-        where TUser : IdentityUser<TKey> 
-	    where TRole : IdentityRole<TKey> 
-	    where TKey : IEquatable<TKey> 
-	    where TUserClaim : IdentityUserClaim<TKey> 
-	    where TUserRole : IdentityUserRole<TKey> 
-	    where TUserLogin : IdentityUserLogin<TKey> 
-	    where TRoleClaim : IdentityRoleClaim<TKey> 
+	    where TIdentityDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
+	    where TUser : IdentityUser<TKey>
+	    where TRole : IdentityRole<TKey>
+	    where TKey : IEquatable<TKey>
+	    where TUserClaim : IdentityUserClaim<TKey>
+	    where TUserRole : IdentityUserRole<TKey>
+	    where TUserLogin : IdentityUserLogin<TKey>
+	    where TRoleClaim : IdentityRoleClaim<TKey>
 	    where TUserToken : IdentityUserToken<TKey>
     {
         Task<bool> ExistsUserAsync(string userId);

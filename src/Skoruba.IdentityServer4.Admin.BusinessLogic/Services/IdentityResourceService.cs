@@ -1,19 +1,23 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 {
-    public class IdentityResourceService : IIdentityResourceService
+    public class IdentityResourceService<TDbContext> : IIdentityResourceService<TDbContext>
+        where TDbContext : DbContext, IAdminConfigurationDbContext
     {
-        private readonly IIdentityResourceRepository _identityResourceRepository;
+        private readonly IIdentityResourceRepository<TDbContext> _identityResourceRepository;
         private readonly IIdentityResourceServiceResources _identityResourceServiceResources;
 
-        public IdentityResourceService(IIdentityResourceRepository identityResourceRepository,
+        public IdentityResourceService(IIdentityResourceRepository<TDbContext> identityResourceRepository,
             IIdentityResourceServiceResources identityResourceServiceResources)
         {
             _identityResourceRepository = identityResourceRepository;

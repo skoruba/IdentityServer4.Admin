@@ -10,17 +10,20 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Constants;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Enums;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Client = IdentityServer4.EntityFramework.Entities.Client;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 {
-    public class ClientRepository : IClientRepository
+    public class ClientRepository<TDbContext> : IClientRepository<TDbContext>
+    where TDbContext : DbContext, IAdminConfigurationDbContext
     {
-        private readonly AdminDbContext _dbContext;
+        private readonly TDbContext _dbContext;
         public bool AutoSaveChanges { get; set; } = true;
 
-        public ClientRepository(AdminDbContext dbContext)
+        public ClientRepository(TDbContext dbContext)
         {
             _dbContext = dbContext;
         }

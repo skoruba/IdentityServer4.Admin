@@ -8,11 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Constants;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts
 {
     public class AdminDbContext : IdentityDbContext<UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>,
-        IConfigurationDbContext, IPersistedGrantDbContext
+        IAdminConfigurationDbContext, IAdminLogDbContext, IAdminPersistedGrantIdentityDbContext
     {
         private readonly ConfigurationStoreOptions _storeOptions;
         private readonly OperationalStoreOptions _operationalOptions;
@@ -25,7 +26,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts
             _storeOptions = storeOptions;
             _operationalOptions = operationalOptions;
         }
-
+        
         public DbSet<ApiResource> ApiResources { get; set; }
 
         public DbSet<IdentityResource> IdentityResources { get; set; }

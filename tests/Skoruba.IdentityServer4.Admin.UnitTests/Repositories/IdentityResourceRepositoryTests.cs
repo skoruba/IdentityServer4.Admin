@@ -5,6 +5,7 @@ using FluentAssertions;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Xunit;
@@ -16,6 +17,13 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         private readonly DbContextOptions<AdminDbContext> _dbContextOptions;
         private readonly ConfigurationStoreOptions _storeOptions;
         private readonly OperationalStoreOptions _operationalStore;
+
+        private IIdentityResourceRepository<AdminDbContext> GetIdentityResourceRepository(AdminDbContext context)
+        {
+            IIdentityResourceRepository<AdminDbContext> identityResourceRepository = new IdentityResourceRepository<AdminDbContext>(context);
+
+            return identityResourceRepository;
+        }
 
         public IdentityResourceRepositoryTests()
         {
@@ -34,7 +42,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IIdentityResourceRepository identityResourceRepository = new IdentityResourceRepository(context);
+                var identityResourceRepository = GetIdentityResourceRepository(context);
 
                 //Generate random new identity resource
                 var identityResource = IdentityResourceMock.GenerateRandomIdentityResource(0);
@@ -55,7 +63,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IIdentityResourceRepository identityResourceRepository = new IdentityResourceRepository(context);
+                var identityResourceRepository = GetIdentityResourceRepository(context);
 
                 //Generate random new identity resource
                 var identityResource = IdentityResourceMock.GenerateRandomIdentityResource(0);
@@ -76,7 +84,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IIdentityResourceRepository identityResourceRepository = new IdentityResourceRepository(context);
+                var identityResourceRepository = GetIdentityResourceRepository(context);
 
                 //Generate random new identity resource
                 var identityResource = IdentityResourceMock.GenerateRandomIdentityResource(0);
@@ -106,7 +114,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IIdentityResourceRepository identityResourceRepository = new IdentityResourceRepository(context);
+                var identityResourceRepository = GetIdentityResourceRepository(context);
 
                 //Generate random new identity resource
                 var identityResource = IdentityResourceMock.GenerateRandomIdentityResource(0);

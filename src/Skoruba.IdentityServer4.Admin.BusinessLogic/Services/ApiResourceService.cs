@@ -1,25 +1,29 @@
 ﻿using System.Threading.Tasks;
 using IdentityServer4.Models;
+using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 {
-    public class ApiResourceService : IApiResourceService
+    public class ApiResourceService<TDbContext> : IApiResourceService<TDbContext> 
+        where TDbContext : DbContext, IAdminConfigurationDbContext
     {
-        private readonly IApiResourceRepository _apiResourceRepository;
+        private readonly IApiResourceRepository<TDbContext> _apiResourceRepository;
         private readonly IApiResourceServiceResources _apiResourceServiceResources;
-        private readonly IClientService _clientService;
+        private readonly IClientService<TDbContext> _clientService;
         private const string SharedSecret = "SharedSecret";
 
-        public ApiResourceService(IApiResourceRepository apiResourceRepository,
+        public ApiResourceService(IApiResourceRepository<TDbContext> apiResourceRepository,
             IApiResourceServiceResources apiResourceServiceResources,
-            IClientService clientService)
+            IClientService<TDbContext> clientService)
         {
             _apiResourceRepository = apiResourceRepository;
             _apiResourceServiceResources = apiResourceServiceResources;

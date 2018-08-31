@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Entities;
+using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
-namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
+namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces
 {
-	public interface IClientRepository
-	{
+	public interface IClientRepository<TDbContext> where TDbContext : DbContext, IAdminConfigurationDbContext
+    {
 		Task<int> AddClientAsync(Client client);
 
 		Task<int> UpdateClientAsync(Client client);
