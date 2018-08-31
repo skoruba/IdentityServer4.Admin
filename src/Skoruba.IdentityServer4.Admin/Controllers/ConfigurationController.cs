@@ -6,7 +6,9 @@ using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.Constants;
+using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.ExceptionHandling;
 
 namespace Skoruba.IdentityServer4.Admin.Controllers
@@ -15,14 +17,14 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
     public class ConfigurationController : BaseController
     {
-        private readonly IIdentityResourceService _identityResourceService;
-        private readonly IApiResourceService _apiResourceService;
-        private readonly IClientService _clientService;
+        private readonly IIdentityResourceService<AdminDbContext> _identityResourceService;
+        private readonly IApiResourceService<AdminDbContext> _apiResourceService;
+        private readonly IClientService<AdminDbContext> _clientService;
         private readonly IStringLocalizer<ConfigurationController> _localizer;
 
-        public ConfigurationController(IIdentityResourceService identityResourceService,
-            IApiResourceService apiResourceService,
-            IClientService clientService,
+        public ConfigurationController(IIdentityResourceService<AdminDbContext> identityResourceService,
+            IApiResourceService<AdminDbContext> apiResourceService,
+            IClientService<AdminDbContext> clientService,
             IStringLocalizer<ConfigurationController> localizer,
             ILogger<ConfigurationController> logger)
             : base(logger)

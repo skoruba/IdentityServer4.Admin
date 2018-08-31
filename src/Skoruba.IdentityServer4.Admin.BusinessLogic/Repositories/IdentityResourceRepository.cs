@@ -7,17 +7,19 @@ using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Enums;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
-using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 {
-    public class IdentityResourceRepository : IIdentityResourceRepository
+    public class IdentityResourceRepository<TDbContext> : IIdentityResourceRepository<TDbContext>
+        where TDbContext : DbContext, IAdminConfigurationDbContext
     {
-        private readonly AdminDbContext _dbContext;
+        private readonly TDbContext _dbContext;
 
         public bool AutoSaveChanges { get; set; } = true;
 
-        public IdentityResourceRepository(AdminDbContext dbContext)
+        public IdentityResourceRepository(TDbContext dbContext)
         {
             _dbContext = dbContext;
         }

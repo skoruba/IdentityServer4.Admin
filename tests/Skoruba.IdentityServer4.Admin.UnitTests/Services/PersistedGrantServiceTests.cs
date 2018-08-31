@@ -6,9 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Moq;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Xunit;
 
@@ -32,17 +35,35 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         private readonly ConfigurationStoreOptions _storeOptions;
         private readonly OperationalStoreOptions _operationalStore;
 
+        private IPersistedGrantRepository<AdminDbContext, UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> GetPersistedGrantRepository(AdminDbContext context)
+        {
+            var persistedGrantRepository = new PersistedGrantRepository<AdminDbContext, UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>(context);
+
+            return persistedGrantRepository;
+        }
+
+        private IPersistedGrantService<AdminDbContext, UserIdentity, UserIdentityRole, int, UserIdentityUserClaim,
+                UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>
+            GetPersistedGrantService(IPersistedGrantRepository<AdminDbContext, UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> repository, IPersistedGrantServiceResources persistedGrantServiceResources)
+        {
+            var persistedGrantService = new PersistedGrantService<AdminDbContext, UserIdentity, UserIdentityRole, int, UserIdentityUserClaim,
+                UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>(repository,
+                persistedGrantServiceResources);
+
+            return persistedGrantService;
+        }
+
         [Fact]
         public async Task GetPersitedGrantAsync()
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IPersistedGrantRepository persistedGrantRepository = new PersistedGrantRepository(context);
+                var persistedGrantRepository = GetPersistedGrantRepository(context);
 
                 var localizerMock = new Mock<IPersistedGrantServiceResources>();
                 var localizer = localizerMock.Object;
 
-                var persistedGrantService = new PersistedGrantService(persistedGrantRepository, localizer);
+                var persistedGrantService = GetPersistedGrantService(persistedGrantRepository, localizer);
 
                 //Generate persisted grant
                 var persistedGrantKey = Guid.NewGuid().ToString();
@@ -65,12 +86,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IPersistedGrantRepository persistedGrantRepository = new PersistedGrantRepository(context);
+                var persistedGrantRepository = GetPersistedGrantRepository(context);
 
                 var localizerMock = new Mock<IPersistedGrantServiceResources>();
                 var localizer = localizerMock.Object;
 
-                var persistedGrantService = new PersistedGrantService(persistedGrantRepository, localizer);
+                var persistedGrantService = GetPersistedGrantService(persistedGrantRepository, localizer);
 
                 //Generate persisted grant
                 var persistedGrantKey = Guid.NewGuid().ToString();
@@ -95,12 +116,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IPersistedGrantRepository persistedGrantRepository = new PersistedGrantRepository(context);
+                var persistedGrantRepository = GetPersistedGrantRepository(context);
 
                 var localizerMock = new Mock<IPersistedGrantServiceResources>();
                 var localizer = localizerMock.Object;
 
-                var persistedGrantService = new PersistedGrantService(persistedGrantRepository, localizer);
+                var persistedGrantService = GetPersistedGrantService(persistedGrantRepository, localizer);
 
                 const int subjectId = 1;
 

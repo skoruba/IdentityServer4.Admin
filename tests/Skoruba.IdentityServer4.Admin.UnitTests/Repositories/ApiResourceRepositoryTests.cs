@@ -5,6 +5,7 @@ using FluentAssertions;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Xunit;
@@ -29,12 +30,20 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
             _operationalStore = new OperationalStoreOptions();
         }
 
+        private IApiResourceRepository<AdminDbContext> GetApiResourceRepository(AdminDbContext context)
+        {
+            IApiResourceRepository<AdminDbContext> apiResourceRepository = new ApiResourceRepository<AdminDbContext>(context);
+
+            return apiResourceRepository;
+        }
+
+
         [Fact]
         public async Task AddApiResourceAsync()
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
+                var apiResourceRepository = GetApiResourceRepository(context);
 
                 //Generate random new api resource
                 var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
@@ -55,7 +64,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
+                var apiResourceRepository = GetApiResourceRepository(context);
 
                 //Generate random new api resource
                 var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
@@ -76,7 +85,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
+                var apiResourceRepository = GetApiResourceRepository(context);
 
                 //Generate random new api resource
                 var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
@@ -106,7 +115,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
+                var apiResourceRepository = GetApiResourceRepository(context);
 
                 //Generate random new api resource
                 var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
@@ -142,7 +151,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
+                var apiResourceRepository = GetApiResourceRepository(context);
 
                 //Generate random new api resource
                 var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
@@ -169,7 +178,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
+                var apiResourceRepository = GetApiResourceRepository(context);
 
                 //Generate random new api resource
                 var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
@@ -214,7 +223,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
+                var apiResourceRepository = GetApiResourceRepository(context);
 
                 //Generate random new api resource
                 var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
@@ -250,7 +259,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
+                var apiResourceRepository = GetApiResourceRepository(context);
 
                 //Generate random new api resource
                 var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
@@ -277,7 +286,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
+                var apiResourceRepository = GetApiResourceRepository(context);
 
                 //Generate random new api resource
                 var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
@@ -304,7 +313,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
+                var apiResourceRepository = GetApiResourceRepository(context);
 
                 //Generate random new api resource
                 var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
@@ -340,7 +349,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
+                var apiResourceRepository = GetApiResourceRepository(context);
 
                 //Generate random new api resource
                 var apiResource = ApiResourceMock.GenerateRandomApiResource(0);

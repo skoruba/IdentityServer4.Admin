@@ -9,6 +9,9 @@ using Skoruba.IdentityServer4.Admin.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Grant;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.Controllers
 {
@@ -16,10 +19,10 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
     public class GrantController : BaseController
     {
-        private readonly IPersistedGrantService _persistedGrantService;
+        private readonly IPersistedGrantService<AdminDbContext, UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> _persistedGrantService;
         private readonly IStringLocalizer<GrantController> _localizer;
 
-        public GrantController(IPersistedGrantService persistedGrantService,
+        public GrantController(IPersistedGrantService<AdminDbContext, UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> persistedGrantService,
             ILogger<ConfigurationController> logger,
             IStringLocalizer<GrantController> localizer) : base(logger)
         {

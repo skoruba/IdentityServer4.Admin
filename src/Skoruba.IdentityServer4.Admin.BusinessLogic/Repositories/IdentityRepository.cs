@@ -12,15 +12,13 @@ using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Enums;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
-using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 {
     public class IdentityRepository<TIdentityDbContext, TUserKey, TRoleKey, TClaimKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
         : IIdentityRepository<TIdentityDbContext, TUserKey, TRoleKey, TClaimKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
-        where TIdentityDbContext : IdentityUserContext<TUser, TKey, TUserClaim, TUserLogin, TUserToken>
+        where TIdentityDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> 
         where TUser : IdentityUser<TKey> 
         where TRole : IdentityRole<TKey> 
         where TKey : IEquatable<TKey> 
@@ -85,7 +83,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
         public Task<bool> ExistsRoleAsync(string roleId)
         {
             var id = ConvertRoleKeyFromString(roleId);
-            
+
             return _roleManager.Roles.AnyAsync(x => x.Id.Equals(id));
         }
 
@@ -93,17 +91,17 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
         {
             var pagedList = new PagedList<TUser>();
             Expression<Func<TUser, bool>> searchCondition = x => x.UserName.Contains(search) || x.Email.Contains(search);
-            
-            var users = await _userManager.Users.WhereIf(!string.IsNullOrEmpty(search), searchCondition).PageBy(x=> x.Id, page, pageSize).ToListAsync();
-            
+
+            var users = await _userManager.Users.WhereIf(!string.IsNullOrEmpty(search), searchCondition).PageBy(x => x.Id, page, pageSize).ToListAsync();
+
             pagedList.Data.AddRange(users);
 
             pagedList.TotalCount = await _userManager.Users.WhereIf(!string.IsNullOrEmpty(search), searchCondition).CountAsync();
             pagedList.PageSize = pageSize;
-            
+
             return pagedList;
         }
-        
+
         public Task<List<TRole>> GetRolesAsync()
         {
             return _roleManager.Roles.ToListAsync();
@@ -113,19 +111,19 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
         {
             var pagedList = new PagedList<TRole>();
 
-            Expression<Func<TRole, bool>> searchCondition = x=> x.Name.Contains(search);
-            var roles = await _roleManager.Roles.WhereIf(!string.IsNullOrEmpty(search), searchCondition).PageBy(x=> x.Id, page, pageSize).ToListAsync();
+            Expression<Func<TRole, bool>> searchCondition = x => x.Name.Contains(search);
+            var roles = await _roleManager.Roles.WhereIf(!string.IsNullOrEmpty(search), searchCondition).PageBy(x => x.Id, page, pageSize).ToListAsync();
 
             pagedList.Data.AddRange(roles);
             pagedList.TotalCount = await _roleManager.Roles.WhereIf(!string.IsNullOrEmpty(search), searchCondition).CountAsync();
             pagedList.PageSize = pageSize;
-            
+
             return pagedList;
         }
 
         public Task<TRole> GetRoleAsync(TRole role)
         {
-            return _roleManager.Roles.Where(x => x.Id.Equals(role.Id)).SingleOrDefaultAsync();            
+            return _roleManager.Roles.Where(x => x.Id.Equals(role.Id)).SingleOrDefaultAsync();
         }
 
         public Task<IdentityResult> CreateRoleAsync(TRole role)
@@ -138,7 +136,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             var thisRole = await _roleManager.FindByIdAsync(role.Id.ToString());
             thisRole.Name = role.Name;
 
-            return await _roleManager.UpdateAsync(thisRole);            
+            return await _roleManager.UpdateAsync(thisRole);
         }
 
         public async Task<IdentityResult> DeleteRoleAsync(TRole role)
@@ -155,7 +153,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 
         public Task<IdentityResult> CreateUserAsync(TUser user)
         {
-            return _userManager.CreateAsync(user);            
+            return _userManager.CreateAsync(user);
         }
 
         public async Task<IdentityResult> UpdateUserAsync(TUser user)
@@ -165,7 +163,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 
             _mapper.Map(user, userIdentity);
 
-            return await _userManager.UpdateAsync(userIdentity);            
+            return await _userManager.UpdateAsync(userIdentity);
         }
 
         public async Task<IdentityResult> CreateUserRoleAsync(string userId, string roleId)
@@ -173,7 +171,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             var user = await _userManager.FindByIdAsync(userId);
             var selectRole = await _roleManager.FindByIdAsync(roleId);
 
-            return await _userManager.AddToRoleAsync(user, selectRole.Name);            
+            return await _userManager.AddToRoleAsync(user, selectRole.Name);
         }
 
         public async Task<PagedList<TRole>> GetUserRolesAsync(string userId, int page = 1, int pageSize = 10)
@@ -183,10 +181,10 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             var pagedList = new PagedList<TRole>();
             var roles = from r in _dbContext.Set<TRole>()
                         join ur in _dbContext.Set<TUserRole>() on r.Id equals ur.RoleId
-                               where ur.UserId.Equals(id)
-                               select r;
+                        where ur.UserId.Equals(id)
+                        select r;
 
-            var userIdentityRoles = await roles.PageBy(x=> x.Id, page, pageSize)
+            var userIdentityRoles = await roles.PageBy(x => x.Id, page, pageSize)
                 .ToListAsync();
 
             pagedList.Data.AddRange(userIdentityRoles);
@@ -210,9 +208,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             var pagedList = new PagedList<TUserClaim>();
 
             var claims = await _dbContext.Set<TUserClaim>().Where(x => x.UserId.Equals(id))
-                .PageBy(x=> x.Id, page, pageSize)
+                .PageBy(x => x.Id, page, pageSize)
                 .ToListAsync();
-            
+
             pagedList.Data.AddRange(claims);
             pagedList.TotalCount = await _dbContext.Set<TUserClaim>().Where(x => x.UserId.Equals(id)).CountAsync();
             pagedList.PageSize = pageSize;
@@ -309,7 +307,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 
             var user = await _userManager.FindByIdAsync(userId);
             var login = await _dbContext.Set<TUserLogin>().Where(x => x.UserId.Equals(userIdConverted) && x.ProviderKey == providerKey && x.LoginProvider == loginProvider).SingleOrDefaultAsync();
-            return await _userManager.RemoveLoginAsync(user, login.LoginProvider, login.ProviderKey);            
+            return await _userManager.RemoveLoginAsync(user, login.LoginProvider, login.ProviderKey);
         }
 
         public async Task<IdentityResult> UserChangePasswordAsync(string userId, string password)

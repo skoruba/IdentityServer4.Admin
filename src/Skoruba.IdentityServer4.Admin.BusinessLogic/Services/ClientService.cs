@@ -2,24 +2,28 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using IdentityServer4.Models;
+using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Enums;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 {
-    public class ClientService : IClientService
+    public class ClientService<TDbContext> : IClientService<TDbContext> 
+        where TDbContext : DbContext, IAdminConfigurationDbContext
     {
-        private readonly IClientRepository _clientRepository;
+        private readonly IClientRepository<TDbContext> _clientRepository;
         private readonly IClientServiceResources _clientServiceResources;
         private const string SharedSecret = "SharedSecret";
 
-        public ClientService(IClientRepository clientRepository, IClientServiceResources clientServiceResources)
+        public ClientService(IClientRepository<TDbContext> clientRepository, IClientServiceResources clientServiceResources)
         {
             _clientRepository = clientRepository;
             _clientServiceResources = clientServiceResources;
