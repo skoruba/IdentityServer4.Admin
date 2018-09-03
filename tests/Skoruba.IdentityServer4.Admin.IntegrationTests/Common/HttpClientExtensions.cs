@@ -1,5 +1,5 @@
 ﻿using System.Net.Http;
-using Skoruba.IdentityServer4.Admin.Constants;
+using Skoruba.IdentityServer4.Admin.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.Middlewares;
 
 namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Common
