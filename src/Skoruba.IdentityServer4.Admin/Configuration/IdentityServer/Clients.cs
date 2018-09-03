@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using IdentityServer4;
 using IdentityServer4.Models;
-using Skoruba.IdentityServer4.Admin.Constants;
+using Skoruba.IdentityServer4.Admin.Configuration.Constants;
+using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 
-namespace Skoruba.IdentityServer4.Admin.Configuration
+namespace Skoruba.IdentityServer4.Admin.Configuration.IdentityServer
 
 {
     public class Clients
     {
 
-        public static IEnumerable<Client> GetAdminClient()
+        public static IEnumerable<Client> GetAdminClient(IAdminConfiguration adminConfiguration)
         {
 
             return new List<Client>
@@ -21,17 +22,17 @@ namespace Skoruba.IdentityServer4.Admin.Configuration
 	            new Client
                 {
 
-                    ClientId = AuthorizationConsts.OidcClientId,
-                    ClientName = AuthorizationConsts.OidcClientId,
-                    ClientUri = AuthorizationConsts.IdentityAdminBaseUrl,
+                    ClientId = AuthenticationConsts.OidcClientId,
+                    ClientName = AuthenticationConsts.OidcClientId,
+                    ClientUri = adminConfiguration.IdentityAdminBaseUrl,
 
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
 
-                    RedirectUris = { $"{AuthorizationConsts.IdentityAdminBaseUrl}/signin-oidc"},
-                    FrontChannelLogoutUri = $"{AuthorizationConsts.IdentityAdminBaseUrl}/signout-oidc",
-                    PostLogoutRedirectUris = { $"{AuthorizationConsts.IdentityAdminBaseUrl}/signout-callback-oidc"},
-                    AllowedCorsOrigins = { AuthorizationConsts.IdentityAdminBaseUrl },
+                    RedirectUris = { $"{adminConfiguration.IdentityAdminBaseUrl}/signin-oidc"},
+                    FrontChannelLogoutUri = $"{adminConfiguration.IdentityAdminBaseUrl}/signout-oidc",
+                    PostLogoutRedirectUris = { $"{adminConfiguration.IdentityAdminBaseUrl}/signout-callback-oidc"},
+                    AllowedCorsOrigins = { adminConfiguration.IdentityAdminBaseUrl },
 
                     AllowedScopes =
                     {

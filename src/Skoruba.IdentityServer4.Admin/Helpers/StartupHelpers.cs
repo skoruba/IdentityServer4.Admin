@@ -18,22 +18,21 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
-using Skoruba.IdentityServer4.Admin.Constants;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Constants;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Middlewares;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
+using Skoruba.IdentityServer4.Admin.Configuration;
+using Skoruba.IdentityServer4.Admin.Configuration.Constants;
+using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -199,7 +198,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 });
         }
 
-        public static void AddAuthentication(this IServiceCollection services, IHostingEnvironment hostingEnvironment)
+        public static void AddAuthentication(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IAdminConfiguration adminConfiguration)
         {
             services.AddIdentity<UserIdentity, UserIdentityRole>()
                 .AddEntityFrameworkStores<AdminDbContext>()
@@ -219,14 +218,14 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                     options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 })
                     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-                        options => { options.Cookie.Name = AuthorizationConsts.IdentityAdminCookieName; });
+                        options => { options.Cookie.Name = AuthenticationConsts.IdentityAdminCookieName; });
             }
             else
             {
                 services.AddAuthentication(options =>
                 {
                     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = AuthorizationConsts.OidcAuthenticationScheme;
+                    options.DefaultChallengeScheme = AuthenticationConsts.OidcAuthenticationScheme;
 
                     options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                     options.DefaultForbidScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -234,19 +233,19 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                     options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 })
                     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-                        options => { options.Cookie.Name = AuthorizationConsts.IdentityAdminCookieName; })
-                    .AddOpenIdConnect(AuthorizationConsts.OidcAuthenticationScheme, options =>
+                        options => { options.Cookie.Name = AuthenticationConsts.IdentityAdminCookieName; })
+                    .AddOpenIdConnect(AuthenticationConsts.OidcAuthenticationScheme, options =>
                     {
-                        options.Authority = AuthorizationConsts.IdentityServerBaseUrl;
+                        options.Authority = adminConfiguration.IdentityServerBaseUrl;
                         options.RequireHttpsMetadata = false;
 
-                        options.ClientId = AuthorizationConsts.OidcClientId;
+                        options.ClientId = AuthenticationConsts.OidcClientId;
 
                         options.Scope.Clear();
-                        options.Scope.Add(AuthorizationConsts.ScopeOpenId);
-                        options.Scope.Add(AuthorizationConsts.ScopeProfile);
-                        options.Scope.Add(AuthorizationConsts.ScopeEmail);
-                        options.Scope.Add(AuthorizationConsts.ScopeRoles);
+                        options.Scope.Add(AuthenticationConsts.ScopeOpenId);
+                        options.Scope.Add(AuthenticationConsts.ScopeProfile);
+                        options.Scope.Add(AuthenticationConsts.ScopeEmail);
+                        options.Scope.Add(AuthenticationConsts.ScopeRoles);
 
                         options.SaveTokens = true;
 
@@ -259,7 +258,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         options.Events = new OpenIdConnectEvents
                         {
                             OnMessageReceived = OnMessageReceived,
-                            OnRedirectToIdentityProvider = OnRedirectToIdentityProvider
+                            OnRedirectToIdentityProvider = n => OnRedirectToIdentityProvider(n, adminConfiguration)
                         };
                     });
             }
@@ -273,11 +272,22 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             return Task.FromResult(0);
         }
 
-        private static Task OnRedirectToIdentityProvider(RedirectContext n)
+        private static Task OnRedirectToIdentityProvider(RedirectContext n, IAdminConfiguration adminConfiguration)
         {
-            n.ProtocolMessage.RedirectUri = AuthorizationConsts.IdentityAdminRedirectUri;
+            n.ProtocolMessage.RedirectUri = adminConfiguration.IdentityAdminRedirectUri;
 
             return Task.FromResult(0);
+        }
+
+        public static IServiceCollection ConfigureRootConfiguration(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddOptions();
+
+            services.Configure<AdminConfiguration>(configuration.GetSection(ConfigurationConsts.AdminConfigurationKey));
+
+            services.TryAddSingleton<IRootConfiguration, RootConfiguration>();
+
+            return services;
         }
     }
 }

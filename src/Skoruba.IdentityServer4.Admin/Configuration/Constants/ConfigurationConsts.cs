@@ -1,4 +1,4 @@
-﻿namespace Skoruba.IdentityServer4.Admin.Constants
+﻿namespace Skoruba.IdentityServer4.Admin.Configuration.Constants
 {
     public class ConfigurationConsts
     {
@@ -9,5 +9,7 @@
         public const string LoggingSectionKey = "Logging";        
 
         public const string ResourcesPath = "Resources";
+
+        public const string AdminConfigurationKey = "AdminConfiguration";
     }
 }

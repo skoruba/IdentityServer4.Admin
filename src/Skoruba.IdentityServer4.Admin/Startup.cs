@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Extensions;
+using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.Helpers;
@@ -40,8 +41,11 @@ namespace Skoruba.IdentityServer4.Admin
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureRootConfiguration(Configuration);
+            var rootConfiguration = services.BuildServiceProvider().GetService<IRootConfiguration>();
+
             services.AddDbContexts(HostingEnvironment, Configuration);
-            services.AddAuthentication(HostingEnvironment);
+            services.AddAuthentication(HostingEnvironment, rootConfiguration.AdminConfiguration);
             services.AddMvcExceptionFilters();
             
             services.AddAdminServices<AdminDbContext, UserDto<int>, int, RoleDto<int>, int, int, int, int, int,
