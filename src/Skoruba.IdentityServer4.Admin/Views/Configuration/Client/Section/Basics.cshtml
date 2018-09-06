@@ -106,7 +106,7 @@
 			</label>
 			<div class="col-sm-9">
 				<picker id="AllowedScopesItems" multiple-select="true" min-search-text="2"
-						selected-items="@Model.AllowedScopes" url="/Configuration/SearchScopes?scope"
+				        selected-items="@Model.AllowedScopes" url="@Url.Action("SearchScopes","Configuration")?scope"
 						search-input-placeholder="Enter 2 and more characters" selected-items-title="Selected: ">
 				</picker>
 			</div>
@@ -133,7 +133,7 @@
 			</label>
 			<div class="col-sm-9">
 				<picker id="AllowedGrantTypesItems" multiple-select="true" min-search-text="2"
-						url="/Configuration/SearchGrantTypes?grant"
+						url="@Url.Action("SearchGrantTypes","Configuration")?grant"
 						selected-items="@Model.AllowedGrantTypes" search-input-placeholder="Enter 2 and more characters"
 						selected-items-title="Selected: ">
 				</picker>

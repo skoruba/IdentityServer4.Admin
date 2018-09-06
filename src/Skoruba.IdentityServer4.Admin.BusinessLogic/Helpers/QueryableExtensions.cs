@@ -25,9 +25,17 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers
 
         public static IQueryable<T> PageBy<T, TKey>(this IQueryable<T> query, Expression<Func<T, TKey>> orderBy, int page, int pageSize, bool orderByDescending = true)
         {
+            const int defaultPageNumber = 1;
+
             if (query == null)
             {
                 throw new ArgumentNullException(nameof(query));
+            }
+
+            // Check if the page number is greater then zero - otherwise use default page number
+            if (page <= 0)
+            {
+                page = defaultPageNumber;
             }
 
             // It is necessary sort items before it
