@@ -85,12 +85,12 @@
 						</thead>
 
 						<tbody>
-							@foreach (var client in Model.ClientClaims)
+							@foreach (var clientClaim in Model.ClientClaims)
 							{
 								<tr>
-									<td>@client.Type</td>
-									<td>@client.Value</td>
-									<td><a asp-action="ClientClaimDelete" asp-route-id="@client.Id" class="btn btn-danger">@Localizer["TableButtonRemove"]</a></td>
+									<td>@clientClaim.Type</td>
+									<td>@clientClaim.Value</td>
+									<td><a asp-action="ClientClaimDelete" asp-route-id="@clientClaim.Id" class="btn btn-danger">@Localizer["TableButtonRemove"]</a></td>
 								</tr>
 							}
 						</tbody>

@@ -61,7 +61,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             {
                 return default(TClaimKey);
             }
-            return (TClaimKey)TypeDescriptor.GetConverter(typeof(TUserKey)).ConvertFromInvariantString(id);
+            return (TClaimKey)TypeDescriptor.GetConverter(typeof(TClaimKey)).ConvertFromInvariantString(id);
         }
 
         public virtual TRoleKey ConvertRoleKeyFromString(string id)
@@ -70,7 +70,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             {
                 return default(TRoleKey);
             }
-            return (TRoleKey)TypeDescriptor.GetConverter(typeof(TUserKey)).ConvertFromInvariantString(id);
+            return (TRoleKey)TypeDescriptor.GetConverter(typeof(TRoleKey)).ConvertFromInvariantString(id);
         }
 
         public Task<bool> ExistsUserAsync(string userId)
