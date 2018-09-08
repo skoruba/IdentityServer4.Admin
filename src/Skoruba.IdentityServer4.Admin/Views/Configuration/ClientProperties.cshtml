@@ -78,12 +78,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach (var client in Model.ClientProperties)
+							@foreach (var clientProperty in Model.ClientProperties)
 							{
 								<tr>
-									<td>@client.Key</td>
-									<td>@client.Value</td>
-									<td><a asp-action="ClientPropertyDelete" asp-route-id="@client.Id" class="btn btn-danger">@Localizer["TableButtonRemove"]</a></td>
+									<td>@clientProperty.Key</td>
+									<td>@clientProperty.Value</td>
+									<td><a asp-action="ClientPropertyDelete" asp-route-id="@clientProperty.Id" class="btn btn-danger">@Localizer["TableButtonRemove"]</a></td>
 								</tr>
 							}
 						</tbody>
