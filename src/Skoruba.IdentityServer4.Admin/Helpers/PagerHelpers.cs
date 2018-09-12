@@ -33,7 +33,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             const int defaultPageNumber = 1;
             var currentMaxPages = GetMaxPageToRender(maxPages, totalPages, currentPage);
 
-            if (currentMaxPages < maxPages) return currentMaxPages;
+            if (currentMaxPages == defaultPageNumber) return currentMaxPages;
             
             if (currentMaxPages == totalPages)
             {
