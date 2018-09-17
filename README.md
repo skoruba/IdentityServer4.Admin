@@ -54,11 +54,7 @@ dotnet ef migrations add DbInit -c AdminDbContext -o Data/Migrations
 dotnet ef database update -c AdminDbContext
 ```
 
-> Migrations are not a part of the repository - they are ignored in `.gitignore`.
-
-### How to configure Identity primary key data type in ASP.NET Core Identity
-
-- [Follow these steps to change the primary key](docs/AspNetIdentityChangeKey.md)
+Migrations are not a part of the repository - they are ignored in `.gitignore`.
 
 ### We suggest to use seed data:
 
@@ -69,6 +65,11 @@ dotnet ef database update -c AdminDbContext
 ### Using other database engines - PostgreSQL, SQLite, MySQL etc.
 
 - [Follow these steps for setup other database engines](docs/EFMigration.md)
+
+### How to configure Identity primary key data type in ASP.NET Core Identity
+
+- By default, it's used as the primary key `int`, it's possible to change it - [follow these steps to change the primary key](docs/AspNetIdentityChangeKey.md)
+
 
 ## Authentication and Authorization
 
@@ -169,8 +170,12 @@ It is possible to define the configuration according the client type - by defaul
 
 - Add more unit and integration tests :blush:
 - Extend administration for another protocols
-- Create separate UI using Razor Class Library and Business Logic & EF layers - available as a nuget package
+- Create the Business Logic & EF layers - available as a nuget package
 - Create a project template using dotnet CLI - `dotnet new template`
+  - First template: The administration of the IdentityServer4 and Asp.Net Core Identity
+  - Second template: The administration of the IdentityServer4 (without Asp.Net Core Identity)
+- Add audit logs to track changes
+- Create separate UI using `Razor Class Library`
 
 ## Licence
 
