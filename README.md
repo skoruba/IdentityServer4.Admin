@@ -54,11 +54,11 @@ dotnet ef migrations add DbInit -c AdminDbContext -o Data/Migrations
 dotnet ef database update -c AdminDbContext
 ```
 
-### How to use another primary key for Asp.Net Core Identity
+> Migrations are not a part of the repository - they are ignored in `.gitignore`.
 
-- [Follow these steps for change the primary key](docs/AspNetIdentityChangeKey.md)
+### How to configure Identity primary key data type in ASP.NET Core Identity
 
-Migrations are not a part of the repository - they are ignored in `.gitignore`.
+- [Follow these steps to change the primary key](docs/AspNetIdentityChangeKey.md)
 
 ### We suggest to use seed data:
 
