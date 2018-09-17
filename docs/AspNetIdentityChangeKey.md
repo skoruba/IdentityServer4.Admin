@@ -1,6 +1,6 @@
-# How to use another primary key for Asp.Net Core Identity
+# How to configure Identity primary key data type in ASP.NET Core Identity
 
-- By default, it's used `int` as a primary key, but you can change to `Guid` or `string` etc.
+- By default, it's used `int` as the primary key, but you can change to `Guid` or `string` etc.
 
 ## How to use for example `Guid`:
 
