@@ -7,7 +7,7 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
 {
-    public interface IIdentityService<TIdentityDbContext, TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TClaimDtoKey, TUserKey, TRoleKey, TClaimKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
+    public interface IIdentityService<TIdentityDbContext, TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
         where TIdentityDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
         where TUserDto : UserDto<TUserDtoKey>
         where TUser : IdentityUser<TKey>
@@ -53,14 +53,14 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
 
         Task<IdentityResult> DeleteUserRoleAsync(UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey> role);
 
-        Task<UserClaimsDto<TUserDtoKey, TClaimDtoKey>> GetUserClaimsAsync(string userId, int page = 1,
+        Task<UserClaimsDto<TUserDtoKey>> GetUserClaimsAsync(string userId, int page = 1,
             int pageSize = 10);
 
-        Task<UserClaimsDto<TUserDtoKey, TClaimDtoKey>> GetUserClaimAsync(string userId, string claimId);
+        Task<UserClaimsDto<TUserDtoKey>> GetUserClaimAsync(string userId, int claimId);
 
-        Task<IdentityResult> CreateUserClaimsAsync(UserClaimsDto<TUserDtoKey, TClaimDtoKey> claimsDto);
+        Task<IdentityResult> CreateUserClaimsAsync(UserClaimsDto<TUserDtoKey> claimsDto);
 
-        Task<int> DeleteUserClaimsAsync(UserClaimsDto<TUserDtoKey, TClaimDtoKey> claim);
+        Task<int> DeleteUserClaimsAsync(UserClaimsDto<TUserDtoKey> claim);
 
         Task<UserProvidersDto<TUserDtoKey>> GetUserProvidersAsync(string userId);
 
@@ -72,13 +72,13 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
 
         Task<IdentityResult> UserChangePasswordAsync(UserChangePasswordDto<TUserDtoKey> userPassword);
 
-        Task<IdentityResult> CreateRoleClaimsAsync(RoleClaimsDto<TRoleDtoKey, TClaimDtoKey> claimsDto);
+        Task<IdentityResult> CreateRoleClaimsAsync(RoleClaimsDto<TRoleDtoKey> claimsDto);
 
-        Task<RoleClaimsDto<TRoleDtoKey, TClaimDtoKey>> GetRoleClaimsAsync(string roleId, int page = 1, int pageSize = 10);
+        Task<RoleClaimsDto<TRoleDtoKey>> GetRoleClaimsAsync(string roleId, int page = 1, int pageSize = 10);
 
-        Task<RoleClaimsDto<TRoleDtoKey, TClaimDtoKey>> GetRoleClaimAsync(string roleId, string claimId);
+        Task<RoleClaimsDto<TRoleDtoKey>> GetRoleClaimAsync(string roleId, int claimId);
 
-        Task<int> DeleteRoleClaimsAsync(RoleClaimsDto<TRoleDtoKey, TClaimDtoKey> role);
+        Task<int> DeleteRoleClaimsAsync(RoleClaimsDto<TRoleDtoKey> role);
 
         Task<IdentityResult> DeleteRoleAsync(RoleDto<TRoleDtoKey> role);
     }

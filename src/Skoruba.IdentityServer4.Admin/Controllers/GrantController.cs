@@ -19,10 +19,10 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
     public class GrantController : BaseController
     {
-        private readonly IPersistedGrantService<AdminDbContext, UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> _persistedGrantService;
+        private readonly IPersistedGrantService<AdminDbContext, UserIdentity, UserIdentityRole, Guid, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> _persistedGrantService;
         private readonly IStringLocalizer<GrantController> _localizer;
 
-        public GrantController(IPersistedGrantService<AdminDbContext, UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> persistedGrantService,
+        public GrantController(IPersistedGrantService<AdminDbContext, UserIdentity, UserIdentityRole, Guid, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> persistedGrantService,
             ILogger<ConfigurationController> logger,
             IStringLocalizer<GrantController> localizer) : base(logger)
         {
@@ -78,7 +78,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         public async Task<IActionResult> PersistedGrant(string id, int? page)
         {
             var persistedGrants = await _persistedGrantService.GetPersitedGrantsByUser(id, page ?? 1);
-            persistedGrants.SubjectId = Convert.ToInt16(id);
+            persistedGrants.SubjectId = id;
 
             return View(persistedGrants);
         }

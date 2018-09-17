@@ -66,7 +66,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return await _persistedGrantRepository.DeletePersistedGrantAsync(key);
         }
 
-        public async Task<int> DeletePersistedGrantsAsync(int userId)
+        public async Task<int> DeletePersistedGrantsAsync(string userId)
         {
             return await _persistedGrantRepository.DeletePersistedGrantsAsync(userId);
         }

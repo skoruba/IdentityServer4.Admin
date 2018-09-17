@@ -16,16 +16,16 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 {
-    public class IdentityRepository<TIdentityDbContext, TUserKey, TRoleKey, TClaimKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
-        : IIdentityRepository<TIdentityDbContext, TUserKey, TRoleKey, TClaimKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
-        where TIdentityDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> 
-        where TUser : IdentityUser<TKey> 
-        where TRole : IdentityRole<TKey> 
-        where TKey : IEquatable<TKey> 
-        where TUserClaim : IdentityUserClaim<TKey> 
-        where TUserRole : IdentityUserRole<TKey> 
-        where TUserLogin : IdentityUserLogin<TKey> 
-        where TRoleClaim : IdentityRoleClaim<TKey> 
+    public class IdentityRepository<TIdentityDbContext, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
+        : IIdentityRepository<TIdentityDbContext, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
+        where TIdentityDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
+        where TUser : IdentityUser<TKey>
+        where TRole : IdentityRole<TKey>
+        where TKey : IEquatable<TKey>
+        where TUserClaim : IdentityUserClaim<TKey>
+        where TUserRole : IdentityUserRole<TKey>
+        where TUserLogin : IdentityUserLogin<TKey>
+        where TRoleClaim : IdentityRoleClaim<TKey>
         where TUserToken : IdentityUserToken<TKey>
     {
         private readonly TIdentityDbContext _dbContext;
@@ -53,15 +53,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
                 return default(TUserKey);
             }
             return (TUserKey)TypeDescriptor.GetConverter(typeof(TUserKey)).ConvertFromInvariantString(id);
-        }
-
-        public virtual TClaimKey ConvertClaimKeyFromString(string id)
-        {
-            if (id == null)
-            {
-                return default(TClaimKey);
-            }
-            return (TClaimKey)TypeDescriptor.GetConverter(typeof(TClaimKey)).ConvertFromInvariantString(id);
         }
 
         public virtual TRoleKey ConvertRoleKeyFromString(string id)
@@ -233,21 +224,19 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             return pagedList;
         }
 
-        public Task<TUserClaim> GetUserClaimAsync(string userId, string claimId)
+        public Task<TUserClaim> GetUserClaimAsync(string userId, int claimId)
         {
             var userIdConverted = ConvertUserKeyFromString(userId);
-            var claimIdConverted = ConvertClaimKeyFromString(claimId);
 
-            return _dbContext.Set<TUserClaim>().Where(x => x.UserId.Equals(userIdConverted) && x.Id.Equals(claimIdConverted))
+            return _dbContext.Set<TUserClaim>().Where(x => x.UserId.Equals(userIdConverted) && x.Id == claimId)
                 .SingleOrDefaultAsync();
         }
 
-        public Task<TRoleClaim> GetRoleClaimAsync(string roleId, string claimId)
+        public Task<TRoleClaim> GetRoleClaimAsync(string roleId, int claimId)
         {
             var roleIdConverted = ConvertRoleKeyFromString(roleId);
-            var claimIdConverted = ConvertClaimKeyFromString(claimId);
 
-            return _dbContext.Set<TRoleClaim>().Where(x => x.RoleId.Equals(roleIdConverted) && x.Id.Equals(claimIdConverted))
+            return _dbContext.Set<TRoleClaim>().Where(x => x.RoleId.Equals(roleIdConverted) && x.Id == claimId)
                 .SingleOrDefaultAsync();
         }
 
@@ -263,22 +252,18 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             return await _roleManager.AddClaimAsync(role, new Claim(claims.ClaimType, claims.ClaimValue));
         }
 
-        public async Task<int> DeleteUserClaimsAsync(string userId, string claimId)
+        public async Task<int> DeleteUserClaimsAsync(string userId, int claimId)
         {
-            var claimIdConverted = ConvertClaimKeyFromString(claimId);
-
-            var userClaim = await _dbContext.Set<TUserClaim>().Where(x => x.Id.Equals(claimIdConverted)).SingleOrDefaultAsync();
+            var userClaim = await _dbContext.Set<TUserClaim>().Where(x => x.Id == claimId).SingleOrDefaultAsync();
 
             _dbContext.UserClaims.Remove(userClaim);
 
             return await AutoSaveChangesAsync();
         }
 
-        public async Task<int> DeleteRoleClaimsAsync(string roleId, string claimId)
+        public async Task<int> DeleteRoleClaimsAsync(string roleId, int claimId)
         {
-            var claimIdConverted = ConvertClaimKeyFromString(claimId);
-
-            var roleClaim = await _dbContext.Set<TRoleClaim>().Where(x => x.Id.Equals(claimIdConverted)).SingleOrDefaultAsync();
+            var roleClaim = await _dbContext.Set<TRoleClaim>().Where(x => x.Id == claimId).SingleOrDefaultAsync();
 
             _dbContext.Set<TRoleClaim>().Remove(roleClaim);
 

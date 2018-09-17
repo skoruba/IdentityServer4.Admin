@@ -22,6 +22,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
         Task<PersistedGrantsDto> GetPersitedGrantsByUser(string subjectId, int page = 1, int pageSize = 10);
         Task<PersistedGrantDto> GetPersitedGrantAsync(string key);
         Task<int> DeletePersistedGrantAsync(string key);
-        Task<int> DeletePersistedGrantsAsync(int userId);
+        Task<int> DeletePersistedGrantsAsync(string userId);
     }
 }
