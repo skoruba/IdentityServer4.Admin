@@ -9,7 +9,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Grant
 			PersistedGrants = new List<PersistedGrantDto>();
 		}
 
-	    public int SubjectId { get; set; }
+	    public string SubjectId { get; set; }
 
 		public int TotalCount { get; set; }
 

@@ -7,7 +7,7 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces
 {
-	public interface IIdentityRepository<TIdentityDbContext, TUserKey, TRoleKey, TClaimKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
+	public interface IIdentityRepository<TIdentityDbContext, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
 	    where TIdentityDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
 	    where TUser : IdentityUser<TKey>
 	    where TRole : IdentityRole<TKey>
@@ -50,11 +50,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces
 
         Task<PagedList<TUserClaim>> GetUserClaimsAsync(string userId, int page = 1, int pageSize = 10);
 
-        Task<TUserClaim> GetUserClaimAsync(string userId, string claimId);
+        Task<TUserClaim> GetUserClaimAsync(string userId, int claimId);
 
         Task<IdentityResult> CreateUserClaimsAsync(TUserClaim claims);
 
-        Task<int> DeleteUserClaimsAsync(string userId, string claimId);
+        Task<int> DeleteUserClaimsAsync(string userId, int claimId);
 
         Task<List<UserLoginInfo>> GetUserProvidersAsync(string userId);
 
@@ -68,9 +68,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces
 
         Task<PagedList<TRoleClaim>> GetRoleClaimsAsync(string roleId, int page = 1, int pageSize = 10);
 
-        Task<TRoleClaim> GetRoleClaimAsync(string roleId, string claimId);
+        Task<TRoleClaim> GetRoleClaimAsync(string roleId, int claimId);
 
-        Task<int> DeleteRoleClaimsAsync(string roleId, string claimId);
+        Task<int> DeleteRoleClaimsAsync(string roleId, int claimId);
 
         Task<IdentityResult> DeleteRoleAsync(TRole role);
     }

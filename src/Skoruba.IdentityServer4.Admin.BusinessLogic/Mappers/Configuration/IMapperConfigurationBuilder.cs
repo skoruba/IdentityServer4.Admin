@@ -6,7 +6,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers.Configuration
 {
     public interface IMapperConfigurationBuilder
     {
-        IMapperConfigurationBuilder UseIdentityMappingProfile<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TClaimDtoKey, TUser, TRole,
+        IMapperConfigurationBuilder UseIdentityMappingProfile<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUser, TRole,
             TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>()
             where TUserDto : UserDto<TUserDtoKey>
             where TRoleDto : RoleDto<TRoleDtoKey>

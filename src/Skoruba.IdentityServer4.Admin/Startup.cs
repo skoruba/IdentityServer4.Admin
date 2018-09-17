@@ -1,4 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System;
+using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -48,9 +49,10 @@ namespace Skoruba.IdentityServer4.Admin
             services.AddAuthentication(HostingEnvironment, rootConfiguration.AdminConfiguration);
             services.AddMvcExceptionFilters();
             
-            services.AddAdminServices<AdminDbContext, UserDto<int>, int, RoleDto<int>, int, int, int, int, int,
-                    UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole,
+            services.AddAdminServices<AdminDbContext, UserDto<Guid>, Guid, RoleDto<Guid>, Guid, Guid, Guid, Guid,
+                    UserIdentity, UserIdentityRole, Guid, UserIdentityUserClaim, UserIdentityUserRole,
                     UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>();
+
             services.AddMvcLocalization();
             services.AddAuthorizationPolicies();
         }

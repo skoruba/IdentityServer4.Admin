@@ -15,8 +15,8 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 {
-    public class IdentityService<TIdentityDbContext, TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TClaimDtoKey, TUserKey, TRoleKey, TClaimKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
-        : IIdentityService<TIdentityDbContext, TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TClaimDtoKey, TUserKey, TRoleKey, TClaimKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
+    public class IdentityService<TIdentityDbContext, TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
+        : IIdentityService<TIdentityDbContext, TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
         where TIdentityDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
         where TUserDto : UserDto<TUserDtoKey>
         where TRoleDto : RoleDto<TRoleDtoKey>
@@ -29,11 +29,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
         where TRoleClaim : IdentityRoleClaim<TKey>
         where TUserToken : IdentityUserToken<TKey>
     {
-        private readonly IIdentityRepository<TIdentityDbContext, TUserKey, TRoleKey, TClaimKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> _identityRepository;
+        private readonly IIdentityRepository<TIdentityDbContext, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> _identityRepository;
         private readonly IIdentityServiceResources _identityServiceResources;
         private readonly IMapper _mapper;
 
-        public IdentityService(IIdentityRepository<TIdentityDbContext, TUserKey, TRoleKey, TClaimKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> identityRepository,
+        public IdentityService(IIdentityRepository<TIdentityDbContext, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> identityRepository,
             IIdentityServiceResources identityServiceResources,
             IMapper mapper)
         {
@@ -189,18 +189,18 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return HandleIdentityError(identityResult, _identityServiceResources.UserRoleDeleteFailed().Description, _identityServiceResources.IdentityErrorKey().Description, role);
         }
 
-        public async Task<UserClaimsDto<TUserDtoKey, TClaimDtoKey>> GetUserClaimsAsync(string userId, int page = 1, int pageSize = 10)
+        public async Task<UserClaimsDto<TUserDtoKey>> GetUserClaimsAsync(string userId, int page = 1, int pageSize = 10)
         {
             var userExists = await _identityRepository.ExistsUserAsync(userId);
             if (!userExists) throw new UserFriendlyErrorPageException(string.Format(_identityServiceResources.UserDoesNotExist().Description, userId), _identityServiceResources.UserDoesNotExist().Description);
 
             var identityUserClaims = await _identityRepository.GetUserClaimsAsync(userId, page, pageSize);
-            var claimDtos = _mapper.Map<UserClaimsDto<TUserDtoKey, TClaimDtoKey>>(identityUserClaims);
+            var claimDtos = _mapper.Map<UserClaimsDto<TUserDtoKey>>(identityUserClaims);
 
             return claimDtos;
         }
 
-        public async Task<UserClaimsDto<TUserDtoKey, TClaimDtoKey>> GetUserClaimAsync(string userId, string claimId)
+        public async Task<UserClaimsDto<TUserDtoKey>> GetUserClaimAsync(string userId, int claimId)
         {
             var userExists = await _identityRepository.ExistsUserAsync(userId);
             if (!userExists) throw new UserFriendlyErrorPageException(string.Format(_identityServiceResources.UserDoesNotExist().Description, userId), _identityServiceResources.UserDoesNotExist().Description);
@@ -208,12 +208,12 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             var identityUserClaim = await _identityRepository.GetUserClaimAsync(userId, claimId);
             if (identityUserClaim == null) throw new UserFriendlyErrorPageException(string.Format(_identityServiceResources.UserClaimDoesNotExist().Description, userId), _identityServiceResources.UserClaimDoesNotExist().Description);
 
-            var userClaimsDto = _mapper.Map<UserClaimsDto<TUserDtoKey, TClaimDtoKey>>(identityUserClaim);
+            var userClaimsDto = _mapper.Map<UserClaimsDto<TUserDtoKey>>(identityUserClaim);
 
             return userClaimsDto;
         }
 
-        public async Task<IdentityResult> CreateUserClaimsAsync(UserClaimsDto<TUserDtoKey, TClaimDtoKey> claimsDto)
+        public async Task<IdentityResult> CreateUserClaimsAsync(UserClaimsDto<TUserDtoKey> claimsDto)
         {
             var userIdentityUserClaim = _mapper.Map<TUserClaim>(claimsDto);
             var identityResult = await _identityRepository.CreateUserClaimsAsync(userIdentityUserClaim);
@@ -221,9 +221,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return HandleIdentityError(identityResult, _identityServiceResources.UserClaimsCreateFailed().Description, _identityServiceResources.IdentityErrorKey().Description, claimsDto);
         }
 
-        public async Task<int> DeleteUserClaimsAsync(UserClaimsDto<TUserDtoKey, TClaimDtoKey> claim)
+        public async Task<int> DeleteUserClaimsAsync(UserClaimsDto<TUserDtoKey> claim)
         {
-            return await _identityRepository.DeleteUserClaimsAsync(claim.UserId.ToString(), claim.ClaimId.ToString());
+            return await _identityRepository.DeleteUserClaimsAsync(claim.UserId.ToString(), claim.ClaimId);
         }
 
         public virtual TUserDtoKey ConvertUserDtoKeyFromString(string id)
@@ -277,7 +277,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return HandleIdentityError(identityResult, _identityServiceResources.UserChangePasswordFailed().Description, _identityServiceResources.IdentityErrorKey().Description, userPassword);
         }
 
-        public async Task<IdentityResult> CreateRoleClaimsAsync(RoleClaimsDto<TRoleDtoKey, TClaimDtoKey> claimsDto)
+        public async Task<IdentityResult> CreateRoleClaimsAsync(RoleClaimsDto<TRoleDtoKey> claimsDto)
         {
             var identityRoleClaim = _mapper.Map<TRoleClaim>(claimsDto);
             var identityResult = await _identityRepository.CreateRoleClaimsAsync(identityRoleClaim);
@@ -285,32 +285,32 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return HandleIdentityError(identityResult, _identityServiceResources.RoleClaimsCreateFailed().Description, _identityServiceResources.IdentityErrorKey().Description, claimsDto);
         }
 
-        public async Task<RoleClaimsDto<TRoleDtoKey, TClaimDtoKey>> GetRoleClaimsAsync(string roleId, int page = 1, int pageSize = 10)
+        public async Task<RoleClaimsDto<TRoleDtoKey>> GetRoleClaimsAsync(string roleId, int page = 1, int pageSize = 10)
         {
             var roleExists = await _identityRepository.ExistsRoleAsync(roleId);
             if (!roleExists) throw new UserFriendlyErrorPageException(string.Format(_identityServiceResources.RoleDoesNotExist().Description, roleId), _identityServiceResources.RoleDoesNotExist().Description);
 
             var identityRoleClaims = await _identityRepository.GetRoleClaimsAsync(roleId, page, pageSize);
-            var roleClaimDtos = _mapper.Map<RoleClaimsDto<TRoleDtoKey, TClaimDtoKey>>(identityRoleClaims);
+            var roleClaimDtos = _mapper.Map<RoleClaimsDto<TRoleDtoKey>>(identityRoleClaims);
 
             return roleClaimDtos;
         }
 
-        public async Task<RoleClaimsDto<TRoleDtoKey, TClaimDtoKey>> GetRoleClaimAsync(string roleId, string claimId)
+        public async Task<RoleClaimsDto<TRoleDtoKey>> GetRoleClaimAsync(string roleId, int claimId)
         {
             var roleExists = await _identityRepository.ExistsRoleAsync(roleId);
             if (!roleExists) throw new UserFriendlyErrorPageException(string.Format(_identityServiceResources.RoleDoesNotExist().Description, roleId), _identityServiceResources.RoleDoesNotExist().Description);
 
             var identityRoleClaim = await _identityRepository.GetRoleClaimAsync(roleId, claimId);
             if (identityRoleClaim == null) throw new UserFriendlyErrorPageException(string.Format(_identityServiceResources.RoleClaimDoesNotExist().Description, claimId), _identityServiceResources.RoleClaimDoesNotExist().Description);
-            var roleClaimsDto = _mapper.Map<RoleClaimsDto<TRoleDtoKey, TClaimDtoKey>>(identityRoleClaim);
+            var roleClaimsDto = _mapper.Map<RoleClaimsDto<TRoleDtoKey>>(identityRoleClaim);
 
             return roleClaimsDto;
         }
 
-        public async Task<int> DeleteRoleClaimsAsync(RoleClaimsDto<TRoleDtoKey, TClaimDtoKey> role)
+        public async Task<int> DeleteRoleClaimsAsync(RoleClaimsDto<TRoleDtoKey> role)
         {
-            return await _identityRepository.DeleteRoleClaimsAsync(role.RoleId.ToString(), role.ClaimId.ToString());
+            return await _identityRepository.DeleteRoleClaimsAsync(role.RoleId.ToString(), role.ClaimId);
         }
 
         public async Task<IdentityResult> DeleteRoleAsync(RoleDto<TRoleDtoKey> role)

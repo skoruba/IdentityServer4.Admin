@@ -1,8 +1,8 @@
 ﻿namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity.Base
 {
-    public class BaseRoleClaimDto<TRoleId, TClaimId>
+    public class BaseRoleClaimDto<TRoleId>
     {
-        public TClaimId ClaimId { get; set; }
+        public int ClaimId { get; set; }
 
         public TRoleId RoleId { get; set; }
     }
