@@ -811,9 +811,14 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
                 await apiResourceRepository.AddApiResourceAsync(apiResource);
 
-                var apiScopes = await clientRepository.GetScopesAsync(apiResource.Name);
+                var resource = await context.ApiResources.Where(x => x.Name == apiResource.Name).SingleOrDefaultAsync();
 
-                apiScopes[0].Should().Be(apiResource.Name);
+                var apiScope = ApiResourceMock.GenerateRandomApiScope(0);
+                await apiResourceRepository.AddApiScopeAsync(resource.Id, apiScope);
+
+                var apiScopes = await clientRepository.GetScopesAsync(apiScope.Name);
+
+                apiScopes[0].Should().Be(apiScope.Name);
             }
         }
         

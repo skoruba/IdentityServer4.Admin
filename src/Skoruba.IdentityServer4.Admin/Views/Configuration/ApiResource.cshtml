@@ -92,7 +92,7 @@
 				</label>
 				<div class="col-sm-9">
 					<picker id="UserClaimsItems" multiple-select="true" min-search-text="2"
-							selected-items="@Model.UserClaims" url="/Configuration/SearchClaims?claim"
+							selected-items="@Model.UserClaims" url="@Url.Action("SearchClaims","Configuration")?claim"
 							search-input-placeholder="Enter 2 and more characters" selected-items-title="Selected: ">
 					</picker>
 				</div>
