@@ -129,7 +129,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 {
                     //Generate persisted grant
                     var persistedGrantKey = Guid.NewGuid().ToString();
-                    var persistedGrant = PersistedGrantMock.GenerateRandomPersistedGrant(persistedGrantKey, subjectId);
+                    var persistedGrant = PersistedGrantMock.GenerateRandomPersistedGrant(persistedGrantKey, subjectId.ToString());
 
                     //Try add new persisted grant
                     await context.PersistedGrants.AddAsync(persistedGrant);
@@ -138,7 +138,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 await context.SaveChangesAsync();
 
                 //Try delete persisted grant
-                await persistedGrantService.DeletePersistedGrantsAsync(subjectId);
+                await persistedGrantService.DeletePersistedGrantsAsync(subjectId.ToString());
 
                 var grant = await persistedGrantRepository.GetPersitedGrantsByUser(subjectId.ToString());
 
