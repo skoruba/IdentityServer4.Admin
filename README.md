@@ -47,7 +47,7 @@ Add-Migration DbInit -context AdminDbContext -output Data/Migrations
 Update-Database -context AdminDbContext
 ```
 
-Or via `dotnet CLI`:
+- Or via `dotnet CLI`:
 
 ```powershell
 dotnet ef migrations add DbInit -c AdminDbContext -o Data/Migrations
@@ -69,7 +69,6 @@ Migrations are not a part of the repository - they are ignored in `.gitignore`.
 ### How to configure Identity primary key data type in ASP.NET Core Identity
 
 - By default, it's used as the primary key `int`, it's possible to change it - [follow these steps to change the primary key](docs/AspNetIdentityChangeKey.md)
-
 
 ## Authentication and Authorization
 
