@@ -175,6 +175,7 @@ It is possible to define the configuration according the client type - by defaul
   - Second template: The administration of the IdentityServer4 (without Asp.Net Core Identity)
 - Add audit logs to track changes
 - Create separate UI using `Razor Class Library`
+- Add localization for other languages
 
 ## Licence
 
