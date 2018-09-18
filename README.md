@@ -150,7 +150,13 @@ It is possible to define the configuration according the client type - by defaul
 
 - Add more unit and integration tests :blush:
 - Extend administration for another protocols
-- Create separate UI using Razor Class Library and Business Logic & EF layers - available as a nuget package
+- Create the Business Logic & EF layers - available as a nuget package
+- Create a project template using dotnet CLI - `dotnet new template`
+  - First template: The administration of the IdentityServer4 and Asp.Net Core Identity
+  - Second template: The administration of the IdentityServer4 (without Asp.Net Core Identity)
+- Add audit logs to track changes
+- Create separate UI using `Razor Class Library`
+- Add localization for other languages
 
 ## Licence
 
