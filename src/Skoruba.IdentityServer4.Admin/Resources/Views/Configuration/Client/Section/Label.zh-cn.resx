@@ -286,7 +286,7 @@ OneTime 刷新令牌时将更新令牌句柄</value>
     <value>允许跨域来源</value>
   </data>
   <data name="AllowedGrantTypes_Info" xml:space="preserve">
-    <value>指定允许客户端使用的授权类型。 使用 GrantTypes 类进行常见组合。 默认授权列表：隐式授权 - (implicit)，客户端凭证授权 - (client_credentials)，授权码授权 - (authorization_code)，混合授权 - (hybrid)，资源所有者密码凭证授权 - (密码)</value>
+    <value>指定允许客户端使用的授权类型。 使用 GrantTypes 类进行常见组合。 默认授权列表：隐式授权 - (implicit)，客户端凭证授权 - (client_credentials)，授权码授权 - (authorization_code)，混合授权 - (hybrid)，资源所有者密码凭证授权 - (password)</value>
   </data>
   <data name="AllowedGrantTypes_Label" xml:space="preserve">
     <value>允许的授权类型</value>
