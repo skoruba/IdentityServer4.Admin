@@ -121,10 +121,10 @@
     <value>删除 Api 资源</value>
   </data>
   <data name="ButtonManageScopes" xml:space="preserve">
-    <value>管理 Api 资源</value>
+    <value>管理 Api 范围</value>
   </data>
   <data name="ButtonManageSecrets" xml:space="preserve">
-    <value>管理 Api 资源</value>
+    <value>管理 Api 密钥</value>
   </data>
   <data name="ButtonSaveApiResource" xml:space="preserve">
     <value>保存 Api 资源</value>

@@ -253,7 +253,7 @@ OneTime 刷新令牌时将更新令牌句柄</value>
     <value>指定此客户端是否需要密钥才能从令牌端点请求令牌（默认为 true）</value>
   </data>
   <data name="RequireClientSecret_Label" xml:space="preserve">
-    <value>需要客户密钥</value>
+    <value>需要客户端密钥</value>
   </data>
   <data name="RequireConsent_Info" xml:space="preserve">
     <value>指定是否需要同意屏幕。 默认为 true。</value>
@@ -379,7 +379,7 @@ OneTime 刷新令牌时将更新令牌句柄</value>
     <value>如果设置，客户端声明类型将以此为前缀。 默认为 client_。 目的是确保它们不会意外地与用户声明冲突。</value>
   </data>
   <data name="ClientClaimsPrefix_Label" xml:space="preserve">
-    <value>客户索赔前缀</value>
+    <value>客户端声明前缀</value>
   </data>
   <data name="Description_Info" xml:space="preserve">
     <value>客户端描述</value>
@@ -400,10 +400,10 @@ OneTime 刷新令牌时将更新令牌句柄</value>
     <value>前台频道注销 Uri</value>
   </data>
   <data name="PairWiseSubjectSalt_Info" xml:space="preserve">
-    <value>对于此客户端的用户，在成对的主题标识生成中使用的盐值。</value>
+    <value>对于此客户端的用户，在配对主题标识生成中使用的盐值。</value>
   </data>
   <data name="PairWiseSubjectSalt_Label" xml:space="preserve">
-    <value>成对的主题盐</value>
+    <value>配对主题盐</value>
   </data>
   <data name="Properties_Info" xml:space="preserve">
     <value>字典可根据需要保存任何自定义客户端特定值。</value>

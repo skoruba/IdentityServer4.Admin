@@ -121,18 +121,18 @@
     <value>回到用户</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>用户提供商</value>
+    <value>用户提供程序</value>
   </data>
   <data name="TableButtonRemove" xml:space="preserve">
     <value>删除</value>
   </data>
   <data name="TableLoginProvider" xml:space="preserve">
-    <value>登录提供商</value>
+    <value>登录提供程序</value>
   </data>
   <data name="TableProviderDisplayName" xml:space="preserve">
-    <value>提供者显示名称</value>
+    <value>提供程序显示名称</value>
   </data>
   <data name="TableProviderKey" xml:space="preserve">
-    <value>提供者密钥</value>
+    <value>提供程序密钥</value>
   </data>
 </root>

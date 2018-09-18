@@ -148,7 +148,7 @@
     <value>客户端重定向 Uri</value>
   </data>
   <data name="LabelCloneClientScopes" xml:space="preserve">
-    <value>客户范围</value>
+    <value>客户端范围</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
     <value>克隆客户端</value>
