@@ -54,7 +54,7 @@ Migrations are not a part of the repository - they are ignored in `.gitignore`.
 - The `Clients` and `Resources` files in `Configuration` are the initial data, based on a sample from IdentityServer4
 - The `Users` file in `Configuration` contains the default admin username and password for the first login
 
-### Using other database engines - PostgreSQL, SQLite etc.
+### Using other database engines - PostgreSQL, SQLite, MySQL etc.
 
 - [Follow these steps for setup other database engines](docs/EFMigration.md)
 
