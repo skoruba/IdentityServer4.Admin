@@ -54,7 +54,7 @@ Migrations are not a part of the repository - they are ignored in `.gitignore`.
 - The `Clients` and `Resources` files in `Configuration` are the initial data, based on a sample from IdentityServer4
 - The `Users` file in `Configuration` contains the default admin username and password for the first login
 
-### Using other database engines - PostgreSQL, SQLite etc.
+### Using other database engines - PostgreSQL, SQLite, MySQL etc.
 
 - [Follow these steps for setup other database engines](docs/EFMigration.md)
 
@@ -150,7 +150,13 @@ It is possible to define the configuration according the client type - by defaul
 
 - Add more unit and integration tests :blush:
 - Extend administration for another protocols
-- Create separate UI using Razor Class Library and Business Logic & EF layers - available as a nuget package
+- Create the Business Logic & EF layers - available as a nuget package
+- Create a project template using dotnet CLI - `dotnet new template`
+  - First template: The administration of the IdentityServer4 and Asp.Net Core Identity
+  - Second template: The administration of the IdentityServer4 (without Asp.Net Core Identity)
+- Add audit logs to track changes
+- Create separate UI using `Razor Class Library`
+- Add localization for other languages
 
 ## Licence
 
