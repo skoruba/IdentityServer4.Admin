@@ -64,12 +64,12 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
                 .TakeIf(x => x.Id, limit > 0, limit)
                 .Select(x => x.Name).ToListAsync();
 
-            var apiResources = await _dbContext.ApiResources
+            var apiScopes = await _dbContext.ApiScopes
                 .WhereIf(!string.IsNullOrEmpty(scope), x => x.Name.Contains(scope))
                 .TakeIf(x => x.Id, limit > 0, limit)
                 .Select(x => x.Name).ToListAsync();
 
-            var scopes = identityResources.Concat(apiResources).TakeIf(x => x, limit > 0, limit).ToList();
+            var scopes = identityResources.Concat(apiScopes).TakeIf(x => x, limit > 0, limit).ToList();
 
             return scopes;
         }

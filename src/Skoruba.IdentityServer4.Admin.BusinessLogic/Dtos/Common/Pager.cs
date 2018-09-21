@@ -11,5 +11,7 @@
         public string Search { get; set; }
 
 	    public bool EnableSearch { get; set; } = false;
+
+	    public int MaxPages { get; set; } = 10;
 	}
 }

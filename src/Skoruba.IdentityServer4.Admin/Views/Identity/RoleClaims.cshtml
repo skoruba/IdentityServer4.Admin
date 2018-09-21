@@ -30,7 +30,7 @@
 						</label>
 						<div class="col-sm-9">
 							<picker id="ClaimType" multiple-select="false" min-search-text="2"
-									selected-item="@Model.ClaimType" url="/Configuration/SearchClaims?claim"
+									selected-item="@Model.ClaimType" url="@Url.Action("SearchClaims","Configuration")?claim"
 									search-input-placeholder="Enter 2 and more characters" selected-items-title="Selected: "
 									required="true" required-message="The Type is required.">
 							</picker>
