@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
+using Skoruba.IdentityServer4.Admin.AspNetIdentity.Dtos.Common;
+using Skoruba.IdentityServer4.Admin.AspNetIdentity.Dtos.Identity;
+using Skoruba.IdentityServer4.Admin.AspNetIdentity.Services.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.Controllers
 {

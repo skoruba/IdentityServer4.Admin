@@ -1,6 +1,6 @@
 ﻿using System;
 using Bogus;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity;
+using Skoruba.IdentityServer4.Admin.AspNetIdentity.Dtos.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 {
