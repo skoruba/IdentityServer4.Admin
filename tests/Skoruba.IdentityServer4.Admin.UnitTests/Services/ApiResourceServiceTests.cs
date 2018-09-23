@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Localization;
 using Moq;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Newtonsoft.Json;
+using Skoruba.IdentityServer4.Admin.AspNetIdentity.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Helpers;
 
@@ -25,12 +26,16 @@ namespace Skoruba.IdentityServer4.Admin.ExceptionHandling
 
         public override void OnException(ExceptionContext context)
         {
-            if (!(context.Exception is UserFriendlyErrorPageException) && !(context.Exception is UserFriendlyViewException)) return;
+            if (!(context.Exception is UserFriendlyErrorPageException) && 
+                !(context.Exception is UserFriendlyViewException) && 
+                !(context.Exception is UserFriendlyErrorPageIdentityException) && 
+                !(context.Exception is UserFriendlyViewIdentityException)) return;
 
             //Create toastr notification
             if (CreateNotification(context, out var tempData)) return;
 
             HandleUserFriendlyViewException(context);
+            HandleUserFriendlyViewIdentityException(context);
             ProcessException(context, tempData);
 
             //Clear toastr notification from temp
@@ -58,7 +63,7 @@ namespace Skoruba.IdentityServer4.Admin.ExceptionHandling
 
             var result = new ViewResult
             {
-                ViewName = context.Exception is UserFriendlyViewException
+                ViewName = context.Exception is UserFriendlyViewException || context.Exception is UserFriendlyViewIdentityException
                     ? controllerActionDescriptor.ActionName
                     : errorViewName,
                 TempData = tempData,
@@ -69,9 +74,14 @@ namespace Skoruba.IdentityServer4.Admin.ExceptionHandling
             };
 
             //For UserFriendlyException is necessary return model with latest form state
-            if (context.Exception is UserFriendlyViewException exception)
+            switch (context.Exception)
             {
-                result.ViewData.Model = exception.Model;
+                case UserFriendlyViewException exception:
+                    result.ViewData.Model = exception.Model;
+                    break;
+                case UserFriendlyViewIdentityException exceptionIdentity:
+                    result.ViewData.Model = exceptionIdentity.Model;
+                    break;
             }
 
             context.ExceptionHandled = true;
@@ -81,6 +91,23 @@ namespace Skoruba.IdentityServer4.Admin.ExceptionHandling
         private void HandleUserFriendlyViewException(ExceptionContext context)
         {
             if (!(context.Exception is UserFriendlyViewException userFriendlyViewException)) return;
+
+            if (userFriendlyViewException.ErrorMessages != null && userFriendlyViewException.ErrorMessages.Any())
+            {
+                foreach (var message in userFriendlyViewException.ErrorMessages)
+                {
+                    context.ModelState.AddModelError(message.ErrorKey, message.ErrorMessage);
+                }
+            }
+            else
+            {
+                context.ModelState.AddModelError(userFriendlyViewException.ErrorKey, context.Exception.Message);
+            }
+        }
+
+        private void HandleUserFriendlyViewIdentityException(ExceptionContext context)
+        {
+            if (!(context.Exception is UserFriendlyViewIdentityException userFriendlyViewException)) return;
 
             if (userFriendlyViewException.ErrorMessages != null && userFriendlyViewException.ErrorMessages.Any())
             {

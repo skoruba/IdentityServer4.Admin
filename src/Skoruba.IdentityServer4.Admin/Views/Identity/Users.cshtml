@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common
-@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity.UsersDto<Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity.UserDto<int>, int>
+@using Skoruba.IdentityServer4.Admin.AspNetIdentity.Dtos.Identity
+@model UsersDto<UserDto<int>, int>
 @inject IViewLocalizer Localizer
 
 @{

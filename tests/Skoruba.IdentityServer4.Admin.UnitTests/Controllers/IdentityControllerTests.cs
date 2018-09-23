@@ -16,11 +16,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity;
+using Skoruba.IdentityServer4.Admin.AspNetIdentity.Dtos.Identity;
+using Skoruba.IdentityServer4.Admin.AspNetIdentity.Extensions;
+using Skoruba.IdentityServer4.Admin.AspNetIdentity.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Extensions;
 using Skoruba.IdentityServer4.Admin.Controllers;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
@@ -563,7 +563,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             //Add Admin services
             services.AddMvcExceptionFilters();
 
-            services.AddAdminServices<AdminDbContext, UserDto<int>, int, RoleDto<int>, int, int, int,
+            services.AddAdminServices<AdminDbContext>();
+
+            services.AddAdminAspNetIdentityServices<AdminDbContext, UserDto<int>, int, RoleDto<int>, int, int, int,
                 UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole,
                 UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>();
 
