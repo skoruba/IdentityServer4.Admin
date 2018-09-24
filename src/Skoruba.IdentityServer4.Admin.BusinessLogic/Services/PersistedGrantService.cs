@@ -1,7 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Grant;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
@@ -12,21 +10,13 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 {
-    public class PersistedGrantService<TDbContext, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> : IPersistedGrantService<TDbContext, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
-        where TDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>, IAdminPersistedGrantIdentityDbContext
-        where TUser : IdentityUser<TKey>
-        where TRole : IdentityRole<TKey>
-        where TKey : IEquatable<TKey>
-        where TUserClaim : IdentityUserClaim<TKey>
-        where TUserRole : IdentityUserRole<TKey>
-        where TUserLogin : IdentityUserLogin<TKey>
-        where TRoleClaim : IdentityRoleClaim<TKey>
-        where TUserToken : IdentityUserToken<TKey>
+    public class PersistedGrantService<TDbContext> : IPersistedGrantService<TDbContext>
+        where TDbContext : DbContext, IAdminPersistedGrantIdentityDbContext
     {
-        private readonly IPersistedGrantRepository<TDbContext, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> _persistedGrantRepository;
+        private readonly IPersistedGrantRepository<TDbContext> _persistedGrantRepository;
         private readonly IPersistedGrantServiceResources _persistedGrantServiceResources;
 
-        public PersistedGrantService(IPersistedGrantRepository<TDbContext, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> persistedGrantRepository,
+        public PersistedGrantService(IPersistedGrantRepository<TDbContext> persistedGrantRepository,
             IPersistedGrantServiceResources persistedGrantServiceResources)
         {
             _persistedGrantRepository = persistedGrantRepository;

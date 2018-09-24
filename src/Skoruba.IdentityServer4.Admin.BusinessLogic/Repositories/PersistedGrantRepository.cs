@@ -3,8 +3,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Entities;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Enums;
@@ -15,17 +13,9 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 {
-    public class PersistedGrantRepository<TDbContext, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> 
-        : IPersistedGrantRepository<TDbContext, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
-        where TDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>, IAdminPersistedGrantIdentityDbContext
-        where TUser : IdentityUser<TKey> 
-        where TRole : IdentityRole<TKey> 
-        where TKey : IEquatable<TKey> 
-        where TUserClaim : IdentityUserClaim<TKey> 
-        where TUserRole : IdentityUserRole<TKey> 
-        where TUserLogin : IdentityUserLogin<TKey> 
-        where TRoleClaim : IdentityRoleClaim<TKey> 
-        where TUserToken : IdentityUserToken<TKey>
+    public class PersistedGrantRepository<TDbContext> 
+        : IPersistedGrantRepository<TDbContext>
+        where TDbContext : DbContext, IAdminPersistedGrantIdentityDbContext
         
     {
         private readonly TDbContext _dbContext;
@@ -42,12 +32,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             var pagedList = new PagedList<PersistedGrantDataView>();
 
             var persistedGrantByUsers = (from pe in _dbContext.PersistedGrants
-                                         join us in _dbContext.Users on pe.SubjectId equals us.Id.ToString() into per
-                                         from us in per.DefaultIfEmpty()
                                          select new PersistedGrantDataView
                                          {
-                                             SubjectId = pe.SubjectId,
-                                             SubjectName = us == null ? string.Empty : us.UserName
+                                             SubjectId = pe.SubjectId
                                          })
                                         .Distinct();
 

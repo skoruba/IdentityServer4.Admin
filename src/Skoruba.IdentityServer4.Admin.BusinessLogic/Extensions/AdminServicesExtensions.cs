@@ -20,7 +20,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Extensions
         }
 
         public static IServiceCollection AddAdminServices<TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(this IServiceCollection services)
-            where TPersistedGrantDbContext : IAdminPersistedGrantIdentityDbContext
+            where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantIdentityDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
         {
@@ -28,18 +28,21 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Extensions
             services.AddTransient<IClientRepository<TConfigurationDbContext>, ClientRepository<TConfigurationDbContext>>();
             services.AddTransient<IIdentityResourceRepository<TConfigurationDbContext>, IdentityResourceRepository<TConfigurationDbContext>>();
             services.AddTransient<IApiResourceRepository<TConfigurationDbContext>, ApiResourceRepository<TConfigurationDbContext>>();
+            services.AddTransient<IPersistedGrantRepository<TPersistedGrantDbContext>, PersistedGrantRepository<TPersistedGrantDbContext>>();
             services.AddTransient<ILogRepository<TLogDbContext>, LogRepository<TLogDbContext>>();
 
             //Services
             services.AddTransient<IClientService<TConfigurationDbContext>, ClientService<TConfigurationDbContext>>();
             services.AddTransient<IApiResourceService<TConfigurationDbContext>, ApiResourceService<TConfigurationDbContext>>();
             services.AddTransient<IIdentityResourceService<TConfigurationDbContext>, IdentityResourceService<TConfigurationDbContext>>();
+            services.AddTransient<IPersistedGrantService<TPersistedGrantDbContext>, PersistedGrantService<TPersistedGrantDbContext>>();
             services.AddTransient<ILogService<TLogDbContext>, LogService<TLogDbContext>>();
 
             //Resources
             services.AddScoped<IApiResourceServiceResources, ApiResourceServiceResources>();
             services.AddScoped<IClientServiceResources, ClientServiceResources>();
             services.AddScoped<IIdentityResourceServiceResources, IdentityResourceServiceResources>();
+            services.AddScoped<IPersistedGrantServiceResources, PersistedGrantServiceResources>();
 
             return services;
         }
