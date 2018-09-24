@@ -18,7 +18,7 @@ using IdentityModel;
 using System.Linq;
 using System;
 using System.Collections.Generic;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 
 namespace IdentityServer4.Quickstart.UI
 {

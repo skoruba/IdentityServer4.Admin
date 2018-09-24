@@ -3,12 +3,10 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
-using Skoruba.IdentityServer4.Admin.AspNetIdentity.Repositories;
-using Skoruba.IdentityServer4.Admin.AspNetIdentity.Repositories.Interfaces;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Xunit;
 

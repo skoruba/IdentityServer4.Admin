@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers
 {

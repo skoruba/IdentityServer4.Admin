@@ -18,8 +18,4 @@
     <Folder Include="Models\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.AspNetIdentity\Skoruba.IdentityServer4.Admin.AspNetIdentity.csproj" />
-  </ItemGroup>
-
 </Project>
