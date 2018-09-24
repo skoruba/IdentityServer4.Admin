@@ -15,7 +15,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.AspNetIdentity.Repositories
 {
-    public class PersistedGrantAspNetIdentityAspNetIdentityRepository<TDbContext, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> 
+    public class PersistedGrantAspNetIdentityRepository<TDbContext, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> 
         : IPersistedGrantAspNetIdentityRepository<TDbContext, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
         where TDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>, IAdminPersistedGrantIdentityDbContext
         where TUser : IdentityUser<TKey> 
@@ -32,7 +32,7 @@ namespace Skoruba.IdentityServer4.Admin.AspNetIdentity.Repositories
 
         public bool AutoSaveChanges { get; set; } = true;
 
-        public PersistedGrantAspNetIdentityAspNetIdentityRepository(TDbContext dbContext)
+        public PersistedGrantAspNetIdentityRepository(TDbContext dbContext)
         {
             _dbContext = dbContext;
         }
