@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 
 namespace Skoruba.IdentityServer4.AspNetIdentity
 {

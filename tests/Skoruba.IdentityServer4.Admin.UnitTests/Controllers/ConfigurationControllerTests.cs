@@ -19,15 +19,15 @@ using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.AspNetIdentity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Extensions;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Extensions;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.Controllers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Skoruba.IdentityServer4.Admin.Helpers;
 using Xunit;
-using Skoruba.IdentityServer4.Admin.AspNetIdentity.Extensions;
-
+  
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 {
     public class ConfigurationControllerTests

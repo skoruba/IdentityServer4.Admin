@@ -11,7 +11,7 @@ using Skoruba.IdentityServer4.Admin.Configuration.Identity;
 using Skoruba.IdentityServer4.Admin.Configuration.IdentityServer;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {

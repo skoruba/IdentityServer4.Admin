@@ -6,11 +6,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.AspNetIdentity.Dtos.Identity;
-using Skoruba.IdentityServer4.Admin.AspNetIdentity.Extensions;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Extensions;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Extensions;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin

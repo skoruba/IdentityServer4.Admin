@@ -13,14 +13,14 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Extensions
     {
         public static IServiceCollection AddAdminServices<TAdminDbContext>(
             this IServiceCollection services)
-            where TAdminDbContext : DbContext, IAdminPersistedGrantIdentityDbContext, IAdminConfigurationDbContext, IAdminLogDbContext
+            where TAdminDbContext : DbContext, IAdminPersistedGrantDbContext, IAdminConfigurationDbContext, IAdminLogDbContext
         {
 
             return services.AddAdminServices<TAdminDbContext, TAdminDbContext, TAdminDbContext>();
         }
 
         public static IServiceCollection AddAdminServices<TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(this IServiceCollection services)
-            where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantIdentityDbContext
+            where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
         {

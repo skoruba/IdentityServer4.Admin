@@ -7,11 +7,10 @@ using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.Models;
 using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Constants;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Enums;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
-using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Client = IdentityServer4.EntityFramework.Entities.Client;
 
