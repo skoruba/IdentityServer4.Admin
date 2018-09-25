@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using IdentityServer4.EntityFramework.Entities;
-using Skoruba.IdentityServer4.Admin.AspNetIdentity.Dtos.Grant;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Grant;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities;
 

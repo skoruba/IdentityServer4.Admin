@@ -9,7 +9,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Skoruba.IdentityServer4.Admin.AspNetIdentity.Dtos.Enums;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Enums;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;

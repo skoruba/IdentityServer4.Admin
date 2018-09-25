@@ -1,6 +1,6 @@
-﻿using Skoruba.IdentityServer4.Admin.AspNetIdentity.Dtos.Identity.Base;
+﻿using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Base;
 
-namespace Skoruba.IdentityServer4.Admin.AspNetIdentity.Dtos.Identity
+namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
 {
     public class UserProviderDto<TUserDtoKey> : BaseUserProviderDto<TUserDtoKey>
     {

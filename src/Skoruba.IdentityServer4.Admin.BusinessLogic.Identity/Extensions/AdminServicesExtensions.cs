@@ -4,7 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Skoruba.IdentityServer4.Admin.AspNetIdentity.Dtos.Identity;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories;

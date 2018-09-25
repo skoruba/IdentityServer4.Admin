@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Skoruba.IdentityServer4.Admin.AspNetIdentity.Dtos.Identity
+namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
 {
     public class RolesDto<TRoleDto, TRoleDtoKey> where TRoleDto : RoleDto<TRoleDtoKey>
     {
