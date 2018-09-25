@@ -9,6 +9,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Constants;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
+using TableConst = Skoruba.IdentityServer4.Admin.EntityFramework.Constants;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts
 {
@@ -18,7 +19,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts
         private readonly ConfigurationStoreOptions _storeOptions;
         private readonly OperationalStoreOptions _operationalOptions;
 
-        public AdminDbContext(DbContextOptions<AdminDbContext> options, 
+        public AdminDbContext(DbContextOptions<AdminDbContext> options,
             ConfigurationStoreOptions storeOptions,
                 OperationalStoreOptions operationalOptions)
             : base(options)
@@ -26,7 +27,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts
             _storeOptions = storeOptions;
             _operationalOptions = operationalOptions;
         }
-        
+
         public DbSet<ApiResource> ApiResources { get; set; }
 
         public DbSet<IdentityResource> IdentityResources { get; set; }
@@ -75,9 +76,21 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts
             base.OnModelCreating(builder);
 
             ConfigureIdentityContext(builder);
+            ConfigureLogContext(builder);
             builder.ConfigureClientContext(_storeOptions);
             builder.ConfigureResourcesContext(_storeOptions);
-            builder.ConfigurePersistedGrantContext(_operationalOptions);   
+            builder.ConfigurePersistedGrantContext(_operationalOptions);
+        }
+
+        private void ConfigureLogContext(ModelBuilder builder)
+        {
+            builder.Entity<Log>(log =>
+            {
+                log.ToTable(TableConst.TableConsts.Logging);
+                log.HasKey(x => x.Id);
+                log.Property(x => x.Properties).HasColumnType("xml");
+                log.Property(x => x.Level).HasMaxLength(128);
+            });
         }
 
         private void ConfigureIdentityContext(ModelBuilder builder)
