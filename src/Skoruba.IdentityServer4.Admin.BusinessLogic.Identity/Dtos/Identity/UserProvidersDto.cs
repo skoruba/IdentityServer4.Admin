@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Skoruba.IdentityServer4.Admin.AspNetIdentity.Dtos.Identity
+namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
 {
     public class UserProvidersDto<TUserDtoKey> : UserProviderDto<TUserDtoKey>
     {

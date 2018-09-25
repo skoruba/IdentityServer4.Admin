@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using Skoruba.IdentityServer4.Admin.AspNetIdentity.Dtos.Identity;
-using Skoruba.IdentityServer4.Admin.AspNetIdentity.Dtos.Identity.Base;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Base;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
