@@ -1,4 +1,4 @@
-﻿using Skoruba.IdentityServer4.Admin.AspNetIdentity.Helpers;
+﻿using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources
 {
