@@ -1,0 +1,25 @@
+﻿.navbar-brand > img {
+	max-height: 31px;
+}
+
+
+.navbar-brand.logo {
+	padding: 10px 10px;
+}
+
+.navbar-brand-image-mobile {
+	display: none;
+}
+
+@media (max-width: 767px) {
+
+	.navbar-brand-image {
+		display: none;
+	}
+
+	.navbar-brand-image-mobile{
+		display: block;
+		padding-left: 0;
+		padding-right: 0;
+	}
+}

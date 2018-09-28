@@ -1,0 +1,90 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}
+
+<div class="welcome-block px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+	<h1 class="display-4">@Localizer["PageTitle"]</h1>
+	<p class="lead">@Localizer["PageSubTitle"]</p>
+</div>
+
+<!-- Cards -->
+<div class="card-deck mb-3 text-center">
+	<!-- Clients -->
+	<div class="card mb-4 box-shadow">
+		<div class="card-header">
+			<h4 class="my-0 font-weight-normal">@Localizer["ButtonClients"]</h4>
+		</div>
+		<div class="card-body">
+			<h1 class="card-title">
+				<span class="oi oi-monitor" title="Clients" aria-hidden="true"></span>
+			</h1>
+			<a asp-controller="Configuration" asp-action="Clients" class="btn btn-lg btn-block btn-primary">@Localizer["ButtonManage"]</a>
+		</div>
+	</div>
+	<!-- Identity Resources -->
+	<div class="card mb-4 box-shadow">
+		<div class="card-header">
+			<h4 class="my-0 font-weight-normal">@Localizer["ButtonIdentityClients"]</h4>
+		</div>
+		<div class="card-body">
+			<h1 class="card-title">
+				<span class="oi oi-tags" title="Identity Resources" aria-hidden="true"></span>
+			</h1>
+			<a asp-controller="Configuration" asp-action="IdentityResources" class="btn btn-lg btn-block btn-outline-primary">@Localizer["ButtonManage"]</a>
+		</div>
+	</div>
+	<!-- Api Resources -->
+	<div class="card mb-4 box-shadow">
+		<div class="card-header">
+			<h4 class="my-0 font-weight-normal">@Localizer["ButtonApiResources"]</h4>
+		</div>
+		<div class="card-body">
+			<h1 class="card-title">
+				<span class="oi oi-cloud" title="Api Resources" aria-hidden="true"></span>
+			</h1>
+			<a asp-controller="Configuration" asp-action="ApiResources" class="btn btn-lg btn-block btn-primary">@Localizer["ButtonManage"]</a>
+		</div>
+	</div>
+</div>
+<div class="card-deck mb-3 text-center">
+	<!-- Persisted Grants -->
+	<div class="card mb-4 box-shadow">
+		<div class="card-header">
+			<h4 class="my-0 font-weight-normal">@Localizer["ButtonPersistedGrants"]</h4>
+		</div>
+		<div class="card-body">
+			<h1 class="card-title">
+				<span class="oi oi-key" title="Persisted Grants" aria-hidden="true"></span>
+			</h1>
+			<a asp-controller="Grant" asp-action="PersistedGrants" class="btn btn-lg btn-block btn-outline-primary">@Localizer["ButtonManage"]</a>
+		</div>
+	</div>
+	<!-- Users -->
+	<div class="card mb-4 box-shadow">
+		<div class="card-header">
+			<h4 class="my-0 font-weight-normal">@Localizer["ButtonUsers"]</h4>
+		</div>
+		<div class="card-body">
+			<h1 class="card-title">
+				<span class="oi oi-person" title="Users" aria-hidden="true"></span>
+			</h1>
+			<a asp-controller="Identity" asp-action="Users" class="btn btn-lg btn-block btn-primary">@Localizer["ButtonManage"]</a>
+		</div>
+	</div>
+	<!-- Roles -->
+	<div class="card mb-4 box-shadow">
+		<div class="card-header">
+			<h4 class="my-0 font-weight-normal">@Localizer["ButtonRoles"]</h4>
+		</div>
+		<div class="card-body">
+			<h1 class="card-title">
+				<span class="oi oi-lock-locked" title="Roles" aria-hidden="true"></span>
+			</h1>
+			<a asp-controller="Identity" asp-action="Roles" class="btn btn-lg btn-block btn-outline-primary">@Localizer["ButtonManage"]</a>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,54 @@
+.jstValue {
+    white-space: pre-wrap;
+    /* font-size: 10px; */
+    font-style: normal;
+    font-variant-ligatures: normal;
+    font-variant-caps: normal;
+    font-variant-numeric: normal;
+    font-variant-east-asian: normal;
+    font-weight: normal;
+    font-stretch: normal;
+    font-size: 13px;
+    line-height: 18px;
+    font-family: monospace;
+}
+.jstComma {
+    white-space: pre-wrap;
+}
+.jstProperty {
+    color: #000;
+    word-wrap: break-word;
+}
+.jstBracket {
+    white-space: pre-wrap;;
+}
+.jstBool {
+    color: #1A01CC;
+    font-weight: bold;
+}
+.jstNum {
+    color: #D036D0;
+}
+.jstNull {
+    color: gray;
+}
+.jstStr {
+    color: #0B7500;
+}
+.jstFold:after {
+    content: ' -';
+    cursor: pointer;
+}
+.jstExpand {
+    white-space: normal;
+}
+.jstExpand:after {
+    content: ' +';
+    cursor: pointer;
+}
+.jstFolded {
+    white-space: normal !important;
+}
+.jstHiddenBlock {
+    display: none;
+}

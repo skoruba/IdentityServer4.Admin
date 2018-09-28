@@ -1,0 +1,58 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.ClientsDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}
+
+<div class="row">
+	<div class="col-12">
+		<h2>@Localizer["PageTitle"]</h2>
+	</div>
+
+	<div class="col-12">
+		<a asp-action="Client" class="btn btn-outline-primary mb-3"><span class="oi oi-plus"></span> @Localizer["ButtonAddNewClient"]</a>
+	</div>
+
+	<div class="col-12">
+		@await Html.PartialAsync("Common/Search", new Search() { Action = "Clients", Controller = "Configuration" })
+	</div>
+</div>
+<div class="row">
+	<div class="col-12">
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th></th>
+						<th>@Localizer["TableClientId"]</th>
+						<th>@Localizer["TableClientName"]</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var client in Model.Clients)
+					{
+						<tr>
+							<th><a class="btn btn-primary" asp-action="Client" asp-route-id="@client.Id">@Localizer["TableButtonEdit"]</a></th>
+							<td>@client.ClientId</td>
+							<td>@client.ClientName</td>
+							<td>
+								<a class="btn btn-danger" asp-action="ClientDelete" asp-route-id="@client.Id"><span class="oi oi-x"></span></a>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-12">
+		@await Html.PartialAsync("Common/Pager", new Pager { Action = "Clients", PageSize = Model.PageSize, TotalCount = Model.TotalCount, Search = ViewBag.Search, EnableSearch = true })
+	</div>
+</div>
