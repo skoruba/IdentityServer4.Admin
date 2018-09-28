@@ -1,0 +1,58 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.ApiResourcesDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}
+
+<div class="row">
+
+	<div class="col-12">
+		<h2>@Localizer["PageTitle"]</h2>
+	</div>
+
+	<div class="col-12">
+		<a asp-action="ApiResource" class="btn btn-outline-primary mb-3"><span class="oi oi-plus"></span> @Localizer["ButtonAddResource"]</a>
+	</div>
+
+	<div class="col-12">
+		@await Html.PartialAsync("Common/Search", new Search() { Action = "ApiResources", Controller = "Configuration" })
+	</div>
+</div>
+<div class="row">
+	<div class="col-12">
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th></th>
+						<th>@Localizer["TableName"]</th>
+						<th></th>
+					</tr>
+				</thead>
+
+				<tbody>
+					@foreach (var api in Model.ApiResources)
+					{
+						<tr>
+							<th scope="row"><a class="btn btn-primary" asp-action="ApiResource" asp-route-id="@api.Id">@Localizer["TableButtonEdit"]</a></th>
+							<td>@api.Name</td>
+							<td>
+								<a class="btn btn-danger" asp-action="ApiResourceDelete" asp-route-id="@api.Id"><span class="oi oi-x"></span></a>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-12">
+		@await Html.PartialAsync("Common/Pager", new Pager { Action = "ApiResources", PageSize = Model.PageSize, TotalCount = Model.TotalCount, EnableSearch = true, Search = @ViewBag.Search })
+	</div>
+</div>
