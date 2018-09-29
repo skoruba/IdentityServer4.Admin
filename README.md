@@ -31,7 +31,7 @@ dotnet new skoruba.is4admin --name MyProject --title MyProject --adminrole MyRol
 
 ### Template uses following list of nuget packages
 
-- https://www.nuget.org/profiles/skoruba
+- [Available nuget packages](https://www.nuget.org/profiles/skoruba)
 
 ## Cloning
 
