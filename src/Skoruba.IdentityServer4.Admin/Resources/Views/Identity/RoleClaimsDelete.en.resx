@@ -120,6 +120,12 @@
   <data name="ButtonDeleteRoleClaim" xml:space="preserve">
     <value>Delete Role Claim</value>
   </data>
+  <data name="NavigationRoleClaims" xml:space="preserve">
+    <value>Role Claims</value>
+  </data>
+  <data name="NavigationRoles" xml:space="preserve">
+    <value>Roles</value>
+  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Delete Role Claim</value>
   </data>

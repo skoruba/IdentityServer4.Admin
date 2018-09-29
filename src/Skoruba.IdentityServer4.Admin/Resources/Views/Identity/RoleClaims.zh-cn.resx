@@ -120,6 +120,9 @@
   <data name="ButtonAddClaim" xml:space="preserve">
     <value>添加角色声明</value>
   </data>
+  <data name="NavigationRoles" xml:space="preserve">
+    <value>角色</value>
+  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>角色声明</value>
   </data>

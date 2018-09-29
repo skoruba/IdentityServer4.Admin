@@ -120,6 +120,12 @@
   <data name="ActionDeleteRole" xml:space="preserve">
     <value>Delete Role</value>
   </data>
+  <data name="NavigationUserRoles" xml:space="preserve">
+    <value>User Roles</value>
+  </data>
+  <data name="NavigationUsers" xml:space="preserve">
+    <value>Users</value>
+  </data>
   <data name="SubTitle" xml:space="preserve">
     <value>Delete Role</value>
   </data>

@@ -120,6 +120,12 @@
   <data name="ActionDeleteRole" xml:space="preserve">
     <value>删除角色</value>
   </data>
+  <data name="NavigationUserRoles" xml:space="preserve">
+    <value>用户角色</value>
+  </data>
+  <data name="NavigationUsers" xml:space="preserve">
+    <value>用户</value>
+  </data>
   <data name="SubTitle" xml:space="preserve">
     <value>删除角色</value>
   </data>

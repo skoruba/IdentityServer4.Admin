@@ -120,6 +120,9 @@
   <data name="ButtonDeleteRole" xml:space="preserve">
     <value>删除角色</value>
   </data>
+  <data name="NavigationRoles" xml:space="preserve">
+    <value>角色</value>
+  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>删除角色</value>
   </data>

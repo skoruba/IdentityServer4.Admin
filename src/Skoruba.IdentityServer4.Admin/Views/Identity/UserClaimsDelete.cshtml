@@ -14,9 +14,9 @@
 		<div class="col-12">
 			<nav aria-label="breadcrumb">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="Users">Users</a></li>
+					<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="Users">@Localizer["NavigationUsers"]</a></li>
 					<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="UserProfile" asp-route-id="@Model.UserId">@Model.UserName</a></li>
-					<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="UserClaims" asp-route-id="@Model.UserId">User Claims</a></li>
+					<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="UserClaims" asp-route-id="@Model.UserId">@Localizer["NavigationUserClaims"]</a></li>
 					<li class="breadcrumb-item active" aria-current="page">@Localizer["PageTitle"]</li>
 				</ol>
 			</nav>
