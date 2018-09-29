@@ -129,6 +129,9 @@
   <data name="ButtonSaveApiResource" xml:space="preserve">
     <value>保存 Api 资源</value>
   </data>
+  <data name="NavigationApiResources" xml:space="preserve">
+    <value>Api 资源</value>
+  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Api 资源</value>
   </data>

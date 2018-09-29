@@ -120,6 +120,12 @@
   <data name="ButtonAddProperty" xml:space="preserve">
     <value>添加客户端属性</value>
   </data>
+  <data name="NavigationClientProperties" xml:space="preserve">
+    <value>客户端属性</value>
+  </data>
+  <data name="NavigationClients" xml:space="preserve">
+    <value>客户端</value>
+  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>客户端属性</value>
   </data>

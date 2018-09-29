@@ -120,6 +120,12 @@
   <data name="ButtonDeleteApiScope" xml:space="preserve">
     <value>Delete Api Scope</value>
   </data>
+  <data name="NavigationApiResources" xml:space="preserve">
+    <value>Api Resources</value>
+  </data>
+  <data name="NavigationApiScopes" xml:space="preserve">
+    <value>Api Scopes</value>
+  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Delete Api Scope</value>
   </data>

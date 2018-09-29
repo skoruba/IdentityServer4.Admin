@@ -12,17 +12,17 @@
 	<div class="col-12">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiResources">Api Resources</a></li>
+				<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiResources">@Localizer["NavigationApiResources"]</a></li>
 				<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiResource" asp-route-id="@Model.ApiResourceId">@Model.ResourceName</a></li>
 
 				@if (Model.ApiScopeId != 0)
 				{
-					<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiScopes" asp-route-id="@Model.ApiResourceId">Api Scopes</a></li>
+					<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiScopes" asp-route-id="@Model.ApiResourceId">@Localizer["NavigationApiScopes"]</a></li>
 					<li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
 				}
 				else
 				{
-					<li class="breadcrumb-item active" aria-current="page">Api Scopes</li>
+					<li class="breadcrumb-item active" aria-current="page">@Localizer["NavigationApiScopes"]</li>
 				}
 			</ol>
 		</nav>

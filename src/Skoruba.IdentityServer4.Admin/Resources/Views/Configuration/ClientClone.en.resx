@@ -150,6 +150,9 @@
   <data name="LabelCloneClientScopes" xml:space="preserve">
     <value>Client Scopes</value>
   </data>
+  <data name="NavigationClients" xml:space="preserve">
+    <value>Clients</value>
+  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Clone Client</value>
   </data>
