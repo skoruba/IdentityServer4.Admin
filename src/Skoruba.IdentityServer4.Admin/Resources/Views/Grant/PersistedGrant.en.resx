@@ -132,6 +132,9 @@
   <data name="DeleteDialogYes" xml:space="preserve">
     <value>Yes - delete</value>
   </data>
+  <data name="NavigationPersistedGrants" xml:space="preserve">
+    <value>Persisted Grants</value>
+  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Persisted Grant</value>
   </data>
