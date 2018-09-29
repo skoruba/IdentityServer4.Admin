@@ -1,12 +1,24 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
-@model Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.UserDto<int>
+@model UserDto<int>
 @inject IViewLocalizer Localizer
 
 @{
 	ViewBag.Title = Localizer["PageTitle"];
 	Layout = "_Layout";
 }
+
+<div class="row">
+	<div class="col-12">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="Users">Users</a></li>
+				<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="UserProfile" asp-route-id="@Model.Id">@Model.UserName</a></li>
+				<li class="breadcrumb-item active" aria-current="page">@Localizer["PageTitle"]</li>
+			</ol>
+		</nav>
+	</div>
+</div>
 
 <form id="client-form" asp-controller="Identity" asp-action="UserDelete" Method="post">
 

@@ -120,9 +120,6 @@
   <data name="ButtonAddClaim" xml:space="preserve">
     <value>Add User Claim</value>
   </data>
-  <data name="ButtonBackUser" xml:space="preserve">
-    <value>Back to User</value>
-  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>User Claims</value>
   </data>

@@ -7,7 +7,21 @@
 	Layout = "_Layout";
 }
 
-<h2>@Localizer["PageTitle"] - @Model.ClientIdOriginal (@Model.ClientNameOriginal)</h2>
+<div class="row">
+	<div class="col-12">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="Clients">Clients</a></li>
+				<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="Client" asp-route-id="@Model.Id">@Model.ClientIdOriginal</a></li>
+				<li class="breadcrumb-item active" aria-current="page">@Localizer["PageTitle"]</li>
+			</ol>
+		</nav>
+	</div>
+
+	<div class="col-12">
+		<h2>@Localizer["PageTitle"] - @Model.ClientIdOriginal (@Model.ClientNameOriginal)</h2>
+	</div>
+</div>
 
 <form id="client-form" asp-controller="Configuration" asp-action="ClientClone" Method="post">
 

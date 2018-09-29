@@ -8,7 +8,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
         {
             Claims = new List<UserClaimDto<TUserDtoKey>>();
         }
-        
+
+        public string UserName { get; set; }
+
         public List<UserClaimDto<TUserDtoKey>> Claims { get; set; }
 
         public int TotalCount { get; set; }

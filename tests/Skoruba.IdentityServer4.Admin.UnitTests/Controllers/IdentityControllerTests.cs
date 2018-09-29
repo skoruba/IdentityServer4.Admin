@@ -56,7 +56,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             // Assert            
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
-            viewResult.ActionName.Should().Be("Users");
+            viewResult.ActionName.Should().Be("UserProfile");
 
             var user = await dbContext.Users.Where(x => x.UserName == userDto.UserName).SingleOrDefaultAsync();
             userDto.Id = user.Id;
@@ -115,7 +115,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             // Assert            
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
-            viewResult.ActionName.Should().Be("Users");
+            viewResult.ActionName.Should().Be("UserProfile");
 
             var updatedUser = await identityService.GetUserAsync(updatedUserDto.Id.ToString());
 
@@ -170,12 +170,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             // Assert            
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
-            viewResult.ActionName.Should().Be("Roles");
+            viewResult.ActionName.Should().Be("Role");
 
             var role = await dbContext.Roles.Where(x => x.Name == roleDto.Name).SingleOrDefaultAsync();
             roleDto.Id = role.Id;
 
-            var addedRole = await identityService.GetRoleAsync(roleDto);
+            var addedRole = await identityService.GetRoleAsync(roleDto.Id.ToString());
 
             roleDto.ShouldBeEquivalentTo(addedRole, opts => opts.Excluding(x => x.Id));
         }
@@ -203,7 +203,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var viewModel = Assert.IsType<RoleDto<int>>(viewResult.ViewData.Model);
             roleDto.Id = roleId;
-            var addedRole = await identityService.GetRoleAsync(roleDto);
+            var addedRole = await identityService.GetRoleAsync(roleDto.Id.ToString());
 
             viewModel.ShouldBeEquivalentTo(addedRole);
         }
@@ -256,9 +256,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             // Assert            
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
-            viewResult.ActionName.Should().Be("Roles");
+            viewResult.ActionName.Should().Be("Role");
 
-            var updatedRole = await identityService.GetRoleAsync(updatedRoleDto);
+            var updatedRole = await identityService.GetRoleAsync(updatedRoleDto.Id.ToString());
 
             updatedRoleDto.ShouldBeEquivalentTo(updatedRole, opts => opts.Excluding(x => x.Id));
         }
@@ -327,7 +327,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             userRoleDto.ShouldBeEquivalentTo(userRole, opts => opts.Excluding(x => x.Roles)
                                                                    .Excluding(x => x.RolesList)
                                                                    .Excluding(x => x.PageSize)
-                                                                   .Excluding(x => x.TotalCount));
+                                                                   .Excluding(x => x.TotalCount)
+                                                                   .Excluding(x => x.UserName));
         }
 
         [Fact]
@@ -426,7 +427,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var addedRoleClaim = await identityService.GetRoleClaimAsync(role.Id.ToString(), roleClaim.Id);
 
-            roleClaimsDto.ShouldBeEquivalentTo(addedRoleClaim, opts => opts.Excluding(x => x.ClaimId));
+            roleClaimsDto.ShouldBeEquivalentTo(addedRoleClaim, opts => opts.Excluding(x => x.ClaimId)
+                .Excluding(x => x.RoleName));
         }
 
         [Fact]

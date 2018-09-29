@@ -120,9 +120,6 @@
   <data name="ButtonAddClaim" xml:space="preserve">
     <value>Add Role Claim</value>
   </data>
-  <data name="ButtonBackRole" xml:space="preserve">
-    <value>Back to Role</value>
-  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Role Claims</value>
   </data>

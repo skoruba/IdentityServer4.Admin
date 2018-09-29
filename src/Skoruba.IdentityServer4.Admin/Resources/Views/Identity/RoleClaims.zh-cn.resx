@@ -120,9 +120,6 @@
   <data name="ButtonAddClaim" xml:space="preserve">
     <value>添加角色声明</value>
   </data>
-  <data name="ButtonBackRole" xml:space="preserve">
-    <value>回到角色</value>
-  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>角色声明</value>
   </data>

@@ -120,9 +120,6 @@
   <data name="ButtonAddProperty" xml:space="preserve">
     <value>Add Client Property</value>
   </data>
-  <data name="ButtonBackClient" xml:space="preserve">
-    <value>Back to Client</value>
-  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Client Properties</value>
   </data>

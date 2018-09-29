@@ -120,9 +120,6 @@
   <data name="ButtonAddClaim" xml:space="preserve">
     <value>添加用户声明</value>
   </data>
-  <data name="ButtonBackUser" xml:space="preserve">
-    <value>回到用户</value>
-  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>用户声明</value>
   </data>

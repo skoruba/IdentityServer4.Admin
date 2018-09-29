@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
-@model Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.RoleClaimsDto<int>
+@model RoleClaimsDto<int>
 @inject IViewLocalizer Localizer
 
 @{
@@ -9,14 +9,25 @@
 	Layout = "_Layout";
 }
 
+
+
 <form id="role-claims-form" asp-controller="Identity" asp-action="RoleClaims" Method="post">
 	<div class="row">
+
+		<div class="col-12">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="Roles">Roles</a></li>
+					<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="Role" asp-route-id="@Model.RoleId">@Model.RoleName</a></li>
+					<li class="breadcrumb-item active" aria-current="page">@Localizer["PageTitle"]</li>
+				</ol>
+			</nav>
+		</div>
+
 		<div class="col-md-12">
 			<h3>@Localizer["PageTitle"]</h3>
 
 			<div asp-validation-summary="All" class="text-danger"></div>
-
-			<a asp-action="Role" asp-route-id="@Model.RoleId" class="btn btn-outline-primary mb-3">@Localizer["ButtonBackRole"]</a>
 
 			<!--Hidden -->
 			<input type="hidden" asp-for="RoleId" />
@@ -31,7 +42,7 @@
 						</label>
 						<div class="col-sm-9">
 							<picker id="ClaimType" multiple-select="false" min-search-text="2"
-									selected-item="@Model.ClaimType" url="@Url.Action("SearchClaims","Configuration")?claim"
+									selected-item="@Model.ClaimType" url="@Url.Action("SearchClaims", "Configuration")?claim"
 									search-input-placeholder="Enter 2 and more characters" selected-items-title="Selected: "
 									required="true" required-message="The Type is required.">
 							</picker>

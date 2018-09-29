@@ -203,7 +203,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var role = await context.Roles.Where(x => x.Name == roleDto.Name).SingleOrDefaultAsync();
                 roleDto.Id = role.Id;
 
-                var newRoleDto = await identityService.GetRoleAsync(roleDto);
+                var newRoleDto = await identityService.GetRoleAsync(roleDto.Id.ToString());
 
                 //Assert new role
                 roleDto.ShouldBeEquivalentTo(newRoleDto);
@@ -256,7 +256,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var role = await context.Roles.Where(x => x.Name == roleDto.Name).SingleOrDefaultAsync();
                 roleDto.Id = role.Id;
 
-                var newRoleDto = await identityService.GetRoleAsync(roleDto);
+                var newRoleDto = await identityService.GetRoleAsync(roleDto.Id.ToString());
 
                 //Assert new role
                 roleDto.ShouldBeEquivalentTo(newRoleDto);
@@ -478,7 +478,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var role = await context.Roles.Where(x => x.Name == roleDto.Name).SingleOrDefaultAsync();
                 roleDto.Id = role.Id;
 
-                var newRoleDto = await identityService.GetRoleAsync(roleDto);
+                var newRoleDto = await identityService.GetRoleAsync(roleDto.Id.ToString());
 
                 //Assert new role
                 roleDto.ShouldBeEquivalentTo(newRoleDto);
@@ -508,7 +508,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var role = await context.Roles.Where(x => x.Name == roleDto.Name).SingleOrDefaultAsync();
                 roleDto.Id = role.Id;
 
-                var newRoleDto = await identityService.GetRoleAsync(roleDto);
+                var newRoleDto = await identityService.GetRoleAsync(roleDto.Id.ToString());
 
                 //Assert new role
                 roleDto.ShouldBeEquivalentTo(newRoleDto);
@@ -522,7 +522,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 //Update role
                 await identityService.UpdateRoleAsync(roleDtoForUpdate);
 
-                var updatedRole = await identityService.GetRoleAsync(roleDtoForUpdate);
+                var updatedRole = await identityService.GetRoleAsync(roleDtoForUpdate.Id.ToString());
 
                 //Assert updated role
                 roleDtoForUpdate.ShouldBeEquivalentTo(updatedRole);
@@ -552,7 +552,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var role = await context.Roles.Where(x => x.Name == roleDto.Name).SingleOrDefaultAsync();
                 roleDto.Id = role.Id;
 
-                var newRoleDto = await identityService.GetRoleAsync(roleDto);
+                var newRoleDto = await identityService.GetRoleAsync(roleDto.Id.ToString());
 
                 //Assert new role
                 roleDto.ShouldBeEquivalentTo(newRoleDto);
@@ -592,7 +592,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var role = await context.Roles.Where(x => x.Name == roleDto.Name).SingleOrDefaultAsync();
                 roleDto.Id = role.Id;
 
-                var newRoleDto = await identityService.GetRoleAsync(roleDto);
+                var newRoleDto = await identityService.GetRoleAsync(roleDto.Id.ToString());
 
                 //Assert new role
                 roleDto.ShouldBeEquivalentTo(newRoleDto);
@@ -609,7 +609,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var newRoleClaimDto = await identityService.GetRoleClaimAsync(roleDto.Id.ToString(), roleClaimDto.ClaimId);
 
                 //Assert new role
-                roleClaimDto.ShouldBeEquivalentTo(newRoleClaimDto);
+                roleClaimDto.ShouldBeEquivalentTo(newRoleClaimDto, options => options.Excluding(o => o.RoleName));
             }
         }
 
@@ -636,7 +636,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var role = await context.Roles.Where(x => x.Name == roleDto.Name).SingleOrDefaultAsync();
                 roleDto.Id = role.Id;
 
-                var newRoleDto = await identityService.GetRoleAsync(roleDto);
+                var newRoleDto = await identityService.GetRoleAsync(roleDto.Id.ToString());
 
                 //Assert new role
                 roleDto.ShouldBeEquivalentTo(newRoleDto);
@@ -653,7 +653,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var newRoleClaimDto = await identityService.GetRoleClaimAsync(roleDto.Id.ToString(), roleClaimDto.ClaimId);
 
                 //Assert new role
-                roleClaimDto.ShouldBeEquivalentTo(newRoleClaimDto);
+                roleClaimDto.ShouldBeEquivalentTo(newRoleClaimDto, options => options.Excluding(o => o.RoleName));
 
                 await identityService.DeleteRoleClaimsAsync(roleClaimDto);
 

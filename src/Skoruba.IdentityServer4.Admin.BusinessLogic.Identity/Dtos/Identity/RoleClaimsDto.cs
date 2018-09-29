@@ -9,6 +9,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
             Claims = new List<RoleClaimDto<TRoleDtoKey>>();
         }
 
+        public string RoleName { get; set; }
+
         public List<RoleClaimDto<TRoleDtoKey>> Claims { get; set; }
 
         public int TotalCount { get; set; }

@@ -120,9 +120,6 @@
   <data name="ActionAddRole" xml:space="preserve">
     <value>添加角色</value>
   </data>
-  <data name="ActionBackUser" xml:space="preserve">
-    <value>回到用户</value>
-  </data>
   <data name="ActionRemoveRole" xml:space="preserve">
     <value>删除</value>
   </data>

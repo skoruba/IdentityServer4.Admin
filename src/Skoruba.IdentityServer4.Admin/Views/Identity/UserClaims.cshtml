@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
-@model Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.UserClaimsDto<int>
+@model UserClaimsDto<int>
 @inject IViewLocalizer Localizer
 
 @{
@@ -11,15 +11,24 @@
 
 <form id="user-claims-form" asp-controller="Identity" asp-action="UserClaims" Method="post">
 	<div class="row">
+		
+		<div class="col-12">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="Users">Users</a></li>
+					<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="UserProfile" asp-route-id="@Model.UserId">@Model.UserName</a></li>
+					<li class="breadcrumb-item active" aria-current="page">@Localizer["PageTitle"]</li>
+				</ol>
+			</nav>
+		</div>
+
 		<div class="col-md-12">
 			<h3>@Localizer["PageTitle"]</h3>
 
 			<div asp-validation-summary="All" class="text-danger"></div>
 
-			<a asp-action="UserProfile" asp-route-id="@Model.UserId" class="btn btn-outline-primary mb-3">@Localizer["ButtonBackUser"]</a>
-
 			<!--Hidden -->
-			<input type="hidden" asp-for="UserId" />
+			<input type="hidden" asp-for="UserId"/>
 
 			<div class="card mt-3">
 				<h5 class="card-header">@Localizer["PanelTitleNew"]</h5>
@@ -32,9 +41,9 @@
 						</label>
 						<div class="col-sm-9">
 							<picker id="ClaimType" multiple-select="false" min-search-text="2"
-									selected-item="@Model.ClaimType" url="@Url.Action("SearchClaims","Configuration")?claim"
-									search-input-placeholder="Enter 2 and more characters" selected-items-title="Selected: "
-									required="true" required-message="The Type is required.">
+							        selected-item="@Model.ClaimType" url="@Url.Action("SearchClaims", "Configuration")?claim"
+							        search-input-placeholder="Enter 2 and more characters" selected-items-title="Selected: "
+							        required="true" required-message="The Type is required.">
 							</picker>
 
 							<span asp-validation-for="ClaimType" class="text-danger"></span>

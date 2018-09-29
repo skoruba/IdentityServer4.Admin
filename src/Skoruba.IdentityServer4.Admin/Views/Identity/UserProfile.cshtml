@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
-@model Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.UserDto<int>
+@model UserDto<int>
 @inject IViewLocalizer Localizer
 
 @{
@@ -8,9 +8,22 @@
 	Layout = "_Layout";
 }
 
-<form id="client-form" asp-controller="Identity" asp-action="UserProfile" Method="post">
+<div class="row">
+	<div class="col-12">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="Users">Users</a></li>
+				<li class="breadcrumb-item active" aria-current="page">@Model.UserName</li>
+			</ol>
+		</nav>
+	</div>
 
-	<h2>@Localizer["PageTitle"]</h2>
+	<div class="col-12">
+		<h2>@Localizer["PageTitle"]</h2>
+	</div>
+</div>
+
+<form id="client-form" asp-controller="Identity" asp-action="UserProfile" Method="post">
 
 	<div asp-validation-summary="All" class="text-danger"></div>
 

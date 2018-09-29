@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Grant
-@model Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Grant.PersistedGrantDto
+@model PersistedGrantDto
 @inject IViewLocalizer Localizer
 
 @{
@@ -8,15 +8,30 @@
 	Layout = "_Layout";
 }	
 
-<h2>@Localizer["PageTitle"]</h2>
+<div class="row">
+	<div class="col-12">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a asp-controller="Grant" asp-action="PersistedGrants">Persisted Grants</a></li>
+				<li class="breadcrumb-item"><a asp-controller="Grant" asp-action="PersistedGrant" asp-route-id="@Model.SubjectId">@Model.SubjectId</a></li>
+				<li class="breadcrumb-item active" aria-current="page">@Localizer["PageTitle"]</li>
+			</ol>
+		</nav>
+	</div>
+
+	<div class="col-12">
+		<h2>@Localizer["PageTitle"]</h2>
+	</div>
+</div>
 
 <form id="client-form" asp-controller="Grant" asp-action="PersistedGrantDelete" Method="post">
 
 	<input type="hidden" asp-for="Key" />
 
 	<div class="row table-responsive">
-		<table class="table table-striped">
-			<thead>
+		<div class="col-12">
+			<table class="table table-striped">
+				<thead>
 				<tr>
 					<th>@Localizer["TableSubjectId"]</th>
 					<th>@Localizer["TableType"]</th>
@@ -24,9 +39,9 @@
 					<th>@Localizer["TableData"]</th>
 					<th>@Localizer["TableClient"]</th>
 				</tr>
-			</thead>
+				</thead>
 
-			<tbody>
+				<tbody>
 				<tr>
 					<td>@Model.SubjectId</td>
 					<td>@Model.Type</td>
@@ -34,8 +49,9 @@
 					<td>@Model.Data</td>
 					<td>@Model.ClientId</td>
 				</tr>
-			</tbody>
-		</table>
+				</tbody>
+			</table>
+		</div>
 	</div>
 
 	<div class="row">

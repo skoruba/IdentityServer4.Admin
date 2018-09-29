@@ -9,6 +9,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
             Providers = new List<UserProviderDto<TUserDtoKey>>();
         }
 
+        public string UserName { get; set; }
+
         public List<UserProviderDto<TUserDtoKey>> Providers { get; set; }
     }
 }
