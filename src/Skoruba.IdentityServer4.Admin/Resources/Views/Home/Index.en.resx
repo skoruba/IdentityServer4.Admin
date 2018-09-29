@@ -139,7 +139,7 @@
     <value>Users</value>
   </data>
   <data name="PageSubTitle" xml:space="preserve">
-    <value>The administration for the IdentityServer4 v2 and Asp.Net Core Identity</value>
+    <value>The administration for the IdentityServer4 and Asp.Net Core Identity</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Skoruba IdentityServer4 Admin</value>

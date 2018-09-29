@@ -8,7 +8,7 @@
 
 		@if (Model.Id != 0)
 		{
-			<a asp-action="ClientClone" asp-route-id="@Model.Id" class="btn btn-outline-primary">@Localizer["ButtonClone"]</a>
+			<a asp-action="ClientClone" asp-route-id="@Model.Id" target="_blank" class="btn btn-outline-primary">@Localizer["ButtonClone"]</a>
 			<a asp-action="ClientDelete" asp-route-id="@Model.Id" class="btn btn-danger">@Localizer["ButtonDelete"]</a>
 		}
 	</div>

@@ -74,12 +74,13 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             return rolesDto;
         }
 
-        public async Task<IdentityResult> CreateRoleAsync(TRoleDto role)
+        public async Task<(IdentityResult identityResult, TKey roleId)> CreateRoleAsync(TRoleDto role)
         {
             var roleEntity = _mapper.Map<TRole>(role);
-            var identityResult = await _identityRepository.CreateRoleAsync(roleEntity);
+            var (identityResult, roleId) = await _identityRepository.CreateRoleAsync(roleEntity);
+            var handleIdentityError = HandleIdentityError(identityResult, _identityServiceResources.RoleCreateFailed().Description, _identityServiceResources.IdentityErrorKey().Description, role);
 
-            return HandleIdentityError(identityResult, _identityServiceResources.RoleCreateFailed().Description, _identityServiceResources.IdentityErrorKey().Description, role);
+            return (handleIdentityError, roleId);
         }
 
         private IdentityResult HandleIdentityError(IdentityResult identityResult, string errorMessage, string errorKey, object model)
@@ -90,12 +91,12 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             throw new UserFriendlyViewException(errorMessage, errorKey, viewErrorMessages, model);
         }
 
-        public async Task<TRoleDto> GetRoleAsync(TRoleDto role)
+        public async Task<TRoleDto> GetRoleAsync(string roleId)
         {
-            var roleEntity = _mapper.Map<TRole>(role);
+            var roleKey = ConvertToKeyFromString(roleId);
 
-            var userIdentityRole = await _identityRepository.GetRoleAsync(roleEntity);
-            if (userIdentityRole == null) throw new UserFriendlyErrorPageException(string.Format(_identityServiceResources.RoleDoesNotExist().Description, role.Id), _identityServiceResources.RoleDoesNotExist().Description);
+            var userIdentityRole = await _identityRepository.GetRoleAsync(roleKey);
+            if (userIdentityRole == null) throw new UserFriendlyErrorPageException(string.Format(_identityServiceResources.RoleDoesNotExist().Description, roleId), _identityServiceResources.RoleDoesNotExist().Description);
 
             var roleDto = _mapper.Map<TRoleDto>(userIdentityRole);
 
@@ -110,12 +111,14 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             return roleDtos;
         }
 
-        public async Task<IdentityResult> UpdateRoleAsync(TRoleDto role)
+        public async Task<(IdentityResult identityResult, TKey roleId)> UpdateRoleAsync(TRoleDto role)
         {
             var userIdentityRole = _mapper.Map<TRole>(role);
-            var identityResult = await _identityRepository.UpdateRoleAsync(userIdentityRole);
+            var (identityResult, roleId) = await _identityRepository.UpdateRoleAsync(userIdentityRole);
 
-            return HandleIdentityError(identityResult, _identityServiceResources.RoleUpdateFailed().Description, _identityServiceResources.IdentityErrorKey().Description, role);
+            var handleIdentityError = HandleIdentityError(identityResult, _identityServiceResources.RoleUpdateFailed().Description, _identityServiceResources.IdentityErrorKey().Description, role);
+
+            return (handleIdentityError, roleId);
         }
 
         public async Task<TUserDto> GetUserAsync(string userId)
@@ -128,20 +131,22 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             return userDto;
         }
 
-        public async Task<IdentityResult> CreateUserAsync(TUserDto user)
+        public async Task<(IdentityResult identityResult, TKey userId)> CreateUserAsync(TUserDto user)
         {
             var userIdentity = _mapper.Map<TUser>(user);
-            var identityResult = await _identityRepository.CreateUserAsync(userIdentity);
+            var (identityResult, userId) = await _identityRepository.CreateUserAsync(userIdentity);
+            var handleIdentityError = HandleIdentityError(identityResult, _identityServiceResources.UserCreateFailed().Description, _identityServiceResources.IdentityErrorKey().Description, user);
 
-            return HandleIdentityError(identityResult, _identityServiceResources.UserCreateFailed().Description, _identityServiceResources.IdentityErrorKey().Description, user);
+            return (handleIdentityError, userId);
         }
 
-        public async Task<IdentityResult> UpdateUserAsync(TUserDto user)
+        public async Task<(IdentityResult identityResult, TKey userId)> UpdateUserAsync(TUserDto user)
         {
             var userIdentity = _mapper.Map<TUser>(user);
-            var identityResult = await _identityRepository.UpdateUserAsync(userIdentity);
+            var (identityResult, userId) = await _identityRepository.UpdateUserAsync(userIdentity);
+            var handleIdentityError = HandleIdentityError(identityResult, _identityServiceResources.UserUpdateFailed().Description, _identityServiceResources.IdentityErrorKey().Description, user);
 
-            return HandleIdentityError(identityResult, _identityServiceResources.UserUpdateFailed().Description, _identityServiceResources.IdentityErrorKey().Description, user);
+            return (handleIdentityError, userId);
         }
 
         public async Task<IdentityResult> DeleteUserAsync(string userId, TUserDto user)
@@ -179,6 +184,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             var userIdentityRoles = await _identityRepository.GetUserRolesAsync(userId, page, pageSize);
             var roleDtos = _mapper.Map<UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey>>(userIdentityRoles);
 
+            var user = await _identityRepository.GetUserAsync(userId);
+            roleDtos.UserName = user.UserName;
+
             return roleDtos;
         }
 
@@ -196,6 +204,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
 
             var identityUserClaims = await _identityRepository.GetUserClaimsAsync(userId, page, pageSize);
             var claimDtos = _mapper.Map<UserClaimsDto<TUserDtoKey>>(identityUserClaims);
+
+            var user = await _identityRepository.GetUserAsync(userId);
+            claimDtos.UserName = user.UserName;
 
             return claimDtos;
         }
@@ -235,6 +246,15 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             return (TUserDtoKey)TypeDescriptor.GetConverter(typeof(TUserDtoKey)).ConvertFromInvariantString(id);
         }
 
+        public virtual TKey ConvertToKeyFromString(string id)
+        {
+            if (id == null)
+            {
+                return default(TKey);
+            }
+            return (TKey)TypeDescriptor.GetConverter(typeof(TKey)).ConvertFromInvariantString(id);
+        }
+
         public async Task<UserProvidersDto<TUserDtoKey>> GetUserProvidersAsync(string userId)
         {
             var userExists = await _identityRepository.ExistsUserAsync(userId);
@@ -243,6 +263,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             var userLoginInfos = await _identityRepository.GetUserProvidersAsync(userId);
             var providersDto = _mapper.Map<UserProvidersDto<TUserDtoKey>>(userLoginInfos);
             providersDto.UserId = ConvertUserDtoKeyFromString(userId);
+
+            var user = await _identityRepository.GetUserAsync(userId);
+            providersDto.UserName = user.UserName;
 
             return providersDto;
         }
@@ -263,6 +286,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             if (identityUserLogin == null) throw new UserFriendlyErrorPageException(string.Format(_identityServiceResources.UserProviderDoesNotExist().Description, providerKey), _identityServiceResources.UserProviderDoesNotExist().Description);
 
             var userProviderDto = _mapper.Map<UserProviderDto<TUserDtoKey>>(identityUserLogin);
+            var user = await GetUserAsync(userId);
+            userProviderDto.UserName = user.UserName;
 
             return userProviderDto;
         }
@@ -292,6 +317,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
 
             var identityRoleClaims = await _identityRepository.GetRoleClaimsAsync(roleId, page, pageSize);
             var roleClaimDtos = _mapper.Map<RoleClaimsDto<TRoleDtoKey>>(identityRoleClaims);
+            var roleDto = await GetRoleAsync(roleId);
+            roleClaimDtos.RoleName = roleDto.Name;
 
             return roleClaimDtos;
         }
@@ -304,6 +331,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             var identityRoleClaim = await _identityRepository.GetRoleClaimAsync(roleId, claimId);
             if (identityRoleClaim == null) throw new UserFriendlyErrorPageException(string.Format(_identityServiceResources.RoleClaimDoesNotExist().Description, claimId), _identityServiceResources.RoleClaimDoesNotExist().Description);
             var roleClaimsDto = _mapper.Map<RoleClaimsDto<TRoleDtoKey>>(identityRoleClaim);
+            var roleDto = await GetRoleAsync(roleId);
+            roleClaimsDto.RoleName = roleDto.Name;
 
             return roleClaimsDto;
         }

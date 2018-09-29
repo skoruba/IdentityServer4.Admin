@@ -58,7 +58,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
                 return View(new TRoleDto());
             }
 
-            var role = await _identityService.GetRoleAsync(new TRoleDto { Id = id });
+            var role = await _identityService.GetRoleAsync(id.ToString());
 
             return View(role);
         }
@@ -72,18 +72,22 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
                 return View(role);
             }
 
+            TKey roleId;
+
             if (EqualityComparer<TRoleDtoKey>.Default.Equals(role.Id, default))
             {
-                await _identityService.CreateRoleAsync(role);
+                var roleData = await _identityService.CreateRoleAsync(role);
+                roleId = roleData.roleId;
             }
             else
             {
-                await _identityService.UpdateRoleAsync(role);
+                var roleData = await _identityService.UpdateRoleAsync(role);
+                roleId = roleData.roleId;
             }
 
             SuccessNotification(string.Format(_localizer["SuccessCreateRole"], role.Name), _localizer["SuccessTitle"]);
 
-            return RedirectToAction(nameof(Roles));
+            return RedirectToAction(nameof(Role), new { Id = roleId });
         }
 
         [HttpGet]
@@ -104,18 +108,22 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
                 return View(user);
             }
 
+            TKey userId;
+
             if (EqualityComparer<TUserDtoKey>.Default.Equals(user.Id, default))
             {
-                await _identityService.CreateUserAsync(user);
+                var userData = await _identityService.CreateUserAsync(user);
+                userId = userData.userId;
             }
             else
             {
-                await _identityService.UpdateUserAsync(user);
+                var userData = await _identityService.UpdateUserAsync(user);
+                userId = userData.userId;
             }
 
             SuccessNotification(string.Format(_localizer["SuccessCreateUser"], user.UserName), _localizer["SuccessTitle"]);
 
-            return RedirectToAction(nameof(Users));
+            return RedirectToAction(nameof(UserProfile), new { Id = userId });
         }
 
         [HttpGet]
@@ -162,13 +170,15 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             await _identityService.ExistsUserAsync(id.ToString());
             await _identityService.ExistsRoleAsync(roleId.ToString());
 
+            var userDto = await _identityService.GetUserAsync(id.ToString());
             var roles = await _identityService.GetRolesAsync();
 
             var rolesDto = new UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey>
             {
                 UserId = id,
                 RolesList = roles.Select(x => new SelectItem(x.Id.ToString(), x.Name)).ToList(),
-                RoleId = roleId
+                RoleId = roleId,
+                UserName = userDto.UserName
             };
 
             return View(rolesDto);
@@ -212,12 +222,15 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         [HttpGet]
         public async Task<IActionResult> UserClaimsDelete(TUserDtoKey id, int claimId)
-        {            
+        {
             if (EqualityComparer<TUserDtoKey>.Default.Equals(id, default)
             || EqualityComparer<int>.Default.Equals(claimId, default)) return NotFound();
 
             var claim = await _identityService.GetUserClaimAsync(id.ToString(), claimId);
             if (claim == null) return NotFound();
+
+            var userDto = await _identityService.GetUserAsync(id.ToString());
+            claim.UserName = userDto.UserName;
 
             return View(claim);
         }
@@ -236,7 +249,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         public async Task<IActionResult> UserProviders(TUserDtoKey id)
         {
             if (EqualityComparer<TUserDtoKey>.Default.Equals(id, default)) return NotFound();
-            
+
             var providers = await _identityService.GetUserProvidersAsync(id.ToString());
 
             return View(providers);
@@ -352,7 +365,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         {
             if (EqualityComparer<TRoleDtoKey>.Default.Equals(id, default)) return NotFound();
 
-            var roleDto = await _identityService.GetRoleAsync(new TRoleDto { Id = id });
+            var roleDto = await _identityService.GetRoleAsync(id.ToString());
             if (roleDto == null) return NotFound();
 
             return View(roleDto);

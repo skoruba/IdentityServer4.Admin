@@ -7,6 +7,19 @@
 	Layout = "_Layout";
 }
 
+
+<div class="row">
+	<div class="col-12">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="Clients">Clients</a></li>
+				<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="Client" asp-route-id="@Model.Id">@Model.ClientName</a></li>
+				<li class="breadcrumb-item active" aria-current="page">@Localizer["PageTitle"]</li>
+			</ol>
+		</nav>
+	</div>
+</div>
+
 <form id="client-form" asp-controller="Configuration" asp-action="ClientDelete" Method="post">
 
 	<!--Hidden -->

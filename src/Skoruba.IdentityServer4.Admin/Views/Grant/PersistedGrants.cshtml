@@ -21,30 +21,28 @@
 	</div>
 </div>
 
-<div class="row">
+<div class="row table-responsive">
 	<div class="col-12">
-		<div class="table-responsive">
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th></th>
-						<th>@Localizer["TableSubjectId"]</th>
-						<th>@Localizer["TableSubjectName"]</th>
-					</tr>
-				</thead>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th></th>
+					<th>@Localizer["TableSubjectId"]</th>
+					<th>@Localizer["TableSubjectName"]</th>
+				</tr>
+			</thead>
 
-				<tbody>
-					@foreach (var persistedGrant in Model.PersistedGrants)
-					{
-						<tr>
-							<th scope="row"><a class="btn btn-primary" asp-action="PersistedGrant" asp-route-id="@persistedGrant.SubjectId">@Localizer["TableButtonDetail"]</a></th>
-							<td>@persistedGrant.SubjectId</td>
-							<td>@persistedGrant.SubjectName</td>
-						</tr>
-					}
-				</tbody>
-			</table>
-		</div>
+			<tbody>
+				@foreach (var persistedGrant in Model.PersistedGrants)
+				{
+					<tr>
+						<th scope="row"><a class="btn btn-primary" asp-action="PersistedGrant" asp-route-id="@persistedGrant.SubjectId">@Localizer["TableButtonDetail"]</a></th>
+						<td>@persistedGrant.SubjectId</td>
+						<td>@persistedGrant.SubjectName</td>
+					</tr>
+				}
+			</tbody>
+		</table>
 	</div>
 </div>
 

@@ -11,6 +11,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
         {
            Roles = new List<TRoleDto>(); 
         }
+
+        public string UserName { get; set; }
         
         public List<SelectItem> RolesList { get; set; }
 

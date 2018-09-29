@@ -28,19 +28,19 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfac
 
         Task<RolesDto<TRoleDto, TRoleDtoKey>> GetRolesAsync(string search, int page = 1, int pageSize = 10);
 
-        Task<IdentityResult> CreateRoleAsync(TRoleDto role);
+        Task<(IdentityResult identityResult, TKey roleId)> CreateRoleAsync(TRoleDto role);
 
-        Task<TRoleDto> GetRoleAsync(TRoleDto role);
+        Task<TRoleDto> GetRoleAsync(string roleId);
 
         Task<List<TRoleDto>> GetRolesAsync();
 
-        Task<IdentityResult> UpdateRoleAsync(TRoleDto role);
+        Task<(IdentityResult identityResult, TKey roleId)> UpdateRoleAsync(TRoleDto role);
 
         Task<TUserDto> GetUserAsync(string userId);
 
-        Task<IdentityResult> CreateUserAsync(TUserDto user);
+        Task<(IdentityResult identityResult, TKey userId)> CreateUserAsync(TUserDto user);
 
-        Task<IdentityResult> UpdateUserAsync(TUserDto user);
+        Task<(IdentityResult identityResult, TKey userId)> UpdateUserAsync(TUserDto user);
 
         Task<IdentityResult> DeleteUserAsync(string userId, TUserDto user);
 

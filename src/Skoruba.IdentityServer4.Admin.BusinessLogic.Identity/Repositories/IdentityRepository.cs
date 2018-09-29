@@ -112,22 +112,25 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories
             return pagedList;
         }
 
-        public Task<TRole> GetRoleAsync(TRole role)
+        public Task<TRole> GetRoleAsync(TKey roleId)
         {
-            return _roleManager.Roles.Where(x => x.Id.Equals(role.Id)).SingleOrDefaultAsync();
+            return _roleManager.Roles.Where(x => x.Id.Equals(roleId)).SingleOrDefaultAsync();
         }
 
-        public Task<IdentityResult> CreateRoleAsync(TRole role)
+        public async Task<(IdentityResult identityResult, TKey roleId)> CreateRoleAsync(TRole role)
         {
-            return _roleManager.CreateAsync(role);
+            var identityResult = await _roleManager.CreateAsync(role);
+
+            return (identityResult, role.Id);
         }
 
-        public async Task<IdentityResult> UpdateRoleAsync(TRole role)
+        public async Task<(IdentityResult identityResult, TKey roleId)> UpdateRoleAsync(TRole role)
         {
             var thisRole = await _roleManager.FindByIdAsync(role.Id.ToString());
             thisRole.Name = role.Name;
+            var identityResult = await _roleManager.UpdateAsync(thisRole);
 
-            return await _roleManager.UpdateAsync(thisRole);
+            return (identityResult, role.Id);
         }
 
         public async Task<IdentityResult> DeleteRoleAsync(TRole role)
@@ -142,19 +145,25 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories
             return _userManager.FindByIdAsync(userId);
         }
 
-        public Task<IdentityResult> CreateUserAsync(TUser user)
+        /// <summary>
+        /// Create a new user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>This method returns identity result and new user id</returns>
+        public async Task<(IdentityResult identityResult, TKey userId)> CreateUserAsync(TUser user)
         {
-            return _userManager.CreateAsync(user);
+            var identityResult = await _userManager.CreateAsync(user);
+
+            return (identityResult, user.Id);
         }
 
-        public async Task<IdentityResult> UpdateUserAsync(TUser user)
+        public async Task<(IdentityResult identityResult, TKey userId)> UpdateUserAsync(TUser user)
         {
-            var userIdentity = await _userManager.FindByIdAsync(user.Id.ToString());
-            if (userIdentity == null) return IdentityResult.Failed(new IdentityError() { Description = "User doesn't exists" });
-
+            var userIdentity = await _userManager.FindByIdAsync(user.Id.ToString());            
             _mapper.Map(user, userIdentity);
+            var identityResult = await _userManager.UpdateAsync(userIdentity);
 
-            return await _userManager.UpdateAsync(userIdentity);
+            return (identityResult, user.Id);
         }
 
         public async Task<IdentityResult> CreateUserRoleAsync(string userId, string roleId)

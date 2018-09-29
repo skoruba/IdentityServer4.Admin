@@ -120,9 +120,6 @@
   <data name="ActionAddRole" xml:space="preserve">
     <value>Add Role</value>
   </data>
-  <data name="ActionBackUser" xml:space="preserve">
-    <value>Back to User</value>
-  </data>
   <data name="ActionRemoveRole" xml:space="preserve">
     <value>Delete</value>
   </data>

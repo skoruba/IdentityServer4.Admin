@@ -47,11 +47,18 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
                 .SingleOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Add new identity resource
+        /// </summary>
+        /// <param name="identityResource"></param>
+        /// <returns>This method return new identity resource id</returns>
         public async Task<int> AddIdentityResourceAsync(IdentityResource identityResource)
         {
             _dbContext.IdentityResources.Add(identityResource);
 
-            return await AutoSaveChangesAsync();
+            await AutoSaveChangesAsync();
+
+            return identityResource.Id;
         }
 
         public async Task<bool> CanInsertIdentityResourceAsync(IdentityResource identityResource)

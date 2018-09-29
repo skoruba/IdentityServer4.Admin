@@ -10,12 +10,21 @@
 
 <form id="client-claims-form" asp-controller="Configuration" asp-action="ClientClaims" Method="post">
 	<div class="row">
+
+		<div class="col-12">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="Clients">Clients</a></li>
+					<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="Client" asp-route-id="@Model.ClientId">@Model.ClientName</a></li>
+					<li class="breadcrumb-item active" aria-current="page">Client Claims</li>
+				</ol>
+			</nav>
+		</div>
+
 		<div class="col-md-12">
-			<h3>@Localizer["PageTitle"] - @Model.ClientName</h3>
+			<h3>@Localizer["PageTitle"]</h3>
 
-			<div asp-validation-summary="All" class="text-danger"></div>
-
-			<a asp-action="Client" asp-route-id="@Model.ClientId" class="btn btn-outline-primary mb-3">@Localizer["ButtonBackClient"]</a>
+			<div asp-validation-summary="All" class="text-danger"></div>			
 
 			<!--Hidden -->
 			<input type="hidden" asp-for="ClientId" />
@@ -34,7 +43,7 @@
 						</label>
 						<div class="col-sm-9">
 							<picker id="Type" multiple-select="false" min-search-text="2"
-									selected-item="@Model.Type" url="@Url.Action("SearchClaims","Configuration")?claim"
+									selected-item="@Model.Type" url="@Url.Action("SearchClaims", "Configuration")?claim"
 									search-input-placeholder="Enter 2 and more characters" selected-items-title="Selected: "
 									required="true" required-message="The Type is required.">
 							</picker>

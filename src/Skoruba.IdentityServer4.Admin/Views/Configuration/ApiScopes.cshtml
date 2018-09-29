@@ -8,13 +8,34 @@
 	Layout = "_Layout";
 }
 
-<h2>@Localizer["PageTitle"] - @Model.ResourceName</h2>
+<div class="row">
+	<div class="col-12">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiResources">Api Resources</a></li>
+				<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiResource" asp-route-id="@Model.ApiResourceId">@Model.ResourceName</a></li>
+
+				@if (Model.ApiScopeId != 0)
+				{
+					<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiScopes" asp-route-id="@Model.ApiResourceId">Api Scopes</a></li>
+					<li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+				}
+				else
+				{
+					<li class="breadcrumb-item active" aria-current="page">Api Scopes</li>
+				}
+			</ol>
+		</nav>
+	</div>
+
+	<div class="col-12">
+		<h2>@Localizer["PageTitle"]</h2>
+	</div>
+</div>
 
 <form asp-action="ApiScopes" asp-route-scope="@Model.ApiScopeId" id="api-scope-form" method="post">
 
 	<div asp-validation-summary="All" class="text-danger"></div>
-
-	<a asp-action="ApiResource" asp-route-id="@Model.ApiResourceId" class="btn btn-outline-primary mb-3">@Localizer["ButtonBackApiResource"]</a>
 
 	<!--Hidden -->
 	<input type="hidden" asp-for="ApiScopeId" />
@@ -127,7 +148,7 @@
 								{
 									<tr>
 										<td>@scope.Name</td>
-										<td><a asp-action="ApiScopes" asp-route-scope="@scope.Id" class="btn btn-primary">@Localizer["TableButtonEdit"]</a> <a asp-action="ApiScopeDelete" asp-route-id="@Model.ApiResourceId" asp-route-scope="@scope.Id" class="btn btn-danger">@Localizer["TableButtonRemove"]</a></td>						
+										<td><a asp-action="ApiScopes" asp-route-scope="@scope.Id" class="btn btn-primary">@Localizer["TableButtonEdit"]</a> <a asp-action="ApiScopeDelete" asp-route-id="@Model.ApiResourceId" asp-route-scope="@scope.Id" class="btn btn-danger">@Localizer["TableButtonRemove"]</a></td>
 									</tr>
 								}
 							</tbody>
@@ -136,7 +157,7 @@
 
 					<div class="row">
 						<div class="col-12">
-							@await Html.PartialAsync("Common/Pager", new Pager() {Action = "ApiScopes", PageSize = Model.PageSize, TotalCount = Model.TotalCount})
+							@await Html.PartialAsync("Common/Pager", new Pager() { Action = "ApiScopes", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
 						</div>
 					</div>
 

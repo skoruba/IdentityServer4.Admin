@@ -8,12 +8,28 @@
 }
 
 <form id="client-form" asp-controller="Configuration" asp-action="Client" Method="post">
-	@if (Model.Id != 0)
-	{
-		<h2>@Localizer["Title"] @Model.ClientId</h2>
-	}
 
-	<div asp-validation-summary="All" class="text-danger"></div>
+	<div class="row">
+		<div class="col-12">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="Clients">Clients</a></li>
+					<li class="breadcrumb-item active" aria-current="page">@Model.ClientId</li>
+				</ol>
+			</nav>
+		</div>
+
+		@if (Model.Id != 0)
+		{
+			<div class="col-12">
+				<h2>@Localizer["Title"] @Model.ClientId</h2>
+			</div>
+		}
+
+		<div class="col-12">
+			<div asp-validation-summary="All" class="text-danger"></div>
+		</div>
+	</div>
 
 	@if (Model.Id != 0)
 	{

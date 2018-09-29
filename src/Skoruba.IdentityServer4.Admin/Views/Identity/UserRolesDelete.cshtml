@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
-@model Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.UserRolesDto<RoleDto<int>, int, int>
+@model UserRolesDto<RoleDto<int>, int, int>
 @inject IViewLocalizer Localizer
 
 @{
@@ -10,6 +10,19 @@
 
 <form asp-controller="Identity" asp-action="UserRolesDelete" Method="post">
 	<div class="row">
+
+		<div class="col-12">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="Users">Users</a></li>
+					<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="UserProfile" asp-route-id="@Model.UserId">@Model.UserName</a></li>
+					<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="UserRoles" asp-route-id="@Model.UserId">User Roles</a></li>
+					<li class="breadcrumb-item active" aria-current="page">@Localizer["Title"]</li>
+				</ol>
+			</nav>
+		</div>
+
+
 		<div class="col-md-12">
 
 			<h3>@Localizer["Title"]</h3>
@@ -30,7 +43,7 @@
 							@await Html.PartialAsync("User/Section/Label", "RolesList")
 						</label>
 						<div class="col-sm-9">
-							<select asp-for="RoleId" disabled="disabled" asp-items="@(new SelectList(Model.RolesList,"Id","Text"))" class="form-control single-select"></select>
+							<select asp-for="RoleId" disabled="disabled" asp-items="@(new SelectList(Model.RolesList, "Id", "Text"))" class="form-control single-select"></select>
 						</div>
 					</div>
 
