@@ -120,6 +120,9 @@
   <data name="ButtonDeleteGrant" xml:space="preserve">
     <value>删除持久授权</value>
   </data>
+  <data name="NavigationPersistedGrants" xml:space="preserve">
+    <value>持久授权</value>
+  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>删除持久授权</value>
   </data>

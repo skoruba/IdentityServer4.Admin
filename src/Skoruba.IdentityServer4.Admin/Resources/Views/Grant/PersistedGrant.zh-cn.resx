@@ -132,6 +132,9 @@
   <data name="DeleteDialogYes" xml:space="preserve">
     <value>是 - 删除</value>
   </data>
+  <data name="NavigationPersistedGrants" xml:space="preserve">
+    <value>持久授权</value>
+  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>持久授权</value>
   </data>

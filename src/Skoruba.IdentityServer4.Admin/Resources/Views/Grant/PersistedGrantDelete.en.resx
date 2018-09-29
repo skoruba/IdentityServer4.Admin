@@ -120,6 +120,9 @@
   <data name="ButtonDeleteGrant" xml:space="preserve">
     <value>Delete Persisted Grant</value>
   </data>
+  <data name="NavigationPersistedGrants" xml:space="preserve">
+    <value>PersistedGrants</value>
+  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Delete Persisted Grant</value>
   </data>
