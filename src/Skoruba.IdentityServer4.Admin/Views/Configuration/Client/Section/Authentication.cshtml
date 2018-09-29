@@ -68,8 +68,14 @@
 			</label>
 			<div class="col-sm-9">
 				<picker id="PostLogoutRedirectUrisItems" multiple-select="true" min-search-text="2"
-						selected-items="@Model.PostLogoutRedirectUris" search-input-placeholder="Enter 2 and more characters"
-						selected-items-title="Selected: ">
+				        selected-items="@Model.PostLogoutRedirectUris" 
+				        search-input-placeholder="@Localizer["PickerSearchItemPlaceholder"].Value"
+				        selected-items-title="@Localizer["PickerSelectedItemsTitle"].Value" 
+				        search-result-title="@Localizer["PickerSearchResultTitle"].Value"
+				        suggested-items-title="@Localizer["PickerSuggestedItemsTitle"].Value" 
+				        no-item-selected-title="@Localizer["PickerNoItemSelectedTitle"].Value" 
+				        show-all-items-title="@Localizer["PickerShowAllItemsTitle"].Value"
+				        item-already-selected-title="@Localizer["PickerItemAlreadySelectedTitle"].Value">
 				</picker>
 			</div>
 		</div>
@@ -81,8 +87,14 @@
 			</label>
 			<div class="col-sm-9">
 				<picker id="IdentityProviderRestrictionsItems" multiple-select="true" min-search-text="2"
-						selected-items="@Model.IdentityProviderRestrictions" search-input-placeholder="Enter 2 and more characters"
-						selected-items-title="Selected: ">
+				        selected-items="@Model.IdentityProviderRestrictions"
+				        search-input-placeholder="@Localizer["PickerSearchItemPlaceholder"].Value"
+				        selected-items-title="@Localizer["PickerSelectedItemsTitle"].Value" 
+				        search-result-title="@Localizer["PickerSearchResultTitle"].Value"
+				        suggested-items-title="@Localizer["PickerSuggestedItemsTitle"].Value" 
+				        no-item-selected-title="@Localizer["PickerNoItemSelectedTitle"].Value" 
+				        show-all-items-title="@Localizer["PickerShowAllItemsTitle"].Value"
+				        item-already-selected-title="@Localizer["PickerItemAlreadySelectedTitle"].Value">
 				</picker>
 			</div>
 		</div>

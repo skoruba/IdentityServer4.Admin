@@ -107,7 +107,13 @@
 			<div class="col-sm-9">
 				<picker id="AllowedScopesItems" multiple-select="true" min-search-text="2"
 				        selected-items="@Model.AllowedScopes" url="@Url.Action("SearchScopes","Configuration")?scope"
-						search-input-placeholder="Enter 2 and more characters" selected-items-title="Selected: ">
+				        search-input-placeholder="@Localizer["PickerSearchItemPlaceholder"].Value"
+				        selected-items-title="@Localizer["PickerSelectedItemsTitle"].Value" 
+				        search-result-title="@Localizer["PickerSearchResultTitle"].Value"
+				        suggested-items-title="@Localizer["PickerSuggestedItemsTitle"].Value" 
+				        no-item-selected-title="@Localizer["PickerNoItemSelectedTitle"].Value" 
+				        show-all-items-title="@Localizer["PickerShowAllItemsTitle"].Value"
+				        item-already-selected-title="@Localizer["PickerItemAlreadySelectedTitle"].Value">
 				</picker>
 			</div>
 		</div>
@@ -120,8 +126,14 @@
 			</label>
 			<div class="col-sm-9">
 				<picker id="RedirectUrisItems" multiple-select="true" min-search-text="2"
-						selected-items="@Model.RedirectUris" search-input-placeholder="Enter 2 and more characters"
-						selected-items-title="Selected: ">
+				        selected-items="@Model.RedirectUris"
+				        search-input-placeholder="@Localizer["PickerSearchItemPlaceholder"].Value"
+				        selected-items-title="@Localizer["PickerSelectedItemsTitle"].Value" 
+				        search-result-title="@Localizer["PickerSearchResultTitle"].Value"
+				        suggested-items-title="@Localizer["PickerSuggestedItemsTitle"].Value" 
+				        no-item-selected-title="@Localizer["PickerNoItemSelectedTitle"].Value" 
+				        show-all-items-title="@Localizer["PickerShowAllItemsTitle"].Value"
+				        item-already-selected-title="@Localizer["PickerItemAlreadySelectedTitle"].Value">
 				</picker>
 			</div>
 		</div>
@@ -134,8 +146,14 @@
 			<div class="col-sm-9">
 				<picker id="AllowedGrantTypesItems" multiple-select="true" min-search-text="2"
 						url="@Url.Action("SearchGrantTypes","Configuration")?grant"
-						selected-items="@Model.AllowedGrantTypes" search-input-placeholder="Enter 2 and more characters"
-						selected-items-title="Selected: ">
+				        selected-items="@Model.AllowedGrantTypes"
+				        search-input-placeholder="@Localizer["PickerSearchItemPlaceholder"].Value"
+				        selected-items-title="@Localizer["PickerSelectedItemsTitle"].Value" 
+				        search-result-title="@Localizer["PickerSearchResultTitle"].Value"
+				        suggested-items-title="@Localizer["PickerSuggestedItemsTitle"].Value" 
+				        no-item-selected-title="@Localizer["PickerNoItemSelectedTitle"].Value" 
+				        show-all-items-title="@Localizer["PickerShowAllItemsTitle"].Value"
+				        item-already-selected-title="@Localizer["PickerItemAlreadySelectedTitle"].Value">
 				</picker>
 			</div>
 		</div>
