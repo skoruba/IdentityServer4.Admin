@@ -123,6 +123,9 @@
   <data name="ButtonSave" xml:space="preserve">
     <value>保存身份资源</value>
   </data>
+  <data name="NavigationIdentityResources" xml:space="preserve">
+    <value>身份资源</value>
+  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>身份资源</value>
   </data>

@@ -120,6 +120,9 @@
   <data name="ButtonDelete" xml:space="preserve">
     <value>删除身份资源</value>
   </data>
+  <data name="NavigationIdentityResources" xml:space="preserve">
+    <value>身份资源</value>
+  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>删除身份资源</value>
   </data>

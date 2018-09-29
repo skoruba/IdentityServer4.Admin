@@ -120,6 +120,12 @@
   <data name="ButtonDeleteClaim" xml:space="preserve">
     <value>删除客户端声明</value>
   </data>
+  <data name="NavigationClientClaims" xml:space="preserve">
+    <value>客户端声明</value>
+  </data>
+  <data name="NavigationClients" xml:space="preserve">
+    <value>客户端</value>
+  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>删除客户端声明</value>
   </data>
