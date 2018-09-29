@@ -120,6 +120,9 @@
   <data name="ButtonDeleteUser" xml:space="preserve">
     <value>Delete User</value>
   </data>
+  <data name="NavigationUsers" xml:space="preserve">
+    <value>Users</value>
+  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Delete User</value>
   </data>
