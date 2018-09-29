@@ -15,6 +15,24 @@ The application is written in the **Asp.Net Core MVC - using .NET Core 2.1** - w
 
 - [Install](https://www.microsoft.com/net/download/windows#/current) the latest .NET Core 2.x SDK
 
+## Installation via dotnet new template
+
+- Install the dotnet new template:
+
+```sh
+dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-beta3
+```
+
+- Create new project with the administration:
+
+```sh
+dotnet new skoruba.is4admin --name MyProject --title MyProject --adminrole MyRole --adminclientid MyClientId
+```
+
+### Template uses following list of nuget packages
+
+- https://www.nuget.org/profiles/skoruba
+
 ## Cloning
 
 ```sh
@@ -94,9 +112,17 @@ Migrations are not a part of the repository - they are ignored in `.gitignore`.
 
   - `Skoruba.IdentityServer4.Admin` - ASP.NET Core MVC application that contains Admin UI
 
-  - `Skoruba.IdentityServer4.Admin.BusinessLogic` - project that contains Dtos, Repositories, Services and Mappers
+  - `Skoruba.IdentityServer4.Admin.BusinessLogic` - project that contains Dtos, Repositories, Services and Mappers for the IdentityServer4
 
-  - `Skoruba.IdentityServer4.Admin.EntityFramework` - EF Core data layer that contains AdminDbContext and Entities
+  - `Skoruba.IdentityServer4.Admin.BusinessLogic.Identity` - project that contains Dtos, Repositories, Services and Mappers for the Asp.Net Core Identity
+
+  - `Skoruba.IdentityServer4.Admin.BusinessLogic.Shared` - project that contains shared Dtos and ExceptionHandling for the Business Logic layer of the IdentityServer4 and Asp.Net Core Identity
+
+  - `Skoruba.IdentityServer4.Admin.EntityFramework` - EF Core data layer that contains Entities for the IdentityServer4
+
+  - `Skoruba.IdentityServer4.Admin.EntityFramework.Identity` - EF Core data layer that contains Entities for the Asp.Net Core Identity
+
+  - `Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts` - project that contains AdminDbContext for the administration
 
   - `Skoruba.IdentityServer4.Admin.IntegrationTests` - xUnit project that contains the integration tests
 
