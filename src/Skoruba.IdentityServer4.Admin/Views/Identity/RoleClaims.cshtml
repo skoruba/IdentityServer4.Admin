@@ -43,8 +43,14 @@
 						<div class="col-sm-9">
 							<picker id="ClaimType" multiple-select="false" min-search-text="2"
 									selected-item="@Model.ClaimType" url="@Url.Action("SearchClaims", "Configuration")?claim"
-									search-input-placeholder="Enter 2 and more characters" selected-items-title="Selected: "
-									required="true" required-message="The Type is required.">
+							        search-input-placeholder="@Localizer["PickerSearchItemPlaceholder"].Value"
+							        selected-items-title="@Localizer["PickerSelectedItemsTitle"].Value" 
+							        search-result-title="@Localizer["PickerSearchResultTitle"].Value"
+							        suggested-items-title="@Localizer["PickerSuggestedItemsTitle"].Value" 
+							        no-item-selected-title="@Localizer["PickerNoItemSelectedTitle"].Value" 
+							        show-all-items-title="@Localizer["PickerShowAllItemsTitle"].Value"
+							        item-already-selected-title="@Localizer["PickerItemAlreadySelectedTitle"].Value"
+							        required="true" required-message="@Localizer["PickerRequiredMessage"].Value">
 							</picker>
 							<span asp-validation-for="ClaimType" class="text-danger"></span>
 						</div>

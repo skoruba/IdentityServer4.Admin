@@ -121,7 +121,7 @@
     <value>Delete Persisted Grant</value>
   </data>
   <data name="NavigationPersistedGrants" xml:space="preserve">
-    <value>PersistedGrants</value>
+    <value>Persisted Grants</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Delete Persisted Grant</value>
