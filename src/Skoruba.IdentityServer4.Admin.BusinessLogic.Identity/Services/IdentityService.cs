@@ -140,13 +140,31 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             return (handleIdentityError, userId);
         }
 
+        /// <summary>
+        /// Updates the specified user, but without updating the password hash value
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public async Task<(IdentityResult identityResult, TKey userId)> UpdateUserAsync(TUserDto user)
         {
             var userIdentity = _mapper.Map<TUser>(user);
+            await MapOriginalPasswordHashAsync(userIdentity);
+
             var (identityResult, userId) = await _identityRepository.UpdateUserAsync(userIdentity);
             var handleIdentityError = HandleIdentityError(identityResult, _identityServiceResources.UserUpdateFailed().Description, _identityServiceResources.IdentityErrorKey().Description, user);
 
             return (handleIdentityError, userId);
+        }
+
+        /// <summary>
+        /// Get original password hash and map password hash to user
+        /// </summary>
+        /// <param name="userIdentity"></param>
+        /// <returns></returns>
+        private async Task MapOriginalPasswordHashAsync(TUser userIdentity)
+        {
+            var identity = await _identityRepository.GetUserAsync(userIdentity.Id.ToString());
+            userIdentity.PasswordHash = identity.PasswordHash;
         }
 
         public async Task<IdentityResult> DeleteUserAsync(string userId, TUserDto user)
