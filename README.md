@@ -20,7 +20,7 @@ The application is written in the **Asp.Net Core MVC - using .NET Core 2.1** - w
 - Install the dotnet new template:
 
 ```sh
-dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-beta3
+dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-beta4
 ```
 
 - Create new project with the administration:
