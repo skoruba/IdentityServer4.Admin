@@ -1,0 +1,56 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.ClientDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}
+
+<form id="client-form" asp-controller="Configuration" asp-action="Client" Method="post">
+
+	<div class="row">
+		<div class="col-12">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="Clients">@Localizer["NavigationClients"]</a></li>
+					<li class="breadcrumb-item active" aria-current="page">@Model.ClientId</li>
+				</ol>
+			</nav>
+		</div>
+
+		@if (Model.Id != 0)
+		{
+			<div class="col-12">
+				<h2>@Localizer["Title"] @Model.ClientId</h2>
+			</div>
+		}
+
+		<div class="col-12">
+			<div asp-validation-summary="All" class="text-danger"></div>
+		</div>
+	</div>
+
+	@if (Model.Id != 0)
+	{
+		@await Html.PartialAsync("Client/Section/ActionButtons")
+	}
+
+	@await Html.PartialAsync("Client/Settings")
+	@await Html.PartialAsync("Client/Section/ActionButtons")
+</form>
+
+@section scripts
+	{
+	<script>
+		$(function () {
+			//Disable enter for this form
+			FormMvc.disableEnter($('#client-form'));
+
+			//Radio image
+			$("label.radio-img>img").click(function () {
+				$(this).parent().find("input:radio").click();
+			});
+		});
+	</script>
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Skoruba.IdentityServer4.Admin.Templates</id>
+    <version>1.0.0-beta4</version>
+    <authors>Jan Škoruba</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/skoruba/IdentityServer4.Admin/blob/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://github.com/skoruba/IdentityServer4.Admin</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/skoruba/IdentityServer4.Admin/master/docs/Images/Skoruba.IdentityServer4.Admin-Logo-Nuget.png</iconUrl>
+    <description>Templates for the administration of the IdentityServer4 and Asp.Net Core Identity</description>
+    <language>en-US</language>
+    <tags>IdentityServer4, Admin, OpenIDConnect, OAuth2, Identity</tags>
+    <packageTypes>
+      <packageType name="Template" />
+    </packageTypes>
+  </metadata>
+</package>

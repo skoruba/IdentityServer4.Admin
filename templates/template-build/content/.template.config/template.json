@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Jan Skoruba",
+  "classifications": ["Web", "IdentityServer4", "Admin"],
+  "name": "Skoruba IdentityServer4 Admin",
+  "identity": "Skoruba.IdentityServer4.Admin",
+  "groupIdentity": "Skoruba.IdentityServer4.Admin",
+  "shortName": "skoruba.is4admin",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "Skoruba.IdentityServer4",
+  "preferNameDirectory": true,
+  "symbols": {
+    "title": {
+      "type": "parameter",
+      "defaultValue": "Skoruba IdentityServer4 Admin",
+      "replaces": "Skoruba IdentityServer4 Admin",
+      "isRequired": true,
+      "description": "The title and footer of the administration"
+    },
+    "adminrole": {
+      "type": "parameter",
+      "defaultValue": "SkorubaIdentityAdminAdministrator",
+      "replaces": "SkorubaIdentityAdminAdministrator",
+      "isRequired": true,
+      "description": "The name of admin role, that is used to authorize the administration (for example: MyAdminRole)."
+    },
+    "adminclientid": {
+      "type": "parameter",
+      "defaultValue": "skoruba_identity_admin",
+      "replaces": "skoruba_identity_admin",
+      "isRequired": true,
+      "description": "The name of client, that is be used in the IdentityServer4"
+    }
+  },
+  "primaryOutputs": [
+    {
+      "path": "src/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj"
+    },
+    {
+      "path": "src/Skoruba.IdentityServer4.AspNetIdentity/Skoruba.IdentityServer4.AspNetIdentity.csproj"
+    }
+  ],
+  "postActions": [
+    {
+      "actionId": "D396686C-DE0E-4DE6-906D-291CD29FC5DE",
+      "args": {
+        "primaryOutputIndexes": "0;1"
+      },
+      "continueOnError": false,
+      "manualInstructions": [
+        {
+          "text": "Add projects to solution."
+        }
+      ]
+    },
+    {
+      "description": "Restore NuGet packages required by this project.",
+      "manualInstructions": [
+        {
+          "text": "Run 'dotnet restore'"
+        }
+      ],
+      "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
+      "continueOnError": true
+    }
+  ]
+}
