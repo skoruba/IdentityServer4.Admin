@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Grant
+@using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
+@model PersistedGrantsDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}
+
+<div class="row">
+	<div class="col-12 mb-3">
+		<h2>@Localizer["PageTitle"]</h2>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-12 mb-3">
+		@await Html.PartialAsync("Common/Search", new Search { Action = "PersistedGrants", Controller = "Grant" })
+	</div>
+</div>
+
+<div class="row table-responsive">
+	<div class="col-12">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th></th>
+					<th>@Localizer["TableSubjectId"]</th>
+					<th>@Localizer["TableSubjectName"]</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				@foreach (var persistedGrant in Model.PersistedGrants)
+				{
+					<tr>
+						<th scope="row"><a class="btn btn-primary" asp-action="PersistedGrant" asp-route-id="@persistedGrant.SubjectId">@Localizer["TableButtonDetail"]</a></th>
+						<td>@persistedGrant.SubjectId</td>
+						<td>@persistedGrant.SubjectName</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-12">
+		@await Html.PartialAsync("Common/Pager", new Pager() { Action = "PersistedGrants", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
+	</div>
+</div>

@@ -1,0 +1,2 @@
+# Create template for fixing project name
+dotnet new skoruba.is4admin --name SkorubaIdentityServer4Admin --title "Skoruba IdentityServer4 Admin" --adminrole SkorubaIdentityAdminAdministrator --adminclientid skoruba_identity_admin
