@@ -7,6 +7,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
     public class UserDto<TKey> : BaseUserDto<TKey>
     {        
         [Required]
+        [RegularExpression(@"^\S+$")]
         public string UserName { get; set; }
 
         [Required]
