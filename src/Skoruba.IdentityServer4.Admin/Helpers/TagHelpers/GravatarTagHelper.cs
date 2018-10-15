@@ -9,6 +9,9 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.TagHelpers
         [HtmlAttributeName("email")]
         public string Email { get; set; }
 
+        [HtmlAttributeName("alt")]
+        public string Alt { get; set; }
+
         [HtmlAttributeName("class")]
         public string Class { get; set; }
 
@@ -24,10 +27,14 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.TagHelpers
                 output.TagName = "img";
                 if (!string.IsNullOrWhiteSpace(Class))
                 {
-                    output.Attributes.Add("class", Class);
+                    output.Attributes.Add("class", Class); 
                 }
 
-                output.Attributes.Add("alt", "Gravatar");
+                if (!string.IsNullOrWhiteSpace(Alt))
+                {
+                    output.Attributes.Add("alt", Alt);
+                }
+                
                 output.Attributes.Add("src", GetAvatarUrl(hash, Size));
                 output.TagMode = TagMode.SelfClosing;
             } 
