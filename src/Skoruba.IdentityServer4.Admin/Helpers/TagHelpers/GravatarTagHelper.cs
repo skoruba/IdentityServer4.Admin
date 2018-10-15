@@ -27,6 +27,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.TagHelpers
                     output.Attributes.Add("class", Class);
                 }
 
+                output.Attributes.Add("alt", "Gravatar");
                 output.Attributes.Add("src", GetAvatarUrl(hash, Size));
                 output.TagMode = TagMode.SelfClosing;
             } 
