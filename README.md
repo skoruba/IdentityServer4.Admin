@@ -56,13 +56,11 @@ Project template options:
 
 - This administration uses bootstrap 4
 
-- Homepage:
-
-![Admin-preview](docs/Images/App/Skoruba-Home-Preview.png)
+![Admin-preview](docs/Images/App/Skoruba-Home-Preview.PNG)
 
 - Form looks like:
 
-![Admin-preview-form](docs/Images/App/Skoruba-Api-Preview.png)
+![Admin-preview-form](docs/Images/App/Skoruba-Api-Preview.PNG)
 
 ## Cloning
 
