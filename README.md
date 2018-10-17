@@ -58,9 +58,9 @@ Project template options:
 
 ![Admin-preview](docs/Images/App/Skoruba-Home-Preview.PNG)
 
-- Form looks like:
+- Forms:
 
-![Admin-preview-form](docs/Images/App/Skoruba-Api-Preview.PNG)
+![Admin-preview-form](docs/Images/App/Skoruba-Forms-Preview.PNG)
 
 ## Cloning
 
