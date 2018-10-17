@@ -1,6 +1,18 @@
+# How to configure DbContext for ASP.NET Core Identity
+
+- You can setup the `DbContext` - in `Startup.cs`:
+
+```
+services.AddAdminAspNetIdentityServices<AdminDbContext, UserDto<int>, int, RoleDto<int>, int, int, int,
+                                UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole,
+                                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>();
+```
+
+- Method `AddAdminAspNetIdentityServices` expects the generic param `TAdminDbContext` that inherits from `IdentityDbContext` and implements interface `IAdminPersistedGrantIdentityDbContext` (for operation data connected with Asp.Net Core Identity)
+
 # How to configure Identity primary key data type in ASP.NET Core Identity
 
-- By default, it's used `int` as the primary key, but you can change to `Guid` or `string` etc.
+- By default, it's used `int` as the primary key, but you can change to `Guid` or `string`.
 
 ## How to use for example `Guid`:
 
@@ -8,10 +20,11 @@
 
 Original:
 
-````cs
+```cs
 services.AddAdminAspNetIdentityServices<AdminDbContext, UserDto<int>, int, RoleDto<int>, int, int, int,
                                 UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole,
-                                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>();```
+                                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>();
+```
 
 New:
 
@@ -19,7 +32,7 @@ New:
 services.AddAdminAspNetIdentityServices<AdminDbContext, UserDto<Guid>, Guid, RoleDto<Guid>, Guid, Guid, Guid,
                                 UserIdentity, UserIdentityRole, Guid, UserIdentityUserClaim, UserIdentityUserRole,
                                 UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>();
-````
+```
 
 ### 2. Change `int` to `Guid` in all files in folder - `Skoruba.IdentityServer4.Admin.EntityFramework/Entities/Identity`:
 
@@ -153,4 +166,8 @@ public class IdentityController : BaseIdentityController<AdminDbContext, UserDto
         {
         }
     }
+```
+
+```
+
 ```

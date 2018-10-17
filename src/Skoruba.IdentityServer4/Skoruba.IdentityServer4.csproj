@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="IdentityServer4" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.5" />
   </ItemGroup>
 
   <ItemGroup>
