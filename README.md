@@ -223,8 +223,8 @@ It is possible to define the configuration according the client type - by defaul
 - [x] Create the Business Logic & EF layers - available as a nuget package
 - [ ] Create a project template using dotnet CLI - `dotnet new template`
   - [x] First template: The administration of the IdentityServer4 and Asp.Net Core Identity
-  - [ ] Second template: The administration of the IdentityServer4 (without Asp.Net Core Identity) ([#79](issues/79))
-- [ ] Add audit logs to track changes ([#61](issues/61))
+  - [ ] Second template: The administration of the IdentityServer4 (without Asp.Net Core Identity) ([#79](https://github.com/skoruba/IdentityServer4.Admin/issues/79))
+- [ ] Add audit logs to track changes ([#61](https://github.com/skoruba/IdentityServer4.Admin/issues/61))
 - [x] Add localization for other languages
   - [x] English
   - [x] Chinese
