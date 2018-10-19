@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Newtonsoft.Json;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.ExceptionHandling;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin.ExceptionHandling
@@ -25,7 +25,8 @@ namespace Skoruba.IdentityServer4.Admin.ExceptionHandling
 
         public override void OnException(ExceptionContext context)
         {
-            if (!(context.Exception is UserFriendlyErrorPageException) && !(context.Exception is UserFriendlyViewException)) return;
+            if (!(context.Exception is UserFriendlyErrorPageException) &&
+                !(context.Exception is UserFriendlyViewException)) return;
 
             //Create toastr notification
             if (CreateNotification(context, out var tempData)) return;
@@ -94,7 +95,7 @@ namespace Skoruba.IdentityServer4.Admin.ExceptionHandling
                 context.ModelState.AddModelError(userFriendlyViewException.ErrorKey, context.Exception.Message);
             }
         }
-
+        
         protected void CreateNotification(NotificationHelpers.AlertType type, ITempDataDictionary tempData, string message, string title = "")
         {
             var toast = new NotificationHelpers.Alert

@@ -4,11 +4,10 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Entities;
 using Microsoft.EntityFrameworkCore;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Enums;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
-using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using ApiResource = IdentityServer4.EntityFramework.Entities.ApiResource;
 
@@ -76,11 +75,18 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             }
         }
 
+        /// <summary>
+        /// Add new api resource
+        /// </summary>
+        /// <param name="apiResource"></param>
+        /// <returns>This method return new api resource id</returns>
         public async Task<int> AddApiResourceAsync(ApiResource apiResource)
         {
             _dbContext.ApiResources.Add(apiResource);
 
-            return await AutoSaveChangesAsync();
+            await AutoSaveChangesAsync();
+
+            return apiResource.Id;
         }
 
         private async Task RemoveApiResourceClaimsAsync(ApiResource identityResource)
@@ -134,6 +140,12 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
                 .SingleOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Add new api scope
+        /// </summary>
+        /// <param name="apiResourceId"></param>
+        /// <param name="apiScope"></param>
+        /// <returns>This method return new api scope id</returns>
         public async Task<int> AddApiScopeAsync(int apiResourceId, ApiScope apiScope)
         {
             var apiResource = await _dbContext.ApiResources.Where(x => x.Id == apiResourceId).SingleOrDefaultAsync();
@@ -141,7 +153,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 
             _dbContext.ApiScopes.Add(apiScope);
 
-            return await AutoSaveChangesAsync();
+            await AutoSaveChangesAsync();
+
+            return apiScope.Id;
         }
 
         private async Task RemoveApiScopeClaimsAsync(ApiScope apiScope)

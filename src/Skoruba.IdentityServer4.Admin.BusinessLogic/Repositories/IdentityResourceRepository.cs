@@ -4,10 +4,10 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Entities;
 using Microsoft.EntityFrameworkCore;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Enums;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
@@ -47,11 +47,18 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
                 .SingleOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Add new identity resource
+        /// </summary>
+        /// <param name="identityResource"></param>
+        /// <returns>This method return new identity resource id</returns>
         public async Task<int> AddIdentityResourceAsync(IdentityResource identityResource)
         {
             _dbContext.IdentityResources.Add(identityResource);
 
-            return await AutoSaveChangesAsync();
+            await AutoSaveChangesAsync();
+
+            return identityResource.Id;
         }
 
         public async Task<bool> CanInsertIdentityResourceAsync(IdentityResource identityResource)

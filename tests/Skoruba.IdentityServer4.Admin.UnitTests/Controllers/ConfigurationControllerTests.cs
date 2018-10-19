@@ -17,16 +17,17 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Extensions;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Extensions;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.Controllers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Skoruba.IdentityServer4.Admin.Helpers;
 using Xunit;
-
+  
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 {
     public class ConfigurationControllerTests
@@ -106,7 +107,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             // Assert            
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
-            viewResult.ActionName.Should().Be("Clients");
+            viewResult.ActionName.Should().Be("Client");
 
             var client = await dbContext.Clients.Where(x => x.ClientId == clientDto.ClientId).SingleOrDefaultAsync();
             var adddedClient = await clientService.GetClientAsync(client.Id);
@@ -167,7 +168,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var adddedClientClaim = await clientService.GetClientClaimAsync(clientClaimAdded.Id);
 
             clientClaim.ShouldBeEquivalentTo(adddedClientClaim, opts => opts.Excluding(x => x.ClientClaimId)
-                        .Excluding(x => x.ClientClaims));
+                        .Excluding(x => x.ClientClaims)
+                        .Excluding(x => x.ClientName));
         }
 
         [Fact]
@@ -251,7 +253,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var newClientSecret = await clientService.GetClientSecretAsync(clientSecretAdded.Id);
 
             clientSecret.ShouldBeEquivalentTo(newClientSecret, opts => opts.Excluding(x => x.ClientSecretId)
-                        .Excluding(x => x.ClientSecrets));
+                        .Excluding(x => x.ClientSecrets)
+                        .Excluding(x => x.ClientName));
         }
 
         [Fact]
@@ -335,7 +338,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var newClientProperty = await clientService.GetClientPropertyAsync(clientPropertyAdded.Id);
 
             clientProperty.ShouldBeEquivalentTo(newClientProperty, opts => opts.Excluding(x => x.ClientPropertyId)
-                        .Excluding(x => x.ClientProperties));
+                        .Excluding(x => x.ClientProperties)
+                        .Excluding(x => x.ClientName));
         }
 
         [Fact]
@@ -433,7 +437,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
-            viewResult.ActionName.Should().Be("IdentityResources");
+            viewResult.ActionName.Should().Be("IdentityResource");
 
             var identityResource = await dbContext.IdentityResources.Where(x => x.Name == identityResourceDto.Name).SingleOrDefaultAsync();
             var addedIdentityResource = await identityResourceService.GetIdentityResourceAsync(identityResource.Id);
@@ -485,7 +489,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
-            viewResult.ActionName.Should().Be("ApiResources");
+            viewResult.ActionName.Should().Be("ApiResource");
 
             var apiResource = await dbContext.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
             var addedApiResource = await apiResourceService.GetApiResourceAsync(apiResource.Id);
@@ -797,7 +801,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             //Add Admin services
             services.AddMvcExceptionFilters();
 
-            services.AddAdminServices<AdminDbContext, UserDto<int>, int, RoleDto<int>, int, int, int, int, int,
+            services.AddAdminServices<AdminDbContext>();
+
+            services.AddAdminAspNetIdentityServices<AdminDbContext, UserDto<int>, int, RoleDto<int>, int, int, int,
                 UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole,
                 UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>();
 

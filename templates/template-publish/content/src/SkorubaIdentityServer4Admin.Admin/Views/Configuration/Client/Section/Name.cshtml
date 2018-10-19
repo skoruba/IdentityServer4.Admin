@@ -1,0 +1,100 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Enums
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.ClientDto
+@inject IViewLocalizer Localizer
+
+<div class="card mt-3">
+	<h5 class="card-header">@Localizer["PanelTitle"]</h5>
+	<div class="card-body">
+
+		<!--Input - text -->
+		<div class="form-group row">
+			<label asp-for="ClientId" class="col-sm-3 col-form-label">
+				@await Html.PartialAsync("Client/Section/Label", "ClientId")
+			</label>
+			<div class="col-sm-9">
+				<input type="text" required class="form-control" asp-for="ClientId">
+				<span asp-validation-for="ClientId" class="text-danger"></span>
+			</div>
+		</div>
+
+		<!--Input - text -->
+		<div class="form-group row">
+			<label asp-for="ClientName" class="col-sm-3 col-form-label">
+				@await Html.PartialAsync("Client/Section/Label", "ClientName")
+			</label>
+			<div class="col-sm-9">
+				<input type="text" required class="form-control" asp-for="ClientName">
+				<span asp-validation-for="ClientName" class="text-danger"></span>
+			</div>
+		</div>
+
+		@if (Model.Id == 0)
+		{			
+			<div class="card-deck mb-3 text-center">
+				<div class="card mt-4 mb-4 box-shadow">
+					<div class="card-body">
+						<label class="radio-img">
+							<input type="radio" asp-for="ClientType" checked="checked" value="@((int)ClientType.Empty)" />
+							<img src="~/images/icons/empty-client.png" alt="Empty" />
+							<h3>@Localizer["TitleEmpty"]</h3>
+						</label>
+					</div>
+				</div>
+				<div class="card mt-4 mb-4 box-shadow">
+					<div class="card-body">
+						<label class="radio-img">
+							<input type="radio" asp-for="ClientType" value="@((int)ClientType.WebImplicit)" />
+							<img src="~/images/icons/web-client.png" alt="Web Implicit" />
+							<h3>@Localizer["TitleWebImplicit"]</h3>
+							<h4>@Localizer["TitleImplicit"]</h4>
+						</label>
+					</div>
+				</div>
+				<div class="card mt-4 mb-4 box-shadow">
+					<div class="card-body">
+						<label class="radio-img">
+							<input type="radio" asp-for="ClientType" value="@((int)ClientType.WebHybrid)" />
+							<img src="~/images/icons/web-client.png" alt="Web Hybrid" />
+							<h3>@Localizer["TitleWebHybrid"]</h3>
+							<h4>@Localizer["TitleHybrid"]</h4>
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="card-deck mb-3 text-center">
+				<div class="card mb-4 box-shadow">
+					<div class="card-body">
+						<label class="radio-img">
+							<input type="radio" asp-for="ClientType" value="@((int)ClientType.Spa)" />
+							<img src="~/images/icons/spa-client.png" alt="Web Spa" />
+							<h3>@Localizer["TitleSpa"]</h3>
+							<h4>@Localizer["TitleImplicit"]</h4>
+						</label>
+					</div>
+				</div>
+				<div class="card mb-4 box-shadow">
+					<div class="card-body">
+						<label class="radio-img">
+							<input type="radio" asp-for="ClientType" value="@((int) ClientType.Native)" />
+							<img src="~/images/icons/native-client.png" alt="Native" />
+							<h3>@Localizer["TitleNative"]</h3>
+							<h4>@Localizer["TitleHybrid"]</h4>
+						</label>
+					</div>
+				</div>
+				<div class="card mb-4 box-shadow">
+					<div class="card-body">
+						<label class="radio-img">
+							<input type="radio" asp-for="ClientType" value="@((int)ClientType.Machine)" />
+							<img src="~/images/icons/server-client.png" alt="Machine" />
+							<h3>@Localizer["TitleMachine"]</h3>
+							<h4>@Localizer["TitlePasswordAndClient"]</h4>
+						</label>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</div>

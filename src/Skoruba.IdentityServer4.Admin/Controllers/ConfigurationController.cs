@@ -5,7 +5,6 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
@@ -76,7 +75,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             await _clientService.UpdateClientAsync(client);
             SuccessNotification(string.Format(_localizer["SuccessUpdateClient"], client.ClientId), _localizer["SuccessTitle"]);
 
-            return RedirectToAction(nameof(Clients));
+            return RedirectToAction(nameof(Client), new { client.Id });
         }
 
         [HttpGet]
@@ -318,12 +317,21 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
             identityResource = _identityResourceService.BuildIdentityResourceViewModel(identityResource);
 
-            if (identityResource.Id == 0) await _identityResourceService.AddIdentityResourceAsync(identityResource);
-            else await _identityResourceService.UpdateIdentityResourceAsync(identityResource);
+            int identityResourceId;
+
+            if (identityResource.Id == 0)
+            {
+                identityResourceId = await _identityResourceService.AddIdentityResourceAsync(identityResource);
+            }
+            else
+            {
+                identityResourceId = identityResource.Id;
+                await _identityResourceService.UpdateIdentityResourceAsync(identityResource);
+            }
 
             SuccessNotification(string.Format(_localizer["SuccessAddIdentityResource"], identityResource.Name), _localizer["SuccessTitle"]);
 
-            return RedirectToAction(nameof(IdentityResources));
+            return RedirectToAction(nameof(IdentityResource), new { Id = identityResourceId });
         }
 
         [HttpPost]
@@ -337,12 +345,21 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
             ComboBoxHelpers.PopulateValuesToList(apiResource.UserClaimsItems, apiResource.UserClaims);
 
-            if (apiResource.Id == 0) await _apiResourceService.AddApiResourceAsync(apiResource);
-            else await _apiResourceService.UpdateApiResourceAsync(apiResource);
+            int apiResourceId;
+
+            if (apiResource.Id == 0)
+            {
+                apiResourceId = await _apiResourceService.AddApiResourceAsync(apiResource);
+            }
+            else
+            {
+                apiResourceId = apiResource.Id;
+                await _apiResourceService.UpdateApiResourceAsync(apiResource);
+            }
 
             SuccessNotification(string.Format(_localizer["SuccessAddApiResource"], apiResource.Name), _localizer["SuccessTitle"]);
 
-            return RedirectToAction(nameof(ApiResources));
+            return RedirectToAction(nameof(ApiResource), new { Id = apiResourceId });
         }
 
         [HttpGet]
@@ -436,12 +453,21 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
             _apiResourceService.BuildApiScopeViewModel(apiScope);
 
-            if (apiScope.ApiScopeId == 0) await _apiResourceService.AddApiScopeAsync(apiScope);
-            else await _apiResourceService.UpdateApiScopeAsync(apiScope);
+            int apiScopeId;
+
+            if (apiScope.ApiScopeId == 0)
+            {
+                apiScopeId = await _apiResourceService.AddApiScopeAsync(apiScope);
+            }
+            else
+            {
+                apiScopeId = apiScope.ApiScopeId;
+                await _apiResourceService.UpdateApiScopeAsync(apiScope);
+            }
 
             SuccessNotification(string.Format(_localizer["SuccessAddApiScope"], apiScope.Name), _localizer["SuccessTitle"]);
 
-            return RedirectToAction(nameof(ApiScopes));
+            return RedirectToAction(nameof(ApiScopes), new { Id = apiScope.ApiResourceId, Scope = apiScopeId });
         }
 
         [HttpGet]
