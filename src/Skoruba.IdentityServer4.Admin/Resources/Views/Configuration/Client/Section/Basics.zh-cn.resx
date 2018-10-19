@@ -126,4 +126,25 @@
   <data name="PanelTitle" xml:space="preserve">
     <value>基本</value>
   </data>
+  <data name="PickerItemAlreadySelectedTitle" xml:space="preserve">
+    <value>项目已被选中</value>
+  </data>
+  <data name="PickerNoItemSelectedTitle" xml:space="preserve">
+    <value>没有选择项目</value>
+  </data>
+  <data name="PickerSearchItemPlaceholder" xml:space="preserve">
+    <value>输入 2 个以上字符</value>
+  </data>
+  <data name="PickerSearchResultTitle" xml:space="preserve">
+    <value>搜索结果:(点击选择)</value>
+  </data>
+  <data name="PickerSelectedItemsTitle" xml:space="preserve">
+    <value>选中项:</value>
+  </data>
+  <data name="PickerShowAllItemsTitle" xml:space="preserve">
+    <value>更多...</value>
+  </data>
+  <data name="PickerSuggestedItemsTitle" xml:space="preserve">
+    <value>建议项:</value>
+  </data>
 </root>
