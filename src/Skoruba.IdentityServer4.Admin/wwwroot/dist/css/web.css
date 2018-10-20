@@ -17,6 +17,9 @@
   .menu-button {
     display: none; } }
 
+.gravatar-image {
+  max-width: none; }
+
 .border-top {
   border-top: 1px solid #e5e5e5; }
 
