@@ -1,35 +1,41 @@
-﻿<div class="welcome-page">
-    <div class="row page-header">
-        <div class="col-sm-10">
-            <h1>
-                <img class="icon" src="~/icon.jpg">
-                Welcome to IdentityServer4
-                @*<small>(build {version})</small>*@
-            </h1>
-        </div>
-    </div>
+﻿<div class="welcome-block px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+	<h1 class="display-4"><img class="icon" alt="Logo" src="~/images/skoruba-icon.png"><br />Skoruba IdentityServer4</h1>
+	<p class="lead">Welcome to Skoruba IdentityServer4</p>
+</div>
 
-    <div class="row">
-        <div class="col-sm-8">
-            <p>
-                IdentityServer publishes a
-                <a href="~/.well-known/openid-configuration">discovery document</a>
-                where you can find metadata and links to all the endpoints, key material, etc.
-            </p>
-        </div>
-        <div class="col-sm-8">
-            <p>
-                Click <a href="~/grants">here</a> to manage your stored grants.
-            </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-8">
-            <p>
-                Here are links to the
-                <a href="https://github.com/identityserver/IdentityServer4">source code repository</a>,
-                and <a href="https://github.com/identityserver/IdentityServer4.Samples">ready to use samples</a>.
-            </p>
-        </div>
-    </div>
+<div class="card-deck mb-3 text-center">
+	<!-- Clients -->
+	<div class="card mb-4 box-shadow">
+		<div class="card-header">
+			<h4 class="my-0 font-weight-normal">Discovery Document</h4>
+		</div>
+		<div class="card-body">
+			<h1 class="card-title">
+				<span class="oi oi-monitor" title="Discovery Document" aria-hidden="true"></span>
+			</h1>
+			<a href="~/.well-known/openid-configuration" class="btn btn-lg btn-block btn-primary">Discovery Document</a>
+		</div>
+	</div>
+	<!-- Identity Resources -->
+	<div class="card mb-4 box-shadow">
+		<div class="card-header">
+			<h4 class="my-0 font-weight-normal">Persisted Grants</h4>
+		</div>
+		<div class="card-body">
+			<h1 class="card-title">
+				<span class="oi oi-key" title="Persisted Grants" aria-hidden="true"></span>
+			</h1>
+			<a asp-controller="Grants" asp-action="Index" class="btn btn-lg btn-block btn-outline-primary">Persisted Grants</a>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-8">
+		<p>
+			Here are links to the
+			<a href="https://github.com/identityserver/IdentityServer4">source code repository</a>,
+			and <a href="https://github.com/identityserver/IdentityServer4.Samples">ready to use samples</a>.
+		</p>
+	</div>
 </div>
