@@ -7,6 +7,6 @@
         public const string OidcClientId = "skoruba_identity_admin";
         public const string OidcClientName = "Skoruba Identity Admin";
         public const string AdminUserName = "admin";
-        public const string AdminPassword = "Pa$$word123";
+        public const string AdminPassword = "P@$$w0rd";
     }
 }
