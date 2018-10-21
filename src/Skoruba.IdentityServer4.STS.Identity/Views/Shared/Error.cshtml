@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@using Microsoft.AspNetCore.Hosting
+@using Skoruba.IdentityServer4.STS.Identity.Quickstart.Home
+@model Skoruba.IdentityServer4.STS.Identity.Quickstart.Home.ErrorViewModel
+@inject IHostingEnvironment host
+
+@{
+	var error = Model?.Error?.Error;
+	var errorDescription = host.IsDevelopment() ? Model?.Error?.ErrorDescription : null;
+	var request_id = Model?.Error?.RequestId;
+}
+
+<div class="error-page">
+	<div class="page-header">
+		<h1>@Localizer["Title"]</h1>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="alert alert-danger">
+				@Localizer["Message"]
+
+				@if (error != null)
+				{
+					<strong>
+						<em>
+							: @error
+						</em>
+					</strong>
+
+					if (errorDescription != null)
+					{
+						<div>@errorDescription</div>
+					}
+				}
+			</div>
+
+			@if (request_id != null)
+			{
+				<div class="request-id">@Localizer["Request"] @request_id</div>
+			}
+		</div>
+	</div>
+</div>
