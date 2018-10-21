@@ -228,12 +228,16 @@ It is possible to define the configuration according the client type - by defaul
 - [x] Add localization for other languages
   - [x] English
   - [x] Chinese
+  
+### 1.1.0:
+
 - [ ] User registration / Password reset
 - [ ] Account linking
 - [ ] Manage profile
 
 ### Future:
 
+- Add UI tests
 - Add more unit and integration tests :blush:
 - Extend administration for another protocols
 - Create separate UI using `Razor Class Library`
