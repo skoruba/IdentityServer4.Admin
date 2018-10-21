@@ -40,7 +40,7 @@
       "path": "src/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj"
     },
     {
-      "path": "src/Skoruba.IdentityServer4.AspNetIdentity/Skoruba.IdentityServer4.AspNetIdentity.csproj"
+      "path": "src/Skoruba.IdentityServer4.STS.Identity/Skoruba.IdentityServer4.STS.Identity.csproj"
     }
   ],
   "postActions": [
