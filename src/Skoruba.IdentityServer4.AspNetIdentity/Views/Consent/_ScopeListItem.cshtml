@@ -1,4 +1,6 @@
-﻿@model ScopeViewModel
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model ScopeViewModel
 
 <li class="list-group-item">
 	<div class="toggle-button__input">
@@ -28,7 +30,7 @@
 	@if (Model.Required)
 	{
 		<div class="toggle-button__text">
-			<span><em>(required)</em></span>
+			<span><em>@Localizer["Required"]</em></span>
 		</div>
 	}
 	@if (Model.Description != null)

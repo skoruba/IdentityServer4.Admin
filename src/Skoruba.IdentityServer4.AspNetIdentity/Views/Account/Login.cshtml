@@ -1,8 +1,10 @@
-﻿@model LoginViewModel
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model LoginViewModel
 
 <div class="login-page">
 	<div class="page-header">
-		<h1>Login</h1>
+		<h1>@Localizer["Title"]</h1>
 	</div>
 
 	@await Html.PartialAsync("_ValidationSummary")
@@ -13,13 +15,12 @@
 		{
 			<div class="col-sm-6">
 				<div class="card mt-3">
-					<h5 class="card-header">Local Login</h5>
+					<h5 class="card-header">@Localizer["LocalLogin"]</h5>
 					<div class="card-body">
 						<form asp-route="Login">
 							<input type="hidden" asp-for="ReturnUrl" />
 
 							<fieldset>
-
 								<div class="form-group row">
 									<div class="col-sm-12">
 										<div class="input-group">
@@ -28,7 +29,7 @@
 													<i class="fa fa-user"></i>
 												</span>
 											</div>
-											<input class="form-control" placeholder="Username" asp-for="Username" aria-label="Username" aria-describedby="input-username" autofocus>
+											<input class="form-control" placeholder="@Localizer["Username"]" asp-for="Username" aria-label="Username" aria-describedby="input-username" autofocus>
 										</div>
 									</div>
 								</div>
@@ -41,17 +42,17 @@
 													<span class="oi oi-lock-locked" title="Lock" aria-hidden="true"></span>
 												</span>
 											</div>
-											<input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="input-password" asp-for="Password" autocomplete="off">
+											<input type="password" class="form-control" placeholder="@Localizer["Password"]" aria-label="Password" aria-describedby="input-password" asp-for="Password" autocomplete="off">
 										</div>
 									</div>
 								</div>
 
 								@if (Model.AllowRememberLogin)
 								{
-									<div class="form-group login-remember row">										
+									<div class="form-group login-remember row">
 										<div class="col-sm-9">
 											<div style="font-size: 8px !important;">
-												Remember my login
+												@Localizer["Remember"]
 											</div>
 											<toggle-button>
 												<input asp-for="RememberLogin" type="checkbox">
@@ -63,8 +64,8 @@
 								<!--Button-->
 								<div class="form-group row">
 									<div class="col-sm-12">
-										<button class="btn btn-primary" name="button" value="login">Login</button>
-										<button class="btn btn-default" name="button" value="cancel">Cancel</button>
+										<button class="btn btn-primary" name="button" value="login">@Localizer["Login"]</button>
+										<button class="btn btn-default" name="button" value="cancel">@Localizer["Cancel"]</button>
 									</div>
 								</div>
 							</fieldset>
@@ -78,7 +79,7 @@
 		{
 			<div class="col-sm-6 external-providers">
 				<div class="card mt-3">
-					<h5 class="card-header">External Login</h5>
+					<h5 class="card-header">@Localizer["ExternalLogin"]</h5>
 					<div class="card-body">
 						<ul class="list-inline">
 							@foreach (var provider in Model.VisibleExternalProviders)
@@ -101,8 +102,8 @@
 		@if (!Model.EnableLocalLogin && !Model.VisibleExternalProviders.Any())
 		{
 			<div class="alert alert-warning">
-				<strong>Invalid login request</strong>
-				There are no login schemes configured for this client.
+				<strong>@Localizer["InvalidRequest"]</strong>
+				@Localizer["NoSchema"]
 			</div>
 		}
 	</div>

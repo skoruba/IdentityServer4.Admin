@@ -1,4 +1,6 @@
-﻿@model ConsentViewModel
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model ConsentViewModel
 
 <div class="consent-container">
 	<div class="row page-header">
@@ -9,7 +11,7 @@
 			}
 			<h1>
 				@Model.ClientName
-				<small>is requesting your permission</small>
+				<small>@Localizer["SubTitle"]</small>
 			</h1>
 		</div>
 	</div>
@@ -21,7 +23,7 @@
 			<form asp-action="Index" class="consent-form">
 				<input type="hidden" asp-for="ReturnUrl" />
 
-				<div>Uncheck the permissions you do not wish to grant.</div>
+				<div>@Localizer["UnCheckPermission"]</div>
 
 				@if (Model.IdentityScopes.Any())
 				{
@@ -29,7 +31,7 @@
 						<div class="card mt-3">
 							<h5 class="card-header">
 								<i class="fa fa-user"></i>
-								Personal Information
+								@Localizer["PersonalInformation"]
 							</h5>
 							<div class="card-body">
 								<ul class="list-group">
@@ -48,7 +50,7 @@
 					<div class="col-sm-12">
 						<div class="card mt-3">
 							<h5 class="card-header">
-								<i class="fa fa-lock"></i> Application Access
+								<i class="fa fa-lock"></i> @Localizer["ApplicationAccess"]
 							</h5>
 							<div class="card-body">
 
@@ -73,7 +75,7 @@
 								</toggle-button>
 							</div>
 							<div class="toggle-button__text">
-								<strong>Remember My Decision</strong>
+								<strong>@Localizer["Remember"]</strong>
 							</div>
 						</div>
 					</div>
@@ -81,10 +83,10 @@
 
 				<div class="row ml-4 mr-4">
 					<div class="col-sm-9 mt-3">
-						<button name="button" value="yes" class="btn btn-primary" autofocus>Yes, Allow</button>
-						<button name="button" value="no" class="btn">No, Do Not Allow</button>											
+						<button name="button" value="yes" class="btn btn-primary" autofocus>@Localizer["Yes"]</button>
+						<button name="button" value="no" class="btn">@Localizer["No"]</button>
 					</div>
-					
+
 					<div class="col-sm-3 mt-3">
 						@if (Model.ClientUrl != null)
 						{
