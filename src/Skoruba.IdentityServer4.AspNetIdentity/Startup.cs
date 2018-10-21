@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Globalization;
 using System.Reflection;
-using IdentityServer4;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Options;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 
@@ -46,8 +49,30 @@ namespace Skoruba.IdentityServer4.AspNetIdentity
             services.AddIdentity<UserIdentity, UserIdentityRole>()
                 .AddEntityFrameworkStores<AdminDbContext>()
                 .AddDefaultTokenProviders();
+            
+            services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
 
-            services.AddMvc();
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddViewLocalization(
+                    LanguageViewLocationExpanderFormat.Suffix,
+                    opts => { opts.ResourcesPath = "Resources"; })
+                .AddDataAnnotationsLocalization();
+
+            services.Configure<RequestLocalizationOptions>(
+                opts =>
+                {
+                    var supportedCultures = new[]
+                    {
+                        new CultureInfo("zh-CN"),
+                        new CultureInfo("en-US"),
+                        new CultureInfo("en")
+                    };
+
+                    opts.DefaultRequestCulture = new RequestCulture("en");
+                    opts.SupportedCultures = supportedCultures;
+                    opts.SupportedUICultures = supportedCultures;
+                });
 
             services.Configure<IISOptions>(iis =>
             {
@@ -104,6 +129,10 @@ namespace Skoruba.IdentityServer4.AspNetIdentity
 
             app.UseStaticFiles();
             app.UseIdentityServer();
+
+            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(options.Value);
+
             app.UseMvcWithDefaultRoute();
         }
     }
