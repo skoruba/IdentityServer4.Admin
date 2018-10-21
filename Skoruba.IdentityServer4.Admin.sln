@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Adm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.UnitTests", "tests\Skoruba.IdentityServer4.Admin.UnitTests\Skoruba.IdentityServer4.Admin.UnitTests.csproj", "{92405E00-759C-4A20-A736-E21E7EF771C2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "host", "host", "{63D44665-AC4C-45F4-A2C7-A7DB394F44C4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sts", "sts", "{63D44665-AC4C-45F4-A2C7-A7DB394F44C4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4", "src\Skoruba.IdentityServer4\Skoruba.IdentityServer4.csproj", "{26112C1E-A965-410B-A86F-B236155A4F21}"
 EndProject
@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Adm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.BusinessLogic", "src\Skoruba.IdentityServer4.Admin.BusinessLogic\Skoruba.IdentityServer4.Admin.BusinessLogic.csproj", "{491B30A8-D4A1-42E8-8DEE-4093E0E45C36}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.AspNetIdentity", "src\Skoruba.IdentityServer4.AspNetIdentity\Skoruba.IdentityServer4.AspNetIdentity.csproj", "{72F17B1A-88D9-47FD-AA35-1C700E51CD0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.STS.Identity", "src\Skoruba.IdentityServer4.STS.Identity\Skoruba.IdentityServer4.STS.Identity.csproj", "{72F17B1A-88D9-47FD-AA35-1C700E51CD0E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.EntityFramework.Identity", "src\Skoruba.IdentityServer4.Admin.EntityFramework.Identity\Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj", "{2FAECDE3-8D21-4C36-BFF1-3F7C1A56F0D4}"
 EndProject
