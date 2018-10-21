@@ -23,7 +23,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Constants
             //http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
             var standardClaims = new List<string>
             {
-                "sub",
                 "name",
                 "given_name",
                 "family_name",
@@ -33,14 +32,10 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Constants
                 "profile",
                 "picture",
                 "website",
-                "email",
-                "email_verified",
                 "gender",
                 "birthdate",
                 "zoneinfo",
                 "locale",
-                "phone_number",
-                "phone_number_verified",
                 "address",
                 "updated_at"
             };
