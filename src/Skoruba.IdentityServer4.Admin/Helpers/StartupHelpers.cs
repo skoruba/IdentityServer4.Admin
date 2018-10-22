@@ -26,19 +26,18 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Constants;
-using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Middlewares;
 using Skoruba.IdentityServer4.Admin.Configuration;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
     public static class StartupHelpers
     {
-        public static void RegisterDbContexts(this IServiceCollection services, IConfigurationRoot configuration)
+        public static void RegisterDbContexts<TContext>(this IServiceCollection services, IConfigurationRoot configuration) 
+            where TContext : DbContext
         {
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
@@ -48,10 +47,11 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             var storeOptions = new ConfigurationStoreOptions();
             services.AddSingleton(storeOptions);
 
-            services.AddDbContext<AdminDbContext>(options => options.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey), optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
+            services.AddDbContext<TContext>(options => options.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey), optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
         }
 
-        public static void RegisterDbContextsStaging(this IServiceCollection services)
+        public static void RegisterDbContextsStaging<TContext>(this IServiceCollection services)
+            where TContext : DbContext
         {
             var databaseName = Guid.NewGuid().ToString();
 
@@ -61,7 +61,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             var storeOptions = new ConfigurationStoreOptions();
             services.AddSingleton(storeOptions);
 
-            services.AddDbContext<AdminDbContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(databaseName));
+            services.AddDbContext<TContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(databaseName));
         }
 
         public static void UseSecurityHeaders(this IApplicationBuilder app)
@@ -106,7 +106,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             });
         }
 
-        public static void ConfigureAuthentification(this IApplicationBuilder app, IHostingEnvironment env)
+        public static void ConfigureAuthentificationServices(this IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseAuthentication();
 
@@ -143,15 +143,16 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 .CreateLogger();
         }
 
-        public static void AddDbContexts(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfigurationRoot configuration)
+        public static void AddDbContexts<TContext>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfigurationRoot configuration)
+        where TContext : DbContext
         {
             if (hostingEnvironment.IsStaging())
             {
-                services.RegisterDbContextsStaging();
+                services.RegisterDbContextsStaging<TContext>();
             }
             else
             {
-                services.RegisterDbContexts(configuration);
+                services.RegisterDbContexts<TContext>(configuration);
             }
         }
 
@@ -199,10 +200,11 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 });
         }
 
-        public static void AddAuthentication(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IAdminConfiguration adminConfiguration)
+        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IAdminConfiguration adminConfiguration)
+            where TContext : DbContext where TUserIdentity : class where TUserIdentityRole : class
         {
-            services.AddIdentity<UserIdentity, UserIdentityRole>()
-                .AddEntityFrameworkStores<AdminDbContext>()
+            services.AddIdentity<TUserIdentity, TUserIdentityRole>()
+                .AddEntityFrameworkStores<TContext>()
                 .AddDefaultTokenProviders();
 
             //For integration tests use only cookie middleware
