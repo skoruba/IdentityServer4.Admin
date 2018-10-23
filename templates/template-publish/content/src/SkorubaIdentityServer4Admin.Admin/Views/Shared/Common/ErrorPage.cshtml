@@ -1,0 +1,24 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Newtonsoft.Json
+@using SkorubaIdentityServer4Admin.Admin.Helpers
+@inject IViewLocalizer Localizer
+@{
+	ViewData["Title"] = "Error";
+}
+
+<h1 class="text-danger">@Localizer["PageTitle"]</h1>
+
+@if (ViewBag.Notifications != null)
+{
+	var settings = new JsonSerializerSettings
+	{
+		TypeNameHandling = TypeNameHandling.All
+	};
+
+	var obj = JsonConvert.DeserializeObject<List<NotificationHelpers.Alert>>(ViewBag.Notifications, settings);
+
+	foreach (NotificationHelpers.Alert notification in obj)
+	{
+		<h2 class="text-danger">@notification.Message</h2>
+	}
+}

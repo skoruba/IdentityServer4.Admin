@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 {

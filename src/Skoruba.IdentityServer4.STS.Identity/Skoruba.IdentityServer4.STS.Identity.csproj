@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp2.1</TargetFramework>
+		<UserSecretsId>9c91d295-54c5-4d09-9bd6-fa56fb74011b</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="IdentityServer4.AspNetIdentity" Version="2.1.0" />
+		<PackageReference Include="IdentityServer4.EntityFramework" Version="2.1.1" />
+		<PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.5" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts\Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts.csproj" />
+		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.Identity\Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj" />
+		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.IdentityServer4.Admin.EntityFramework.csproj" />
+	</ItemGroup>
+
+</Project>

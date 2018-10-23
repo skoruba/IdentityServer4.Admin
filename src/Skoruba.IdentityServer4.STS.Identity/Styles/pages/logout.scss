@@ -1,0 +1,11 @@
+﻿.logout-container {
+}
+
+.logged-out-container {
+
+	iframe {
+		display: none;
+		width: 0;
+		height: 0;
+	}
+}

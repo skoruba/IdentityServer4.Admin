@@ -2,24 +2,28 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using IdentityServer4.Models;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
+using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Enums;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.ExceptionHandling;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 {
-    public class ClientService : IClientService
+    public class ClientService<TDbContext> : IClientService<TDbContext> 
+        where TDbContext : DbContext, IAdminConfigurationDbContext
     {
-        private readonly IClientRepository _clientRepository;
+        private readonly IClientRepository<TDbContext> _clientRepository;
         private readonly IClientServiceResources _clientServiceResources;
         private const string SharedSecret = "SharedSecret";
 
-        public ClientService(IClientRepository clientRepository, IClientServiceResources clientServiceResources)
+        public ClientService(IClientRepository<TDbContext> clientRepository, IClientServiceResources clientServiceResources)
         {
             _clientRepository = clientRepository;
             _clientServiceResources = clientServiceResources;
@@ -315,8 +319,13 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             var clientSecret = await _clientRepository.GetClientSecretAsync(clientSecretId);
             if (clientSecret == null) throw new UserFriendlyErrorPageException(string.Format(_clientServiceResources.ClientSecretDoesNotExist().Description, clientSecretId));
 
+            var clientInfo = await _clientRepository.GetClientIdAsync(clientSecret.Client.Id);
+            if (clientInfo.ClientId == null) throw new UserFriendlyErrorPageException(string.Format(_clientServiceResources.ClientDoesNotExist().Description, clientSecret.Client.Id));
+            
             var clientSecretsDto = clientSecret.ToModel();
-
+            clientSecretsDto.ClientId = clientSecret.Client.Id;
+            clientSecretsDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
+            
             return clientSecretsDto;
         }
 
@@ -351,8 +360,13 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             var clientClaim = await _clientRepository.GetClientClaimAsync(clientClaimId);
             if (clientClaim == null) throw new UserFriendlyErrorPageException(string.Format(_clientServiceResources.ClientClaimDoesNotExist().Description, clientClaimId));
 
+            var clientInfo = await _clientRepository.GetClientIdAsync(clientClaim.Client.Id);
+            if (clientInfo.ClientId == null) throw new UserFriendlyErrorPageException(string.Format(_clientServiceResources.ClientDoesNotExist().Description, clientClaim.Client.Id));
+            
             var clientClaimsDto = clientClaim.ToModel();
-
+            clientClaimsDto.ClientId = clientClaim.Client.Id;
+            clientClaimsDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
+            
             return clientClaimsDto;
         }
 
@@ -361,8 +375,13 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             var clientProperty = await _clientRepository.GetClientPropertyAsync(clientPropertyId);
             if (clientProperty == null) throw new UserFriendlyErrorPageException(string.Format(_clientServiceResources.ClientPropertyDoesNotExist().Description, clientPropertyId));
 
+            var clientInfo = await _clientRepository.GetClientIdAsync(clientProperty.Client.Id);
+            if (clientInfo.ClientId == null) throw new UserFriendlyErrorPageException(string.Format(_clientServiceResources.ClientDoesNotExist().Description, clientProperty.Client.Id));
+           
             var clientPropertiesDto = clientProperty.ToModel();
-
+            clientPropertiesDto.ClientId = clientProperty.Client.Id;
+            clientPropertiesDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
+            
             return clientPropertiesDto;
         }
 

@@ -1,0 +1,35 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SkorubaIdentityServer4Admin.STS.Identity.Quickstart.Diagnostics
+@inject IViewLocalizer Localizer
+@model SkorubaIdentityServer4Admin.STS.Identity.Quickstart.Diagnostics.DiagnosticsViewModel
+
+<h1>@Localizer["Title"]</h1>
+
+<h3>@Localizer["Claims"]</h3>
+<dl>
+	@foreach (var claim in Model.AuthenticateResult.Principal.Claims)
+	{
+		<dt>@claim.Type</dt>
+		<dd>@claim.Value</dd>
+	}
+</dl>
+
+<h3>@Localizer["Properties"]</h3>
+<dl>
+	@foreach (var prop in Model.AuthenticateResult.Properties.Items)
+	{
+		<dt>@prop.Key</dt>
+		<dd>@prop.Value</dd>
+	}
+</dl>
+
+@if (Model.Clients.Any())
+{
+	<h3>@Localizer["Clients"]</h3>
+	<ul>
+		@foreach (var client in Model.Clients)
+		{
+			<li>@client</li>
+		}
+	</ul>
+}

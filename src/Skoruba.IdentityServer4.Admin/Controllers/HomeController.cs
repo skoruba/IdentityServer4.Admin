@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Skoruba.IdentityServer4.Admin.Constants;
+using Skoruba.IdentityServer4.Admin.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.ExceptionHandling;
 
 namespace Skoruba.IdentityServer4.Admin.Controllers

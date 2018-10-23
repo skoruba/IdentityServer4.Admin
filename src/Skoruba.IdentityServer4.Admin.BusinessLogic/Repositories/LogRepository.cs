@@ -2,18 +2,20 @@
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
-using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 {
-    public class LogRepository : ILogRepository
+    public class LogRepository<TDbContext> : ILogRepository<TDbContext>
+        where TDbContext : DbContext, IAdminLogDbContext
     {
-        private readonly AdminDbContext _dbContext;
+        private readonly TDbContext _dbContext;
 
-        public LogRepository(AdminDbContext dbContext)
+        public LogRepository(TDbContext dbContext)
         {
             _dbContext = dbContext;
         }

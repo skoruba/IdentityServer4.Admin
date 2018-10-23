@@ -1,0 +1,29 @@
+{
+  "version": "1.0.0",
+  "name": "skoruba-identity-server-4-admin-sts",
+  "description": "The administration for the IdentityServer4 and Asp.Net Core Identity",
+  "author": "Jan Skoruba & jan@skoruba.com",
+  "license": "MIT",
+  "private": true,
+  "resolutions": {
+    "natives": "1.1.3"
+  },
+  "dependencies": {
+    "jquery": "3.3.1",
+    "jquery-validation": "1.18.0",
+    "jquery-validation-unobtrusive": "3.2.11",
+    "bootstrap": "4.1.3",
+    "popper.js": "1.14.4",
+    "holderjs": "2.9.4",
+    "open-iconic": "1.1.1",
+    "font-awesome": "4.7.0"
+  },
+  "devDependencies": {
+    "gulp": "4.0.0",
+    "gulp-concat": "2.6.1",
+    "gulp-uglify": "3.0.1",
+    "gulp-sass": "4.0.2",
+    "gulp-minify-css": "1.2.4",
+    "del": "3.0.0"
+  }
+}

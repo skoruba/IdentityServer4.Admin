@@ -6,6 +6,7 @@ using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Xunit;
@@ -30,12 +31,33 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         private readonly ConfigurationStoreOptions _storeOptions;
         private readonly OperationalStoreOptions _operationalStore;
 
+        private IClientRepository<AdminDbContext> GetClientRepository(AdminDbContext context)
+        {
+            IClientRepository<AdminDbContext> clientRepository = new ClientRepository<AdminDbContext>(context);
+
+            return clientRepository;
+        }
+
+        private IApiResourceRepository<AdminDbContext> GetApiResourceRepository(AdminDbContext context)
+        {
+            IApiResourceRepository<AdminDbContext> apiResourceRepository = new ApiResourceRepository<AdminDbContext>(context);
+
+            return apiResourceRepository;
+        }
+
+        private IIdentityResourceRepository<AdminDbContext> GetIdentityResourceRepository(AdminDbContext context)
+        {
+            IIdentityResourceRepository<AdminDbContext> identityResourceRepository = new IdentityResourceRepository<AdminDbContext>(context);
+
+            return identityResourceRepository;
+        }
+
         [Fact]
         public async Task AddClientAsync()
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Generate random new client
                 var client = ClientMock.GenerateRandomClient(0);
@@ -56,7 +78,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Generate random new client without id
                 var client = ClientMock.GenerateRandomClient(0);
@@ -90,7 +112,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Generate random new client without id
                 var client = ClientMock.GenerateRandomClient(0);
@@ -124,7 +146,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Generate random new client without id
                 var client = ClientMock.GenerateRandomClient(0);
@@ -160,7 +182,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 //Generate random new client
                 var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
 
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Add new client
                 await clientRepository.AddClientAsync(client);
@@ -187,7 +209,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 //Generate random new client
                 var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
 
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Add new client
                 await clientRepository.AddClientAsync(client);
@@ -212,7 +234,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 //Generate random new client
                 var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
 
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Add new client
                 await clientRepository.AddClientAsync(client);
@@ -237,7 +259,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 //Generate random new client
                 var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
 
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Add new client
                 await clientRepository.AddClientAsync(client);
@@ -262,7 +284,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 //Generate random new client
                 var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
 
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Add new client
                 await clientRepository.AddClientAsync(client);
@@ -287,7 +309,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 //Generate random new client
                 var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
 
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Add new client
                 await clientRepository.AddClientAsync(client);
@@ -312,7 +334,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 //Generate random new client
                 var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
 
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Add new client
                 await clientRepository.AddClientAsync(client);
@@ -337,7 +359,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 //Generate random new client
                 var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
 
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Add new client
                 await clientRepository.AddClientAsync(client);
@@ -362,7 +384,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 //Generate random new client
                 var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
 
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Add new client
                 await clientRepository.AddClientAsync(client);
@@ -384,7 +406,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Generate random new client without id
                 var client = ClientMock.GenerateRandomClient(0);
@@ -429,7 +451,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Generate random new client without id
                 var client = ClientMock.GenerateRandomClient(0);
@@ -474,7 +496,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Generate random new client without id
                 var client = ClientMock.GenerateRandomClient(0);
@@ -518,7 +540,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Generate random new client without id
                 var client = ClientMock.GenerateRandomClient(0);
@@ -539,7 +561,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Generate random new client without id
                 var client = ClientMock.GenerateRandomClient(0);
@@ -572,7 +594,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Generate random new client without id
                 var client = ClientMock.GenerateRandomClient(0);
@@ -605,7 +627,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 var rnd = new Random();
                 var generateRows = rnd.Next(1, 10);
@@ -632,7 +654,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Generate random new client without id
                 var client = ClientMock.GenerateRandomClient(0);
@@ -665,7 +687,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Generate random new client without id
                 var client = ClientMock.GenerateRandomClient(0);
@@ -699,7 +721,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Generate random new client without id
                 var client = ClientMock.GenerateRandomClient(0);
@@ -736,7 +758,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Try get some existing grant
                 var randomClientGrantType = ClientMock.GenerateRandomClientGrantType();
@@ -751,7 +773,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 //Try get some existing claims
                 var randomClientClaim = ClientMock.GenerateRandomClientClaim(0);
@@ -766,10 +788,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
-                IIdentityResourceRepository identityResourceRepository = new IdentityResourceRepository(context);
+                var clientRepository = GetClientRepository(context);
+                var identityResourceRepository = GetIdentityResourceRepository(context);
                 
-
                 var identityResource = IdentityResourceMock.GenerateRandomIdentityResource(0);
                 await identityResourceRepository.AddIdentityResourceAsync(identityResource);
                 
@@ -784,8 +805,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
-                IApiResourceRepository apiResourceRepository = new ApiResourceRepository(context);
+                var clientRepository = GetClientRepository(context);
+                var apiResourceRepository = GetApiResourceRepository(context);
                 
                 var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
                 await apiResourceRepository.AddApiResourceAsync(apiResource);

@@ -1,18 +1,22 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Grant;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.ExceptionHandling;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 {
-    public class PersistedGrantService : IPersistedGrantService
+    public class PersistedGrantService<TDbContext> : IPersistedGrantService<TDbContext>
+        where TDbContext : DbContext, IAdminPersistedGrantDbContext
     {
-        private readonly IPersistedGrantRepository _persistedGrantRepository;
+        private readonly IPersistedGrantRepository<TDbContext> _persistedGrantRepository;
         private readonly IPersistedGrantServiceResources _persistedGrantServiceResources;
-        
-        public PersistedGrantService(IPersistedGrantRepository persistedGrantRepository,
+
+        public PersistedGrantService(IPersistedGrantRepository<TDbContext> persistedGrantRepository,
             IPersistedGrantServiceResources persistedGrantServiceResources)
         {
             _persistedGrantRepository = persistedGrantRepository;
@@ -30,7 +34,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
         public async Task<PersistedGrantsDto> GetPersitedGrantsByUser(string subjectId, int page = 1, int pageSize = 10)
         {
             var exists = await _persistedGrantRepository.ExistsPersistedGrantsAsync(subjectId);
-            if(!exists) throw new UserFriendlyErrorPageException(string.Format(_persistedGrantServiceResources.PersistedGrantWithSubjectIdDoesNotExist().Description, subjectId), _persistedGrantServiceResources.PersistedGrantWithSubjectIdDoesNotExist().Description);
+            if (!exists) throw new UserFriendlyErrorPageException(string.Format(_persistedGrantServiceResources.PersistedGrantWithSubjectIdDoesNotExist().Description, subjectId), _persistedGrantServiceResources.PersistedGrantWithSubjectIdDoesNotExist().Description);
 
             var pagedList = await _persistedGrantRepository.GetPersitedGrantsByUser(subjectId, page, pageSize);
             var persistedGrantsDto = pagedList.ToModel();
@@ -41,7 +45,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
         public async Task<PersistedGrantDto> GetPersitedGrantAsync(string key)
         {
             var persistedGrant = await _persistedGrantRepository.GetPersitedGrantAsync(key);
-            if(persistedGrant == null) throw new UserFriendlyErrorPageException(string.Format(_persistedGrantServiceResources.PersistedGrantDoesNotExist().Description, key), _persistedGrantServiceResources.PersistedGrantDoesNotExist().Description);
+            if (persistedGrant == null) throw new UserFriendlyErrorPageException(string.Format(_persistedGrantServiceResources.PersistedGrantDoesNotExist().Description, key), _persistedGrantServiceResources.PersistedGrantDoesNotExist().Description);
             var persistedGrantDto = persistedGrant.ToModel();
 
             return persistedGrantDto;
@@ -52,7 +56,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return await _persistedGrantRepository.DeletePersistedGrantAsync(key);
         }
 
-        public async Task<int> DeletePersistedGrantsAsync(int userId)
+        public async Task<int> DeletePersistedGrantsAsync(string userId)
         {
             return await _persistedGrantRepository.DeletePersistedGrantsAsync(userId);
         }
