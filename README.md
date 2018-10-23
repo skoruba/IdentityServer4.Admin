@@ -14,9 +14,7 @@ This is currently in **beta version**
 The application is written in the **Asp.Net Core MVC - using .NET Core 2.1** - works only with **IdentityServer4 version 2.0+**
 
 ## Requirements
-- [Install](https://www.microsoft.com/net/download/windows#/current) the latest .NET Core 2.x SDK
-
-:warning: using older versions may lead to 502.5 errors when hosted on IIS or application exiting immediately after starting when self-hosted
+- [Install](https://www.microsoft.com/net/download/windows#/current) the latest .NET Core 2.x SDK (using older versions may lead to 502.5 errors when hosted on IIS or application exiting immediately after starting when self-hosted)
 
 ## Installation via dotnet new template
 
