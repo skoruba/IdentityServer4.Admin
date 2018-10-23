@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-	  <Version>1.0.0-beta2</Version>
+	  <Version>1.0.0-beta3</Version>
 	  <Authors>Jan Škoruba</Authors>
 	  <PackageTags>IdentityServer4 Admin OpenIDConnect OAuth2 Identity</PackageTags>
 	  <Description>Shared Business Logic layer for the administration of the IdentityServer4 and Asp.Net Core Identity</Description>

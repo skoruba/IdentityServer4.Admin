@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using SkorubaIdentityServer4Admin.STS.Identity.Quickstart.Account
+@inject IViewLocalizer Localizer
+@model SkorubaIdentityServer4Admin.STS.Identity.Quickstart.Account.LoggedOutViewModel
+
+@{
+	// set this so the layout rendering sees an anonymous user
+	ViewData["signed-out"] = true;
+}
+
+<div class="page-header logged-out-container">
+	<h1>
+		@Localizer["Title"]
+		<small>@Localizer["SubTitle"]</small>
+	</h1>
+
+	@if (Model.PostLogoutRedirectUri != null)
+	{
+		<div>
+			@Localizer["Click"] <a class="PostLogoutRedirectUri" href="@Model.PostLogoutRedirectUri">@Localizer["Here"]</a> @Localizer["Return"]
+			<span>@Model.ClientName</span>.
+		</div>
+	}
+
+	@if (Model.SignOutIframeUrl != null)
+	{
+		<iframe width="0" height="0" class="signout" src="@Model.SignOutIframeUrl"></iframe>
+	}
+</div>
+
+@section scripts
+	{
+	@if (Model.AutomaticRedirectAfterSignOut)
+	{
+		<script src="~/js/signout-redirect.js"></script>
+	}
+}
