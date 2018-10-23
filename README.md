@@ -13,6 +13,7 @@ This is currently in **beta version**
 
 The application is written in the **Asp.Net Core MVC - using .NET Core 2.1** - works only with **IdentityServer4 version 2.0+**
 
+## Requirements
 - [Install](https://www.microsoft.com/net/download/windows#/current) the latest .NET Core 2.x SDK
 
 ## Installation via dotnet new template
@@ -52,6 +53,12 @@ Project template options:
 
 - [Available nuget packages](https://www.nuget.org/profiles/skoruba)
 
+### Running in Visual Studio
+
+- Set Startup projects:
+  - Skoruba.IdentityServer4.Admin
+  - Skoruba.IdentityServer4.STS.Identity
+
 ## Administration UI preview
 
 - This administration uses bootstrap 4
@@ -72,6 +79,9 @@ git clone https://github.com/skoruba/IdentityServer4.Admin
 
 ```sh
 cd src/Skoruba.IdentityServer4.Admin
+npm install
+
+cd src/Skoruba.IdentityServer4.STS.Identity
 npm install
 ```
 
@@ -126,6 +136,16 @@ Migrations are not a part of the repository - they are ignored in `.gitignore`.
   - Client label descriptions from - http://docs.identityserver.io/en/release/reference/client.html
   - Api Resource label descriptions from - http://docs.identityserver.io/en/release/reference/api_resource.html
   - Identity Resource label descriptions from - http://docs.identityserver.io/en/release/reference/identity_resource.html
+  
+## Tests
+
+-  The solution contains unit and integration tests. 
+- **Stage environment is used for integration tests**:
+  - `DbContext` contains setup for InMemory database
+  - `Authentication` is setup for `CookieAuthentication` - with fake login url only for testing purpose
+  - `AuthenticatedTestRequestMiddleware` - middleware for testing of authentication.
+  
+- If you want to use `Stage environment` for deploying - it is necessary to change these settings in `StartupHelpers.cs`.
 
 ## Overview
 
