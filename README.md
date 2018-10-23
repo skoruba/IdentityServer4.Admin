@@ -16,6 +16,8 @@ The application is written in the **Asp.Net Core MVC - using .NET Core 2.1** - w
 ## Requirements
 - [Install](https://www.microsoft.com/net/download/windows#/current) the latest .NET Core 2.x SDK
 
+:warning: using older versions may lead to 502.5 errors when hosted on IIS or application exiting immediately after starting when self-hosted
+
 ## Installation via dotnet new template
 
 - Install the dotnet new template:
