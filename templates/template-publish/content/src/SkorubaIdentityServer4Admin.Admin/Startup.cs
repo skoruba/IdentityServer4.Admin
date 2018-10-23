@@ -46,8 +46,8 @@ namespace SkorubaIdentityServer4Admin.Admin
             services.ConfigureRootConfiguration(Configuration);
             var rootConfiguration = services.BuildServiceProvider().GetService<IRootConfiguration>();
 
-            services.AddDbContexts(HostingEnvironment, Configuration);
-            services.AddAuthentication(HostingEnvironment, rootConfiguration.AdminConfiguration);
+            services.AddDbContexts<AdminDbContext>(HostingEnvironment, Configuration);
+            services.AddAuthenticationServices<AdminDbContext, UserIdentity, UserIdentityRole>(HostingEnvironment, rootConfiguration.AdminConfiguration);
             services.AddMvcExceptionFilters();
 
             services.AddAdminServices<AdminDbContext>();
@@ -76,7 +76,7 @@ namespace SkorubaIdentityServer4Admin.Admin
 
             app.UseSecurityHeaders();
             app.UseStaticFiles();
-            app.ConfigureAuthentification(env);
+            app.ConfigureAuthentificationServices(env);
             app.ConfigureLocalization();
 
             app.UseMvc(routes =>

@@ -5,8 +5,8 @@
 @inject IViewLocalizer Localizer
 
 @{
-	ViewBag.Title = Localizer["Title"];
-	Layout = "_Layout";
+    ViewBag.Title = Localizer["Title"];
+    Layout = "_Layout";
 }
 
 <h2>@Localizer["Title"]</h2>
@@ -14,49 +14,52 @@
 <a asp-action="UserProfile" class="btn btn-outline-primary mb-3 mt-3"><span class="oi oi-plus"></span> @Localizer["ActionAddUser"]</a>
 
 <div class="row">
-	<div class="col-12">
-		@await Html.PartialAsync("Common/Search", new Search() { Action = "Users", Controller = "Identity" })
-	</div>
+    <div class="col-12">
+        @await Html.PartialAsync("Common/Search", new Search() { Action = "Users", Controller = "Identity" })
+    </div>
 </div>
 
 <div class="row">
-	<div class="col-12">
-		<div class="table-responsive">
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th></th>
-						<th>@Localizer["UserId"]</th>
-						<th>@Localizer["UserName"]</th>
-						<th>@Localizer["Email"]</th>
-						<th></th>
-					</tr>
-				</thead>
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>@Localizer["UserId"]</th>
+                        <th>@Localizer["UserName"]</th>
+                        <th>@Localizer["Email"]</th>
+                        <th></th>
+                    </tr>
+                </thead>
 
-				<tbody>
-					@foreach (var user in Model.Users)
-					{
-						<tr>
-							<td>
-								<a class="btn btn-primary" asp-action="UserProfile" asp-route-id="@user.Id">@Localizer["ActionEditUser"]</a>
-							</td>
-
-							<td>@user.Id</td>
-							<td>@user.UserName</td>
-							<td>@user.Email</td>
-							<td>
-								<a class="btn btn-danger" asp-action="UserDelete" asp-route-id="@user.Id"><span class="oi oi-x"></span></a>
-							</td>
-						</tr>
-					}
-				</tbody>
-			</table>
-		</div>
-	</div>
+                <tbody>
+                    @foreach (var user in Model.Users)
+                    {
+                        <tr>
+                            <td class="align-middle">
+                                <a class="btn btn-primary" asp-action="UserProfile" asp-route-id="@user.Id">@Localizer["ActionEditUser"]</a>
+                            </td>
+                            <td class="align-middle">
+                                <img-gravatar email="@user.Email" class="gravatar-image img-thumbnail" />
+                            </td>
+                            <td class="align-middle">@user.Id</td>
+                            <td class="align-middle">@user.UserName</td>
+                            <td class="align-middle">@user.Email</td>
+                            <td class="align-middle">
+                                <a class="btn btn-danger" asp-action="UserDelete" asp-route-id="@user.Id"><span class="oi oi-x"></span></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <div class="row">
-	<div class="col-12">
-		@await Html.PartialAsync("Common/Pager", new Pager { Action = "Users", PageSize = Model.PageSize, TotalCount = Model.TotalCount, EnableSearch = true, Search = ViewBag.Search })
-	</div>
+    <div class="col-12">
+        @await Html.PartialAsync("Common/Pager", new Pager { Action = "Users", PageSize = Model.PageSize, TotalCount = Model.TotalCount, EnableSearch = true, Search = ViewBag.Search })
+    </div>
 </div>

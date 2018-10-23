@@ -9,17 +9,17 @@
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="7.0.1" />
 		<PackageReference Include="IdentityServer4.EntityFramework" Version="2.1.1" />
-		<PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.2" />
+		<PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.5" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
 		<PackageReference Include="Microsoft.Extensions.Options" Version="2.1.1" />
-		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" />
 		<PackageReference Include="NWebsec.AspNetCore.Middleware" Version="2.0.0" />
 		<PackageReference Include="Serilog.AspNetCore" Version="2.1.1" />
-		<PackageReference Include="Serilog.Settings.Configuration" Version="2.6.1" />
-		<PackageReference Include="Serilog.Sinks.MSSqlServerCore" Version="1.1.0" />
-		<PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic" Version="1.0.0-beta2" />
-		<PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic.Identity" Version="1.0.0-beta2" />
-		<PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts" Version="1.0.0-beta2" />
+		<PackageReference Include="Serilog.Settings.Configuration" Version="3.0.0" />
+		<PackageReference Include="Serilog.Sinks.MSSqlServerCore" Version="1.1.1" />
+		<PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic" Version="1.0.0-beta3" />
+		<PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic.Identity" Version="1.0.0-beta3" />
+		<PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts" Version="1.0.0-beta3" />
 	</ItemGroup>
 
 	<ItemGroup>
