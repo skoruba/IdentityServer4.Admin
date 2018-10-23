@@ -4,7 +4,7 @@
 # - Create db migrations for seed data
 
 $gitProject = "https://github.com/skoruba/IdentityServer4.Admin"
-$gitBranchName = "feature/extensible-aspnet-identity"
+$gitBranchName = "dev"
 $gitProjectFolder = "Skoruba.IdentityServer4.Admin"
 $templateSrc = "template-build/content/src"
 $templateTests = "template-build/content/tests"
