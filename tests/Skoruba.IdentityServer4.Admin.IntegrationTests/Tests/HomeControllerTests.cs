@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Skoruba.IdentityServer4.Admin.Constants;
+using Skoruba.IdentityServer4.Admin.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.IntegrationTests.Common;
 using Xunit;
 
@@ -44,7 +44,7 @@ namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Tests
             response.StatusCode.Should().Be(HttpStatusCode.Redirect);
 
             //The redirect to login
-            response.Headers.Location.ToString().Should().Contain(AuthorizationConsts.AccountLoginPage);
+            response.Headers.Location.ToString().Should().Contain(AuthenticationConsts.AccountLoginPage);
         }
     }
 }

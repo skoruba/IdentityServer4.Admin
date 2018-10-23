@@ -1,7 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Grant
 @using Skoruba.IdentityServer4.Admin.Helpers
-@using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common
-@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Grant.PersistedGrantsDto
+@using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
+@model PersistedGrantsDto
 @inject IViewLocalizer Localizer
 
 @{
@@ -9,7 +10,20 @@
 	Layout = "_Layout";
 }
 
-<h2>@Localizer["PageTitle"]</h2>
+<div class="row">
+	<div class="col-12">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a asp-controller="Grant" asp-action="PersistedGrants">@Localizer["NavigationPersistedGrants"]</a></li>
+				<li class="breadcrumb-item active" aria-current="page">@Model.SubjectId</li>
+			</ol>
+		</nav>
+	</div>
+
+	<div class="col-12">
+		<h2>@Localizer["PageTitle"]</h2>
+	</div>
+</div>
 
 <form id="client-form" asp-controller="Grant" asp-action="PersistedGrantsDelete" Method="post">
 
@@ -19,32 +33,34 @@
 	<input type="hidden" asp-for="SubjectId" />
 
 	<div class="row table-responsive">
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>@Localizer["TableSubjectId"]</th>
-					<th>@Localizer["TableType"]</th>
-					<th>@Localizer["TableExpiration"]</th>
-					<th>@Localizer["TableData"]</th>
-					<th>@Localizer["TableClient"]</th>
-					<th></th>
-				</tr>
-			</thead>
-
-			<tbody>
-				@foreach (var persistedGrant in Model.PersistedGrants)
-				{
+		<div class="col-12">
+			<table class="table table-striped">
+				<thead>
 					<tr>
-						<td>@persistedGrant.SubjectId</td>
-						<td>@persistedGrant.Type</td>
-						<td>@persistedGrant.Expiration</td>
-						<td>@persistedGrant.Data</td>
-						<td>@persistedGrant.ClientId</td>
-						<td><a class="btn btn-danger" asp-action="PersistedGrantDelete" asp-route-id="@UrlHelpers.QueryStringSafeHash(persistedGrant.Key)"><span class="oi oi-x"></span></a></td>
+						<th>@Localizer["TableSubjectId"]</th>
+						<th>@Localizer["TableType"]</th>
+						<th>@Localizer["TableExpiration"]</th>
+						<th>@Localizer["TableData"]</th>
+						<th>@Localizer["TableClient"]</th>
+						<th></th>
 					</tr>
-				}
-			</tbody>
-		</table>
+				</thead>
+
+				<tbody>
+					@foreach (var persistedGrant in Model.PersistedGrants)
+					{
+						<tr>
+							<td>@persistedGrant.SubjectId</td>
+							<td>@persistedGrant.Type</td>
+							<td>@persistedGrant.Expiration</td>
+							<td>@persistedGrant.Data</td>
+							<td>@persistedGrant.ClientId</td>
+							<td><a class="btn btn-danger" asp-action="PersistedGrantDelete" asp-route-id="@UrlHelpers.QueryStringSafeHash(persistedGrant.Key)"><span class="oi oi-x"></span></a></td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
 	</div>
 
 	<div class="row">

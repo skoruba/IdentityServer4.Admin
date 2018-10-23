@@ -1,0 +1,82 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.STS.Identity.Quickstart.Grants
+@inject IViewLocalizer Localizer
+@model Skoruba.IdentityServer4.STS.Identity.Quickstart.Grants.GrantsViewModel
+
+<div class="grants-container">
+	<div class="row page-header">
+		<div class="col-sm-10">
+			<h1>
+				@Localizer["Title"]
+			</h1>
+			<div>@Localizer["SubTitle"]</div>
+		</div>
+	</div>
+
+	@if (Model.Grants.Any() == false)
+	{
+		<div class="row">
+			<div class="col-sm-8">
+				<div class="alert alert-info">
+					@Localizer["NoGrants"]
+				</div>
+			</div>
+		</div>
+	}
+	else
+	{
+		foreach (var grant in Model.Grants)
+		{
+			<div class="row grant">
+				<div class="col-sm-2">
+					@if (grant.ClientLogoUrl != null)
+					{
+						<img src="@grant.ClientLogoUrl">
+					}
+				</div>
+				<div class="col-sm-8">
+					<div class="clientname">@grant.ClientName</div>
+					<div>
+						<span class="created">@Localizer["Created"]</span> @grant.Created.ToString("yyyy-MM-dd")
+					</div>
+					@if (grant.Expires.HasValue)
+					{
+						<div>
+							<span class="expires">@Localizer["Expires"]</span> @grant.Expires.Value.ToString("yyyy-MM-dd")
+						</div>
+					}
+					@if (grant.IdentityGrantNames.Any())
+					{
+						<div>
+							<div class="granttype">@Localizer["IdentityGrants"]</div>
+							<ul>
+								@foreach (var name in grant.IdentityGrantNames)
+								{
+									<li>@name</li>
+								}
+							</ul>
+						</div>
+					}
+					@if (grant.ApiGrantNames.Any())
+					{
+						<div>
+							<div class="granttype">@Localizer["ApiGrants"]</div>
+							<ul>
+								@foreach (var name in grant.ApiGrantNames)
+								{
+									<li>@name</li>
+								}
+							</ul>
+						</div>
+					}
+				</div>
+				<div class="col-sm-2">
+					<form asp-action="Revoke">
+						<input type="hidden" name="clientId" value="@grant.ClientId">
+						<button class="btn btn-danger">@Localizer["RevokeAccess"]</button>
+					</form>
+				</div>
+			</div>
+		}
+	}
+</div>

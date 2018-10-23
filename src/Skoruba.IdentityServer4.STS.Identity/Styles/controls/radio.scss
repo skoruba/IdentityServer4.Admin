@@ -1,0 +1,27 @@
+﻿$radioColor: #007bff;
+$radioBackgroundColor: #ffe7ac;
+
+label.radio-img > input {
+	visibility: hidden;
+	position: absolute;
+}
+
+label.radio-img > input + img {
+	cursor: pointer;
+	border: 2px solid transparent;
+}
+
+label.radio-img > input:checked + img {
+	background-color: $radioBackgroundColor;
+	-ms-border-radius: 15px;
+	border-radius: 15px;
+}
+
+label.radio-img > input:checked ~ h3, label.radio-img > input:checked ~ h4 {
+	color: $radioColor;
+	text-decoration: underline;
+}
+
+label.radio-img > h3, label > h4 {
+	cursor: pointer;
+}

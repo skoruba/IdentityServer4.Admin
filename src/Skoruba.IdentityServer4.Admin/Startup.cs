@@ -1,9 +1,16 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System;
+using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Extensions;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Extensions;
+using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin
@@ -36,9 +43,19 @@ namespace Skoruba.IdentityServer4.Admin
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContexts(HostingEnvironment, Configuration);
-            services.AddAuthentication(HostingEnvironment);
-            services.AddServices();
+            services.ConfigureRootConfiguration(Configuration);
+            var rootConfiguration = services.BuildServiceProvider().GetService<IRootConfiguration>();
+
+            services.AddDbContexts<AdminDbContext>(HostingEnvironment, Configuration);
+            services.AddAuthenticationServices<AdminDbContext, UserIdentity, UserIdentityRole>(HostingEnvironment, rootConfiguration.AdminConfiguration);
+            services.AddMvcExceptionFilters();
+
+            services.AddAdminServices<AdminDbContext>();
+
+            services.AddAdminAspNetIdentityServices<AdminDbContext, UserDto<int>, int, RoleDto<int>, int, int, int,
+                                UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole,
+                                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>();
+
             services.AddMvcLocalization();
             services.AddAuthorizationPolicies();
         }
@@ -56,16 +73,16 @@ namespace Skoruba.IdentityServer4.Admin
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-                        
+
             app.UseSecurityHeaders();
             app.UseStaticFiles();
-            app.ConfigureAuthentification(env);
+            app.ConfigureAuthentificationServices(env);
             app.ConfigureLocalization();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
-        }       
+        }
     }
 }

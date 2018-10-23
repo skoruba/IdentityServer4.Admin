@@ -1,0 +1,29 @@
+﻿@for $i from 1 through 10 {
+	.col-p-#{$i * 5} {
+		padding: 1px * $i * 5;
+	}
+}
+
+@for $i from 1 through 10 {
+	.col-p-b-#{$i * 5} {
+		padding-bottom: 1px * $i * 5;
+	}
+}
+
+@for $i from 1 through 10 {
+	.col-p-t-#{$i * 5} {
+		padding-top: 1px * $i * 5;
+	}
+}
+
+@for $i from 1 through 10 {
+	.col-p-l-#{$i * 5} {
+		padding-left: 1px * $i * 5;
+	}
+}
+
+@for $i from 1 through 10 {
+	.col-p-r-#{$i * 5} {
+		padding-right: 1px * $i * 5;
+	}
+}

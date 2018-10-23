@@ -4,21 +4,24 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Entities;
 using Microsoft.EntityFrameworkCore;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Enums;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
-using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 {
-    public class PersistedGrantRepository : IPersistedGrantRepository
+    public class PersistedGrantRepository<TDbContext> : IPersistedGrantRepository<TDbContext>
+        where TDbContext : DbContext, IAdminPersistedGrantDbContext
+        
     {
-        private readonly AdminDbContext _dbContext;
+        private readonly TDbContext _dbContext;
 
         public bool AutoSaveChanges { get; set; } = true;
 
-        public PersistedGrantRepository(AdminDbContext dbContext)
+        public PersistedGrantRepository(TDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -28,14 +31,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             var pagedList = new PagedList<PersistedGrantDataView>();
 
             var persistedGrantByUsers = (from pe in _dbContext.PersistedGrants
-                                         join us in _dbContext.Users on Convert.ToInt32(pe.SubjectId) equals us.Id into per
-                                         from us in per.DefaultIfEmpty()
                                          select new PersistedGrantDataView
                                          {
-                                             SubjectId = pe.SubjectId,
-                                             SubjectName = us == null ? string.Empty : us.UserName
+                                             SubjectId = pe.SubjectId
                                          })
-                .Distinct();
+                                        .Distinct();
 
             Expression<Func<PersistedGrantDataView, bool>> searchCondition = x => x.SubjectId.Contains(search) || x.SubjectName.Contains(search);
 
@@ -92,9 +92,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             return _dbContext.PersistedGrants.AnyAsync(x => x.SubjectId == subjectId);
         }
 
-        public async Task<int> DeletePersistedGrantsAsync(int userId)
+        public async Task<int> DeletePersistedGrantsAsync(string userId)
         {
-            var grants = await _dbContext.PersistedGrants.Where(x => x.SubjectId == userId.ToString()).ToListAsync();
+            var grants = await _dbContext.PersistedGrants.Where(x => x.SubjectId == userId).ToListAsync();
 
             _dbContext.RemoveRange(grants);
 

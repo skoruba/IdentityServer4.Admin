@@ -18,27 +18,26 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
-using Skoruba.IdentityServer4.Admin.Constants;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Constants;
-using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Middlewares;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
+using Skoruba.IdentityServer4.Admin.Configuration;
+using Skoruba.IdentityServer4.Admin.Configuration.Constants;
+using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
     public static class StartupHelpers
     {
-        public static void RegisterDbContexts(this IServiceCollection services, IConfigurationRoot configuration)
+        public static void RegisterDbContexts<TContext>(this IServiceCollection services, IConfigurationRoot configuration) 
+            where TContext : DbContext
         {
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
@@ -48,10 +47,11 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             var storeOptions = new ConfigurationStoreOptions();
             services.AddSingleton(storeOptions);
 
-            services.AddDbContext<AdminDbContext>(options => options.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey), optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
+            services.AddDbContext<TContext>(options => options.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey), optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
         }
 
-        public static void RegisterDbContextsStaging(this IServiceCollection services)
+        public static void RegisterDbContextsStaging<TContext>(this IServiceCollection services)
+            where TContext : DbContext
         {
             var databaseName = Guid.NewGuid().ToString();
 
@@ -61,7 +61,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             var storeOptions = new ConfigurationStoreOptions();
             services.AddSingleton(storeOptions);
 
-            services.AddDbContext<AdminDbContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(databaseName));
+            services.AddDbContext<TContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(databaseName));
         }
 
         public static void UseSecurityHeaders(this IApplicationBuilder app)
@@ -106,7 +106,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             });
         }
 
-        public static void ConfigureAuthentification(this IApplicationBuilder app, IHostingEnvironment env)
+        public static void ConfigureAuthentificationServices(this IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseAuthentication();
 
@@ -143,15 +143,16 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 .CreateLogger();
         }
 
-        public static void AddDbContexts(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfigurationRoot configuration)
+        public static void AddDbContexts<TContext>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfigurationRoot configuration)
+        where TContext : DbContext
         {
             if (hostingEnvironment.IsStaging())
             {
-                services.RegisterDbContextsStaging();
+                services.RegisterDbContextsStaging<TContext>();
             }
             else
             {
-                services.RegisterDbContexts(configuration);
+                services.RegisterDbContexts<TContext>(configuration);
             }
         }
 
@@ -164,31 +165,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             });
         }
 
-        public static void AddServices(this IServiceCollection services)
+        public static void AddMvcExceptionFilters(this IServiceCollection services)
         {
-            //Repositories
-            services.AddTransient<IClientRepository, ClientRepository>();
-            services.AddTransient<IIdentityResourceRepository, IdentityResourceRepository>();
-            services.AddTransient<IIdentityRepository, IdentityRepository>();
-            services.AddTransient<IApiResourceRepository, ApiResourceRepository>();
-            services.AddTransient<IPersistedGrantRepository, PersistedGrantRepository>();
-            services.AddTransient<ILogRepository, LogRepository>();
-
-            //Services
-            services.AddTransient<ILogService, LogService>();
-            services.AddTransient<IClientService, ClientService>();
-            services.AddTransient<IApiResourceService, ApiResourceService>();
-            services.AddTransient<IIdentityResourceService, IdentityResourceService>();
-            services.AddTransient<IPersistedGrantService, PersistedGrantService>();
-            services.AddTransient<IIdentityService, IdentityService>();
-
-            //Resources
-            services.AddScoped<IApiResourceServiceResources, ApiResourceServiceResources>();
-            services.AddScoped<IClientServiceResources, ClientServiceResources>();
-            services.AddScoped<IIdentityResourceServiceResources, IdentityResourceServiceResources>();
-            services.AddScoped<IIdentityServiceResources, IdentityServiceResources>();
-            services.AddScoped<IPersistedGrantServiceResources, PersistedGrantServiceResources>();
-
             //Exception handling
             services.AddScoped<ControllerExceptionFilterAttribute>();
         }
@@ -211,6 +189,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 {
                     var supportedCultures = new[]
                     {
+                        new CultureInfo("zh-CN"),
                         new CultureInfo("en-US"),
                         new CultureInfo("en")
                     };
@@ -221,10 +200,11 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 });
         }
 
-        public static void AddAuthentication(this IServiceCollection services, IHostingEnvironment hostingEnvironment)
+        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IAdminConfiguration adminConfiguration)
+            where TContext : DbContext where TUserIdentity : class where TUserIdentityRole : class
         {
-            services.AddIdentity<UserIdentity, UserIdentityRole>()
-                .AddEntityFrameworkStores<AdminDbContext>()
+            services.AddIdentity<TUserIdentity, TUserIdentityRole>()
+                .AddEntityFrameworkStores<TContext>()
                 .AddDefaultTokenProviders();
 
             //For integration tests use only cookie middleware
@@ -241,14 +221,14 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                     options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 })
                     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-                        options => { options.Cookie.Name = AuthorizationConsts.IdentityAdminCookieName; });
+                        options => { options.Cookie.Name = AuthenticationConsts.IdentityAdminCookieName; });
             }
             else
             {
                 services.AddAuthentication(options =>
                 {
                     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = AuthorizationConsts.OidcAuthenticationScheme;
+                    options.DefaultChallengeScheme = AuthenticationConsts.OidcAuthenticationScheme;
 
                     options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                     options.DefaultForbidScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -256,19 +236,19 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                     options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 })
                     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-                        options => { options.Cookie.Name = AuthorizationConsts.IdentityAdminCookieName; })
-                    .AddOpenIdConnect(AuthorizationConsts.OidcAuthenticationScheme, options =>
+                        options => { options.Cookie.Name = AuthenticationConsts.IdentityAdminCookieName; })
+                    .AddOpenIdConnect(AuthenticationConsts.OidcAuthenticationScheme, options =>
                     {
-                        options.Authority = AuthorizationConsts.IdentityServerBaseUrl;
+                        options.Authority = adminConfiguration.IdentityServerBaseUrl;
                         options.RequireHttpsMetadata = false;
 
-                        options.ClientId = AuthorizationConsts.OidcClientId;
+                        options.ClientId = AuthenticationConsts.OidcClientId;
 
                         options.Scope.Clear();
-                        options.Scope.Add(AuthorizationConsts.ScopeOpenId);
-                        options.Scope.Add(AuthorizationConsts.ScopeProfile);
-                        options.Scope.Add(AuthorizationConsts.ScopeEmail);
-                        options.Scope.Add(AuthorizationConsts.ScopeRoles);
+                        options.Scope.Add(AuthenticationConsts.ScopeOpenId);
+                        options.Scope.Add(AuthenticationConsts.ScopeProfile);
+                        options.Scope.Add(AuthenticationConsts.ScopeEmail);
+                        options.Scope.Add(AuthenticationConsts.ScopeRoles);
 
                         options.SaveTokens = true;
 
@@ -281,7 +261,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         options.Events = new OpenIdConnectEvents
                         {
                             OnMessageReceived = OnMessageReceived,
-                            OnRedirectToIdentityProvider = OnRedirectToIdentityProvider
+                            OnRedirectToIdentityProvider = n => OnRedirectToIdentityProvider(n, adminConfiguration)
                         };
                     });
             }
@@ -295,11 +275,22 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             return Task.FromResult(0);
         }
 
-        private static Task OnRedirectToIdentityProvider(RedirectContext n)
+        private static Task OnRedirectToIdentityProvider(RedirectContext n, IAdminConfiguration adminConfiguration)
         {
-            n.ProtocolMessage.RedirectUri = AuthorizationConsts.IdentityAdminRedirectUri;
+            n.ProtocolMessage.RedirectUri = adminConfiguration.IdentityAdminRedirectUri;
 
             return Task.FromResult(0);
+        }
+
+        public static IServiceCollection ConfigureRootConfiguration(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddOptions();
+
+            services.Configure<AdminConfiguration>(configuration.GetSection(ConfigurationConsts.AdminConfigurationKey));
+
+            services.TryAddSingleton<IRootConfiguration, RootConfiguration>();
+
+            return services;
         }
     }
 }

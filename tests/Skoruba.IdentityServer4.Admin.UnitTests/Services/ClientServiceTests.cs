@@ -7,9 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Xunit;
 
@@ -33,17 +35,31 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         private readonly ConfigurationStoreOptions _storeOptions;
         private readonly OperationalStoreOptions _operationalStore;
 
+        private IClientRepository<AdminDbContext> GetClientRepository(AdminDbContext context)
+        {
+            IClientRepository<AdminDbContext> clientRepository = new ClientRepository<AdminDbContext>(context);
+
+            return clientRepository;
+        }
+
+        private IClientService<AdminDbContext> GetClientService(IClientRepository<AdminDbContext> repository, IClientServiceResources resources)
+        {
+            IClientService<AdminDbContext> clientService = new ClientService<AdminDbContext>(repository, resources);
+
+            return clientService;
+        }
+
         [Fact]
         public async Task AddClientAsync()
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
-                IClientService clientService = new ClientService(clientRepository, localizer);
+                var clientService = GetClientService(clientRepository, localizer);
 
                 //Generate random new client
                 var client = ClientDtoMock.GenerateRandomClient(0);
@@ -71,12 +87,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 //Generate random new client
                 var clientDto = ClientDtoMock.GenerateRandomClient(0);
 
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
-                IClientService clientService = new ClientService(clientRepository, localizer);
+                var clientService = GetClientService(clientRepository, localizer);
 
                 //Add new client
                 await clientService.AddClientAsync(clientDto);
@@ -87,7 +103,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var clientDtoToClone = await clientService.GetClientAsync(clientId);
 
                 var clientCloneDto = ClientDtoMock.GenerateClientCloneDto(clientDtoToClone.Id);
-                
+
                 //Try clone it
                 clonedClientId = await clientService.CloneClientAsync(clientCloneDto);
 
@@ -181,12 +197,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
-                IClientService clientService = new ClientService(clientRepository, localizer);
+                var clientService = GetClientService(clientRepository, localizer);
 
                 //Generate random new client without id
                 var client = ClientDtoMock.GenerateRandomClient(0);
@@ -227,12 +243,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
-                IClientService clientService = new ClientService(clientRepository, localizer);
+                var clientService = GetClientService(clientRepository, localizer);
 
                 //Generate random new client without id
                 var client = ClientDtoMock.GenerateRandomClient(0);
@@ -269,12 +285,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
-                IClientService clientService = new ClientService(clientRepository, localizer);
+                var clientService = GetClientService(clientRepository, localizer);
 
                 //Generate random new client
                 var client = ClientDtoMock.GenerateRandomClient(0);
@@ -297,12 +313,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
-                IClientService clientService = new ClientService(clientRepository, localizer);
+                var clientService = GetClientService(clientRepository, localizer);
 
                 //Generate random new client
                 var client = ClientDtoMock.GenerateRandomClient(0);
@@ -314,7 +330,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                     await context.Clients.Where(x => x.ClientId == client.ClientId).SingleOrDefaultAsync();
 
                 var clientDto = await clientService.GetClientAsync(clientEntity.Id);
-                
+
                 //Assert new client
                 client.ShouldBeEquivalentTo(clientDto, options => options.Excluding(o => o.Id));
 
@@ -335,7 +351,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var clientClaimsDto = await clientService.GetClientClaimAsync(claim.Id);
 
                 //Assert
-                clientClaimsDto.ShouldBeEquivalentTo(claimsDto, options => options.Excluding(o => o.ClientClaimId));
+                clientClaimsDto.ShouldBeEquivalentTo(claimsDto, options =>
+                    options.Excluding(o => o.ClientClaimId)
+                           .Excluding(o => o.ClientName));
             }
         }
 
@@ -344,12 +362,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
-                IClientService clientService = new ClientService(clientRepository, localizer);
+                var clientService = GetClientService(clientRepository, localizer);
 
                 //Generate random new client
                 var client = ClientDtoMock.GenerateRandomClient(0);
@@ -382,7 +400,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var clientClaimsDto = await clientService.GetClientClaimAsync(claim.Id);
 
                 //Assert
-                clientClaimsDto.ShouldBeEquivalentTo(claimsDto, options => options.Excluding(o => o.ClientClaimId));
+                clientClaimsDto.ShouldBeEquivalentTo(claimsDto, options => options.Excluding(o => o.ClientClaimId)
+                                .Excluding(o => o.ClientName));
 
                 //Delete client claim
                 await clientService.DeleteClientClaimAsync(clientClaimsDto);
@@ -400,12 +419,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
-                IClientService clientService = new ClientService(clientRepository, localizer);
+                var clientService = GetClientService(clientRepository, localizer);
 
                 //Generate random new client
                 var client = ClientDtoMock.GenerateRandomClient(0);
@@ -438,7 +457,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var clientClaimsDto = await clientService.GetClientClaimAsync(claim.Id);
 
                 //Assert
-                clientClaimsDto.ShouldBeEquivalentTo(claimsDto, options => options.Excluding(o => o.ClientClaimId));
+                clientClaimsDto.ShouldBeEquivalentTo(claimsDto, options => options.Excluding(o => o.ClientClaimId)
+                    .Excluding(o => o.ClientName));
             }
         }
 
@@ -447,12 +467,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
-                IClientService clientService = new ClientService(clientRepository, localizer);
+                var clientService = GetClientService(clientRepository, localizer);
 
                 //Generate random new client
                 var client = ClientDtoMock.GenerateRandomClient(0);
@@ -485,7 +505,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var clientPropertiesDto = await clientService.GetClientPropertyAsync(property.Id);
 
                 //Assert
-                clientPropertiesDto.ShouldBeEquivalentTo(propertyDto, options => options.Excluding(o => o.ClientPropertyId));
+                clientPropertiesDto.ShouldBeEquivalentTo(propertyDto, options => 
+                    options.Excluding(o => o.ClientPropertyId)
+                           .Excluding(o => o.ClientName));
             }
         }
 
@@ -494,12 +516,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
-                IClientService clientService = new ClientService(clientRepository, localizer);
+                var clientService = GetClientService(clientRepository, localizer);
 
                 //Generate random new client
                 var client = ClientDtoMock.GenerateRandomClient(0);
@@ -532,7 +554,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var clientPropertiesDto = await clientService.GetClientPropertyAsync(property.Id);
 
                 //Assert
-                clientPropertiesDto.ShouldBeEquivalentTo(propertyDto, options => options.Excluding(o => o.ClientPropertyId));
+                clientPropertiesDto.ShouldBeEquivalentTo(propertyDto, options => options.Excluding(o => o.ClientPropertyId)
+                    .Excluding(o => o.ClientName));
             }
         }
 
@@ -541,12 +564,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
-                IClientService clientService = new ClientService(clientRepository, localizer);
+                var clientService = GetClientService(clientRepository, localizer);
 
                 //Generate random new client
                 var client = ClientDtoMock.GenerateRandomClient(0);
@@ -579,7 +602,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var clientPropertiesDto = await clientService.GetClientPropertyAsync(property.Id);
 
                 //Assert
-                clientPropertiesDto.ShouldBeEquivalentTo(propertiesDto, options => options.Excluding(o => o.ClientPropertyId));
+                clientPropertiesDto.ShouldBeEquivalentTo(propertiesDto, options => options.Excluding(o => o.ClientPropertyId)
+                    .Excluding(o => o.ClientName));
 
                 //Delete client Property
                 await clientService.DeleteClientPropertyAsync(clientPropertiesDto);
@@ -597,12 +621,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
-                IClientService clientService = new ClientService(clientRepository, localizer);
+                var clientService = GetClientService(clientRepository, localizer);
 
                 //Generate random new client
                 var client = ClientDtoMock.GenerateRandomClient(0);
@@ -635,7 +659,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var secretsDto = await clientService.GetClientSecretAsync(secret.Id);
 
                 //Assert
-                secretsDto.ShouldBeEquivalentTo(clientSecretsDto, options => options.Excluding(o => o.ClientSecretId));
+                secretsDto.ShouldBeEquivalentTo(clientSecretsDto, options => 
+                    options.Excluding(o => o.ClientSecretId)
+                           .Excluding(o => o.ClientName));
             }
         }
 
@@ -644,12 +670,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
-                IClientService clientService = new ClientService(clientRepository, localizer);
+                var clientService = GetClientService(clientRepository, localizer);
 
                 //Generate random new client
                 var client = ClientDtoMock.GenerateRandomClient(0);
@@ -682,7 +708,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var secretsDto = await clientService.GetClientSecretAsync(secret.Id);
 
                 //Assert
-                secretsDto.ShouldBeEquivalentTo(clientSecretsDto, options => options.Excluding(o => o.ClientSecretId));
+                secretsDto.ShouldBeEquivalentTo(clientSecretsDto, options => options.Excluding(o => o.ClientSecretId)
+                    .Excluding(o => o.ClientName));
             }
         }
 
@@ -691,12 +718,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         {
             using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
             {
-                IClientRepository clientRepository = new ClientRepository(context);
+                var clientRepository = GetClientRepository(context);
 
                 var localizerMock = new Mock<IClientServiceResources>();
                 var localizer = localizerMock.Object;
 
-                IClientService clientService = new ClientService(clientRepository, localizer);
+                var clientService = GetClientService(clientRepository, localizer);
 
                 //Generate random new client
                 var client = ClientDtoMock.GenerateRandomClient(0);
@@ -729,7 +756,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var clientSecretsDto = await clientService.GetClientSecretAsync(secret.Id);
 
                 //Assert
-                clientSecretsDto.ShouldBeEquivalentTo(secretsDto, options => options.Excluding(o => o.ClientSecretId));
+                clientSecretsDto.ShouldBeEquivalentTo(secretsDto, options => options.Excluding(o => o.ClientSecretId)
+                    .Excluding(o => o.ClientName));
 
                 //Delete client secret
                 await clientService.DeleteClientSecretAsync(clientSecretsDto);

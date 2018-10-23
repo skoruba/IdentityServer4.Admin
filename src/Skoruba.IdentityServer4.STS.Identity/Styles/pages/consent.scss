@@ -1,0 +1,28 @@
+﻿.consent-container {
+
+	.toggle-button {
+
+		&__input {
+			float: left;
+		}
+
+		&__text {
+			float: left;
+			margin-top: 6px;
+			margin-left: 10px;
+		}
+	}
+
+	.consent-description {
+		width: 100%;
+		float: left;
+	}
+
+	.client-logo {
+		float: left;
+
+		img {
+			margin-right: 25px;
+		}
+	}
+}
