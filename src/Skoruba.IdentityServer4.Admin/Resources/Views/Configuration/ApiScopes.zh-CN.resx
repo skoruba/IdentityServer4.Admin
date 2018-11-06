@@ -148,7 +148,7 @@
     <value>选中项:</value>
   </data>
   <data name="PickerShowAllItemsTitle" xml:space="preserve">
-    <value>更多...</value>
+    <value>更多</value>
   </data>
   <data name="PickerSuggestedItemsTitle" xml:space="preserve">
     <value>建议项:</value>
