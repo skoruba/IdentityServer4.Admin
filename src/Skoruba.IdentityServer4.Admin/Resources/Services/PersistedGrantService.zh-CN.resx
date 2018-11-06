@@ -121,6 +121,6 @@
     <value>标识为 {0} 的持久授权不存在</value>
   </data>
   <data name="PersistedGrantWithSubjectIdDoesNotExist" xml:space="preserve">
-    <value>主题标识为 {0} 的持久授权不存在</value>
+    <value>主体标识为 {0} 的持久授权不存在</value>
   </data>
 </root>

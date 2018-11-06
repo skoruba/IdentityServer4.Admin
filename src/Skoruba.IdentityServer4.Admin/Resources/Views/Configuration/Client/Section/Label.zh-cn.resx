@@ -400,10 +400,10 @@ OneTime 刷新令牌时将更新令牌句柄</value>
     <value>前台频道注销 Uri</value>
   </data>
   <data name="PairWiseSubjectSalt_Info" xml:space="preserve">
-    <value>对于此客户端的用户，在配对主题标识生成中使用的盐值。</value>
+    <value>对于此客户端的用户，在配对主体标识生成中使用的盐值。</value>
   </data>
   <data name="PairWiseSubjectSalt_Label" xml:space="preserve">
-    <value>配对主题盐</value>
+    <value>配对主体盐</value>
   </data>
   <data name="Properties_Info" xml:space="preserve">
     <value>字典可根据需要保存任何自定义客户端特定值。</value>

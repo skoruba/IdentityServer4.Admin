@@ -124,9 +124,9 @@
     <value>详情</value>
   </data>
   <data name="TableSubjectId" xml:space="preserve">
-    <value>主题标识</value>
+    <value>主体标识</value>
   </data>
   <data name="TableSubjectName" xml:space="preserve">
-    <value>主题名称</value>
+    <value>主体名称</value>
   </data>
 </root>

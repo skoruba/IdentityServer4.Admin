@@ -136,7 +136,7 @@
     <value>到期</value>
   </data>
   <data name="TableSubjectId" xml:space="preserve">
-    <value>主题标识</value>
+    <value>主体标识</value>
   </data>
   <data name="TableType" xml:space="preserve">
     <value>类型</value>
