@@ -142,7 +142,7 @@
     <value>允许通过浏览器访问令牌</value>
   </data>
   <data name="AllowOfflineAccess_Info" xml:space="preserve">
-    <value>指定此客户端是否可以请求刷新令牌（请求 offline_access 范围）</value>
+    <value>指定此客户端是否可以请求刷新令牌（请求 offline_access 作用域）</value>
   </data>
   <data name="AllowOfflineAccess_Label" xml:space="preserve">
     <value>允许离线访问</value>
@@ -292,10 +292,10 @@ OneTime 刷新令牌时将更新令牌句柄</value>
     <value>允许的授权类型</value>
   </data>
   <data name="AllowedScopes_Info" xml:space="preserve">
-    <value>默认情况下，客户端无权访问任何资源 - 通过添加相应的范围名称来指定允许的资源</value>
+    <value>默认情况下，客户端无权访问任何资源 - 通过添加相应的作用域名称来指定允许的资源</value>
   </data>
   <data name="AllowedScopes_Label" xml:space="preserve">
-    <value>允许的范围</value>
+    <value>允许的作用域</value>
   </data>
   <data name="Claims_Info" xml:space="preserve">
     <value>允许客户端的设置声明（将包含在访问令牌中）。</value>

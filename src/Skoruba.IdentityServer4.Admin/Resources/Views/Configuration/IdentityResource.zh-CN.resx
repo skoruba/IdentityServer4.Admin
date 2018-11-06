@@ -133,10 +133,10 @@
     <value>身份资源</value>
   </data>
   <data name="PickerItemAlreadySelectedTitle" xml:space="preserve">
-    <value>项目已被选中</value>
+    <value>项已被选中</value>
   </data>
   <data name="PickerNoItemSelectedTitle" xml:space="preserve">
-    <value>没有选择项目</value>
+    <value>没有选择项</value>
   </data>
   <data name="PickerSearchItemPlaceholder" xml:space="preserve">
     <value>输入 2 个以上字符</value>

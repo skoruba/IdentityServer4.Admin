@@ -121,7 +121,7 @@
     <value>Api 资源 {0} 已成功创建！</value>
   </data>
   <data name="SuccessAddApiScope" xml:space="preserve">
-    <value>Api 范围 {0} 已成功创建！</value>
+    <value>Api 作用域 {0} 已成功创建！</value>
   </data>
   <data name="SuccessAddApiSecret" xml:space="preserve">
     <value>Api 密钥已成功创建！</value>
@@ -151,7 +151,7 @@
     <value>Api 资源已成功删除！</value>
   </data>
   <data name="SuccessDeleteApiScope" xml:space="preserve">
-    <value>Api 范围已成功删除！</value>
+    <value>Api 作用域已成功删除！</value>
   </data>
   <data name="SuccessDeleteApiSecret" xml:space="preserve">
     <value>Api 密钥已成功删除！</value>

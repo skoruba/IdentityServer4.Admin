@@ -142,10 +142,10 @@
     <value>名称</value>
   </data>
   <data name="Scopes_Info" xml:space="preserve">
-    <value>API 必须至少有一个范围。 每个范围可以有不同的设置。</value>
+    <value>API 必须至少有一个作用域。 每个作用域可以有不同的设置。</value>
   </data>
   <data name="Scopes_Label" xml:space="preserve">
-    <value>范围</value>
+    <value>作用域</value>
   </data>
   <data name="Secrets_Info" xml:space="preserve">
     <value>API 密钥用于内省端点。 API 可以使用 API 名称和密钥进行内省验证。</value>

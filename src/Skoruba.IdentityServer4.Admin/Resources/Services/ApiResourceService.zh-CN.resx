@@ -127,13 +127,13 @@
     <value>Api 资源 ({0}) 已经存在</value>
   </data>
   <data name="ApiScopeDoesNotExist" xml:space="preserve">
-    <value>标识为 {0} 的 Api 范围不存在</value>
+    <value>标识为 {0} 的 Api 作用域不存在</value>
   </data>
   <data name="ApiScopeExistsKey" xml:space="preserve">
-    <value>Api 范围已经存在</value>
+    <value>Api 作用域已经存在</value>
   </data>
   <data name="ApiScopeExistsValue" xml:space="preserve">
-    <value>Api 范围 ({0}) 已经存在</value>
+    <value>Api 作用域 ({0}) 已经存在</value>
   </data>
   <data name="ApiSecretDoesNotExist" xml:space="preserve">
     <value>标识为 {0} 的 Api 密钥不存在</value>

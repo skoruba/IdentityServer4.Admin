@@ -136,10 +136,10 @@
     <value>客户端声明</value>
   </data>
   <data name="PickerItemAlreadySelectedTitle" xml:space="preserve">
-    <value>项目已被选中</value>
+    <value>项已被选中</value>
   </data>
   <data name="PickerNoItemSelectedTitle" xml:space="preserve">
-    <value>没有选择项目</value>
+    <value>没有选择项</value>
   </data>
   <data name="PickerRequiredMessage" xml:space="preserve">
     <value>类型必选</value>
