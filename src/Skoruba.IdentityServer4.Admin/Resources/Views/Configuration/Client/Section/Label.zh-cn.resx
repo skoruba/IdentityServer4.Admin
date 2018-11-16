@@ -367,13 +367,13 @@ OneTime 刷新令牌时将更新令牌句柄</value>
     <value>指定是否应在请求中将用户的会话 ID 发送到 BackChannelLogoutUri。 默认为 true。</value>
   </data>
   <data name="BackChannelLogoutSessionRequired_Label" xml:space="preserve">
-    <value>需要返回频道注销会话</value>
+    <value>需要后端通道注销会话</value>
   </data>
   <data name="BackChannelLogoutUri_Info" xml:space="preserve">
-    <value>指定客户端的注销 URI，以用于基于 HTTP 的反向通道注销。 有关详细信息，请参阅 OIDC Back-Channel 规范。</value>
+    <value>指定客户端的注销 URI，以用于基于 HTTP 的后端通道注销。 有关详细信息，请参阅 OIDC Back-Channel 规范。</value>
   </data>
   <data name="BackChannelLogoutUri_Label" xml:space="preserve">
-    <value>返回频道退出 Uri</value>
+    <value>后端通道退出 Uri</value>
   </data>
   <data name="ClientClaimsPrefix_Info" xml:space="preserve">
     <value>如果设置，客户端声明类型将以此为前缀。 默认为 client_。 目的是确保它们不会意外地与用户声明冲突。</value>
@@ -391,13 +391,13 @@ OneTime 刷新令牌时将更新令牌句柄</value>
     <value>指定是否应将用户的会话标识发送到 FrontChannelLogoutUri。 默认为 true。</value>
   </data>
   <data name="FrontChannelLogoutSessionRequired_Label" xml:space="preserve">
-    <value>需要前台频道注销会话</value>
+    <value>需要前端通道注销会话</value>
   </data>
   <data name="FrontChannelLogoutUri_Info" xml:space="preserve">
     <value>指定客户端的注销 URI，以用于基于 HTTP 的前端通道注销。 有关详细信息，请参阅 OIDC Front-Channel 规范。</value>
   </data>
   <data name="FrontChannelLogoutUri_Label" xml:space="preserve">
-    <value>前台频道注销 Uri</value>
+    <value>前端通道注销 Uri</value>
   </data>
   <data name="PairWiseSubjectSalt_Info" xml:space="preserve">
     <value>对于此客户端的用户，在配对主体标识生成中使用的盐值。</value>
