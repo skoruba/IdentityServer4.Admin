@@ -248,6 +248,9 @@ It is possible to define the configuration according the client type - by defaul
 - [x] Create a project template using dotnet CLI - `dotnet new template`
   - [x] First template: The administration of the IdentityServer4 and Asp.Net Core Identity
 - [ ] Add audit logs to track changes ([#61](https://github.com/skoruba/IdentityServer4.Admin/issues/61))
+- [ ] Add logging into
+  - [x] Database
+  - [ ] File
 - [x] Add localization for other languages
   - [x] English
   - [x] Chinese
@@ -259,6 +262,12 @@ It is possible to define the configuration according the client type - by defaul
 - [ ] User registration / Password reset
 - [ ] Account linking
 - [ ] Manage profile
+
+### 2.0.0:
+- [ ] Add API:
+  - [ ] IdentityServer4
+  - [ ] Asp.Net Core Identity
+  - [ ] Add swagger support
 
 ### Future:
 
