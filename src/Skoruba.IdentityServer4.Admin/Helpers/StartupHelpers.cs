@@ -190,7 +190,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                     var supportedCultures = new[]
                     {
                         new CultureInfo("ru"),
-                        new CultureInfo("zh-cn"),
+                        new CultureInfo("zh"),
                         new CultureInfo("en")
                     };
 
