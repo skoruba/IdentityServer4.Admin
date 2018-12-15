@@ -191,7 +191,6 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                     {
                         new CultureInfo("ru"),
                         new CultureInfo("zh-cn"),
-                        new CultureInfo("en-US"),
                         new CultureInfo("en")
                     };
 
