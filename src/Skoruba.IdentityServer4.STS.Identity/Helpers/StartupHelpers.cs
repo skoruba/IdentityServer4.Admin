@@ -34,8 +34,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 {
                     var supportedCultures = new[]
                     {
-                        new CultureInfo("zh-CN"),
-                        new CultureInfo("en-US"),
+                        new CultureInfo("ru"),
                         new CultureInfo("en")
                     };
 

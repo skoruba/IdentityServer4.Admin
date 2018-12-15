@@ -11,7 +11,9 @@
 
 This is currently in **beta version**
 
-The application is written in the **Asp.Net Core MVC - using .NET Core 2.1** - works only with **IdentityServer4 version 2.0+**
+The application is written in the **Asp.Net Core MVC - using .NET Core 2.1** 
+
+**NOTE:** Currently works only with **IdentityServer4 version < 2.3.0**  - **updating to IdentityServer4 version 2.3.0 - in progress** 🚀
 
 ## Requirements
 - [Install](https://www.microsoft.com/net/download/windows#/current) the latest .NET Core 2.x SDK (using older versions may lead to 502.5 errors when hosted on IIS or application exiting immediately after starting when self-hosted)
@@ -153,7 +155,7 @@ Migrations are not a part of the repository - they are ignored in `.gitignore`.
 
 - STS:
 
-  - `Skoruba.IdentityServer4.STS.Identity` - [Quickstart UI for the IdentityServer4 with Asp.Net Core Identity and EF Core storage](https://github.com/IdentityServer/IdentityServer4.Samples/tree/release/Quickstarts/Combined_AspNetIdentity_and_EntityFrameworkStorage)
+  - `Skoruba.IdentityServer4.STS.Identity` - [Quickstart UI for the IdentityServer4 with Asp.Net Core Identity and EF Core storage](https://github.com/IdentityServer/IdentityServer4.Samples/tree/master/Quickstarts/Combined_AspId_and_EFStorage)
 
 - Admin UI:
 
@@ -304,7 +306,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 <!-- prettier-ignore-start -->
 | [<img src="https://avatars3.githubusercontent.com/u/35664089?s=460&v=3" width="100px;"/><br /><sub> Jan Škoruba</sub>](https://github.com/skoruba) <br /> 💻 💬 📖 💡 🤔 | [<img src="https://avatars0.githubusercontent.com/u/6831144?s=460&v=3" width="100px;"/><br /><sub> Tomáš Hübelbauer</sub>](https://github.com/TomasHubelbauer) <br /> 💻 👀 📖  🤔 | [<img src="https://avatars0.githubusercontent.com/u/1004852?s=460&v=3" width="100px;"/><br /><sub>Michał Drzał </sub>](https://github.com/xmichaelx) <br />💻 👀 📖 💡 🤔 | [<img src="https://avatars0.githubusercontent.com/u/2261603?s=460&v=3" width="100px;"/><br /><sub>cerginio </sub>](https://github.com/cerginio) <br /> 💻 🐛 💡 🤔 | [<img src="https://avatars3.githubusercontent.com/u/13407080?s=460&v=3" width="100px;"/><br /><sub>Sven Dummis </sub>](https://github.com/svendu) <br /> 📖| [<img src="https://avatars1.githubusercontent.com/u/1687087?s=460&v=3" width="100px;"/><br /><sub>Seaear</sub>](https://github.com/Seaear) <br />🌍|
 | :---: | :---: | :---: | :---: | :---: | :---: |
-|[<img src="https://avatars1.githubusercontent.com/u/1150473?s=460&v=3" width="118px;"/><br /><sub>Rune Antonsen </sub>](https://github.com/ruant) <br />🐛|[<img src="https://avatars1.githubusercontent.com/u/5537607?s=460&v=3" width="118px;"/><br /><sub>Sindre Njøsen </sub>](https://github.com/Sindrenj) <br />💻|
+|[<img src="https://avatars1.githubusercontent.com/u/1150473?s=460&v=3" width="118px;"/><br /><sub>Rune Antonsen </sub>](https://github.com/ruant) <br />🐛|[<img src="https://avatars1.githubusercontent.com/u/5537607?s=460&v=3" width="118px;"/><br /><sub>Sindre Njøsen </sub>](https://github.com/Sindrenj) <br />💻|[<img src="https://avatars1.githubusercontent.com/u/40323674?s=460&v=3" width="118px;"/><br /><sub>Alevtina Brown </sub>](https://github.com/alev7ina) <br />🌍|
 <!-- prettier-ignore-end -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification.

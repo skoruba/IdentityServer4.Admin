@@ -25,8 +25,19 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         {
             return View();
         }
-        
-        public IActionResult Error()
+
+	    [HttpPost]
+	    public IActionResult SetLanguage(string culture, string returnUrl)
+	    {
+		    Response.Cookies.Append(
+			    CookieRequestCultureProvider.DefaultCookieName,
+			    CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+			    new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+		    );
+		    return LocalRedirect(returnUrl);
+	    }
+
+		public IActionResult Error()
         {
             // Get the details of the exception that occurred
             var exceptionFeature = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
