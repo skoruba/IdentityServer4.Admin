@@ -256,7 +256,6 @@ It is possible to define the configuration according the client type - by defaul
   - [x] Database
   - [ ] File
 - [x] Add localization for other languages
-
   - [x] English
   - [x] Chinese
   - [x] Russian
