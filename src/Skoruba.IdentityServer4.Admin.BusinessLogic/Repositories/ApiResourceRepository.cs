@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -47,7 +48,47 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<bool> CanInsertApiResourceAsync(ApiResource apiResource)
+		public async Task<PagedList<ApiResourceProperty>> GetApiResourcePropertiesAsync(int apiResourceId, int page = 1, int pageSize = 10)
+		{
+			var pagedList = new PagedList<ApiResourceProperty>();
+
+			var properties = await _dbContext.ApiResourceProperties.Where(x => x.ApiResource.Id == apiResourceId).PageBy(x => x.Id, page, pageSize)
+				.ToListAsync();
+
+			pagedList.Data.AddRange(properties);
+			pagedList.TotalCount = await _dbContext.ApiResourceProperties.Where(x => x.ApiResource.Id == apiResourceId).CountAsync();
+			pagedList.PageSize = pageSize;
+
+			return pagedList;
+		}
+
+	    public Task<ApiResourceProperty> GetApiResourcePropertyAsync(int apiResourcePropertyId)
+	    {
+		    return _dbContext.ApiResourceProperties
+			    .Include(x => x.ApiResource)
+			    .Where(x => x.Id == apiResourcePropertyId)
+			    .SingleOrDefaultAsync();
+	    }
+
+	    public async Task<int> AddApiResourcePropertyAsync(int apiResourceId, ApiResourceProperty apiResourceProperty)
+	    {
+		    var apiResource = await _dbContext.ApiResources.Where(x => x.Id == apiResourceId).SingleOrDefaultAsync();
+
+		    apiResourceProperty.ApiResource = apiResource;
+		    await _dbContext.ApiResourceProperties.AddAsync(apiResourceProperty);
+
+		    return await AutoSaveChangesAsync();
+	    }
+
+	    public async Task<int> DeleteApiResourcePropertyAsync(ApiResourceProperty apiResourceProperty)
+	    {
+		    var propertyToDelete = await _dbContext.ApiResourceProperties.Where(x => x.Id == apiResourceProperty.Id).SingleOrDefaultAsync();
+
+		    _dbContext.ApiResourceProperties.Remove(propertyToDelete);
+		    return await AutoSaveChangesAsync();
+	    }
+
+		public async Task<bool> CanInsertApiResourceAsync(ApiResource apiResource)
         {
             if (apiResource.Id == 0)
             {

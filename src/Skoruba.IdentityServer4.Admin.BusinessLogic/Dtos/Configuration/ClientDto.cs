@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Enums;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
@@ -102,5 +103,14 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
 		public List<ClientClaimDto> Claims { get; set; }
 		public List<ClientSecretDto> ClientSecrets { get; set; }
         public List<ClientPropertyDto> Properties { get; set; }
+
+		public DateTime? Updated { get; set; }
+		public DateTime? LastAccessed { get; set; }
+
+		public int? UserSsoLifetime { get; set; }
+		public string UserCodeType { get; set; }
+		public int DeviceCodeLifetime { get; set; } = 300;
+
+		public bool NonEditable { get; set; }
 	}
 }

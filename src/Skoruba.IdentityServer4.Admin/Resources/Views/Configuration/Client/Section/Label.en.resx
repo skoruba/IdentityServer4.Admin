@@ -429,4 +429,22 @@ OneTime the refresh token handle will be updated when refreshing tokens</value>
   <data name="ProtocolType_Label" xml:space="preserve">
     <value>Protocol Type</value>
   </data>
+  <data name="UserSsoLifetime_Info" xml:space="preserve">
+    <value>The maximum duration (in seconds) since the last time the user authenticated. Defaults to null</value>
+  </data>
+  <data name="UserSsoLifetime_Label" xml:space="preserve">
+    <value>User Sso Lifetime</value>
+  </data>
+  <data name="DeviceCodeLifetime_Info" xml:space="preserve">
+    <value>Lifetime to device code in seconds (defaults to 300 seconds / 5 minutes)</value>
+  </data>
+  <data name="DeviceCodeLifetime_Label" xml:space="preserve">
+    <value>Device Code Lifetime</value>
+  </data>
+  <data name="UserCodeType_Info" xml:space="preserve">
+    <value>Specifies the type of user code to use for the client. Otherwise falls back to default.</value>
+  </data>
+  <data name="UserCodeType_Label" xml:space="preserve">
+    <value>User Code Type</value>
+  </data>
 </root>

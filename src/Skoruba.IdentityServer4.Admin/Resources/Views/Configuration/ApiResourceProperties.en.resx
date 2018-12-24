@@ -117,25 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NavAuthentication" xml:space="preserve">
-    <value>Authentication/Logout</value>
+  <data name="ButtonAddProperty" xml:space="preserve">
+    <value>Add Api Resource Property</value>
   </data>
-  <data name="NavBasics" xml:space="preserve">
-    <value>Basics</value>
+  <data name="NavigationApiResourceProperties" xml:space="preserve">
+    <value>Api Resource Properties</value>
   </data>
-  <data name="NavConsent" xml:space="preserve">
-    <value>Consent Screen</value>
+  <data name="NavigationApiResources" xml:space="preserve">
+    <value>Api Resource</value>
   </data>
-  <data name="NavDeviceFlow" xml:space="preserve">
-    <value>Device Flow</value>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Api Resource Properties</value>
   </data>
-  <data name="NavName" xml:space="preserve">
-    <value>Name</value>
+  <data name="PanelTitle" xml:space="preserve">
+    <value>Api Resource Properties</value>
   </data>
-  <data name="NavToken" xml:space="preserve">
-    <value>Token</value>
+  <data name="PanelTitleNew" xml:space="preserve">
+    <value>Api Resource Property</value>
   </data>
-  <data name="Title" xml:space="preserve">
-    <value>Settings</value>
+  <data name="TableButtonRemove" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="TableKey" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="TableValue" xml:space="preserve">
+    <value>Value</value>
   </data>
 </root>

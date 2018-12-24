@@ -14,6 +14,7 @@
 					<a class="nav-item nav-link" id="nav-authentication-tab" data-toggle="tab" href="#nav-authentication" role="tab" aria-controls="nav-authentication" aria-selected="false">@Localizer["NavAuthentication"]</a>
 					<a class="nav-item nav-link" id="nav-token-tab" data-toggle="tab" href="#nav-token" role="tab" aria-controls="nav-token" aria-selected="false">@Localizer["NavToken"]</a>
 					<a class="nav-item nav-link" id="nav-consent-tab" data-toggle="tab" href="#nav-consent" role="tab" aria-controls="nav-consent" aria-selected="false">@Localizer["NavConsent"]</a>
+					<a class="nav-item nav-link" id="nav-deviceflow-tab" data-toggle="tab" href="#nav-deviceflow" role="tab" aria-controls="nav-deviceflow" aria-selected="false">@Localizer["NavDeviceFlow"]</a>
 				}
 			</div>
 		</nav>
@@ -36,6 +37,9 @@
 				</div>
 				<div class="tab-pane" id="nav-consent" role="tabpanel" aria-labelledby="nav-consent-tab">
 					@await Html.PartialAsync("Client/Section/Consent")
+				</div>
+				<div class="tab-pane" id="nav-deviceflow" role="tabpanel" aria-labelledby="nav-deviceflow-tab">
+					@await Html.PartialAsync("Client/Section/DeviceFlow")
 				</div>
 			}
 		</div>

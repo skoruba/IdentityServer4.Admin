@@ -120,6 +120,9 @@
   <data name="SuccessAddApiResource" xml:space="preserve">
     <value>Api Resource {0} is successfully saved!</value>
   </data>
+  <data name="SuccessAddApiResourceProperty" xml:space="preserve">
+    <value>Api Resource property {0} for api resource {1} is successfully saved!</value>
+  </data>
   <data name="SuccessAddApiScope" xml:space="preserve">
     <value>Api Scope {0} is successfully saved!</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="SuccessDeleteApiResource" xml:space="preserve">
     <value>Api Resource is successfully deleted!</value>
+  </data>
+  <data name="SuccessDeleteApiResourceProperty" xml:space="preserve">
+    <value>Api resource property is successfully deleted!</value>
   </data>
   <data name="SuccessDeleteApiScope" xml:space="preserve">
     <value>Api Scope is successfully deleted!</value>

@@ -88,6 +88,15 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Api Resource Property with id {0} doesn&apos;t exist.
+        /// </summary>
+        internal static string ApiResourcePropertyDoesNotExist {
+            get {
+                return ResourceManager.GetString("ApiResourcePropertyDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Api Scope with id {0} doesn&apos;t exist.
         /// </summary>
         internal static string ApiScopeDoesNotExist {

@@ -38,7 +38,46 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return apiResourcesDto;
         }
 
-        private void HashApiSharedSecret(ApiSecretsDto apiSecret)
+	    public async Task<ApiResourcePropertiesDto> GetApiResourcePropertiesAsync(int apiResourceId, int page = 1, int pageSize = 10)
+	    {
+		    var apiResource = await _apiResourceRepository.GetApiResourceAsync(apiResourceId);
+		    if (apiResource == null) throw new UserFriendlyErrorPageException(string.Format(_apiResourceServiceResources.ApiResourceDoesNotExist().Description, apiResourceId), _apiResourceServiceResources.ApiResourceDoesNotExist().Description);
+
+			var pagedList = await _apiResourceRepository.GetApiResourcePropertiesAsync(apiResourceId, page, pageSize);
+		    var apiResourcePropertiesDto = pagedList.ToModel();
+		    apiResourcePropertiesDto.ApiResourceId = apiResourceId;
+		    apiResourcePropertiesDto.ApiResourceName = await _apiResourceRepository.GetApiResourceNameAsync(apiResourceId);
+
+		    return apiResourcePropertiesDto;
+		}
+
+	    public async Task<ApiResourcePropertiesDto> GetApiResourcePropertyAsync(int apiResourcePropertyId)
+	    {
+			var apiResourceProperty = await _apiResourceRepository.GetApiResourcePropertyAsync(apiResourcePropertyId);
+		    if (apiResourceProperty == null) throw new UserFriendlyErrorPageException(string.Format(_apiResourceServiceResources.ApiResourcePropertyDoesNotExist().Description, apiResourcePropertyId));
+
+		    var apiResourcePropertiesDto = apiResourceProperty.ToModel();
+		    apiResourcePropertiesDto.ApiResourceId = apiResourceProperty.ApiResourceId;
+		    apiResourcePropertiesDto.ApiResourceName = await _apiResourceRepository.GetApiResourceNameAsync(apiResourceProperty.ApiResourceId);
+
+		    return apiResourcePropertiesDto;
+		}
+
+	    public async Task<int> AddApiResourcePropertyAsync(ApiResourcePropertiesDto apiResourceProperties)
+	    {
+			var apiResourceProperty = apiResourceProperties.ToEntity();
+
+		    return await _apiResourceRepository.AddApiResourcePropertyAsync(apiResourceProperties.ApiResourceId, apiResourceProperty);
+		}
+
+	    public async Task<int> DeleteApiResourcePropertyAsync(ApiResourcePropertiesDto apiResourceProperty)
+	    {
+		    var propertyEntity = apiResourceProperty.ToEntity();
+
+		    return await _apiResourceRepository.DeleteApiResourcePropertyAsync(propertyEntity);
+		}
+
+	    private void HashApiSharedSecret(ApiSecretsDto apiSecret)
         {
             if (apiSecret.Type != SharedSecret) return;
 

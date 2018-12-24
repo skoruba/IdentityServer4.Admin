@@ -26,7 +26,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mappers
                        .Excluding(o => o.PostLogoutRedirectUris)
                        .Excluding(o => o.AllowedGrantTypes)
                        .Excluding(o => o.AllowedScopes)
-                       .Excluding(o => o.IdentityProviderRestrictions));
+					   .Excluding(o => o.Created)
+					   .Excluding(o => o.IdentityProviderRestrictions));
 
             //Assert collection
             client.AllowedCorsOrigins.Select(x => x.Origin).ShouldBeEquivalentTo(clientDto.AllowedCorsOrigins);
@@ -54,7 +55,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mappers
                     .Excluding(o => o.PostLogoutRedirectUris)
                     .Excluding(o => o.AllowedGrantTypes)
                     .Excluding(o => o.AllowedScopes)
-                    .Excluding(o => o.IdentityProviderRestrictions));
+	                .Excluding(o => o.Created)
+					.Excluding(o => o.IdentityProviderRestrictions));
 
             //Assert collection
             client.AllowedCorsOrigins.Select(x => x.Origin).ShouldBeEquivalentTo(clientDto.AllowedCorsOrigins);
@@ -107,7 +109,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mappers
 
             clientSecret.ShouldBeEquivalentTo(clientSecretsDto, options =>
                 options.Excluding(o => o.Id)
-                    .Excluding(o => o.Client));
+	                .Excluding(o => o.Created)
+					.Excluding(o => o.Client));
         }
 
         [Fact]
@@ -122,7 +125,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mappers
 
             clientSecret.ShouldBeEquivalentTo(clientSecretsDto, options =>
                 options.Excluding(o => o.Id)
-                    .Excluding(o => o.Client));
+	                .Excluding(o => o.Created)
+					.Excluding(o => o.Client));
         }
 
         [Fact]
