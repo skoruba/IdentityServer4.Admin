@@ -13,7 +13,7 @@ This is currently in **beta version**
 
 The application is written in the **Asp.Net Core MVC - using .NET Core 2.1**
 
-**NOTE:** Currently works only with **IdentityServer4 version => 2.3.0** 🚀
+**NOTE:** Works only with **IdentityServer4 version => 2.3.0** 🚀
 
 ## Requirements
 
