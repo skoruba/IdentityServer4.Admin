@@ -10,7 +10,9 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Serilog;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
@@ -102,5 +104,12 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(options.Value);
         }
-    }
+
+	    public static void AddLogging(this IApplicationBuilder app, ILoggerFactory loggerFactory, IConfiguration configuration)
+	    {
+		    Log.Logger = new LoggerConfiguration()
+			    .ReadFrom.Configuration(configuration)
+			    .CreateLogger();
+	    }
+	}
 }
