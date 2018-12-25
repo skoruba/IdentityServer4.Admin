@@ -11,7 +11,7 @@
 
 This is currently in **beta version**
 
-The application is written in the **Asp.Net Core MVC - using .NET Core 2.1**
+The application is written in the **Asp.Net Core MVC - using .NET Core 2.2**
 
 **NOTE:** Works only with **IdentityServer4 version => 2.3.0** 🚀
 
@@ -252,9 +252,9 @@ It is possible to define the configuration according the client type - by defaul
 - [x] Create the Business Logic & EF layers - available as a nuget package
 - [x] Create a project template using dotnet CLI - `dotnet new template`
   - [x] First template: The administration of the IdentityServer4 and Asp.Net Core Identity
-- [ ] Add logging into
+- [x] Add logging into
   - [x] Database
-  - [ ] File
+  - [x] File
 - [x] Add localization for other languages
   - [x] English
   - [x] Chinese
