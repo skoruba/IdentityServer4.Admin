@@ -252,7 +252,7 @@ It is possible to define the configuration according the client type - by defaul
 - [x] Create the Business Logic & EF layers - available as a nuget package
 - [x] Create a project template using dotnet CLI - `dotnet new template`
   - [x] First template: The administration of the IdentityServer4 and Asp.Net Core Identity
-- [ ] Add logging into
+- [x] Add logging into
   - [x] Database
   - [x] File
 - [x] Add localization for other languages
