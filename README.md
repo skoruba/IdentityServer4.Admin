@@ -254,7 +254,7 @@ It is possible to define the configuration according the client type - by defaul
   - [x] First template: The administration of the IdentityServer4 and Asp.Net Core Identity
 - [ ] Add logging into
   - [x] Database
-  - [ ] File
+  - [x] File
 - [x] Add localization for other languages
   - [x] English
   - [x] Chinese
