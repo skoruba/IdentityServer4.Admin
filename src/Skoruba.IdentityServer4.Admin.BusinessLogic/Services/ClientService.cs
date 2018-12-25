@@ -66,7 +66,10 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
                 case ClientType.Machine:
                     client.AllowedGrantTypes.AddRange(GrantTypes.ResourceOwnerPasswordAndClientCredentials);
                     break;
-                default:
+	            case ClientType.Device:
+		            client.AllowedGrantTypes.AddRange(GrantTypes.DeviceFlow);
+					break;
+	            default:
                     throw new ArgumentOutOfRangeException();
             }
         }

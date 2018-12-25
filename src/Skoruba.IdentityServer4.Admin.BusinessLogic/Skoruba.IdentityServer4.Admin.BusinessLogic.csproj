@@ -26,12 +26,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ApiResourceServiceResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\IdentityResourceServiceResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IdentityResourceServiceResource.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="Resources\ApiResourceServiceResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ApiResourceServiceResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\IdentityResourceServiceResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>IdentityResourceServiceResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

@@ -123,4 +123,25 @@
   <data name="PanelTitle" xml:space="preserve">
     <value>Token</value>
   </data>
+  <data name="PickerItemAlreadySelectedTitle" xml:space="preserve">
+    <value>item already selected</value>
+  </data>
+  <data name="PickerNoItemSelectedTitle" xml:space="preserve">
+    <value>No item/s selected</value>
+  </data>
+  <data name="PickerSearchItemPlaceholder" xml:space="preserve">
+    <value>Enter 2 and more characters</value>
+  </data>
+  <data name="PickerSearchResultTitle" xml:space="preserve">
+    <value>Search result: (click on the item to select)</value>
+  </data>
+  <data name="PickerSelectedItemsTitle" xml:space="preserve">
+    <value>Selected item/s: </value>
+  </data>
+  <data name="PickerShowAllItemsTitle" xml:space="preserve">
+    <value>more</value>
+  </data>
+  <data name="PickerSuggestedItemsTitle" xml:space="preserve">
+    <value>Suggested items: </value>
+  </data>
 </root>

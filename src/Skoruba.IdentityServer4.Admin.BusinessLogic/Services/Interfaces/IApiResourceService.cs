@@ -21,6 +21,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
 
 	    Task<int> DeleteApiResourcePropertyAsync(ApiResourcePropertiesDto apiResourceProperty);
 
+	    Task<bool> CanInsertApiResourcePropertyAsync(ApiResourcePropertiesDto apiResourceProperty);
+
 		Task<ApiResourceDto> GetApiResourceAsync(int apiResourceId);
 
         Task<int> AddApiResourceAsync(ApiResourceDto apiResource);
