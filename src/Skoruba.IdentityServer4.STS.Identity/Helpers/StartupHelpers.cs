@@ -90,7 +90,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             }
             else
             {
-                throw new Exception("need to configure key material");
+	            builder.AddCustomSigningCredential(configuration);
+	            builder.AddCustomValidationKey(configuration);
             }
         }
 
