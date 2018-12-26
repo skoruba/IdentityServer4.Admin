@@ -198,6 +198,7 @@ It is possible to define the configuration according the client type - by defaul
 - Single Page Application - Javascript - Implicit flow
 - Native Application - Mobile/Desktop - Hybrid flow
 - Machine/Robot - Resource Owner Password and Client Credentials flow
+- TV and Limited-Input Device Application - Device flow
 
 - Actions: Add, Update, Clone, Remove
 - Entities:
