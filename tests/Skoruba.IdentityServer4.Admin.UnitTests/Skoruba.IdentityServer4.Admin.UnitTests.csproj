@@ -21,6 +21,7 @@
 		<PackageReference Include="FluentAssertions" Version="4.19.4" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
 		<PackageReference Include="Moq" Version="4.10.1" />
+		<PackageReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 
 	<ItemGroup>

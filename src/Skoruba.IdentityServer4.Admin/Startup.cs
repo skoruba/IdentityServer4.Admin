@@ -66,7 +66,6 @@ namespace Skoruba.IdentityServer4.Admin
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
             }
             else
             {
