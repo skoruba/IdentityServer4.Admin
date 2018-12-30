@@ -23,9 +23,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
-using Serilog.Events;
-using Serilog.Sinks.MSSqlServer;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Constants;
 using Skoruba.IdentityServer4.Admin.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Middlewares;
 using Skoruba.IdentityServer4.Admin.Configuration;
@@ -36,7 +33,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 {
     public static class StartupHelpers
     {
-        public static void RegisterDbContexts<TContext>(this IServiceCollection services, IConfigurationRoot configuration) 
+        public static void RegisterDbContexts<TContext>(this IServiceCollection services, IConfigurationRoot configuration)
             where TContext : DbContext
         {
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
@@ -124,22 +121,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
         public static void AddLogging(this IApplicationBuilder app, ILoggerFactory loggerFactory, IConfigurationRoot configuration)
         {
-            loggerFactory.AddConsole(configuration.GetSection(ConfigurationConsts.LoggingSectionKey));
-            loggerFactory.AddDebug();
-
-            var columnOptions = new ColumnOptions();
-
-            // Don't include the Properties XML column.
-            columnOptions.Store.Remove(StandardColumn.Properties);
-
-            // Do include the log event data as JSON.
-            columnOptions.Store.Add(StandardColumn.LogEvent);
-
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.MSSqlServer(configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey),
-                    TableConsts.Logging,
-                    columnOptions: columnOptions,
-                    restrictedToMinimumLevel: LogEventLevel.Error)
+                .ReadFrom.Configuration(configuration)
                 .CreateLogger();
         }
 

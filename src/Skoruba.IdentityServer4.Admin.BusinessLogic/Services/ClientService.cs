@@ -16,7 +16,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 {
-    public class ClientService<TDbContext> : IClientService<TDbContext> 
+    public class ClientService<TDbContext> : IClientService<TDbContext>
         where TDbContext : DbContext, IAdminConfigurationDbContext
     {
         private readonly IClientRepository<TDbContext> _clientRepository;
@@ -65,6 +65,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
                     break;
                 case ClientType.Machine:
                     client.AllowedGrantTypes.AddRange(GrantTypes.ResourceOwnerPasswordAndClientCredentials);
+                    break;
+                case ClientType.Device:
+                    client.AllowedGrantTypes.AddRange(GrantTypes.DeviceFlow);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -321,11 +324,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var clientInfo = await _clientRepository.GetClientIdAsync(clientSecret.Client.Id);
             if (clientInfo.ClientId == null) throw new UserFriendlyErrorPageException(string.Format(_clientServiceResources.ClientDoesNotExist().Description, clientSecret.Client.Id));
-            
+
             var clientSecretsDto = clientSecret.ToModel();
             clientSecretsDto.ClientId = clientSecret.Client.Id;
             clientSecretsDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
-            
+
             return clientSecretsDto;
         }
 
@@ -362,11 +365,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var clientInfo = await _clientRepository.GetClientIdAsync(clientClaim.Client.Id);
             if (clientInfo.ClientId == null) throw new UserFriendlyErrorPageException(string.Format(_clientServiceResources.ClientDoesNotExist().Description, clientClaim.Client.Id));
-            
+
             var clientClaimsDto = clientClaim.ToModel();
             clientClaimsDto.ClientId = clientClaim.Client.Id;
             clientClaimsDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
-            
+
             return clientClaimsDto;
         }
 
@@ -377,11 +380,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var clientInfo = await _clientRepository.GetClientIdAsync(clientProperty.Client.Id);
             if (clientInfo.ClientId == null) throw new UserFriendlyErrorPageException(string.Format(_clientServiceResources.ClientDoesNotExist().Description, clientProperty.Client.Id));
-           
+
             var clientPropertiesDto = clientProperty.ToModel();
             clientPropertiesDto.ClientId = clientProperty.Client.Id;
             clientPropertiesDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
-            
+
             return clientPropertiesDto;
         }
 

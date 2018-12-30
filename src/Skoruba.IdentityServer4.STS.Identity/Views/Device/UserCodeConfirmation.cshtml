@@ -1,0 +1,113 @@
+@model IdentityServer4.Quickstart.UI.Device.DeviceAuthorizationViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<div class="consent-container">
+    <div class="row page-header">
+        <div class="col-sm-10">
+            @if (Model.ClientLogoUrl != null)
+            {
+                <div class="client-logo"><img src="@Model.ClientLogoUrl"></div>
+            }
+            <h1>
+                @Model.ClientName
+                <small>@Localizer["SubTitle"]</small>
+            </h1>
+        </div>
+    </div>
+    @if (Model.ConfirmUserCode)
+    {
+        <div class="row">
+            <div class="col-sm-8">
+                <p>
+                   @Localizer["ConfirmCode"] "@Model.UserCode".
+                </p>
+            </div>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-sm-12">
+            @await Html.PartialAsync("_ValidationSummary")
+
+            <form asp-action="Callback" class="consent-form">
+                <input type="hidden" asp-for="UserCode" />
+
+                <div>@Localizer["UnCheckPermission"]</div>
+
+                @if (Model.IdentityScopes.Any())
+                {
+                    <div class="col-sm-12">
+                        <div class="card mt-3">
+                            <h5 class="card-header">
+                                <i class="fa fa-user"></i>
+                                @Localizer["PersonalInformation"]
+                            </h5>
+                            <div class="card-body">
+                                <ul class="list-group">
+                                    @foreach (var scope in Model.IdentityScopes)
+                                    {
+                                        @await Html.PartialAsync("_ScopeListItem", scope)
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (Model.ResourceScopes.Any())
+                {
+                    <div class="col-sm-12">
+                        <div class="card mt-3">
+                            <h5 class="card-header">
+                                <i class="fa fa-lock"></i> @Localizer["ApplicationAccess"]
+                            </h5>
+                            <div class="card-body">
+
+                                <ul class="list-group">
+                                    @foreach (var scope in Model.ResourceScopes)
+                                    {
+                                        @await Html.PartialAsync("_ScopeListItem", scope)
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (Model.AllowRememberConsent)
+                {
+                    <div class="row m-4">
+                        <div class="col-sm-12">
+                            <div class="toggle-button__input">
+                                <toggle-button>
+                                    <input asp-for="RememberConsent" />
+                                </toggle-button>
+                            </div>
+                            <div class="toggle-button__text">
+                                <strong>@Localizer["Remember"]</strong>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="row ml-4 mr-4">
+                    <div class="col-sm-9 mt-3">
+                        <button name="button" value="yes" class="btn btn-primary" autofocus>@Localizer["Yes"]</button>
+                        <button name="button" value="no" class="btn">@Localizer["No"]</button>
+                    </div>
+
+                    <div class="col-sm-3 mt-3">
+                        @if (Model.ClientUrl != null)
+                        {
+                            <a class="btn btn-outline-primary" target="_blank" href="@Model.ClientUrl">
+                                <i class="fa fa-info-circle"></i>
+                                <strong>@Model.ClientName</strong>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

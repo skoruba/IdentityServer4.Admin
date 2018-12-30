@@ -370,5 +370,117 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 newApiSecret.ShouldBeEquivalentTo(apiSecret, options => options.Excluding(o => o.Id));
             }
         }
-    }
+
+	    [Fact]
+		public async Task AddApiResourcePropertyAsync()
+	    {
+		    using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+		    {
+			    var apiResourceRepository = GetApiResourceRepository(context);
+
+			    //Generate random new api resource without id
+			    var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
+
+				//Add new api resource
+				await apiResourceRepository.AddApiResourceAsync(apiResource);
+
+				//Get new api resource
+				var resource = await apiResourceRepository.GetApiResourceAsync(apiResource.Id);
+
+				//Assert new api resource
+				resource.ShouldBeEquivalentTo(apiResource, options => options.Excluding(o => o.Id));
+
+			    //Generate random new api resource property
+			    var apiResourceProperty = ApiResourceMock.GenerateRandomApiResourceProperty(0);
+
+				//Add new api resource property
+				await apiResourceRepository.AddApiResourcePropertyAsync(resource.Id, apiResourceProperty);
+
+				//Get new api resource property
+				var resourceProperty = await context.ApiResourceProperties.Where(x => x.Id == apiResourceProperty.Id)
+				    .SingleOrDefaultAsync();
+
+			    resourceProperty.ShouldBeEquivalentTo(apiResourceProperty,
+				    options => options.Excluding(o => o.Id).Excluding(x => x.ApiResource));
+		    }
+	    }
+
+	    [Fact]
+	    public async Task DeleteApiResourcePropertyAsync()
+	    {
+		    using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+		    {
+			    var apiResourceRepository = GetApiResourceRepository(context);
+
+				//Generate random new api resource without id
+				var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
+
+			    //Add new api resource
+			    await apiResourceRepository.AddApiResourceAsync(apiResource);
+
+				//Get new api resource
+				var resource = await apiResourceRepository.GetApiResourceAsync(apiResource.Id);
+
+				//Assert new api resource
+				resource.ShouldBeEquivalentTo(apiResource, options => options.Excluding(o => o.Id));
+
+				//Generate random new api resource property
+				var apiResourceProperty = ApiResourceMock.GenerateRandomApiResourceProperty(0);
+
+				//Add new api resource property
+				await apiResourceRepository.AddApiResourcePropertyAsync(resource.Id, apiResourceProperty);
+
+				//Get new api resource property
+				var property = await context.ApiResourceProperties.Where(x => x.Id == apiResourceProperty.Id)
+				    .SingleOrDefaultAsync();
+
+			    //Assert
+			    property.ShouldBeEquivalentTo(apiResourceProperty,
+				    options => options.Excluding(o => o.Id).Excluding(x => x.ApiResource));
+
+			    //Try delete it
+			    await apiResourceRepository.DeleteApiResourcePropertyAsync(property);
+
+				//Get new api resource property
+				var resourceProperty = await context.ApiResourceProperties.Where(x => x.Id == apiResourceProperty.Id)
+				    .SingleOrDefaultAsync();
+
+			    //Assert
+			    resourceProperty.Should().BeNull();
+		    }
+	    }
+
+	    [Fact]
+	    public async Task GetApiResourcePropertyAsync()
+	    {
+		    using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+		    {
+			    var apiResourceRepository = GetApiResourceRepository(context);
+
+			    //Generate random new api resource without id
+			    var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
+
+				//Add new api resource
+				await apiResourceRepository.AddApiResourceAsync(apiResource);
+
+				//Get new api resource
+				var resource = await apiResourceRepository.GetApiResourceAsync(apiResource.Id);
+
+				//Assert new api resource
+				resource.ShouldBeEquivalentTo(apiResource, options => options.Excluding(o => o.Id));
+
+				//Generate random new api resource property
+				var apiResourceProperty = ApiResourceMock.GenerateRandomApiResourceProperty(0);
+
+				//Add new api resource property
+				await apiResourceRepository.AddApiResourcePropertyAsync(resource.Id, apiResourceProperty);
+
+				//Get new api resource property
+				var resourceProperty = await apiResourceRepository.GetApiResourcePropertyAsync(apiResourceProperty.Id);
+
+			    resourceProperty.ShouldBeEquivalentTo(apiResourceProperty,
+				    options => options.Excluding(o => o.Id).Excluding(x => x.ApiResource));
+		    }
+	    }
+	}
 }

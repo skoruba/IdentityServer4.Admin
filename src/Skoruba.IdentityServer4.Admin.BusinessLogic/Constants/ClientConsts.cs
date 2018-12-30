@@ -51,7 +51,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Constants
                     "client_credentials",
                     "authorization_code",
                     "hybrid",
-                    "password"
+                    "password",
+                    "urn:ietf:params:oauth:grant-type:device_code"
                 };
 
             return allowedGrantypes;

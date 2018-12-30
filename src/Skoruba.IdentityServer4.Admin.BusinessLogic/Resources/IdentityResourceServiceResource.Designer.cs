@@ -87,5 +87,32 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Resources {
                 return ResourceManager.GetString("IdentityResourceExistsValue", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Identity Resource Property with id {0} doesn&apos;t exist.
+        /// </summary>
+        internal static string IdentityResourcePropertyDoesNotExist {
+            get {
+                return ResourceManager.GetString("IdentityResourcePropertyDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Identity Resource Property already exists.
+        /// </summary>
+        internal static string IdentityResourcePropertyExistsKey {
+            get {
+                return ResourceManager.GetString("IdentityResourcePropertyExistsKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Identity Resource Property with key ({0}) already exists.
+        /// </summary>
+        internal static string IdentityResourcePropertyExistsValue {
+            get {
+                return ResourceManager.GetString("IdentityResourcePropertyExistsValue", resourceCulture);
+            }
+        }
     }
 }

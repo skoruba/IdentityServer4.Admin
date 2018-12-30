@@ -26,21 +26,21 @@ namespace Skoruba.IdentityServer4.STS.Identity.Quickstart.Home
             return View();
         }
 
-	    [HttpPost]
-	    public IActionResult SetLanguage(string culture, string returnUrl)
-	    {
-		    Response.Cookies.Append(
-			    CookieRequestCultureProvider.DefaultCookieName,
-			    CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
-			    new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
-		    );
-		    return LocalRedirect(returnUrl);
-	    }
+        [HttpPost]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+            return LocalRedirect(returnUrl);
+        }
 
-		/// <summary>
-		/// Shows the error page
-		/// </summary>
-		public async Task<IActionResult> Error(string errorId)
+        /// <summary>
+        /// Shows the error page
+        /// </summary>
+        public async Task<IActionResult> Error(string errorId)
         {
             var vm = new ErrorViewModel();
 

@@ -30,7 +30,11 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts
 
         public DbSet<ApiResource> ApiResources { get; set; }
 
+        public DbSet<ApiResourceProperty> ApiResourceProperties { get; set; }
+
         public DbSet<IdentityResource> IdentityResources { get; set; }
+
+        public DbSet<IdentityResourceProperty> IdentityResourceProperties { get; set; }
 
         public DbSet<ApiSecret> ApiSecrets { get; set; }
 
@@ -63,6 +67,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts
         public DbSet<ClientProperty> ClientProperties { get; set; }
 
         public DbSet<PersistedGrant> PersistedGrants { get; set; }
+
+        public DbSet<DeviceFlowCodes> DeviceFlowCodes { get; set; }
 
         public DbSet<Log> Logs { get; set; }
 

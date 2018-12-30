@@ -141,6 +141,24 @@
   <data name="Name_Label" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="Properties_Info" xml:space="preserve">
+    <value>Dictionary to hold any custom api resource-specific values as needed.</value>
+  </data>
+  <data name="Properties_Label" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="PropertyKey_Info" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="PropertyKey_Label" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="PropertyValue_Info" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="PropertyValue_Label" xml:space="preserve">
+    <value>Value</value>
+  </data>
   <data name="Scopes_Info" xml:space="preserve">
     <value>An API must have at least one scope. Each scope can have different settings.</value>
   </data>

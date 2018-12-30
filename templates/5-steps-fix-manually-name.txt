@@ -10,4 +10,4 @@ with:
 Skoruba.IdentityServer4.Admin.EntityFramework
 
 # Fix nuget package name
-# Copy fixed src to template-publish
+# Copy fixed src from SkorubaIdentityServer4Admin to template-publish
