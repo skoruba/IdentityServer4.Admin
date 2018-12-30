@@ -67,31 +67,31 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Resources
             };
         }
 
-	    public ResourceMessage ApiResourcePropertyDoesNotExist()
-	    {
-			return new ResourceMessage()
-			{
-				Code = nameof(ApiResourcePropertyDoesNotExist),
-				Description = ApiResourceServiceResource.ApiResourcePropertyDoesNotExist
-			};
-		}
+        public ResourceMessage ApiResourcePropertyDoesNotExist()
+        {
+            return new ResourceMessage()
+            {
+                Code = nameof(ApiResourcePropertyDoesNotExist),
+                Description = ApiResourceServiceResource.ApiResourcePropertyDoesNotExist
+            };
+        }
 
-	    public ResourceMessage ApiResourcePropertyExistsKey()
-	    {
-			return new ResourceMessage()
-			{
-				Code = nameof(ApiResourcePropertyExistsKey),
-				Description = ApiResourceServiceResource.ApiResourcePropertyExistsKey
-			};
-		}
+        public ResourceMessage ApiResourcePropertyExistsKey()
+        {
+            return new ResourceMessage()
+            {
+                Code = nameof(ApiResourcePropertyExistsKey),
+                Description = ApiResourceServiceResource.ApiResourcePropertyExistsKey
+            };
+        }
 
-	    public ResourceMessage ApiResourcePropertyExistsValue()
-	    {
-			return new ResourceMessage()
-			{
-				Code = nameof(ApiResourcePropertyExistsValue),
-				Description = ApiResourceServiceResource.ApiResourcePropertyExistsValue
-			};
-		}
+        public ResourceMessage ApiResourcePropertyExistsValue()
+        {
+            return new ResourceMessage()
+            {
+                Code = nameof(ApiResourcePropertyExistsValue),
+                Description = ApiResourceServiceResource.ApiResourcePropertyExistsValue
+            };
+        }
     }
 }

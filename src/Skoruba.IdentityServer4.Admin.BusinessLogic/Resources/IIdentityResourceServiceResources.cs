@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
+﻿using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Resources
 {
-	public interface IIdentityResourceServiceResources
-	{
-		ResourceMessage IdentityResourceDoesNotExist();
+    public interface IIdentityResourceServiceResources
+    {
+        ResourceMessage IdentityResourceDoesNotExist();
 
-		ResourceMessage IdentityResourceExistsKey();
+        ResourceMessage IdentityResourceExistsKey();
 
-		ResourceMessage IdentityResourceExistsValue();
+        ResourceMessage IdentityResourceExistsValue();
 
-		ResourceMessage IdentityResourcePropertyDoesNotExist();
+        ResourceMessage IdentityResourcePropertyDoesNotExist();
 
-		ResourceMessage IdentityResourcePropertyExistsValue();
+        ResourceMessage IdentityResourcePropertyExistsValue();
 
-		ResourceMessage IdentityResourcePropertyExistsKey();
-	}
+        ResourceMessage IdentityResourcePropertyExistsKey();
+    }
 }
