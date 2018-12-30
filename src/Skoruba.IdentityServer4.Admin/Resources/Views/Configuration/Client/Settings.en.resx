@@ -126,6 +126,9 @@
   <data name="NavConsent" xml:space="preserve">
     <value>Consent Screen</value>
   </data>
+  <data name="NavDeviceFlow" xml:space="preserve">
+    <value>Device Flow</value>
+  </data>
   <data name="NavName" xml:space="preserve">
     <value>Name</value>
   </data>

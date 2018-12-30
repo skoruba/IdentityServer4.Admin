@@ -72,11 +72,16 @@
 
 		<footer class="pt-4 my-md-5 pt-md-5 border-top">
 			<div class="row">
-				<div class="col-12 col-md">
+				<div class="col-6 col-md">
 					@Localizer["FooterTitle"]
 					<small class="d-block mb-3 text-muted">@Localizer["FooterCopyright"]</small>
 				</div>
+				<div class="col-md-6 text-right">
+					@await Html.PartialAsync("Common/SelectLanguage")
+				</div>
 			</div>
+
+
 		</footer>
 	</div>
 

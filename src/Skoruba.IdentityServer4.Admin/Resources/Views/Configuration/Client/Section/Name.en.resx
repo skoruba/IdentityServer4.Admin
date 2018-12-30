@@ -120,6 +120,12 @@
   <data name="PanelTitle" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="TitleDevice" xml:space="preserve">
+    <value>TV and Limited-Input Device Application</value>
+  </data>
+  <data name="TitleDeviceFlow" xml:space="preserve">
+    <value>Device flow</value>
+  </data>
   <data name="TitleEmpty" xml:space="preserve">
     <value>Empty - Default</value>
   </data>

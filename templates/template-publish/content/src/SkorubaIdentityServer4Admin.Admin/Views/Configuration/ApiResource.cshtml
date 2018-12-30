@@ -96,6 +96,15 @@
 						<a asp-action="ApiSecrets" asp-route-id="@Model.Id" class="btn btn-primary">@Localizer["ButtonManageSecrets"]</a>
 					</div>
 				</div>
+				<!--Button-->
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label">
+						@await Html.PartialAsync("ApiResource/Section/Label", "Properties")
+					</label>
+					<div class="col-sm-9">
+						<a asp-action="ApiResourceProperties" asp-route-id="@Model.Id" class="btn btn-primary">@Localizer["ButtonManageProperties"]</a>
+					</div>
+				</div>
 			}
 
 			<!--Select with tags-->
@@ -106,13 +115,13 @@
 				<div class="col-sm-9">
 					<picker id="UserClaimsItems" multiple-select="true" min-search-text="2"
 							selected-items="@Model.UserClaims" url="@Url.Action("SearchClaims","Configuration")?claim"
-					        search-input-placeholder="@Localizer["PickerSearchItemPlaceholder"].Value"
-					        selected-items-title="@Localizer["PickerSelectedItemsTitle"].Value" 
-					        search-result-title="@Localizer["PickerSearchResultTitle"].Value"
-					        suggested-items-title="@Localizer["PickerSuggestedItemsTitle"].Value" 
-					        no-item-selected-title="@Localizer["PickerNoItemSelectedTitle"].Value" 
-					        show-all-items-title="@Localizer["PickerShowAllItemsTitle"].Value"
-					        item-already-selected-title="@Localizer["PickerItemAlreadySelectedTitle"].Value">
+							search-input-placeholder="@Localizer["PickerSearchItemPlaceholder"].Value"
+							selected-items-title="@Localizer["PickerSelectedItemsTitle"].Value"
+							search-result-title="@Localizer["PickerSearchResultTitle"].Value"
+							suggested-items-title="@Localizer["PickerSuggestedItemsTitle"].Value"
+							no-item-selected-title="@Localizer["PickerNoItemSelectedTitle"].Value"
+							show-all-items-title="@Localizer["PickerShowAllItemsTitle"].Value"
+							item-already-selected-title="@Localizer["PickerItemAlreadySelectedTitle"].Value">
 					</picker>
 				</div>
 			</div>

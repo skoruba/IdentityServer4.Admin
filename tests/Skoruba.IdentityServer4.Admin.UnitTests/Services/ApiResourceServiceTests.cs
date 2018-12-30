@@ -17,539 +17,707 @@ using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 {
-    public class ApiResourceServiceTests
-    {
-        public ApiResourceServiceTests()
-        {
-            var databaseName = Guid.NewGuid().ToString();
+	public class ApiResourceServiceTests
+	{
+		public ApiResourceServiceTests()
+		{
+			var databaseName = Guid.NewGuid().ToString();
 
-            _dbContextOptions = new DbContextOptionsBuilder<AdminDbContext>()
-                .UseInMemoryDatabase(databaseName)
-                .Options;
-
-            _storeOptions = new ConfigurationStoreOptions();
-            _operationalStore = new OperationalStoreOptions();
-        }
-
-        private readonly DbContextOptions<AdminDbContext> _dbContextOptions;
-        private readonly ConfigurationStoreOptions _storeOptions;
-        private readonly OperationalStoreOptions _operationalStore;
-
-        private IClientRepository<AdminDbContext> GetClientRepository(AdminDbContext context)
-        {
-            IClientRepository<AdminDbContext> clientRepository = new ClientRepository<AdminDbContext>(context);
-
-            return clientRepository;
-        }
+			_dbContextOptions = new DbContextOptionsBuilder<AdminDbContext>()
+				.UseInMemoryDatabase(databaseName)
+				.Options;
 
-        private IApiResourceRepository<AdminDbContext> GetApiResourceRepository(AdminDbContext context)
-        {
-            IApiResourceRepository<AdminDbContext> apiResourceRepository = new ApiResourceRepository<AdminDbContext>(context);
+			_storeOptions = new ConfigurationStoreOptions();
+			_operationalStore = new OperationalStoreOptions();
+		}
 
-            return apiResourceRepository;
-        }
+		private readonly DbContextOptions<AdminDbContext> _dbContextOptions;
+		private readonly ConfigurationStoreOptions _storeOptions;
+		private readonly OperationalStoreOptions _operationalStore;
 
-        private IClientService<AdminDbContext> GetClientService(IClientRepository<AdminDbContext> repository, IClientServiceResources resources)
-        {
-            IClientService<AdminDbContext> clientService = new ClientService<AdminDbContext>(repository, resources);
+		private IClientRepository<AdminDbContext> GetClientRepository(AdminDbContext context)
+		{
+			IClientRepository<AdminDbContext> clientRepository = new ClientRepository<AdminDbContext>(context);
 
-            return clientService;
-        }
+			return clientRepository;
+		}
 
-        private IApiResourceService<AdminDbContext> GetApiResourceService(IApiResourceRepository<AdminDbContext> repository, IApiResourceServiceResources resources, IClientService<AdminDbContext> clientService)
-        {
-            IApiResourceService<AdminDbContext> apiResourceService = new ApiResourceService<AdminDbContext>(repository, resources, clientService);
+		private IApiResourceRepository<AdminDbContext> GetApiResourceRepository(AdminDbContext context)
+		{
+			IApiResourceRepository<AdminDbContext> apiResourceRepository = new ApiResourceRepository<AdminDbContext>(context);
 
-            return apiResourceService;
-        }
-        
-        [Fact]
-        public async Task AddApiResourceAsync()
-        {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
-            {
-                var apiResourceRepository = GetApiResourceRepository(context);
-                var clientRepository = GetClientRepository(context);
-                
-                var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-                var localizerApiResource = localizerApiResourceMock.Object;
+			return apiResourceRepository;
+		}
 
-                var localizerClientResourceMock = new Mock<IClientServiceResources>();
-                var localizerClientResource = localizerClientResourceMock.Object;
+		private IClientService<AdminDbContext> GetClientService(IClientRepository<AdminDbContext> repository, IClientServiceResources resources)
+		{
+			IClientService<AdminDbContext> clientService = new ClientService<AdminDbContext>(repository, resources);
 
-                var clientService = GetClientService(clientRepository, localizerClientResource);
-                var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
+			return clientService;
+		}
 
-                //Generate random new api resource
-                var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+		private IApiResourceService<AdminDbContext> GetApiResourceService(IApiResourceRepository<AdminDbContext> repository, IApiResourceServiceResources resources, IClientService<AdminDbContext> clientService)
+		{
+			IApiResourceService<AdminDbContext> apiResourceService = new ApiResourceService<AdminDbContext>(repository, resources, clientService);
 
-                await apiResourceService.AddApiResourceAsync(apiResourceDto);
+			return apiResourceService;
+		}
 
-                //Get new api resource
-                var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
+		[Fact]
+		public async Task AddApiResourceAsync()
+		{
+			using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+			{
+				var apiResourceRepository = GetApiResourceRepository(context);
+				var clientRepository = GetClientRepository(context);
 
-                var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
+				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
+				var localizerApiResource = localizerApiResourceMock.Object;
 
-                //Assert new api resource
-                apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
-            }
-        }
+				var localizerClientResourceMock = new Mock<IClientServiceResources>();
+				var localizerClientResource = localizerClientResourceMock.Object;
 
-        [Fact]
-        public async Task GetApiResourceAsync()
-        {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
-            {
-                var apiResourceRepository = GetApiResourceRepository(context);
-                var clientRepository = GetClientRepository(context);
+				var clientService = GetClientService(clientRepository, localizerClientResource);
+				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
 
-                var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-                var localizerApiResource = localizerApiResourceMock.Object;
+				//Generate random new api resource
+				var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
-                var localizerClientResourceMock = new Mock<IClientServiceResources>();
-                var localizerClientResource = localizerClientResourceMock.Object;
+				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
-                var clientService = GetClientService(clientRepository, localizerClientResource);
-                var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
+				//Get new api resource
+				var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
 
-                //Generate random new api resource
-                var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+				var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
-                await apiResourceService.AddApiResourceAsync(apiResourceDto);
+				//Assert new api resource
+				apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
+			}
+		}
 
-                //Get new api resource
-                var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
+		[Fact]
+		public async Task GetApiResourceAsync()
+		{
+			using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+			{
+				var apiResourceRepository = GetApiResourceRepository(context);
+				var clientRepository = GetClientRepository(context);
 
-                var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
+				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
+				var localizerApiResource = localizerApiResourceMock.Object;
 
-                //Assert new api resource
-                apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
-            }
-        }
+				var localizerClientResourceMock = new Mock<IClientServiceResources>();
+				var localizerClientResource = localizerClientResourceMock.Object;
 
-        [Fact]
-        public async Task RemoveApiResourceAsync()
-        {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
-            {
-                var apiResourceRepository = GetApiResourceRepository(context);
-                var clientRepository = GetClientRepository(context);
+				var clientService = GetClientService(clientRepository, localizerClientResource);
+				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
 
-                var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-                var localizerApiResource = localizerApiResourceMock.Object;
+				//Generate random new api resource
+				var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
-                var localizerClientResourceMock = new Mock<IClientServiceResources>();
-                var localizerClientResource = localizerClientResourceMock.Object;
+				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
-                var clientService = GetClientService(clientRepository, localizerClientResource);
-                var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
+				//Get new api resource
+				var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
 
-                //Generate random new api resource
-                var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+				var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
-                await apiResourceService.AddApiResourceAsync(apiResourceDto);
+				//Assert new api resource
+				apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
+			}
+		}
 
-                //Get new api resource
-                var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
+		[Fact]
+		public async Task RemoveApiResourceAsync()
+		{
+			using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+			{
+				var apiResourceRepository = GetApiResourceRepository(context);
+				var clientRepository = GetClientRepository(context);
 
-                var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
+				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
+				var localizerApiResource = localizerApiResourceMock.Object;
 
-                //Assert new api resource
-                apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
+				var localizerClientResourceMock = new Mock<IClientServiceResources>();
+				var localizerClientResource = localizerClientResourceMock.Object;
 
-                //Remove api resource
-                await apiResourceService.DeleteApiResourceAsync(newApiResourceDto);
+				var clientService = GetClientService(clientRepository, localizerClientResource);
+				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
 
-                //Try get removed api resource
-                var removeApiResource = await context.ApiResources.Where(x => x.Id == apiResource.Id)
-                    .SingleOrDefaultAsync();
+				//Generate random new api resource
+				var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
-                //Assert removed api resource
-                removeApiResource.Should().BeNull();
-            }
-        }
+				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
-        [Fact]
-        public async Task UpdateApiResourceAsync()
-        {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
-            {
-                var apiResourceRepository = GetApiResourceRepository(context);
-                var clientRepository = GetClientRepository(context);
+				//Get new api resource
+				var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
 
-                var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-                var localizerApiResource = localizerApiResourceMock.Object;
+				var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
-                var localizerClientResourceMock = new Mock<IClientServiceResources>();
-                var localizerClientResource = localizerClientResourceMock.Object;
+				//Assert new api resource
+				apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
 
-                var clientService = GetClientService(clientRepository, localizerClientResource);
-                var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
+				//Remove api resource
+				await apiResourceService.DeleteApiResourceAsync(newApiResourceDto);
 
-                //Generate random new api resource
-                var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+				//Try get removed api resource
+				var removeApiResource = await context.ApiResources.Where(x => x.Id == apiResource.Id)
+					.SingleOrDefaultAsync();
 
-                await apiResourceService.AddApiResourceAsync(apiResourceDto);
+				//Assert removed api resource
+				removeApiResource.Should().BeNull();
+			}
+		}
 
-                //Get new api resource
-                var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
+		[Fact]
+		public async Task UpdateApiResourceAsync()
+		{
+			using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+			{
+				var apiResourceRepository = GetApiResourceRepository(context);
+				var clientRepository = GetClientRepository(context);
 
-                var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
+				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
+				var localizerApiResource = localizerApiResourceMock.Object;
 
-                //Assert new api resource
-                apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
+				var localizerClientResourceMock = new Mock<IClientServiceResources>();
+				var localizerClientResource = localizerClientResourceMock.Object;
 
-                //Detached the added item
-                context.Entry(apiResource).State = EntityState.Detached;
+				var clientService = GetClientService(clientRepository, localizerClientResource);
+				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
 
-                //Generete new api resuorce with added item id
-                var updatedApiResource = ApiResourceDtoMock.GenerateRandomApiResource(apiResource.Id);
+				//Generate random new api resource
+				var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
-                //Update api resource
-                await apiResourceService.UpdateApiResourceAsync(updatedApiResource);
-                
-                var updatedApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
+				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
-                //Assert updated api resuorce
-                updatedApiResource.ShouldBeEquivalentTo(updatedApiResourceDto, options => options.Excluding(o => o.Id));
-            }
-        }
+				//Get new api resource
+				var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
 
-        [Fact]
-        public async Task AddApiScopeAsync()
-        {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
-            {
-                var apiResourceRepository = GetApiResourceRepository(context);
-                var clientRepository = GetClientRepository(context);
+				var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
-                var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-                var localizerApiResource = localizerApiResourceMock.Object;
+				//Assert new api resource
+				apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
 
-                var localizerClientResourceMock = new Mock<IClientServiceResources>();
-                var localizerClientResource = localizerClientResourceMock.Object;
+				//Detached the added item
+				context.Entry(apiResource).State = EntityState.Detached;
 
-                var clientService = GetClientService(clientRepository, localizerClientResource);
-                var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
+				//Generete new api resuorce with added item id
+				var updatedApiResource = ApiResourceDtoMock.GenerateRandomApiResource(apiResource.Id);
 
-                //Generate random new api resource
-                var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+				//Update api resource
+				await apiResourceService.UpdateApiResourceAsync(updatedApiResource);
 
-                await apiResourceService.AddApiResourceAsync(apiResourceDto);
+				var updatedApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
-                //Get new api resource
-                var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
+				//Assert updated api resuorce
+				updatedApiResource.ShouldBeEquivalentTo(updatedApiResourceDto, options => options.Excluding(o => o.Id));
+			}
+		}
 
-                var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
+		[Fact]
+		public async Task AddApiScopeAsync()
+		{
+			using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+			{
+				var apiResourceRepository = GetApiResourceRepository(context);
+				var clientRepository = GetClientRepository(context);
 
-                //Assert new api resource
-                apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
+				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
+				var localizerApiResource = localizerApiResourceMock.Object;
 
-                //Generate random new api scope
-                var apiScopeDtoMock = ApiResourceDtoMock.GenerateRandomApiScope(0, newApiResourceDto.Id);
+				var localizerClientResourceMock = new Mock<IClientServiceResources>();
+				var localizerClientResource = localizerClientResourceMock.Object;
 
-                //Add new api scope
-                await apiResourceService.AddApiScopeAsync(apiScopeDtoMock);
+				var clientService = GetClientService(clientRepository, localizerClientResource);
+				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
 
-                //Get inserted api scope
-                var apiScope = await context.ApiScopes.Where(x => x.Name == apiScopeDtoMock.Name && x.ApiResource.Id == newApiResourceDto.Id)
-                    .SingleOrDefaultAsync();
+				//Generate random new api resource
+				var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
-                //Map entity to model
-                var apiScopesDto = apiScope.ToModel();
+				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
-                //Get new api scope
-                var newApiScope = await apiResourceService.GetApiScopeAsync(apiScopesDto.ApiResourceId, apiScopesDto.ApiScopeId);
+				//Get new api resource
+				var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
 
-                //Assert
-                newApiScope.ShouldBeEquivalentTo(apiScopesDto, o => o.Excluding(x => x.ResourceName));
-            }
-        }
+				var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
-        [Fact]
-        public async Task GetApiScopeAsync()
-        {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
-            {
-                var apiResourceRepository = GetApiResourceRepository(context);
-                var clientRepository = GetClientRepository(context);
+				//Assert new api resource
+				apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
 
-                var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-                var localizerApiResource = localizerApiResourceMock.Object;
+				//Generate random new api scope
+				var apiScopeDtoMock = ApiResourceDtoMock.GenerateRandomApiScope(0, newApiResourceDto.Id);
 
-                var localizerClientResourceMock = new Mock<IClientServiceResources>();
-                var localizerClientResource = localizerClientResourceMock.Object;
+				//Add new api scope
+				await apiResourceService.AddApiScopeAsync(apiScopeDtoMock);
 
-                var clientService = GetClientService(clientRepository, localizerClientResource);
-                var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
+				//Get inserted api scope
+				var apiScope = await context.ApiScopes.Where(x => x.Name == apiScopeDtoMock.Name && x.ApiResource.Id == newApiResourceDto.Id)
+					.SingleOrDefaultAsync();
 
-                //Generate random new api resource
-                var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+				//Map entity to model
+				var apiScopesDto = apiScope.ToModel();
 
-                await apiResourceService.AddApiResourceAsync(apiResourceDto);
+				//Get new api scope
+				var newApiScope = await apiResourceService.GetApiScopeAsync(apiScopesDto.ApiResourceId, apiScopesDto.ApiScopeId);
 
-                //Get new api resource
-                var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
+				//Assert
+				newApiScope.ShouldBeEquivalentTo(apiScopesDto, o => o.Excluding(x => x.ResourceName));
+			}
+		}
 
-                var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
+		[Fact]
+		public async Task GetApiScopeAsync()
+		{
+			using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+			{
+				var apiResourceRepository = GetApiResourceRepository(context);
+				var clientRepository = GetClientRepository(context);
 
-                //Assert new api resource
-                apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
+				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
+				var localizerApiResource = localizerApiResourceMock.Object;
 
-                //Generate random new api scope
-                var apiScopeDtoMock = ApiResourceDtoMock.GenerateRandomApiScope(0, newApiResourceDto.Id);
+				var localizerClientResourceMock = new Mock<IClientServiceResources>();
+				var localizerClientResource = localizerClientResourceMock.Object;
 
-                //Add new api scope
-                await apiResourceService.AddApiScopeAsync(apiScopeDtoMock);
+				var clientService = GetClientService(clientRepository, localizerClientResource);
+				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
 
-                //Get inserted api scope
-                var apiScope = await context.ApiScopes.Where(x => x.Name == apiScopeDtoMock.Name && x.ApiResource.Id == newApiResourceDto.Id)
-                    .SingleOrDefaultAsync();
+				//Generate random new api resource
+				var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
-                //Map entity to model
-                var apiScopesDto = apiScope.ToModel();
+				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
-                //Get new api scope
-                var newApiScope = await apiResourceService.GetApiScopeAsync(apiScopesDto.ApiResourceId, apiScopesDto.ApiScopeId);
+				//Get new api resource
+				var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
 
-                //Assert
-                newApiScope.ShouldBeEquivalentTo(apiScopesDto, o => o.Excluding(x => x.ResourceName));
-            }
-        }
+				var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
-        [Fact]
-        public async Task UpdateApiScopeAsync()
-        {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
-            {
-                var apiResourceRepository = GetApiResourceRepository(context);
-                var clientRepository = GetClientRepository(context);
+				//Assert new api resource
+				apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
 
-                var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-                var localizerApiResource = localizerApiResourceMock.Object;
+				//Generate random new api scope
+				var apiScopeDtoMock = ApiResourceDtoMock.GenerateRandomApiScope(0, newApiResourceDto.Id);
 
-                var localizerClientResourceMock = new Mock<IClientServiceResources>();
-                var localizerClientResource = localizerClientResourceMock.Object;
+				//Add new api scope
+				await apiResourceService.AddApiScopeAsync(apiScopeDtoMock);
 
-                var clientService = GetClientService(clientRepository, localizerClientResource);
-                var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
+				//Get inserted api scope
+				var apiScope = await context.ApiScopes.Where(x => x.Name == apiScopeDtoMock.Name && x.ApiResource.Id == newApiResourceDto.Id)
+					.SingleOrDefaultAsync();
 
-                //Generate random new api resource
-                var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+				//Map entity to model
+				var apiScopesDto = apiScope.ToModel();
 
-                await apiResourceService.AddApiResourceAsync(apiResourceDto);
+				//Get new api scope
+				var newApiScope = await apiResourceService.GetApiScopeAsync(apiScopesDto.ApiResourceId, apiScopesDto.ApiScopeId);
 
-                //Get new api resource
-                var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
+				//Assert
+				newApiScope.ShouldBeEquivalentTo(apiScopesDto, o => o.Excluding(x => x.ResourceName));
+			}
+		}
 
-                var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
+		[Fact]
+		public async Task UpdateApiScopeAsync()
+		{
+			using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+			{
+				var apiResourceRepository = GetApiResourceRepository(context);
+				var clientRepository = GetClientRepository(context);
 
-                //Assert new api resource
-                apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
+				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
+				var localizerApiResource = localizerApiResourceMock.Object;
 
-                //Generate random new api scope
-                var apiScopeDtoMock = ApiResourceDtoMock.GenerateRandomApiScope(0, newApiResourceDto.Id);
+				var localizerClientResourceMock = new Mock<IClientServiceResources>();
+				var localizerClientResource = localizerClientResourceMock.Object;
 
-                //Add new api scope
-                await apiResourceService.AddApiScopeAsync(apiScopeDtoMock);
+				var clientService = GetClientService(clientRepository, localizerClientResource);
+				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
 
-                //Get inserted api scope
-                var apiScope = await context.ApiScopes.Where(x => x.Name == apiScopeDtoMock.Name && x.ApiResource.Id == newApiResourceDto.Id)
-                    .SingleOrDefaultAsync();
-                
-                //Map entity to model
-                var apiScopesDto = apiScope.ToModel();
+				//Generate random new api resource
+				var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
-                //Get new api scope
-                var newApiScope = await apiResourceService.GetApiScopeAsync(apiScopesDto.ApiResourceId, apiScopesDto.ApiScopeId);
+				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
-                //Assert
-                newApiScope.ShouldBeEquivalentTo(apiScopesDto, o => o.Excluding(x => x.ResourceName));
+				//Get new api resource
+				var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
 
-                //Detached the added item
-                context.Entry(apiScope).State = EntityState.Detached;
+				var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
-                //Update api scope
-                var updatedApiScope = ApiResourceDtoMock.GenerateRandomApiScope(apiScopesDto.ApiScopeId, apiScopesDto.ApiResourceId);
+				//Assert new api resource
+				apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
 
-                await apiResourceService.UpdateApiScopeAsync(updatedApiScope);
-                
-                var updatedApiScopeDto = await apiResourceService.GetApiScopeAsync(apiScopesDto.ApiResourceId, apiScopesDto.ApiScopeId);
+				//Generate random new api scope
+				var apiScopeDtoMock = ApiResourceDtoMock.GenerateRandomApiScope(0, newApiResourceDto.Id);
 
-                //Assert updated api scope
-                updatedApiScope.ShouldBeEquivalentTo(updatedApiScopeDto, o => o.Excluding(x => x.ResourceName));
-            }
-        }
+				//Add new api scope
+				await apiResourceService.AddApiScopeAsync(apiScopeDtoMock);
 
-        [Fact]
-        public async Task DeleteApiScopeAsync()
-        {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
-            {
-                var apiResourceRepository = GetApiResourceRepository(context);
-                var clientRepository = GetClientRepository(context);
+				//Get inserted api scope
+				var apiScope = await context.ApiScopes.Where(x => x.Name == apiScopeDtoMock.Name && x.ApiResource.Id == newApiResourceDto.Id)
+					.SingleOrDefaultAsync();
 
-                var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-                var localizerApiResource = localizerApiResourceMock.Object;
+				//Map entity to model
+				var apiScopesDto = apiScope.ToModel();
 
-                var localizerClientResourceMock = new Mock<IClientServiceResources>();
-                var localizerClientResource = localizerClientResourceMock.Object;
+				//Get new api scope
+				var newApiScope = await apiResourceService.GetApiScopeAsync(apiScopesDto.ApiResourceId, apiScopesDto.ApiScopeId);
 
-                var clientService = GetClientService(clientRepository, localizerClientResource);
-                var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
+				//Assert
+				newApiScope.ShouldBeEquivalentTo(apiScopesDto, o => o.Excluding(x => x.ResourceName));
 
-                //Generate random new api resource
-                var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+				//Detached the added item
+				context.Entry(apiScope).State = EntityState.Detached;
 
-                await apiResourceService.AddApiResourceAsync(apiResourceDto);
+				//Update api scope
+				var updatedApiScope = ApiResourceDtoMock.GenerateRandomApiScope(apiScopesDto.ApiScopeId, apiScopesDto.ApiResourceId);
 
-                //Get new api resource
-                var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
+				await apiResourceService.UpdateApiScopeAsync(updatedApiScope);
 
-                var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
+				var updatedApiScopeDto = await apiResourceService.GetApiScopeAsync(apiScopesDto.ApiResourceId, apiScopesDto.ApiScopeId);
 
-                //Assert new api resource
-                apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
+				//Assert updated api scope
+				updatedApiScope.ShouldBeEquivalentTo(updatedApiScopeDto, o => o.Excluding(x => x.ResourceName));
+			}
+		}
 
-                //Generate random new api scope
-                var apiScopeDtoMock = ApiResourceDtoMock.GenerateRandomApiScope(0, newApiResourceDto.Id);
+		[Fact]
+		public async Task DeleteApiScopeAsync()
+		{
+			using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+			{
+				var apiResourceRepository = GetApiResourceRepository(context);
+				var clientRepository = GetClientRepository(context);
 
-                //Add new api scope
-                await apiResourceService.AddApiScopeAsync(apiScopeDtoMock);
+				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
+				var localizerApiResource = localizerApiResourceMock.Object;
 
-                //Get inserted api scope
-                var apiScope = await context.ApiScopes.Where(x => x.Name == apiScopeDtoMock.Name && x.ApiResource.Id == newApiResourceDto.Id)
-                    .SingleOrDefaultAsync();
+				var localizerClientResourceMock = new Mock<IClientServiceResources>();
+				var localizerClientResource = localizerClientResourceMock.Object;
 
-                //Map entity to model
-                var apiScopesDto = apiScope.ToModel();
+				var clientService = GetClientService(clientRepository, localizerClientResource);
+				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
 
-                //Get new api scope
-                var newApiScope = await apiResourceService.GetApiScopeAsync(apiScopesDto.ApiResourceId, apiScopesDto.ApiScopeId);
+				//Generate random new api resource
+				var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
-                //Assert
-                newApiScope.ShouldBeEquivalentTo(apiScopesDto, o => o.Excluding(x => x.ResourceName));
+				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
-                //Delete it
-                await apiResourceService.DeleteApiScopeAsync(newApiScope);
+				//Get new api resource
+				var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
 
-                var deletedApiScope = await context.ApiScopes.Where(x => x.Name == apiScopeDtoMock.Name && x.ApiResource.Id == newApiResourceDto.Id)
-                    .SingleOrDefaultAsync();
+				var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
-                //Assert after deleting
-                deletedApiScope.Should().BeNull();
-            }
-        }
+				//Assert new api resource
+				apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
 
-        [Fact]
-        public async Task AddApiSecretAsync()
-        {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
-            {
-                var apiResourceRepository = GetApiResourceRepository(context);
-                var clientRepository = GetClientRepository(context);
+				//Generate random new api scope
+				var apiScopeDtoMock = ApiResourceDtoMock.GenerateRandomApiScope(0, newApiResourceDto.Id);
 
-                var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-                var localizerApiResource = localizerApiResourceMock.Object;
+				//Add new api scope
+				await apiResourceService.AddApiScopeAsync(apiScopeDtoMock);
 
-                var localizerClientResourceMock = new Mock<IClientServiceResources>();
-                var localizerClientResource = localizerClientResourceMock.Object;
+				//Get inserted api scope
+				var apiScope = await context.ApiScopes.Where(x => x.Name == apiScopeDtoMock.Name && x.ApiResource.Id == newApiResourceDto.Id)
+					.SingleOrDefaultAsync();
 
-                var clientService = GetClientService(clientRepository, localizerClientResource);
-                var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
+				//Map entity to model
+				var apiScopesDto = apiScope.ToModel();
 
-                //Generate random new api resource
-                var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+				//Get new api scope
+				var newApiScope = await apiResourceService.GetApiScopeAsync(apiScopesDto.ApiResourceId, apiScopesDto.ApiScopeId);
 
-                await apiResourceService.AddApiResourceAsync(apiResourceDto);
+				//Assert
+				newApiScope.ShouldBeEquivalentTo(apiScopesDto, o => o.Excluding(x => x.ResourceName));
 
-                //Get new api resource
-                var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
+				//Delete it
+				await apiResourceService.DeleteApiScopeAsync(newApiScope);
 
-                var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
+				var deletedApiScope = await context.ApiScopes.Where(x => x.Name == apiScopeDtoMock.Name && x.ApiResource.Id == newApiResourceDto.Id)
+					.SingleOrDefaultAsync();
 
-                //Assert new api resource
-                apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
+				//Assert after deleting
+				deletedApiScope.Should().BeNull();
+			}
+		}
 
-                //Generate random new api secret
-                var apiSecretsDto = ApiResourceDtoMock.GenerateRandomApiSecret(0, newApiResourceDto.Id);
+		[Fact]
+		public async Task AddApiSecretAsync()
+		{
+			using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+			{
+				var apiResourceRepository = GetApiResourceRepository(context);
+				var clientRepository = GetClientRepository(context);
 
-                //Add new api secret
-                await apiResourceService.AddApiSecretAsync(apiSecretsDto);
+				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
+				var localizerApiResource = localizerApiResourceMock.Object;
 
-                //Get inserted api secret
-                var apiSecret = await context.ApiSecrets.Where(x => x.Value == apiSecretsDto.Value && x.ApiResource.Id == newApiResourceDto.Id)
-                    .SingleOrDefaultAsync();
+				var localizerClientResourceMock = new Mock<IClientServiceResources>();
+				var localizerClientResource = localizerClientResourceMock.Object;
 
-                //Map entity to model
-                var secretsDto = apiSecret.ToModel();
+				var clientService = GetClientService(clientRepository, localizerClientResource);
+				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
 
-                //Get new api secret    
-                var newApiSecret = await apiResourceService.GetApiSecretAsync(secretsDto.ApiSecretId);
+				//Generate random new api resource
+				var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
-                //Assert
-                newApiSecret.ShouldBeEquivalentTo(secretsDto, o => o.Excluding(x => x.ApiResourceName));
-            }
-        }
+				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
-        [Fact]
-        public async Task DeleteApiSecretAsync()
-        {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
-            {
-                var apiResourceRepository = GetApiResourceRepository(context);
-                var clientRepository = GetClientRepository(context);
+				//Get new api resource
+				var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
 
-                var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-                var localizerApiResource = localizerApiResourceMock.Object;
+				var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
-                var localizerClientResourceMock = new Mock<IClientServiceResources>();
-                var localizerClientResource = localizerClientResourceMock.Object;
+				//Assert new api resource
+				apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
 
-                var clientService = GetClientService(clientRepository, localizerClientResource);
-                var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
+				//Generate random new api secret
+				var apiSecretsDto = ApiResourceDtoMock.GenerateRandomApiSecret(0, newApiResourceDto.Id);
 
-                //Generate random new api resource
-                var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+				//Add new api secret
+				await apiResourceService.AddApiSecretAsync(apiSecretsDto);
 
-                await apiResourceService.AddApiResourceAsync(apiResourceDto);
+				//Get inserted api secret
+				var apiSecret = await context.ApiSecrets.Where(x => x.Value == apiSecretsDto.Value && x.ApiResource.Id == newApiResourceDto.Id)
+					.SingleOrDefaultAsync();
 
-                //Get new api resource
-                var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
+				//Map entity to model
+				var secretsDto = apiSecret.ToModel();
 
-                var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
+				//Get new api secret    
+				var newApiSecret = await apiResourceService.GetApiSecretAsync(secretsDto.ApiSecretId);
 
-                //Assert new api resource
-                apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
+				//Assert
+				newApiSecret.ShouldBeEquivalentTo(secretsDto, o => o.Excluding(x => x.ApiResourceName));
+			}
+		}
 
-                //Generate random new api secret
-                var apiSecretsDtoMock = ApiResourceDtoMock.GenerateRandomApiSecret(0, newApiResourceDto.Id);
+		[Fact]
+		public async Task DeleteApiSecretAsync()
+		{
+			using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+			{
+				var apiResourceRepository = GetApiResourceRepository(context);
+				var clientRepository = GetClientRepository(context);
 
-                //Add new api secret
-                await apiResourceService.AddApiSecretAsync(apiSecretsDtoMock);
+				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
+				var localizerApiResource = localizerApiResourceMock.Object;
 
-                //Get inserted api secret
-                var apiSecret = await context.ApiSecrets.Where(x => x.Value == apiSecretsDtoMock.Value && x.ApiResource.Id == newApiResourceDto.Id)
-                    .SingleOrDefaultAsync();
+				var localizerClientResourceMock = new Mock<IClientServiceResources>();
+				var localizerClientResource = localizerClientResourceMock.Object;
 
-                //Map entity to model
-                var apiSecretsDto = apiSecret.ToModel();
+				var clientService = GetClientService(clientRepository, localizerClientResource);
+				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
 
-                //Get new api secret    
-                var newApiSecret = await apiResourceService.GetApiSecretAsync(apiSecretsDto.ApiSecretId);
+				//Generate random new api resource
+				var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
-                //Assert
-                newApiSecret.ShouldBeEquivalentTo(apiSecretsDto, o => o.Excluding(x => x.ApiResourceName));
+				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
-                //Delete it
-                await apiResourceService.DeleteApiSecretAsync(newApiSecret);
+				//Get new api resource
+				var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
 
-                var deletedApiSecret = await context.ApiSecrets.Where(x => x.Value == apiSecretsDtoMock.Value && x.ApiResource.Id == newApiResourceDto.Id)
-                    .SingleOrDefaultAsync();
+				var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
-                //Assert after deleting
-                deletedApiSecret.Should().BeNull();
-            }
-        }
-    }
+				//Assert new api resource
+				apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
+
+				//Generate random new api secret
+				var apiSecretsDtoMock = ApiResourceDtoMock.GenerateRandomApiSecret(0, newApiResourceDto.Id);
+
+				//Add new api secret
+				await apiResourceService.AddApiSecretAsync(apiSecretsDtoMock);
+
+				//Get inserted api secret
+				var apiSecret = await context.ApiSecrets.Where(x => x.Value == apiSecretsDtoMock.Value && x.ApiResource.Id == newApiResourceDto.Id)
+					.SingleOrDefaultAsync();
+
+				//Map entity to model
+				var apiSecretsDto = apiSecret.ToModel();
+
+				//Get new api secret    
+				var newApiSecret = await apiResourceService.GetApiSecretAsync(apiSecretsDto.ApiSecretId);
+
+				//Assert
+				newApiSecret.ShouldBeEquivalentTo(apiSecretsDto, o => o.Excluding(x => x.ApiResourceName));
+
+				//Delete it
+				await apiResourceService.DeleteApiSecretAsync(newApiSecret);
+
+				var deletedApiSecret = await context.ApiSecrets.Where(x => x.Value == apiSecretsDtoMock.Value && x.ApiResource.Id == newApiResourceDto.Id)
+					.SingleOrDefaultAsync();
+
+				//Assert after deleting
+				deletedApiSecret.Should().BeNull();
+			}
+		}
+
+		[Fact]
+		public async Task AddApiResourcePropertyAsync()
+		{
+			using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+			{
+				var apiResourceRepository = GetApiResourceRepository(context);
+				var clientRepository = GetClientRepository(context);
+
+				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
+				var localizerApiResource = localizerApiResourceMock.Object;
+
+				var localizerClientResourceMock = new Mock<IClientServiceResources>();
+				var localizerClientResource = localizerClientResourceMock.Object;
+
+				var clientService = GetClientService(clientRepository, localizerClientResource);
+				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
+
+				//Generate random new api resource
+				var apiResource = ApiResourceDtoMock.GenerateRandomApiResource(0);
+
+				await apiResourceService.AddApiResourceAsync(apiResource);
+
+				//Get new api resource
+				var resource = await context.ApiResources.Where(x => x.Name == apiResource.Name).SingleOrDefaultAsync();
+
+				var apiResourceDto = await apiResourceService.GetApiResourceAsync(resource.Id);
+
+				//Assert new api resource
+				apiResource.ShouldBeEquivalentTo(apiResourceDto, options => options.Excluding(o => o.Id));
+
+				//Generate random new api resource property
+				var apiResourceProperty = ApiResourceDtoMock.GenerateRandomApiResourceProperty(0, resource.Id);
+
+				//Add new api resource property
+				await apiResourceService.AddApiResourcePropertyAsync(apiResourceProperty);
+
+				//Get inserted api resource property
+				var property = await context.ApiResourceProperties.Where(x => x.Value == apiResourceProperty.Value && x.ApiResource.Id == resource.Id)
+					.SingleOrDefaultAsync();
+
+				//Map entity to model
+				var propertyDto = property.ToModel();
+
+				//Get new api resource property    
+				var resourcePropertiesDto = await apiResourceService.GetApiResourcePropertyAsync(property.Id);
+
+				//Assert
+				resourcePropertiesDto.ShouldBeEquivalentTo(propertyDto, options =>
+					options.Excluding(o => o.ApiResourcePropertyId)
+						   .Excluding(o => o.ApiResourceName));
+			}
+		}
+
+		[Fact]
+		public async Task GetApiResourcePropertyAsync()
+		{
+			using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+			{
+				var apiResourceRepository = GetApiResourceRepository(context);
+				var clientRepository = GetClientRepository(context);
+
+				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
+				var localizerApiResource = localizerApiResourceMock.Object;
+
+				var localizerClientResourceMock = new Mock<IClientServiceResources>();
+				var localizerClientResource = localizerClientResourceMock.Object;
+
+				var clientService = GetClientService(clientRepository, localizerClientResource);
+				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
+
+				//Generate random new api resource
+				var apiResource = ApiResourceDtoMock.GenerateRandomApiResource(0);
+
+				await apiResourceService.AddApiResourceAsync(apiResource);
+
+				//Get new api resource
+				var resource = await context.ApiResources.Where(x => x.Name == apiResource.Name).SingleOrDefaultAsync();
+
+				var apiResourceDto = await apiResourceService.GetApiResourceAsync(resource.Id);
+
+				//Assert new api resource
+				apiResource.ShouldBeEquivalentTo(apiResourceDto, options => options.Excluding(o => o.Id));
+
+				//Generate random new api resource property
+				var apiResourceProperty = ApiResourceDtoMock.GenerateRandomApiResourceProperty(0, resource.Id);
+
+				//Add new api resource property
+				await apiResourceService.AddApiResourcePropertyAsync(apiResourceProperty);
+
+				//Get inserted api resource property
+				var property = await context.ApiResourceProperties.Where(x => x.Value == apiResourceProperty.Value && x.ApiResource.Id == resource.Id)
+					.SingleOrDefaultAsync();
+
+				//Map entity to model
+				var propertyDto = property.ToModel();
+
+				//Get new api resource property    
+				var apiResourcePropertiesDto = await apiResourceService.GetApiResourcePropertyAsync(property.Id);
+
+				//Assert
+				apiResourcePropertiesDto.ShouldBeEquivalentTo(propertyDto, options =>
+					options.Excluding(o => o.ApiResourcePropertyId)
+					.Excluding(o => o.ApiResourceName));
+			}
+		}
+
+		[Fact]
+		public async Task DeleteApiResourcePropertyAsync()
+		{
+			using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+			{
+				var apiResourceRepository = GetApiResourceRepository(context);
+				var clientRepository = GetClientRepository(context);
+
+				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
+				var localizerApiResource = localizerApiResourceMock.Object;
+
+				var localizerClientResourceMock = new Mock<IClientServiceResources>();
+				var localizerClientResource = localizerClientResourceMock.Object;
+
+				var clientService = GetClientService(clientRepository, localizerClientResource);
+				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
+
+				//Generate random new api resource
+				var apiResource = ApiResourceDtoMock.GenerateRandomApiResource(0);
+
+				await apiResourceService.AddApiResourceAsync(apiResource);
+
+				//Get new api resource
+				var resource = await context.ApiResources.Where(x => x.Name == apiResource.Name).SingleOrDefaultAsync();
+
+				var apiResourceDto = await apiResourceService.GetApiResourceAsync(resource.Id);
+
+				//Assert new api resource
+				apiResource.ShouldBeEquivalentTo(apiResourceDto, options => options.Excluding(o => o.Id));
+
+				//Generate random new api resource Property
+				var apiResourcePropertiesDto = ApiResourceDtoMock.GenerateRandomApiResourceProperty(0, resource.Id);
+
+				//Add new api resource Property
+				await apiResourceService.AddApiResourcePropertyAsync(apiResourcePropertiesDto);
+
+				//Get inserted api resource Property
+				var property = await context.ApiResourceProperties.Where(x => x.Value == apiResourcePropertiesDto.Value && x.ApiResource.Id == resource.Id)
+					.SingleOrDefaultAsync();
+
+				//Map entity to model
+				var propertiesDto = property.ToModel();
+
+				//Get new api resource Property    
+				var resourcePropertiesDto = await apiResourceService.GetApiResourcePropertyAsync(property.Id);
+
+				//Assert
+				resourcePropertiesDto.ShouldBeEquivalentTo(propertiesDto, options => 
+					options.Excluding(o => o.ApiResourcePropertyId)
+					.Excluding(o => o.ApiResourceName));
+
+				//Delete api resource Property
+				await apiResourceService.DeleteApiResourcePropertyAsync(resourcePropertiesDto);
+
+				//Get removed api resource Property
+				var apiResourceProperty = await context.ApiResourceProperties.Where(x => x.Id == property.Id).SingleOrDefaultAsync();
+
+				//Assert after delete it
+				apiResourceProperty.Should().BeNull();
+			}
+		}
+	}
 }

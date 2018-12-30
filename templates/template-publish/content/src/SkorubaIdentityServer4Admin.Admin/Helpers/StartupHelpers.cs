@@ -23,9 +23,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
-using Serilog.Events;
-using Serilog.Sinks.MSSqlServer;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Constants;
 using SkorubaIdentityServer4Admin.Admin.ExceptionHandling;
 using SkorubaIdentityServer4Admin.Admin.Middlewares;
 using SkorubaIdentityServer4Admin.Admin.Configuration;
@@ -34,7 +31,7 @@ using SkorubaIdentityServer4Admin.Admin.Configuration.Interfaces;
 
 namespace SkorubaIdentityServer4Admin.Admin.Helpers
 {
-    public static class StartupHelpers
+	public static class StartupHelpers
     {
         public static void RegisterDbContexts<TContext>(this IServiceCollection services, IConfigurationRoot configuration) 
             where TContext : DbContext
@@ -124,22 +121,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers
 
         public static void AddLogging(this IApplicationBuilder app, ILoggerFactory loggerFactory, IConfigurationRoot configuration)
         {
-            loggerFactory.AddConsole(configuration.GetSection(ConfigurationConsts.LoggingSectionKey));
-            loggerFactory.AddDebug();
-
-            var columnOptions = new ColumnOptions();
-
-            // Don't include the Properties XML column.
-            columnOptions.Store.Remove(StandardColumn.Properties);
-
-            // Do include the log event data as JSON.
-            columnOptions.Store.Add(StandardColumn.LogEvent);
-
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.MSSqlServer(configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey),
-                    TableConsts.Logging,
-                    columnOptions: columnOptions,
-                    restrictedToMinimumLevel: LogEventLevel.Error)
+	        Log.Logger = new LoggerConfiguration()
+	            .ReadFrom.Configuration(configuration)
                 .CreateLogger();
         }
 
@@ -189,8 +172,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers
                 {
                     var supportedCultures = new[]
                     {
-                        new CultureInfo("zh-CN"),
-                        new CultureInfo("en-US"),
+                        new CultureInfo("ru"),
+                        new CultureInfo("zh"),
                         new CultureInfo("en")
                     };
 

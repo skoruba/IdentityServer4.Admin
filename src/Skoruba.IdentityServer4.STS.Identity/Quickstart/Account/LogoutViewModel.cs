@@ -6,6 +6,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Quickstart.Account
 {
     public class LogoutViewModel : LogoutInputModel
     {
-        public bool ShowLogoutPrompt { get; set; }
+        public bool ShowLogoutPrompt { get; set; } = true;
     }
 }
