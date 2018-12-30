@@ -117,7 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Required" xml:space="preserve">
-    <value>(需要)</value>
+  <data name="Success" xml:space="preserve">
+    <value>成功</value>
+  </data>
+  <data name="SuccessMessage" xml:space="preserve">
+    <value>您已成功授权该设备</value>
   </data>
 </root>

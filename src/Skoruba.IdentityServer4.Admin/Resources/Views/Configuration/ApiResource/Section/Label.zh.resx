@@ -141,6 +141,24 @@
   <data name="Name_Label" xml:space="preserve">
     <value>名称</value>
   </data>
+  <data name="Properties_Info" xml:space="preserve">
+    <value>需要保留任何自定义 Api 资源特定值的字典。</value>
+  </data>
+  <data name="Properties_Label" xml:space="preserve">
+    <value>属性</value>
+  </data>
+  <data name="PropertyKey_Info" xml:space="preserve">
+    <value>键</value>
+  </data>
+  <data name="PropertyKey_Label" xml:space="preserve">
+    <value>键</value>
+  </data>
+  <data name="PropertyValue_Info" xml:space="preserve">
+    <value>值</value>
+  </data>
+  <data name="PropertyValue_Label" xml:space="preserve">
+    <value>值</value>
+  </data>
   <data name="Scopes_Info" xml:space="preserve">
     <value>API 必须至少有一个作用域。 每个作用域可以有不同的设置。</value>
   </data>

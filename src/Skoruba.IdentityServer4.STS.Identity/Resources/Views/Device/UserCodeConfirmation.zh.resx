@@ -120,6 +120,9 @@
   <data name="ApplicationAccess" xml:space="preserve">
     <value>应用访问</value>
   </data>
+  <data name="ConfirmCode" xml:space="preserve">
+    <value>请确认授权请求引用代码：</value>
+  </data>
   <data name="No" xml:space="preserve">
     <value>否, 不允许</value>
   </data>
