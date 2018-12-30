@@ -68,14 +68,14 @@
 			</label>
 			<div class="col-sm-9">
 				<picker id="PostLogoutRedirectUrisItems" multiple-select="true" min-search-text="2"
-				        selected-items="@Model.PostLogoutRedirectUris" 
-				        search-input-placeholder="@Localizer["PickerSearchItemPlaceholder"].Value"
-				        selected-items-title="@Localizer["PickerSelectedItemsTitle"].Value" 
-				        search-result-title="@Localizer["PickerSearchResultTitle"].Value"
-				        suggested-items-title="@Localizer["PickerSuggestedItemsTitle"].Value" 
-				        no-item-selected-title="@Localizer["PickerNoItemSelectedTitle"].Value" 
-				        show-all-items-title="@Localizer["PickerShowAllItemsTitle"].Value"
-				        item-already-selected-title="@Localizer["PickerItemAlreadySelectedTitle"].Value">
+						selected-items="@Model.PostLogoutRedirectUris"
+						search-input-placeholder="@Localizer["PickerSearchItemPlaceholder"].Value"
+						selected-items-title="@Localizer["PickerSelectedItemsTitle"].Value"
+						search-result-title="@Localizer["PickerSearchResultTitle"].Value"
+						suggested-items-title="@Localizer["PickerSuggestedItemsTitle"].Value"
+						no-item-selected-title="@Localizer["PickerNoItemSelectedTitle"].Value"
+						show-all-items-title="@Localizer["PickerShowAllItemsTitle"].Value"
+						item-already-selected-title="@Localizer["PickerItemAlreadySelectedTitle"].Value">
 				</picker>
 			</div>
 		</div>
@@ -87,15 +87,25 @@
 			</label>
 			<div class="col-sm-9">
 				<picker id="IdentityProviderRestrictionsItems" multiple-select="true" min-search-text="2"
-				        selected-items="@Model.IdentityProviderRestrictions"
-				        search-input-placeholder="@Localizer["PickerSearchItemPlaceholder"].Value"
-				        selected-items-title="@Localizer["PickerSelectedItemsTitle"].Value" 
-				        search-result-title="@Localizer["PickerSearchResultTitle"].Value"
-				        suggested-items-title="@Localizer["PickerSuggestedItemsTitle"].Value" 
-				        no-item-selected-title="@Localizer["PickerNoItemSelectedTitle"].Value" 
-				        show-all-items-title="@Localizer["PickerShowAllItemsTitle"].Value"
-				        item-already-selected-title="@Localizer["PickerItemAlreadySelectedTitle"].Value">
+						selected-items="@Model.IdentityProviderRestrictions"
+						search-input-placeholder="@Localizer["PickerSearchItemPlaceholder"].Value"
+						selected-items-title="@Localizer["PickerSelectedItemsTitle"].Value"
+						search-result-title="@Localizer["PickerSearchResultTitle"].Value"
+						suggested-items-title="@Localizer["PickerSuggestedItemsTitle"].Value"
+						no-item-selected-title="@Localizer["PickerNoItemSelectedTitle"].Value"
+						show-all-items-title="@Localizer["PickerShowAllItemsTitle"].Value"
+						item-already-selected-title="@Localizer["PickerItemAlreadySelectedTitle"].Value">
 				</picker>
+			</div>
+		</div>
+
+		<!--Input - number -->
+		<div class="form-group row">
+			<label asp-for="UserSsoLifetime" class="col-sm-3 col-form-label">
+				@await Html.PartialAsync("Client/Section/Label", "UserSsoLifetime")
+			</label>
+			<div class="col-sm-9">
+				<input type="number" class="form-control" asp-for="UserSsoLifetime">
 			</div>
 		</div>
 	</div>
