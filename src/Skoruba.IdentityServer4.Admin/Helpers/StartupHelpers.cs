@@ -31,9 +31,9 @@ using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
-	public static class StartupHelpers
+    public static class StartupHelpers
     {
-        public static void RegisterDbContexts<TContext>(this IServiceCollection services, IConfigurationRoot configuration) 
+        public static void RegisterDbContexts<TContext>(this IServiceCollection services, IConfigurationRoot configuration)
             where TContext : DbContext
         {
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
@@ -121,8 +121,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
         public static void AddLogging(this IApplicationBuilder app, ILoggerFactory loggerFactory, IConfigurationRoot configuration)
         {
-	        Log.Logger = new LoggerConfiguration()
-	            .ReadFrom.Configuration(configuration)
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
                 .CreateLogger();
         }
 

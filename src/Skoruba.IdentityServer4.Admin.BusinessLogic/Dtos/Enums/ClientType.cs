@@ -8,6 +8,6 @@
         Spa = 3,
         Native = 4,
         Machine = 5,
-		Device = 6
+        Device = 6
     }
 }

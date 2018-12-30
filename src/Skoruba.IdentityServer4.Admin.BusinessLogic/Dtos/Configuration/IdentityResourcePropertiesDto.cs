@@ -5,11 +5,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
 {
     public class IdentityResourcePropertiesDto
     {
-        public IdentityResourcePropertiesDto()
-        {
-	        IdentityResourceProperties = new List<IdentityResourcePropertyDto>();
-        }
-
         public int IdentityResourcePropertyId { get; set; }
 
         public int IdentityResourceId { get; set; }
@@ -22,10 +17,10 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
         [Required]
         public string Value { get; set; }
 
-        public List<IdentityResourcePropertyDto> IdentityResourceProperties { get; set; }
+        public List<IdentityResourcePropertyDto> IdentityResourceProperties { get; set; } = new List<IdentityResourcePropertyDto>();
 
         public int TotalCount { get; set; }
 
-        public int PageSize { get; set; }        
+        public int PageSize { get; set; }
     }
 }

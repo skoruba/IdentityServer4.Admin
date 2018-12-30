@@ -38,8 +38,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     {
                         new CultureInfo("ru"),
                         new CultureInfo("en"),
-	                    new CultureInfo("zh")
-					};
+                        new CultureInfo("zh")
+                    };
 
                     opts.DefaultRequestCulture = new RequestCulture("en");
                     opts.SupportedCultures = supportedCultures;
@@ -90,8 +90,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             }
             else
             {
-	            builder.AddCustomSigningCredential(configuration);
-	            builder.AddCustomValidationKey(configuration);
+                builder.AddCustomSigningCredential(configuration);
+                builder.AddCustomValidationKey(configuration);
             }
         }
 
@@ -107,11 +107,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             app.UseRequestLocalization(options.Value);
         }
 
-	    public static void AddLogging(this IApplicationBuilder app, ILoggerFactory loggerFactory, IConfiguration configuration)
-	    {
-		    Log.Logger = new LoggerConfiguration()
-			    .ReadFrom.Configuration(configuration)
-			    .CreateLogger();
-	    }
-	}
+        public static void AddLogging(this IApplicationBuilder app, ILoggerFactory loggerFactory, IConfiguration configuration)
+        {
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
+        }
+    }
 }

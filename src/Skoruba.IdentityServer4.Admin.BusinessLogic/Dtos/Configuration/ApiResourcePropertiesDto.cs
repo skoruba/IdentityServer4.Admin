@@ -5,11 +5,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
 {
     public class ApiResourcePropertiesDto
     {
-        public ApiResourcePropertiesDto()
-        {
-	        ApiResourceProperties = new List<ApiResourcePropertyDto>();
-        }
-
         public int ApiResourcePropertyId { get; set; }
 
         public int ApiResourceId { get; set; }
@@ -22,10 +17,10 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
         [Required]
         public string Value { get; set; }
 
-        public List<ApiResourcePropertyDto> ApiResourceProperties { get; set; }
+        public List<ApiResourcePropertyDto> ApiResourceProperties { get; set; } = new List<ApiResourcePropertyDto>();
 
         public int TotalCount { get; set; }
 
-        public int PageSize { get; set; }        
+        public int PageSize { get; set; }
     }
 }
