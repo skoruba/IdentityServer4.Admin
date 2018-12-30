@@ -37,9 +37,24 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
 			return resource == null ? null : Mapper.Map<IdentityResource>(resource);
 		}
 
+	    public static IdentityResourcePropertiesDto ToModel(this PagedList<IdentityResourceProperty> identityResourceProperties)
+	    {
+		    return Mapper.Map<IdentityResourcePropertiesDto>(identityResourceProperties);
+	    }
+
+	    public static IdentityResourcePropertiesDto ToModel(this IdentityResourceProperty identityResourceProperty)
+	    {
+		    return Mapper.Map<IdentityResourcePropertiesDto>(identityResourceProperty);
+	    }
+
 		public static List<IdentityResource> ToEntity(this List<IdentityResourceDto> resource)
 		{
 			return resource == null ? null : Mapper.Map< List<IdentityResource>>(resource);
 		}
+
+	    public static IdentityResourceProperty ToEntity(this IdentityResourcePropertiesDto identityResourceProperties)
+	    {
+		    return Mapper.Map<IdentityResourceProperty>(identityResourceProperties);
+	    }
 	}
 }

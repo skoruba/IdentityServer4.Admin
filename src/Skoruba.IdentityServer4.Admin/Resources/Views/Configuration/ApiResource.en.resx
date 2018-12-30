@@ -120,6 +120,9 @@
   <data name="ButtonDeleteApiResource" xml:space="preserve">
     <value>Delete Api Resource</value>
   </data>
+  <data name="ButtonManageProperties" xml:space="preserve">
+    <value>Manage Api Resource Properties</value>
+  </data>
   <data name="ButtonManageScopes" xml:space="preserve">
     <value>Manage Api Scopes</value>
   </data>

@@ -30,5 +30,26 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 
             return identityResource;
         }
-    }
+
+	    public static IdentityResourcePropertiesDto GenerateRandomIdentityResourceProperty(int id, int identityResourceId)
+	    {
+		    var identityResourcePropertyFaker = IdentityResourcePropertyFaker(id, identityResourceId);
+
+		    var propertyTesting = identityResourcePropertyFaker.Generate();
+
+		    return propertyTesting;
+	    }
+
+	    public static Faker<IdentityResourcePropertiesDto> IdentityResourcePropertyFaker(int id, int identityResourceId)
+	    {
+		    var identityResourcePropertyFaker = new Faker<IdentityResourcePropertiesDto>()
+			    .StrictMode(false)
+			    .RuleFor(o => o.IdentityResourcePropertyId, id)
+			    .RuleFor(o => o.Key, f => Guid.NewGuid().ToString())
+			    .RuleFor(o => o.Value, f => Guid.NewGuid().ToString())
+			    .RuleFor(o => o.IdentityResourceId, identityResourceId);
+
+		    return identityResourcePropertyFaker;
+	    }
+	}
 }
