@@ -10,7 +10,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Quickstart.Account
         public string ClientName { get; set; }
         public string SignOutIframeUrl { get; set; }
 
-        public bool AutomaticRedirectAfterSignOut { get; set; }
+        public bool AutomaticRedirectAfterSignOut { get; set; } = false;
 
         public string LogoutId { get; set; }
         public bool TriggerExternalSignout => ExternalAuthenticationScheme != null;
