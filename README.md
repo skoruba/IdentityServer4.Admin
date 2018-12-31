@@ -289,7 +289,7 @@ It is possible to define the configuration according the client type - by defaul
 
 This repository is licensed under the terms of the [**MIT license**](LICENSE.md).
 
-**NOTE**: This repository uses code from https://github.com/IdentityServer/IdentityServer4.Quickstart.UI which is under the terms of the 
+**NOTE**: This repository uses source code from https://github.com/IdentityServer/IdentityServer4.Quickstart.UI which is under the terms of the 
 [**Apache License 2.0**](https://github.com/IdentityServer/IdentityServer4.Quickstart.UI/blob/master/LICENSE).
 
 ## Acknowledgements
