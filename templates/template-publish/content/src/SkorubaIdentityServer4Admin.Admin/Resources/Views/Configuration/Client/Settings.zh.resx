@@ -126,6 +126,9 @@
   <data name="NavConsent" xml:space="preserve">
     <value>同意屏幕</value>
   </data>
+  <data name="NavDeviceFlow" xml:space="preserve">
+    <value>设备流程</value>
+  </data>
   <data name="NavName" xml:space="preserve">
     <value>名称</value>
   </data>

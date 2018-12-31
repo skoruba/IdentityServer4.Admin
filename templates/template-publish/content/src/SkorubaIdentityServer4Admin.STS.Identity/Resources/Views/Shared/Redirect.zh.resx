@@ -117,43 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ButtonDelete" xml:space="preserve">
-    <value>删除身份资源</value>
+  <data name="SubTitle" xml:space="preserve">
+    <value>完成后，您可以关闭此选项卡</value>
   </data>
-  <data name="ButtonManageProperties" xml:space="preserve">
-    <value>管理身份资源属性</value>
-  </data>
-  <data name="ButtonSave" xml:space="preserve">
-    <value>保存身份资源</value>
-  </data>
-  <data name="NavigationIdentityResources" xml:space="preserve">
-    <value>身份资源</value>
-  </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>身份资源</value>
-  </data>
-  <data name="PanelTitle" xml:space="preserve">
-    <value>身份资源</value>
-  </data>
-  <data name="PickerItemAlreadySelectedTitle" xml:space="preserve">
-    <value>项已被选中</value>
-  </data>
-  <data name="PickerNoItemSelectedTitle" xml:space="preserve">
-    <value>没有选择项</value>
-  </data>
-  <data name="PickerSearchItemPlaceholder" xml:space="preserve">
-    <value>输入 2 个以上字符</value>
-  </data>
-  <data name="PickerSearchResultTitle" xml:space="preserve">
-    <value>搜索结果:(点击选择)</value>
-  </data>
-  <data name="PickerSelectedItemsTitle" xml:space="preserve">
-    <value>选中项:</value>
-  </data>
-  <data name="PickerShowAllItemsTitle" xml:space="preserve">
-    <value>更多</value>
-  </data>
-  <data name="PickerSuggestedItemsTitle" xml:space="preserve">
-    <value>建议项:</value>
+  <data name="Title" xml:space="preserve">
+    <value>您现在正在返回该应用程序。</value>
   </data>
 </root>

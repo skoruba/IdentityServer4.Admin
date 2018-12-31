@@ -120,6 +120,12 @@
   <data name="PanelTitle" xml:space="preserve">
     <value>名称</value>
   </data>
+  <data name="TitleDevice" xml:space="preserve">
+    <value>电视和限制输入设备应用程序</value>
+  </data>
+  <data name="TitleDeviceFlow" xml:space="preserve">
+    <value>设备流程</value>
+  </data>
   <data name="TitleEmpty" xml:space="preserve">
     <value>空 - 默认</value>
   </data>

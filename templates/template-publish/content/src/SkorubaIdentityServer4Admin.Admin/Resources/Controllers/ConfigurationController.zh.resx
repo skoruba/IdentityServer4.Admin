@@ -120,6 +120,9 @@
   <data name="SuccessAddApiResource" xml:space="preserve">
     <value>Api 资源 {0} 已成功创建！</value>
   </data>
+  <data name="SuccessAddApiResourceProperty" xml:space="preserve">
+    <value>Api 资源 {1} 的 Api 资源属性 {0} 已成功保存！</value>
+  </data>
   <data name="SuccessAddApiScope" xml:space="preserve">
     <value>Api 作用域 {0} 已成功创建！</value>
   </data>
@@ -141,6 +144,9 @@
   <data name="SuccessAddIdentityResource" xml:space="preserve">
     <value>身份资源 {0} 已成功保存！</value>
   </data>
+  <data name="SuccessAddIdentityResourceProperty" xml:space="preserve">
+    <value>Api 资源 {1} 的身份资源属性 {0} 已成功保存！</value>
+  </data>
   <data name="SuccessClientClone" xml:space="preserve">
     <value>客户端 {0} 已成功克隆！</value>
   </data>
@@ -149,6 +155,9 @@
   </data>
   <data name="SuccessDeleteApiResource" xml:space="preserve">
     <value>Api 资源已成功删除！</value>
+  </data>
+  <data name="SuccessDeleteApiResourceProperty" xml:space="preserve">
+    <value>Api 资源属性已成功删除！</value>
   </data>
   <data name="SuccessDeleteApiScope" xml:space="preserve">
     <value>Api 作用域已成功删除！</value>
@@ -167,6 +176,9 @@
   </data>
   <data name="SuccessDeleteIdentityResource" xml:space="preserve">
     <value>身份资源已成功删除！</value>
+  </data>
+  <data name="SuccessDeleteIdentityResourceProperty" xml:space="preserve">
+    <value>身份资源属性已成功删除！</value>
   </data>
   <data name="SuccessTitle" xml:space="preserve">
     <value>成功</value>
