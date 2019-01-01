@@ -1,0 +1,7 @@
+@model SkorubaIdentityServer4Admin.STS.Identity.Quickstart.Account.RedirectViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+<h1>@Localizer["Title"]</h1>
+<p>@Localizer["SubTitle"]</p>
+<meta http-equiv="refresh" content="0;url=@Model.RedirectUrl" data-url="@Model.RedirectUrl">
+<script src="~/js/signin-redirect.js"></script>

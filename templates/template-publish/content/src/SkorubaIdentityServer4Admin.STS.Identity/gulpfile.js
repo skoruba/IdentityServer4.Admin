@@ -23,6 +23,7 @@ function processScripts() {
 			'./node_modules/bootstrap/dist/js/bootstrap.js',
 			'./node_modules/holderjs/holder.js',
 			'./Scripts/App/components/Menu.js',
+			'./Scripts/App/components/Language.js',
 			'./Scripts/App/components/Theme.js'
 		])
 		.pipe(concat('bundle.min.js'))

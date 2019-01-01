@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-	  <Version>1.0.0-beta3</Version>
+	  <Version>1.0.0-beta5</Version>
 	  <Authors>Jan Škoruba</Authors>
 	  <PackageTags>IdentityServer4 Admin OpenIDConnect OAuth2 Identity</PackageTags>
 	  <Description>Entity Framework layer for the administration of the IdentityServer4</Description>
@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="IdentityServer4.EntityFramework" Version="2.1.1" />
+    <PackageReference Include="IdentityServer4.EntityFramework" Version="2.3.2" />
   </ItemGroup>
 
 </Project>

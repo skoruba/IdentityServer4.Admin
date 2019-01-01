@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
+﻿using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Resources
 {
@@ -12,5 +9,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Resources
         ResourceMessage IdentityResourceExistsKey();
 
         ResourceMessage IdentityResourceExistsValue();
+
+        ResourceMessage IdentityResourcePropertyDoesNotExist();
+
+        ResourceMessage IdentityResourcePropertyExistsValue();
+
+        ResourceMessage IdentityResourcePropertyExistsKey();
     }
 }

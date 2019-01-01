@@ -1,111 +1,111 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.STS.Identity.Quickstart.Account
 @inject IViewLocalizer Localizer
 @model Skoruba.IdentityServer4.STS.Identity.Quickstart.Account.LoginViewModel
 
 <div class="login-page">
-	<div class="page-header">
-		<h1>@Localizer["Title"]</h1>
-	</div>
+    <div class="page-header">
+        <h1>@Localizer["Title"]</h1>
+    </div>
 
-	@await Html.PartialAsync("_ValidationSummary")
+    @await Html.PartialAsync("_ValidationSummary")
 
-	<div class="row">
+    <div class="row">
 
-		@if (Model.EnableLocalLogin)
-		{
-			<div class="col-sm-6">
-				<div class="card mt-3">
-					<h5 class="card-header">@Localizer["LocalLogin"]</h5>
-					<div class="card-body">
-						<form asp-route="Login">
-							<input type="hidden" asp-for="ReturnUrl" />
+        @if (Model.EnableLocalLogin)
+        {
+            <div class="col-sm-6">
+                <div class="card mt-3">
+                    <h5 class="card-header">@Localizer["LocalLogin"]</h5>
+                    <div class="card-body">
+                        <form asp-route="Login">
+                            <input type="hidden" asp-for="ReturnUrl" />
 
-							<fieldset>
-								<div class="form-group row">
-									<div class="col-sm-12">
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text" id="input-username">
-													<i class="fa fa-user"></i>
-												</span>
-											</div>
-											<input class="form-control" placeholder="@Localizer["Username"]" asp-for="Username" aria-label="Username" aria-describedby="input-username" autofocus>
-										</div>
-									</div>
-								</div>
+                            <fieldset>
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="input-username">
+                                                    <i class="fa fa-user"></i>
+                                                </span>
+                                            </div>
+                                            <input class="form-control" placeholder="@Localizer["Username"]" asp-for="Username" aria-label="Username" aria-describedby="input-username" autofocus>
+                                        </div>
+                                    </div>
+                                </div>
 
-								<div class="form-group row">
-									<div class="col-sm-12">
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text" id="input-password">
-													<span class="oi oi-lock-locked" title="Lock" aria-hidden="true"></span>
-												</span>
-											</div>
-											<input type="password" class="form-control" placeholder="@Localizer["Password"]" aria-label="Password" aria-describedby="input-password" asp-for="Password" autocomplete="off">
-										</div>
-									</div>
-								</div>
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="input-password">
+                                                    <span class="oi oi-lock-locked" title="Lock" aria-hidden="true"></span>
+                                                </span>
+                                            </div>
+                                            <input type="password" class="form-control" placeholder="@Localizer["Password"]" aria-label="Password" aria-describedby="input-password" asp-for="Password" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
 
-								@if (Model.AllowRememberLogin)
-								{
-									<div class="form-group login-remember row">
-										<div class="col-sm-9">
-											<div style="font-size: 8px !important;">
-												@Localizer["Remember"]
-											</div>
-											<toggle-button>
-												<input asp-for="RememberLogin" type="checkbox">
-											</toggle-button>
-										</div>
-									</div>
-								}
+                                @if (Model.AllowRememberLogin)
+                                {
+                                    <div class="form-group login-remember row">
+                                        <div class="col-sm-9">
+                                            <div>
+                                                @Localizer["Remember"]
+                                            </div>
+                                            <toggle-button>
+                                                <input asp-for="RememberLogin" type="checkbox">
+                                            </toggle-button>
+                                        </div>
+                                    </div>
+                                }
 
-								<!--Button-->
-								<div class="form-group row">
-									<div class="col-sm-12">
-										<button class="btn btn-primary" name="button" value="login">@Localizer["Login"]</button>
-										<button class="btn btn-default" name="button" value="cancel">@Localizer["Cancel"]</button>
-									</div>
-								</div>
-							</fieldset>
-						</form>
-					</div>
-				</div>
-			</div>
-		}
+                                <!--Button-->
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-primary" name="button" value="login">@Localizer["Login"]</button>
+                                        <button class="btn btn-default" name="button" value="cancel">@Localizer["Cancel"]</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
 
-		@if (Model.VisibleExternalProviders.Any())
-		{
-			<div class="col-sm-6 external-providers">
-				<div class="card mt-3">
-					<h5 class="card-header">@Localizer["ExternalLogin"]</h5>
-					<div class="card-body">
-						<ul class="list-inline">
-							@foreach (var provider in Model.VisibleExternalProviders)
-							{
-								<li class="list-inline-item">
-									<a class="btn btn-primary"
-									   asp-action="ExternalLogin"
-									   asp-route-provider="@provider.AuthenticationScheme"
-									   asp-route-returnUrl="@Model.ReturnUrl">
-										@provider.DisplayName
-									</a>
-								</li>
-							}
-						</ul>
-					</div>
-				</div>
-			</div>
-		}
+        @if (Model.VisibleExternalProviders.Any())
+        {
+            <div class="col-sm-6 external-providers">
+                <div class="card mt-3">
+                    <h5 class="card-header">@Localizer["ExternalLogin"]</h5>
+                    <div class="card-body">
+                        <ul class="list-inline">
+                            @foreach (var provider in Model.VisibleExternalProviders)
+                            {
+                                <li class="list-inline-item">
+                                    <a class="btn btn-primary"
+                                       asp-controller="External"
+                                       asp-action="Challenge"
+                                       asp-route-provider="@provider.AuthenticationScheme"
+                                       asp-route-returnUrl="@Model.ReturnUrl">
+                                        @provider.DisplayName
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
 
-		@if (!Model.EnableLocalLogin && !Model.VisibleExternalProviders.Any())
-		{
-			<div class="alert alert-warning">
-				<strong>@Localizer["InvalidRequest"]</strong>
-				@Localizer["NoSchema"]
-			</div>
-		}
-	</div>
+        @if (!Model.EnableLocalLogin && !Model.VisibleExternalProviders.Any())
+        {
+            <div class="alert alert-warning">
+                <strong>@Localizer["InvalidRequest"]</strong>
+                @Localizer["NoSchema"]
+            </div>
+        }
+    </div>
 </div>

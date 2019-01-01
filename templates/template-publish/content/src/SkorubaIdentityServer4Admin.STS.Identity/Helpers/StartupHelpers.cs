@@ -10,7 +10,9 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Serilog;
 using SkorubaIdentityServer4Admin.STS.Identity.Configuration.Constants;
 
 namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
@@ -34,9 +36,9 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
                 {
                     var supportedCultures = new[]
                     {
-                        new CultureInfo("zh-CN"),
-                        new CultureInfo("en-US"),
-                        new CultureInfo("en")
+                        new CultureInfo("ru"),
+                        new CultureInfo("en"),
+                        new CultureInfo("zh")
                     };
 
                     opts.DefaultRequestCulture = new RequestCulture("en");
@@ -85,7 +87,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
             }
             else
             {
-                throw new Exception("need to configure key material");
+                builder.AddCustomSigningCredential(configuration);
+                builder.AddCustomValidationKey(configuration);
             }
         }
 
@@ -99,6 +102,13 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
         {
             var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(options.Value);
+        }
+
+        public static void AddLogging(this IApplicationBuilder app, ILoggerFactory loggerFactory, IConfiguration configuration)
+        {
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
         }
     }
 }

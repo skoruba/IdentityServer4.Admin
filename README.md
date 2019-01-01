@@ -7,13 +7,17 @@
 ## Project Status
 
 [![Build status](https://ci.appveyor.com/api/projects/status/5yg59bn70399hn6s/branch/master?svg=true)](https://ci.appveyor.com/project/JanSkoruba/identityserver4-admin/branch/master)
+[![Build Status](https://dev.azure.com/skoruba/IdentityServer4.Admin/_apis/build/status/IdentityServer4.Admin-CI?branchName=master)](https://dev.azure.com/skoruba/IdentityServer4.Admin/_build/latest?definitionId=2?branchName=master)
 [![Join the chat at https://gitter.im/skoruba/IdentityServer4.Admin](https://badges.gitter.im/skoruba/IdentityServer4.Admin.svg)](https://gitter.im/skoruba/IdentityServer4.Admin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 This is currently in **beta version**
 
-The application is written in the **Asp.Net Core MVC - using .NET Core 2.1** - works only with **IdentityServer4 version 2.0+**
+The application is written in the **Asp.Net Core MVC - using .NET Core 2.2**
+
+**NOTE:** Works only with **IdentityServer4 version => 2.3.0** 🚀
 
 ## Requirements
+
 - [Install](https://www.microsoft.com/net/download/windows#/current) the latest .NET Core 2.x SDK (using older versions may lead to 502.5 errors when hosted on IIS or application exiting immediately after starting when self-hosted)
 
 ## Installation via dotnet new template
@@ -21,7 +25,7 @@ The application is written in the **Asp.Net Core MVC - using .NET Core 2.1** - w
 - Install the dotnet new template:
 
 ```sh
-dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-beta4-update1
+dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-beta5-update1
 ```
 
 - Create new project:
@@ -133,18 +137,20 @@ Migrations are not a part of the repository - they are ignored in `.gitignore`.
 ## Localizations - labels, messages
 
 - All labels and messages are stored in the resources `.resx` - locatated in `/Resources`
+
   - Client label descriptions from - http://docs.identityserver.io/en/release/reference/client.html
   - Api Resource label descriptions from - http://docs.identityserver.io/en/release/reference/api_resource.html
   - Identity Resource label descriptions from - http://docs.identityserver.io/en/release/reference/identity_resource.html
-  
+
 ## Tests
 
--  The solution contains unit and integration tests. 
+- The solution contains unit and integration tests.
 - **Stage environment is used for integration tests**:
+
   - `DbContext` contains setup for InMemory database
   - `Authentication` is setup for `CookieAuthentication` - with fake login url only for testing purpose
   - `AuthenticatedTestRequestMiddleware` - middleware for testing of authentication.
-  
+
 - If you want to use `Stage environment` for deploying - it is necessary to change these settings in `StartupHelpers.cs`.
 
 ## Overview
@@ -153,7 +159,7 @@ Migrations are not a part of the repository - they are ignored in `.gitignore`.
 
 - STS:
 
-  - `Skoruba.IdentityServer4.STS.Identity` - [Quickstart UI for the IdentityServer4 with Asp.Net Core Identity and EF Core storage](https://github.com/IdentityServer/IdentityServer4.Samples/tree/release/Quickstarts/Combined_AspNetIdentity_and_EntityFrameworkStorage)
+  - `Skoruba.IdentityServer4.STS.Identity` - [Quickstart UI for the IdentityServer4 with Asp.Net Core Identity and EF Core storage](https://github.com/IdentityServer/IdentityServer4.Samples/tree/master/Quickstarts/Combined_AspId_and_EFStorage)
 
 - Admin UI:
 
@@ -193,6 +199,7 @@ It is possible to define the configuration according the client type - by defaul
 - Single Page Application - Javascript - Implicit flow
 - Native Application - Mobile/Desktop - Hybrid flow
 - Machine/Robot - Resource Owner Password and Client Credentials flow
+- TV and Limited-Input Device Application - Device flow
 
 - Actions: Add, Update, Clone, Remove
 - Entities:
@@ -247,16 +254,17 @@ It is possible to define the configuration according the client type - by defaul
 - [x] Create the Business Logic & EF layers - available as a nuget package
 - [x] Create a project template using dotnet CLI - `dotnet new template`
   - [x] First template: The administration of the IdentityServer4 and Asp.Net Core Identity
-- [ ] Add audit logs to track changes ([#61](https://github.com/skoruba/IdentityServer4.Admin/issues/61))
-- [ ] Add logging into
+- [x] Add logging into
   - [x] Database
-  - [ ] File
+  - [x] File
 - [x] Add localization for other languages
   - [x] English
   - [x] Chinese
-  
+  - [x] Russian
+
 ### 1.1.0:
 
+- [ ] Add audit logs to track changes ([#61](https://github.com/skoruba/IdentityServer4.Admin/issues/61))
 - [ ] Create a project template using dotnet CLI - `dotnet new template`
   - [ ] Second template: The administration of the IdentityServer4 (without Asp.Net Core Identity) ([#79](https://github.com/skoruba/IdentityServer4.Admin/issues/79))
 - [ ] User registration / Password reset
@@ -264,6 +272,7 @@ It is possible to define the configuration according the client type - by defaul
 - [ ] Manage profile
 
 ### 2.0.0:
+
 - [ ] Add API:
   - [ ] IdentityServer4
   - [ ] Asp.Net Core Identity
@@ -279,6 +288,9 @@ It is possible to define the configuration according the client type - by defaul
 ## Licence
 
 This repository is licensed under the terms of the [**MIT license**](LICENSE.md).
+
+**NOTE**: This repository uses the source code from https://github.com/IdentityServer/IdentityServer4.Quickstart.UI which is under the terms of the 
+[**Apache License 2.0**](https://github.com/IdentityServer/IdentityServer4.Quickstart.UI/blob/master/LICENSE).
 
 ## Acknowledgements
 
@@ -304,7 +316,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 <!-- prettier-ignore-start -->
 | [<img src="https://avatars3.githubusercontent.com/u/35664089?s=460&v=3" width="100px;"/><br /><sub> Jan Škoruba</sub>](https://github.com/skoruba) <br /> 💻 💬 📖 💡 🤔 | [<img src="https://avatars0.githubusercontent.com/u/6831144?s=460&v=3" width="100px;"/><br /><sub> Tomáš Hübelbauer</sub>](https://github.com/TomasHubelbauer) <br /> 💻 👀 📖  🤔 | [<img src="https://avatars0.githubusercontent.com/u/1004852?s=460&v=3" width="100px;"/><br /><sub>Michał Drzał </sub>](https://github.com/xmichaelx) <br />💻 👀 📖 💡 🤔 | [<img src="https://avatars0.githubusercontent.com/u/2261603?s=460&v=3" width="100px;"/><br /><sub>cerginio </sub>](https://github.com/cerginio) <br /> 💻 🐛 💡 🤔 | [<img src="https://avatars3.githubusercontent.com/u/13407080?s=460&v=3" width="100px;"/><br /><sub>Sven Dummis </sub>](https://github.com/svendu) <br /> 📖| [<img src="https://avatars1.githubusercontent.com/u/1687087?s=460&v=3" width="100px;"/><br /><sub>Seaear</sub>](https://github.com/Seaear) <br />🌍|
 | :---: | :---: | :---: | :---: | :---: | :---: |
-|[<img src="https://avatars1.githubusercontent.com/u/1150473?s=460&v=3" width="118px;"/><br /><sub>Rune Antonsen </sub>](https://github.com/ruant) <br />🐛|[<img src="https://avatars1.githubusercontent.com/u/5537607?s=460&v=3" width="118px;"/><br /><sub>Sindre Njøsen </sub>](https://github.com/Sindrenj) <br />💻|
+|[<img src="https://avatars1.githubusercontent.com/u/1150473?s=460&v=3" width="118px;"/><br /><sub>Rune Antonsen </sub>](https://github.com/ruant) <br />🐛|[<img src="https://avatars1.githubusercontent.com/u/5537607?s=460&v=3" width="118px;"/><br /><sub>Sindre Njøsen </sub>](https://github.com/Sindrenj) <br />💻|[<img src="https://avatars1.githubusercontent.com/u/40323674?s=460&v=3" width="118px;"/><br /><sub>Alevtina Brown </sub>](https://github.com/alev7ina) <br />🌍|
 <!-- prettier-ignore-end -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification.

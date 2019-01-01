@@ -147,6 +147,24 @@
   <data name="Name_Label" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="Properties_Info" xml:space="preserve">
+    <value>Dictionary to hold any custom identity resource-specific values as needed.</value>
+  </data>
+  <data name="Properties_Label" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="PropertyKey_Info" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="PropertyKey_Label" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="PropertyValue_Info" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="PropertyValue_Label" xml:space="preserve">
+    <value>Value</value>
+  </data>
   <data name="Required_Info" xml:space="preserve">
     <value>Specifies whether the user can de-select the scope on the consent screen (if the consent screen wants to implement such a feature). Defaults to false.</value>
   </data>

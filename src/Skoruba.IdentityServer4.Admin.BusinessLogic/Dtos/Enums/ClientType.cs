@@ -7,6 +7,7 @@
         WebHybrid = 2,
         Spa = 3,
         Native = 4,
-        Machine = 5
+        Machine = 5,
+        Device = 6
     }
 }
