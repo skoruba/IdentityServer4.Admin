@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
+// Original file: https://github.com/IdentityServer/IdentityServer4.Quickstart.UI
+// Modified by Jan Škoruba
 
 using System;
 using System.Threading.Tasks;
@@ -26,21 +28,21 @@ namespace Skoruba.IdentityServer4.STS.Identity.Quickstart.Home
             return View();
         }
 
-	    [HttpPost]
-	    public IActionResult SetLanguage(string culture, string returnUrl)
-	    {
-		    Response.Cookies.Append(
-			    CookieRequestCultureProvider.DefaultCookieName,
-			    CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
-			    new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
-		    );
-		    return LocalRedirect(returnUrl);
-	    }
+        [HttpPost]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+            return LocalRedirect(returnUrl);
+        }
 
-		/// <summary>
-		/// Shows the error page
-		/// </summary>
-		public async Task<IActionResult> Error(string errorId)
+        /// <summary>
+        /// Shows the error page
+        /// </summary>
+        public async Task<IActionResult> Error(string errorId)
         {
             var vm = new ErrorViewModel();
 

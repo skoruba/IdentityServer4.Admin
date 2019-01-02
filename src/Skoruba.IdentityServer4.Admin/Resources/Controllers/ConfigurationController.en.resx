@@ -120,6 +120,9 @@
   <data name="SuccessAddApiResource" xml:space="preserve">
     <value>Api Resource {0} is successfully saved!</value>
   </data>
+  <data name="SuccessAddApiResourceProperty" xml:space="preserve">
+    <value>Api Resource property {0} for api resource {1} is successfully saved!</value>
+  </data>
   <data name="SuccessAddApiScope" xml:space="preserve">
     <value>Api Scope {0} is successfully saved!</value>
   </data>
@@ -141,6 +144,9 @@
   <data name="SuccessAddIdentityResource" xml:space="preserve">
     <value>Identity Resource {0} is successfully saved!</value>
   </data>
+  <data name="SuccessAddIdentityResourceProperty" xml:space="preserve">
+    <value>Identity Resource property {0} for api resource {1} is successfully saved!</value>
+  </data>
   <data name="SuccessClientClone" xml:space="preserve">
     <value>Client {0} is successfully cloned!</value>
   </data>
@@ -149,6 +155,9 @@
   </data>
   <data name="SuccessDeleteApiResource" xml:space="preserve">
     <value>Api Resource is successfully deleted!</value>
+  </data>
+  <data name="SuccessDeleteApiResourceProperty" xml:space="preserve">
+    <value>Api resource property is successfully deleted!</value>
   </data>
   <data name="SuccessDeleteApiScope" xml:space="preserve">
     <value>Api Scope is successfully deleted!</value>
@@ -167,6 +176,9 @@
   </data>
   <data name="SuccessDeleteIdentityResource" xml:space="preserve">
     <value>Identity Resource is successfully deleted!</value>
+  </data>
+  <data name="SuccessDeleteIdentityResourceProperty" xml:space="preserve">
+    <value>Identity resource property is successfully deleted!</value>
   </data>
   <data name="SuccessTitle" xml:space="preserve">
     <value>Success</value>

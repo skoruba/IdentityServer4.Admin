@@ -145,6 +145,56 @@ namespace SkorubaIdentityServer4Admin.Admin.Controllers
             return View(properties);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ApiResourceProperties(int id, int? page)
+        {
+            if (id == 0) return NotFound();
+
+            var properties = await _apiResourceService.GetApiResourcePropertiesAsync(id, page ?? 1);
+
+            return View(properties);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ApiResourceProperties(ApiResourcePropertiesDto apiResourceProperty)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(apiResourceProperty);
+            }
+
+            await _apiResourceService.AddApiResourcePropertyAsync(apiResourceProperty);
+            SuccessNotification(string.Format(_localizer["SuccessAddApiResourceProperty"], apiResourceProperty.Key, apiResourceProperty.ApiResourceName), _localizer["SuccessTitle"]);
+
+            return RedirectToAction(nameof(ApiResourceProperties), new { Id = apiResourceProperty.ApiResourceId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> IdentityResourceProperties(int id, int? page)
+        {
+            if (id == 0) return NotFound();
+
+            var properties = await _identityResourceService.GetIdentityResourcePropertiesAsync(id, page ?? 1);
+
+            return View(properties);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> IdentityResourceProperties(IdentityResourcePropertiesDto identityResourceProperty)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(identityResourceProperty);
+            }
+
+            await _identityResourceService.AddIdentityResourcePropertyAsync(identityResourceProperty);
+            SuccessNotification(string.Format(_localizer["SuccessAddIdentityResourceProperty"], identityResourceProperty.Value, identityResourceProperty.IdentityResourceName), _localizer["SuccessTitle"]);
+
+            return RedirectToAction(nameof(IdentityResourceProperties), new { Id = identityResourceProperty.IdentityResourceId });
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ClientProperties(ClientPropertiesDto clientProperty)
@@ -195,6 +245,26 @@ namespace SkorubaIdentityServer4Admin.Admin.Controllers
             return View(nameof(ClientPropertyDelete), clientProperty);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ApiResourcePropertyDelete(int id)
+        {
+            if (id == 0) return NotFound();
+
+            var apiResourceProperty = await _apiResourceService.GetApiResourcePropertyAsync(id);
+
+            return View(nameof(ApiResourcePropertyDelete), apiResourceProperty);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> IdentityResourcePropertyDelete(int id)
+        {
+            if (id == 0) return NotFound();
+
+            var identityResourceProperty = await _identityResourceService.GetIdentityResourcePropertyAsync(id);
+
+            return View(nameof(IdentityResourcePropertyDelete), identityResourceProperty);
+        }
+
         [HttpPost]
         public async Task<IActionResult> ClientClaimDelete(ClientClaimsDto clientClaim)
         {
@@ -212,6 +282,26 @@ namespace SkorubaIdentityServer4Admin.Admin.Controllers
             SuccessNotification(_localizer["SuccessDeleteClientProperty"], _localizer["SuccessTitle"]);
 
             return RedirectToAction(nameof(ClientProperties), new { Id = clientProperty.ClientId });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ApiResourcePropertyDelete(ApiResourcePropertiesDto apiResourceProperty)
+        {
+            await _apiResourceService.DeleteApiResourcePropertyAsync(apiResourceProperty);
+            SuccessNotification(_localizer["SuccessDeleteApiResourceProperty"], _localizer["SuccessTitle"]);
+
+            return RedirectToAction(nameof(ApiResourceProperties), new { Id = apiResourceProperty.ApiResourceId });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> IdentityResourcePropertyDelete(IdentityResourcePropertiesDto identityResourceProperty)
+        {
+            await _identityResourceService.DeleteIdentityResourcePropertyAsync(identityResourceProperty);
+            SuccessNotification(_localizer["SuccessDeleteIdentityResourceProperty"], _localizer["SuccessTitle"]);
+
+            return RedirectToAction(nameof(IdentityResourceProperties), new { Id = identityResourceProperty.IdentityResourceId });
         }
 
         [HttpGet]

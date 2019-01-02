@@ -30,7 +30,7 @@
 		</div>
 
 		@if (Model.Id == 0)
-		{			
+		{
 			<div class="card-deck mb-3 text-center">
 				<div class="card mt-4 mb-4 box-shadow">
 					<div class="card-body">
@@ -41,6 +41,7 @@
 						</label>
 					</div>
 				</div>
+				<div class="w-100 d-none d-sm-block d-md-none"></div>
 				<div class="card mt-4 mb-4 box-shadow">
 					<div class="card-body">
 						<label class="radio-img">
@@ -51,6 +52,7 @@
 						</label>
 					</div>
 				</div>
+				<div class="w-100 d-none d-sm-block d-md-none"></div>
 				<div class="card mt-4 mb-4 box-shadow">
 					<div class="card-body">
 						<label class="radio-img">
@@ -74,6 +76,7 @@
 						</label>
 					</div>
 				</div>
+				<div class="w-100 d-none d-sm-block d-md-none"></div>
 				<div class="card mb-4 box-shadow">
 					<div class="card-body">
 						<label class="radio-img">
@@ -84,6 +87,7 @@
 						</label>
 					</div>
 				</div>
+				<div class="w-100 d-none d-sm-block d-md-none"></div>
 				<div class="card mb-4 box-shadow">
 					<div class="card-body">
 						<label class="radio-img">
@@ -92,6 +96,21 @@
 							<h3>@Localizer["TitleMachine"]</h3>
 							<h4>@Localizer["TitlePasswordAndClient"]</h4>
 						</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-12 col-md-4 mb-3 text-center">
+					<div class="card mb-4 box-shadow">
+						<div class="card-body">
+							<label class="radio-img">
+								<input type="radio" asp-for="ClientType" value="@((int)ClientType.Device)" />
+								<img src="~/images/icons/device-client.png" alt="Device" />
+								<h3>@Localizer["TitleDevice"]</h3>
+								<h4>@Localizer["TitleDeviceFlow"]</h4>
+							</label>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 using SkorubaIdentityServer4Admin.STS.Identity.Helpers;
@@ -37,8 +38,10 @@ namespace SkorubaIdentityServer4Admin.STS.Identity
             services.AddMvcLocalization();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+			app.AddLogging(loggerFactory, Configuration);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -21,7 +21,28 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             return fakerApiResource;
         }
 
-        public static Faker<ApiSecretsDto> GetApiSecretFaker(int id, int resourceId)
+	    public static ApiResourcePropertiesDto GenerateRandomApiResourceProperty(int id, int apiResourceId)
+	    {
+		    var apiResourcePropertyFaker = ApiResourcePropertyFaker(id, apiResourceId);
+
+		    var propertyTesting = apiResourcePropertyFaker.Generate();
+
+		    return propertyTesting;
+	    }
+
+	    public static Faker<ApiResourcePropertiesDto> ApiResourcePropertyFaker(int id, int apiResourceId)
+	    {
+		    var apiResourcePropertyFaker = new Faker<ApiResourcePropertiesDto>()
+			    .StrictMode(false)
+			    .RuleFor(o => o.ApiResourcePropertyId, id)
+			    .RuleFor(o => o.Key, f => Guid.NewGuid().ToString())
+			    .RuleFor(o => o.Value, f => Guid.NewGuid().ToString())
+			    .RuleFor(o => o.ApiResourceId, apiResourceId);
+
+		    return apiResourcePropertyFaker;
+	    }
+
+		public static Faker<ApiSecretsDto> GetApiSecretFaker(int id, int resourceId)
         {
             var fakerApiSecret = new Faker<ApiSecretsDto>()
                 .RuleFor(o => o.Type, f => Guid.NewGuid().ToString())
