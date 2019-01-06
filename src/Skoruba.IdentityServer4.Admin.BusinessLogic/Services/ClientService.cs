@@ -69,6 +69,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
                 case ClientType.Device:
                     client.AllowedGrantTypes.AddRange(GrantTypes.DeviceFlow);
                     client.RequireClientSecret = false;
+                    client.AllowOfflineAccess = true;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
