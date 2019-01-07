@@ -120,6 +120,9 @@
   <data name="SuccessAddApiResource" xml:space="preserve">
     <value>Api Ресурс {0} успешно сохранен!</value>
   </data>
+  <data name="SuccessAddApiResourceProperty" xml:space="preserve">
+    <value>Api Свойство Ресурса {0} для api ресурса {1} успешно сохранено!</value>
+  </data>
   <data name="SuccessAddApiScope" xml:space="preserve">
     <value>Api Область {0} успешно сохранена!</value>
   </data>
@@ -130,31 +133,37 @@
     <value>Клиент {0} успешно создан!</value>
   </data>
   <data name="SuccessAddClientClaim" xml:space="preserve">
-    <value>Утверждение Клиента {0} для Клиента {1} успешно сохранено!</value>
+    <value>Утверждение Клиента {0} для клиента {1} успешно сохранено!</value>
   </data>
   <data name="SuccessAddClientProperty" xml:space="preserve">
     <value>Свойство Клиента {0} для клиента {1} успешно сохранено!</value>
   </data>
   <data name="SuccessAddClientSecret" xml:space="preserve">
-    <value>Секрет Клиента для клиента {0} успешно сохранен!</value>
+    <value>Секрет Клиента для клиента {0} успешно сохранён!</value>
   </data>
   <data name="SuccessAddIdentityResource" xml:space="preserve">
-    <value>Ресурс Идентификации {0} успешно сохранен!</value>
+    <value>Ресурс Идентификации {0} успешно сохранён!</value>
+  </data>
+  <data name="SuccessAddIdentityResourceProperty" xml:space="preserve">
+    <value>Свойство Ресурса Идентификации {0} для api ресурса {1} успешно сохранено!</value>
   </data>
   <data name="SuccessClientClone" xml:space="preserve">
     <value>Клиент {0} успешно продублирован!</value>
   </data>
   <data name="SuccessClientDelete" xml:space="preserve">
-    <value>Клиент успешно удален!</value>
+    <value>Клиент успешно удалён!</value>
   </data>
   <data name="SuccessDeleteApiResource" xml:space="preserve">
-    <value>Api Ресурс успешно удален!</value>
+    <value>Api Ресурс успешно удалён!</value>
+  </data>
+  <data name="SuccessDeleteApiResourceProperty" xml:space="preserve">
+    <value>Api свойство ресурса успешно удалено!</value>
   </data>
   <data name="SuccessDeleteApiScope" xml:space="preserve">
     <value>Api Область успешно удалена!</value>
   </data>
   <data name="SuccessDeleteApiSecret" xml:space="preserve">
-    <value>Api Секрет успешно удален!</value>
+    <value>Api Секрет успешно удалён!</value>
   </data>
   <data name="SuccessDeleteClientClaim" xml:space="preserve">
     <value>Утверждение Клиента успешно удалено!</value>
@@ -166,12 +175,15 @@
     <value>Секрет Клиента успешно удален!</value>
   </data>
   <data name="SuccessDeleteIdentityResource" xml:space="preserve">
-    <value>Идентификация Ресурса успешно удалена!</value>
+    <value>Ресурс Идентификации успешно удалён!</value>
+  </data>
+  <data name="SuccessDeleteIdentityResourceProperty" xml:space="preserve">
+    <value>Свойство ресурса идентификации успешно удалено!</value>
   </data>
   <data name="SuccessTitle" xml:space="preserve">
     <value>Успех</value>
   </data>
   <data name="SuccessUpdateClient" xml:space="preserve">
-    <value>Клиент {0} успешно обновлен!</value>
+    <value>Клиент {0} успешно обновлён!</value>
   </data>
 </root>

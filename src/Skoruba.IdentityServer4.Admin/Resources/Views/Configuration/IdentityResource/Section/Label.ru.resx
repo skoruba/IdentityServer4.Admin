@@ -147,6 +147,24 @@
   <data name="Name_Label" xml:space="preserve">
     <value>Имя</value>
   </data>
+  <data name="Properties_Info" xml:space="preserve">
+    <value>Словарь для хранения любых пользовательских значений специфичных для ресурса идентификации.</value>
+  </data>
+  <data name="Properties_Label" xml:space="preserve">
+    <value>Свойства</value>
+  </data>
+  <data name="PropertyKey_Info" xml:space="preserve">
+    <value>Ключ</value>
+  </data>
+  <data name="PropertyKey_Label" xml:space="preserve">
+    <value>Ключ</value>
+  </data>
+  <data name="PropertyValue_Info" xml:space="preserve">
+    <value>Значение</value>
+  </data>
+  <data name="PropertyValue_Label" xml:space="preserve">
+    <value>Значение</value>
+  </data>
   <data name="Required_Info" xml:space="preserve">
     <value>Указывает может ли пользователь отменить выбор области на экране подтверждения (если экран подтверждения хочет реализовать такую функцию). По умолчанию значение равно false.</value>
   </data>

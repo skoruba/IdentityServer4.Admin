@@ -141,6 +141,24 @@
   <data name="Name_Label" xml:space="preserve">
     <value>Имя</value>
   </data>
+  <data name="Properties_Info" xml:space="preserve">
+    <value>Словарь для хранения любых пользовательских значений ресурсов приложения по мере необходимости.</value>
+  </data>
+  <data name="Properties_Label" xml:space="preserve">
+    <value>Свойства</value>
+  </data>
+  <data name="PropertyKey_Info" xml:space="preserve">
+    <value>Ключ</value>
+  </data>
+  <data name="PropertyKey_Label" xml:space="preserve">
+    <value>Ключ</value>
+  </data>
+  <data name="PropertyValue_Info" xml:space="preserve">
+    <value>Значение</value>
+  </data>
+  <data name="PropertyValue_Label" xml:space="preserve">
+    <value>Значение</value>
+  </data>
   <data name="Scopes_Info" xml:space="preserve">
     <value>Приложение должно иметь хотя бы одну область. Каждая область может иметь разные настройки.</value>
   </data>

@@ -120,6 +120,9 @@
   <data name="ApplicationAccess" xml:space="preserve">
     <value>Доступ к Приложению</value>
   </data>
+  <data name="ConfirmCode" xml:space="preserve">
+    <value>Пожалуйста, подтвердите, что запрос авторизации указывает на код:</value>
+  </data>
   <data name="No" xml:space="preserve">
     <value>Нет, Не Разрешать </value>
   </data>
