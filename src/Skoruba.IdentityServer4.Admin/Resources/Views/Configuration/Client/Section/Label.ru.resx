@@ -429,4 +429,22 @@
   <data name="ProtocolType_Label" xml:space="preserve">
     <value>Тип Протокола</value>
   </data>
+  <data name="DeviceCodeLifetime_Info" xml:space="preserve">
+    <value>Срок службы кода устройства в секундах (по умолчанию 300 секунд / 5 минут)</value>
+  </data>
+  <data name="DeviceCodeLifetime_Label" xml:space="preserve">
+    <value>Срок службы кода устройства</value>
+  </data>
+  <data name="UserCodeType_Info" xml:space="preserve">
+    <value>Определяет тип кода пользователя, который будет использоваться для клиента. В противном случае возвращается значение по умолчанию.</value>
+  </data>
+  <data name="UserCodeType_Label" xml:space="preserve">
+    <value>Тип Кода Пользователя</value>
+  </data>
+  <data name="UserSsoLifetime_Info" xml:space="preserve">
+    <value>Максимальная продолжительность (в секундах) с момента последней аутентификации пользователя. По умолчанию null</value>
+  </data>
+  <data name="UserSsoLifetime_Label" xml:space="preserve">
+    <value>Срок службы единого входа в систему (Sso) Пользователя</value>
+  </data>
 </root>

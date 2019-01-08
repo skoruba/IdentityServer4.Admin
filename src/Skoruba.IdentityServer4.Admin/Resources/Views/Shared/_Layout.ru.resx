@@ -130,7 +130,7 @@
     <value>Клиенты</value>
   </data>
   <data name="LinkIdentityResources" xml:space="preserve">
-    <value>Идентификации Ресурсов</value>
+    <value>Ресурсы Идентификации</value>
   </data>
   <data name="LinkLogout" xml:space="preserve">
     <value>Выход</value>
