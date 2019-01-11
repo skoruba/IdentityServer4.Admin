@@ -44,7 +44,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             var storeOptions = new ConfigurationStoreOptions();
             services.AddSingleton(storeOptions);
 
-            services.AddDbContext<TContext>(options => options.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey), optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
+            services.AddDbContext<TContext>(options => options.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey), optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly).UseRowNumberForPaging()));
         }
 
         public static void RegisterDbContextsStaging<TContext>(this IServiceCollection services)
