@@ -123,4 +123,13 @@
   <data name="IdentityResourceExistsValue" xml:space="preserve">
     <value>身份资源 {0} 已存在</value>
   </data>
+  <data name="IdentityResourcePropertyDoesNotExist" xml:space="preserve">
+    <value>标识为 {0} 的身份资源属性不存在</value>
+  </data>
+  <data name="IdentityResourcePropertyExistsKey" xml:space="preserve">
+    <value>身份资源属性已存在</value>
+  </data>
+  <data name="IdentityResourcePropertyExistsValue" xml:space="preserve">
+    <value>键为（{0}）的身份资源属性已存在</value>
+  </data>
 </root>

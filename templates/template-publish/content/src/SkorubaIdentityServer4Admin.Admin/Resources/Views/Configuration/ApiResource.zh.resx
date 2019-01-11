@@ -120,6 +120,9 @@
   <data name="ButtonDeleteApiResource" xml:space="preserve">
     <value>删除 Api 资源</value>
   </data>
+  <data name="ButtonManageProperties" xml:space="preserve">
+    <value>管理 Api 资源属性</value>
+  </data>
   <data name="ButtonManageScopes" xml:space="preserve">
     <value>管理 Api 作用域</value>
   </data>

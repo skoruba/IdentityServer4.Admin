@@ -126,6 +126,15 @@
   <data name="ApiResourceExistsValue" xml:space="preserve">
     <value>Api 资源 ({0}) 已经存在</value>
   </data>
+  <data name="ApiResourcePropertyDoesNotExist" xml:space="preserve">
+    <value>标识为 {0} 的 Api 资源属性不存在</value>
+  </data>
+  <data name="ApiResourcePropertyExistsKey" xml:space="preserve">
+    <value>Api 资源属性已存在</value>
+  </data>
+  <data name="ApiResourcePropertyExistsValue" xml:space="preserve">
+    <value>键为（{0}）的 Api 资源属性已存在</value>
+  </data>
   <data name="ApiScopeDoesNotExist" xml:space="preserve">
     <value>标识为 {0} 的 Api 作用域不存在</value>
   </data>

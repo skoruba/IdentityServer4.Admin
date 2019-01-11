@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonAddIdentityResource" xml:space="preserve">
-    <value>Добавить Идентификацию Ресурса</value>
+    <value>Добавить Ресурс Идентификации</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Идентификация Ресурсов</value>
+    <value>Ресурсы Идентификации</value>
   </data>
   <data name="TableButtonEdit" xml:space="preserve">
     <value>Редактировать</value>

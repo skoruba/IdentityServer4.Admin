@@ -124,7 +124,7 @@
     <value>Клиенты</value>
   </data>
   <data name="ButtonIdentityClients" xml:space="preserve">
-    <value>Идентификация Ресурсов</value>
+    <value>Ресурсы Идентификации</value>
   </data>
   <data name="ButtonManage" xml:space="preserve">
     <value>Изменить</value>

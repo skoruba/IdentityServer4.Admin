@@ -120,6 +120,9 @@
   <data name="ButtonDelete" xml:space="preserve">
     <value>删除身份资源</value>
   </data>
+  <data name="ButtonManageProperties" xml:space="preserve">
+    <value>管理身份资源属性</value>
+  </data>
   <data name="ButtonSave" xml:space="preserve">
     <value>保存身份资源</value>
   </data>
