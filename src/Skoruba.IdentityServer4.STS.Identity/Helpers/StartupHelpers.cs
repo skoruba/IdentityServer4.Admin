@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Serilog;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
@@ -47,7 +48,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 });
         }
 
-        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfiguration configuration) where TContext : DbContext
+        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfiguration configuration, ILogger logger) where TContext : DbContext
             where TUserIdentity : class where TUserIdentityRole : class
         {
             var connectionString = configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey);
@@ -84,15 +85,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 #endif                
                 });
 
-            if (hostingEnvironment.IsDevelopment())
-            {
-                builder.AddDeveloperSigningCredential();
-            }
-            else
-            {
-                builder.AddCustomSigningCredential(configuration);
-                builder.AddCustomValidationKey(configuration);
-            }
+            builder.AddCustomSigningCredential(configuration, logger);
+            builder.AddCustomValidationKey(configuration, logger);
         }
 
         public static void AddDbContexts<TContext>(this IServiceCollection services, IConfiguration configuration) where TContext : DbContext
