@@ -49,6 +49,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSecurityHeaders();
             app.UseStaticFiles();
             app.UseIdentityServer();
             app.UseMvcLocalizationServices();
