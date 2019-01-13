@@ -55,6 +55,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
+
+            app.UseXfo(options => options.SameOrigin());
+            app.UseReferrerPolicy(options => options.NoReferrer());
         }
 
         public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfiguration configuration, ILogger logger) where TContext : DbContext
