@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
@@ -21,8 +23,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// </summary>
         /// <param name="builder"></param>
         /// <param name="configuration"></param>
+        /// <param name="logger"></param>
         /// <returns></returns>
-        public static IIdentityServerBuilder AddCustomSigningCredential(this IIdentityServerBuilder builder, IConfiguration configuration)
+        public static IIdentityServerBuilder AddCustomSigningCredential(this IIdentityServerBuilder builder, IConfiguration configuration, ILogger logger)
         {
             var certificateConfiguration = configuration.GetSection(nameof(CertificateConfiguration)).Get<CertificateConfiguration>();
 
@@ -46,25 +49,33 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 
                 builder.AddSigningCredential(certificate);
             }
-            else if (certificateConfiguration.UseSigningCertificateFile)
+            else if (certificateConfiguration.UseSigningCertificatePfxFile)
             {
-                if (string.IsNullOrWhiteSpace(certificateConfiguration.SigningCertificateFilePath))
+                if (string.IsNullOrWhiteSpace(certificateConfiguration.SigningCertificatePfxFilePath))
                 {
                     throw new Exception(SigningCertificatePathIsNotSpecified);
                 }
 
-                if (File.Exists(certificateConfiguration.SigningCertificateFilePath))
+                if (File.Exists(certificateConfiguration.SigningCertificatePfxFilePath))
                 {
-                    builder.AddSigningCredential(new X509Certificate2(certificateConfiguration.SigningCertificateFilePath, certificateConfiguration.SigningCertificateFilePassword));
+
+                    try
+                    {
+                        builder.AddSigningCredential(new X509Certificate2(certificateConfiguration.SigningCertificatePfxFilePath, certificateConfiguration.SigningCertificatePfxFilePassword));
+                    }
+                    catch (CryptographicException e)
+                    {
+                        logger.LogError($"There was an error adding the key file - during the creation of the signing key {e.Message}");
+                    }
                 }
                 else
                 {
-                    throw new Exception($"Signing key file: {certificateConfiguration.SigningCertificateFilePath} not found");
+                    throw new Exception($"Signing key file: {certificateConfiguration.SigningCertificatePfxFilePath} not found");
                 }
             }
-            else if (certificateConfiguration.UseTemporaryKey)
+            else if (certificateConfiguration.UseTemporarySigningKeyForDevelopment)
             {
-                builder.AddDeveloperSigningCredential(persistKey: false);
+                builder.AddDeveloperSigningCredential();
             }
 
             return builder;
@@ -76,8 +87,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// </summary>
         /// <param name="builder"></param>
         /// <param name="configuration"></param>
+        /// <param name="logger"></param>
         /// <returns></returns>
-        public static IIdentityServerBuilder AddCustomValidationKey(this IIdentityServerBuilder builder, IConfiguration configuration)
+        public static IIdentityServerBuilder AddCustomValidationKey(this IIdentityServerBuilder builder, IConfiguration configuration, ILogger logger)
         {
             var certificateConfiguration = configuration.GetSection(nameof(CertificateConfiguration)).Get<CertificateConfiguration>();
 
@@ -102,20 +114,28 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 builder.AddValidationKey(certificate);
 
             }
-            else if (certificateConfiguration.UseValidationCertificateFile)
+            else if (certificateConfiguration.UseValidationCertificatePfxFile)
             {
-                if (string.IsNullOrWhiteSpace(certificateConfiguration.ValidationCertificateFilePath))
+                if (string.IsNullOrWhiteSpace(certificateConfiguration.ValidationCertificatePfxFilePath))
                 {
                     throw new Exception(ValidationCertificatePathIsNotSpecified);
                 }
 
-                if (File.Exists(certificateConfiguration.ValidationCertificateFilePath))
+                if (File.Exists(certificateConfiguration.ValidationCertificatePfxFilePath))
                 {
-                    builder.AddValidationKey(new X509Certificate2(certificateConfiguration.ValidationCertificateFilePath, certificateConfiguration.ValidationCertificateFilePassword));
+                    try
+                    {
+                        builder.AddValidationKey(new X509Certificate2(certificateConfiguration.ValidationCertificatePfxFilePath, certificateConfiguration.ValidationCertificatePfxFilePassword));
+
+                    }
+                    catch (CryptographicException e)
+                    {
+                        logger.LogError($"There was an error adding the key file - during the creation of the validation key {e.Message}");
+                    }
                 }
                 else
                 {
-                    throw new Exception($"Validation key file: {certificateConfiguration.SigningCertificateFilePath} not found");
+                    throw new Exception($"Validation key file: {certificateConfiguration.SigningCertificatePfxFilePath} not found");
                 }
             }
 
