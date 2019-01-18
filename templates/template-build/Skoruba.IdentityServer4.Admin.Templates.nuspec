@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Skoruba.IdentityServer4.Admin.Templates</id>
-    <version>1.0.0-beta5-update1</version>
+    <version>1.0.0-beta5-update2</version>
     <authors>Jan Škoruba</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>https://github.com/skoruba/IdentityServer4.Admin/blob/master/LICENSE.md</licenseUrl>

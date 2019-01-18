@@ -120,6 +120,12 @@
   <data name="PanelTitle" xml:space="preserve">
     <value>Имя</value>
   </data>
+  <data name="TitleDevice" xml:space="preserve">
+    <value>ТВ и Применение Устройства с Ограниченным Вводом</value>
+  </data>
+  <data name="TitleDeviceFlow" xml:space="preserve">
+    <value>Поток устройства</value>
+  </data>
   <data name="TitleEmpty" xml:space="preserve">
     <value>Пустой - По умолчанию</value>
   </data>

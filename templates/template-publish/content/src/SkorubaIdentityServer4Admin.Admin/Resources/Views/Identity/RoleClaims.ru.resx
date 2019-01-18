@@ -145,7 +145,7 @@
     <value>Введите 2 или более символов</value>
   </data>
   <data name="PickerSearchResultTitle" xml:space="preserve">
-    <value>Поиск результата:(нажмите на пункт для выбора)</value>
+    <value>Поиск результата: (нажмите на пункт для выбора)</value>
   </data>
   <data name="PickerSelectedItemsTitle" xml:space="preserve">
     <value>Выбранные пункты:</value>
