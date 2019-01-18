@@ -126,4 +126,13 @@
   <data name="IdentityResourceExistsValue" xml:space="preserve">
     <value>Identity Resource {0} already exists</value>
   </data>
+  <data name="IdentityResourcePropertyDoesNotExist" xml:space="preserve">
+    <value>Identity Resource Property with id {0} doesn't exist</value>
+  </data>
+  <data name="IdentityResourcePropertyExistsKey" xml:space="preserve">
+    <value>Identity Resource Property already exists</value>
+  </data>
+  <data name="IdentityResourcePropertyExistsValue" xml:space="preserve">
+    <value>Identity Resource Property with key ({0}) already exists</value>
+  </data>
 </root>

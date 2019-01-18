@@ -1,0 +1,66 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.ApiResourcePropertiesDto
+@inject IViewLocalizer Localizer
+
+@{
+	ViewBag.Title = Localizer["PageTitle"];
+	Layout = "_Layout";
+}
+
+<form asp-controller="Configuration" asp-action="ApiResourcePropertyDelete" Method="post">
+	<div class="row">
+
+		<div class="col-12">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiResources">@Localizer["NavigationApiResources"]</a></li>
+					<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiResource" asp-route-id="@Model.ApiResourceId">@Model.ApiResourceName</a></li>
+					<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiResourceProperties" asp-route-id="@Model.ApiResourceId">@Localizer["NavigationApiResourceProperties"]</a></li>
+					<li class="breadcrumb-item active" aria-current="page">@Localizer["PageTitle"]</li>
+				</ol>
+			</nav>
+		</div>
+
+		<div class="col-md-12">
+			<h3>@Localizer["PageTitle"]</h3>
+			
+			<!--Hidden -->
+			<input type="hidden" asp-for="ApiResourceId" />
+			<input type="hidden" asp-for="ApiResourcePropertyId" />
+
+			<div class="card mt-3">
+				<h5 class="card-header">@Localizer["PanelTitle"]</h5>
+				<div class="card-body">
+					<!--Input - text -->
+					<div class="form-group row">
+						<label asp-for="Key" class="col-sm-3 col-form-label">
+							@await Html.PartialAsync("ApiResource/Section/Label", "PropertyKey")
+						</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" disabled="disabled" asp-for="Key">
+						</div>
+					</div>
+
+					<!--Input - text -->
+					<div class="form-group row">
+						<label asp-for="Value" class="col-sm-3 col-form-label">
+							@await Html.PartialAsync("ApiResource/Section/Label", "PropertyValue")
+						</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" disabled="disabled" asp-for="Value">
+						</div>
+					</div>
+
+					<!--Button-->
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label">
+						</label>
+						<div class="col-sm-9">
+							<button type="submit" class="btn btn-danger">@Localizer["ButtonDeleteProperty"]</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>

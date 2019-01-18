@@ -33,5 +33,9 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces
         DbSet<ClientClaim> ClientClaims { get; set; }
 
         DbSet<ClientProperty> ClientProperties { get; set; }
+
+        DbSet<IdentityResourceProperty> IdentityResourceProperties { get; set; }
+
+        DbSet<ApiResourceProperty> ApiResourceProperties { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Serilog;
 
 namespace SkorubaIdentityServer4Admin.STS.Identity
 {
@@ -7,11 +8,13 @@ namespace SkorubaIdentityServer4Admin.STS.Identity
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            CreateWebHostBuilder(args)
+	            .UseSerilog()
+				.Build().Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+            WebHost.CreateDefaultBuilder(args)               
                 .UseStartup<Startup>();
     }
 }

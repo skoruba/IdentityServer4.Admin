@@ -120,6 +120,9 @@
   <data name="ButtonDelete" xml:space="preserve">
     <value>Delete Identity Resource</value>
   </data>
+  <data name="ButtonManageProperties" xml:space="preserve">
+    <value>Manage Identity Resource Properties</value>
+  </data>
   <data name="ButtonSave" xml:space="preserve">
     <value>Save Identity Resource</value>
   </data>

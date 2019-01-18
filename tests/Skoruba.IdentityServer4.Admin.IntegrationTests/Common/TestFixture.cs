@@ -3,7 +3,6 @@ using System.IO;
 using System.Net.Http;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.PlatformAbstractions;
 
 namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Common
 {
@@ -26,8 +25,8 @@ namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Common
 
         private string GetContentRootPath()
         {
-            var testProjectPath = PlatformServices.Default.Application.ApplicationBasePath;
-            const string relativePathToWebProject = @"../../../../../src/Skoruba.IdentityServer4.Admin/";
+	        var testProjectPath = AppContext.BaseDirectory;
+			const string relativePathToWebProject = @"../../../../../src/Skoruba.IdentityServer4.Admin/";
 
             return Path.Combine(testProjectPath, relativePathToWebProject);
         }

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,14 +12,16 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Serilog;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
     public static class StartupHelpers
     {
-
         public static void AddMvcLocalization(this IServiceCollection services)
         {
             services.AddLocalization(opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; });
@@ -34,9 +38,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 {
                     var supportedCultures = new[]
                     {
-                        new CultureInfo("zh-CN"),
-                        new CultureInfo("en-US"),
-                        new CultureInfo("en")
+                        new CultureInfo("ru"),
+                        new CultureInfo("en"),
+                        new CultureInfo("zh")
                     };
 
                     opts.DefaultRequestCulture = new RequestCulture("en");
@@ -45,7 +49,18 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 });
         }
 
-        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfiguration configuration) where TContext : DbContext
+        public static void UseSecurityHeaders(this IApplicationBuilder app)
+        {
+            app.UseForwardedHeaders(new ForwardedHeadersOptions()
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
+            app.UseXfo(options => options.SameOrigin());
+            app.UseReferrerPolicy(options => options.NoReferrer());
+        }
+
+        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfiguration configuration, ILogger logger) where TContext : DbContext
             where TUserIdentity : class where TUserIdentityRole : class
         {
             var connectionString = configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey);
@@ -82,14 +97,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 #endif                
                 });
 
-            if (hostingEnvironment.IsDevelopment())
-            {
-                builder.AddDeveloperSigningCredential();
-            }
-            else
-            {
-                throw new Exception("need to configure key material");
-            }
+            builder.AddCustomSigningCredential(configuration, logger);
+            builder.AddCustomValidationKey(configuration, logger);
         }
 
         public static void AddDbContexts<TContext>(this IServiceCollection services, IConfiguration configuration) where TContext : DbContext
@@ -102,6 +111,13 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         {
             var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(options.Value);
+        }
+
+        public static void AddLogging(this IApplicationBuilder app, ILoggerFactory loggerFactory, IConfiguration configuration)
+        {
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
         }
     }
 }

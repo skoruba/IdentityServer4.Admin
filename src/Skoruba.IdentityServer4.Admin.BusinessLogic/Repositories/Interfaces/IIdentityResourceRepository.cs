@@ -21,6 +21,18 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces
 
         Task<int> DeleteIdentityResourceAsync(IdentityResource identityResource);
 
+        Task<bool> CanInsertIdentityResourcePropertyAsync(IdentityResourceProperty identityResourceProperty);
+
+        Task<PagedList<IdentityResourceProperty>> GetIdentityResourcePropertiesAsync(int identityResourceId,
+            int page = 1, int pageSize = 10);
+
+        Task<IdentityResourceProperty> GetIdentityResourcePropertyAsync(int identityResourcePropertyId);
+
+        Task<int> AddIdentityResourcePropertyAsync(int identityResourceId,
+            IdentityResourceProperty identityResourceProperty);
+
+        Task<int> DeleteIdentityResourcePropertyAsync(IdentityResourceProperty identityResourceProperty);
+
         Task<int> SaveAllChangesAsync();
     }
 }

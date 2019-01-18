@@ -1,9 +1,14 @@
 ﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
+// Original file: https://github.com/IdentityServer/IdentityServer4.Quickstart.UI
+// Modified by Jan Škoruba
 
+using System;
 using System.Threading.Tasks;
 using IdentityServer4.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SkorubaIdentityServer4Admin.STS.Identity.Quickstart.Home
@@ -21,6 +26,17 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Quickstart.Home
         public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+            return LocalRedirect(returnUrl);
         }
 
         /// <summary>
