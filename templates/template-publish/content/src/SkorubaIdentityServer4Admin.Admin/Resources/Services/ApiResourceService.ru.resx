@@ -121,10 +121,19 @@
     <value>Api Ресурс с id {0} не существует</value>
   </data>
   <data name="ApiResourceExistsKey" xml:space="preserve">
-    <value>Api Ресурс уже существует </value>
+    <value>Api Ресурс уже существует</value>
   </data>
   <data name="ApiResourceExistsValue" xml:space="preserve">
     <value>Api Ресурс ({0}) уже существует</value>
+  </data>
+  <data name="ApiResourcePropertyDoesNotExist" xml:space="preserve">
+    <value>Api Свойство Ресурса с id {0} не существует</value>
+  </data>
+  <data name="ApiResourcePropertyExistsKey" xml:space="preserve">
+    <value>Api Свойство Ресурса уже существует </value>
+  </data>
+  <data name="ApiResourcePropertyExistsValue" xml:space="preserve">
+    <value>Api Свойство Ресурса с ключом ({0}) уже существует</value>
   </data>
   <data name="ApiScopeDoesNotExist" xml:space="preserve">
     <value>Api Область с id {0} не существует</value>

@@ -118,7 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonDeleteApiResource" xml:space="preserve">
-    <value>Удалить Ресурсы Api </value>
+    <value>Удалить Ресурсы Api</value>
+  </data>
+  <data name="ButtonManageProperties" xml:space="preserve">
+    <value>Изменить Свойства Ресурсов Api</value>
   </data>
   <data name="ButtonManageScopes" xml:space="preserve">
     <value>Изменить Области Api</value>
@@ -145,7 +148,7 @@
     <value>ни один пункт/ы не выбран/ы</value>
   </data>
   <data name="PickerSearchItemPlaceholder" xml:space="preserve">
-    <value>Введите 2 или более символа</value>
+    <value>Введите 2 и более символа</value>
   </data>
   <data name="PickerSearchResultTitle" xml:space="preserve">
     <value>Поиск результата:(нажмите на пункт для выбора)</value>
@@ -154,7 +157,7 @@
     <value>Выбранные пункты:</value>
   </data>
   <data name="PickerShowAllItemsTitle" xml:space="preserve">
-    <value>Больше</value>
+    <value>больше</value>
   </data>
   <data name="PickerSuggestedItemsTitle" xml:space="preserve">
     <value>Предложенные пункты:</value>

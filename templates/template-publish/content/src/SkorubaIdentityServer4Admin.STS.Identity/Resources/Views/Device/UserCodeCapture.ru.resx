@@ -117,43 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ButtonDelete" xml:space="preserve">
-    <value>Удалить Ресурс Идентификации</value>
+  <data name="EnterCode" xml:space="preserve">
+    <value>Пожалуйста, введите код, отображаемый на вашем устройстве</value>
   </data>
-  <data name="ButtonManageProperties" xml:space="preserve">
-    <value>Изменить Свойства Ресурса Идентификации</value>
+  <data name="Submit" xml:space="preserve">
+    <value>Отправить</value>
   </data>
-  <data name="ButtonSave" xml:space="preserve">
-    <value>Сохранить Ресурс  Идентификации</value>
-  </data>
-  <data name="NavigationIdentityResources" xml:space="preserve">
-    <value>Ресурсы Идентификации</value>
-  </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>Ресурс Идентификации</value>
-  </data>
-  <data name="PanelTitle" xml:space="preserve">
-    <value>Ресурс Идентификации</value>
-  </data>
-  <data name="PickerItemAlreadySelectedTitle" xml:space="preserve">
-    <value>пункт уже выбран</value>
-  </data>
-  <data name="PickerNoItemSelectedTitle" xml:space="preserve">
-    <value>ни один пункт/ы не выбран/ы</value>
-  </data>
-  <data name="PickerSearchItemPlaceholder" xml:space="preserve">
-    <value>Введите 2 или более символа</value>
-  </data>
-  <data name="PickerSearchResultTitle" xml:space="preserve">
-    <value>Поиск результата: (нажмите на пункт для выбора)</value>
-  </data>
-  <data name="PickerSelectedItemsTitle" xml:space="preserve">
-    <value>Выбранные пункты:</value>
-  </data>
-  <data name="PickerShowAllItemsTitle" xml:space="preserve">
-    <value>больше</value>
-  </data>
-  <data name="PickerSuggestedItemsTitle" xml:space="preserve">
-    <value>Предложенные пункты:</value>
+  <data name="Title" xml:space="preserve">
+    <value>Код Пользователя</value>
   </data>
 </root>

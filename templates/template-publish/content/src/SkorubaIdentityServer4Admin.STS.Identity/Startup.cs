@@ -13,8 +13,9 @@ namespace SkorubaIdentityServer4Admin.STS.Identity
     {
         public IConfiguration Configuration { get; }
         public IHostingEnvironment Environment { get; }
+        public ILogger Logger { get; set; }
 
-        public Startup(IHostingEnvironment environment)
+        public Startup(IHostingEnvironment environment, ILoggerFactory loggerFactory)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(environment.ContentRootPath)
@@ -29,12 +30,13 @@ namespace SkorubaIdentityServer4Admin.STS.Identity
 
             Configuration = builder.Build();
             Environment = environment;
+            Logger = loggerFactory.CreateLogger<Startup>();
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContexts<AdminDbContext>(Configuration);
-            services.AddAuthenticationServices<AdminDbContext, UserIdentity, UserIdentityRole>(Environment, Configuration);
+            services.AddAuthenticationServices<AdminDbContext, UserIdentity, UserIdentityRole>(Environment, Configuration, Logger);
             services.AddMvcLocalization();
         }
 
@@ -47,6 +49,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSecurityHeaders();
             app.UseStaticFiles();
             app.UseIdentityServer();
             app.UseMvcLocalizationServices();

@@ -121,10 +121,13 @@
     <value>Аутентификация/Выход</value>
   </data>
   <data name="NavBasics" xml:space="preserve">
-    <value>Основы</value>
+    <value>Основные сведения</value>
   </data>
   <data name="NavConsent" xml:space="preserve">
     <value>Экран Подтверждения </value>
+  </data>
+  <data name="NavDeviceFlow" xml:space="preserve">
+    <value>Поток Устройства</value>
   </data>
   <data name="NavName" xml:space="preserve">
     <value>Имя</value>
