@@ -11,7 +11,7 @@ If you don't have publicly accessible database you will need to create one. Foll
 - [PostgreSQL](https://docs.microsoft.com/en-us/azure/postgresql/quickstart-create-server-database-portal)
 - [MySQL](https://docs.microsoft.com/en-us/azure/mysql/quickstart-create-mysql-server-database-using-azure-portal)
 
-Replace connection strings in appsettings with connection string to generated databse.
+Replace connection strings in `appSettings.json` with connection string to generated database.
 
 Then you can generate migrations and update the database. In `src/Skoruba.IdentityServer4.Admin` issue:
 
@@ -28,7 +28,7 @@ We will assume in the tutorial that STS and Admin were deployed to:
 - https://is4-admin.azurewebsites.net - Admin panel
 
 
-### Updating urls
+### Updating URLs
 
 Remember to replace those values with your own in `src/Skoruba.IdentityServer4.Admin/appsettings.json` before first publish -
 
@@ -46,6 +46,14 @@ Then follow instructions from [Quickstart deploy to Azure](https://docs.microsof
 ### Adding certificate for signing tokens
 
 We also need to upload pfx certificate for signing tokens. If you don't have one here are the steps to do it using openssl (remember to write down the password - we will need it later):
+
+Windows users can download OpenSSL from [here](https://slproweb.com/products/Win32OpenSSL.html)
+
+Or if you're using [Chocolatey](https://chocolatey.org/) you can install above package using:
+
+```
+choco install openssl.light 
+```
 
 ```
 openssl genrsa 2048 > private.pem
