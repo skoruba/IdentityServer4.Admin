@@ -13,7 +13,7 @@ If you don't have publicly accessible database you will need to create one. Foll
 
 Replace connection strings in appsettings with connection string to generated databse.
 
-Then you can generate migrations and update the database. In `src\Skoruba.IdentityServer4.Admin` issue:
+Then you can generate migrations and update the database. In `src/Skoruba.IdentityServer4.Admin` issue:
 
 ```
 dotnet ef migrations add DbInit -c AdminDbContext -o Data/Migrations
@@ -40,14 +40,12 @@ Remember to replace those values with your own in `src/Skoruba.IdentityServer4.A
 }
 ```
 
-Follow instructions from [Quickstart deploy to Azure](https://docs.microsoft.com/en-us/visualstudio/deployment/quickstart-deploy-to-azure)
+Then follow instructions from [Quickstart deploy to Azure](https://docs.microsoft.com/en-us/visualstudio/deployment/quickstart-deploy-to-azure) 
 
 
 ### Adding certificate for signing tokens
 
-We also need to upload pfx certificate for signing tokens. If you don't have one here are the steps to do it:
-
-Self-signed certificate is enough for this, we can create it using openssl (remember to write down the password - we will need it later):
+We also need to upload pfx certificate for signing tokens. If you don't have one here are the steps to do it using openssl (remember to write down the password - we will need it later):
 
 ```
 openssl genrsa 2048 > private.pem
