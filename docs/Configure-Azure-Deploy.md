@@ -55,6 +55,8 @@ Or if you're using [Chocolatey](https://chocolatey.org/) you can install above p
 choco install openssl.light 
 ```
 
+To generate pfx certificate:
+
 ```
 openssl genrsa 2048 > private.pem
 openssl req -x509 -new -key private.pem -out public.pem
