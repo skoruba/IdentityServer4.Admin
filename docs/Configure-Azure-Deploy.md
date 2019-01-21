@@ -30,7 +30,7 @@ We will assume in the tutorial that STS and Admin were deployed to:
 
 ### Updating urls
 
-Remember to replace those values with your own in `src\Skoruba.IdentityServer4.Admin\appsettings.json` before first publish -
+Remember to replace those values with your own in `src/Skoruba.IdentityServer4.Admin/appsettings.json` before first publish -
 
 ```json
 "AdminConfiguration": {
@@ -40,7 +40,7 @@ Remember to replace those values with your own in `src\Skoruba.IdentityServer4.A
 }
 ```
 
-Follow instructions from: https://docs.microsoft.com/en-us/visualstudio/deployment/quickstart-deploy-to-azure
+Follow instructions from [Quickstart deploy to Azure](https://docs.microsoft.com/en-us/visualstudio/deployment/quickstart-deploy-to-azure)
 
 
 ### Adding certificate for signing tokens
