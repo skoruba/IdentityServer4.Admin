@@ -78,9 +78,7 @@ Last step before deploy - we need to update `src/Skoruba.IdentityServer4.STS.Ide
 "CertificateConfiguration": {
     "UseTemporarySigningKeyForDevelopment": false,
     "UseSigningCertificateThumbprint": true,
-    "SigningCertificateThumbprint": "<enter here thumbprint from Azure>",
-    "UseValidationCertificateThumbprint": true,
-    "ValidationCertificateThumbprint": "<enter here thumbprint from Azure>"
+    "SigningCertificateThumbprint": "<enter here thumbprint from Azure>"
 }
 ```
 
