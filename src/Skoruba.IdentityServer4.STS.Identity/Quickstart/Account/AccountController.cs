@@ -124,6 +124,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Quickstart.Account
                 var result = await _signInManager.PasswordSignInAsync(userName, model.Password, model.RememberLogin, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
+                    // this means we've succeeded with login but it was not email
+                    // so we need to find the user by username
                     if (user == default(UserIdentity))
                     {
                         user = await _userManager.FindByNameAsync(userName);
