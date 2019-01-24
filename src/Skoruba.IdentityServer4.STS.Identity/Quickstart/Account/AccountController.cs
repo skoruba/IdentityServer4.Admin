@@ -5,6 +5,7 @@
 // Modified by Jan Škoruba
 
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using IdentityModel;
@@ -105,10 +106,24 @@ namespace Skoruba.IdentityServer4.STS.Identity.Quickstart.Account
 
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberLogin, lockoutOnFailure: true);
+                var userName = model.Username;
+                var emailVerifier = new EmailAddressAttribute();
+                // if supplied username is a valid email then try to find match as an email first
+                // remember to have RequireUniqueEmail set to true (by default it is) for this search to work
+                if (emailVerifier.IsValid(userName))
+                {
+                    var emailUser = await _userManager.FindByEmailAsync(userName);
+                    // if match found then replace the email with actual username and proceed
+                    if (emailUser != default(UserIdentity))
+                    {
+                        userName = emailUser.UserName;
+                    }
+                }
+
+                var result = await _signInManager.PasswordSignInAsync(userName, model.Password, model.RememberLogin, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
-                    var user = await _userManager.FindByNameAsync(model.Username);
+                    var user = await _userManager.FindByNameAsync(userName);
                     await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName));
 
                     if (context != null)
