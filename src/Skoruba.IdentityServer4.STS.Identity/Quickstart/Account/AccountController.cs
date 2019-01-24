@@ -106,24 +106,29 @@ namespace Skoruba.IdentityServer4.STS.Identity.Quickstart.Account
 
             if (ModelState.IsValid)
             {
+                var user = default(UserIdentity);
                 var userName = model.Username;
                 var emailVerifier = new EmailAddressAttribute();
                 // if supplied username is a valid email then try to find match as an email first
                 // remember to have RequireUniqueEmail set to true (by default it is) for this search to work
                 if (emailVerifier.IsValid(userName))
                 {
-                    var emailUser = await _userManager.FindByEmailAsync(userName);
+                    user = await _userManager.FindByEmailAsync(userName);
                     // if match found then replace the email with actual username and proceed
-                    if (emailUser != default(UserIdentity))
+                    if (user != default(UserIdentity))
                     {
-                        userName = emailUser.UserName;
+                        userName = user.UserName;
                     }
                 }
 
                 var result = await _signInManager.PasswordSignInAsync(userName, model.Password, model.RememberLogin, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
-                    var user = await _userManager.FindByNameAsync(userName);
+                    if (user == default(UserIdentity))
+                    {
+                        user = await _userManager.FindByNameAsync(userName);
+                    }
+
                     await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName));
 
                     if (context != null)
