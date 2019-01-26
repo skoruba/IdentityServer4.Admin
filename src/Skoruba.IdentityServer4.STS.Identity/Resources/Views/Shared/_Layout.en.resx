@@ -120,6 +120,9 @@
   <data name="ChangePassword" xml:space="preserve">
     <value>Change password</value>
   </data>
+  <data name="ExternalLogins" xml:space="preserve">
+    <value>Manage external logins</value>
+  </data>
   <data name="Footer" xml:space="preserve">
     <value>Skoruba IdentityServer4</value>
   </data>
@@ -146,9 +149,6 @@
   </data>
   <data name="Signout" xml:space="preserve">
     <value>logout</value>
-  </data>
-  <data name="String1" xml:space="preserve">
-    <value />
   </data>
   <data name="Title" xml:space="preserve">
     <value>Skoruba IdentityServer4</value>

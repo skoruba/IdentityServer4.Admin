@@ -1,5 +1,7 @@
 ﻿@using IdentityServer4.Extensions
+@using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity
 @inject IViewLocalizer Localizer
 @{
     string name = null;
@@ -7,6 +9,11 @@
     {
         name = Context.User?.GetDisplayName();
     }
+}
+
+@inject SignInManager<UserIdentity> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
 <!DOCTYPE html>
 <html>
@@ -48,6 +55,12 @@
                     <a class="dropdown-item" asp-controller="Manage" asp-action="Index">@Localizer["ManageProfile"]</a>
                     <a class="dropdown-item" asp-controller="Manage" asp-action="ChangePassword">@Localizer["ChangePassword"]</a>
                     <a class="dropdown-item" asp-controller="Manage" asp-action="PersonalData">@Localizer["ManagePersonalData"]</a>
+                    
+                    @if (hasExternalLogins)
+                    {
+                        <a class="dropdown-item" asp-controller="Manage" asp-action="ExternalLogins">@Localizer["ExternalLogins"]</a>
+                    }
+
                     <a class="dropdown-item" asp-controller="Grants" asp-action="Index">@Localizer["Grants"]</a>
                 </div>
             </div>

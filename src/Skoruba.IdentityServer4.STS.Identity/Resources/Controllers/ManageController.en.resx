@@ -123,6 +123,12 @@
   <data name="DeletePersonalData" xml:space="preserve">
     <value>User with ID '{0}' deleted themselves.</value>
   </data>
+  <data name="ExternalLoginAdded" xml:space="preserve">
+    <value>The external login was added.</value>
+  </data>
+  <data name="ExternalLoginRemoved" xml:space="preserve">
+    <value>The external login was removed.</value>
+  </data>
   <data name="PasswordChanged" xml:space="preserve">
     <value>Your password has been changed.</value>
   </data>
