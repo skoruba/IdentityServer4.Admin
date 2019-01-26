@@ -117,37 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="Alert" xml:space="preserve">
+    <value>Deleting this data will permanently remove your account, and this cannot be recovered.</value>
   </data>
-  <data name="ExternalLogin" xml:space="preserve">
-    <value>External Login</value>
-  </data>
-  <data name="Forgot" xml:space="preserve">
-    <value>Forgot password</value>
-  </data>
-  <data name="InvalidRequest" xml:space="preserve">
-    <value>Invalid login request</value>
-  </data>
-  <data name="LocalLogin" xml:space="preserve">
-    <value>Local Login</value>
-  </data>
-  <data name="Login" xml:space="preserve">
-    <value>Login</value>
-  </data>
-  <data name="NoSchema" xml:space="preserve">
-    <value>There are no login schemes configured for this client.</value>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete data and close my account</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
-  <data name="Remember" xml:space="preserve">
-    <value>Remember my login</value>
-  </data>
   <data name="Title" xml:space="preserve">
-    <value>Login</value>
-  </data>
-  <data name="Username" xml:space="preserve">
-    <value>Username</value>
+    <value>Delete Personal Data</value>
   </data>
 </root>

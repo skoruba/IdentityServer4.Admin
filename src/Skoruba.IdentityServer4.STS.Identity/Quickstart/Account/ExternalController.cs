@@ -67,21 +67,19 @@ namespace Skoruba.IdentityServer4.STS.Identity.Quickstart.Account
                 // windows authentication needs special handling
                 return await ProcessWindowsLoginAsync(returnUrl);
             }
-            else
-            {
-                // start challenge and roundtrip the return URL and scheme 
-                var props = new AuthenticationProperties
-                {
-                    RedirectUri = Url.Action(nameof(Callback)),
-                    Items =
-                    {
-                        { "returnUrl", returnUrl },
-                        { "scheme", provider },
-                    }
-                };
 
-                return Challenge(props, provider);
-            }
+            // start challenge and roundtrip the return URL and scheme 
+            var props = new AuthenticationProperties
+            {
+                RedirectUri = Url.Action(nameof(Callback)),
+                Items =
+                {
+                    { "returnUrl", returnUrl },
+                    { "scheme", provider },
+                }
+            };
+
+            return Challenge(props, provider);
         }
 
         /// <summary>
@@ -268,8 +266,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Quickstart.Account
 
             return user;
         }
-
-
+        
         private void ProcessLoginCallbackForOidc(AuthenticateResult externalResult, List<Claim> localClaims, AuthenticationProperties localSignInProps)
         {
             // if the external system sent a session id claim, copy it over

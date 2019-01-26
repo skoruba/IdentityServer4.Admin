@@ -117,37 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="AskForPersonalDataLog" xml:space="preserve">
+    <value>User with ID '{0}' asked for their personal data.</value>
   </data>
-  <data name="ExternalLogin" xml:space="preserve">
-    <value>External Login</value>
+  <data name="DeletePersonalData" xml:space="preserve">
+    <value>User with ID '{0}' deleted themselves.</value>
   </data>
-  <data name="Forgot" xml:space="preserve">
-    <value>Forgot password</value>
+  <data name="PasswordChanged" xml:space="preserve">
+    <value>Your password has been changed.</value>
   </data>
-  <data name="InvalidRequest" xml:space="preserve">
-    <value>Invalid login request</value>
+  <data name="PasswordChangedLog" xml:space="preserve">
+    <value>User {0} changed their password successfully.</value>
   </data>
-  <data name="LocalLogin" xml:space="preserve">
-    <value>Local Login</value>
+  <data name="PasswordNotCorrect" xml:space="preserve">
+    <value>Password not correct.</value>
   </data>
-  <data name="Login" xml:space="preserve">
-    <value>Login</value>
+  <data name="PasswordSet" xml:space="preserve">
+    <value>Your password has been set.</value>
   </data>
-  <data name="NoSchema" xml:space="preserve">
-    <value>There are no login schemes configured for this client.</value>
+  <data name="ProfileUpdated" xml:space="preserve">
+    <value>Your profile has been updated</value>
   </data>
-  <data name="Password" xml:space="preserve">
-    <value>Password</value>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>Unable to load user with ID {0}.</value>
   </data>
-  <data name="Remember" xml:space="preserve">
-    <value>Remember my login</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>Login</value>
-  </data>
-  <data name="Username" xml:space="preserve">
-    <value>Username</value>
+  <data name="VerificationSent" xml:space="preserve">
+    <value>Verification email sent. Please check your email.</value>
   </data>
 </root>

@@ -117,37 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
   </data>
-  <data name="ExternalLogin" xml:space="preserve">
-    <value>External Login</value>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Phone Number</value>
   </data>
-  <data name="Forgot" xml:space="preserve">
-    <value>Forgot password</value>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
   </data>
-  <data name="InvalidRequest" xml:space="preserve">
-    <value>Invalid login request</value>
-  </data>
-  <data name="LocalLogin" xml:space="preserve">
-    <value>Local Login</value>
-  </data>
-  <data name="Login" xml:space="preserve">
-    <value>Login</value>
-  </data>
-  <data name="NoSchema" xml:space="preserve">
-    <value>There are no login schemes configured for this client.</value>
-  </data>
-  <data name="Password" xml:space="preserve">
-    <value>Password</value>
-  </data>
-  <data name="Remember" xml:space="preserve">
-    <value>Remember my login</value>
+  <data name="SendVerificationEmail" xml:space="preserve">
+    <value>Send verification email</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Login</value>
+    <value>Profile</value>
   </data>
-  <data name="Username" xml:space="preserve">
-    <value>Username</value>
+  <data name="UserName" xml:space="preserve">
+    <value>UserName</value>
   </data>
 </root>
