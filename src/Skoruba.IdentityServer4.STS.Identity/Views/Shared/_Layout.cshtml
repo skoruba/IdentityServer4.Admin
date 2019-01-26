@@ -36,28 +36,19 @@
         <h3 class="menu-logo my-0 mr-md-auto font-weight-normal"><a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Title"]</a></h3>
 
         <!--Menu item -->
-        <div class="menu-item my-2 my-md-0 mr-md-3 dropdown">
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                @Localizer["Settings"]
-            </button>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" asp-area="" asp-controller="Grants" asp-action="Index">@Localizer["Grants"]</a>
-            </div>
-        </div>
-
-        <!--Menu item -->
         @if (User.Identity.IsAuthenticated)
         {
 
             <!--Menu item -->
             <div class="menu-item my-2 my-md-0 mr-md-3 dropdown">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                    @name
+                    @Localizer["Settings"] - @name
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" asp-controller="Manage" asp-action="Index">Manage profile</a>
-                    <a class="dropdown-item" asp-controller="Manage" asp-action="ChangePassword">Change password</a>
-                    <a class="dropdown-item" asp-controller="Manage" asp-action="PersonalData">Personal Data</a>
+                    <a class="dropdown-item" asp-controller="Manage" asp-action="Index">@Localizer["ManageProfile"]</a>
+                    <a class="dropdown-item" asp-controller="Manage" asp-action="ChangePassword">@Localizer["ChangePassword"]</a>
+                    <a class="dropdown-item" asp-controller="Manage" asp-action="PersonalData">@Localizer["ManagePersonalData"]</a>
+                    <a class="dropdown-item" asp-controller="Grants" asp-action="Index">@Localizer["Grants"]</a>
                 </div>
             </div>
 
