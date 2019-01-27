@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using SendGrid;
 using Serilog;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
@@ -62,6 +63,29 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             app.UseReferrerPolicy(options => options.NoReferrer());
         }
 
+        public static void AddEmailSenders(this IServiceCollection services, IConfiguration configuration) 
+        {
+            var sendgridConnectionString = configuration.GetConnectionString(ConfigurationConsts.SendgridConnectionStringKey);
+            var smtpConfiguration = configuration.GetSection(nameof(SmtpConfiguration)).Get<SmtpConfiguration>();
+            var sendgridConfiguration = configuration.GetSection(nameof(SendgridConfiguration)).Get<SendgridConfiguration>();
+
+            if (!string.IsNullOrWhiteSpace(sendgridConnectionString))
+            {
+                services.AddSingleton<ISendGridClient>(_ => new SendGridClient(sendgridConnectionString));
+                services.AddSingleton(sendgridConfiguration);
+                services.AddTransient<IEmailSender, SendgridEmailSender>();
+            }
+            else if (smtpConfiguration != null)
+            {
+                services.AddSingleton(smtpConfiguration);
+                services.AddTransient<IEmailSender, SmtpEmailSender>();
+            } else
+            {
+                services.AddSingleton<IEmailSender, EmailSender>();
+            }
+
+        }
+
         public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfiguration configuration, ILogger logger) where TContext : DbContext
             where TUserIdentity : class where TUserIdentityRole : class
         {
@@ -73,7 +97,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 .AddEntityFrameworkStores<TContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddSingleton<IEmailSender, EmailSender>();
 
             services.Configure<IISOptions>(iis =>
             {

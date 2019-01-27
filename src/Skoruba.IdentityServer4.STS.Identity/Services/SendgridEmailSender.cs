@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Services
 {
-    public class SendGridMailingService : IEmailSender
+    public class SendgridEmailSender : IEmailSender
     {
         private ISendGridClient _client;
         private readonly SendgridConfiguration _configuration;
-        private readonly ILogger<SendGridMailingService> _logger;
+        private readonly ILogger<SendgridEmailSender> _logger;
 
-        public SendGridMailingService(ILogger<SendGridMailingService> logger, ISendGridClient client, SendgridConfiguration configuration)
+        public SendgridEmailSender(ILogger<SendgridEmailSender> logger, ISendGridClient client, SendgridConfiguration configuration)
         {
             _logger = logger;
             _client = client;
