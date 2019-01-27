@@ -70,7 +70,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 
             services
                 .AddSingleton(loginConfiguration)
-                .AddScoped<UserExtractor>()
+                .AddScoped<UserResolver>()
                 .AddIdentity<TUserIdentity, TUserIdentityRole>( o => {
                 o.User.RequireUniqueEmail = true;
             })

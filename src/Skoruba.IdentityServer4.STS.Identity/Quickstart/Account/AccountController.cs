@@ -27,7 +27,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Quickstart.Account
     [AllowAnonymous]
     public class AccountController : Controller
     {
-        private readonly UserExtractor _extractor;
+        private readonly UserResolver _userResolver;
         private readonly UserManager<UserIdentity> _userManager;
         private readonly SignInManager<UserIdentity> _signInManager;
         private readonly IIdentityServerInteractionService _interaction;
@@ -36,7 +36,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Quickstart.Account
         private readonly IEventService _events;
 
         public AccountController(
-            UserExtractor extractor,
+            UserResolver userResolver,
             UserManager<UserIdentity> userManager,
             SignInManager<UserIdentity> signInManager,
             IIdentityServerInteractionService interaction,
@@ -44,7 +44,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Quickstart.Account
             IAuthenticationSchemeProvider schemeProvider,
             IEventService events)
         {
-            _extractor = extractor;
+            _userResolver = userResolver;
             _userManager = userManager;
             _signInManager = signInManager;
             _interaction = interaction;
@@ -110,7 +110,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Quickstart.Account
 
             if (ModelState.IsValid)
             {
-                var user = await _extractor.GetUserAsync(model.Username);
+                var user = await _userResolver.GetUserAsync(model.Username);
 
                 if (user != default(UserIdentity))
                 {
