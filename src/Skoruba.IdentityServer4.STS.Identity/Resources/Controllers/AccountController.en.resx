@@ -120,4 +120,7 @@
   <data name="EmailNotFound" xml:space="preserve">
     <value>The user does not exist or is not confirmed</value>
   </data>
+  <data name="ErrorExternalProvider" xml:space="preserve">
+    <value>Error from external provider: {0}</value>
+  </data>
 </root>

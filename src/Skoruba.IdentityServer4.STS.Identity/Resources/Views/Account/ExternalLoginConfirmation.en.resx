@@ -117,40 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ChangePassword" xml:space="preserve">
-    <value>Change password</value>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
   </data>
-  <data name="ExternalLogins" xml:space="preserve">
-    <value>My external logins</value>
+  <data name="Info" xml:space="preserve">
+    <value>You've successfully authenticated with {0}.
+        Please enter an email address for this site below and click the Register button to finish
+        logging in.</value>
   </data>
-  <data name="Footer" xml:space="preserve">
-    <value>Skoruba IdentityServer4</value>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
   </data>
-  <data name="FooterCopyright" xml:space="preserve">
-    <value>© 2018</value>
-  </data>
-  <data name="Grants" xml:space="preserve">
-    <value>Grants</value>
-  </data>
-  <data name="ManagePersonalData" xml:space="preserve">
-    <value>My personal data</value>
-  </data>
-  <data name="ManageProfile" xml:space="preserve">
-    <value>My profile</value>
-  </data>
-  <data name="Menu" xml:space="preserve">
-    <value>Menu</value>
-  </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>IdentityServer4</value>
-  </data>
-  <data name="Settings" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="Signout" xml:space="preserve">
-    <value>logout</value>
+  <data name="SubTitle" xml:space="preserve">
+    <value>Associate your {0} account.</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Skoruba IdentityServer4</value>
+    <value>Register</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>UserName</value>
   </data>
 </root>

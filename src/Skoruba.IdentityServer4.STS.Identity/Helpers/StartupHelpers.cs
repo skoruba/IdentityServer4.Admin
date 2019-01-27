@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Reflection;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -16,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Serilog;
+using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using Skoruba.IdentityServer4.STS.Identity.Services;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
@@ -65,6 +65,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfiguration configuration, ILogger logger) where TContext : DbContext
             where TUserIdentity : class where TUserIdentityRole : class
         {
+
             var connectionString = configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey);
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
@@ -80,29 +81,58 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 iis.AutomaticAuthentication = false;
             });
 
+            var authenticationBuilder = services.AddAuthentication();
+
+            AddExternalProviders(authenticationBuilder, configuration);
+
+            AddIdentityServer<TContext, TUserIdentity, TUserIdentityRole>(services, configuration, logger, connectionString, migrationsAssembly);
+        }
+
+        private static void AddIdentityServer<TContext, TUserIdentity, TUserIdentityRole>(IServiceCollection services,
+            IConfiguration configuration, ILogger logger, string connectionString, string migrationsAssembly)
+            where TContext : DbContext where TUserIdentity : class where TUserIdentityRole : class
+        {
             var builder = services.AddIdentityServer(options =>
-            {
-                options.Events.RaiseErrorEvents = true;
-                options.Events.RaiseInformationEvents = true;
-                options.Events.RaiseFailureEvents = true;
-                options.Events.RaiseSuccessEvents = true;
-            })
+                {
+                    options.Events.RaiseErrorEvents = true;
+                    options.Events.RaiseInformationEvents = true;
+                    options.Events.RaiseFailureEvents = true;
+                    options.Events.RaiseSuccessEvents = true;
+                })
                 .AddAspNetIdentity<TUserIdentity>()
                 .AddConfigurationStore(options =>
                 {
-                    options.ConfigureDbContext = b => b.UseSqlServer(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
+                    options.ConfigureDbContext = b =>
+                        b.UseSqlServer(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
                 })
                 .AddOperationalStore(options =>
                 {
-                    options.ConfigureDbContext = b => b.UseSqlServer(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
+                    options.ConfigureDbContext = b =>
+                        b.UseSqlServer(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
                     options.EnableTokenCleanup = true;
 #if DEBUG
                     options.TokenCleanupInterval = 15;
-#endif                
+#endif
                 });
 
             builder.AddCustomSigningCredential(configuration, logger);
             builder.AddCustomValidationKey(configuration, logger);
+        }
+
+        private static void AddExternalProviders(AuthenticationBuilder authenticationBuilder,
+            IConfiguration configuration)
+        {
+            var externalProviderConfiguration = configuration.GetSection(nameof(ExternalProvidersConfiguration)).Get<ExternalProvidersConfiguration>();
+
+            if (externalProviderConfiguration.UseGitHubProvider)
+            {
+                authenticationBuilder.AddGitHub(options =>
+                {
+                    options.ClientId = externalProviderConfiguration.GitHubClientId;
+                    options.ClientSecret = externalProviderConfiguration.GitHubClientSecret;
+                    options.Scope.Add("user:email");
+                });
+            }
         }
 
         public static void AddDbContexts<TContext>(this IServiceCollection services, IConfiguration configuration) where TContext : DbContext

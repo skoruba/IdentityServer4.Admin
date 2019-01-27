@@ -341,7 +341,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             var result = await _userManager.AddLoginAsync(user, info);
             if (!result.Succeeded)
             {
-                throw new ApplicationException($"Unexpected error occurred adding external login for user with ID '{user.Id}'.");
+                AddErrors(result);
+                return View("LinkLoginFailure");
             }
 
             // Clear the existing external cookie to ensure a clean login process
