@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
+using Skoruba.IdentityServer4.STS.Identity.Helpers;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Quickstart.Account
 {
@@ -26,6 +27,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Quickstart.Account
     [AllowAnonymous]
     public class AccountController : Controller
     {
+        private readonly UserExtractor _extractor;
         private readonly UserManager<UserIdentity> _userManager;
         private readonly SignInManager<UserIdentity> _signInManager;
         private readonly IIdentityServerInteractionService _interaction;
@@ -34,6 +36,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Quickstart.Account
         private readonly IEventService _events;
 
         public AccountController(
+            UserExtractor extractor,
             UserManager<UserIdentity> userManager,
             SignInManager<UserIdentity> signInManager,
             IIdentityServerInteractionService interaction,
@@ -41,6 +44,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Quickstart.Account
             IAuthenticationSchemeProvider schemeProvider,
             IEventService events)
         {
+            _extractor = extractor;
             _userManager = userManager;
             _signInManager = signInManager;
             _interaction = interaction;
@@ -106,60 +110,44 @@ namespace Skoruba.IdentityServer4.STS.Identity.Quickstart.Account
 
             if (ModelState.IsValid)
             {
-                var user = default(UserIdentity);
-                var userName = model.Username;
-                var emailVerifier = new EmailAddressAttribute();
-                // if supplied username is a valid email then try to find match as an email first
-                // remember to have RequireUniqueEmail set to true (by default it is) for this search to work
-                if (emailVerifier.IsValid(userName))
+                var user = await _extractor.GetUserAsync(model.Username);
+
+                if (user != default(UserIdentity))
                 {
-                    user = await _userManager.FindByEmailAsync(userName);
-                    // if match found then replace the email with actual username and proceed
-                    if (user != default(UserIdentity))
+                    var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberLogin, lockoutOnFailure: true);
+                    if (result.Succeeded)
                     {
-                        userName = user.UserName;
-                    }
-                }
+                        await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName));
 
-                var result = await _signInManager.PasswordSignInAsync(userName, model.Password, model.RememberLogin, lockoutOnFailure: true);
-                if (result.Succeeded)
-                {
-                    // this means we've succeeded with login but it was not email
-                    // so we need to find the user by username
-                    if (user == default(UserIdentity))
-                    {
-                        user = await _userManager.FindByNameAsync(userName);
-                    }
-
-                    await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName));
-
-                    if (context != null)
-                    {
-                        if (await _clientStore.IsPkceClientAsync(context.ClientId))
+                        if (context != null)
                         {
-                            // if the client is PKCE then we assume it's native, so this change in how to
-                            // return the response is for better UX for the end user.
-                            return View("Redirect", new RedirectViewModel { RedirectUrl = model.ReturnUrl });
+                            if (await _clientStore.IsPkceClientAsync(context.ClientId))
+                            {
+                                // if the client is PKCE then we assume it's native, so this change in how to
+                                // return the response is for better UX for the end user.
+                                return View("Redirect", new RedirectViewModel { RedirectUrl = model.ReturnUrl });
+                            }
+
+                            // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
+                            return Redirect(model.ReturnUrl);
                         }
 
-                        // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
-                        return Redirect(model.ReturnUrl);
+                        // request for a local page
+                        if (Url.IsLocalUrl(model.ReturnUrl))
+                        {
+                            return Redirect(model.ReturnUrl);
+                        }
+                        else if (string.IsNullOrEmpty(model.ReturnUrl))
+                        {
+                            return Redirect("~/");
+                        }
+                        else
+                        {
+                            // user might have clicked on a malicious link - should be logged
+                            throw new Exception("invalid return URL");
+                        }
                     }
 
-                    // request for a local page
-                    if (Url.IsLocalUrl(model.ReturnUrl))
-                    {
-                        return Redirect(model.ReturnUrl);
-                    }
-                    else if (string.IsNullOrEmpty(model.ReturnUrl))
-                    {
-                        return Redirect("~/");
-                    }
-                    else
-                    {
-                        // user might have clicked on a malicious link - should be logged
-                        throw new Exception("invalid return URL");
-                    }
                 }
 
                 await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials"));

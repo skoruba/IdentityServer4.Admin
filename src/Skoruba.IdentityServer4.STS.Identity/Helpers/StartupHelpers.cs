@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Serilog;
+using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
@@ -64,9 +65,15 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TUserIdentity : class where TUserIdentityRole : class
         {
             var connectionString = configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey);
+            var loginConfiguration = configuration.GetSection(nameof(LoginConfiguration)).Get<LoginConfiguration>();
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
-            services.AddIdentity<TUserIdentity, TUserIdentityRole>()
+            services
+                .AddSingleton(loginConfiguration)
+                .AddScoped<UserExtractor>()
+                .AddIdentity<TUserIdentity, TUserIdentityRole>( o => {
+                o.User.RequireUniqueEmail = true;
+            })
                 .AddEntityFrameworkStores<TContext>()
                 .AddDefaultTokenProviders();
 
