@@ -123,4 +123,13 @@
   <data name="ErrorExternalProvider" xml:space="preserve">
     <value>Error from external provider: {0}</value>
   </data>
+  <data name="InvalidAuthenticatorCode" xml:space="preserve">
+    <value>Invalid authenticator code.</value>
+  </data>
+  <data name="InvalidRecoveryCode" xml:space="preserve">
+    <value>Invalid recovery code entered.</value>
+  </data>
+  <data name="Unable2FA" xml:space="preserve">
+    <value>Unable to load two-factor authentication user.</value>
+  </data>
 </root>

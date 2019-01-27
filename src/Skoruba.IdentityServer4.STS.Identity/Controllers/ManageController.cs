@@ -22,17 +22,22 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ManageController> _logger;
         private readonly IStringLocalizer<ManageController> _localizer;
+        private readonly UrlEncoder _urlEncoder;
+
+        private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
+        private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
         [TempData]
         public string StatusMessage { get; set; }
 
-        public ManageController(UserManager<UserIdentity> userManager, SignInManager<UserIdentity> signInManager, IEmailSender emailSender, ILogger<ManageController> logger, IStringLocalizer<ManageController> localizer)
+        public ManageController(UserManager<UserIdentity> userManager, SignInManager<UserIdentity> signInManager, IEmailSender emailSender, ILogger<ManageController> logger, IStringLocalizer<ManageController> localizer, UrlEncoder urlEncoder)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
             _localizer = localizer;
+            _urlEncoder = urlEncoder;
         }
 
         [HttpGet]
@@ -78,7 +83,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 var setEmailResult = await _userManager.SetEmailAsync(user, model.Email);
                 if (!setEmailResult.Succeeded)
                 {
-                    throw new ApplicationException($"Unexpected error occurred setting email for user with ID '{user.Id}'.");
+                    throw new ApplicationException(_localizer["ErrorSettingEmail", user.Id]);
                 }
             }
 
@@ -88,7 +93,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, model.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
-                    throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
+                    throw new ApplicationException(_localizer["ErrorSettingPhone", user.Id]);
                 }
             }
 
@@ -291,7 +296,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             var userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)
             {
-                throw new InvalidOperationException($"Unexpected error occurred deleting user with ID '{userId}'.");
+                throw new InvalidOperationException(_localizer["ErrorDeletingUser", user.Id]);
             }
 
             await _signInManager.SignOutAsync();
@@ -314,7 +319,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             var result = await _userManager.RemoveLoginAsync(user, model.LoginProvider, model.ProviderKey);
             if (!result.Succeeded)
             {
-                throw new ApplicationException($"Unexpected error occurred removing external login for user with ID '{user.Id}'.");
+                throw new ApplicationException(_localizer["ErrorRemovingExternalLogin", user.Id]);
             }
 
             await _signInManager.RefreshSignInAsync(user);
@@ -335,7 +340,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             var info = await _signInManager.GetExternalLoginInfoAsync(user.Id.ToString());
             if (info == null)
             {
-                throw new ApplicationException($"Unexpected error occurred loading external login info for user with ID '{user.Id}'.");
+                throw new ApplicationException(_localizer["ErrorLoadingExternalLogin", user.Id]);
             }
 
             var result = await _userManager.AddLoginAsync(user, info);
@@ -390,12 +395,272 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             return new ChallengeResult(provider, properties);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> GenerateRecoveryCodes()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
+            }
+
+            if (!user.TwoFactorEnabled)
+            {
+                AddError(_localizer["ErrorGenerateCodesWithout2FA"]);
+                return View();
+            }
+
+            var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
+
+            _logger.LogInformation(_localizer["UserGenerated2FACodes", user.Id]);
+
+            var model = new ShowRecoveryCodesViewModel { RecoveryCodes = recoveryCodes.ToArray() };
+
+            return View(nameof(ShowRecoveryCodes), model);
+        }
+
+        [HttpGet]
+        public IActionResult ShowRecoveryCodes()
+        {
+            var recoveryCodes = (string[])TempData[RecoveryCodesKey];
+            if (recoveryCodes == null)
+            {
+                return RedirectToAction(nameof(TwoFactorAuthentication));
+            }
+
+            var model = new ShowRecoveryCodesViewModel { RecoveryCodes = recoveryCodes };
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> TwoFactorAuthentication()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
+            }
+
+            var model = new TwoFactorAuthenticationViewModel
+            {
+                HasAuthenticator = await _userManager.GetAuthenticatorKeyAsync(user) != null,
+                Is2faEnabled = user.TwoFactorEnabled,
+                RecoveryCodesLeft = await _userManager.CountRecoveryCodesAsync(user),
+                IsMachineRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user)
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgetTwoFactorClient()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
+            }
+
+            await _signInManager.ForgetTwoFactorClientAsync();
+
+            StatusMessage = _localizer["SuccessForgetBrowser2FA"];
+
+            return RedirectToAction(nameof(TwoFactorAuthentication));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Disable2faWarning()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
+            }
+
+            if (!user.TwoFactorEnabled)
+            {
+                throw new ApplicationException(_localizer["ErrorDisable2FA", user.Id]);
+            }
+
+            return View(nameof(Disable2fa));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Disable2fa()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
+            }
+
+            var disable2faResult = await _userManager.SetTwoFactorEnabledAsync(user, false);
+            if (!disable2faResult.Succeeded)
+            {
+                throw new ApplicationException(_localizer["ErrorDisable2FA", user.Id]);
+            }
+
+            _logger.LogInformation(_localizer["SuccessDisabled2FA", user.Id]);
+
+            return RedirectToAction(nameof(TwoFactorAuthentication));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetAuthenticator()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
+            }
+
+            await _userManager.SetTwoFactorEnabledAsync(user, false);
+            await _userManager.ResetAuthenticatorKeyAsync(user);
+            _logger.LogInformation(_localizer["SuccessResetAuthenticationKey", user.Id]);
+
+            return RedirectToAction(nameof(EnableAuthenticator));
+        }
+
+        [HttpGet]
+        public IActionResult ResetAuthenticatorWarning()
+        {
+            return View(nameof(ResetAuthenticator));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EnableAuthenticator()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
+            }
+
+            var model = new EnableAuthenticatorViewModel();
+            await LoadSharedKeyAndQrCodeUriAsync(user, model);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EnableAuthenticator(EnableAuthenticatorViewModel model)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                await LoadSharedKeyAndQrCodeUriAsync(user, model);
+                return View(model);
+            }
+            
+            var verificationCode = model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
+
+            var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
+                user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
+
+            if (!is2faTokenValid)
+            {
+                ModelState.AddModelError(_localizer["ErrorCode"], _localizer["InvalidVerificationCode"]);
+                await LoadSharedKeyAndQrCodeUriAsync(user, model);
+                return View(model);
+            }
+
+            await _userManager.SetTwoFactorEnabledAsync(user, true);
+            var userId = await _userManager.GetUserIdAsync(user);
+
+            _logger.LogInformation(_localizer["SuccessUserEnabled2FA"], userId);
+            
+            StatusMessage = _localizer["AuthenticatorVerified"];
+
+            if (await _userManager.CountRecoveryCodesAsync(user) == 0)
+            {
+                var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
+                TempData[RecoveryCodesKey] = recoveryCodes.ToArray();
+
+                return RedirectToAction(nameof(ShowRecoveryCodes));
+            }
+
+            return RedirectToAction(nameof(TwoFactorAuthentication));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GenerateRecoveryCodesWarning()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
+            }
+
+            if (!user.TwoFactorEnabled)
+            {
+                throw new ApplicationException(_localizer["Error2FANotEnabled", user.Id]);
+            }
+
+            return View(nameof(GenerateRecoveryCodes));
+        }
+
+        private async Task LoadSharedKeyAndQrCodeUriAsync(UserIdentity user, EnableAuthenticatorViewModel model)
+        {
+            var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
+            if (string.IsNullOrEmpty(unformattedKey))
+            {
+                await _userManager.ResetAuthenticatorKeyAsync(user);
+                unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
+            }
+
+            model.SharedKey = FormatKey(unformattedKey);
+            model.AuthenticatorUri = GenerateQrCodeUri(user.Email, unformattedKey);
+        }
+
+        private string FormatKey(string unformattedKey)
+        {
+            var result = new StringBuilder();
+            var currentPosition = 0;
+
+            while (currentPosition + 4 < unformattedKey.Length)
+            {
+                result.Append(unformattedKey.Substring(currentPosition, 4)).Append(" ");
+                currentPosition += 4;
+            }
+
+            if (currentPosition < unformattedKey.Length)
+            {
+                result.Append(unformattedKey.Substring(currentPosition));
+            }
+
+            return result.ToString().ToLowerInvariant();
+        }
+
+        private string GenerateQrCodeUri(string email, string unformattedKey)
+        {
+            return string.Format(
+                AuthenticatorUriFormat,
+                _urlEncoder.Encode("Skoruba.IdentityServer4.STS.Identity"),
+                _urlEncoder.Encode(email),
+                unformattedKey);
+        }
+
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }
+        }
+
+        private void AddError(string description, string title = "")
+        {
+            ModelState.AddModelError(title, description);
         }
     }
 }
