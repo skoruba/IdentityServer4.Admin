@@ -26,10 +26,25 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             {
                 return await _userManager.FindByNameAsync(login);
             }
-            else if ((_policy == LoginResolutionPolicy.Email) ||
-                ((_policy == LoginResolutionPolicy.EmailOrUsername) && emailVerifier.IsValid(login)))
+            else if (_policy == LoginResolutionPolicy.Email)
             {
                 return await _userManager.FindByEmailAsync(login);
+            }
+            else if ((_policy == LoginResolutionPolicy.EmailOrUsername) && emailVerifier.IsValid(login))
+            {
+                var user = await _userManager.FindByEmailAsync(login);
+
+                if (user != default(UserIdentity))
+                {
+                    return user;
+                }
+
+                user = await _userManager.FindByNameAsync(login);
+
+                if (user != default(UserIdentity))
+                {
+                    return user;
+                }
             }
 
             return null;
