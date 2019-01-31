@@ -63,6 +63,11 @@ Project template options:
   - Skoruba.IdentityServer4.Admin
   - Skoruba.IdentityServer4.STS.Identity
 
+## Configuration of Administration for Deployment
+
+- [Configuration of Admin for deploy on Azure](docs/Configure-Azure-Deploy.md)
+- [Configuration of Admin on Ubuntu with PostgreSQL database](docs/Configure-Ubuntu-PostgreSQL-Tutorial.md)
+
 ## Administration UI preview
 
 - This administration uses bootstrap 4
