@@ -94,7 +94,6 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts
             {
                 log.ToTable(TableConst.TableConsts.Logging);
                 log.HasKey(x => x.Id);
-                log.Property(x => x.Properties).HasColumnType("xml");
                 log.Property(x => x.Level).HasMaxLength(128);
             });
         }
