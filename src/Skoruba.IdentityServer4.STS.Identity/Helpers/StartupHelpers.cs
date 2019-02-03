@@ -63,7 +63,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             app.UseReferrerPolicy(options => options.NoReferrer());
         }
 
-        public static void AddEmailSenders(this IServiceCollection services, IConfiguration configuration) 
+        public static void AddEmailSenders(this IServiceCollection services, IConfiguration configuration)
         {
             var sendgridConnectionString = configuration.GetConnectionString(ConfigurationConsts.SendgridConnectionStringKey);
             var smtpConfiguration = configuration.GetSection(nameof(SmtpConfiguration)).Get<SmtpConfiguration>();
@@ -75,15 +75,15 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 services.AddSingleton(sendgridConfiguration);
                 services.AddTransient<IEmailSender, SendgridEmailSender>();
             }
-            else if (smtpConfiguration != null)
+            else if (smtpConfiguration != null && !string.IsNullOrWhiteSpace(smtpConfiguration.Host))
             {
                 services.AddSingleton(smtpConfiguration);
                 services.AddTransient<IEmailSender, SmtpEmailSender>();
-            } else
+            }
+            else
             {
                 services.AddSingleton<IEmailSender, EmailSender>();
             }
-
         }
 
         public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfiguration configuration, ILogger logger) where TContext : DbContext

@@ -16,12 +16,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.Services
         {
             _logger = logger;
             _configuration = configuration;
-            _client = new SmtpClient();
-            _client.Host = _configuration.Host;
-            _client.Port = _configuration.Port;
-            _client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            _client.EnableSsl = _configuration.UseSSL;
-            _client.Credentials = new System.Net.NetworkCredential(_configuration.Login, _configuration.Password);
+            _client = new SmtpClient
+            {
+                Host = _configuration.Host,
+                Port = _configuration.Port,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                EnableSsl = _configuration.UseSSL,
+                Credentials = new System.Net.NetworkCredential(_configuration.Login, _configuration.Password)
+            };
         }
 
         public Task SendEmailAsync(string email, string subject, string htmlMessage)
