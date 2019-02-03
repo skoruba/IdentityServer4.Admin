@@ -2,7 +2,7 @@
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity
 {
-    public class UserIdentityUserLogin : IdentityUserLogin<int>
+    public class UserIdentityUserLogin : IdentityUserLogin<string>
     {
         
     }

@@ -49,14 +49,14 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             return userChangePassword;
         }
 
-        public static UserDto<TKey> GenerateRandomUser(TKey id)
+        public static UserDto<TKey> GenerateRandomUser(TKey id = default(TKey))        
         {
             var user = GetUserFaker(id).Generate();
 
             return user;
         }
 
-        public static RoleDto<TKey> GenerateRandomRole(TKey id)
+        public static RoleDto<TKey> GenerateRandomRole(TKey id = default(TKey))
         {
             var role = GetRoleFaker(id).Generate();
 
@@ -74,7 +74,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             return userClaimFaker;
         }
 
-        public static UserClaimsDto<TKey> GenerateRandomUserClaim(int id, TKey userId)
+        public static UserClaimsDto<TKey> GenerateRandomUserClaim(int id, TKey userId = default(TKey))
         {
             var userClaim = GetUserClaimsFaker(id, userId).Generate();
 
