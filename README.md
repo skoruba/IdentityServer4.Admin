@@ -261,15 +261,17 @@ It is possible to define the configuration according the client type - by defaul
   - [x] English
   - [x] Chinese
   - [x] Russian
+- [x] Manage profile
+- [x] Password reset
+- [x] Account linking
+- [x] Two-Factor Authentication (2FA)
 
 ### 1.1.0:
 
 - [ ] Add audit logs to track changes ([#61](https://github.com/skoruba/IdentityServer4.Admin/issues/61))
 - [ ] Create a project template using dotnet CLI - `dotnet new template`
   - [ ] Second template: The administration of the IdentityServer4 (without Asp.Net Core Identity) ([#79](https://github.com/skoruba/IdentityServer4.Admin/issues/79))
-- [ ] User registration / Password reset
-- [ ] Account linking
-- [ ] Manage profile
+- [ ] User registration
 
 ### 2.0.0:
 
