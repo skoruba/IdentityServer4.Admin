@@ -22,10 +22,12 @@
             </div>
             <div class="form-group">
                 <div class="checkbox">
-                    <label asp-for="RememberMachine">
-                        <input asp-for="RememberMachine" />
+                    <div>                        
                         @Localizer["Remember"]
-                    </label>
+                    </div>
+                    <toggle-button>
+                        <input asp-for="RememberMachine" />
+                    </toggle-button>
                 </div>
             </div>
             <div class="form-group">
