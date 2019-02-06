@@ -13,7 +13,7 @@ using TableConst = Skoruba.IdentityServer4.Admin.EntityFramework.Constants;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts
 {
-    public class AdminDbContext : IdentityDbContext<UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>,
+    public class AdminDbContext : IdentityDbContext<UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>,
         IAdminConfigurationDbContext, IAdminLogDbContext, IAdminPersistedGrantDbContext, IAdminPersistedGrantIdentityDbContext
     {
         private readonly ConfigurationStoreOptions _storeOptions;
