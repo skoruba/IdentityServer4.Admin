@@ -14,9 +14,14 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 {
     [Authorize(Policy = AuthorizationConsts.AdministrationPolicy)]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
-    public class IdentityController : BaseIdentityController<AdminDbContext, UserDto<int>, int, RoleDto<int>, int, int, int, UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>
+    public class IdentityController : BaseIdentityController<AdminDbContext, UserDto<string>, string, RoleDto<string>, string, string, string, UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
+        UsersDto<UserDto<string>, string>,RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>,string,string>,UserClaimsDto<string>,
+        UserProviderDto<string>,UserProvidersDto<string>,UserChangePasswordDto<string>,RoleClaimsDto<string>>
     {
-        public IdentityController(IIdentityService<AdminDbContext, UserDto<int>, int, RoleDto<int>, int, int, int, UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> identityService, ILogger<ConfigurationController> logger, IStringLocalizer<IdentityController> localizer)
+        public IdentityController(IIdentityService<AdminDbContext, UserDto<string>, string, RoleDto<string>, string, string, string, UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
+                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,  UserClaimsDto<string>,
+                UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>, RoleClaimsDto<string>> identityService, 
+            ILogger<ConfigurationController> logger, IStringLocalizer<IdentityController> localizer)
             : base(identityService, logger, localizer)
         {
         }

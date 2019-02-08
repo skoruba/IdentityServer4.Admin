@@ -13,7 +13,9 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 
 namespace Skoruba.IdentityServer4.Admin.Controllers
 {
-    public class BaseIdentityController<TIdentityDbContext, TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> : BaseController
+    public class BaseIdentityController<TIdentityDbContext, TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
+            TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
+            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto> : BaseController
         where TIdentityDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
         where TUserDto : UserDto<TUserDtoKey>, new()
         where TRoleDto : RoleDto<TRoleDtoKey>, new()
@@ -27,11 +29,23 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         where TUserToken : IdentityUserToken<TKey>
         where TRoleDtoKey : IEquatable<TRoleDtoKey>
         where TUserDtoKey : IEquatable<TUserDtoKey>
+        where TUsersDto : UsersDto<TUserDto, TUserDtoKey>
+        where TRolesDto : RolesDto<TRoleDto, TRoleDtoKey>
+        where TUserRolesDto : UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey>
+        where TUserClaimsDto : UserClaimsDto<TUserDtoKey>
+        where TUserProviderDto : UserProviderDto<TUserDtoKey>
+        where TUserProvidersDto : UserProvidersDto<TUserDtoKey>
+        where TUserChangePasswordDto : UserChangePasswordDto<TUserDtoKey>
+        where TRoleClaimsDto : RoleClaimsDto<TRoleDtoKey>
     {
-        private readonly IIdentityService<TIdentityDbContext, TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> _identityService;
+        private readonly IIdentityService<TIdentityDbContext, TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
+            TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
+            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto> _identityService;
         private readonly IStringLocalizer<IdentityController> _localizer;
 
-        public BaseIdentityController(IIdentityService<TIdentityDbContext, TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> identityService,
+        public BaseIdentityController(IIdentityService<TIdentityDbContext, TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
+                TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
+                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto> identityService,
             ILogger<ConfigurationController> logger,
             IStringLocalizer<IdentityController> localizer) : base(logger)
         {
@@ -156,7 +170,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UserRoles(UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey> role)
+        public async Task<IActionResult> UserRoles(TUserRolesDto role)
         {
             await _identityService.CreateUserRoleAsync(role);
             SuccessNotification(_localizer["SuccessCreateUserRole"], _localizer["SuccessTitle"]);
@@ -186,7 +200,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UserRolesDelete(UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey> role)
+        public async Task<IActionResult> UserRolesDelete(TUserRolesDto role)
         {
             await _identityService.DeleteUserRoleAsync(role);
             SuccessNotification(_localizer["SuccessDeleteUserRole"], _localizer["SuccessTitle"]);
@@ -196,7 +210,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UserClaims(UserClaimsDto<TUserDtoKey> claim)
+        public async Task<IActionResult> UserClaims(TUserClaimsDto claim)
         {
             if (!ModelState.IsValid)
             {
@@ -237,7 +251,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UserClaimsDelete(UserClaimsDto<TUserDtoKey> claim)
+        public async Task<IActionResult> UserClaimsDelete(TUserClaimsDto claim)
         {
             await _identityService.DeleteUserClaimsAsync(claim);
             SuccessNotification(_localizer["SuccessDeleteUserClaims"], _localizer["SuccessTitle"]);
@@ -268,7 +282,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UserProvidersDelete(UserProviderDto<TUserDtoKey> provider)
+        public async Task<IActionResult> UserProvidersDelete(TUserProviderDto provider)
         {
             await _identityService.DeleteUserProvidersAsync(provider);
             SuccessNotification(_localizer["SuccessDeleteUserProviders"], _localizer["SuccessTitle"]);
@@ -289,7 +303,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UserChangePassword(UserChangePasswordDto<TUserDtoKey> userPassword)
+        public async Task<IActionResult> UserChangePassword(TUserChangePasswordDto userPassword)
         {
             if (!ModelState.IsValid)
             {
@@ -315,7 +329,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RoleClaims(RoleClaimsDto<TRoleDtoKey> claim)
+        public async Task<IActionResult> RoleClaims(TRoleClaimsDto claim)
         {
             if (!ModelState.IsValid)
             {
@@ -352,7 +366,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RoleClaimsDelete(RoleClaimsDto<TRoleDtoKey> claim)
+        public async Task<IActionResult> RoleClaimsDelete(TRoleClaimsDto claim)
         {
             await _identityService.DeleteRoleClaimsAsync(claim);
             SuccessNotification(_localizer["SuccessDeleteRoleClaims"], _localizer["SuccessTitle"]);
