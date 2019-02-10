@@ -464,9 +464,6 @@ label.radio-img > h3, label > h4 {
   margin-top: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid lightgray; }
-  .grants-container .grant img {
-    /*width: 100px;
-			height: 100px;*/ }
   .grants-container .grant .clientname {
     font-size: 140%;
     font-weight: bold; }
