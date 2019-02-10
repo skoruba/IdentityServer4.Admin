@@ -54,21 +54,30 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         private IIdentityService<AdminDbContext, UserDto<string>, string, RoleDto<string>, string, string, string, UserIdentity,
             UserIdentityRole, string,
             UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim,
-            UserIdentityUserToken> GetIdentityService(IIdentityRepository<AdminDbContext, string, string, UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> identityRepository,
+            UserIdentityUserToken,
+            UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
+            UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
+            RoleClaimsDto<string>> GetIdentityService(IIdentityRepository<AdminDbContext, string, string, UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> identityRepository,
             IIdentityServiceResources identityServiceResources,
             IMapper mapper)
         {
             return new IdentityService<AdminDbContext, UserDto<string>, string, RoleDto<string>, string, string, string, UserIdentity,
                 UserIdentityRole, string,
                 UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim,
-                UserIdentityUserToken>(identityRepository, identityServiceResources, mapper);
+                UserIdentityUserToken,
+                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
+                UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
+                RoleClaimsDto<string>>(identityRepository, identityServiceResources, mapper);
         }
 
         private IMapper GetMapper()
         {
             return new MapperConfiguration(cfg => cfg.AddProfile<IdentityMapperProfile<UserDto<string>, string, RoleDto<string>, string, UserIdentity, UserIdentityRole, string,
                         UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim,
-                        UserIdentityUserToken>
+                        UserIdentityUserToken,
+                        UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
+                        UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>,
+                        RoleClaimsDto<string>>
                 >())
                 .CreateMapper();
         }
@@ -665,4 +674,3 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         }
     }
 }
-

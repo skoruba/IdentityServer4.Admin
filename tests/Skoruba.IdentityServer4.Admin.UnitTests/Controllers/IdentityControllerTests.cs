@@ -33,11 +33,17 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
     {
         private IIdentityService<AdminDbContext, UserDto<string>, string, RoleDto<string>, string, string, string,
             UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
-            UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> GetIdentityService(IServiceProvider services)
+            UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
+            UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
+            UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
+            RoleClaimsDto<string>> GetIdentityService(IServiceProvider services)
         {
             return services.GetRequiredService<IIdentityService<AdminDbContext, UserDto<string>, string, RoleDto<string>, string, string, string,
                 UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
-                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>>();
+                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
+                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
+                UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
+                RoleClaimsDto<string>>>();
         }
 
 
@@ -569,7 +575,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             services.AddAdminAspNetIdentityServices<AdminDbContext, UserDto<string>, string, RoleDto<string>, string, string, string,
                 UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
-                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>();
+                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
+                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
+                UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
+                RoleClaimsDto<string>>();
 
             services.AddIdentity<UserIdentity, UserIdentityRole>()
                 .AddEntityFrameworkStores<AdminDbContext>()
