@@ -49,7 +49,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             return userChangePassword;
         }
 
-        public static UserDto<TKey> GenerateRandomUser(TKey id = default(TKey))
+        public static UserDto<TKey> GenerateRandomUser(TKey id = default(TKey))        
         {
             var user = GetUserFaker(id).Generate();
 

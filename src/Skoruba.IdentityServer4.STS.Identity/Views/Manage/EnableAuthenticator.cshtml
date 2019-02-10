@@ -1,0 +1,57 @@
+﻿@inject IViewLocalizer Localizer
+@using Microsoft.AspNetCore.Mvc.Localization
+@model Skoruba.IdentityServer4.STS.Identity.ViewModels.Manage.EnableAuthenticatorViewModel
+@{
+    ViewData["Title"] = Localizer["Title"];
+}
+
+<h4>@ViewData["Title"]</h4>
+<div>
+    <p>@Localizer["SubTitle"]</p>
+    <ol class="list">
+        <li>
+            <p>
+                @Localizer["DownloadTitle"]
+                <a href="https://go.microsoft.com/fwlink/?Linkid=825071">Windows Phone</a>,
+                <a href="https://go.microsoft.com/fwlink/?Linkid=825072">Android</a>,
+                <a href="https://go.microsoft.com/fwlink/?Linkid=825073">iOS</a>.
+                @Localizer["GoogleAuthenticatorTitle"]
+                <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&amp;hl=en">Android</a>,
+                <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8">iOS</a>.
+            </p>
+        </li>
+        <li>
+            <p>@Localizer["ScanQR"] <kbd>@Model.SharedKey</kbd> @Localizer["ScanQRSubTitle"]</p>
+            <div id="qrCode"></div>
+            <div id="qrCodeData" data-url="@Html.Raw(Model.AuthenticatorUri)"></div>
+        </li>
+        <li>
+            <p>
+                @Localizer["Info"]
+            </p>
+            <div class="row">
+                <div class="col-md-6">
+                    <form method="post">
+                        <div class="form-group">
+                            <label asp-for="Code" class="control-label">@Localizer["Code"]</label>
+                            <input asp-for="Code" class="form-control" autocomplete="off" />
+                            <span asp-validation-for="Code" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary">@Localizer["Verify"]</button>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    </form>
+                </div>
+            </div>
+        </li>
+    </ol>
+</div>
+
+<script src="~/js/qrcode.min.js"></script>
+<script type="text/javascript">
+    new QRCode(document.getElementById("qrCode"),
+        {
+            text: "@Html.Raw(Model.AuthenticatorUri)",
+            width: 300,
+            height: 300
+        });
+</script>

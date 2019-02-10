@@ -36,6 +36,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContexts<AdminDbContext>(Configuration);
+            services.AddEmailSenders(Configuration);
             services.AddAuthenticationServices<AdminDbContext, UserIdentity, UserIdentityRole>(Environment, Configuration, Logger);
             services.AddMvcLocalization();
         }

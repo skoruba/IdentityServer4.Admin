@@ -417,6 +417,19 @@ input:checked + .slider:before {
 .picker hr {
   margin-bottom: 5px; }
 
+.picker .button__text {
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  margin: 3px;
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  border-color: #007bff;
+  color: #007bff; }
+
 .picker .button__add {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -424,7 +437,7 @@ input:checked + .slider:before {
   white-space: normal;
   text-transform: none; }
 
-.picker .button__delete {
+.picker .button__delete, .picker .button__update {
   margin-top: 5px;
   margin-bottom: 5px;
   margin-right: 5px;
