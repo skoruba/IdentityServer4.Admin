@@ -136,13 +136,13 @@
     <value>Api ویژگی منبع با کلید ({0}) درحال حاضر وجود دارد</value>
   </data>
   <data name="ApiScopeDoesNotExist" xml:space="preserve">
-    <value>Api محدوده با شناسه {0} وجود ندارد</value>
+    <value>Api اسکوپ با شناسه {0} وجود ندارد</value>
   </data>
   <data name="ApiScopeExistsKey" xml:space="preserve">
-    <value>Api محدوده درحال حاضر وجود دارد</value>
+    <value>Api اسکوپ درحال حاضر وجود دارد</value>
   </data>
   <data name="ApiScopeExistsValue" xml:space="preserve">
-    <value>Api محدوده ({0}) درحال حاضر وجود دارد</value>
+    <value>Api اسکوپ ({0}) درحال حاضر وجود دارد</value>
   </data>
   <data name="ApiSecretDoesNotExist" xml:space="preserve">
     <value>Api رمز با شناسه {0} وجود ندارد</value>

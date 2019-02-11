@@ -117,73 +117,64 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SuccessAddApiResource" xml:space="preserve">
-    <value>Api منبع {0} با موفقیت ذخیرده شد!</value>
+  <data name="Description_Info" xml:space="preserve">
+    <value>از این مقدار می توان استفاده کرد e.g. در صفحه موافقت کردن.</value>
   </data>
-  <data name="SuccessAddApiResourceProperty" xml:space="preserve">
-    <value>Api ویژگی منبع {0} برای api منبع {1} با موفقیت ذخیرده شد!</value>
+  <data name="Description_Label" xml:space="preserve">
+    <value>شرح</value>
   </data>
-  <data name="SuccessAddApiScope" xml:space="preserve">
-    <value>Api اسکوپ {0} با موفقیت ثبت شد!</value>
+  <data name="DisplayName_Info" xml:space="preserve">
+    <value>از این مقدار می توان استفاده کرد e.g. در صفحه موافقت کردن.</value>
   </data>
-  <data name="SuccessAddApiSecret" xml:space="preserve">
-    <value>Api رمز با موفقیت ایجاد شد!</value>
+  <data name="DisplayName_Label" xml:space="preserve">
+    <value>نام نمایشی</value>
   </data>
-  <data name="SuccessAddClient" xml:space="preserve">
-    <value>مشتری {0} با موفقیت ایجاد شد!</value>
+  <data name="Enabled_Info" xml:space="preserve">
+    <value>نشان می دهد اگر این منبع فعال باشد و می تواند درخواست شود. پیش فرض فعال است.</value>
   </data>
-  <data name="SuccessAddClientClaim" xml:space="preserve">
-    <value>ادعای مشتری {0} برای مشتری {1} با موفقیت ذخیره شد!</value>
+  <data name="Enabled_Label" xml:space="preserve">
+    <value>فعال</value>
   </data>
-  <data name="SuccessAddClientProperty" xml:space="preserve">
-    <value>ویژگی مشتری {0} برای مشتری {1} با موفقیت ذخیرده شد!</value>
+  <data name="Name_Info" xml:space="preserve">
+    <value>نام منحصر به فرد API. این مقدار برای احراز هویت با استفاده از خودآزمایی استفاده می شود و به توکن دسترسی خروجی مخاطبان اضافه می شود.</value>
   </data>
-  <data name="SuccessAddClientSecret" xml:space="preserve">
-    <value>رمز مشتری برای مشتری {0} با موفقیت ذخیره شد!</value>
+  <data name="Name_Label" xml:space="preserve">
+    <value>نام</value>
   </data>
-  <data name="SuccessAddIdentityResource" xml:space="preserve">
-    <value>منبع هویت {0} با موفقیت ذخیره شد!</value>
+  <data name="Properties_Info" xml:space="preserve">
+    <value>دیکشنری برای نگهداری هر گونه مقادیر سفارشی api منبع-ویژه در صورت نیاز.</value>
   </data>
-  <data name="SuccessAddIdentityResourceProperty" xml:space="preserve">
-    <value>ویژگی منبع هویت {0} برای api منبع {1} با موفقیت ذخیره شد!</value>
+  <data name="Properties_Label" xml:space="preserve">
+    <value>خواص</value>
   </data>
-  <data name="SuccessClientClone" xml:space="preserve">
-    <value>مشتری {0} با موفقیت کلون شد!</value>
+  <data name="PropertyKey_Info" xml:space="preserve">
+    <value>کلید</value>
   </data>
-  <data name="SuccessClientDelete" xml:space="preserve">
-    <value>مشتری با موفقیت حذف شد!</value>
+  <data name="PropertyKey_Label" xml:space="preserve">
+    <value>کلید</value>
   </data>
-  <data name="SuccessDeleteApiResource" xml:space="preserve">
-    <value>Api منبع با موفقیت حذف شد!</value>
+  <data name="PropertyValue_Info" xml:space="preserve">
+    <value>مقدار</value>
   </data>
-  <data name="SuccessDeleteApiResourceProperty" xml:space="preserve">
-    <value>Api منبع ویژگی با موفقیت حذف شد!</value>
+  <data name="PropertyValue_Label" xml:space="preserve">
+    <value>مقدار</value>
   </data>
-  <data name="SuccessDeleteApiScope" xml:space="preserve">
-    <value>Api اسکوپ با موفقیت حذف شد!</value>
+  <data name="Scopes_Info" xml:space="preserve">
+    <value>یک API باید حداقل یک اسکوپ داشته باشد. هر اسکوپ می تواند تنظیمات مختلفی داشته باشد.</value>
   </data>
-  <data name="SuccessDeleteApiSecret" xml:space="preserve">
-    <value>Api رمز با موفقیت حذف شد!</value>
+  <data name="Scopes_Label" xml:space="preserve">
+    <value>اسکوپ ها</value>
   </data>
-  <data name="SuccessDeleteClientClaim" xml:space="preserve">
-    <value>ادعای مشتری با موفقیت حذف شد!</value>
+  <data name="Secrets_Info" xml:space="preserve">
+    <value>رمز API برای نقطه پایانی خودآزمایی استفاده می شود. API با استفاده از نام و رمز API میتواند با استفاده از خودآزمایی تأیید هویت شود.</value>
   </data>
-  <data name="SuccessDeleteClientProperty" xml:space="preserve">
-    <value>ویژگی مشتری با موفقیت حذف شد!</value>
+  <data name="Secrets_Label" xml:space="preserve">
+    <value>رمزها</value>
   </data>
-  <data name="SuccessDeleteClientSecret" xml:space="preserve">
-    <value>رمز مشتری با موفقیت حذف شد!</value>
+  <data name="UserClaims_Info" xml:space="preserve">
+    <value>فهرستی از انواع ادعا کاربر که باید در توکن دسترسی موجود باشند.</value>
   </data>
-  <data name="SuccessDeleteIdentityResource" xml:space="preserve">
-    <value>منبع هویت با موفقیت حذف شد!</value>
-  </data>
-  <data name="SuccessDeleteIdentityResourceProperty" xml:space="preserve">
-    <value>ویژگی منبع هویت با موفقیت حذف شد!</value>
-  </data>
-  <data name="SuccessTitle" xml:space="preserve">
-    <value>موفق</value>
-  </data>
-  <data name="SuccessUpdateClient" xml:space="preserve">
-    <value>مشتری {0} با موفقیت بروزرسانی شد!</value>
+  <data name="UserClaims_Label" xml:space="preserve">
+    <value>ادعا های کاربر</value>
   </data>
 </root>

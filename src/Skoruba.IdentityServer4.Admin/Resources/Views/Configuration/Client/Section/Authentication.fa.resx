@@ -117,73 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SuccessAddApiResource" xml:space="preserve">
-    <value>Api منبع {0} با موفقیت ذخیرده شد!</value>
+  <data name="PanelTitle" xml:space="preserve">
+    <value>احراز هویت/خروج</value>
   </data>
-  <data name="SuccessAddApiResourceProperty" xml:space="preserve">
-    <value>Api ویژگی منبع {0} برای api منبع {1} با موفقیت ذخیرده شد!</value>
+  <data name="PickerItemAlreadySelectedTitle" xml:space="preserve">
+    <value>مورد انتخاب شده است</value>
   </data>
-  <data name="SuccessAddApiScope" xml:space="preserve">
-    <value>Api اسکوپ {0} با موفقیت ثبت شد!</value>
+  <data name="PickerNoItemSelectedTitle" xml:space="preserve">
+    <value>هیچ مورد/مواردی انتخاب نشده است</value>
   </data>
-  <data name="SuccessAddApiSecret" xml:space="preserve">
-    <value>Api رمز با موفقیت ایجاد شد!</value>
+  <data name="PickerSearchItemPlaceholder" xml:space="preserve">
+    <value>وارد کنید 2 و کاراکترهای بیشتر</value>
   </data>
-  <data name="SuccessAddClient" xml:space="preserve">
-    <value>مشتری {0} با موفقیت ایجاد شد!</value>
+  <data name="PickerSearchResultTitle" xml:space="preserve">
+    <value>نتیجه جستجو: (بر روی مورد برای انتخاب کلیک کنید)</value>
   </data>
-  <data name="SuccessAddClientClaim" xml:space="preserve">
-    <value>ادعای مشتری {0} برای مشتری {1} با موفقیت ذخیره شد!</value>
+  <data name="PickerSelectedItemsTitle" xml:space="preserve">
+    <value>عنوان/عناوین انتخاب شده:</value>
   </data>
-  <data name="SuccessAddClientProperty" xml:space="preserve">
-    <value>ویژگی مشتری {0} برای مشتری {1} با موفقیت ذخیرده شد!</value>
+  <data name="PickerShowAllItemsTitle" xml:space="preserve">
+    <value>بیشتر</value>
   </data>
-  <data name="SuccessAddClientSecret" xml:space="preserve">
-    <value>رمز مشتری برای مشتری {0} با موفقیت ذخیره شد!</value>
-  </data>
-  <data name="SuccessAddIdentityResource" xml:space="preserve">
-    <value>منبع هویت {0} با موفقیت ذخیره شد!</value>
-  </data>
-  <data name="SuccessAddIdentityResourceProperty" xml:space="preserve">
-    <value>ویژگی منبع هویت {0} برای api منبع {1} با موفقیت ذخیره شد!</value>
-  </data>
-  <data name="SuccessClientClone" xml:space="preserve">
-    <value>مشتری {0} با موفقیت کلون شد!</value>
-  </data>
-  <data name="SuccessClientDelete" xml:space="preserve">
-    <value>مشتری با موفقیت حذف شد!</value>
-  </data>
-  <data name="SuccessDeleteApiResource" xml:space="preserve">
-    <value>Api منبع با موفقیت حذف شد!</value>
-  </data>
-  <data name="SuccessDeleteApiResourceProperty" xml:space="preserve">
-    <value>Api منبع ویژگی با موفقیت حذف شد!</value>
-  </data>
-  <data name="SuccessDeleteApiScope" xml:space="preserve">
-    <value>Api اسکوپ با موفقیت حذف شد!</value>
-  </data>
-  <data name="SuccessDeleteApiSecret" xml:space="preserve">
-    <value>Api رمز با موفقیت حذف شد!</value>
-  </data>
-  <data name="SuccessDeleteClientClaim" xml:space="preserve">
-    <value>ادعای مشتری با موفقیت حذف شد!</value>
-  </data>
-  <data name="SuccessDeleteClientProperty" xml:space="preserve">
-    <value>ویژگی مشتری با موفقیت حذف شد!</value>
-  </data>
-  <data name="SuccessDeleteClientSecret" xml:space="preserve">
-    <value>رمز مشتری با موفقیت حذف شد!</value>
-  </data>
-  <data name="SuccessDeleteIdentityResource" xml:space="preserve">
-    <value>منبع هویت با موفقیت حذف شد!</value>
-  </data>
-  <data name="SuccessDeleteIdentityResourceProperty" xml:space="preserve">
-    <value>ویژگی منبع هویت با موفقیت حذف شد!</value>
-  </data>
-  <data name="SuccessTitle" xml:space="preserve">
-    <value>موفق</value>
-  </data>
-  <data name="SuccessUpdateClient" xml:space="preserve">
-    <value>مشتری {0} با موفقیت بروزرسانی شد!</value>
+  <data name="PickerSuggestedItemsTitle" xml:space="preserve">
+    <value>موارد پیشنهادی:</value>
   </data>
 </root>
