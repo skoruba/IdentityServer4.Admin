@@ -11,6 +11,7 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
+using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using Skoruba.IdentityServer4.STS.Identity.ViewModels.Manage;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Controllers
@@ -50,13 +51,24 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
             }
 
+            var claims = await _userManager.GetClaimsAsync(user);
+            var profile = OpenIDClaimHelpers.ExtractProfileInfo(claims);
+
             var model = new IndexViewModel
             {
                 Username = user.UserName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 IsEmailConfirmed = user.EmailConfirmed,
-                StatusMessage = StatusMessage
+                StatusMessage = StatusMessage,
+                Name = profile.FullName,
+                Website = profile.Website,
+                Profile = profile.Profile,
+                Country = profile.Country,
+                Region = profile.Region,
+                PostalCode = profile.PostalCode,
+                Locality = profile.Locality,
+                StreetAddress = profile.StreetAddress
             };
 
             return View(model);
@@ -95,6 +107,33 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 {
                     throw new ApplicationException(_localizer["ErrorSettingPhone", user.Id]);
                 }
+            }
+
+
+            var claims = await _userManager.GetClaimsAsync(user);
+            var oldProfile = OpenIDClaimHelpers.ExtractProfileInfo(claims);
+            var newProfile = new OpenIDProfile
+            {
+                Website = model.Website,
+                StreetAddress = model.StreetAddress,
+                Locality = model.Locality,
+                PostalCode = model.PostalCode,
+                Region = model.Region,
+                Country = model.Country,
+                FullName = model.Name,
+                Profile = model.Profile
+            };
+           
+            var claimsToRemove = OpenIDClaimHelpers.ExtractClaimsToRemove(oldProfile, newProfile);
+            var claimsToAdd = OpenIDClaimHelpers.ExtractClaimsToAdd(oldProfile, newProfile);
+            var claimsToReplace = OpenIDClaimHelpers.ExtractClaimsToReplace(claims, newProfile);
+
+            await _userManager.RemoveClaimsAsync(user, claimsToRemove);
+            await _userManager.AddClaimsAsync(user, claimsToAdd);
+
+            foreach (var pair in claimsToReplace)
+            {
+                await _userManager.ReplaceClaimAsync(user, pair.Item1, pair.Item2);
             }
 
             StatusMessage = _localizer["ProfileUpdated"];
@@ -561,7 +600,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 await LoadSharedKeyAndQrCodeUriAsync(user, model);
                 return View(model);
             }
-            
+
             var verificationCode = model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
 
             var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
@@ -578,7 +617,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             var userId = await _userManager.GetUserIdAsync(user);
 
             _logger.LogInformation(_localizer["SuccessUserEnabled2FA"], userId);
-            
+
             StatusMessage = _localizer["AuthenticatorVerified"];
 
             if (await _userManager.CountRecoveryCodesAsync(user) == 0)
