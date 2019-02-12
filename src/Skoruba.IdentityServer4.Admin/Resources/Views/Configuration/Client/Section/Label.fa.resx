@@ -280,171 +280,171 @@
     <value>ادعاهای توکن دسترسی با تازه سازی بروز شود</value>
   </data>
   <data name="AllowedCorsOrigins_Info" xml:space="preserve">
-    <value>If specified, will be used by the default CORS policy service implementations (In-Memory and EF) to build a CORS policy for JavaScript clients.</value>
+    <value>اگر مشخص شود, بصورت پیش فرض لا پیاده سازی های سرویس سیاست CORS استفاده خواهد شد (In-Memory و EF) برای ساخت یک سیاست CORS برای کاربران JavaScript.</value>
   </data>
   <data name="AllowedCorsOrigins_Label" xml:space="preserve">
-    <value>Allowed Cors Origins</value>
+    <value>مجاز Cors Origins</value>
   </data>
   <data name="AllowedGrantTypes_Info" xml:space="preserve">
-    <value>Specifies the grant types the client is allowed to use. Use the GrantTypes class for common combinations. List of default grants: Implicit Grant - (implicit), Client Credentials Grant - (client_credentials), Authorization Code Grant - (authorization_code), Hybrid grant - (hybrid), Resource Owner Password Credentials Grant - (password)</value>
+    <value>انواع واگذاری که کاربر مجاز به استفاده است مشخص می کند. از کلاس GrantTypes برای ترکیب های معمول استفاده کنید. فهرست واگذاری های پیش فرض: واگذاری ضمنی - (implicit), واگذاری اعتبارات کاربر - (client_credentials), واگذاری کد مجوز - (authorization_code), واگذاری ترکیبی - (hybrid), واگذاری گواهی نامه های کلمه عبور صاحب منبع - (password)</value>
   </data>
   <data name="AllowedGrantTypes_Label" xml:space="preserve">
-    <value>Allowed Grant Types</value>
+    <value>انواع واگذاری مجاز</value>
   </data>
   <data name="AllowedScopes_Info" xml:space="preserve">
-    <value>By default a client has no access to any resources - specify the allowed resources by adding the corresponding scopes names</value>
+    <value>بصورت پیش فرض یک کاربر به هیچ منبعی دسترسی ندارد - بوسیله اضافه کردن نام های اسکوپ های مربوطه منابع مجاز را مشخص کنید</value>
   </data>
   <data name="AllowedScopes_Label" xml:space="preserve">
-    <value>Allowed Scopes</value>
+    <value>اسکوپ های مجاز</value>
   </data>
   <data name="Claims_Info" xml:space="preserve">
-    <value>Allows settings claims for the client (will be included in the access token).</value>
+    <value>تنظیمات ادعاهای کاربر را مجاز می کند (در توکن دسترسی گنجانده خواهد شد).</value>
   </data>
   <data name="Claims_Label" xml:space="preserve">
-    <value>Claims</value>
+    <value>ادعاها</value>
   </data>
   <data name="ClientSecrets_Info" xml:space="preserve">
-    <value>List of client secrets - credentials to access the token endpoint.</value>
+    <value>فهرست رمزهای کاربر - اعتبار دسترسی به توکن نقطه پایانی.</value>
   </data>
   <data name="ClientSecrets_Label" xml:space="preserve">
-    <value>Client Secrets</value>
+    <value>رمزهای کاربر</value>
   </data>
   <data name="IdentityProviderRestrictions_Info" xml:space="preserve">
-    <value>Specifies which external IdPs can be used with this client (if list is empty all IdPs are allowed). Defaults to empty.</value>
+    <value>مشخص می کند که کدام IdP های خارجی را می توان با این کاربر مورد استفاده قرار داد (اگر فهرست خالی باشد، تمام IdP ها مجاز می باشند). پیش فرض خالی است.</value>
   </data>
   <data name="IdentityProviderRestrictions_Label" xml:space="preserve">
-    <value>Identity Provider Restrictions</value>
+    <value>محدودیت های ارائه دهنده هویت</value>
   </data>
   <data name="PostLogoutRedirectUris_Info" xml:space="preserve">
-    <value>Specifies allowed URIs to redirect to after logout</value>
+    <value>URI های مجاز به تغییر مسیر پس از خروج را مشخص می کند</value>
   </data>
   <data name="PostLogoutRedirectUris_Label" xml:space="preserve">
-    <value>Post Logout Redirect Uris</value>
+    <value>Uri های تغییر مسیر خروج را ارسال می کند</value>
   </data>
   <data name="RedirectUris_Info" xml:space="preserve">
-    <value>Specifies the allowed URIs to return tokens or authorization codes to</value>
+    <value>URI های مجاز را برای بازگرداندن توکن ها یا کدهای مجوز به مشخص می کند</value>
   </data>
   <data name="RedirectUris_Label" xml:space="preserve">
-    <value>Redirect Uris</value>
+    <value>Uri های تغییر مسیر</value>
   </data>
   <data name="Type_Info" xml:space="preserve">
     <value />
   </data>
   <data name="Type_Label" xml:space="preserve">
-    <value>Claim Type</value>
+    <value>نوع ادعا</value>
   </data>
   <data name="Value_Info" xml:space="preserve">
     <value />
   </data>
   <data name="Value_Label" xml:space="preserve">
-    <value>Claim Value</value>
+    <value>مقدار ادعا</value>
   </data>
   <data name="SecretType_Info" xml:space="preserve">
     <value />
   </data>
   <data name="SecretType_Label" xml:space="preserve">
-    <value>Secret Type</value>
+    <value>نوع رمز</value>
   </data>
   <data name="SecretValue_Info" xml:space="preserve">
     <value />
   </data>
   <data name="SecretValue_Label" xml:space="preserve">
-    <value>Secret Value</value>
+    <value>مقدار رمز</value>
   </data>
   <data name="HashType_Info" xml:space="preserve">
     <value />
   </data>
   <data name="HashType_Label" xml:space="preserve">
-    <value>Hash Type</value>
+    <value>نوع هش</value>
   </data>
   <data name="RoleNormalizedName_Info" xml:space="preserve">
-    <value>The Normalized Role Name</value>
+    <value>نام نقش نرمال شده</value>
   </data>
   <data name="RoleNormalizedName_Label" xml:space="preserve">
-    <value>Normalized Name</value>
+    <value>نام نرمال شده</value>
   </data>
   <data name="BackChannelLogoutSessionRequired_Info" xml:space="preserve">
-    <value>Specifies if the user’s session id should be sent in the request to the BackChannelLogoutUri. Defaults to true.</value>
+    <value>مشخص می کند که آیا شناسه سشن کاربر باید در درخواست به BackChannelLogoutUri ارسال شود. پیش فرض true.</value>
   </data>
   <data name="BackChannelLogoutSessionRequired_Label" xml:space="preserve">
-    <value>Back Channel Logout Session Required</value>
+    <value>سشن کانال برگشت خروج ضروری است</value>
   </data>
   <data name="BackChannelLogoutUri_Info" xml:space="preserve">
-    <value>Specifies logout URI at client for HTTP based back-channel logout. See the OIDC Back-Channel spec for more details.</value>
+    <value>URI خروج سمت کاربر را برای HTTP بر اساس back-channel خروج مشخص می کند . برای جزئیات بیشتر مشخصات OIDC Back-Channel را ببینید.</value>
   </data>
   <data name="BackChannelLogoutUri_Label" xml:space="preserve">
-    <value>Back Channel Logout Uri</value>
+    <value>Uri کانال برگشت خروج</value>
   </data>
   <data name="ClientClaimsPrefix_Info" xml:space="preserve">
-    <value>If set, the prefix client claim types will be prefixed with. Defaults to client_. The intent is to make sure they don’t accidentally collide with user claims.</value>
+    <value>اگر تنظیم شود, پیشوند انواع ادعای کاربر با آن پیشوند می شود. پیش فرض client_. هدف این است که اطمینان حاصل کنید که آنها به طور تصادفی با ادعاهای کاربر برخورد نمی کنند.</value>
   </data>
   <data name="ClientClaimsPrefix_Label" xml:space="preserve">
-    <value>Client Claims Prefix</value>
+    <value>پیشوند ادعاهای کاربر</value>
   </data>
   <data name="Description_Info" xml:space="preserve">
-    <value>Client Description</value>
+    <value>شرح کاربر</value>
   </data>
   <data name="Description_Label" xml:space="preserve">
-    <value>Description</value>
+    <value>شرح</value>
   </data>
   <data name="FrontChannelLogoutSessionRequired_Info" xml:space="preserve">
-    <value>Specifies if the user’s session id should be sent to the FrontChannelLogoutUri. Defaults to true.</value>
+    <value>مشخص می کند که آیا شناسه سشن کاربر باید به FrontChannelLogoutUri ارسال شود. پیش فرض true.</value>
   </data>
   <data name="FrontChannelLogoutSessionRequired_Label" xml:space="preserve">
-    <value>Front Channel Logout Session Required</value>
+    <value>سشن کانال جلو خروج ضروری است</value>
   </data>
   <data name="FrontChannelLogoutUri_Info" xml:space="preserve">
-    <value>Specifies logout URI at client for HTTP based front-channel logout. See the OIDC Front-Channel spec for more details.</value>
+    <value>URI خروج سمت کاربر را برای HTTP بر اساس front-channel خروج مشخص می کند . برای جزئیات بیشتر مشخصات OIDC Front-Channel را ببینید.</value>
   </data>
   <data name="FrontChannelLogoutUri_Label" xml:space="preserve">
-    <value>Front Channel Logout Uri</value>
+    <value>Uri کانال جلو خروج</value>
   </data>
   <data name="PairWiseSubjectSalt_Info" xml:space="preserve">
-    <value>Salt value used in pair-wise subjectId generation for users of this client.</value>
+    <value>مقدار سالت استفاده شده در pair-wise subjectId تولید شده برای کاربران این کاربر.</value>
   </data>
   <data name="PairWiseSubjectSalt_Label" xml:space="preserve">
     <value>Pair Wise Subject Salt</value>
   </data>
   <data name="Properties_Info" xml:space="preserve">
-    <value>Dictionary to hold any custom client-specific values as needed.</value>
+    <value>دیکشنری برای نگهداری هر مقدار client-specific سفارشی مورد نیاز</value>
   </data>
   <data name="Properties_Label" xml:space="preserve">
-    <value>Properties</value>
+    <value>خواص</value>
   </data>
   <data name="PropertyKey_Info" xml:space="preserve">
-    <value>Key</value>
+    <value>کلید</value>
   </data>
   <data name="PropertyKey_Label" xml:space="preserve">
-    <value>Key</value>
+    <value>کلید</value>
   </data>
   <data name="PropertyValue_Info" xml:space="preserve">
-    <value>Value</value>
+    <value>مقدار</value>
   </data>
   <data name="PropertyValue_Label" xml:space="preserve">
-    <value>Value</value>
+    <value>مقدار</value>
   </data>
   <data name="ProtocolType_Info" xml:space="preserve">
-    <value>Default is OpenID Connect protocol</value>
+    <value>پیش فرض پروتکل OpenID Connect</value>
   </data>
   <data name="ProtocolType_Label" xml:space="preserve">
-    <value>Protocol Type</value>
+    <value>نوع پروتکل</value>
   </data>
   <data name="UserSsoLifetime_Info" xml:space="preserve">
-    <value>The maximum duration (in seconds) since the last time the user authenticated. Defaults to null</value>
+    <value>حداکثر مدت زمان (در ثانیه) از زمان آخرین تأیید هویت کاربر. پیش فرض null</value>
   </data>
   <data name="UserSsoLifetime_Label" xml:space="preserve">
-    <value>User Sso Lifetime</value>
+    <value>طول عمر Sso کاربر</value>
   </data>
   <data name="DeviceCodeLifetime_Info" xml:space="preserve">
-    <value>Lifetime to device code in seconds (defaults to 300 seconds / 5 minutes)</value>
+    <value>طول عمر به کد دستگاه در ثانیه (پیش فرض به 300 ثانیه / 5 دقیقه)</value>
   </data>
   <data name="DeviceCodeLifetime_Label" xml:space="preserve">
-    <value>Device Code Lifetime</value>
+    <value>طول عمر کد دستگاه</value>
   </data>
   <data name="UserCodeType_Info" xml:space="preserve">
-    <value>Specifies the type of user code to use for the client. Otherwise falls back to default.</value>
+    <value>نوع کد کاربر را برای استفاده برای مشتری مشخص می کند. در غیر این صورت به پیش فرض می رود.</value>
   </data>
   <data name="UserCodeType_Label" xml:space="preserve">
-    <value>User Code Type</value>
+    <value>نوع کد کاربر</value>
   </data>
 </root>
