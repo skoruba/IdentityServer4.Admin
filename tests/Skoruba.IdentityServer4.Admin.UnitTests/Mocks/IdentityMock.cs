@@ -40,7 +40,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             var userValidators = new List<IUserValidator<TUser>>();
             var validator = new Mock<IUserValidator<TUser>>();
             userValidators.Add(validator.Object);
-            var pwdValidators = new List<PasswordValidator<TUser>> {new PasswordValidator<TUser>()};
+            var pwdValidators = new List<PasswordValidator<TUser>> { new PasswordValidator<TUser>() };
             var userManager = new UserManager<TUser>(store, options.Object, new PasswordHasher<TUser>(),
                 userValidators, pwdValidators, new UpperInvariantLookupNormalizer(),
                 new IdentityErrorDescriber(), null,
@@ -53,7 +53,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
         public static RoleManager<TRole> TestRoleManager<TRole>(IRoleStore<TRole> store = null) where TRole : class
         {
             store = store ?? new Mock<IRoleStore<TRole>>().Object;
-            var roles = new List<IRoleValidator<TRole>> {new RoleValidator<TRole>()};
+            var roles = new List<IRoleValidator<TRole>> { new RoleValidator<TRole>() };
             return new RoleManager<TRole>(store, roles,
                 new UpperInvariantLookupNormalizer(),
                 new IdentityErrorDescriber(),
