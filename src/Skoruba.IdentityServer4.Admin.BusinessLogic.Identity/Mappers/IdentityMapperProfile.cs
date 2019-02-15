@@ -14,10 +14,11 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers
 {
-    public class IdentityMapperProfile<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUser, TRole, TKey, TUserClaim, TUserRole, 
+    public class IdentityMapperProfile<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUser, TRole, TKey, TUserClaim, TUserRole,
         TUserLogin, TRoleClaim, TUserToken,
         TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-        TUserProviderDto, TUserProvidersDto, TRoleClaimsDto> 
+        TUserProviderDto, TUserProvidersDto, TRoleClaimsDto,
+        TUserClaimDto, TRoleClaimDto>
         : Profile
         where TUserDto : UserDto<TUserDtoKey>
         where TRoleDto : RoleDto<TRoleDtoKey>
@@ -36,12 +37,14 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers
         where TUserProviderDto : UserProviderDto<TUserDtoKey>
         where TUserProvidersDto : UserProvidersDto<TUserDtoKey>
         where TRoleClaimsDto : RoleClaimsDto<TRoleDtoKey>
+        where TUserClaimDto : UserClaimDto<TUserDtoKey>
+        where TRoleClaimDto : RoleClaimDto<TRoleDtoKey>
     {
         public IdentityMapperProfile()
         {
             // entity to model
             CreateMap<TUser, TUserDto>(MemberList.Destination);
-            
+
             CreateMap<UserLoginInfo, TUserProviderDto>(MemberList.Destination);
 
             CreateMap<IdentityError, ViewErrorMessage>(MemberList.Destination)
@@ -58,7 +61,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers
                 .ForMember(x => x.Users,
                     opt => opt.MapFrom(src => src.Data));
 
-            CreateMap<TUserClaim, TUserClaimsDto>(MemberList.Destination)
+            CreateMap<TUserClaim, TUserClaimDto>(MemberList.Destination)
                 .ForMember(x => x.ClaimId, opt => opt.MapFrom(src => src.Id));
 
             CreateMap<TUserClaim, TUserClaimsDto>(MemberList.Destination)
@@ -83,7 +86,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers
             CreateMap<List<UserLoginInfo>, TUserProvidersDto>(MemberList.Destination)
                 .ForMember(x => x.Providers, opt => opt.MapFrom(src => src));
 
-            CreateMap<TRoleClaim, TRoleClaimsDto>(MemberList.Destination)
+            CreateMap<TRoleClaim, TRoleClaimDto>(MemberList.Destination)
                 .ForMember(x => x.ClaimId, opt => opt.MapFrom(src => src.Id));
 
             CreateMap<TRoleClaim, TRoleClaimsDto>(MemberList.Destination)

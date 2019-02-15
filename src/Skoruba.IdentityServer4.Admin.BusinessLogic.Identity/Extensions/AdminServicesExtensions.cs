@@ -25,7 +25,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Extensions
             public IMapperConfigurationBuilder UseIdentityMappingProfile<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUser, TRole, TKey,
                 TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>() 
+                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto,
+                TUserClaimDto, TRoleClaimDto>() 
                 where TUserDto : UserDto<TUserDtoKey> 
                 where TRoleDto : RoleDto<TRoleDtoKey> 
                 where TUser : IdentityUser<TKey> 
@@ -44,11 +45,13 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Extensions
                 where TUserProvidersDto : UserProvidersDto<TUserDtoKey>
                 where TUserChangePasswordDto : UserChangePasswordDto<TUserDtoKey>
                 where TRoleClaimsDto : RoleClaimsDto<TRoleDtoKey>
+                where TUserClaimDto : UserClaimDto<TUserDtoKey>
+                where TRoleClaimDto : RoleClaimDto<TRoleDtoKey>
             {
                 ProfileTypes.Add(typeof(IdentityMapperProfile<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUser, TRole, TKey,
                     TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                     TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                    TUserProviderDto, TUserProvidersDto, TRoleClaimsDto>));
+                    TUserProviderDto, TUserProvidersDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>));
 
                 return this;
             }
@@ -72,7 +75,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Extensions
         public static IServiceCollection AddAdminAspNetIdentityServices<TAdminDbContext, TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey,
             TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>(
+            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto,
+            TUserClaimDto, TRoleClaimDto>(
                 this IServiceCollection services)
             where TAdminDbContext :
             IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>,
@@ -95,17 +99,19 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Extensions
             where TUserProvidersDto : UserProvidersDto<TUserDtoKey>
             where TUserChangePasswordDto : UserChangePasswordDto<TUserDtoKey>
             where TRoleClaimsDto : RoleClaimsDto<TRoleDtoKey>
+            where TUserClaimDto : UserClaimDto<TUserDtoKey>
+            where TRoleClaimDto : RoleClaimDto<TRoleDtoKey>
         {
 
             return services.AddAdminAspNetIdentityServices<TAdminDbContext, TAdminDbContext, TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey,
                 TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>();
+                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>();
         }
 
         public static IServiceCollection AddAdminAspNetIdentityServices<TPersistedGrantDbContext, TIdentityDbContext, TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                     TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                    TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>(
+                    TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>(
                         this IServiceCollection services)
             where TPersistedGrantDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>, IAdminPersistedGrantIdentityDbContext            
             where TIdentityDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
@@ -127,6 +133,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Extensions
             where TUserProvidersDto : UserProvidersDto<TUserDtoKey>
             where TUserChangePasswordDto : UserChangePasswordDto<TUserDtoKey>
             where TRoleClaimsDto : RoleClaimsDto<TRoleDtoKey>
+            where TUserClaimDto : UserClaimDto<TUserDtoKey>
+            where TRoleClaimDto : RoleClaimDto<TRoleDtoKey>
         {
             //Repositories
             services.AddTransient<IIdentityRepository<TIdentityDbContext, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>, IdentityRepository<TIdentityDbContext, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>>();
@@ -149,7 +157,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Extensions
             services.AddAdminAspNetIdentityMapping()
                     .UseIdentityMappingProfile<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                     TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                    TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>();
+                    TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>();
 
             return services;
         }

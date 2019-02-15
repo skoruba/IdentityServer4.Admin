@@ -77,7 +77,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                         UserIdentityUserToken,
                         UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
                         UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>,
-                        RoleClaimsDto<string>>
+                        RoleClaimsDto<string>, UserClaimDto<string>, RoleClaimDto<string>>
                 >())
                 .CreateMapper();
         }
