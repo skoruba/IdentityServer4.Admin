@@ -30,7 +30,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         public async Task<IActionResult> PersistedGrants(int? page, string search)
         {
             ViewBag.Search = search;
-            var persistedGrants = await _persistedGrantService.GetPersitedGrantsByUsers(search, page ?? 1);
+            var persistedGrants = await _persistedGrantService.GetPersistedGrantsByUsers(search, page ?? 1);
 
             return View(persistedGrants);
         }
@@ -40,7 +40,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         {
             if (string.IsNullOrEmpty(id)) return NotFound();
 
-            var grant = await _persistedGrantService.GetPersitedGrantAsync(UrlHelpers.QueryStringUnSafeHash(id));
+            var grant = await _persistedGrantService.GetPersistedGrantAsync(UrlHelpers.QueryStringUnSafeHash(id));
             if (grant == null) return NotFound();
 
             return View(grant);
@@ -73,7 +73,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> PersistedGrant(string id, int? page)
         {
-            var persistedGrants = await _persistedGrantService.GetPersitedGrantsByUser(id, page ?? 1);
+            var persistedGrants = await _persistedGrantService.GetPersistedGrantsByUser(id, page ?? 1);
             persistedGrants.SubjectId = id;
 
             return View(persistedGrants);

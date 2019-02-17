@@ -57,7 +57,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         }
 
         [Fact]
-        public async Task GetPersitedGrantAsync()
+        public async Task GetPersistedGrantAsync()
         {
             using (var context = new IdentityServerPersistedGrantDbContext(_dbContextOptions, _operationalStore))
             {
@@ -79,7 +79,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                     await context.SaveChangesAsync();
 
                     //Try get persisted grant
-                    var persistedGrantAdded = await persistedGrantService.GetPersitedGrantAsync(persistedGrantKey);
+                    var persistedGrantAdded = await persistedGrantService.GetPersistedGrantAsync(persistedGrantKey);
 
                     //Assert
                     persistedGrant.ShouldBeEquivalentTo(persistedGrantAdded);
@@ -112,7 +112,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                     //Try delete persisted grant
                     await persistedGrantService.DeletePersistedGrantAsync(persistedGrantKey);
 
-                    var grant = await persistedGrantRepository.GetPersitedGrantAsync(persistedGrantKey);
+                    var grant = await persistedGrantRepository.GetPersistedGrantAsync(persistedGrantKey);
 
                     //Assert
                     grant.Should().BeNull();
@@ -151,7 +151,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                     //Try delete persisted grant
                     await persistedGrantService.DeletePersistedGrantsAsync(subjectId.ToString());
 
-                    var grant = await persistedGrantRepository.GetPersitedGrantsByUser(subjectId.ToString());
+                    var grant = await persistedGrantRepository.GetPersistedGrantsByUser(subjectId.ToString());
 
                     //Assert
                     grant.TotalCount.Should().Be(0);
