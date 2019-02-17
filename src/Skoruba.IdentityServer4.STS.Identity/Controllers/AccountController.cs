@@ -69,7 +69,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         {
             // build a model so we know what to show on the login page
             var vm = await BuildLoginViewModelAsync(returnUrl);
-            
+
             if (vm.EnableLocalLogin == false && vm.ExternalProviders.Count() == 1)
             {
                 // only one option for logging in
@@ -152,7 +152,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToAction(nameof(LoginWith2fa), new { ReturnUrl = model.ReturnUrl, RememberMe = model.RememberLogin });
+                    return RedirectToAction(nameof(LoginWith2fa), new { model.ReturnUrl, RememberMe = model.RememberLogin });
                 }
 
                 if (result.IsLockedOut)
@@ -475,7 +475,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 ReturnUrl = returnUrl,
                 RememberMe = rememberMe
             };
-            
+
             return View(model);
         }
 

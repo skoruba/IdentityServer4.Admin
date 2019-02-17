@@ -185,6 +185,19 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         }
 
         /// <summary>
+        /// Add DbContext for Identity
+        /// </summary>
+        /// <typeparam name="TContext"></typeparam>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        public static void AddIdentityDbContext<TContext>(this IServiceCollection services, IConfiguration configuration)
+            where TContext : DbContext
+        {
+            var connectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
+            services.AddDbContext<TContext>(options => options.UseSqlServer(connectionString));
+        }
+
+        /// <summary>
         /// Add shared DbContext for Identity and IdentityServer4 stores
         /// </summary>
         /// <typeparam name="TContext"></typeparam>

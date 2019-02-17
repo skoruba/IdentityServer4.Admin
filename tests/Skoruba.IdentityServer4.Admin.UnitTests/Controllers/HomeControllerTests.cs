@@ -15,10 +15,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
         public HomeControllerTests()
         {
-            var efServiceProvider = new ServiceCollection().AddEntityFrameworkInMemoryDatabase().BuildServiceProvider();
-
             var services = new ServiceCollection();
-            services.AddDbContext<AdminDbContext>(b => b.UseInMemoryDatabase(Guid.NewGuid().ToString()).UseInternalServiceProvider(efServiceProvider));
             services.AddLogging();
 
             _serviceProvider = services.BuildServiceProvider();
@@ -31,7 +28,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var logger = _serviceProvider.GetRequiredService<ILogger<ConfigurationController>>();
 
             var controller = new HomeController(logger);
-            
+
             // Action
             var result = controller.Index();
 

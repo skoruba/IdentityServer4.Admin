@@ -23,7 +23,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		{
 			var databaseName = Guid.NewGuid().ToString();
 
-			_dbContextOptions = new DbContextOptionsBuilder<AdminDbContext>()
+			_dbContextOptions = new DbContextOptionsBuilder<IdentityServerConfigurationDbContext>()
 				.UseInMemoryDatabase(databaseName)
 				.Options;
 
@@ -31,13 +31,13 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 			_operationalStore = new OperationalStoreOptions();
 		}
 
-		private readonly DbContextOptions<AdminDbContext> _dbContextOptions;
+		private readonly DbContextOptions<IdentityServerConfigurationDbContext> _dbContextOptions;
 		private readonly ConfigurationStoreOptions _storeOptions;
 		private readonly OperationalStoreOptions _operationalStore;
 
-		private IIdentityResourceRepository GetIdentityResourceRepository(AdminDbContext context)
+		private IIdentityResourceRepository GetIdentityResourceRepository(IdentityServerConfigurationDbContext context)
 		{
-			IIdentityResourceRepository identityResourceRepository = new IdentityResourceRepository<AdminDbContext>(context);
+			IIdentityResourceRepository identityResourceRepository = new IdentityResourceRepository<IdentityServerConfigurationDbContext>(context);
 
 			return identityResourceRepository;
 		}
@@ -52,7 +52,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		[Fact]
 		public async Task AddIdentityResourceAsync()
 		{
-			using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
 				var identityResourceRepository = GetIdentityResourceRepository(context);
 
@@ -79,7 +79,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		[Fact]
 		public async Task GetIdentityResourceAsync()
 		{
-			using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
 				var identityResourceRepository = GetIdentityResourceRepository(context);
 
@@ -106,7 +106,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		[Fact]
 		public async Task RemoveIdentityResourceAsync()
 		{
-			using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
 				var identityResourceRepository = GetIdentityResourceRepository(context);
 
@@ -143,7 +143,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		[Fact]
 		public async Task UpdateIdentityResourceAsync()
 		{
-			using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
 				var identityResourceRepository = GetIdentityResourceRepository(context);
 
@@ -184,7 +184,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		[Fact]
 		public async Task AddIdentityResourcePropertyAsync()
 		{
-			using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
 				var identityResourceRepository = GetIdentityResourceRepository(context);
 
@@ -232,7 +232,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		[Fact]
 		public async Task GetIdentityResourcePropertyAsync()
 		{
-			using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
 				var identityResourceRepository = GetIdentityResourceRepository(context);
 
@@ -280,7 +280,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		[Fact]
 		public async Task DeleteIdentityResourcePropertyAsync()
 		{
-			using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
 				var identityResourceRepository = GetIdentityResourceRepository(context);
 
