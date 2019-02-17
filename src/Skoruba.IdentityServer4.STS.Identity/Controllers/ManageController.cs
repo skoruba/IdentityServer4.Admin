@@ -51,29 +51,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
             }
 
-            var claims = await _userManager.GetClaimsAsync(user);
-            var profile = OpenIdClaimHelpers.ExtractProfileInfo(claims);
-
-            var model = new IndexViewModel
-            {
-                Username = user.UserName,
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
-                IsEmailConfirmed = user.EmailConfirmed,
-                StatusMessage = StatusMessage,
-                Name = profile.FullName,
-                Website = profile.Website,
-                Profile = profile.Profile,
-                Country = profile.Country,
-                Region = profile.Region,
-                PostalCode = profile.PostalCode,
-                Locality = profile.Locality,
-                StreetAddress = profile.StreetAddress
-            };
+            var model = await BuildManageIndexViewModelAsync(user);
 
             return View(model);
         }
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(IndexViewModel model)
@@ -108,39 +90,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                     throw new ApplicationException(_localizer["ErrorSettingPhone", user.Id]);
                 }
             }
-
-
-            var claims = await _userManager.GetClaimsAsync(user);
-            var oldProfile = OpenIdClaimHelpers.ExtractProfileInfo(claims);
-            var newProfile = new OpenIdProfile
-            {
-                Website = model.Website,
-                StreetAddress = model.StreetAddress,
-                Locality = model.Locality,
-                PostalCode = model.PostalCode,
-                Region = model.Region,
-                Country = model.Country,
-                FullName = model.Name,
-                Profile = model.Profile
-            };
-           
-            var claimsToRemove = OpenIdClaimHelpers.ExtractClaimsToRemove(oldProfile, newProfile);
-            var claimsToAdd = OpenIdClaimHelpers.ExtractClaimsToAdd(oldProfile, newProfile);
-            var claimsToReplace = OpenIdClaimHelpers.ExtractClaimsToReplace(claims, newProfile);
-
-            await _userManager.RemoveClaimsAsync(user, claimsToRemove);
-            await _userManager.AddClaimsAsync(user, claimsToAdd);
-
-            foreach (var pair in claimsToReplace)
-            {
-                await _userManager.ReplaceClaimAsync(user, pair.Item1, pair.Item2);
-            }
+            
+            await UpdateUserClaimsAsync(model, user);
 
             StatusMessage = _localizer["ProfileUpdated"];
 
             return RedirectToAction(nameof(Index));
         }
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendVerificationEmail(IndexViewModel model)
@@ -659,6 +616,59 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             model.SharedKey = FormatKey(unformattedKey);
             model.AuthenticatorUri = GenerateQrCodeUri(user.Email, unformattedKey);
+        }
+
+        private async Task<IndexViewModel> BuildManageIndexViewModelAsync(UserIdentity user)
+        {
+            var claims = await _userManager.GetClaimsAsync(user);
+            var profile = OpenIdClaimHelpers.ExtractProfileInfo(claims);
+
+            var model = new IndexViewModel
+            {
+                Username = user.UserName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                IsEmailConfirmed = user.EmailConfirmed,
+                StatusMessage = StatusMessage,
+                Name = profile.FullName,
+                Website = profile.Website,
+                Profile = profile.Profile,
+                Country = profile.Country,
+                Region = profile.Region,
+                PostalCode = profile.PostalCode,
+                Locality = profile.Locality,
+                StreetAddress = profile.StreetAddress
+            };
+            return model;
+        }
+
+        private async Task UpdateUserClaimsAsync(IndexViewModel model, UserIdentity user)
+        {
+            var claims = await _userManager.GetClaimsAsync(user);
+            var oldProfile = OpenIdClaimHelpers.ExtractProfileInfo(claims);
+            var newProfile = new OpenIdProfile
+            {
+                Website = model.Website,
+                StreetAddress = model.StreetAddress,
+                Locality = model.Locality,
+                PostalCode = model.PostalCode,
+                Region = model.Region,
+                Country = model.Country,
+                FullName = model.Name,
+                Profile = model.Profile
+            };
+
+            var claimsToRemove = OpenIdClaimHelpers.ExtractClaimsToRemove(oldProfile, newProfile);
+            var claimsToAdd = OpenIdClaimHelpers.ExtractClaimsToAdd(oldProfile, newProfile);
+            var claimsToReplace = OpenIdClaimHelpers.ExtractClaimsToReplace(claims, newProfile);
+
+            await _userManager.RemoveClaimsAsync(user, claimsToRemove);
+            await _userManager.AddClaimsAsync(user, claimsToAdd);
+
+            foreach (var pair in claimsToReplace)
+            {
+                await _userManager.ReplaceClaimAsync(user, pair.Item1, pair.Item2);
+            }
         }
 
         private string FormatKey(string unformattedKey)
