@@ -130,25 +130,25 @@
     <value>طول عمر توکن دسترسی</value>
   </data>
   <data name="AccessTokenTypes_Info" xml:space="preserve">
-    <value>مشخص می کند که آیا توکن دسترسی یک توکن مرجع یا توکن JWT تودار (پیش فرض به Jwt) است.</value>
+    <value>مشخص می کند که آیا توکن دسترسی یک توکن رفرنس یا توکن JWT خوددار (پیش فرض به Jwt) است.</value>
   </data>
   <data name="AccessTokenTypes_Label" xml:space="preserve">
     <value>نوع توکن دسترسی</value>
   </data>
   <data name="AllowAccessTokensViaBrowser_Info" xml:space="preserve">
-    <value>مشخص می کند که آیا این کاربر مجاز به دریافت توکن های دسترسی از طریق مرورگر است. این برای جریان های سخت تر که انواع مختلف پاسخ را اجازه می دهد مفید است  (مثلا با رد کردن یک کاربر جریان ترکیبی که قرار است استفاده کند از کد id_token برای افزودن نوع توکن پاسخ و بنابراین توکن در مرورگر فاش می شود.)</value>
+    <value>مشخص می کند که آیا این سرویس گیرنده مجاز به دریافت توکن های دسترسی از طریق مرورگر است. این برای جریان های سخت تر که انواع مختلف پاسخ را اجازه می دهد مفید است  (مثلا با رد کردن یک سرویس گیرنده جریان ترکیبی که قرار است استفاده کند از کد id_token برای افزودن نوع توکن پاسخ و بنابراین توکن در مرورگر فاش می شود.)</value>
   </data>
   <data name="AllowAccessTokensViaBrowser_Label" xml:space="preserve">
     <value>اجازه توکن دسترسی از طریق مرورگر</value>
   </data>
   <data name="AllowOfflineAccess_Info" xml:space="preserve">
-    <value>مشخص می کند که آیا کاربر می تواند توکن های رفرش را درخواست کند (درخواست کردن اسکوپ offline_access)</value>
+    <value>مشخص می کند که آیا سرویس گیرنده می تواند توکن های رفرش را درخواست کند (درخواست کردن اسکوپ offline_access)</value>
   </data>
   <data name="AllowOfflineAccess_Label" xml:space="preserve">
     <value>اجازه دسترسی آفلاین</value>
   </data>
   <data name="AllowPlainTextPkce_Info" xml:space="preserve">
-    <value>مشخص می کند که آیا مشتریانی که از PKCE استفاده می کنند میتوانند از یک کد ساده متن استفاده کنند (توصیه نمی شود - و به طور پیش فرض به false)</value>
+    <value>مشخص می کند که آیا سرویس گیرنده هایی که از PKCE استفاده می کنند میتوانند از یک کد ساده متن استفاده کنند (توصیه نمی شود - و به طور پیش فرض به false)</value>
   </data>
   <data name="AllowPlainTextPkce_Label" xml:space="preserve">
     <value>اجازه متن ساده Pkce</value>
@@ -166,10 +166,10 @@
     <value>همیشه شامل ادعاهای کاربر در IdToken</value>
   </data>
   <data name="AlwaysSendClientClaims_Info" xml:space="preserve">
-    <value>اگر تنظیم شود، ادعای کاربر برای هر جریان ارسال می شود. اگر نه، فقط برای جریان اعتبار کاربر (پیش فرض false)</value>
+    <value>اگر تنظیم شود، ادعای سرویس گیرنده برای هر جریان ارسال می شود. اگر نه، فقط برای جریان اعتبار سرویس گیرنده (پیش فرض false)</value>
   </data>
   <data name="AlwaysSendClientClaims_Label" xml:space="preserve">
-    <value>همیشه ادعاهای کاربر ارسال شود</value>
+    <value>همیشه ادعاهای سرویس گیرنده ارسال شود</value>
   </data>
   <data name="AuthorizationCodeLifetime_Info" xml:space="preserve">
     <value>طول عمر کد مجوز در ثانیه (پیش فرض به 300 ثانیه / 5 دقیقه)</value>
@@ -178,31 +178,31 @@
     <value>طول عمر کد مجوز</value>
   </data>
   <data name="ClientId_Info" xml:space="preserve">
-    <value>شناسه یکتاء کاربر</value>
+    <value>شناسه یکتاء سرویس گیرنده</value>
   </data>
   <data name="ClientId_Label" xml:space="preserve">
-    <value>شناسه کاربر</value>
+    <value>شناسه سرویس گیرنده</value>
   </data>
   <data name="ClientName_Info" xml:space="preserve">
-    <value>نام نمایشی کاربر (برای صفحه ورود و موافقت استفاده می شود)</value>
+    <value>نام نمایشی سرویس گیرنده (برای صفحه ورود و موافقت استفاده می شود)</value>
   </data>
   <data name="ClientName_Label" xml:space="preserve">
-    <value>نام کاربر</value>
+    <value>نام سرویس گیرنده</value>
   </data>
   <data name="ClientUri_Info" xml:space="preserve">
-    <value>URI برای اطلاعات بیشتر در مورد کاربر (در صفحه موافقت استفاده می شود)</value>
+    <value>URI برای اطلاعات بیشتر در مورد سرویس گیرنده (در صفحه موافقت استفاده می شود)</value>
   </data>
   <data name="ClientUri_Label" xml:space="preserve">
-    <value>کاربر Uri</value>
+    <value>سرویس گیرنده Uri</value>
   </data>
   <data name="Enabled_Info" xml:space="preserve">
-    <value>مشخص می کند که آیا کاربر فعال است. پیش فرض true.</value>
+    <value>مشخص می کند که آیا سرویس گیرنده فعال است. پیش فرض true.</value>
   </data>
   <data name="Enabled_Label" xml:space="preserve">
     <value>فعال</value>
   </data>
   <data name="EnableLocalLogin_Info" xml:space="preserve">
-    <value>مشخص می کند که آیا این کاربر می تواند از حساب های محلی، یا فقط IdP های خارجی استفاده کند. پیش فرض true</value>
+    <value>مشخص می کند که آیا این سرویس گیرنده می تواند از حساب های محلی، یا فقط IdP های خارجی استفاده کند. پیش فرض true</value>
   </data>
   <data name="EnableLocalLogin_Label" xml:space="preserve">
     <value>ورود محلی را فعال کنید</value>
@@ -220,7 +220,7 @@
     <value>شامل Jwt Id</value>
   </data>
   <data name="LogoUri_Info" xml:space="preserve">
-    <value>URI به لوگوی کاربر (در صفحه موافقت استفاده شده)</value>
+    <value>URI به لوگوی سرویس گیرنده (در صفحه موافقت استفاده شده)</value>
   </data>
   <data name="LogoUri_Label" xml:space="preserve">
     <value>لوگو Uri</value>
@@ -250,10 +250,10 @@
     <value>کاربرد رفرش توکن</value>
   </data>
   <data name="RequireClientSecret_Info" xml:space="preserve">
-    <value>مشخص می کند که آیا این کاربر نیاز به یک رمز برای درخواست کردن توکن ها از توکن نقطه پایان دارد (پیش فرض true)</value>
+    <value>مشخص می کند که آیا این سرویس گیرنده نیاز به یک رمز برای درخواست کردن توکن ها از توکن نقطه پایان دارد (پیش فرض true)</value>
   </data>
   <data name="RequireClientSecret_Label" xml:space="preserve">
-    <value>نیازمند رمز کاربر</value>
+    <value>نیازمند رمز سرویس گیرنده</value>
   </data>
   <data name="RequireConsent_Info" xml:space="preserve">
     <value>مشخص می کند که آیا یک صفحه موافقت نیاز است. پیش فرض true</value>
@@ -262,7 +262,7 @@
     <value>نیازمند موافقت</value>
   </data>
   <data name="RequirePkce_Info" xml:space="preserve">
-    <value>مشخص می کند درحالی که کاربران از یک کد مجوز بر پایه نوع واگذاری استفاده می کنند باید یک کلید اثبات ارسال کنند </value>
+    <value>مشخص می کند درحالی که سرویس گیرنده ها از یک کد مجوز بر پایه نوع واگذاری استفاده می کنند باید یک کلید اثبات ارسال کنند </value>
   </data>
   <data name="RequirePkce_Label" xml:space="preserve">
     <value>نیازمند Pkce</value>
@@ -280,37 +280,37 @@
     <value>ادعاهای توکن دسترسی با تازه سازی بروز شود</value>
   </data>
   <data name="AllowedCorsOrigins_Info" xml:space="preserve">
-    <value>اگر مشخص شود, بصورت پیش فرض لا پیاده سازی های سرویس سیاست CORS استفاده خواهد شد (In-Memory و EF) برای ساخت یک سیاست CORS برای کاربران JavaScript.</value>
+    <value>اگر مشخص شود, بصورت پیش فرض لا پیاده سازی های سرویس سیاست CORS استفاده خواهد شد (In-Memory و EF) برای ساخت یک سیاست CORS برای سرویس گیرنده ها JavaScript.</value>
   </data>
   <data name="AllowedCorsOrigins_Label" xml:space="preserve">
     <value>مجاز Cors Origins</value>
   </data>
   <data name="AllowedGrantTypes_Info" xml:space="preserve">
-    <value>انواع واگذاری که کاربر مجاز به استفاده است مشخص می کند. از کلاس GrantTypes برای ترکیب های معمول استفاده کنید. فهرست واگذاری های پیش فرض: واگذاری ضمنی - (implicit), واگذاری اعتبارات کاربر - (client_credentials), واگذاری کد مجوز - (authorization_code), واگذاری ترکیبی - (hybrid), واگذاری گواهی نامه های کلمه عبور صاحب منبع - (password)</value>
+    <value>انواع واگذاری که سرویس گیرنده مجاز به استفاده است مشخص می کند. از کلاس GrantTypes برای ترکیب های معمول استفاده کنید. فهرست واگذاری های پیش فرض: واگذاری ضمنی - (implicit), واگذاری اعتبارات سرویس گیرنده - (client_credentials), واگذاری کد مجوز - (authorization_code), واگذاری ترکیبی - (hybrid), واگذاری گواهی نامه های کلمه عبور صاحب منبع - (password)</value>
   </data>
   <data name="AllowedGrantTypes_Label" xml:space="preserve">
     <value>انواع واگذاری مجاز</value>
   </data>
   <data name="AllowedScopes_Info" xml:space="preserve">
-    <value>بصورت پیش فرض یک کاربر به هیچ منبعی دسترسی ندارد - بوسیله اضافه کردن نام های اسکوپ های مربوطه منابع مجاز را مشخص کنید</value>
+    <value>بصورت پیش فرض یک سرویس گیرنده به هیچ منبعی دسترسی ندارد - بوسیله اضافه کردن نام های اسکوپ های مربوطه منابع مجاز را مشخص کنید</value>
   </data>
   <data name="AllowedScopes_Label" xml:space="preserve">
     <value>اسکوپ های مجاز</value>
   </data>
   <data name="Claims_Info" xml:space="preserve">
-    <value>تنظیمات ادعاهای کاربر را مجاز می کند (در توکن دسترسی گنجانده خواهد شد).</value>
+    <value>تنظیمات ادعاهای سرویس گیرنده را مجاز می کند (در توکن دسترسی گنجانده خواهد شد).</value>
   </data>
   <data name="Claims_Label" xml:space="preserve">
     <value>ادعاها</value>
   </data>
   <data name="ClientSecrets_Info" xml:space="preserve">
-    <value>فهرست رمزهای کاربر - اعتبار دسترسی به توکن نقطه پایانی.</value>
+    <value>فهرست رمزهای سرویس گیرنده - اعتبار دسترسی به توکن نقطه پایانی.</value>
   </data>
   <data name="ClientSecrets_Label" xml:space="preserve">
-    <value>رمزهای کاربر</value>
+    <value>رمزهای سرویس گیرنده</value>
   </data>
   <data name="IdentityProviderRestrictions_Info" xml:space="preserve">
-    <value>مشخص می کند که کدام IdP های خارجی را می توان با این کاربر مورد استفاده قرار داد (اگر فهرست خالی باشد، تمام IdP ها مجاز می باشند). پیش فرض خالی است.</value>
+    <value>مشخص می کند که کدام IdP های خارجی را می توان با این سرویس گیرنده مورد استفاده قرار داد (اگر فهرست خالی باشد، تمام IdP ها مجاز می باشند). پیش فرض خالی است.</value>
   </data>
   <data name="IdentityProviderRestrictions_Label" xml:space="preserve">
     <value>محدودیت های ارائه دهنده هویت</value>
@@ -370,19 +370,19 @@
     <value>سشن کانال برگشت خروج ضروری است</value>
   </data>
   <data name="BackChannelLogoutUri_Info" xml:space="preserve">
-    <value>URI خروج سمت کاربر را برای HTTP بر اساس back-channel خروج مشخص می کند . برای جزئیات بیشتر مشخصات OIDC Back-Channel را ببینید.</value>
+    <value>URI خروج سمت سرویس گیرنده را برای HTTP بر اساس back-channel خروج مشخص می کند . برای جزئیات بیشتر مشخصات OIDC Back-Channel را ببینید.</value>
   </data>
   <data name="BackChannelLogoutUri_Label" xml:space="preserve">
     <value>Uri کانال برگشت خروج</value>
   </data>
   <data name="ClientClaimsPrefix_Info" xml:space="preserve">
-    <value>اگر تنظیم شود, پیشوند انواع ادعای کاربر با آن پیشوند می شود. پیش فرض client_. هدف این است که اطمینان حاصل کنید که آنها به طور تصادفی با ادعاهای کاربر برخورد نمی کنند.</value>
+    <value>اگر تنظیم شود, پیشوند انواع ادعای سرویس گیرنده با آن پیشوند می شود. پیش فرض client_. هدف این است که اطمینان حاصل کنید که آنها به طور تصادفی با ادعاهای سرویس گیرنده برخورد نمی کنند.</value>
   </data>
   <data name="ClientClaimsPrefix_Label" xml:space="preserve">
-    <value>پیشوند ادعاهای کاربر</value>
+    <value>پیشوند ادعاهای سرویس گیرنده</value>
   </data>
   <data name="Description_Info" xml:space="preserve">
-    <value>شرح کاربر</value>
+    <value>شرح سرویس گیرنده</value>
   </data>
   <data name="Description_Label" xml:space="preserve">
     <value>شرح</value>
@@ -394,13 +394,13 @@
     <value>سشن کانال جلو خروج ضروری است</value>
   </data>
   <data name="FrontChannelLogoutUri_Info" xml:space="preserve">
-    <value>URI خروج سمت کاربر را برای HTTP بر اساس front-channel خروج مشخص می کند . برای جزئیات بیشتر مشخصات OIDC Front-Channel را ببینید.</value>
+    <value>URI خروج سمت سرویس گیرنده را برای HTTP بر اساس front-channel خروج مشخص می کند . برای جزئیات بیشتر مشخصات OIDC Front-Channel را ببینید.</value>
   </data>
   <data name="FrontChannelLogoutUri_Label" xml:space="preserve">
     <value>Uri کانال جلو خروج</value>
   </data>
   <data name="PairWiseSubjectSalt_Info" xml:space="preserve">
-    <value>مقدار سالت استفاده شده در pair-wise subjectId تولید شده برای کاربران این کاربر.</value>
+    <value>مقدار سالت استفاده شده در pair-wise subjectId تولید شده برای کاربران این سرویس گیرنده.</value>
   </data>
   <data name="PairWiseSubjectSalt_Label" xml:space="preserve">
     <value>Pair Wise Subject Salt</value>
@@ -442,7 +442,7 @@
     <value>طول عمر کد دستگاه</value>
   </data>
   <data name="UserCodeType_Info" xml:space="preserve">
-    <value>نوع کد کاربر را برای استفاده برای مشتری مشخص می کند. در غیر این صورت به پیش فرض می رود.</value>
+    <value>نوع کد کاربر را برای استفاده برای سرویس گیرنده مشخص می کند. در غیر این صورت به پیش فرض می رود.</value>
   </data>
   <data name="UserCodeType_Label" xml:space="preserve">
     <value>نوع کد کاربر</value>

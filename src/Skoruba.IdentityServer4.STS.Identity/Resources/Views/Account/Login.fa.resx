@@ -133,7 +133,7 @@
     <value>ورود</value>
   </data>
   <data name="NoSchema" xml:space="preserve">
-    <value>هیچ طرح ورودی برای این مشتری تنظیم نشده است.</value>
+    <value>هیچ طرح ورودی برای این سرویس گیرنده تنظیم نشده است.</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>کلمه عبور</value>

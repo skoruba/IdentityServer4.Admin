@@ -142,7 +142,7 @@
     <value>برنامه بومی - موبایل/دسکتاپ</value>
   </data>
   <data name="TitlePasswordAndClient" xml:space="preserve">
-    <value>کلمه عبور صاحب منبع و جریان اعتبارات کاربر</value>
+    <value>کلمه عبور صاحب منبع و جریان اعتبارات سرویس گیرنده</value>
   </data>
   <data name="TitleSpa" xml:space="preserve">
     <value>برنامه تک صفحه ای - جاوااسکریپت</value>

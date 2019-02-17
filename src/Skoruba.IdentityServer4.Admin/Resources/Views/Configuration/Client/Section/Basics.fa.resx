@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonManageClientProperties" xml:space="preserve">
-    <value>مدیریت خواص مشتری</value>
+    <value>مدیریت خواص سرویس گیرنده</value>
   </data>
   <data name="ButtonManageClientSecrets" xml:space="preserve">
-    <value>مدیریت رمزهای مشتری</value>
+    <value>مدیریت رمزهای سرویس گیرنده</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
     <value>مبانی</value>
@@ -133,7 +133,7 @@
     <value>هیچ مورد/مواردی انتخاب نشده است</value>
   </data>
   <data name="PickerSearchItemPlaceholder" xml:space="preserve">
-    <value>وارد کنید 2 و کاراکترهای بیشتر</value>
+    <value>حداقل 2 کاراکتر وارد کنید</value>
   </data>
   <data name="PickerSearchResultTitle" xml:space="preserve">
     <value>نتیجه جستجو: (بر روی مورد برای انتخاب کلیک کنید)</value>

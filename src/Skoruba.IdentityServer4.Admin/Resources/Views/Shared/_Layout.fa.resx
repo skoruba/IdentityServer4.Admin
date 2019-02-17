@@ -127,7 +127,7 @@
     <value>Api منابع</value>
   </data>
   <data name="LinkClients" xml:space="preserve">
-    <value>کاربران</value>
+    <value>سرویس گیرنده ها</value>
   </data>
   <data name="LinkIdentityResources" xml:space="preserve">
     <value>منابع هویت</value>
@@ -151,7 +151,7 @@
     <value>Skoruba IdentityServer4 ادمین</value>
   </data>
   <data name="TitleConfiguration" xml:space="preserve">
-    <value>کابران/منابع</value>
+    <value>سرویس گیرنده ها/منابع</value>
   </data>
   <data name="TitleLogs" xml:space="preserve">
     <value>لاگ ها</value>

@@ -214,10 +214,10 @@
     <value>کلید ارائه دهنده</value>
   </data>
   <data name="UserTwoFactorEnabled_Info" xml:space="preserve">
-    <value>فعال کردن کاربر دو فاکتور</value>
+    <value>فعال کردن کاربر دو مرحله ای</value>
   </data>
   <data name="UserTwoFactorEnabled_Label" xml:space="preserve">
-    <value>فعال کردن کاربر دو فاکتور</value>
+    <value>فعال کردن کاربر دو مرحله ای</value>
   </data>
   <data name="UserUserName_Info" xml:space="preserve">
     <value>نام کاربری</value>

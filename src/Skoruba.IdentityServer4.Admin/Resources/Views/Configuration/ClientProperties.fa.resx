@@ -118,22 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonAddProperty" xml:space="preserve">
-    <value>افزودن ویژگی کاربر</value>
+    <value>افزودن ویژگی سرویس گیرنده</value>
   </data>
   <data name="NavigationClientProperties" xml:space="preserve">
-    <value>خواص کاربر</value>
+    <value>خواص سرویس گیرنده</value>
   </data>
   <data name="NavigationClients" xml:space="preserve">
-    <value>کاربران</value>
+    <value>سرویس گیرنده ها</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>خواص کاربر</value>
+    <value>خواص سرویس گیرنده</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
-    <value>خواص کاربر</value>
+    <value>خواص سرویس گیرنده</value>
   </data>
   <data name="PanelTitleNew" xml:space="preserve">
-    <value>ویژگی کاربر</value>
+    <value>ویژگی سرویس گیرنده</value>
   </data>
   <data name="TableButtonRemove" xml:space="preserve">
     <value>حذف</value>

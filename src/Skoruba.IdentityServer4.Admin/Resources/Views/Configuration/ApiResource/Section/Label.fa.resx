@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Description_Info" xml:space="preserve">
-    <value>از این مقدار می توان استفاده کرد e.g. در صفحه موافقت کردن.</value>
+    <value>از این مقدار می توان استفاده کرد بعنوان نمونه در صفحه موافقت کردن.</value>
   </data>
   <data name="Description_Label" xml:space="preserve">
     <value>شرح</value>
   </data>
   <data name="DisplayName_Info" xml:space="preserve">
-    <value>از این مقدار می توان استفاده کرد e.g. در صفحه موافقت کردن.</value>
+    <value>از این مقدار می توان استفاده کرد بعنوان نمونه در صفحه موافقت کردن.</value>
   </data>
   <data name="DisplayName_Label" xml:space="preserve">
     <value>نام نمایشی</value>

@@ -148,7 +148,7 @@
     <value>هیچ مورد/مواردی انتخاب نشده است</value>
   </data>
   <data name="PickerSearchItemPlaceholder" xml:space="preserve">
-    <value>وارد کنید 2 و کاراکترهای بیشتر</value>
+    <value>حداقل 2 کاراکتر وارد کنید</value>
   </data>
   <data name="PickerSearchResultTitle" xml:space="preserve">
     <value>نتیجه جستجو: (بر روی مورد برای انتخاب کلیک کنید)</value>

@@ -130,16 +130,16 @@
     <value>Api رمز با موفقیت ایجاد شد!</value>
   </data>
   <data name="SuccessAddClient" xml:space="preserve">
-    <value>مشتری {0} با موفقیت ایجاد شد!</value>
+    <value>سرویس گیرنده {0} با موفقیت ایجاد شد!</value>
   </data>
   <data name="SuccessAddClientClaim" xml:space="preserve">
-    <value>ادعای مشتری {0} برای مشتری {1} با موفقیت ذخیره شد!</value>
+    <value>ادعای سرویس گیرنده {0} برای سرویس گیرنده {1} با موفقیت ذخیره شد!</value>
   </data>
   <data name="SuccessAddClientProperty" xml:space="preserve">
-    <value>ویژگی مشتری {0} برای مشتری {1} با موفقیت ذخیرده شد!</value>
+    <value>ویژگی سرویس گیرنده {0} برای سرویس گیرنده {1} با موفقیت ذخیرده شد!</value>
   </data>
   <data name="SuccessAddClientSecret" xml:space="preserve">
-    <value>رمز مشتری برای مشتری {0} با موفقیت ذخیره شد!</value>
+    <value>رمز سرویس گیرنده برای سرویس گیرنده {0} با موفقیت ذخیره شد!</value>
   </data>
   <data name="SuccessAddIdentityResource" xml:space="preserve">
     <value>منبع هویت {0} با موفقیت ذخیره شد!</value>
@@ -148,10 +148,10 @@
     <value>ویژگی منبع هویت {0} برای api منبع {1} با موفقیت ذخیره شد!</value>
   </data>
   <data name="SuccessClientClone" xml:space="preserve">
-    <value>مشتری {0} با موفقیت کلون شد!</value>
+    <value>سرویس گیرنده {0} با موفقیت کلون شد!</value>
   </data>
   <data name="SuccessClientDelete" xml:space="preserve">
-    <value>مشتری با موفقیت حذف شد!</value>
+    <value>سرویس گیرنده با موفقیت حذف شد!</value>
   </data>
   <data name="SuccessDeleteApiResource" xml:space="preserve">
     <value>Api منبع با موفقیت حذف شد!</value>
@@ -166,13 +166,13 @@
     <value>Api رمز با موفقیت حذف شد!</value>
   </data>
   <data name="SuccessDeleteClientClaim" xml:space="preserve">
-    <value>ادعای مشتری با موفقیت حذف شد!</value>
+    <value>ادعای سرویس گیرنده با موفقیت حذف شد!</value>
   </data>
   <data name="SuccessDeleteClientProperty" xml:space="preserve">
-    <value>ویژگی مشتری با موفقیت حذف شد!</value>
+    <value>ویژگی سرویس گیرنده با موفقیت حذف شد!</value>
   </data>
   <data name="SuccessDeleteClientSecret" xml:space="preserve">
-    <value>رمز مشتری با موفقیت حذف شد!</value>
+    <value>رمز سرویس گیرنده با موفقیت حذف شد!</value>
   </data>
   <data name="SuccessDeleteIdentityResource" xml:space="preserve">
     <value>منبع هویت با موفقیت حذف شد!</value>
@@ -184,6 +184,6 @@
     <value>موفق</value>
   </data>
   <data name="SuccessUpdateClient" xml:space="preserve">
-    <value>مشتری {0} با موفقیت بروزرسانی شد!</value>
+    <value>سرویس گیرنده {0} با موفقیت بروزرسانی شد!</value>
   </data>
 </root>

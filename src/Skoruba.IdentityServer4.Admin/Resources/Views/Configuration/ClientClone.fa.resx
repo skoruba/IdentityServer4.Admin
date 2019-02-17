@@ -118,45 +118,45 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonClone" xml:space="preserve">
-    <value>کلون کاربر</value>
+    <value>کلون سرویس گیرنده</value>
   </data>
   <data name="InfoDescription" xml:space="preserve">
-    <value>رمزهای مشتری کلون نخواهد شد.</value>
+    <value>رمزهای سرویس گیرنده کلون نخواهد شد.</value>
   </data>
   <data name="InfoTitle" xml:space="preserve">
     <value>اطلاعات:</value>
   </data>
   <data name="LabelCloneClientClaims" xml:space="preserve">
-    <value>ادعاهای کاربر</value>
+    <value>ادعاهای سرویس گیرنده</value>
   </data>
   <data name="LabelCloneClientCorsOrigins" xml:space="preserve">
-    <value>کاربر Cors Origins</value>
+    <value>سرویس گیرنده Cors Origins</value>
   </data>
   <data name="LabelCloneClientGrantTypes" xml:space="preserve">
-    <value>نوع واگذاری های کاربر</value>
+    <value>نوع واگذاری های سرویس گیرنده</value>
   </data>
   <data name="LabelCloneClientIdPRestrictions" xml:space="preserve">
-    <value>کاربر IdP محدودیت های</value>
+    <value>سرویس گیرنده IdP محدودیت های</value>
   </data>
   <data name="LabelCloneClientPostLogoutRedirectUris" xml:space="preserve">
-    <value>کاربر Uri های تغییر مسیر خروج را ارسال می کند</value>
+    <value>سرویس گیرنده Uri های تغییر مسیر خروج را ارسال می کند</value>
   </data>
   <data name="LabelCloneClientProperties" xml:space="preserve">
-    <value>خواص کاربر</value>
+    <value>خواص سرویس گیرنده</value>
   </data>
   <data name="LabelCloneClientRedirectUris" xml:space="preserve">
-    <value>Uri های تغییر مسیر کاربر</value>
+    <value>Uri های تغییر مسیر سرویس گیرنده</value>
   </data>
   <data name="LabelCloneClientScopes" xml:space="preserve">
-    <value>اسکوپ های کاربر</value>
+    <value>اسکوپ های سرویس گیرنده</value>
   </data>
   <data name="NavigationClients" xml:space="preserve">
-    <value>کاربران</value>
+    <value>سرویس گیرنده ها</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>کلون کاربر</value>
+    <value>کلون سرویس گیرنده</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
-    <value>کاربر</value>
+    <value>سرویس گیرنده</value>
   </data>
 </root>

@@ -118,21 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ClientClaimDoesNotExist" xml:space="preserve">
-    <value>ادعای مشتری با شناسه {0} وجود ندارد</value>
+    <value>ادعای سرویس گیرنده با شناسه {0} وجود ندارد</value>
   </data>
   <data name="ClientDoesNotExist" xml:space="preserve">
-    <value>مشتری با شناسه {0} وجود ندارد</value>
+    <value>سرویس گیرنده با شناسه {0} وجود ندارد</value>
   </data>
   <data name="ClientExistsKey" xml:space="preserve">
-    <value>مشتری در حال حاضر موجود است</value>
+    <value>سرویس گیرنده در حال حاضر موجود است</value>
   </data>
   <data name="ClientExistsValue" xml:space="preserve">
-    <value>شناسه مشتری ({0}) درحال حاضر وجود دارد</value>
+    <value>شناسه سرویس گیرنده ({0}) درحال حاضر وجود دارد</value>
   </data>
   <data name="ClientPropertyDoesNotExist" xml:space="preserve">
-    <value>ویژگی مشتری با شناسه {0} وجود ندارد</value>
+    <value>ویژگی سرویس گیرنده با شناسه {0} وجود ندارد</value>
   </data>
   <data name="ClientSecretDoesNotExist" xml:space="preserve">
-    <value>رمز مشتری با شناسه {0} وجود ندارد</value>
+    <value>رمز سرویس گیرنده با شناسه {0} وجود ندارد</value>
   </data>
 </root>
