@@ -7,14 +7,13 @@ using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Constants;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using TableConst = Skoruba.IdentityServer4.Admin.EntityFramework.Constants;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts
 {
     public class AdminDbContext : IdentityDbContext<UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>,
-        IAdminConfigurationDbContext, IAdminLogDbContext, IAdminPersistedGrantDbContext, IAdminPersistedGrantIdentityDbContext
+        IAdminConfigurationDbContext, IAdminLogDbContext, IAdminPersistedGrantDbContext
     {
         private readonly ConfigurationStoreOptions _storeOptions;
         private readonly OperationalStoreOptions _operationalOptions;

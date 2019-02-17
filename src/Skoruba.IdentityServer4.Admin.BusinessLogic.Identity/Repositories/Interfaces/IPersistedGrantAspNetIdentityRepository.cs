@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Entities;
 using Microsoft.AspNetCore.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories.Interfaces
 {

@@ -10,14 +10,14 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Enums;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories
 {
     public class PersistedGrantAspNetIdentityRepository<TIdentityDbContext, TPersistedGrantDbContext, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> : IPersistedGrantAspNetIdentityRepository
         where TIdentityDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
-        where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantIdentityDbContext
+        where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
         where TUser : IdentityUser<TKey> 
         where TRole : IdentityRole<TKey> 
         where TKey : IEquatable<TKey> 

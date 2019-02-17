@@ -12,6 +12,8 @@
 
         public const string PersistedGrantDbMigrationsAssemblyKey = "PersistedGrantMigrationsAssembly";
 
+        public const string IdentityDbConnectionStringKey = "IdentityDbConnection";
+
         public const string AdminLogDbConnectionStringKey = "AdminLogDbConnection";
 
         public const string ResourcesPath = "Resources";

@@ -13,7 +13,7 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories.Interfac
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfaces;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Extensions
 {
@@ -76,7 +76,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Extensions
         public static IServiceCollection AddAdminAspNetIdentityServices<TIdentityDbContext, TPersistedGrantDbContext, TUser>(
             this IServiceCollection services)
             where TIdentityDbContext : IdentityDbContext<TUser, IdentityRole, string, IdentityUserClaim<string>, IdentityUserRole<string>, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>
-            where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantIdentityDbContext
+            where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TUser : IdentityUser
         {
             return services.AddAdminAspNetIdentityServices<TIdentityDbContext, TPersistedGrantDbContext, UserDto<string>, string, RoleDto<string>, string, string,
@@ -94,7 +94,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Extensions
                 this IServiceCollection services)
             where TAdminDbContext :
             IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>,
-            IAdminPersistedGrantIdentityDbContext
+            IAdminPersistedGrantDbContext
             where TUserDto : UserDto<TUserDtoKey>
             where TUser : IdentityUser<TKey>
             where TRole : IdentityRole<TKey>
@@ -127,7 +127,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Extensions
                     TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
                     TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>(
                         this IServiceCollection services)
-            where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantIdentityDbContext
+            where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TIdentityDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
             where TUserDto : UserDto<TUserDtoKey>
             where TUser : IdentityUser<TKey>
