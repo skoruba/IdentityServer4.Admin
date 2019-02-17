@@ -9,9 +9,9 @@ using System.Security.Claims;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
-    public static class OpenIDClaimHelpers
+    public static class OpenIdClaimHelpers
     {
-        public static Claim ExtractAddressClaim(OpenIDProfile profile)
+        public static Claim ExtractAddressClaim(OpenIdProfile profile)
         {
             var addressJson = new JObject();
             if (!string.IsNullOrWhiteSpace(profile.StreetAddress))
@@ -43,56 +43,67 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             return new Claim(JwtClaimTypes.Address, addressJson.Count != 0 ? addressJson.ToString() : string.Empty);
         }
 
-        public static OpenIDProfile ExtractProfileInfo(IList<Claim> claims)
+        /// <summary>
+        /// Map claims to OpenId Profile
+        /// </summary>
+        /// <param name="claims"></param>
+        /// <returns></returns>
+        public static OpenIdProfile ExtractProfileInfo(IList<Claim> claims)
         {
-            var profile = new OpenIDProfile();
+            var profile = new OpenIdProfile
+            {
+                FullName = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Name)?.Value,
+                Website = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.WebSite)?.Value,
+                Profile = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Profile)?.Value
+            };
 
-            profile.FullName = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Name)?.Value;
-            profile.Website = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.WebSite)?.Value;
-            profile.Profile = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Profile)?.Value;
             var address = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Address)?.Value;
 
-            if (address != null)
+            if (address == null) return profile;
+
+            try
             {
-                try
+                var addressJson = JObject.Parse(address);
+                if (addressJson.ContainsKey(AddressClaimConstants.StreetAddress))
                 {
-                    var addressJson = JObject.Parse(address);
-                    if (addressJson.ContainsKey(AddressClaimConstants.StreetAddress))
-                    {
-                        profile.StreetAddress = addressJson[AddressClaimConstants.StreetAddress].ToString();
-                    }
-
-                    if (addressJson.ContainsKey(AddressClaimConstants.Locality))
-                    {
-                        profile.Locality = addressJson[AddressClaimConstants.Locality].ToString();
-                    }
-
-                    if (addressJson.ContainsKey(AddressClaimConstants.Region))
-                    {
-                        profile.Region = addressJson[AddressClaimConstants.Region].ToString();
-                    }
-
-                    if (addressJson.ContainsKey(AddressClaimConstants.PostalCode))
-                    {
-                        profile.PostalCode = addressJson[AddressClaimConstants.PostalCode].ToString();
-                    }
-
-                    if (addressJson.ContainsKey(AddressClaimConstants.Country))
-                    {
-                        profile.Country = addressJson[AddressClaimConstants.Country].ToString();
-                    }
+                    profile.StreetAddress = addressJson[AddressClaimConstants.StreetAddress].ToString();
                 }
-                catch (JsonReaderException)
+
+                if (addressJson.ContainsKey(AddressClaimConstants.Locality))
                 {
-
+                    profile.Locality = addressJson[AddressClaimConstants.Locality].ToString();
                 }
+
+                if (addressJson.ContainsKey(AddressClaimConstants.Region))
+                {
+                    profile.Region = addressJson[AddressClaimConstants.Region].ToString();
+                }
+
+                if (addressJson.ContainsKey(AddressClaimConstants.PostalCode))
+                {
+                    profile.PostalCode = addressJson[AddressClaimConstants.PostalCode].ToString();
+                }
+
+                if (addressJson.ContainsKey(AddressClaimConstants.Country))
+                {
+                    profile.Country = addressJson[AddressClaimConstants.Country].ToString();
+                }
+            }
+            catch (JsonReaderException)
+            {
 
             }
 
             return profile;
         }
 
-        public static IList<Claim> ExtractClaimsToRemove(OpenIDProfile oldProfile, OpenIDProfile newProfile)
+        /// <summary>
+        /// Get claims to remove
+        /// </summary>
+        /// <param name="oldProfile"></param>
+        /// <param name="newProfile"></param>
+        /// <returns></returns>
+        public static IList<Claim> ExtractClaimsToRemove(OpenIdProfile oldProfile, OpenIdProfile newProfile)
         {
             var claimsToRemove = new List<Claim>();
 
@@ -122,7 +133,13 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             return claimsToRemove;
         }
 
-        public static IList<Claim> ExtractClaimsToAdd(OpenIDProfile oldProfile, OpenIDProfile newProfile)
+        /// <summary>
+        /// Get claims to add
+        /// </summary>
+        /// <param name="oldProfile"></param>
+        /// <param name="newProfile"></param>
+        /// <returns></returns>
+        public static IList<Claim> ExtractClaimsToAdd(OpenIdProfile oldProfile, OpenIdProfile newProfile)
         {
             var claimsToAdd = new List<Claim>();
 
@@ -152,7 +169,13 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             return claimsToAdd;
         }
 
-        public static IList<Tuple<Claim,Claim>> ExtractClaimsToReplace(IList<Claim> oldClaims, OpenIDProfile newProfile)
+        /// <summary>
+        /// Get claims to replace
+        /// </summary>
+        /// <param name="oldClaims"></param>
+        /// <param name="newProfile"></param>
+        /// <returns></returns>
+        public static IList<Tuple<Claim,Claim>> ExtractClaimsToReplace(IList<Claim> oldClaims, OpenIdProfile newProfile)
         {
             var oldProfile = ExtractProfileInfo(oldClaims);
             var claimsToReplace = new List<Tuple<Claim, Claim>>();

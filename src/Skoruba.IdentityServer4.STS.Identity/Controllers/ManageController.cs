@@ -52,7 +52,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             }
 
             var claims = await _userManager.GetClaimsAsync(user);
-            var profile = OpenIDClaimHelpers.ExtractProfileInfo(claims);
+            var profile = OpenIdClaimHelpers.ExtractProfileInfo(claims);
 
             var model = new IndexViewModel
             {
@@ -111,8 +111,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
 
             var claims = await _userManager.GetClaimsAsync(user);
-            var oldProfile = OpenIDClaimHelpers.ExtractProfileInfo(claims);
-            var newProfile = new OpenIDProfile
+            var oldProfile = OpenIdClaimHelpers.ExtractProfileInfo(claims);
+            var newProfile = new OpenIdProfile
             {
                 Website = model.Website,
                 StreetAddress = model.StreetAddress,
@@ -124,9 +124,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 Profile = model.Profile
             };
            
-            var claimsToRemove = OpenIDClaimHelpers.ExtractClaimsToRemove(oldProfile, newProfile);
-            var claimsToAdd = OpenIDClaimHelpers.ExtractClaimsToAdd(oldProfile, newProfile);
-            var claimsToReplace = OpenIDClaimHelpers.ExtractClaimsToReplace(claims, newProfile);
+            var claimsToRemove = OpenIdClaimHelpers.ExtractClaimsToRemove(oldProfile, newProfile);
+            var claimsToAdd = OpenIdClaimHelpers.ExtractClaimsToAdd(oldProfile, newProfile);
+            var claimsToReplace = OpenIdClaimHelpers.ExtractClaimsToReplace(claims, newProfile);
 
             await _userManager.RemoveClaimsAsync(user, claimsToRemove);
             await _userManager.AddClaimsAsync(user, claimsToAdd);

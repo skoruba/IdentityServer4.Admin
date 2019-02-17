@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
-    public class OpenIDProfile
+    public class OpenIdProfile
     {
         public string FullName { get; internal set; }
         public string Website { get; internal set; }
