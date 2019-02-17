@@ -121,19 +121,19 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories
         {
             var grants = await _persistedGrantDbContext.PersistedGrants.Where(x => x.SubjectId == userId).ToListAsync();
 
-            _identityDbContext.RemoveRange(grants);
+            _persistedGrantDbContext.RemoveRange(grants);
 
             return await AutoSaveChangesAsync();
         }
 
         private async Task<int> AutoSaveChangesAsync()
         {
-            return AutoSaveChanges ? await _identityDbContext.SaveChangesAsync() : (int)SavedStatus.WillBeSavedExplicitly;
+            return AutoSaveChanges ? await _persistedGrantDbContext.SaveChangesAsync() : (int)SavedStatus.WillBeSavedExplicitly;
         }
 
         public async Task<int> SaveAllChangesAsync()
         {
-            return await _identityDbContext.SaveChangesAsync();
+            return await _persistedGrantDbContext.SaveChangesAsync();
         }
     }
 }
