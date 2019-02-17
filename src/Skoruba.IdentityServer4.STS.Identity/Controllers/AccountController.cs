@@ -30,26 +30,28 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 {
     [SecurityHeaders]
     [AllowAnonymous]
-    public class AccountController : Controller
+    public class AccountController<TUser, TKey> : Controller
+        where TUser : IdentityUser<TKey>, new()
+        where TKey : IEquatable<TKey>
     {
-        private readonly UserManager<UserIdentity> _userManager;
-        private readonly SignInManager<UserIdentity> _signInManager;
+        private readonly UserManager<TUser> _userManager;
+        private readonly SignInManager<TUser> _signInManager;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IEventService _events;
         private readonly IEmailSender _emailSender;
-        private readonly IStringLocalizer<AccountController> _localizer;
+        private readonly IStringLocalizer<AccountController<TUser, TKey>> _localizer;
 
         public AccountController(
-            UserManager<UserIdentity> userManager,
-            SignInManager<UserIdentity> signInManager,
+            UserManager<TUser> userManager,
+            SignInManager<TUser> signInManager,
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
             IEventService events,
             IEmailSender emailSender,
-            IStringLocalizer<AccountController> localizer)
+            IStringLocalizer<AccountController<TUser, TKey>> localizer)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -379,7 +381,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                     return View("ExternalLoginFailure");
                 }
 
-                var user = new UserIdentity
+                var user = new TUser
                 {
                     UserName = model.UserName,
                     Email = model.Email

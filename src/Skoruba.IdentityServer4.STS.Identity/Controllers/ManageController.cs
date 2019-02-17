@@ -16,13 +16,15 @@ using Skoruba.IdentityServer4.STS.Identity.ViewModels.Manage;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 {
-    public class ManageController : Controller
+    public class ManageController<TUser, TKey> : Controller
+        where TUser : IdentityUser<TKey>, new()
+        where TKey : IEquatable<TKey>
     {
-        private readonly UserManager<UserIdentity> _userManager;
-        private readonly SignInManager<UserIdentity> _signInManager;
+        private readonly UserManager<TUser> _userManager;
+        private readonly SignInManager<TUser> _signInManager;
         private readonly IEmailSender _emailSender;
-        private readonly ILogger<ManageController> _logger;
-        private readonly IStringLocalizer<ManageController> _localizer;
+        private readonly ILogger<ManageController<TUser, TKey>> _logger;
+        private readonly IStringLocalizer<ManageController<TUser, TKey>> _localizer;
         private readonly UrlEncoder _urlEncoder;
 
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
@@ -31,7 +33,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         [TempData]
         public string StatusMessage { get; set; }
 
-        public ManageController(UserManager<UserIdentity> userManager, SignInManager<UserIdentity> signInManager, IEmailSender emailSender, ILogger<ManageController> logger, IStringLocalizer<ManageController> localizer, UrlEncoder urlEncoder)
+        public ManageController(UserManager<TUser> userManager, SignInManager<TUser> signInManager, IEmailSender emailSender, ILogger<ManageController<TUser, TKey>> logger, IStringLocalizer<ManageController<TUser, TKey>> localizer, UrlEncoder urlEncoder)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -244,7 +246,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             _logger.LogInformation(_localizer["AskForPersonalDataLog"], _userManager.GetUserId(User));
 
-            var personalDataProps = typeof(UserIdentity).GetProperties().Where(prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
+            var personalDataProps = typeof(TUser).GetProperties().Where(prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
             var personalData = personalDataProps.ToDictionary(p => p.Name, p => p.GetValue(user)?.ToString() ?? "null");
 
             Response.Headers.Add("Content-Disposition", "attachment; filename=PersonalData.json");
@@ -605,7 +607,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             return View(nameof(GenerateRecoveryCodes));
         }
 
-        private async Task LoadSharedKeyAndQrCodeUriAsync(UserIdentity user, EnableAuthenticatorViewModel model)
+        private async Task LoadSharedKeyAndQrCodeUriAsync(TUser user, EnableAuthenticatorViewModel model)
         {
             var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
             if (string.IsNullOrEmpty(unformattedKey))
@@ -618,7 +620,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             model.AuthenticatorUri = GenerateQrCodeUri(user.Email, unformattedKey);
         }
 
-        private async Task<IndexViewModel> BuildManageIndexViewModelAsync(UserIdentity user)
+        private async Task<IndexViewModel> BuildManageIndexViewModelAsync(TUser user)
         {
             var claims = await _userManager.GetClaimsAsync(user);
             var profile = OpenIdClaimHelpers.ExtractProfileInfo(claims);
@@ -642,7 +644,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             return model;
         }
 
-        private async Task UpdateUserClaimsAsync(IndexViewModel model, UserIdentity user)
+        private async Task UpdateUserClaimsAsync(IndexViewModel model, TUser user)
         {
             var claims = await _userManager.GetClaimsAsync(user);
             var oldProfile = OpenIdClaimHelpers.ExtractProfileInfo(claims);
