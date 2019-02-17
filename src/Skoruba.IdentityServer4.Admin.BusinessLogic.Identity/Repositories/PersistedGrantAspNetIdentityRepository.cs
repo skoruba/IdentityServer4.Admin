@@ -16,7 +16,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Interfaces;
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories
 {
     public class PersistedGrantAspNetIdentityRepository<TDbContext, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> 
-        : IPersistedGrantAspNetIdentityRepository<TDbContext, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
+        : IPersistedGrantAspNetIdentityRepository<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
         where TDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>, IAdminPersistedGrantIdentityDbContext
         where TUser : IdentityUser<TKey> 
         where TRole : IdentityRole<TKey> 

@@ -13,7 +13,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 {
-    public class PersistedGrantRepository<TDbContext> : IPersistedGrantRepository<TDbContext>
+    public class PersistedGrantRepository<TDbContext> : IPersistedGrantRepository
         where TDbContext : DbContext, IAdminPersistedGrantDbContext
         
     {

@@ -18,9 +18,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         private readonly ConfigurationStoreOptions _storeOptions;
         private readonly OperationalStoreOptions _operationalStore;
 
-        private IIdentityResourceRepository<AdminDbContext> GetIdentityResourceRepository(AdminDbContext context)
+        private IIdentityResourceRepository GetIdentityResourceRepository(AdminDbContext context)
         {
-            IIdentityResourceRepository<AdminDbContext> identityResourceRepository = new IdentityResourceRepository<AdminDbContext>(context);
+            IIdentityResourceRepository identityResourceRepository = new IdentityResourceRepository<AdminDbContext>(context);
 
             return identityResourceRepository;
         }

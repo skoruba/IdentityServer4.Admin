@@ -25,18 +25,18 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Extensions
             where TLogDbContext : DbContext, IAdminLogDbContext
         {
             //Repositories
-            services.AddTransient<IClientRepository<TConfigurationDbContext>, ClientRepository<TConfigurationDbContext>>();
-            services.AddTransient<IIdentityResourceRepository<TConfigurationDbContext>, IdentityResourceRepository<TConfigurationDbContext>>();
-            services.AddTransient<IApiResourceRepository<TConfigurationDbContext>, ApiResourceRepository<TConfigurationDbContext>>();
-            services.AddTransient<IPersistedGrantRepository<TPersistedGrantDbContext>, PersistedGrantRepository<TPersistedGrantDbContext>>();
-            services.AddTransient<ILogRepository<TLogDbContext>, LogRepository<TLogDbContext>>();
+            services.AddTransient<IClientRepository, ClientRepository<TConfigurationDbContext>>();
+            services.AddTransient<IIdentityResourceRepository, IdentityResourceRepository<TConfigurationDbContext>>();
+            services.AddTransient<IApiResourceRepository, ApiResourceRepository<TConfigurationDbContext>>();
+            services.AddTransient<IPersistedGrantRepository, PersistedGrantRepository<TPersistedGrantDbContext>>();
+            services.AddTransient<ILogRepository, LogRepository<TLogDbContext>>();
 
             //Services
-            services.AddTransient<IClientService<TConfigurationDbContext>, ClientService<TConfigurationDbContext>>();
-            services.AddTransient<IApiResourceService<TConfigurationDbContext>, ApiResourceService<TConfigurationDbContext>>();
-            services.AddTransient<IIdentityResourceService<TConfigurationDbContext>, IdentityResourceService<TConfigurationDbContext>>();
-            services.AddTransient<IPersistedGrantService<TPersistedGrantDbContext>, PersistedGrantService<TPersistedGrantDbContext>>();
-            services.AddTransient<ILogService<TLogDbContext>, LogService<TLogDbContext>>();
+            services.AddTransient<IClientService, ClientService>();
+            services.AddTransient<IApiResourceService, ApiResourceService>();
+            services.AddTransient<IIdentityResourceService, IdentityResourceService>();
+            services.AddTransient<IPersistedGrantService, PersistedGrantService>();
+            services.AddTransient<ILogService, LogService>();
 
             //Resources
             services.AddScoped<IApiResourceServiceResources, ApiResourceServiceResources>();

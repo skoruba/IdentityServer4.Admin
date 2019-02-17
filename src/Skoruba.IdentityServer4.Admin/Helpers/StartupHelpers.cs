@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -23,11 +24,14 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Middlewares;
 using Skoruba.IdentityServer4.Admin.Configuration;
+using Skoruba.IdentityServer4.Admin.Configuration.ApplicationParts;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -154,33 +158,64 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             services.AddScoped<ControllerExceptionFilterAttribute>();
         }
 
-        public static void AddMvcLocalization(this IServiceCollection services)
+        public static void AddMvcWithLocalization<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
+            TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
+            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>(this IServiceCollection services)
+            where TUserDto : UserDto<TUserDtoKey>, new()
+            where TRoleDto : RoleDto<TRoleDtoKey>, new()
+            where TUser : IdentityUser<TKey>
+            where TRole : IdentityRole<TKey>
+            where TKey : IEquatable<TKey>
+            where TUserClaim : IdentityUserClaim<TKey>
+            where TUserRole : IdentityUserRole<TKey>
+            where TUserLogin : IdentityUserLogin<TKey>
+            where TRoleClaim : IdentityRoleClaim<TKey>
+            where TUserToken : IdentityUserToken<TKey>
+            where TRoleDtoKey : IEquatable<TRoleDtoKey>
+            where TUserDtoKey : IEquatable<TUserDtoKey>
+            where TUsersDto : UsersDto<TUserDto, TUserDtoKey>
+            where TRolesDto : RolesDto<TRoleDto, TRoleDtoKey>
+            where TUserRolesDto : UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey>
+            where TUserClaimsDto : UserClaimsDto<TUserDtoKey>
+            where TUserProviderDto : UserProviderDto<TUserDtoKey>
+            where TUserProvidersDto : UserProvidersDto<TUserDtoKey>
+            where TUserChangePasswordDto : UserChangePasswordDto<TUserDtoKey>
+            where TRoleClaimsDto : RoleClaimsDto<TRoleDtoKey>
         {
             services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
 
             services.AddLocalization(opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; });
 
-            services.AddMvc()
+            services.AddMvc(o =>
+                {
+                    o.Conventions.Add(new GenericControllerRouteConvention());
+                })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddViewLocalization(
                     LanguageViewLocationExpanderFormat.Suffix,
                     opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; })
-                .AddDataAnnotationsLocalization();
+                .AddDataAnnotationsLocalization()
+                .ConfigureApplicationPartManager(m =>
+                {
+                    m.FeatureProviders.Add(new GenericTypeControllerFeatureProvider<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
+                        TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
+                        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>());
+                });
 
             services.Configure<RequestLocalizationOptions>(
-                opts =>
+            opts =>
+            {
+                var supportedCultures = new[]
                 {
-                    var supportedCultures = new[]
-                    {
                         new CultureInfo("ru"),
                         new CultureInfo("zh"),
                         new CultureInfo("en")
-                    };
+                };
 
-                    opts.DefaultRequestCulture = new RequestCulture("en");
-                    opts.SupportedCultures = supportedCultures;
-                    opts.SupportedUICultures = supportedCultures;
-                });
+                opts.DefaultRequestCulture = new RequestCulture("en");
+                opts.SupportedCultures = supportedCultures;
+                opts.SupportedUICultures = supportedCultures;
+            });
         }
 
         public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IAdminConfiguration adminConfiguration)

@@ -35,30 +35,30 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		private readonly ConfigurationStoreOptions _storeOptions;
 		private readonly OperationalStoreOptions _operationalStore;
 
-		private IClientRepository<AdminDbContext> GetClientRepository(AdminDbContext context)
+		private IClientRepository GetClientRepository(AdminDbContext context)
 		{
-			IClientRepository<AdminDbContext> clientRepository = new ClientRepository<AdminDbContext>(context);
+			IClientRepository clientRepository = new ClientRepository<AdminDbContext>(context);
 
 			return clientRepository;
 		}
 
-		private IApiResourceRepository<AdminDbContext> GetApiResourceRepository(AdminDbContext context)
+		private IApiResourceRepository GetApiResourceRepository(AdminDbContext context)
 		{
-			IApiResourceRepository<AdminDbContext> apiResourceRepository = new ApiResourceRepository<AdminDbContext>(context);
+			IApiResourceRepository apiResourceRepository = new ApiResourceRepository<AdminDbContext>(context);
 
 			return apiResourceRepository;
 		}
 
-		private IClientService<AdminDbContext> GetClientService(IClientRepository<AdminDbContext> repository, IClientServiceResources resources)
+		private IClientService GetClientService(IClientRepository repository, IClientServiceResources resources)
 		{
-			IClientService<AdminDbContext> clientService = new ClientService<AdminDbContext>(repository, resources);
+			IClientService clientService = new ClientService(repository, resources);
 
 			return clientService;
 		}
 
-		private IApiResourceService<AdminDbContext> GetApiResourceService(IApiResourceRepository<AdminDbContext> repository, IApiResourceServiceResources resources, IClientService<AdminDbContext> clientService)
+		private IApiResourceService GetApiResourceService(IApiResourceRepository repository, IApiResourceServiceResources resources, IClientService clientService)
 		{
-			IApiResourceService<AdminDbContext> apiResourceService = new ApiResourceService<AdminDbContext>(repository, resources, clientService);
+			IApiResourceService apiResourceService = new ApiResourceService(repository, resources, clientService);
 
 			return apiResourceService;
 		}

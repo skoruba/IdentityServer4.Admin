@@ -35,16 +35,16 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		private readonly ConfigurationStoreOptions _storeOptions;
 		private readonly OperationalStoreOptions _operationalStore;
 
-		private IIdentityResourceRepository<AdminDbContext> GetIdentityResourceRepository(AdminDbContext context)
+		private IIdentityResourceRepository GetIdentityResourceRepository(AdminDbContext context)
 		{
-			IIdentityResourceRepository<AdminDbContext> identityResourceRepository = new IdentityResourceRepository<AdminDbContext>(context);
+			IIdentityResourceRepository identityResourceRepository = new IdentityResourceRepository<AdminDbContext>(context);
 
 			return identityResourceRepository;
 		}
 
-		private IIdentityResourceService<AdminDbContext> GetIdentityResourceService(IIdentityResourceRepository<AdminDbContext> repository, IIdentityResourceServiceResources identityResourceServiceResources)
+		private IIdentityResourceService GetIdentityResourceService(IIdentityResourceRepository repository, IIdentityResourceServiceResources identityResourceServiceResources)
 		{
-			IIdentityResourceService<AdminDbContext> identityResourceService = new IdentityResourceService<AdminDbContext>(repository, identityResourceServiceResources);
+			IIdentityResourceService identityResourceService = new IdentityResourceService(repository, identityResourceServiceResources);
 
 			return identityResourceService;
 		}

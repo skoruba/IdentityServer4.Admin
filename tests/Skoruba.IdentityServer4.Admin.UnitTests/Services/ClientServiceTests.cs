@@ -35,16 +35,16 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         private readonly ConfigurationStoreOptions _storeOptions;
         private readonly OperationalStoreOptions _operationalStore;
 
-        private IClientRepository<AdminDbContext> GetClientRepository(AdminDbContext context)
+        private IClientRepository GetClientRepository(AdminDbContext context)
         {
-            IClientRepository<AdminDbContext> clientRepository = new ClientRepository<AdminDbContext>(context);
+            IClientRepository clientRepository = new ClientRepository<AdminDbContext>(context);
 
             return clientRepository;
         }
 
-        private IClientService<AdminDbContext> GetClientService(IClientRepository<AdminDbContext> repository, IClientServiceResources resources)
+        private IClientService GetClientService(IClientRepository repository, IClientServiceResources resources)
         {
-            IClientService<AdminDbContext> clientService = new ClientService<AdminDbContext>(repository, resources);
+            IClientService clientService = new ClientService(repository, resources);
 
             return clientService;
         }

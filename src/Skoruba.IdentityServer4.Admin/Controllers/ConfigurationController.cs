@@ -16,14 +16,14 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
     public class ConfigurationController : BaseController
     {
-        private readonly IIdentityResourceService<AdminDbContext> _identityResourceService;
-        private readonly IApiResourceService<AdminDbContext> _apiResourceService;
-        private readonly IClientService<AdminDbContext> _clientService;
+        private readonly IIdentityResourceService _identityResourceService;
+        private readonly IApiResourceService _apiResourceService;
+        private readonly IClientService _clientService;
         private readonly IStringLocalizer<ConfigurationController> _localizer;
 
-        public ConfigurationController(IIdentityResourceService<AdminDbContext> identityResourceService,
-            IApiResourceService<AdminDbContext> apiResourceService,
-            IClientService<AdminDbContext> clientService,
+        public ConfigurationController(IIdentityResourceService identityResourceService,
+            IApiResourceService apiResourceService,
+            IClientService clientService,
             IStringLocalizer<ConfigurationController> localizer,
             ILogger<ConfigurationController> logger)
             : base(logger)

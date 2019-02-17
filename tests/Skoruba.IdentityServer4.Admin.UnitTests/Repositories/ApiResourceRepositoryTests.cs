@@ -30,9 +30,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
             _operationalStore = new OperationalStoreOptions();
         }
 
-        private IApiResourceRepository<AdminDbContext> GetApiResourceRepository(AdminDbContext context)
+        private IApiResourceRepository GetApiResourceRepository(AdminDbContext context)
         {
-            IApiResourceRepository<AdminDbContext> apiResourceRepository = new ApiResourceRepository<AdminDbContext>(context);
+            IApiResourceRepository apiResourceRepository = new ApiResourceRepository<AdminDbContext>(context);
 
             return apiResourceRepository;
         }

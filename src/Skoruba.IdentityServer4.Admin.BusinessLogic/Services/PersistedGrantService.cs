@@ -1,22 +1,19 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Grant;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.ExceptionHandling;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 {
-    public class PersistedGrantService<TDbContext> : IPersistedGrantService<TDbContext>
-        where TDbContext : DbContext, IAdminPersistedGrantDbContext
+    public class PersistedGrantService : IPersistedGrantService
     {
-        private readonly IPersistedGrantRepository<TDbContext> _persistedGrantRepository;
+        private readonly IPersistedGrantRepository _persistedGrantRepository;
         private readonly IPersistedGrantServiceResources _persistedGrantServiceResources;
 
-        public PersistedGrantService(IPersistedGrantRepository<TDbContext> persistedGrantRepository,
+        public PersistedGrantService(IPersistedGrantRepository persistedGrantRepository,
             IPersistedGrantServiceResources persistedGrantServiceResources)
         {
             _persistedGrantRepository = persistedGrantRepository;
