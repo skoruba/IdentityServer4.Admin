@@ -34,19 +34,17 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         private readonly ConfigurationStoreOptions _storeOptions;
         private readonly OperationalStoreOptions _operationalStore;
 
-        private IPersistedGrantAspNetIdentityRepository<UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> GetPersistedGrantRepository(AdminDbContext context)
+        private IPersistedGrantAspNetIdentityRepository GetPersistedGrantRepository(AdminDbContext context)
         {
-            var persistedGrantRepository = new PersistedGrantAspNetIdentityRepository<AdminDbContext, UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>(context);
+            var persistedGrantRepository = new PersistedGrantAspNetIdentityRepository<AdminDbContext, AdminDbContext, UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>(context, context);
 
             return persistedGrantRepository;
         }
 
-        private IPersistedGrantAspNetIdentityService<UserIdentity, UserIdentityRole, string, UserIdentityUserClaim,
-                UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>
-            GetPersistedGrantService(IPersistedGrantAspNetIdentityRepository<UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> repository, IPersistedGrantAspNetIdentityServiceResources persistedGrantServiceResources)
+        private IPersistedGrantAspNetIdentityService
+            GetPersistedGrantService(IPersistedGrantAspNetIdentityRepository repository, IPersistedGrantAspNetIdentityServiceResources persistedGrantServiceResources)
         {
-            var persistedGrantService = new PersistedGrantAspNetIdentityService<UserIdentity, UserIdentityRole, string, UserIdentityUserClaim,
-                UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>(repository,
+            var persistedGrantService = new PersistedGrantAspNetIdentityService(repository,
                 persistedGrantServiceResources);
 
             return persistedGrantService;

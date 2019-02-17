@@ -10,20 +10,12 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.ExceptionHandling;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
 {
-    public class PersistedGrantAspNetIdentityService<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> : IPersistedGrantAspNetIdentityService<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>        
-        where TUser : IdentityUser<TKey>
-        where TRole : IdentityRole<TKey>
-        where TKey : IEquatable<TKey>
-        where TUserClaim : IdentityUserClaim<TKey>
-        where TUserRole : IdentityUserRole<TKey>
-        where TUserLogin : IdentityUserLogin<TKey>
-        where TRoleClaim : IdentityRoleClaim<TKey>
-        where TUserToken : IdentityUserToken<TKey>
+    public class PersistedGrantAspNetIdentityService : IPersistedGrantAspNetIdentityService
     {
-        private readonly IPersistedGrantAspNetIdentityRepository<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> _persistedGrantAspNetIdentityRepository;
+        private readonly IPersistedGrantAspNetIdentityRepository _persistedGrantAspNetIdentityRepository;
         private readonly IPersistedGrantAspNetIdentityServiceResources _persistedGrantAspNetIdentityServiceResources;
 
-        public PersistedGrantAspNetIdentityService(IPersistedGrantAspNetIdentityRepository<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> persistedGrantAspNetIdentityRepository,
+        public PersistedGrantAspNetIdentityService(IPersistedGrantAspNetIdentityRepository persistedGrantAspNetIdentityRepository,
             IPersistedGrantAspNetIdentityServiceResources persistedGrantAspNetIdentityServiceResources)
         {
             _persistedGrantAspNetIdentityRepository = persistedGrantAspNetIdentityRepository;

@@ -30,9 +30,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         private readonly ConfigurationStoreOptions _storeOptions;
         private readonly OperationalStoreOptions _operationalStore;
 
-        private IPersistedGrantAspNetIdentityRepository<UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> GetPersistedGrantRepository(AdminDbContext context)
+        private IPersistedGrantAspNetIdentityRepository GetPersistedGrantRepository(AdminDbContext context)
         {
-            var persistedGrantRepository = new PersistedGrantAspNetIdentityRepository<AdminDbContext, UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>(context);
+            var persistedGrantRepository = new PersistedGrantAspNetIdentityRepository<AdminDbContext, AdminDbContext, UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>(context, context);
 
             return persistedGrantRepository;
         }
