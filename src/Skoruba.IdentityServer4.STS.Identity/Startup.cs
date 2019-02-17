@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
+using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 
 namespace Skoruba.IdentityServer4.STS.Identity
@@ -34,11 +36,11 @@ namespace Skoruba.IdentityServer4.STS.Identity
         }
 
         public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddDbContexts<AdminDbContext>(Configuration);
-            services.AddEmailSenders(Configuration);
-            services.AddAuthenticationServices<AdminDbContext, UserIdentity, UserIdentityRole>(Environment, Configuration, Logger);
-            services.AddMvcLocalization();
+        {            
+            services.AddDbContext<AdminIdentityDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey), sql => sql.MigrationsAssembly(typeof(AdminIdentityDbContext).Assembly.GetName().Name)));
+            services.AddEmailSenders(Configuration);            
+            services.AddAuthenticationServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Environment, Configuration, Logger);
+            services.AddMvcWithLocalization();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

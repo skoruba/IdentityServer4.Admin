@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
-using System.Reflection;
+using IdentityServer4.EntityFramework.Interfaces;
+using IdentityServer4.EntityFramework.Storage;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,7 +26,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
     public static class StartupHelpers
     {
-        public static void AddMvcLocalization(this IServiceCollection services)
+        /// <summary>
+        /// Register services for MVC and localization including available languages
+        /// </summary>
+        /// <param name="services"></param>
+        public static void AddMvcWithLocalization(this IServiceCollection services)
         {
             services.AddLocalization(opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; });
 
@@ -52,6 +57,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 });
         }
 
+        /// <summary>
+        /// Using of Forwarded Headers and Referrer Policy
+        /// </summary>
+        /// <param name="app"></param>
         public static void UseSecurityHeaders(this IApplicationBuilder app)
         {
             app.UseForwardedHeaders(new ForwardedHeadersOptions()
@@ -63,6 +72,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             app.UseReferrerPolicy(options => options.NoReferrer());
         }
 
+        /// <summary>
+        /// Add email senders - configuration of sendgrid, smtp senders
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
         public static void AddEmailSenders(this IServiceCollection services, IConfiguration configuration)
         {
             var sendgridConnectionString = configuration.GetConnectionString(ConfigurationConsts.SendgridConnectionStringKey);
@@ -86,18 +100,29 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             }
         }
 
-        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfiguration configuration, ILogger logger) where TContext : DbContext
-            where TUserIdentity : class where TUserIdentityRole : class
+        /// <summary>
+        /// Add services for authentication, including Identity model, IdentityServer4 and external providers
+        /// </summary>
+        /// <typeparam name="TIdentityDbContext">DbContext for Identity</typeparam>
+        /// <typeparam name="TUserIdentity">User Identity class</typeparam>
+        /// <typeparam name="TUserIdentityRole">User Identity Role class</typeparam>
+        /// <typeparam name="TConfigurationDbContext"></typeparam>
+        /// <typeparam name="TPersistedGrantDbContext"></typeparam>
+        /// <param name="services"></param>
+        /// <param name="hostingEnvironment"></param>
+        /// <param name="configuration"></param>
+        /// <param name="logger"></param>
+        public static void AddAuthenticationServices<TConfigurationDbContext, TPersistedGrantDbContext, TIdentityDbContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfiguration configuration, ILogger logger)
+            where TPersistedGrantDbContext : DbContext, IPersistedGrantDbContext
+            where TConfigurationDbContext : DbContext, IConfigurationDbContext
+            where TIdentityDbContext : DbContext
+            where TUserIdentity : class 
+            where TUserIdentityRole : class            
         {
-
-            var connectionString = configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey);
-            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-
             services.AddIdentity<TUserIdentity, TUserIdentityRole>()
-                .AddEntityFrameworkStores<TContext>()
+                .AddEntityFrameworkStores<TIdentityDbContext>()
                 .AddDefaultTokenProviders();
-
-
+            
             services.Configure<IISOptions>(iis =>
             {
                 iis.AuthenticationDisplayName = "Windows";
@@ -108,12 +133,21 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 
             AddExternalProviders(authenticationBuilder, configuration);
 
-            AddIdentityServer<TContext, TUserIdentity, TUserIdentityRole>(services, configuration, logger, connectionString, migrationsAssembly);
+            AddIdentityServer<TConfigurationDbContext, TPersistedGrantDbContext, TUserIdentity>(services, configuration, logger);
         }
 
-        private static void AddIdentityServer<TContext, TUserIdentity, TUserIdentityRole>(IServiceCollection services,
-            IConfiguration configuration, ILogger logger, string connectionString, string migrationsAssembly)
-            where TContext : DbContext where TUserIdentity : class where TUserIdentityRole : class
+        /// <summary>
+        /// Add configuration for IdentityServer4
+        /// </summary>
+        /// <typeparam name="TUserIdentity"></typeparam>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        /// <param name="logger"></param>
+        private static void AddIdentityServer<TConfigurationDbContext, TPersistedGrantDbContext, TUserIdentity>(IServiceCollection services,
+            IConfiguration configuration, ILogger logger)
+            where TUserIdentity : class
+            where TPersistedGrantDbContext : DbContext, IPersistedGrantDbContext
+            where TConfigurationDbContext : DbContext, IConfigurationDbContext
         {
             var builder = services.AddIdentityServer(options =>
                 {
@@ -123,25 +157,17 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     options.Events.RaiseSuccessEvents = true;
                 })
                 .AddAspNetIdentity<TUserIdentity>()
-                .AddConfigurationStore(options =>
-                {
-                    options.ConfigureDbContext = b =>
-                        b.UseSqlServer(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
-                })
-                .AddOperationalStore(options =>
-                {
-                    options.ConfigureDbContext = b =>
-                        b.UseSqlServer(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
-                    options.EnableTokenCleanup = true;
-#if DEBUG
-                    options.TokenCleanupInterval = 15;
-#endif
-                });
+                .AddIdentityServerStoresWithDbContexts<TConfigurationDbContext, TPersistedGrantDbContext>(configuration);
 
             builder.AddCustomSigningCredential(configuration, logger);
             builder.AddCustomValidationKey(configuration, logger);
         }
 
+        /// <summary>
+        /// Add external providers
+        /// </summary>
+        /// <param name="authenticationBuilder"></param>
+        /// <param name="configuration"></param>
         private static void AddExternalProviders(AuthenticationBuilder authenticationBuilder,
             IConfiguration configuration)
         {
@@ -158,18 +184,69 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             }
         }
 
-        public static void AddDbContexts<TContext>(this IServiceCollection services, IConfiguration configuration) where TContext : DbContext
+        /// <summary>
+        /// Add shared DbContext for Identity and IdentityServer4 stores
+        /// </summary>
+        /// <typeparam name="TContext"></typeparam>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        public static void AddDbContexts<TContext>(this IServiceCollection services, IConfiguration configuration) 
+            where TContext : DbContext
         {
             var connectionString = configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey);
             services.AddDbContext<TContext>(options => options.UseSqlServer(connectionString));
         }
 
+        /// <summary>
+        /// Register DbContexts and configure stores for IdentityServer4
+        /// </summary>
+        /// <typeparam name="TConfigurationDbContext"></typeparam>
+        /// <typeparam name="TPersistedGrantDbContext"></typeparam>        
+        /// <param name="builder"></param>
+        /// <param name="configuration"></param>
+        public static IIdentityServerBuilder AddIdentityServerStoresWithDbContexts<TConfigurationDbContext, TPersistedGrantDbContext>(this IIdentityServerBuilder builder, IConfiguration configuration)
+            where TPersistedGrantDbContext : DbContext, IPersistedGrantDbContext
+            where TConfigurationDbContext : DbContext, IConfigurationDbContext
+        {
+            // Config DB from existing connection
+            builder.AddConfigurationStore<TConfigurationDbContext>(options =>
+            {
+                options.ConfigureDbContext = b =>
+                    b.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey),
+                        sql => sql.MigrationsAssembly(configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbMigrationsAssemblyKey)));
+            });
+
+            // Operational DB from existing connection
+            builder.AddOperationalStore<TPersistedGrantDbContext>(options =>
+            {
+                options.EnableTokenCleanup = true;
+#if DEBUG
+                options.TokenCleanupInterval = 15;
+#endif
+                options.ConfigureDbContext = b =>
+                    b.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey),
+                        sql => sql.MigrationsAssembly(configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbMigrationsAssemblyKey)));
+            });
+
+            return builder;
+        }
+
+        /// <summary>
+        /// Register middleware for localization
+        /// </summary>
+        /// <param name="app"></param>
         public static void UseMvcLocalizationServices(this IApplicationBuilder app)
         {
             var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(options.Value);
         }
 
+        /// <summary>
+        /// Add configuration for logging
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="loggerFactory"></param>
+        /// <param name="configuration"></param>
         public static void AddLogging(this IApplicationBuilder app, ILoggerFactory loggerFactory, IConfiguration configuration)
         {
             Log.Logger = new LoggerConfiguration()
