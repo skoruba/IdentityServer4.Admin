@@ -19,7 +19,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             var databaseName = Guid.NewGuid().ToString();
 
-            _dbContextOptions = new DbContextOptionsBuilder<AdminDbContext>()
+            _dbContextOptions = new DbContextOptionsBuilder<IdentityServerConfigurationDbContext>()
                 .UseInMemoryDatabase(databaseName)
                 .Options;
 
@@ -27,27 +27,27 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
             _operationalStore = new OperationalStoreOptions();
         }
 
-        private readonly DbContextOptions<AdminDbContext> _dbContextOptions;
+        private readonly DbContextOptions<IdentityServerConfigurationDbContext> _dbContextOptions;
         private readonly ConfigurationStoreOptions _storeOptions;
         private readonly OperationalStoreOptions _operationalStore;
 
-        private IClientRepository<AdminDbContext> GetClientRepository(AdminDbContext context)
+        private IClientRepository GetClientRepository(IdentityServerConfigurationDbContext context)
         {
-            IClientRepository<AdminDbContext> clientRepository = new ClientRepository<AdminDbContext>(context);
+            IClientRepository clientRepository = new ClientRepository<IdentityServerConfigurationDbContext>(context);
 
             return clientRepository;
         }
 
-        private IApiResourceRepository<AdminDbContext> GetApiResourceRepository(AdminDbContext context)
+        private IApiResourceRepository GetApiResourceRepository(IdentityServerConfigurationDbContext context)
         {
-            IApiResourceRepository<AdminDbContext> apiResourceRepository = new ApiResourceRepository<AdminDbContext>(context);
+            IApiResourceRepository apiResourceRepository = new ApiResourceRepository<IdentityServerConfigurationDbContext>(context);
 
             return apiResourceRepository;
         }
 
-        private IIdentityResourceRepository<AdminDbContext> GetIdentityResourceRepository(AdminDbContext context)
+        private IIdentityResourceRepository GetIdentityResourceRepository(IdentityServerConfigurationDbContext context)
         {
-            IIdentityResourceRepository<AdminDbContext> identityResourceRepository = new IdentityResourceRepository<AdminDbContext>(context);
+            IIdentityResourceRepository identityResourceRepository = new IdentityResourceRepository<IdentityServerConfigurationDbContext>(context);
 
             return identityResourceRepository;
         }
@@ -55,7 +55,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task AddClientAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 var clientRepository = GetClientRepository(context);
 
@@ -76,7 +76,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task AddClientClaimAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 var clientRepository = GetClientRepository(context);
 
@@ -110,7 +110,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task AddClientPropertyAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 var clientRepository = GetClientRepository(context);
 
@@ -144,7 +144,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task AddClientSecretAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 var clientRepository = GetClientRepository(context);
 
@@ -177,7 +177,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task CloneClientAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 //Generate random new client
                 var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
@@ -204,7 +204,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task CloneClientWithoutCorsAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 //Generate random new client
                 var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
@@ -229,7 +229,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task CloneClientWithoutClaimsAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 //Generate random new client
                 var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
@@ -254,7 +254,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task CloneClientWithoutPropertiesAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 //Generate random new client
                 var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
@@ -279,7 +279,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task CloneClientWithoutGrantTypesAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 //Generate random new client
                 var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
@@ -304,7 +304,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task CloneClientWithoutIdPRestrictionsAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 //Generate random new client
                 var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
@@ -329,7 +329,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task CloneClientWithoutPostLogoutRedirectUrisAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 //Generate random new client
                 var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
@@ -354,7 +354,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task CloneClientWithoutRedirectUrisAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 //Generate random new client
                 var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
@@ -379,7 +379,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task CloneClientWithoutScopesAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 //Generate random new client
                 var client = ClientMock.GenerateRandomClient(0, generateClaims: true, generateProperties: true, generateSecrets: true);
@@ -404,7 +404,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task DeleteClientClaimAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 var clientRepository = GetClientRepository(context);
 
@@ -449,7 +449,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task DeleteClientPropertyAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 var clientRepository = GetClientRepository(context);
 
@@ -494,7 +494,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task DeleteClientSecretAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 var clientRepository = GetClientRepository(context);
 
@@ -538,7 +538,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task GetClientAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 var clientRepository = GetClientRepository(context);
 
@@ -559,7 +559,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task GetClientClaimAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 var clientRepository = GetClientRepository(context);
 
@@ -592,7 +592,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task GetClientPropertyAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 var clientRepository = GetClientRepository(context);
 
@@ -625,7 +625,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task GetClientsAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 var clientRepository = GetClientRepository(context);
 
@@ -652,7 +652,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task GetClientSecretAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 var clientRepository = GetClientRepository(context);
 
@@ -685,7 +685,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task RemoveClientAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 var clientRepository = GetClientRepository(context);
 
@@ -719,7 +719,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task UpdateClientAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 var clientRepository = GetClientRepository(context);
 
@@ -756,7 +756,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public void GetGrantTypes()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 var clientRepository = GetClientRepository(context);
 
@@ -771,7 +771,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public void GetStandardClaims()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 var clientRepository = GetClientRepository(context);
 
@@ -786,7 +786,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task GetScopesIdentityResourceAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 var clientRepository = GetClientRepository(context);
                 var identityResourceRepository = GetIdentityResourceRepository(context);
@@ -803,7 +803,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         [Fact]
         public async Task GetScopesApiResourceAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 var clientRepository = GetClientRepository(context);
                 var apiResourceRepository = GetApiResourceRepository(context);

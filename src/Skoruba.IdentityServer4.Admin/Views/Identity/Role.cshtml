@@ -1,6 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
-@model RoleDto<int>
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Interfaces.IRoleDto
 @inject IViewLocalizer Localizer
 
 @{
@@ -28,7 +27,7 @@
 
 	<div asp-validation-summary="All" class="text-danger"></div>
 
-	@if (!EqualityComparer<int>.Default.Equals(Model.Id, default(int)))
+	@if (!Model.IsDefaultId())
 	{
 		<!--Button-->
 		<div class="form-group row">

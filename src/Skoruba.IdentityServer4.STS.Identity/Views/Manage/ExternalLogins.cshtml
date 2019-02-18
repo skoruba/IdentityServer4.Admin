@@ -1,0 +1,54 @@
+﻿@inject IViewLocalizer Localizer
+@using Microsoft.AspNetCore.Mvc.Localization
+@model Skoruba.IdentityServer4.STS.Identity.ViewModels.Manage.ExternalLoginsViewModel
+@{
+    ViewData["Title"] = Localizer["Title"];
+}
+
+@await Html.PartialAsync("_StatusMessage", Model.StatusMessage)
+
+@if (Model.CurrentLogins?.Count > 0)
+{
+    <h4>@Localizer["SubTitle"]</h4>
+    <table class="table">
+        <tbody>
+            @foreach (var login in Model.CurrentLogins)
+            {
+                <tr>
+                    <td>@login.LoginProvider</td>
+                    <td>
+                        @if (Model.ShowRemoveButton)
+                        {
+                            <form asp-action="RemoveLogin" method="post">
+                                <div>
+                                    <input asp-for="@login.LoginProvider" name="LoginProvider" type="hidden" />
+                                    <input asp-for="@login.ProviderKey" name="ProviderKey" type="hidden" />
+                                    <button type="submit" class="btn btn-primary" title="Remove this @login.LoginProvider login from your account">@Localizer["Remove"]</button>
+                                </div>
+                            </form>
+                        }
+                        else
+                        {
+                            @: &nbsp;
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@if (Model.OtherLogins?.Count > 0)
+{
+    <h4>@Localizer["TitleAddAnotherService"]</h4>
+    <hr />
+    <form asp-action="LinkLogin" method="post" class="form-horizontal">
+        <div id="socialLoginList">
+            <p>
+                @foreach (var provider in Model.OtherLogins)
+                {
+                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                }
+            </p>
+        </div>
+    </form>
+}

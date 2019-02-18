@@ -1,85 +1,101 @@
 ﻿@using IdentityServer4.Extensions
+@using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity
 @inject IViewLocalizer Localizer
 @{
-	string name = null;
-	if (!true.Equals(ViewData["signed-out"]))
-	{
-		name = Context.User?.GetDisplayName();
-	}
+    string name = null;
+    if (!true.Equals(ViewData["signed-out"]))
+    {
+        name = Context.User?.GetDisplayName();
+    }
+}
+
+@inject SignInManager<UserIdentity> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@Localizer["PageTitle"]</title>
-	<link rel="icon" type="image/x-icon" href="~/images/skoruba-icon.png" />
-	<link rel="shortcut icon" type="image/x-icon" href="~/images/skoruba-icon.png" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@Localizer["PageTitle"]</title>
+    <link rel="icon" type="image/x-icon" href="~/images/skoruba-icon.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/images/skoruba-icon.png" />
 
-	<environment include="Development">
-		<link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
-		<link href="~/dist/css/web.css" asp-append-version="true" rel="stylesheet" />
-	</environment>
-	<environment exclude="Development">
-		<link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
-		<link href="~/dist/css/web.min.css" asp-append-version="true" rel="stylesheet" />
-	</environment>
+    <environment include="Development">
+        <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
+        <link href="~/dist/css/web.css" asp-append-version="true" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
+        <link href="~/dist/css/web.min.css" asp-append-version="true" rel="stylesheet" />
+    </environment>
 
-	@RenderSection("styles", required: false)
+    @RenderSection("styles", required: false)
 </head>
 <body>
 
-	<div class="menu d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-		<!--Site name -->
-		<h3 class="menu-logo my-0 mr-md-auto font-weight-normal"><a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Title"]</a></h3>
+    <div class="menu d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+        <!--Site name -->
+        <h3 class="menu-logo my-0 mr-md-auto font-weight-normal"><a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Title"]</a></h3>
 
-		<!--Menu item -->
-		<div class="menu-item my-2 my-md-0 mr-md-3 dropdown">
-			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-				@Localizer["Settings"]
-			</button>
-			<div class="dropdown-menu">
-				<a class="dropdown-item" asp-area="" asp-controller="Grants" asp-action="Index">@Localizer["Grants"]</a>
-			</div>
-		</div>
+        <!--Menu item -->
+        @if (User.Identity.IsAuthenticated)
+        {
 
-		<!--Menu item -->
-		@if (User.Identity.IsAuthenticated)
-		{
-			<a class="menu-item my-2 btn btn-outline-primary" asp-action="Logout" asp-controller="Account">@name - @Localizer["Signout"]</a>
-		}
+            <!--Menu item -->
+            <div class="menu-item my-2 my-md-0 mr-md-3 dropdown">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    @Localizer["Settings"] - @name
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" asp-controller="Manage" asp-action="Index">@Localizer["ManageProfile"]</a>
+                    <a class="dropdown-item" asp-controller="Manage" asp-action="PersonalData">@Localizer["ManagePersonalData"]</a>
+                    @if (hasExternalLogins)
+                    {
+                        <a class="dropdown-item" asp-controller="Manage" asp-action="ExternalLogins">@Localizer["ExternalLogins"]</a>
+                    }
+                    <a class="dropdown-item" asp-controller="Manage" asp-action="TwoFactorAuthentication">@Localizer["2FA"]</a>
+                    <a class="dropdown-item" asp-controller="Manage" asp-action="ChangePassword">@Localizer["ChangePassword"]</a>
+                    <a class="dropdown-item" asp-controller="Grants" asp-action="Index">@Localizer["Grants"]</a>
+                </div>
+            </div>
 
-		<!--Menu button - show in < MD -->
-		<a class="my-2 btn btn-outline-primary menu-button" href="#">
-			<span class="oi oi-menu" title="menu" aria-hidden="true"></span> @Localizer["Menu"]
-		</a>
-	</div>
+            <a class="menu-item my-2 btn btn-outline-primary" asp-action="Logout" asp-controller="Account">@Localizer["Signout"]</a>
+        }
 
-	<div class="container">
-		@RenderBody()
+        <!--Menu button - show in < MD -->
+        <a class="my-2 btn btn-outline-primary menu-button" href="#">
+            <span class="oi oi-menu" title="menu" aria-hidden="true"></span> @Localizer["Menu"]
+        </a>
+    </div>
 
-		<footer class="pt-4 my-md-5 pt-md-5 border-top">
-			<div class="row">
-				<div class="col-6 col-md">
-					@Localizer["Footer"]
-					<small class="d-block mb-3 text-muted">@Localizer["FooterCopyright"]</small>
-				</div>
-				<div class="col-md-6 text-right">
-					@await Html.PartialAsync("Common/SelectLanguage")
-				</div>
-			</div>
-		</footer>
-	</div>
+    <div class="container">
+        @RenderBody()
 
-	<environment include="Development">
-		<script src="~/dist/js/bundle.min.js" asp-append-version="true"></script>
-	</environment>
-	<environment exclude="Development">
-		<script src="~/dist/js/bundle.min.js" asp-append-version="true"></script>
-	</environment>
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+            <div class="row">
+                <div class="col-6 col-md">
+                    @Localizer["Footer"]
+                    <small class="d-block mb-3 text-muted">@Localizer["FooterCopyright"]</small>
+                </div>
+                <div class="col-md-6 text-right">
+                    @await Html.PartialAsync("Common/SelectLanguage")
+                </div>
+            </div>
+        </footer>
+    </div>
 
-	@RenderSection("scripts", required: false)
+    <environment include="Development">
+        <script src="~/dist/js/bundle.min.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/dist/js/bundle.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("scripts", required: false)
 </body>
 </html>

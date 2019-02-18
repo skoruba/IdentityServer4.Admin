@@ -1,13 +1,11 @@
 ﻿using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Entities;
-using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using ApiResource = IdentityServer4.EntityFramework.Entities.ApiResource;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces
 {
-    public interface IApiResourceRepository<TDbContext> where TDbContext : DbContext, IAdminConfigurationDbContext
+    public interface IApiResourceRepository
     {
         Task<PagedList<ApiResource>> GetApiResourcesAsync(string search, int page = 1, int pageSize = 10);
 

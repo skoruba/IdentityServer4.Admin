@@ -1,0 +1,8 @@
+﻿@inject IViewLocalizer Localizer
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@{
+    ViewData["Title"] = Localizer["Title"];
+}
+
+<h4>@ViewData["Title"]</h4>

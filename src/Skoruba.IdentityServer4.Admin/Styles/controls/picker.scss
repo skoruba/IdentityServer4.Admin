@@ -1,45 +1,60 @@
 ﻿.picker {
 
-	hr {
-		margin-bottom: 5px;
-	}
+    hr {
+        margin-bottom: 5px;
+    }
 
-	.button {
-		&__add {
-			margin-top: 5px;
-			margin-bottom: 5px;
-			margin-right: 5px;
-			white-space: normal;
-			text-transform: none;
-		}
+    .button {
 
-		&__delete {
-			margin-top: 5px;
-			margin-bottom: 5px;
-			margin-right: 5px;
-			white-space: normal;
-			text-transform: none;
-		}
+        &__text {
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            margin: 3px;
+            border: 1px solid transparent;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: .25rem;
+            border-color: #007bff;
+            color: #007bff;
+        }
 
-		&__show-all {
-			margin-top: 5px;
-			margin-bottom: 5px;
-			margin-right: 5px;
-			white-space: normal;
-			text-transform: none;
-		}
-	}
+        &__add {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            margin-right: 5px;
+            white-space: normal;
+            text-transform: none;
+        }
 
-	.block {
-		&__buttons {
-			&__add {
-				margin-top: 4px;
-			}
-		}
-	}
+        &__delete, &__update {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            margin-right: 5px;
+            white-space: normal;
+            text-transform: none;
+        }
 
-	.search-title {
-		color: gray;
-		font-size: 12px;
-	}
+        &__show-all {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            margin-right: 5px;
+            white-space: normal;
+            text-transform: none;
+        }
+    }
+
+    .block {
+        &__buttons {
+            &__add {
+                margin-top: 4px;
+            }
+        }
+    }
+
+    .search-title {
+        color: gray;
+        font-size: 12px;
+    }
 }

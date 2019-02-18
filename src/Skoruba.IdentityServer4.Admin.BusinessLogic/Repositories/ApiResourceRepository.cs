@@ -14,7 +14,7 @@ using ApiResource = IdentityServer4.EntityFramework.Entities.ApiResource;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 {
-    public class ApiResourceRepository<TDbContext> : IApiResourceRepository<TDbContext>
+    public class ApiResourceRepository<TDbContext> : IApiResourceRepository
         where TDbContext : DbContext, IAdminConfigurationDbContext
     {
         private readonly TDbContext _dbContext;

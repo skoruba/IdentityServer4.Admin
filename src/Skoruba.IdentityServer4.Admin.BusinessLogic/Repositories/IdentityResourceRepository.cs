@@ -12,7 +12,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 {
-    public class IdentityResourceRepository<TDbContext> : IIdentityResourceRepository<TDbContext>
+    public class IdentityResourceRepository<TDbContext> : IIdentityResourceRepository
         where TDbContext : DbContext, IAdminConfigurationDbContext
     {
         private readonly TDbContext _dbContext;
