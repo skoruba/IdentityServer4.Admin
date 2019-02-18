@@ -14,7 +14,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+            WebHost.CreateDefaultBuilder(args)               
                 .UseStartup<Startup>();
     }
 }

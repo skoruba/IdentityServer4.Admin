@@ -1,0 +1,42 @@
+﻿@inject IViewLocalizer Localizer
+@using Microsoft.AspNetCore.Mvc.Localization
+@model Skoruba.IdentityServer4.STS.Identity.ViewModels.Account.LoginWith2faViewModel
+@{
+    ViewData["Title"] = Localizer["Title"];
+}
+
+@await Html.PartialAsync("_ValidationSummary")
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<p>@Localizer["Info"]</p>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-route-returnUrl="@Model.ReturnUrl">
+            <input asp-for="RememberMe" type="hidden" />
+            <input asp-for="ReturnUrl" type="hidden" />
+            <div class="form-group">
+                <label asp-for="TwoFactorCode">@Localizer["Code"]</label>
+                <input asp-for="TwoFactorCode" class="form-control" autocomplete="off" />
+                <span asp-validation-for="TwoFactorCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <div>                        
+                        @Localizer["Remember"]
+                    </div>
+                    <toggle-button>
+                        <input asp-for="RememberMachine" />
+                    </toggle-button>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">@Localizer["LogIn"]</button>
+            </div>
+        </form>
+    </div>
+</div>
+<p>
+    @Localizer["NoAuthenticatorDevice"]
+    <a asp-action="LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl">@Localizer["LoginWithRecoveryCode"]</a>
+</p>

@@ -11,9 +11,9 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
     [Authorize(Policy = AuthorizationConsts.AdministrationPolicy)]
     public class LogController : BaseController
     {
-        private readonly ILogService<AdminDbContext> _logService;
+        private readonly ILogService _logService;
 
-        public LogController(ILogService<AdminDbContext> logService,
+        public LogController(ILogService logService,
             ILogger<ConfigurationController> logger) : base(logger)
         {
             _logService = logService;

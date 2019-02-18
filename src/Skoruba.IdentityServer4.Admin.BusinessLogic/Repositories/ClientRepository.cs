@@ -16,7 +16,7 @@ using Client = IdentityServer4.EntityFramework.Entities.Client;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 {
-    public class ClientRepository<TDbContext> : IClientRepository<TDbContext>
+    public class ClientRepository<TDbContext> : IClientRepository
     where TDbContext : DbContext, IAdminConfigurationDbContext
     {
         private readonly TDbContext _dbContext;

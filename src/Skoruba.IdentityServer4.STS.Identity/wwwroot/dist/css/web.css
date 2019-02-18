@@ -434,6 +434,15 @@ label.radio-img > input:checked ~ h3, label.radio-img > input:checked ~ h4 {
 label.radio-img > h3, label > h4 {
   cursor: pointer; }
 
+.cc-window {
+  color: #212529;
+  background-color: #f7f7f7; }
+
+.cc-btn {
+  color: #ffffff;
+  background-color: #007bff;
+  border-color: transparent; }
+
 /*Pages*/
 .consent-container .toggle-button__input {
   float: left; }
@@ -464,9 +473,6 @@ label.radio-img > h3, label > h4 {
   margin-top: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid lightgray; }
-  .grants-container .grant img {
-    /*width: 100px;
-			height: 100px;*/ }
   .grants-container .grant .clientname {
     font-size: 140%;
     font-weight: bold; }

@@ -1,12 +1,14 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Extensions;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Extensions;
+using Skoruba.IdentityServer4.Admin.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
@@ -45,17 +47,28 @@ namespace Skoruba.IdentityServer4.Admin
             services.ConfigureRootConfiguration(Configuration);
             var rootConfiguration = services.BuildServiceProvider().GetService<IRootConfiguration>();
 
-            services.AddDbContexts<AdminDbContext>(HostingEnvironment, Configuration);
-            services.AddAuthenticationServices<AdminDbContext, UserIdentity, UserIdentityRole>(HostingEnvironment, rootConfiguration.AdminConfiguration);
+            services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>(HostingEnvironment, Configuration);
+
+            services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(HostingEnvironment, rootConfiguration.AdminConfiguration);
+            
             services.AddMvcExceptionFilters();
 
-            services.AddAdminServices<AdminDbContext>();
+            services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
 
-            services.AddAdminAspNetIdentityServices<AdminDbContext, UserDto<int>, int, RoleDto<int>, int, int, int,
-                                UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole,
-                                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>();
+            services.AddAdminAspNetIdentityServices<AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, UserDto<string>, string, RoleDto<string>, string, string, string,
+                                UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
+                                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
+                                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
+                                UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
+                                RoleClaimsDto<string>, UserClaimDto<string>, RoleClaimDto<string>>();
+            
+            services.AddMvcWithLocalization<UserDto<string>, string, RoleDto<string>, string, string, string,
+                UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
+                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
+                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
+                UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
+                RoleClaimsDto<string>>();
 
-            services.AddMvcLocalization();
             services.AddAuthorizationPolicies();
         }
 
@@ -74,7 +87,7 @@ namespace Skoruba.IdentityServer4.Admin
 
             app.UseSecurityHeaders();
             app.UseStaticFiles();
-            app.ConfigureAuthentificationServices(env);
+            app.ConfigureAuthenticationServices(env);
             app.ConfigureLocalization();
 
             app.UseMvc(routes =>

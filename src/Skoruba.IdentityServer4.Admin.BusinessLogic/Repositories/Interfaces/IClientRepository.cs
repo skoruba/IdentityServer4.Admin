@@ -7,7 +7,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces
 {
-	public interface IClientRepository<TDbContext> where TDbContext : DbContext, IAdminConfigurationDbContext
+	public interface IClientRepository
     {
 		Task<int> AddClientAsync(Client client);
 

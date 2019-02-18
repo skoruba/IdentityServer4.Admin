@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,12 +16,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Serilog;
 using SkorubaIdentityServer4Admin.STS.Identity.Configuration.Constants;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
 {
     public static class StartupHelpers
     {
-
         public static void AddMvcLocalization(this IServiceCollection services)
         {
             services.AddLocalization(opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; });
@@ -47,7 +49,18 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
                 });
         }
 
-        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfiguration configuration) where TContext : DbContext
+        public static void UseSecurityHeaders(this IApplicationBuilder app)
+        {
+            app.UseForwardedHeaders(new ForwardedHeadersOptions()
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
+            app.UseXfo(options => options.SameOrigin());
+            app.UseReferrerPolicy(options => options.NoReferrer());
+        }
+
+        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfiguration configuration, ILogger logger) where TContext : DbContext
             where TUserIdentity : class where TUserIdentityRole : class
         {
             var connectionString = configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey);
@@ -81,15 +94,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
                     options.EnableTokenCleanup = true;
                 });
 
-            if (hostingEnvironment.IsDevelopment())
-            {
-                builder.AddDeveloperSigningCredential();
-            }
-            else
-            {
-                builder.AddCustomSigningCredential(configuration);
-                builder.AddCustomValidationKey(configuration);
-            }
+            builder.AddCustomSigningCredential(configuration, logger);
+            builder.AddCustomValidationKey(configuration, logger);
         }
 
         public static void AddDbContexts<TContext>(this IServiceCollection services, IConfiguration configuration) where TContext : DbContext

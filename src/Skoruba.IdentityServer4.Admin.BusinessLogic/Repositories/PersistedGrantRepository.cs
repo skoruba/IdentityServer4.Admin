@@ -13,7 +13,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 {
-    public class PersistedGrantRepository<TDbContext> : IPersistedGrantRepository<TDbContext>
+    public class PersistedGrantRepository<TDbContext> : IPersistedGrantRepository
         where TDbContext : DbContext, IAdminPersistedGrantDbContext
         
     {
@@ -26,7 +26,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<PagedList<PersistedGrantDataView>> GetPersitedGrantsByUsers(string search, int page = 1, int pageSize = 10)
+        public async Task<PagedList<PersistedGrantDataView>> GetPersistedGrantsByUsers(string search, int page = 1, int pageSize = 10)
         {
             var pagedList = new PagedList<PersistedGrantDataView>();
 
@@ -49,7 +49,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             return pagedList;
         }
 
-        public async Task<PagedList<PersistedGrant>> GetPersitedGrantsByUser(string subjectId, int page = 1, int pageSize = 10)
+        public async Task<PagedList<PersistedGrant>> GetPersistedGrantsByUser(string subjectId, int page = 1, int pageSize = 10)
         {
             var pagedList = new PagedList<PersistedGrant>();
 
@@ -73,7 +73,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             return pagedList;
         }
 
-        public Task<PersistedGrant> GetPersitedGrantAsync(string key)
+        public Task<PersistedGrant> GetPersistedGrantAsync(string key)
         {
             return _dbContext.PersistedGrants.SingleOrDefaultAsync(x => x.Key == key);
         }

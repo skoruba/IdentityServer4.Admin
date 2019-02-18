@@ -1,19 +1,16 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Log;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 {
-    public class LogService<TDbContext> : ILogService<TDbContext>
-        where TDbContext : DbContext, IAdminLogDbContext
+    public class LogService : ILogService
     {
-        private readonly ILogRepository<TDbContext> _repository;
+        private readonly ILogRepository _repository;
 
-        public LogService(ILogRepository<TDbContext> repository)
+        public LogService(ILogRepository repository)
         {
             _repository = repository;
         }
