@@ -123,6 +123,12 @@
   <data name="AuthenticatorVerified" xml:space="preserve">
     <value>您的身份验证器应用已经过验证。</value>
   </data>
+  <data name="ConfirmEmailBody" xml:space="preserve">
+    <value>请通过&lt;a href='{0}'&gt;点击此处&lt;/a&gt;确认您的帐户。</value>
+  </data>
+  <data name="ConfirmEmailTitle" xml:space="preserve">
+    <value>确认您的电子邮件</value>
+  </data>
   <data name="DeletePersonalData" xml:space="preserve">
     <value>ID 为 '{0}' 的用户自行删除。</value>
   </data>

@@ -120,4 +120,7 @@
   <data name="ConfirmMessage" xml:space="preserve">
     <value>感谢您确认电子邮件。</value>
   </data>
+  <data name="Title" xml:space="preserve">
+    <value>确认邮件</value>
+  </data>
 </root>

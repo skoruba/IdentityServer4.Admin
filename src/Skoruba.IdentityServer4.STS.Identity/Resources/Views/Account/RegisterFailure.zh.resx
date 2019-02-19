@@ -117,31 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ConfirmEmailBody" xml:space="preserve">
-    <value>请通过&lt;a href='{0}'&gt;点击此处&lt;/a&gt;确认您的帐户。</value>
+  <data name="Error" xml:space="preserve">
+    <value>注册已禁用。</value>
   </data>
-  <data name="ConfirmEmailTitle" xml:space="preserve">
-    <value>确认您的电子邮件</value>
-  </data>
-  <data name="EmailNotFound" xml:space="preserve">
-    <value>用户不存在或未确认</value>
-  </data>
-  <data name="ErrorExternalProvider" xml:space="preserve">
-    <value>外部提供程序出错：{0}</value>
-  </data>
-  <data name="InvalidAuthenticatorCode" xml:space="preserve">
-    <value>验证码无效。</value>
-  </data>
-  <data name="InvalidRecoveryCode" xml:space="preserve">
-    <value>输入的恢复码无效。</value>
-  </data>
-  <data name="ResetPasswordBody" xml:space="preserve">
-    <value>请通过&lt;a href='{0}'&gt;点击此处&lt;/a&gt;重置密码。</value>
-  </data>
-  <data name="ResetPasswordTitle" xml:space="preserve">
-    <value>重置密码</value>
-  </data>
-  <data name="Unable2FA" xml:space="preserve">
-    <value>无法加载双因素身份验证用户。</value>
+  <data name="Title" xml:space="preserve">
+    <value>注册失败</value>
   </data>
 </root>
