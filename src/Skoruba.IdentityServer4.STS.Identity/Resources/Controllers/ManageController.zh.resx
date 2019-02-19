@@ -117,43 +117,91 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="2FA" xml:space="preserve">
-    <value>双因素身份验证</value>
+  <data name="AskForPersonalDataLog" xml:space="preserve">
+    <value>ID 为 '{0}' 的用户询问了他的个人数据。</value>
   </data>
-  <data name="ChangePassword" xml:space="preserve">
-    <value>更改密码</value>
+  <data name="AuthenticatorVerified" xml:space="preserve">
+    <value>您的身份验证器应用已经过验证。</value>
   </data>
-  <data name="ExternalLogins" xml:space="preserve">
-    <value>我的外部登录</value>
+  <data name="ConfirmEmailBody" xml:space="preserve">
+    <value>请通过&lt;a href='{0}'&gt;点击此处&lt;/a&gt;确认您的帐户。</value>
   </data>
-  <data name="Footer" xml:space="preserve">
-    <value>Skoruba IdentityServer4</value>
+  <data name="ConfirmEmailTitle" xml:space="preserve">
+    <value>确认您的电子邮件</value>
   </data>
-  <data name="FooterCopyright" xml:space="preserve">
-    <value>© 2018</value>
+  <data name="DeletePersonalData" xml:space="preserve">
+    <value>ID 为 '{0}' 的用户自行删除。</value>
   </data>
-  <data name="Grants" xml:space="preserve">
-    <value>授权</value>
+  <data name="Error2FANotEnabled" xml:space="preserve">
+    <value>无法为 ID 为 {0} 的用户生成恢复码，因为他没有启用2FA。</value>
   </data>
-  <data name="ManagePersonalData" xml:space="preserve">
-    <value>我的个人数据</value>
+  <data name="ErrorCode" xml:space="preserve">
+    <value>代码</value>
   </data>
-  <data name="ManageProfile" xml:space="preserve">
-    <value>我的个人资料</value>
+  <data name="ErrorDeletingUser" xml:space="preserve">
+    <value>删除 ID 为 {0} 的用户时发生意外错误。</value>
   </data>
-  <data name="Menu" xml:space="preserve">
-    <value>菜单</value>
+  <data name="ErrorDisable2FA" xml:space="preserve">
+    <value>禁用 ID 为 {0} 的用户 2FA 时发生意外错误。</value>
   </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>IdentityServer4</value>
+  <data name="ErrorGenerateCodesWithout2FA" xml:space="preserve">
+    <value>无法为用户生成恢复代码，因为他没有启用 2FA。</value>
   </data>
-  <data name="Settings" xml:space="preserve">
-    <value>设置</value>
+  <data name="ErrorLoadingExternalLogin" xml:space="preserve">
+    <value>为 ID 为 {0} 的用户加载外部登录信息时发生意外错误。</value>
   </data>
-  <data name="Signout" xml:space="preserve">
-    <value>注销</value>
+  <data name="ErrorRemovingExternalLogin" xml:space="preserve">
+    <value>删除 ID 为 {0} 的用户的外部登录时发生意外错误。</value>
   </data>
-  <data name="Title" xml:space="preserve">
-    <value>Skoruba IdentityServer4</value>
+  <data name="ErrorSettingEmail" xml:space="preserve">
+    <value>为 ID 为 {0} 的用户设置电子邮件时发生意外错误。</value>
+  </data>
+  <data name="ErrorSettingPhone" xml:space="preserve">
+    <value>为 ID 为 {0} 的用户设置电话号码时发生意外错误。</value>
+  </data>
+  <data name="ExternalLoginAdded" xml:space="preserve">
+    <value>外部登录已添加。</value>
+  </data>
+  <data name="ExternalLoginRemoved" xml:space="preserve">
+    <value>外部登录已删除。</value>
+  </data>
+  <data name="InvalidVerificationCode" xml:space="preserve">
+    <value>验证码无效。</value>
+  </data>
+  <data name="PasswordChanged" xml:space="preserve">
+    <value>您的密码已被更改。</value>
+  </data>
+  <data name="PasswordChangedLog" xml:space="preserve">
+    <value>用户 {0} 已成功更改其密码。</value>
+  </data>
+  <data name="PasswordNotCorrect" xml:space="preserve">
+    <value>密码不正确。</value>
+  </data>
+  <data name="PasswordSet" xml:space="preserve">
+    <value>您的密码已设置。</value>
+  </data>
+  <data name="ProfileUpdated" xml:space="preserve">
+    <value>你的个人资料已经更新</value>
+  </data>
+  <data name="SuccessDisabled2FA" xml:space="preserve">
+    <value>ID 为 {0} 的用户已禁用 2fa。</value>
+  </data>
+  <data name="SuccessForgetBrowser2FA" xml:space="preserve">
+    <value>目前的浏览器已被遗忘。 当您从此浏览器再次登录时，系统将提示您输入 2fa 代码。</value>
+  </data>
+  <data name="SuccessResetAuthenticationKey" xml:space="preserve">
+    <value>ID 为 {0} 的用户已重置其身份验证应用密钥。</value>
+  </data>
+  <data name="SuccessUserEnabled2FA" xml:space="preserve">
+    <value>ID 为 {0} 的用户已使用身份验证器应用启用了 2FA。</value>
+  </data>
+  <data name="UserGenerated2FACodes" xml:space="preserve">
+    <value>ID 为 {0} 的用户已生成新的 FA 恢复代码。</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>无法加载 ID 为 {0} 的用户。</value>
+  </data>
+  <data name="VerificationSent" xml:space="preserve">
+    <value>已发送验证邮件。 请检查您的电子邮件。</value>
   </data>
 </root>

@@ -117,43 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="2FA" xml:space="preserve">
-    <value>双因素身份验证</value>
+  <data name="Country" xml:space="preserve">
+    <value>国家</value>
   </data>
-  <data name="ChangePassword" xml:space="preserve">
-    <value>更改密码</value>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
   </data>
-  <data name="ExternalLogins" xml:space="preserve">
-    <value>我的外部登录</value>
+  <data name="Locality" xml:space="preserve">
+    <value>城市</value>
   </data>
-  <data name="Footer" xml:space="preserve">
-    <value>Skoruba IdentityServer4</value>
+  <data name="Name" xml:space="preserve">
+    <value>全名</value>
   </data>
-  <data name="FooterCopyright" xml:space="preserve">
-    <value>© 2018</value>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>电话号码</value>
   </data>
-  <data name="Grants" xml:space="preserve">
-    <value>授权</value>
+  <data name="PostalCode" xml:space="preserve">
+    <value>邮政编码</value>
   </data>
-  <data name="ManagePersonalData" xml:space="preserve">
-    <value>我的个人数据</value>
+  <data name="Profile" xml:space="preserve">
+    <value>个人资料 URL</value>
   </data>
-  <data name="ManageProfile" xml:space="preserve">
-    <value>我的个人资料</value>
+  <data name="Region" xml:space="preserve">
+    <value>地区</value>
   </data>
-  <data name="Menu" xml:space="preserve">
-    <value>菜单</value>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
   </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>IdentityServer4</value>
+  <data name="SendVerificationEmail" xml:space="preserve">
+    <value>发送验证邮件</value>
   </data>
-  <data name="Settings" xml:space="preserve">
-    <value>设置</value>
-  </data>
-  <data name="Signout" xml:space="preserve">
-    <value>注销</value>
+  <data name="StreetAddress" xml:space="preserve">
+    <value>街道地址</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Skoruba IdentityServer4</value>
+    <value>资料</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>用户名</value>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>网站 URL</value>
   </data>
 </root>

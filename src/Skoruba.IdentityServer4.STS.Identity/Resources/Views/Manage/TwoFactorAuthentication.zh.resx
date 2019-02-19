@@ -117,43 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="2FA" xml:space="preserve">
-    <value>双因素身份验证</value>
+  <data name="AddAuthenticator" xml:space="preserve">
+    <value>添加身份验证器应用</value>
   </data>
-  <data name="ChangePassword" xml:space="preserve">
-    <value>更改密码</value>
+  <data name="AuthenticatorApp" xml:space="preserve">
+    <value>身份验证器应用</value>
   </data>
-  <data name="ExternalLogins" xml:space="preserve">
-    <value>我的外部登录</value>
+  <data name="BeforeLogin" xml:space="preserve">
+    <value>在您使用恢复码登录之前</value>
   </data>
-  <data name="Footer" xml:space="preserve">
-    <value>Skoruba IdentityServer4</value>
+  <data name="Disable2FA" xml:space="preserve">
+    <value>禁用 2FA</value>
   </data>
-  <data name="FooterCopyright" xml:space="preserve">
-    <value>© 2018</value>
+  <data name="ForgetBrowser" xml:space="preserve">
+    <value>忘记这个浏览器</value>
   </data>
-  <data name="Grants" xml:space="preserve">
-    <value>授权</value>
+  <data name="GenerateNewCodes" xml:space="preserve">
+    <value>生成一组新的恢复码</value>
   </data>
-  <data name="ManagePersonalData" xml:space="preserve">
-    <value>我的个人数据</value>
+  <data name="NoCodes" xml:space="preserve">
+    <value>您还没有恢复码</value>
   </data>
-  <data name="ManageProfile" xml:space="preserve">
-    <value>我的个人资料</value>
+  <data name="OneCode" xml:space="preserve">
+    <value>您还剩 1 个恢复码</value>
   </data>
-  <data name="Menu" xml:space="preserve">
-    <value>菜单</value>
+  <data name="RecoveryCodeLeft" xml:space="preserve">
+    <value>个剩余恢复代码</value>
   </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>IdentityServer4</value>
+  <data name="ResetAuthenticator" xml:space="preserve">
+    <value>重置身份验证器应用</value>
   </data>
-  <data name="Settings" xml:space="preserve">
-    <value>设置</value>
+  <data name="ResetCodes" xml:space="preserve">
+    <value>重置恢复码</value>
   </data>
-  <data name="Signout" xml:space="preserve">
-    <value>注销</value>
+  <data name="SetupAuthenticator" xml:space="preserve">
+    <value>设置身份验证器应用</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Skoruba IdentityServer4</value>
+    <value>双因素身份验证 (2FA)</value>
+  </data>
+  <data name="YouCanGenerateCodes" xml:space="preserve">
+    <value>您可以生成一组新的恢复码</value>
+  </data>
+  <data name="YouHave" xml:space="preserve">
+    <value>你有</value>
+  </data>
+  <data name="YouMust" xml:space="preserve">
+    <value>你必须</value>
+  </data>
+  <data name="YouShould" xml:space="preserve">
+    <value>你应该</value>
   </data>
 </root>

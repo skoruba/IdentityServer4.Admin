@@ -117,43 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="2FA" xml:space="preserve">
-    <value>双因素身份验证</value>
+  <data name="ConfirmEmailBody" xml:space="preserve">
+    <value>请通过&lt;a href='{0}'&gt;点击此处&lt;/a&gt;确认您的帐户。</value>
   </data>
-  <data name="ChangePassword" xml:space="preserve">
-    <value>更改密码</value>
+  <data name="ConfirmEmailTitle" xml:space="preserve">
+    <value>确认您的电子邮件</value>
   </data>
-  <data name="ExternalLogins" xml:space="preserve">
-    <value>我的外部登录</value>
+  <data name="EmailNotFound" xml:space="preserve">
+    <value>用户不存在或未确认</value>
   </data>
-  <data name="Footer" xml:space="preserve">
-    <value>Skoruba IdentityServer4</value>
+  <data name="ErrorExternalProvider" xml:space="preserve">
+    <value>外部提供程序出错：{0}</value>
   </data>
-  <data name="FooterCopyright" xml:space="preserve">
-    <value>© 2018</value>
+  <data name="InvalidAuthenticatorCode" xml:space="preserve">
+    <value>验证码无效。</value>
   </data>
-  <data name="Grants" xml:space="preserve">
-    <value>授权</value>
+  <data name="InvalidRecoveryCode" xml:space="preserve">
+    <value>输入的恢复码无效。</value>
   </data>
-  <data name="ManagePersonalData" xml:space="preserve">
-    <value>我的个人数据</value>
+  <data name="ResetPasswordBody" xml:space="preserve">
+    <value>请通过&lt;a href='{0}'&gt;点击此处&lt;/a&gt;重置密码。</value>
   </data>
-  <data name="ManageProfile" xml:space="preserve">
-    <value>我的个人资料</value>
+  <data name="ResetPasswordTitle" xml:space="preserve">
+    <value>重置密码</value>
   </data>
-  <data name="Menu" xml:space="preserve">
-    <value>菜单</value>
-  </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>IdentityServer4</value>
-  </data>
-  <data name="Settings" xml:space="preserve">
-    <value>设置</value>
-  </data>
-  <data name="Signout" xml:space="preserve">
-    <value>注销</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>Skoruba IdentityServer4</value>
+  <data name="Unable2FA" xml:space="preserve">
+    <value>无法加载双因素身份验证用户。</value>
   </data>
 </root>
