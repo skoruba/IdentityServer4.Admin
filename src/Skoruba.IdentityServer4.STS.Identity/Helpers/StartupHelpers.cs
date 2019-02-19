@@ -128,13 +128,16 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TPersistedGrantDbContext : DbContext, IPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IConfigurationDbContext
             where TIdentityDbContext : DbContext
-            where TUserIdentity : class 
-            where TUserIdentityRole : class            
+            where TUserIdentity : class
+            where TUserIdentityRole : class
         {
-            services.AddIdentity<TUserIdentity, TUserIdentityRole>()
+            services.AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
+                {
+                    options.User.RequireUniqueEmail = true;
+                })
                 .AddEntityFrameworkStores<TIdentityDbContext>()
                 .AddDefaultTokenProviders();
-            
+
             services.Configure<IISOptions>(iis =>
             {
                 iis.AuthenticationDisplayName = "Windows";
@@ -215,7 +218,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <typeparam name="TContext"></typeparam>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        public static void AddDbContexts<TContext>(this IServiceCollection services, IConfiguration configuration) 
+        public static void AddDbContexts<TContext>(this IServiceCollection services, IConfiguration configuration)
             where TContext : DbContext
         {
             var connectionString = configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey);
