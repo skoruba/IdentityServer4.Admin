@@ -94,17 +94,19 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
         {
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
             // Config DB for identity
             services.AddDbContext<TIdentityDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey),
-                    sql => sql.MigrationsAssembly(typeof(TIdentityDbContext).Assembly.GetName().Name)));
+                    sql => sql.MigrationsAssembly(migrationsAssembly)));
 
             // Config DB from existing connection
             services.AddConfigurationDbContext<TConfigurationDbContext>(options =>
             {
                 options.ConfigureDbContext = b =>
                     b.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey),
-                        sql => sql.MigrationsAssembly(configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbMigrationsAssemblyKey)));
+                        sql => sql.MigrationsAssembly(migrationsAssembly));
             });
 
             // Operational DB from existing connection
@@ -112,15 +114,14 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             {
                 options.ConfigureDbContext = b =>
                     b.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey),
-                        sql => sql.MigrationsAssembly(configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbMigrationsAssemblyKey)));
+                        sql => sql.MigrationsAssembly(migrationsAssembly));
             });
 
             // Log DB from existing connection
-            var defaultMigrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
             services.AddDbContext<TLogDbContext>(options =>
                 options.UseSqlServer(
                     configuration.GetConnectionString(ConfigurationConsts.AdminLogDbConnectionStringKey),
-                    optionsSql => optionsSql.MigrationsAssembly(defaultMigrationsAssembly)));
+                    optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
         }
 
         /// <summary>
