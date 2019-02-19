@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using Exceptionless;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -44,6 +45,10 @@ namespace Skoruba.IdentityServer4.Admin
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging(b => b
+                   .AddConfiguration(Configuration.GetSection("Logging"))
+                   .AddDebug()
+                   .AddConsole());
             services.ConfigureRootConfiguration(Configuration);
             var rootConfiguration = services.BuildServiceProvider().GetService<IRootConfiguration>();
 
@@ -75,6 +80,7 @@ namespace Skoruba.IdentityServer4.Admin
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             app.AddLogging(loggerFactory, Configuration);
+            loggerFactory.AddExceptionless((c) => c.ReadFromConfiguration(Configuration));
 
             if (env.IsDevelopment())
             {
