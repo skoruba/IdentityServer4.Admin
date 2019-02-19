@@ -124,7 +124,7 @@
     <value>下载双因素验证器应用程序，如适用于</value>
   </data>
   <data name="GoogleAuthenticatorTitle" xml:space="preserve">
-    <value>Google Authenticator for</value>
+    <value>Google Authenticator 适用于</value>
   </data>
   <data name="Info" xml:space="preserve">
     <value>扫描完二维码或输入上述密钥后，您的双因素身份验证应用程序将为您提供唯一的代码。 在下面的确认框中输入代码。</value>

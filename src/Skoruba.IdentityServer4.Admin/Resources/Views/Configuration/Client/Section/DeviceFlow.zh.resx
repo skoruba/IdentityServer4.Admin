@@ -117,46 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Country" xml:space="preserve">
-    <value>国家</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>Email</value>
-  </data>
-  <data name="Locality" xml:space="preserve">
-    <value>城市</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>全名</value>
-  </data>
-  <data name="PhoneNumber" xml:space="preserve">
-    <value>电话号码</value>
-  </data>
-  <data name="PostalCode" xml:space="preserve">
-    <value>邮政编码</value>
-  </data>
-  <data name="Profile" xml:space="preserve">
-    <value>个人资料 URL</value>
-  </data>
-  <data name="Region" xml:space="preserve">
-    <value>地区</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>保存</value>
-  </data>
-  <data name="SendVerificationEmail" xml:space="preserve">
-    <value>发送验证邮件</value>
-  </data>
-  <data name="StreetAddress" xml:space="preserve">
-    <value>街道地址</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>资料</value>
-  </data>
-  <data name="UserName" xml:space="preserve">
-    <value>用户名</value>
-  </data>
-  <data name="Website" xml:space="preserve">
-    <value>网站 URL</value>
+  <data name="PanelTitle" xml:space="preserve">
+    <value>设备流程</value>
   </data>
 </root>
