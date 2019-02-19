@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>172f8673-254d-4f94-8cb4-a5cf2c50e52c</ProjectGuid>
+    <ProjectGuid>08F4F0B8-77B3-4D6B-8803-32FB20EC4B13</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
     <DockerServiceName>skoruba.identityserver4.admin</DockerServiceName>
