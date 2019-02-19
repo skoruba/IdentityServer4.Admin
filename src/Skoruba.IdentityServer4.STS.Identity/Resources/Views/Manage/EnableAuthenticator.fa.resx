@@ -117,118 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="RoleName_Info" xml:space="preserve">
-    <value>نام نقش</value>
+  <data name="Code" xml:space="preserve">
+    <value>کد تایید</value>
   </data>
-  <data name="RoleName_Label" xml:space="preserve">
-    <value>نام نقش</value>
+  <data name="DownloadTitle" xml:space="preserve">
+    <value>دانلود کنید یک برنامه تأیید هویت دو-عاملی مانند Microsoft Authenticator for</value>
   </data>
-  <data name="RolesList_Info" xml:space="preserve">
-    <value>نقش</value>
+  <data name="GoogleAuthenticatorTitle" xml:space="preserve">
+    <value>Google Authenticator برای</value>
   </data>
-  <data name="RolesList_Label" xml:space="preserve">
-    <value>نقش</value>
+  <data name="Info" xml:space="preserve">
+    <value>هنگامی که شما کد QR را اسکن کردید یا کلید بالا را وارد کردید، برنامه تأیید هویت دو عاملی شما یک کد یکتاء فراهم می کند. کد را در جعبه تأیید در زیر وارد کنید.</value>
   </data>
-  <data name="Type_Info" xml:space="preserve">
-    <value />
+  <data name="ScanQR" xml:space="preserve">
+    <value>کد QR را اسکن کنید یا این کلید را وارد کنید</value>
   </data>
-  <data name="Type_Label" xml:space="preserve">
-    <value>نوع ادعا</value>
+  <data name="ScanQRSubTitle" xml:space="preserve">
+    <value>در برنامه تأیید هویت دو عاملی شما. فاصله ها یا بزرگ/کوچک مهم نیست.</value>
   </data>
-  <data name="UserAccessFailedCount_Info" xml:space="preserve">
-    <value>تعداد دسترسی ناموفق کاربر</value>
+  <data name="SubTitle" xml:space="preserve">
+    <value>برای استفاده از یک برنامه تأیید هویت از مراحل زیر استفاده کنید:</value>
   </data>
-  <data name="UserAccessFailedCount_Label" xml:space="preserve">
-    <value>تعداد دسترسی ناموفق کاربر</value>
+  <data name="Title" xml:space="preserve">
+    <value>پیکربندی برنامه تأیید هویت</value>
   </data>
-  <data name="UserChangePasswordConfirmPassword_Info" xml:space="preserve">
-    <value>تایید کلمه عبور</value>
-  </data>
-  <data name="UserChangePasswordConfirmPassword_Label" xml:space="preserve">
-    <value>تایید کلمه عبور</value>
-  </data>
-  <data name="UserChangePasswordPassword_Info" xml:space="preserve">
-    <value>کلمه عبور</value>
-  </data>
-  <data name="UserChangePasswordPassword_Label" xml:space="preserve">
-    <value>کلمه عبور</value>
-  </data>
-  <data name="UserChangePasswordUserName_Info" xml:space="preserve">
-    <value>نام کاربری</value>
-  </data>
-  <data name="UserChangePasswordUserName_Label" xml:space="preserve">
-    <value>نام کاربری</value>
-  </data>
-  <data name="UserEmailConfirmed_Info" xml:space="preserve">
-    <value>تایید ایمیل کاربر</value>
-  </data>
-  <data name="UserEmailConfirmed_Label" xml:space="preserve">
-    <value>تایید ایمیل کاربر</value>
-  </data>
-  <data name="UserEmail_Info" xml:space="preserve">
-    <value>ایمیل</value>
-  </data>
-  <data name="UserEmail_Label" xml:space="preserve">
-    <value>ایمیل</value>
-  </data>
-  <data name="UserLockoutEnabled_Info" xml:space="preserve">
-    <value>فعال کردن قفل کاربر</value>
-  </data>
-  <data name="UserLockoutEnabled_Label" xml:space="preserve">
-    <value>فعال کردن قفل کاربر</value>
-  </data>
-  <data name="UserLockoutEnd_Info" xml:space="preserve">
-    <value>پایان قفل کاربر</value>
-  </data>
-  <data name="UserLockoutEnd_Label" xml:space="preserve">
-    <value>پایان قفل کاربر</value>
-  </data>
-  <data name="UserPhoneNumberConfirmed_Info" xml:space="preserve">
-    <value>تایید شماره تلفن کاربر</value>
-  </data>
-  <data name="UserPhoneNumberConfirmed_Label" xml:space="preserve">
-    <value>تایید شماره تلفن کاربر</value>
-  </data>
-  <data name="UserPhoneNumber_Info" xml:space="preserve">
-    <value>شماره تلفن کاربر</value>
-  </data>
-  <data name="UserPhoneNumber_Label" xml:space="preserve">
-    <value>شماره تلفن کاربر</value>
-  </data>
-  <data name="UserProviderLoginProvider_Info" xml:space="preserve">
-    <value>ارائه دهنده ی ورود</value>
-  </data>
-  <data name="UserProviderLoginProvider_Label" xml:space="preserve">
-    <value>ارائه دهنده ی ورود</value>
-  </data>
-  <data name="UserProviderProviderDisplayName_Info" xml:space="preserve">
-    <value>نام نمایشی</value>
-  </data>
-  <data name="UserProviderProviderDisplayName_Label" xml:space="preserve">
-    <value>نام نمایشی</value>
-  </data>
-  <data name="UserProviderProviderKey_Info" xml:space="preserve">
-    <value>کلید ارائه دهنده</value>
-  </data>
-  <data name="UserProviderProviderKey_Label" xml:space="preserve">
-    <value>کلید ارائه دهنده</value>
-  </data>
-  <data name="UserTwoFactorEnabled_Info" xml:space="preserve">
-    <value>فعال کردن کاربر دو عاملی</value>
-  </data>
-  <data name="UserTwoFactorEnabled_Label" xml:space="preserve">
-    <value>فعال کردن کاربر دو عاملی</value>
-  </data>
-  <data name="UserUserName_Info" xml:space="preserve">
-    <value>نام کاربری</value>
-  </data>
-  <data name="UserUserName_Label" xml:space="preserve">
-    <value>نام کاربری</value>
-  </data>
-  <data name="Value_Info" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Value_Label" xml:space="preserve">
-    <value>مقدار ادعا</value>
+  <data name="Verify" xml:space="preserve">
+    <value>تأیید کنید</value>
   </data>
 </root>

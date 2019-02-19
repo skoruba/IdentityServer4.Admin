@@ -117,118 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="RoleName_Info" xml:space="preserve">
-    <value>نام نقش</value>
+  <data name="AddAuthenticator" xml:space="preserve">
+    <value>اضافه کردن برنامه تأیید هویت</value>
   </data>
-  <data name="RoleName_Label" xml:space="preserve">
-    <value>نام نقش</value>
+  <data name="AuthenticatorApp" xml:space="preserve">
+    <value>برنامه تأیید هویت</value>
   </data>
-  <data name="RolesList_Info" xml:space="preserve">
-    <value>نقش</value>
+  <data name="BeforeLogin" xml:space="preserve">
+    <value>قبل از اینکه بتوانید با کد بازیابی وارد شوید</value>
   </data>
-  <data name="RolesList_Label" xml:space="preserve">
-    <value>نقش</value>
+  <data name="Disable2FA" xml:space="preserve">
+    <value>غیر فعال کردن 2FA</value>
   </data>
-  <data name="Type_Info" xml:space="preserve">
-    <value />
+  <data name="ForgetBrowser" xml:space="preserve">
+    <value>این مرورگر را فراموش کن</value>
   </data>
-  <data name="Type_Label" xml:space="preserve">
-    <value>نوع ادعا</value>
+  <data name="GenerateNewCodes" xml:space="preserve">
+    <value>یک مجموعه جدید از کدهای بازیابی تولید کنید</value>
   </data>
-  <data name="UserAccessFailedCount_Info" xml:space="preserve">
-    <value>تعداد دسترسی ناموفق کاربر</value>
+  <data name="NoCodes" xml:space="preserve">
+    <value>هیچ کدام از کدهای بازیابی شما باقی نمانده است</value>
   </data>
-  <data name="UserAccessFailedCount_Label" xml:space="preserve">
-    <value>تعداد دسترسی ناموفق کاربر</value>
+  <data name="OneCode" xml:space="preserve">
+    <value>شما 1 کد بازیابی باقی مانده دارید</value>
   </data>
-  <data name="UserChangePasswordConfirmPassword_Info" xml:space="preserve">
-    <value>تایید کلمه عبور</value>
+  <data name="RecoveryCodeLeft" xml:space="preserve">
+    <value>کدهای بازیابی باقی مانده</value>
   </data>
-  <data name="UserChangePasswordConfirmPassword_Label" xml:space="preserve">
-    <value>تایید کلمه عبور</value>
+  <data name="ResetAuthenticator" xml:space="preserve">
+    <value>تنظیم مجدد برنامه تأیید هویت</value>
   </data>
-  <data name="UserChangePasswordPassword_Info" xml:space="preserve">
-    <value>کلمه عبور</value>
+  <data name="ResetCodes" xml:space="preserve">
+    <value>تنظیم مجدد کدهای بازیابی</value>
   </data>
-  <data name="UserChangePasswordPassword_Label" xml:space="preserve">
-    <value>کلمه عبور</value>
+  <data name="SetupAuthenticator" xml:space="preserve">
+    <value>راه اندازی برنامه تأیید هویت</value>
   </data>
-  <data name="UserChangePasswordUserName_Info" xml:space="preserve">
-    <value>نام کاربری</value>
+  <data name="Title" xml:space="preserve">
+    <value>احراز هویت دو-عاملی (2FA)</value>
   </data>
-  <data name="UserChangePasswordUserName_Label" xml:space="preserve">
-    <value>نام کاربری</value>
+  <data name="YouCanGenerateCodes" xml:space="preserve">
+    <value>شما می توانید مجموعه ای جدید از کدهای بازیابی را تولید کنید</value>
   </data>
-  <data name="UserEmailConfirmed_Info" xml:space="preserve">
-    <value>تایید ایمیل کاربر</value>
+  <data name="YouHave" xml:space="preserve">
+    <value>شما دارید</value>
   </data>
-  <data name="UserEmailConfirmed_Label" xml:space="preserve">
-    <value>تایید ایمیل کاربر</value>
+  <data name="YouMust" xml:space="preserve">
+    <value>شما باید</value>
   </data>
-  <data name="UserEmail_Info" xml:space="preserve">
-    <value>ایمیل</value>
-  </data>
-  <data name="UserEmail_Label" xml:space="preserve">
-    <value>ایمیل</value>
-  </data>
-  <data name="UserLockoutEnabled_Info" xml:space="preserve">
-    <value>فعال کردن قفل کاربر</value>
-  </data>
-  <data name="UserLockoutEnabled_Label" xml:space="preserve">
-    <value>فعال کردن قفل کاربر</value>
-  </data>
-  <data name="UserLockoutEnd_Info" xml:space="preserve">
-    <value>پایان قفل کاربر</value>
-  </data>
-  <data name="UserLockoutEnd_Label" xml:space="preserve">
-    <value>پایان قفل کاربر</value>
-  </data>
-  <data name="UserPhoneNumberConfirmed_Info" xml:space="preserve">
-    <value>تایید شماره تلفن کاربر</value>
-  </data>
-  <data name="UserPhoneNumberConfirmed_Label" xml:space="preserve">
-    <value>تایید شماره تلفن کاربر</value>
-  </data>
-  <data name="UserPhoneNumber_Info" xml:space="preserve">
-    <value>شماره تلفن کاربر</value>
-  </data>
-  <data name="UserPhoneNumber_Label" xml:space="preserve">
-    <value>شماره تلفن کاربر</value>
-  </data>
-  <data name="UserProviderLoginProvider_Info" xml:space="preserve">
-    <value>ارائه دهنده ی ورود</value>
-  </data>
-  <data name="UserProviderLoginProvider_Label" xml:space="preserve">
-    <value>ارائه دهنده ی ورود</value>
-  </data>
-  <data name="UserProviderProviderDisplayName_Info" xml:space="preserve">
-    <value>نام نمایشی</value>
-  </data>
-  <data name="UserProviderProviderDisplayName_Label" xml:space="preserve">
-    <value>نام نمایشی</value>
-  </data>
-  <data name="UserProviderProviderKey_Info" xml:space="preserve">
-    <value>کلید ارائه دهنده</value>
-  </data>
-  <data name="UserProviderProviderKey_Label" xml:space="preserve">
-    <value>کلید ارائه دهنده</value>
-  </data>
-  <data name="UserTwoFactorEnabled_Info" xml:space="preserve">
-    <value>فعال کردن کاربر دو عاملی</value>
-  </data>
-  <data name="UserTwoFactorEnabled_Label" xml:space="preserve">
-    <value>فعال کردن کاربر دو عاملی</value>
-  </data>
-  <data name="UserUserName_Info" xml:space="preserve">
-    <value>نام کاربری</value>
-  </data>
-  <data name="UserUserName_Label" xml:space="preserve">
-    <value>نام کاربری</value>
-  </data>
-  <data name="Value_Info" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Value_Label" xml:space="preserve">
-    <value>مقدار ادعا</value>
+  <data name="YouShould" xml:space="preserve">
+    <value>شما باید</value>
   </data>
 </root>
