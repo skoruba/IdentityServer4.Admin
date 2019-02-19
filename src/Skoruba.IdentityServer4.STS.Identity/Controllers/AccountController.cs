@@ -543,7 +543,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             var user = new TUser
             {
-                UserName = model.Email,
+                UserName = model.UserName,
                 Email = model.Email
             };
 

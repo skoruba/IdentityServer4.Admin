@@ -135,4 +135,7 @@
   <data name="Title" xml:space="preserve">
     <value>Register</value>
   </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Username</value>
+  </data>
 </root>
