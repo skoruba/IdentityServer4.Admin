@@ -10,7 +10,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 {
-    public class LogRepository<TDbContext> : ILogRepository<TDbContext>
+    public class LogRepository<TDbContext> : ILogRepository
         where TDbContext : DbContext, IAdminLogDbContext
     {
         private readonly TDbContext _dbContext;

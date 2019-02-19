@@ -1,0 +1,36 @@
+﻿@inject IViewLocalizer Localizer
+@using Microsoft.AspNetCore.Mvc.Localization
+@model Skoruba.IdentityServer4.STS.Identity.ViewModels.Account.ExternalLoginConfirmationViewModel
+@{
+    ViewData["Title"] = Localizer["Title"];
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h4>@Localizer["SubTitle", ViewData["LoginProvider"].ToString()]</h4>
+
+<form asp-controller="Account" asp-action="ExternalLoginConfirmation" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+    <hr />
+    <div class="alert alert-info" role="alert">
+        @Localizer["Info", ViewData["LoginProvider"].ToString()]
+    </div>
+    <div class="form-group">
+        <label asp-for="UserName" class="col-md-2 control-label">@Localizer["UserName"]</label>
+        <div class="col-md-10">
+            <input asp-for="UserName" class="form-control" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email" class="col-md-2 control-label">@Localizer["Email"]</label>
+        <div class="col-md-10">
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-primary">@Localizer["Register"]</button>
+        </div>
+    </div>
+</form>

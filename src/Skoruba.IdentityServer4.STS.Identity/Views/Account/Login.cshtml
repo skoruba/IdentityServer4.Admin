@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
-@model Skoruba.IdentityServer4.STS.Identity.Quickstart.Account.LoginViewModel
+@model Skoruba.IdentityServer4.STS.Identity.ViewModels.Account.LoginViewModel
 
 <div class="login-page">
     <div class="page-header">
@@ -66,6 +66,7 @@
                                     <div class="col-sm-12">
                                         <button class="btn btn-primary" name="button" value="login">@Localizer["Login"]</button>
                                         <button class="btn btn-default" name="button" value="cancel">@Localizer["Cancel"]</button>
+                                        <a asp-action="ForgotPassword" asp-controller="Account" class="btn btn-info" value="forgot">@Localizer["Forgot"]</a>
                                     </div>
                                 </div>
                             </fieldset>
@@ -86,8 +87,7 @@
                             {
                                 <li class="list-inline-item">
                                     <a class="btn btn-primary"
-                                       asp-controller="External"
-                                       asp-action="Challenge"
+                                       asp-action="ExternalLogin"
                                        asp-route-provider="@provider.AuthenticationScheme"
                                        asp-route-returnUrl="@Model.ReturnUrl">
                                         @provider.DisplayName

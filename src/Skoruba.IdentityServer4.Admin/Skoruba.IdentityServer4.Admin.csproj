@@ -29,6 +29,75 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Include="Views\Account\AccessDenied.cshtml" />
+	  <None Include="Views\Configuration\ApiResource.cshtml" />
+	  <None Include="Views\Configuration\ApiResourceDelete.cshtml" />
+	  <None Include="Views\Configuration\ApiResourceProperties.cshtml" />
+	  <None Include="Views\Configuration\ApiResourcePropertyDelete.cshtml" />
+	  <None Include="Views\Configuration\ApiResources.cshtml" />
+	  <None Include="Views\Configuration\ApiResource\Section\Label.cshtml" />
+	  <None Include="Views\Configuration\ApiScopeDelete.cshtml" />
+	  <None Include="Views\Configuration\ApiScopes.cshtml" />
+	  <None Include="Views\Configuration\ApiSecretDelete.cshtml" />
+	  <None Include="Views\Configuration\ApiSecrets.cshtml" />
+	  <None Include="Views\Configuration\Client.cshtml" />
+	  <None Include="Views\Configuration\ClientClaimDelete.cshtml" />
+	  <None Include="Views\Configuration\ClientClaims.cshtml" />
+	  <None Include="Views\Configuration\ClientClone.cshtml" />
+	  <None Include="Views\Configuration\ClientDelete.cshtml" />
+	  <None Include="Views\Configuration\ClientProperties.cshtml" />
+	  <None Include="Views\Configuration\ClientPropertyDelete.cshtml" />
+	  <None Include="Views\Configuration\Clients.cshtml" />
+	  <None Include="Views\Configuration\ClientSecretDelete.cshtml" />
+	  <None Include="Views\Configuration\ClientSecrets.cshtml" />
+	  <None Include="Views\Configuration\Client\Section\ActionButtons.cshtml" />
+	  <None Include="Views\Configuration\Client\Section\Authentication.cshtml" />
+	  <None Include="Views\Configuration\Client\Section\Basics.cshtml" />
+	  <None Include="Views\Configuration\Client\Section\Consent.cshtml" />
+	  <None Include="Views\Configuration\Client\Section\DeviceFlow.cshtml" />
+	  <None Include="Views\Configuration\Client\Section\Label.cshtml" />
+	  <None Include="Views\Configuration\Client\Section\Name.cshtml" />
+	  <None Include="Views\Configuration\Client\Section\Token.cshtml" />
+	  <None Include="Views\Configuration\Client\Settings.cshtml" />
+	  <None Include="Views\Configuration\IdentityResource.cshtml" />
+	  <None Include="Views\Configuration\IdentityResourceDelete.cshtml" />
+	  <None Include="Views\Configuration\IdentityResourceProperties.cshtml" />
+	  <None Include="Views\Configuration\IdentityResourcePropertyDelete.cshtml" />
+	  <None Include="Views\Configuration\IdentityResources.cshtml" />
+	  <None Include="Views\Configuration\IdentityResource\Section\Label.cshtml" />
+	  <None Include="Views\Grant\PersistedGrant.cshtml" />
+	  <None Include="Views\Grant\PersistedGrantDelete.cshtml" />
+	  <None Include="Views\Grant\PersistedGrants.cshtml" />
+	  <None Include="Views\Home\Error.cshtml" />
+	  <None Include="Views\Home\Index.cshtml" />
+	  <None Include="Views\Identity\Role.cshtml" />
+	  <None Include="Views\Identity\RoleClaims.cshtml" />
+	  <None Include="Views\Identity\RoleClaimsDelete.cshtml" />
+	  <None Include="Views\Identity\RoleDelete.cshtml" />
+	  <None Include="Views\Identity\Roles.cshtml" />
+	  <None Include="Views\Identity\Role\Section\Label.cshtml" />
+	  <None Include="Views\Identity\UserChangePassword.cshtml" />
+	  <None Include="Views\Identity\UserClaims.cshtml" />
+	  <None Include="Views\Identity\UserClaimsDelete.cshtml" />
+	  <None Include="Views\Identity\UserDelete.cshtml" />
+	  <None Include="Views\Identity\UserProfile.cshtml" />
+	  <None Include="Views\Identity\UserProviders.cshtml" />
+	  <None Include="Views\Identity\UserProvidersDelete.cshtml" />
+	  <None Include="Views\Identity\UserRoles.cshtml" />
+	  <None Include="Views\Identity\UserRolesDelete.cshtml" />
+	  <None Include="Views\Identity\Users.cshtml" />
+	  <None Include="Views\Identity\User\Section\Label.cshtml" />
+	  <None Include="Views\Log\ErrorsLog.cshtml" />
+	  <None Include="Views\Shared\Common\ErrorPage.cshtml" />
+	  <None Include="Views\Shared\Common\Notification.cshtml" />
+	  <None Include="Views\Shared\Common\Pager.cshtml" />
+	  <None Include="Views\Shared\Common\Search.cshtml" />
+	  <None Include="Views\Shared\Common\SelectLanguage.cshtml" />
+	  <None Include="Views\Shared\Error.cshtml" />
+	  <None Include="Views\Shared\_Layout.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.csproj" />
 	  <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.BusinessLogic.Shared\Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.csproj" />
 	  <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.BusinessLogic\Skoruba.IdentityServer4.Admin.BusinessLogic.csproj" />

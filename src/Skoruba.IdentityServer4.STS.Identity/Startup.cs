@@ -35,9 +35,10 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContexts<AdminDbContext>(Configuration);
-            services.AddAuthenticationServices<AdminDbContext, UserIdentity, UserIdentityRole>(Environment, Configuration, Logger);
-            services.AddMvcLocalization();
+            services.AddIdentityDbContext<AdminIdentityDbContext>(Configuration);
+            services.AddEmailSenders(Configuration);            
+            services.AddAuthenticationServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Environment, Configuration, Logger);
+            services.AddMvcWithLocalization<UserIdentity, string>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

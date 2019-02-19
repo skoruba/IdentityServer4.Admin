@@ -1,0 +1,12 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = "Confirm email";
+}
+
+<h1>@ViewData["Title"]</h1>
+<div>
+    <p>
+        @Localizer["ConfirmMessage"]
+    </p>
+</div>
