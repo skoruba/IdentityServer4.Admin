@@ -117,31 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ConfirmEmailBody" xml:space="preserve">
-    <value>Please confirm your account by &lt;a href='{0}'&gt;clicking here&lt;/a&gt;.</value>
+  <data name="Error" xml:space="preserve">
+    <value>The registration is disabled.</value>
   </data>
-  <data name="ConfirmEmailTitle" xml:space="preserve">
-    <value>Confirm your email</value>
-  </data>
-  <data name="EmailNotFound" xml:space="preserve">
-    <value>The user does not exist or is not confirmed</value>
-  </data>
-  <data name="ErrorExternalProvider" xml:space="preserve">
-    <value>Error from external provider: {0}</value>
-  </data>
-  <data name="InvalidAuthenticatorCode" xml:space="preserve">
-    <value>Invalid authenticator code.</value>
-  </data>
-  <data name="InvalidRecoveryCode" xml:space="preserve">
-    <value>Invalid recovery code entered.</value>
-  </data>
-  <data name="ResetPasswordBody" xml:space="preserve">
-    <value>Please reset your password by &lt;a href='{0}'&gt;clicking here&lt;/a&gt;.</value>
-  </data>
-  <data name="ResetPasswordTitle" xml:space="preserve">
-    <value>Reset Password</value>
-  </data>
-  <data name="Unable2FA" xml:space="preserve">
-    <value>Unable to load two-factor authentication user.</value>
+  <data name="Title" xml:space="preserve">
+    <value>Register Failure</value>
   </data>
 </root>

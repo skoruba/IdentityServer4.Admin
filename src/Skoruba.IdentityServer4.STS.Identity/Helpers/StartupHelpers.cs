@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Reflection;
 using IdentityServer4.EntityFramework.Interfaces;
 using IdentityServer4.EntityFramework.Storage;
 using Microsoft.AspNetCore.Authentication;
@@ -232,12 +233,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TPersistedGrantDbContext : DbContext, IPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IConfigurationDbContext
         {
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
             // Config DB from existing connection
             builder.AddConfigurationStore<TConfigurationDbContext>(options =>
             {
                 options.ConfigureDbContext = b =>
                     b.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey),
-                        sql => sql.MigrationsAssembly(configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbMigrationsAssemblyKey)));
+                        sql => sql.MigrationsAssembly(migrationsAssembly));
             });
 
             // Operational DB from existing connection
@@ -249,7 +252,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 #endif
                 options.ConfigureDbContext = b =>
                     b.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey),
-                        sql => sql.MigrationsAssembly(configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbMigrationsAssemblyKey)));
+                        sql => sql.MigrationsAssembly(migrationsAssembly));
             });
 
             return builder;
