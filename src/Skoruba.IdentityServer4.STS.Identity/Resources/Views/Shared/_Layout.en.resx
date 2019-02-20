@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="2FA" xml:space="preserve">
+    <value>Two-factor authentication</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="ExternalLogins" xml:space="preserve">
+    <value>My external logins</value>
+  </data>
   <data name="Footer" xml:space="preserve">
     <value>Skoruba IdentityServer4</value>
   </data>
@@ -125,6 +134,12 @@
   </data>
   <data name="Grants" xml:space="preserve">
     <value>Grants</value>
+  </data>
+  <data name="ManagePersonalData" xml:space="preserve">
+    <value>My personal data</value>
+  </data>
+  <data name="ManageProfile" xml:space="preserve">
+    <value>My profile</value>
   </data>
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>

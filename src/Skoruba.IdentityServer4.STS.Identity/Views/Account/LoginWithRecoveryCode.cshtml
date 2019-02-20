@@ -1,0 +1,27 @@
+﻿@inject IViewLocalizer Localizer
+@using Microsoft.AspNetCore.Mvc.Localization
+@model Skoruba.IdentityServer4.STS.Identity.ViewModels.Account.LoginWithRecoveryCodeViewModel
+@{
+    ViewData["Title"] = Localizer["Title"];
+}
+
+@await Html.PartialAsync("_ValidationSummary")
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+<p>
+    @Localizer["Info"]
+</p>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <input asp-for="ReturnUrl" type="hidden" />
+            <div class="form-group">
+                <label asp-for="RecoveryCode">@Localizer["Code"]</label>
+                <input asp-for="RecoveryCode" class="form-control" autocomplete="off" />
+                <span asp-validation-for="RecoveryCode" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">@Localizer["LogIn"]</button>
+        </form>
+    </div>
+</div>

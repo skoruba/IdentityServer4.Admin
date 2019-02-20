@@ -132,6 +132,9 @@
   <data name="LinkTitle" xml:space="preserve">
     <value>Here are links to the</value>
   </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
   <data name="SubTitle" xml:space="preserve">
     <value>Welcome to Skoruba IdentityServer4</value>
   </data>

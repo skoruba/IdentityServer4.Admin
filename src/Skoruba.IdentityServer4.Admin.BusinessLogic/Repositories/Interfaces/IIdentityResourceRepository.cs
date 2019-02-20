@@ -6,8 +6,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces
 {
-    public interface IIdentityResourceRepository<TDbContext>
-        where TDbContext : DbContext, IAdminConfigurationDbContext
+    public interface IIdentityResourceRepository
     {
         Task<PagedList<IdentityResource>> GetIdentityResourcesAsync(string search, int page = 1, int pageSize = 10);
 

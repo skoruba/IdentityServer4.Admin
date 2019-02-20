@@ -123,6 +123,9 @@
   <data name="ExternalLogin" xml:space="preserve">
     <value>External Login</value>
   </data>
+  <data name="Forgot" xml:space="preserve">
+    <value>Forgot password</value>
+  </data>
   <data name="InvalidRequest" xml:space="preserve">
     <value>Invalid login request</value>
   </data>

@@ -1,0 +1,25 @@
+﻿@inject IViewLocalizer Localizer
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@{
+    ViewData["Title"] = Localizer["Title"];
+}
+
+<h4>@ViewData["Title"]</h4>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="alert alert-info" role="alert">
+            @Localizer["Info"]
+        </div>
+        <form asp-action="DownloadPersonalData" method="post" class="form-group">
+            <button class="btn btn-primary" type="submit">@Localizer["Download"]</button>
+        </form>
+        <div class="alert alert-danger" role="alert">
+            @Localizer["Warning"]
+        </div>
+        <div>
+            <a asp-action="DeletePersonalData" class="btn btn-primary">@Localizer["Delete"]</a>
+        </div>
+    </div>
+</div>

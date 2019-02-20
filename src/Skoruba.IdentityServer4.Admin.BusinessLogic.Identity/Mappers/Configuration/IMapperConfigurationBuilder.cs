@@ -7,7 +7,10 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers.Configura
     public interface IMapperConfigurationBuilder
     {
         IMapperConfigurationBuilder UseIdentityMappingProfile<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUser, TRole,
-            TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>()
+            TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
+            TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
+            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto,
+            TUserClaimDto, TRoleClaimDto>()
             where TUserDto : UserDto<TUserDtoKey>
             where TRoleDto : RoleDto<TRoleDtoKey>
             where TUser : IdentityUser<TKey>
@@ -17,6 +20,16 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers.Configura
             where TUserRole : IdentityUserRole<TKey>
             where TUserLogin : IdentityUserLogin<TKey>
             where TRoleClaim : IdentityRoleClaim<TKey>
-            where TUserToken : IdentityUserToken<TKey>;
+            where TUserToken : IdentityUserToken<TKey>
+            where TUsersDto : UsersDto<TUserDto, TUserDtoKey>
+            where TRolesDto : RolesDto<TRoleDto, TRoleDtoKey>
+            where TUserRolesDto : UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey>
+            where TUserClaimsDto : UserClaimsDto<TUserDtoKey>
+            where TUserProviderDto : UserProviderDto<TUserDtoKey>
+            where TUserProvidersDto : UserProvidersDto<TUserDtoKey>
+            where TUserChangePasswordDto : UserChangePasswordDto<TUserDtoKey>
+            where TRoleClaimsDto : RoleClaimsDto<TRoleDtoKey>
+            where TUserClaimDto : UserClaimDto<TUserDtoKey>
+            where TRoleClaimDto : RoleClaimDto<TRoleDtoKey>;
     }
 }

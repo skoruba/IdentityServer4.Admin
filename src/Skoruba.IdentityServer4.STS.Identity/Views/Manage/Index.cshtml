@@ -1,0 +1,94 @@
+﻿@inject IViewLocalizer Localizer
+@using Microsoft.AspNetCore.Mvc.Localization
+@model Skoruba.IdentityServer4.STS.Identity.ViewModels.Manage.IndexViewModel
+
+<h4>@Localizer["Title"]</h4>
+
+@await Html.PartialAsync("_ValidationSummary")
+
+@await Html.PartialAsync("_StatusMessage", Model.StatusMessage)
+
+<div class="row">
+    <div class="col-lg-2">
+        <img-gravatar email="@Model.Email" class="img-thumbnail" size="150" />
+    </div>
+    <div class="col-sm-10">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Username">@Localizer["UserName"]</label>
+                <input asp-for="Username" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="Email">@Localizer["Email"]</label>
+                <input type="hidden" asp-for="IsEmailConfirmed" />
+                @if (Model.IsEmailConfirmed)
+                {
+                    <div class="input-group">
+                        <input asp-for="Email" class="form-control" />
+                    </div>
+                }
+                else
+                {
+                    <input asp-for="Email" class="form-control" />
+                    <button asp-action="SendVerificationEmail" class="btn btn-link">@Localizer["SendVerificationEmail"]</button>
+                }
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber">@Localizer["PhoneNumber"]</label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Name">@Localizer["Name"]</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Website">@Localizer["Website"]</label>
+                <input asp-for="Website" class="form-control" />
+                <span asp-validation-for="Website" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Profile">@Localizer["Profile"]</label>
+                <input asp-for="Profile" class="form-control" />
+                <span asp-validation-for="Profile" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StreetAddress">@Localizer["StreetAddress"]</label>
+                <input asp-for="StreetAddress" class="form-control" />
+                <span asp-validation-for="StreetAddress" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Locality">@Localizer["Locality"]</label>
+                <input asp-for="Locality" class="form-control" />
+                <span asp-validation-for="Locality" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Region">@Localizer["Region"]</label>
+                <input asp-for="Region" class="form-control" />
+                <span asp-validation-for="Region" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PostalCode">@Localizer["PostalCode"]</label>
+                <input asp-for="PostalCode" class="form-control" />
+                <span asp-validation-for="PostalCode" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Country">@Localizer["Country"]</label>
+                <input asp-for="Country" class="form-control" />
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">@Localizer["Save"]</button>
+        </form>
+    </div>
+</div>
