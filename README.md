@@ -327,7 +327,7 @@ It is possible to define the configuration according the client type - by defaul
 - [x] Password reset
 - [x] Account linking
 - [x] Two-Factor Authentication (2FA)
-- [ ] User registration
+- [x] User registration
 
 ### 1.1.0:
 
