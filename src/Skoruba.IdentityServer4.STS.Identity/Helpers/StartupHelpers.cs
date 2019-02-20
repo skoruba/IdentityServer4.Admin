@@ -132,7 +132,13 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TUserIdentity : class
             where TUserIdentityRole : class
         {
-            services.AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
+            var loginConfiguration = configuration.GetSection(nameof(LoginConfiguration)).Get<LoginConfiguration>();
+
+
+            services
+                .AddSingleton(loginConfiguration)
+                .AddScoped<UserResolver<TUserIdentity>>()
+                .AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
                 {
                     options.User.RequireUniqueEmail = true;
                 })

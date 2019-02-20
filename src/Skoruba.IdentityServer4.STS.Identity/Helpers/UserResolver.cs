@@ -1,20 +1,19 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
-    public class UserResolver
+    public class UserResolver<TUser> where TUser : class
     {
-        private readonly UserManager<UserIdentity> _userManager;
-        private readonly ILogger<UserResolver> _logger;
+        private readonly UserManager<TUser> _userManager;
+        private readonly ILogger<UserResolver<TUser>> _logger;
         private readonly LoginResolutionPolicy _policy;
 
-        public UserResolver(UserManager<UserIdentity> userManager, LoginConfiguration configuration, IOptions<IdentityOptions> identityOptions, ILogger<UserResolver> logger)
+        public UserResolver(UserManager<TUser> userManager, LoginConfiguration configuration, IOptions<IdentityOptions> identityOptions, ILogger<UserResolver<TUser>> logger)
         {
             _userManager = userManager;
             _logger = logger;
@@ -30,7 +29,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             }
         }
 
-        public async Task<UserIdentity> GetUserAsync(string login)
+        public async Task<TUser> GetUserAsync(string login)
         {
             var emailVerifier = new EmailAddressAttribute();
 
@@ -47,14 +46,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             {
                 var user = await _userManager.FindByEmailAsync(login);
 
-                if (user != default(UserIdentity))
+                if (user != default(TUser))
                 {
                     return user;
                 }
 
                 user = await _userManager.FindByNameAsync(login);
 
-                if (user != default(UserIdentity))
+                if (user != default(TUser))
                 {
                     return user;
                 }

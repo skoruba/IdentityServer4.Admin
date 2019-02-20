@@ -35,6 +35,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         where TUser : IdentityUser<TKey>, new()
         where TKey : IEquatable<TKey>
     {
+        private readonly UserResolver<TUser> _userResolver;
         private readonly UserManager<TUser> _userManager;
         private readonly SignInManager<TUser> _signInManager;
         private readonly IIdentityServerInteractionService _interaction;
@@ -46,6 +47,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         private readonly IConfiguration _configuration;
 
         public AccountController(
+            UserResolver<TUser> userResolver,
             UserManager<TUser> userManager,
             SignInManager<TUser> signInManager,
             IIdentityServerInteractionService interaction,
@@ -56,6 +58,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             IStringLocalizer<AccountController<TUser, TKey>> localizer,
             IConfiguration configuration)
         {
+            _userResolver = userResolver;
             _userManager = userManager;
             _signInManager = signInManager;
             _interaction = interaction;
@@ -122,50 +125,51 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberLogin, lockoutOnFailure: true);
-                if (result.Succeeded)
-                {
-                    var user = await _userManager.FindByNameAsync(model.Username);
-                    await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName));
-
-                    if (context != null)
+                var user = await _userResolver.GetUserAsync(model.Username);
+                if (user != default(TUser)) { 
+                    var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberLogin, lockoutOnFailure: true);
+                    if (result.Succeeded)
                     {
-                        if (await _clientStore.IsPkceClientAsync(context.ClientId))
+                        await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName));
+
+                        if (context != null)
                         {
-                            // if the client is PKCE then we assume it's native, so this change in how to
-                            // return the response is for better UX for the end user.
-                            return View("Redirect", new RedirectViewModel { RedirectUrl = model.ReturnUrl });
+                            if (await _clientStore.IsPkceClientAsync(context.ClientId))
+                            {
+                                // if the client is PKCE then we assume it's native, so this change in how to
+                                // return the response is for better UX for the end user.
+                                return View("Redirect", new RedirectViewModel { RedirectUrl = model.ReturnUrl });
+                            }
+
+                            // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
+                            return Redirect(model.ReturnUrl);
                         }
 
-                        // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
-                        return Redirect(model.ReturnUrl);
+                        // request for a local page
+                        if (Url.IsLocalUrl(model.ReturnUrl))
+                        {
+                            return Redirect(model.ReturnUrl);
+                        }
+
+                        if (string.IsNullOrEmpty(model.ReturnUrl))
+                        {
+                            return Redirect("~/");
+                        }
+
+                        // user might have clicked on a malicious link - should be logged
+                        throw new Exception("invalid return URL");
                     }
 
-                    // request for a local page
-                    if (Url.IsLocalUrl(model.ReturnUrl))
+                    if (result.RequiresTwoFactor)
                     {
-                        return Redirect(model.ReturnUrl);
+                        return RedirectToAction(nameof(LoginWith2fa), new { model.ReturnUrl, RememberMe = model.RememberLogin });
                     }
 
-                    if (string.IsNullOrEmpty(model.ReturnUrl))
+                    if (result.IsLockedOut)
                     {
-                        return Redirect("~/");
+                        return View("Lockout");
                     }
-
-                    // user might have clicked on a malicious link - should be logged
-                    throw new Exception("invalid return URL");
                 }
-
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToAction(nameof(LoginWith2fa), new { model.ReturnUrl, RememberMe = model.RememberLogin });
-                }
-
-                if (result.IsLockedOut)
-                {
-                    return View("Lockout");
-                }
-
                 await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials"));
                 ModelState.AddModelError(string.Empty, AccountOptions.InvalidCredentialsErrorMessage);
             }
