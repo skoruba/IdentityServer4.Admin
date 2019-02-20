@@ -52,15 +52,10 @@
                     @Localizer["Settings"] - @name
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" asp-controller="Manage" asp-action="Index">@Localizer["ManageProfile"]</a>
-                    <a class="dropdown-item" asp-controller="Manage" asp-action="PersonalData">@Localizer["ManagePersonalData"]</a>
                     @if (hasExternalLogins)
                     {
                         <a class="dropdown-item" asp-controller="Manage" asp-action="ExternalLogins">@Localizer["ExternalLogins"]</a>
                     }
-                    <a class="dropdown-item" asp-controller="Manage" asp-action="TwoFactorAuthentication">@Localizer["2FA"]</a>
-                    <a class="dropdown-item" asp-controller="Manage" asp-action="ChangePassword">@Localizer["ChangePassword"]</a>
-                    <a class="dropdown-item" asp-controller="Grants" asp-action="Index">@Localizer["Grants"]</a>
                 </div>
             </div>
 
