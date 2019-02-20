@@ -132,6 +132,9 @@
   <data name="LinkTitle" xml:space="preserve">
     <value>这是链接到</value>
   </data>
+  <data name="Login" xml:space="preserve">
+    <value>登录</value>
+  </data>
   <data name="SubTitle" xml:space="preserve">
     <value>欢迎来到 Skoruba IdentityServer4</value>
   </data>

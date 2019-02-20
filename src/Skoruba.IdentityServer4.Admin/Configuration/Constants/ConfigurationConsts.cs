@@ -6,11 +6,7 @@
 
         public const string ConfigurationDbConnectionStringKey = "ConfigurationDbConnection";
 
-        public const string ConfigurationDbMigrationsAssemblyKey = "ConfigurationDbMigrationsAssembly";
-
         public const string PersistedGrantDbConnectionStringKey = "PersistedGrantDbConnection";
-
-        public const string PersistedGrantDbMigrationsAssemblyKey = "PersistedGrantMigrationsAssembly";
 
         public const string IdentityDbConnectionStringKey = "IdentityDbConnection";
 
