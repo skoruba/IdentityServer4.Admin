@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using IdentityServer4.EntityFramework.Interfaces;
-using IdentityServer4.EntityFramework.Storage;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -76,9 +76,42 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <param name="app"></param>
         public static void UseSecurityHeaders(this IApplicationBuilder app)
         {
+            app.UseXXssProtection(options => options.EnabledWithBlockMode());
+            app.UseXContentTypeOptions();
+
             app.UseForwardedHeaders(new ForwardedHeadersOptions()
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
+            var allowCspUrls = new List<string>
+            {
+                "https://fonts.googleapis.com/",
+                "https://fonts.gstatic.com/"
+            };
+
+            app.UseCsp(options =>
+            {
+                options.FontSources(configuration =>
+                {
+                    configuration.SelfSrc = true;
+                    configuration.CustomSources = allowCspUrls;
+                });
+
+                //TODO: consider remove unsafe sources - currently using for toastr inline scripts in Notification.cshtml
+                options.ScriptSources(configuration =>
+                {
+                    configuration.SelfSrc = true;
+                    configuration.UnsafeInlineSrc = true;
+                    configuration.UnsafeEvalSrc = true;
+                });
+
+                options.StyleSources(configuration =>
+                {
+                    configuration.SelfSrc = true;
+                    configuration.CustomSources = allowCspUrls;
+                    configuration.UnsafeInlineSrc = true;
+                });
             });
 
             app.UseXfo(options => options.SameOrigin());
