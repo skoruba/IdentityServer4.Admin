@@ -76,14 +76,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <param name="app"></param>
         public static void UseSecurityHeaders(this IApplicationBuilder app)
         {
-            app.UseXXssProtection(options => options.EnabledWithBlockMode());
-            app.UseXContentTypeOptions();
-
             app.UseForwardedHeaders(new ForwardedHeadersOptions()
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
+            app.UseHsts(options => options.MaxAge(days: 365));
+            app.UseXXssProtection(options => options.EnabledWithBlockMode());
+            app.UseXContentTypeOptions();
             var allowCspUrls = new List<string>
             {
                 "https://fonts.googleapis.com/",
