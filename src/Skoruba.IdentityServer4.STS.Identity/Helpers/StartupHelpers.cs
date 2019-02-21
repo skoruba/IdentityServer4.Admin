@@ -82,38 +82,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             });
 
             app.UseHsts(options => options.MaxAge(days: 365));
-            app.UseXXssProtection(options => options.EnabledWithBlockMode());
-            app.UseXContentTypeOptions();
-            var allowCspUrls = new List<string>
-            {
-                "https://fonts.googleapis.com/",
-                "https://fonts.gstatic.com/"
-            };
-
-            app.UseCsp(options =>
-            {
-                options.FontSources(configuration =>
-                {
-                    configuration.SelfSrc = true;
-                    configuration.CustomSources = allowCspUrls;
-                });
-
-                //TODO: consider remove unsafe sources - currently using for toastr inline scripts in Notification.cshtml
-                options.ScriptSources(configuration =>
-                {
-                    configuration.SelfSrc = true;
-                    configuration.UnsafeInlineSrc = true;
-                    configuration.UnsafeEvalSrc = true;
-                });
-
-                options.StyleSources(configuration =>
-                {
-                    configuration.SelfSrc = true;
-                    configuration.CustomSources = allowCspUrls;
-                    configuration.UnsafeInlineSrc = true;
-                });
-            });
-
             app.UseXfo(options => options.SameOrigin());
             app.UseReferrerPolicy(options => options.NoReferrer());
         }
