@@ -8,7 +8,9 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.ApplicationParts
         {
             if (controller.ControllerType.IsGenericType)
             {
-                controller.ControllerName = controller.ControllerType.Name.Substring(0, controller.ControllerType.Name.IndexOf('`') - 10);
+                var genericName = controller.ControllerType.Name;
+                var genericNameWithoutArity = genericName.Substring(0, genericName.IndexOf('`'));
+                controller.ControllerName = genericNameWithoutArity.Substring(0, genericNameWithoutArity.LastIndexOf("Controller"));
             }
         }
     }
