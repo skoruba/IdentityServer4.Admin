@@ -30,7 +30,7 @@ using Skoruba.IdentityServer4.STS.Identity.ViewModels.Account;
 namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 {
     [SecurityHeaders]
-    [AllowAnonymous]
+    [Authorize]    
     public class AccountController<TUser, TKey> : Controller
         where TUser : IdentityUser<TKey>, new()
         where TKey : IEquatable<TKey>
@@ -71,6 +71,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         /// Entry point into the login workflow
         /// </summary>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl)
         {
             // build a model so we know what to show on the login page
@@ -89,6 +90,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         /// Handle postback from username/password login
         /// </summary>
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginInputModel model, string button)
         {
