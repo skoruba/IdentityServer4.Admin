@@ -5,7 +5,6 @@
     public enum LoginResolutionPolicy
     {
         Username = 0,
-        Email = 1,
-        EmailOrUsername = 2
+        Email = 1
     }
 }
