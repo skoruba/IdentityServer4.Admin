@@ -45,10 +45,6 @@ namespace Skoruba.IdentityServer4.Admin
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddLogging(b => b
-                   .AddConfiguration(Configuration.GetSection("Logging"))
-                   .AddDebug()
-                   .AddConsole());
             services.ConfigureRootConfiguration(Configuration);
             var rootConfiguration = services.BuildServiceProvider().GetService<IRootConfiguration>();
 
