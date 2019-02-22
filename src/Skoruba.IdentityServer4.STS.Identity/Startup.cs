@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Exceptionless;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,6 +45,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
 			app.AddLogging(loggerFactory, Configuration);
+            loggerFactory.AddExceptionless((c) => c.ReadFromConfiguration(Configuration));
 
             if (env.IsDevelopment())
             {
