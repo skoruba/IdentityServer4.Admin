@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
@@ -29,7 +30,7 @@ using Skoruba.IdentityServer4.STS.Identity.ViewModels.Account;
 namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 {
     [SecurityHeaders]
-    [AllowAnonymous]
+    [Authorize]    
     public class AccountController<TUser, TKey> : Controller
         where TUser : IdentityUser<TKey>, new()
         where TKey : IEquatable<TKey>
@@ -42,6 +43,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         private readonly IEventService _events;
         private readonly IEmailSender _emailSender;
         private readonly IStringLocalizer<AccountController<TUser, TKey>> _localizer;
+        private readonly IConfiguration _configuration;
 
         public AccountController(
             UserManager<TUser> userManager,
@@ -51,7 +53,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             IAuthenticationSchemeProvider schemeProvider,
             IEventService events,
             IEmailSender emailSender,
-            IStringLocalizer<AccountController<TUser, TKey>> localizer)
+            IStringLocalizer<AccountController<TUser, TKey>> localizer,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -61,12 +64,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             _events = events;
             _emailSender = emailSender;
             _localizer = localizer;
+            _configuration = configuration;
         }
 
         /// <summary>
         /// Entry point into the login workflow
         /// </summary>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl)
         {
             // build a model so we know what to show on the login page
@@ -85,6 +90,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         /// Handle postback from username/password login
         /// </summary>
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginInputModel model, string button)
         {
@@ -268,7 +274,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, HttpContext.Request.Scheme);
 
-                await _emailSender.SendEmailAsync(model.Email, "Reset Password", $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                await _emailSender.SendEmailAsync(model.Email, _localizer["ResetPasswordTitle"], _localizer["ResetPasswordBody", HtmlEncoder.Default.Encode(callbackUrl)]);
 
 
                 return View("ForgotPasswordConfirmation");
@@ -513,6 +519,51 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             ModelState.AddModelError(string.Empty, _localizer["InvalidAuthenticatorCode"]);
 
+            return View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Register(string returnUrl = null)
+        {
+            var registerConfiguration = _configuration.GetSection(nameof(RegisterConfiguration)).Get<RegisterConfiguration>();
+            if (!registerConfiguration.Enabled) return View("RegisterFailure");
+
+            ViewData["ReturnUrl"] = returnUrl;
+
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+
+            if (!ModelState.IsValid) return View(model);
+
+            var user = new TUser
+            {
+                UserName = model.UserName,
+                Email = model.Email
+            };
+
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, HttpContext.Request.Scheme);
+
+                await _emailSender.SendEmailAsync(model.Email, _localizer["ConfirmEmailTitle"], _localizer["ConfirmEmailBody", HtmlEncoder.Default.Encode(callbackUrl)]);
+                await _signInManager.SignInAsync(user, isPersistent: false);
+
+                return RedirectToLocal(returnUrl);
+            }
+
+            AddErrors(result);
+
+            // If we got this far, something failed, redisplay form
             return View(model);
         }
 

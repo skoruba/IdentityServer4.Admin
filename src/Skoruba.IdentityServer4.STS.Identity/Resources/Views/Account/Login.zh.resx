@@ -123,6 +123,9 @@
   <data name="ExternalLogin" xml:space="preserve">
     <value>外部登录</value>
   </data>
+  <data name="Forgot" xml:space="preserve">
+    <value>忘记密码</value>
+  </data>
   <data name="InvalidRequest" xml:space="preserve">
     <value>登录请求无效</value>
   </data>

@@ -45,14 +45,71 @@
             </div>
         </div>
     }
-</div>
 
-<div class="row">
-    <div class="col-sm-8">
-        <p>
-            @Localizer["LinkTitle"]
-            <a href="https://github.com/identityserver/IdentityServer4">@Localizer["LinkSource"]</a>,
-            <a href="https://github.com/identityserver/IdentityServer4.Samples">@Localizer["LinkSamples"]</a>.
-        </p>
-    </div>
+    @if (User.IsAuthenticated())
+    {
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">@Localizer["ManageProfile"]</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title">
+                    <span class="oi oi-person" title="@Localizer["ManageProfile"]" aria-hidden="true"></span>
+                </h1>
+                <a asp-controller="Manage" asp-action="Index" class="btn btn-lg btn-block btn-primary">@Localizer["ManageProfile"]</a>
+            </div>
+        </div>
+    }
 </div>
+@if (User.IsAuthenticated())
+{
+    <div class="card-deck mb-3 text-center">
+
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">@Localizer["ManagePersonalData"]</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title">
+                    <span class="oi oi-cloud-download" title="@Localizer["ManagePersonalData"]" aria-hidden="true"></span>
+                </h1>
+                <a asp-controller="Manage" asp-action="PersonalData" class="btn btn-lg btn-block btn-outline-primary">@Localizer["ManagePersonalData"]</a>
+            </div>
+        </div>
+
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">@Localizer["2FA"]</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title">
+                    <span class="oi oi-phone" title="@Localizer["2FA"]" aria-hidden="true"></span>
+                </h1>
+                <a asp-controller="Manage" asp-action="TwoFactorAuthentication" class="btn btn-lg btn-block btn-primary">@Localizer["2FA"]</a>
+            </div>
+        </div>
+
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">@Localizer["ChangePassword"]</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title">
+                    <span class="oi oi-pencil" title="@Localizer["ChangePassword"]" aria-hidden="true"></span>
+                </h1>
+                <a asp-controller="Manage" asp-action="ChangePassword" class="btn btn-lg btn-block btn-outline-primary">@Localizer["ChangePassword"]</a>
+            </div>
+        </div>
+    </div>
+}
+
+
+    <div class="row">
+        <div class="col-sm-8">
+            <p>
+                @Localizer["LinkTitle"]
+                <a href="https://github.com/identityserver/IdentityServer4">@Localizer["LinkSource"]</a>,
+                <a href="https://github.com/identityserver/IdentityServer4.Samples">@Localizer["LinkSamples"]</a>.
+            </p>
+        </div>
+    </div>

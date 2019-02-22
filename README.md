@@ -106,18 +106,73 @@ The following Gulp commands are available:
 
 ## EF Core & Data Access
 
-- Run entity framework migrations - for instance from Visual Studio command line (Nuget package manager):
+- The solution uses these `DbContexts`:
+
+  - `AdminIdentityDbContext`: for Asp.Net Core Identity
+  - `AdminLogDbContext`: for logging
+  - `IdentityServerConfigurationDbContext`: for IdentityServer configuration store
+  - `IdentityServerPersistedGrantDbContext`: for IdentityServer operational store
+
+- Run entity framework migrations:
+
+### Visual Studio command line (Nuget package manager):
+
+#### Migrations for Asp.Net Core Identity DbContext:
 
 ```powershell
-Add-Migration DbInit -context AdminDbContext -output Data/Migrations
-Update-Database -context AdminDbContext
+Add-Migration AspNetIdentityDbInit -context AdminIdentityDbContext -output Data/Migrations/Identity
+Update-Database -context AdminIdentityDbContext
 ```
 
-- Or via `dotnet CLI`:
+#### Migrations for Logging DbContext:
 
 ```powershell
-dotnet ef migrations add DbInit -c AdminDbContext -o Data/Migrations
-dotnet ef database update -c AdminDbContext
+Add-Migration LoggingDbInit -context AdminLogDbContext -output Data/Migrations/Logging
+Update-Database -context AdminLogDbContext
+```
+
+#### Migrations for IdentityServer configuration DbContext:
+
+```powershell
+Add-Migration IdentityServerConfigurationDbInit -context IdentityServerConfigurationDbContext -output Data/Migrations/IdentityServerConfiguration
+Update-Database -context IdentityServerConfigurationDbContext
+```
+
+#### Migrations for IdentityServer persisted grants DbContext:
+
+```powershell
+Add-Migration IdentityServerPersistedGrantsDbInit -context IdentityServerPersistedGrantDbContext -output Data/Migrations/IdentityServerGrants
+Update-Database -context IdentityServerPersistedGrantDbContext
+```
+
+### Or via `dotnet CLI`:
+
+#### Migrations for Asp.Net Core Identity DbContext:
+
+```powershell
+dotnet ef migrations add AspNetIdentityDbInit -c AdminIdentityDbContext -o Data/Migrations/Identity
+dotnet ef database update -c AdminIdentityDbContext
+```
+
+#### Migrations for Logging DbContext:
+
+```powershell
+dotnet ef migrations add LoggingDbInit -c AdminLogDbContext -o Data/Migrations/Logging
+dotnet ef database update -c AdminLogDbContext
+```
+
+#### Migrations for IdentityServer configuration DbContext:
+
+```powershell
+dotnet ef migrations add IdentityServerConfigurationDbInit -c IdentityServerConfigurationDbContext -o Data/Migrations/IdentityServerConfiguration
+dotnet ef database update -c IdentityServerConfigurationDbContext
+```
+
+#### Migrations for IdentityServer persisted grants DbContext:
+
+```powershell
+dotnet ef migrations add IdentityServerPersistedGrantsDbInit -c IdentityServerPersistedGrantDbContext -o Data/Migrations/IdentityServerGrants
+dotnet ef database update -c IdentityServerPersistedGrantDbContext
 ```
 
 Migrations are not a part of the repository - they are ignored in `.gitignore`.
@@ -268,11 +323,12 @@ It is possible to define the configuration according the client type - by defaul
   - [x] English
   - [x] Chinese
   - [x] Russian
+  - [x] Persian
 - [x] Manage profile
 - [x] Password reset
 - [x] Account linking
 - [x] Two-Factor Authentication (2FA)
-- [ ] User registration
+- [x] User registration
 
 ### 1.1.0:
 
@@ -298,7 +354,7 @@ It is possible to define the configuration according the client type - by defaul
 
 This repository is licensed under the terms of the [**MIT license**](LICENSE.md).
 
-**NOTE**: This repository uses the source code from https://github.com/IdentityServer/IdentityServer4.Quickstart.UI which is under the terms of the 
+**NOTE**: This repository uses the source code from https://github.com/IdentityServer/IdentityServer4.Quickstart.UI which is under the terms of the
 [**Apache License 2.0**](https://github.com/IdentityServer/IdentityServer4.Quickstart.UI/blob/master/LICENSE).
 
 ## Acknowledgements
@@ -325,7 +381,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 <!-- prettier-ignore-start -->
 | [<img src="https://avatars3.githubusercontent.com/u/35664089?s=460&v=3" width="100px;"/><br /><sub> Jan Škoruba</sub>](https://github.com/skoruba) <br /> 💻 💬 📖 💡 🤔 | [<img src="https://avatars0.githubusercontent.com/u/6831144?s=460&v=3" width="100px;"/><br /><sub> Tomáš Hübelbauer</sub>](https://github.com/TomasHubelbauer) <br /> 💻 👀 📖  🤔 | [<img src="https://avatars0.githubusercontent.com/u/1004852?s=460&v=3" width="100px;"/><br /><sub>Michał Drzał </sub>](https://github.com/xmichaelx) <br />💻 👀 📖 💡 🤔 | [<img src="https://avatars0.githubusercontent.com/u/2261603?s=460&v=3" width="100px;"/><br /><sub>cerginio </sub>](https://github.com/cerginio) <br /> 💻 🐛 💡 🤔 | [<img src="https://avatars3.githubusercontent.com/u/13407080?s=460&v=3" width="100px;"/><br /><sub>Sven Dummis </sub>](https://github.com/svendu) <br /> 📖| [<img src="https://avatars1.githubusercontent.com/u/1687087?s=460&v=3" width="100px;"/><br /><sub>Seaear</sub>](https://github.com/Seaear) <br />💻 🌍|
 | :---: | :---: | :---: | :---: | :---: | :---: |
-|[<img src="https://avatars1.githubusercontent.com/u/1150473?s=460&v=3" width="118px;"/><br /><sub>Rune Antonsen </sub>](https://github.com/ruant) <br />🐛|[<img src="https://avatars1.githubusercontent.com/u/5537607?s=460&v=3" width="118px;"/><br /><sub>Sindre Njøsen </sub>](https://github.com/Sindrenj) <br />💻|[<img src="https://avatars1.githubusercontent.com/u/40323674?s=460&v=3" width="118px;"/><br /><sub>Alevtina Brown </sub>](https://github.com/alev7ina) <br />🌍|
+|[<img src="https://avatars1.githubusercontent.com/u/1150473?s=460&v=3" width="118px;"/><br /><sub>Rune Antonsen </sub>](https://github.com/ruant) <br />🐛|[<img src="https://avatars1.githubusercontent.com/u/5537607?s=460&v=3" width="118px;"/><br /><sub>Sindre Njøsen </sub>](https://github.com/Sindrenj) <br />💻|[<img src="https://avatars1.githubusercontent.com/u/40323674?s=460&v=3" width="118px;"/><br /><sub>Alevtina Brown </sub>](https://github.com/alev7ina) <br />🌍|[<img src="https://avatars3.githubusercontent.com/u/29726153?s=460&v=3" width="118px;"/><br /><sub>Brice </sub>](https://github.com/Brice-xCIT) <br />💻|[<img src="https://avatars0.githubusercontent.com/u/17114154?s=460&v=3" width="118px;"/><br /><sub>TheEvilPenguin </sub>](https://github.com/TheEvilPenguin) <br />💻|[<img src="https://avatars3.githubusercontent.com/u/15545395?s=460&v=3" width="118px;"/><br /><sub>Saeed Rahmani </sub>](https://github.com/saeedrahmo) <br />🌍|
 <!-- prettier-ignore-end -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification.
