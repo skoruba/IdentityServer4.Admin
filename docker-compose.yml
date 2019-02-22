@@ -18,7 +18,7 @@ services:
       - "AdminConfiguration:IdentityAdminBaseUrl=http://localhost:9000"
       - "AdminConfiguration:IdentityAdminRedirectUri=http://localhost:9000/signin-oidc"
       - "AdminConfiguration:IdentityServerBaseUrl=http://id.example.com"
-    command: dotnet IdentityServer4Admin.dll /seed
+    command: dotnet Skoruba.IdentityServer4.Admin.dll /seed
     depends_on:
       - db
       - skoruba.identityserver4.sts.identity
