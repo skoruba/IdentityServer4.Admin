@@ -29,7 +29,7 @@
                                                     <i class="fa fa-user"></i>
                                                 </span>
                                             </div>
-                                            <input class="form-control" placeholder="@Localizer["Username"]" asp-for="Username" aria-label="Username" aria-describedby="input-username" autofocus>
+                                            <input class="form-control" placeholder="@Localizer[Model.UseEmailAsLogin ? "Email": "Username"]" asp-for="Username" aria-label="Username" aria-describedby="input-username" autofocus>
                                         </div>
                                     </div>
                                 </div>

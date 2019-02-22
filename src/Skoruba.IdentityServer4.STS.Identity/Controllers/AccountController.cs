@@ -22,7 +22,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
+using Microsoft.Extensions.Options;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using Skoruba.IdentityServer4.STS.Identity.ViewModels.Account;
@@ -44,6 +44,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         private readonly IEventService _events;
         private readonly IEmailSender _emailSender;
         private readonly IStringLocalizer<AccountController<TUser, TKey>> _localizer;
+        private readonly LoginConfiguration _loginConfiguration;
         private readonly IConfiguration _configuration;
 
         public AccountController(
@@ -56,6 +57,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             IEventService events,
             IEmailSender emailSender,
             IStringLocalizer<AccountController<TUser, TKey>> localizer,
+            LoginConfiguration loginConfiguration,
             IConfiguration configuration)
         {
             _userResolver = userResolver;
@@ -67,6 +69,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             _events = events;
             _emailSender = emailSender;
             _localizer = localizer;
+            _loginConfiguration = loginConfiguration;
             _configuration = configuration;
         }
 
@@ -601,6 +604,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                     EnableLocalLogin = false,
                     ReturnUrl = returnUrl,
                     Username = context?.LoginHint,
+                    UseEmailAsLogin = _loginConfiguration.ResolutionPolicy == LoginResolutionPolicy.Email,
                     ExternalProviders = new ExternalProvider[] { new ExternalProvider { AuthenticationScheme = context.IdP } }
                 };
             }
@@ -638,6 +642,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 EnableLocalLogin = allowLocal && AccountOptions.AllowLocalLogin,
                 ReturnUrl = returnUrl,
                 Username = context?.LoginHint,
+                UseEmailAsLogin = _loginConfiguration.ResolutionPolicy == LoginResolutionPolicy.Email,
                 ExternalProviders = providers.ToArray()
             };
         }

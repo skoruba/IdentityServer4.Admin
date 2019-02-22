@@ -120,6 +120,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Отменить</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
   <data name="ExternalLogin" xml:space="preserve">
     <value>Внешний выход</value>
   </data>
