@@ -85,7 +85,6 @@ namespace Skoruba.IdentityServer4.Admin
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseHttpsRedirection();
             app.UseSecurityHeaders();
             app.UseStaticFiles();
             app.ConfigureAuthenticationServices(env);
