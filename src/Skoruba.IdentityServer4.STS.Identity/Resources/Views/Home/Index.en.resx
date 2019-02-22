@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="2FA" xml:space="preserve">
+    <value>Two-factor authentication</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change password</value>
+  </data>
   <data name="Discovery" xml:space="preserve">
     <value>Discovery Document</value>
   </data>
@@ -134,6 +140,12 @@
   </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
+  </data>
+  <data name="ManagePersonalData" xml:space="preserve">
+    <value>My personal data</value>
+  </data>
+  <data name="ManageProfile" xml:space="preserve">
+    <value>My profile</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
     <value>Welcome to Skoruba IdentityServer4</value>

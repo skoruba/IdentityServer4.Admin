@@ -4,18 +4,19 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using Skoruba.IdentityServer4.STS.Identity.ViewModels.Manage;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Controllers
-{
+{    
+    [Authorize]
     public class ManageController<TUser, TKey> : Controller
         where TUser : IdentityUser<TKey>, new()
         where TKey : IEquatable<TKey>

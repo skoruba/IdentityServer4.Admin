@@ -138,6 +138,9 @@
   <data name="Profile" xml:space="preserve">
     <value>مشخصات URL</value>
   </data>
+  <data name="ProfileUpdated" xml:space="preserve">
+    <value>مشخصات شما به روز شده است</value>
+  </data>
   <data name="Region" xml:space="preserve">
     <value>منطقه</value>
   </data>
