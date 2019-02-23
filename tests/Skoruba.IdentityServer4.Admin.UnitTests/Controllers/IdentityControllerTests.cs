@@ -25,6 +25,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Skoruba.IdentityServer4.Admin.Helpers;
+using Skoruba.IdentityServer4.Admin.Helpers.Localization;
 using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
@@ -538,7 +539,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             RoleClaimsDto<string>> PrepareIdentityController(IServiceProvider serviceProvider)
         {
             // Arrange
-            var localizer = serviceProvider.GetRequiredService<IStringLocalizer<IdentityController<UserDto<string>, string, RoleDto<string>, string, string, string,
+            var localizer = serviceProvider.GetRequiredService<IGenericControllerLocalizer<IdentityController<UserDto<string>, string, RoleDto<string>, string, string, string,
                 UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
                 UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
                 UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,

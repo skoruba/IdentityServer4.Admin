@@ -25,6 +25,7 @@ using Microsoft.Extensions.Localization;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
+using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 using Skoruba.IdentityServer4.STS.Identity.ViewModels.Account;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Controllers
@@ -42,7 +43,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IEventService _events;
         private readonly IEmailSender _emailSender;
-        private readonly IStringLocalizer<AccountController<TUser, TKey>> _localizer;
+        private readonly IGenericControllerLocalizer<AccountController<TUser, TKey>> _localizer;
         private readonly IConfiguration _configuration;
 
         public AccountController(
@@ -53,7 +54,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             IAuthenticationSchemeProvider schemeProvider,
             IEventService events,
             IEmailSender emailSender,
-            IStringLocalizer<AccountController<TUser, TKey>> localizer,
+            IGenericControllerLocalizer<AccountController<TUser, TKey>> localizer,
             IConfiguration configuration)
         {
             _userManager = userManager;
