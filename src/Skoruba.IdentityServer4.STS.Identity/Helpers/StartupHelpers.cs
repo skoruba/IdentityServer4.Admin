@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using IdentityServer4.EntityFramework.Interfaces;
@@ -84,6 +85,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
+            app.UseHsts(options => options.MaxAge(days: 365));
             app.UseXfo(options => options.SameOrigin());
             app.UseReferrerPolicy(options => options.NoReferrer());
         }
