@@ -135,8 +135,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TUserIdentity : class
             where TUserIdentityRole : class
         {
-            var loginConfiguration = configuration.GetSection(nameof(LoginConfiguration)).Get<LoginConfiguration>();
-
+            var loginConfiguration = GetLoginConfiguration(configuration);
 
             services
                 .AddSingleton(loginConfiguration)
@@ -159,6 +158,24 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             AddExternalProviders(authenticationBuilder, configuration);
 
             AddIdentityServer<TConfigurationDbContext, TPersistedGrantDbContext, TUserIdentity>(services, configuration, logger);
+        }
+
+        /// <summary>
+        /// Get configuration for login
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        private static LoginConfiguration GetLoginConfiguration(IConfiguration configuration)
+        {
+            var loginConfiguration = configuration.GetSection(nameof(LoginConfiguration)).Get<LoginConfiguration>();
+            
+            // Cannot load configuration - use default configuration values
+            if (loginConfiguration == null)
+            {
+                return new LoginConfiguration();
+            }
+
+            return loginConfiguration;
         }
 
         /// <summary>

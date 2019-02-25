@@ -607,7 +607,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                     EnableLocalLogin = false,
                     ReturnUrl = returnUrl,
                     Username = context?.LoginHint,
-                    UseEmailAsLogin = _loginConfiguration.ResolutionPolicy == LoginResolutionPolicy.Email,
+                    LoginResolutionPolicy = _loginConfiguration.ResolutionPolicy,
                     ExternalProviders = new ExternalProvider[] { new ExternalProvider { AuthenticationScheme = context.IdP } }
                 };
             }
@@ -645,7 +645,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 EnableLocalLogin = allowLocal && AccountOptions.AllowLocalLogin,
                 ReturnUrl = returnUrl,
                 Username = context?.LoginHint,
-                UseEmailAsLogin = _loginConfiguration.ResolutionPolicy == LoginResolutionPolicy.Email,
+                LoginResolutionPolicy = _loginConfiguration.ResolutionPolicy,
                 ExternalProviders = providers.ToArray()
             };
         }
