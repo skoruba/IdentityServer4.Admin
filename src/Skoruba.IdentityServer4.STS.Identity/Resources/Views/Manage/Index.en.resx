@@ -138,6 +138,9 @@
   <data name="Profile" xml:space="preserve">
     <value>Profile URL</value>
   </data>
+  <data name="ProfileUpdated" xml:space="preserve">
+    <value>Your profile has been updated</value>
+  </data>
   <data name="Region" xml:space="preserve">
     <value>Region</value>
   </data>
