@@ -127,75 +127,75 @@
     <value>Пользователь с ID '{0}' удалился.</value>
   </data>
   <data name="Error2FANotEnabled" xml:space="preserve">
-    <value>Не удается создать коды восстановления для пользователя с ID {0} because they do not have 2FA enabled.</value>
+    <value>Не удается создать коды восстановления для пользователя с ID {0} потому что у них активирована двухвакторная аутентификация.</value>
   </data>
   <data name="ErrorCode" xml:space="preserve">
-    <value>Code</value>
+    <value>Код</value>
   </data>
   <data name="ErrorDeletingUser" xml:space="preserve">
-    <value>Unexpected error occurred deleting user with ID {0}.</value>
+    <value>Непредвиденная ошибка при удалении пользователя с ID {0}.</value>
   </data>
   <data name="ErrorDisable2FA" xml:space="preserve">
-    <value>Unexpected error occured disabling 2FA for user with ID {0}.</value>
+    <value>Непредвиденная ошибка при отключении двухфакторной аутентификации для пользователя с ID {0}.</value>
   </data>
   <data name="ErrorGenerateCodesWithout2FA" xml:space="preserve">
-    <value>Cannot generate recovery codes for user as they do not have 2FA enabled.</value>
+    <value>Не удается создать коды восстановления для пользователя потому что двухфакторная аутентификация отключена.</value>
   </data>
   <data name="ErrorLoadingExternalLogin" xml:space="preserve">
-    <value>Unexpected error occurred loading external login info for user with ID {0}.</value>
+    <value>Непредвиденная ошибка при загрузке внешний данных для входа пользователя с ID {0}.</value>
   </data>
   <data name="ErrorRemovingExternalLogin" xml:space="preserve">
-    <value>Unexpected error occurred removing external login for user with ID {0}.</value>
+    <value>Непредвиденная ошибка при удалении внешнего входа для пользователя с ID {0}.</value>
   </data>
   <data name="ErrorSettingEmail" xml:space="preserve">
-    <value>Unexpected error occurred setting email for user with ID {0}.</value>
+    <value>Произошла непредвиденная ошибка при настройке электронной почты для пользователя с ID {0}.</value>
   </data>
   <data name="ErrorSettingPhone" xml:space="preserve">
-    <value>Unexpected error occurred setting phone number for user with ID {0}.</value>
+    <value>Произошла непредвиденная ошибка при установке номера телефона для пользователя с ID {0}.</value>
   </data>
   <data name="ExternalLoginAdded" xml:space="preserve">
-    <value>The external login was added.</value>
+    <value>Внешний вход был добавлен.</value>
   </data>
   <data name="ExternalLoginRemoved" xml:space="preserve">
-    <value>The external login was removed.</value>
+    <value>Внешний вход был удалён.</value>
   </data>
   <data name="InvalidVerificationCode" xml:space="preserve">
-    <value>Verification code is invalid.</value>
+    <value>Неверный проверочный код.</value>
   </data>
   <data name="PasswordChanged" xml:space="preserve">
-    <value>Your password has been changed.</value>
+    <value>Ваш пароль был изменён.</value>
   </data>
   <data name="PasswordChangedLog" xml:space="preserve">
-    <value>User {0} changed their password successfully.</value>
+    <value>Пользователь {0} успешно сменил пароль.</value>
   </data>
   <data name="PasswordNotCorrect" xml:space="preserve">
-    <value>Password not correct.</value>
+    <value>Пароль неверный.</value>
   </data>
   <data name="PasswordSet" xml:space="preserve">
-    <value>Your password has been set.</value>
+    <value>Ваш пароль установлен.</value>
   </data>
   <data name="ProfileUpdated" xml:space="preserve">
-    <value>Your profile has been updated</value>
+    <value>Ваш профиль был обновлён.</value>
   </data>
   <data name="SuccessDisabled2FA" xml:space="preserve">
-    <value>User with ID {0} has disabled 2fa.</value>
+    <value>Пользователь с ID {0} отключил двухфакторную аутентификацию.</value>
   </data>
   <data name="SuccessForgetBrowser2FA" xml:space="preserve">
-    <value>The current browser has been forgotten. When you login again from this browser you will be prompted for your 2fa code.</value>
+    <value>Текущий браузер был забыт. При повторном входе в систему из этого браузера вам будет предложено ввести код двухфакторной аутентификации.</value>
   </data>
   <data name="SuccessResetAuthenticationKey" xml:space="preserve">
-    <value>User with id {0} has reset their authentication app key.</value>
+    <value>Пользователь с ID {0} сбросил ключ приложения аутентификации.</value>
   </data>
   <data name="SuccessUserEnabled2FA" xml:space="preserve">
-    <value>User with ID {0} has enabled 2FA with an authenticator app.</value>
+    <value>Пользоваетль с ID {0} влкючил двухфакторную аутентификацию с приложением проверки подлинности.</value>
   </data>
   <data name="UserGenerated2FACodes" xml:space="preserve">
-    <value>User with ID {0} has generated new 2FA recovery codes.</value>
+    <value>Пользователь с ID {0} сгенерировал новые коды восстановления с двухфакторной аутентификацией.</value>
   </data>
   <data name="UserNotFound" xml:space="preserve">
-    <value>Unable to load user with ID {0}.</value>
+    <value>Невозможно загрузить данные пользователя с ID {0}.</value>
   </data>
   <data name="VerificationSent" xml:space="preserve">
-    <value>Verification email sent. Please check your email.</value>
+    <value>Подтверждение по электронной почте отправлено. Пожалуйста,проверьте электронную почту.</value>
   </data>
 </root>
