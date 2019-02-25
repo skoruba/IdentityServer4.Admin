@@ -137,7 +137,12 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TUserIdentity : class
             where TUserIdentityRole : class
         {
-            services.AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
+            var loginConfiguration = GetLoginConfiguration(configuration);
+
+            services
+                .AddSingleton(loginConfiguration)
+                .AddScoped<UserResolver<TUserIdentity>>()
+                .AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
                 {
                     options.User.RequireUniqueEmail = true;
                 })
@@ -155,6 +160,24 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             AddExternalProviders(authenticationBuilder, configuration);
 
             AddIdentityServer<TConfigurationDbContext, TPersistedGrantDbContext, TUserIdentity>(services, configuration, logger);
+        }
+
+        /// <summary>
+        /// Get configuration for login
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        private static LoginConfiguration GetLoginConfiguration(IConfiguration configuration)
+        {
+            var loginConfiguration = configuration.GetSection(nameof(LoginConfiguration)).Get<LoginConfiguration>();
+            
+            // Cannot load configuration - use default configuration values
+            if (loginConfiguration == null)
+            {
+                return new LoginConfiguration();
+            }
+
+            return loginConfiguration;
         }
 
         /// <summary>
