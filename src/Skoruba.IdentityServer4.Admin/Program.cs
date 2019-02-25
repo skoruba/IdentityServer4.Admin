@@ -24,7 +24,7 @@ namespace Skoruba.IdentityServer4.Admin
             // await DbMigrationHelpers.EnsureSeedData<IdentityServerConfigurationDbContext, UserIdentity, UserIdentityRole>(host);
             if (seed)
             {
-                await DbMigrationHelpers.EnsureSeedData<IdentityServerConfigurationDbContext, UserIdentity, UserIdentityRole>(host);
+                await DbMigrationHelpers.EnsureSeedData<IdentityServerConfigurationDbContext, AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, UserIdentity, UserIdentityRole>(host);
             }
 
             host.Run();
