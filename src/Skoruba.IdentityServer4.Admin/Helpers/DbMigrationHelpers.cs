@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
@@ -24,8 +25,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         public static async Task EnsureSeedData<TIdentityServerDbContext, TIdentityDbContext, TPersistedGrantDbContext, TLogDbContext, TUser, TRole>(IWebHost host)
             where TIdentityServerDbContext : DbContext, IAdminConfigurationDbContext
             where TIdentityDbContext : DbContext
-            where TPersistedGrantDbContext : DbContext
-            where TLogDbContext : DbContext
+            where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
+            where TLogDbContext : DbContext, IAdminLogDbContext
             where TUser : IdentityUser, new()
             where TRole : IdentityRole, new()
         {
@@ -37,7 +38,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             }
         }
 
-        public async static Task EnsureDatabasesMigrated<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(IServiceProvider services)
+        public static async Task EnsureDatabasesMigrated<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(IServiceProvider services)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext
             where TConfigurationDbContext : DbContext
