@@ -138,8 +138,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TUserIdentityRole : class
         {
             var loginConfiguration = GetLoginConfiguration(configuration);
+            var registrationConfiguration = GetRegistrationConfiguration(configuration);
 
             services
+                .AddSingleton(registrationConfiguration)
                 .AddSingleton(loginConfiguration)
                 .AddScoped<UserResolver<TUserIdentity>>()
                 .AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
@@ -178,6 +180,24 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             }
 
             return loginConfiguration;
+        }
+
+        /// <summary>
+        /// Get configuration for registration
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        private static RegisterConfiguration GetRegistrationConfiguration(IConfiguration configuration)
+        {
+            var registerConfiguration = configuration.GetSection(nameof(RegisterConfiguration)).Get<RegisterConfiguration>();
+
+            // Cannot load configuration - use default configuration values
+            if (registerConfiguration == null)
+            {
+                return new RegisterConfiguration();
+            }
+
+            return registerConfiguration;
         }
 
         /// <summary>

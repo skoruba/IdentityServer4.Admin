@@ -430,8 +430,11 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                     .AddOpenIdConnect(AuthenticationConsts.OidcAuthenticationScheme, options =>
                     {
                         options.Authority = adminConfiguration.IdentityServerBaseUrl;
+#if DEBUG
                         options.RequireHttpsMetadata = false;
-
+#else
+                        options.RequireHttpsMetadata = true;
+#endif
                         options.ClientId = AuthenticationConsts.OidcClientId;
 
                         options.Scope.Clear();

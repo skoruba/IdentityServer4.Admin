@@ -21,8 +21,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Options;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
@@ -46,7 +44,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         private readonly IEmailSender _emailSender;
         private readonly IGenericControllerLocalizer<AccountController<TUser, TKey>> _localizer;
         private readonly LoginConfiguration _loginConfiguration;
-        private readonly IConfiguration _configuration;
+        private readonly RegisterConfiguration _registerConfiguration;
 
         public AccountController(
             UserResolver<TUser> userResolver,
@@ -59,7 +57,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             IEmailSender emailSender,
             IGenericControllerLocalizer<AccountController<TUser, TKey>> localizer,
             LoginConfiguration loginConfiguration,
-            IConfiguration configuration)
+            RegisterConfiguration registerConfiguration)
         {
             _userResolver = userResolver;
             _userManager = userManager;
@@ -71,7 +69,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             _emailSender = emailSender;
             _localizer = localizer;
             _loginConfiguration = loginConfiguration;
-            _configuration = configuration;
+            _registerConfiguration = registerConfiguration;
         }
 
         /// <summary>
@@ -533,9 +531,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
-        {
-            var registerConfiguration = _configuration.GetSection(nameof(RegisterConfiguration)).Get<RegisterConfiguration>();
-            if (!registerConfiguration.Enabled) return View("RegisterFailure");
+        {            
+            if (!_registerConfiguration.Enabled) return View("RegisterFailure");
 
             ViewData["ReturnUrl"] = returnUrl;
 
