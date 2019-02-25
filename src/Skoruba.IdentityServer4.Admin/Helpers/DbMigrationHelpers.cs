@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
@@ -21,16 +22,49 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// https://github.com/skoruba/IdentityServer4.Admin#ef-core--data-access
         /// </summary>
         /// <param name="host"></param>      
-        public static async Task EnsureSeedData<TIdentityServerDbContext, TUser, TRole>(IWebHost host)
+        public static async Task EnsureSeedData<TIdentityServerDbContext, TIdentityDbContext, TPersistedGrantDbContext, TLogDbContext, TUser, TRole>(IWebHost host)
             where TIdentityServerDbContext : DbContext, IAdminConfigurationDbContext
+            where TIdentityDbContext : DbContext
+            where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
+            where TLogDbContext : DbContext, IAdminLogDbContext
             where TUser : IdentityUser, new()
             where TRole : IdentityRole, new()
         {
             using (var serviceScope = host.Services.CreateScope())
             {
                 var services = serviceScope.ServiceProvider;
-
+                await EnsureDatabasesMigrated<TIdentityDbContext, TIdentityServerDbContext, TPersistedGrantDbContext, TLogDbContext>(services);
                 await EnsureSeedData<TIdentityServerDbContext, TUser, TRole>(services);
+            }
+        }
+
+        public static async Task EnsureDatabasesMigrated<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(IServiceProvider services)
+            where TIdentityDbContext : DbContext
+            where TPersistedGrantDbContext : DbContext
+            where TConfigurationDbContext : DbContext
+            where TLogDbContext : DbContext
+        {
+            using (var scope = services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                using (var context = scope.ServiceProvider.GetRequiredService<TPersistedGrantDbContext>())
+                {
+                    await context.Database.MigrateAsync();
+                }
+
+                using (var context = scope.ServiceProvider.GetRequiredService<TIdentityDbContext>())
+                {
+                    await context.Database.MigrateAsync();
+                }
+
+                using (var context = scope.ServiceProvider.GetRequiredService<TConfigurationDbContext>())
+                {
+                    await context.Database.MigrateAsync();
+                }
+
+                using (var context = scope.ServiceProvider.GetRequiredService<TLogDbContext>())
+                {
+                    await context.Database.MigrateAsync();
+                }
             }
         }
 

@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -33,6 +32,7 @@ using Skoruba.IdentityServer4.Admin.Configuration.ApplicationParts;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
+using Skoruba.IdentityServer4.Admin.Helpers.Localization;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -94,17 +94,19 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
         {
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
             // Config DB for identity
             services.AddDbContext<TIdentityDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey),
-                    sql => sql.MigrationsAssembly(typeof(TIdentityDbContext).Assembly.GetName().Name)));
+                    sql => sql.MigrationsAssembly(migrationsAssembly)));
 
             // Config DB from existing connection
             services.AddConfigurationDbContext<TConfigurationDbContext>(options =>
             {
                 options.ConfigureDbContext = b =>
                     b.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey),
-                        sql => sql.MigrationsAssembly(configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbMigrationsAssemblyKey)));
+                        sql => sql.MigrationsAssembly(migrationsAssembly));
             });
 
             // Operational DB from existing connection
@@ -112,15 +114,14 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             {
                 options.ConfigureDbContext = b =>
                     b.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey),
-                        sql => sql.MigrationsAssembly(configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbMigrationsAssemblyKey)));
+                        sql => sql.MigrationsAssembly(migrationsAssembly));
             });
 
             // Log DB from existing connection
-            var defaultMigrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
             services.AddDbContext<TLogDbContext>(options =>
                 options.UseSqlServer(
                     configuration.GetConnectionString(ConfigurationConsts.AdminLogDbConnectionStringKey),
-                    optionsSql => optionsSql.MigrationsAssembly(defaultMigrationsAssembly)));
+                    optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
         }
 
         /// <summary>
@@ -340,6 +341,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
             services.AddLocalization(opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; });
 
+            services.TryAddTransient(typeof(IGenericControllerLocalizer<>), typeof(GenericControllerLocalizer<>));
+
             services.AddMvc(o =>
                 {
                     o.Conventions.Add(new GenericControllerRouteConvention());
@@ -361,6 +364,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             {
                 var supportedCultures = new[]
                 {
+                        new CultureInfo("fa"),
                         new CultureInfo("ru"),
                         new CultureInfo("zh"),
                         new CultureInfo("en")
@@ -386,7 +390,10 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IAdminConfiguration adminConfiguration)
             where TContext : DbContext where TUserIdentity : class where TUserIdentityRole : class
         {
-            services.AddIdentity<TUserIdentity, TUserIdentityRole>()
+            services.AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
+                {
+                    options.User.RequireUniqueEmail = true;
+                })
                 .AddEntityFrameworkStores<TContext>()
                 .AddDefaultTokenProviders();
 
@@ -423,8 +430,11 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                     .AddOpenIdConnect(AuthenticationConsts.OidcAuthenticationScheme, options =>
                     {
                         options.Authority = adminConfiguration.IdentityServerBaseUrl;
+#if DEBUG
                         options.RequireHttpsMetadata = false;
-
+#else
+                        options.RequireHttpsMetadata = true;
+#endif
                         options.ClientId = AuthenticationConsts.OidcClientId;
 
                         options.Scope.Clear();

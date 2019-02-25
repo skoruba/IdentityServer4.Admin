@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Reflection;
 using IdentityServer4.EntityFramework.Interfaces;
-using IdentityServer4.EntityFramework.Storage;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SendGrid;
@@ -21,6 +23,7 @@ using Serilog;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.ApplicationParts;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
+using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 using Skoruba.IdentityServer4.STS.Identity.Services;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
@@ -37,6 +40,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TKey : IEquatable<TKey>
         {
             services.AddLocalization(opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; });
+
+            services.TryAddTransient(typeof(IGenericControllerLocalizer<>), typeof(GenericControllerLocalizer<>));
 
             services.AddMvc(o =>
                 {
@@ -57,6 +62,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 {
                     var supportedCultures = new[]
                     {
+                        new CultureInfo("fa"),
                         new CultureInfo("ru"),
                         new CultureInfo("en"),
                         new CultureInfo("zh")
@@ -79,6 +85,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
+            app.UseHsts(options => options.MaxAge(days: 365));
             app.UseXfo(options => options.SameOrigin());
             app.UseReferrerPolicy(options => options.NoReferrer());
         }
@@ -127,13 +134,23 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TPersistedGrantDbContext : DbContext, IPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IConfigurationDbContext
             where TIdentityDbContext : DbContext
-            where TUserIdentity : class 
-            where TUserIdentityRole : class            
+            where TUserIdentity : class
+            where TUserIdentityRole : class
         {
-            services.AddIdentity<TUserIdentity, TUserIdentityRole>()
+            var loginConfiguration = GetLoginConfiguration(configuration);
+            var registrationConfiguration = GetRegistrationConfiguration(configuration);
+
+            services
+                .AddSingleton(registrationConfiguration)
+                .AddSingleton(loginConfiguration)
+                .AddScoped<UserResolver<TUserIdentity>>()
+                .AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
+                {
+                    options.User.RequireUniqueEmail = true;
+                })
                 .AddEntityFrameworkStores<TIdentityDbContext>()
                 .AddDefaultTokenProviders();
-            
+
             services.Configure<IISOptions>(iis =>
             {
                 iis.AuthenticationDisplayName = "Windows";
@@ -145,6 +162,42 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             AddExternalProviders(authenticationBuilder, configuration);
 
             AddIdentityServer<TConfigurationDbContext, TPersistedGrantDbContext, TUserIdentity>(services, configuration, logger);
+        }
+
+        /// <summary>
+        /// Get configuration for login
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        private static LoginConfiguration GetLoginConfiguration(IConfiguration configuration)
+        {
+            var loginConfiguration = configuration.GetSection(nameof(LoginConfiguration)).Get<LoginConfiguration>();
+            
+            // Cannot load configuration - use default configuration values
+            if (loginConfiguration == null)
+            {
+                return new LoginConfiguration();
+            }
+
+            return loginConfiguration;
+        }
+
+        /// <summary>
+        /// Get configuration for registration
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        private static RegisterConfiguration GetRegistrationConfiguration(IConfiguration configuration)
+        {
+            var registerConfiguration = configuration.GetSection(nameof(RegisterConfiguration)).Get<RegisterConfiguration>();
+
+            // Cannot load configuration - use default configuration values
+            if (registerConfiguration == null)
+            {
+                return new RegisterConfiguration();
+            }
+
+            return registerConfiguration;
         }
 
         /// <summary>
@@ -214,7 +267,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <typeparam name="TContext"></typeparam>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        public static void AddDbContexts<TContext>(this IServiceCollection services, IConfiguration configuration) 
+        public static void AddDbContexts<TContext>(this IServiceCollection services, IConfiguration configuration)
             where TContext : DbContext
         {
             var connectionString = configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey);
@@ -232,12 +285,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TPersistedGrantDbContext : DbContext, IPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IConfigurationDbContext
         {
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
             // Config DB from existing connection
             builder.AddConfigurationStore<TConfigurationDbContext>(options =>
             {
                 options.ConfigureDbContext = b =>
                     b.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey),
-                        sql => sql.MigrationsAssembly(configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbMigrationsAssemblyKey)));
+                        sql => sql.MigrationsAssembly(migrationsAssembly));
             });
 
             // Operational DB from existing connection
@@ -249,7 +304,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 #endif
                 options.ConfigureDbContext = b =>
                     b.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey),
-                        sql => sql.MigrationsAssembly(configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbMigrationsAssemblyKey)));
+                        sql => sql.MigrationsAssembly(migrationsAssembly));
             });
 
             return builder;

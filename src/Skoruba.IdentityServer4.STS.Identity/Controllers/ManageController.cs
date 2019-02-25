@@ -4,18 +4,20 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
+using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 using Skoruba.IdentityServer4.STS.Identity.ViewModels.Manage;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Controllers
-{
+{    
+    [Authorize]
     public class ManageController<TUser, TKey> : Controller
         where TUser : IdentityUser<TKey>, new()
         where TKey : IEquatable<TKey>
@@ -24,7 +26,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         private readonly SignInManager<TUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ManageController<TUser, TKey>> _logger;
-        private readonly IStringLocalizer<ManageController<TUser, TKey>> _localizer;
+        private readonly IGenericControllerLocalizer<ManageController<TUser, TKey>> _localizer;
         private readonly UrlEncoder _urlEncoder;
 
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
@@ -33,7 +35,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         [TempData]
         public string StatusMessage { get; set; }
 
-        public ManageController(UserManager<TUser> userManager, SignInManager<TUser> signInManager, IEmailSender emailSender, ILogger<ManageController<TUser, TKey>> logger, IStringLocalizer<ManageController<TUser, TKey>> localizer, UrlEncoder urlEncoder)
+        public ManageController(UserManager<TUser> userManager, SignInManager<TUser> signInManager, IEmailSender emailSender, ILogger<ManageController<TUser, TKey>> logger, IGenericControllerLocalizer<ManageController<TUser, TKey>> localizer, UrlEncoder urlEncoder)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -118,7 +120,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, HttpContext.Request.Scheme);
 
-            await _emailSender.SendEmailAsync(model.Email, "Confirm your email", $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+            await _emailSender.SendEmailAsync(model.Email, _localizer["ConfirmEmailTitle"], _localizer["ConfirmEmailBody", HtmlEncoder.Default.Encode(callbackUrl)]);
 
             StatusMessage = _localizer["VerificationSent"];
 

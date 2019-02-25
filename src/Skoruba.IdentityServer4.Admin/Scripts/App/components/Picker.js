@@ -318,7 +318,7 @@ ko.components.register('picker', {
         '<!-- ko foreach: suggestedResult -->' +
         '<input type="button" class="btn btn-light button__add" data-bind="value: $data, click: function() { $parent.add($data); }">' +
         '<!-- /ko -->' +
-        '<button class="btn btn-default button__show-all" data-bind="visible:allowSuggestedItems(), click: function() { $component.showAll(); }"><span data-bind="text: showAllItemsTitle"></span> <span class="oi oi-plus"></span></button>' +
+        '<button class="btn btn-secondary button__show-all" data-bind="visible:allowSuggestedItems(), click: function() { $component.showAll(); }"><span data-bind="text: showAllItemsTitle"></span> <span class="oi oi-plus"></span></button>' +
         '</div>' +
         '</div>' +
         '<div class="modal fade" tabindex="-1" role="dialog" data-bind="modal:isVisibleEditDialog">' +

@@ -8,7 +8,13 @@ namespace Skoruba.IdentityServer4.STS.Identity.Configuration.ApplicationParts
         {
             if (controller.ControllerType.IsGenericType)
             {
-                controller.ControllerName = controller.ControllerType.Name.Substring(0, controller.ControllerType.Name.IndexOf('`') - 10);
+                // this change is required because some of the controllers have generic parameters
+                // and require resolution that will remove arity from the type 
+                // as well as remove the 'Controller' at the end of string
+                
+                var name = controller.ControllerType.Name;
+                var nameWithoutArity = name.Substring(0, name.IndexOf('`'));
+                controller.ControllerName = nameWithoutArity.Substring(0, nameWithoutArity.LastIndexOf("Controller"));
             }
         }
     }

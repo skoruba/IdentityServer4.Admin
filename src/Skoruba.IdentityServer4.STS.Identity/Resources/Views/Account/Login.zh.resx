@@ -120,8 +120,14 @@
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
   <data name="ExternalLogin" xml:space="preserve">
     <value>外部登录</value>
+  </data>
+  <data name="Forgot" xml:space="preserve">
+    <value>忘记密码</value>
   </data>
   <data name="InvalidRequest" xml:space="preserve">
     <value>登录请求无效</value>

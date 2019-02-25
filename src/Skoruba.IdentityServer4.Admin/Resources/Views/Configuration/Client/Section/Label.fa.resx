@@ -1,0 +1,450 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AbsoluteRefreshTokenLifetime_Info" xml:space="preserve">
+    <value>حداکثر طول عمر یک رفرش توکن در ثانیه. پیش فرض به 2592000 ثانیه / 30 روز</value>
+  </data>
+  <data name="AbsoluteRefreshTokenLifetime_Label" xml:space="preserve">
+    <value>طول عمر رفرش توکن خالص</value>
+  </data>
+  <data name="AccessTokenLifetime_Info" xml:space="preserve">
+    <value>طول عمر توکن دسترسی در ثانیه (پیش فرض به 3600 ثانیه / 1 ساعت)</value>
+  </data>
+  <data name="AccessTokenLifetime_Label" xml:space="preserve">
+    <value>طول عمر توکن دسترسی</value>
+  </data>
+  <data name="AccessTokenTypes_Info" xml:space="preserve">
+    <value>مشخص می کند که آیا توکن دسترسی یک توکن رفرنس یا توکن JWT خوددار (پیش فرض به Jwt) است.</value>
+  </data>
+  <data name="AccessTokenTypes_Label" xml:space="preserve">
+    <value>نوع توکن دسترسی</value>
+  </data>
+  <data name="AllowAccessTokensViaBrowser_Info" xml:space="preserve">
+    <value>مشخص می کند که آیا این سرویس گیرنده مجاز به دریافت توکن های دسترسی از طریق مرورگر است. این برای جریان های سخت تر که انواع مختلف پاسخ را اجازه می دهد مفید است  (مثلا با رد کردن یک سرویس گیرنده جریان ترکیبی که قرار است استفاده کند از کد id_token برای افزودن نوع توکن پاسخ و بنابراین توکن در مرورگر فاش می شود.)</value>
+  </data>
+  <data name="AllowAccessTokensViaBrowser_Label" xml:space="preserve">
+    <value>اجازه توکن دسترسی از طریق مرورگر</value>
+  </data>
+  <data name="AllowOfflineAccess_Info" xml:space="preserve">
+    <value>مشخص می کند که آیا سرویس گیرنده می تواند توکن های رفرش را درخواست کند (درخواست کردن اسکوپ offline_access)</value>
+  </data>
+  <data name="AllowOfflineAccess_Label" xml:space="preserve">
+    <value>اجازه دسترسی آفلاین</value>
+  </data>
+  <data name="AllowPlainTextPkce_Info" xml:space="preserve">
+    <value>مشخص می کند که آیا سرویس گیرنده هایی که از PKCE استفاده می کنند میتوانند از یک کد ساده متن استفاده کنند (توصیه نمی شود - و به طور پیش فرض به false)</value>
+  </data>
+  <data name="AllowPlainTextPkce_Label" xml:space="preserve">
+    <value>اجازه متن ساده Pkce</value>
+  </data>
+  <data name="AllowRememberConsent_Info" xml:space="preserve">
+    <value>مشخص می کند که آیا کاربر می تواند تصمیمات موافقت را ذخیره کند یا خیر. پیش فرض true</value>
+  </data>
+  <data name="AllowRememberConsent_Label" xml:space="preserve">
+    <value>اجازه به خاطر داشتن موافقت</value>
+  </data>
+  <data name="AlwaysIncludeUserClaimsInIdToken_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AlwaysIncludeUserClaimsInIdToken_Label" xml:space="preserve">
+    <value>همیشه شامل ادعاهای کاربر در IdToken</value>
+  </data>
+  <data name="AlwaysSendClientClaims_Info" xml:space="preserve">
+    <value>اگر تنظیم شود، ادعای سرویس گیرنده برای هر جریان ارسال می شود. اگر نه، فقط برای جریان اعتبار سرویس گیرنده (پیش فرض false)</value>
+  </data>
+  <data name="AlwaysSendClientClaims_Label" xml:space="preserve">
+    <value>همیشه ادعاهای سرویس گیرنده ارسال شود</value>
+  </data>
+  <data name="AuthorizationCodeLifetime_Info" xml:space="preserve">
+    <value>طول عمر کد مجوز در ثانیه (پیش فرض به 300 ثانیه / 5 دقیقه)</value>
+  </data>
+  <data name="AuthorizationCodeLifetime_Label" xml:space="preserve">
+    <value>طول عمر کد مجوز</value>
+  </data>
+  <data name="ClientId_Info" xml:space="preserve">
+    <value>شناسه یکتاء سرویس گیرنده</value>
+  </data>
+  <data name="ClientId_Label" xml:space="preserve">
+    <value>شناسه سرویس گیرنده</value>
+  </data>
+  <data name="ClientName_Info" xml:space="preserve">
+    <value>نام نمایشی سرویس گیرنده (برای صفحه ورود و موافقت استفاده می شود)</value>
+  </data>
+  <data name="ClientName_Label" xml:space="preserve">
+    <value>نام سرویس گیرنده</value>
+  </data>
+  <data name="ClientUri_Info" xml:space="preserve">
+    <value>URI برای اطلاعات بیشتر در مورد سرویس گیرنده (در صفحه موافقت استفاده می شود)</value>
+  </data>
+  <data name="ClientUri_Label" xml:space="preserve">
+    <value>سرویس گیرنده Uri</value>
+  </data>
+  <data name="Enabled_Info" xml:space="preserve">
+    <value>مشخص می کند که آیا سرویس گیرنده فعال است. پیش فرض true.</value>
+  </data>
+  <data name="Enabled_Label" xml:space="preserve">
+    <value>فعال</value>
+  </data>
+  <data name="EnableLocalLogin_Info" xml:space="preserve">
+    <value>مشخص می کند که آیا این سرویس گیرنده می تواند از حساب های محلی، یا فقط IdP های خارجی استفاده کند. پیش فرض true</value>
+  </data>
+  <data name="EnableLocalLogin_Label" xml:space="preserve">
+    <value>ورود محلی را فعال کنید</value>
+  </data>
+  <data name="IdentityTokenLifetime_Info" xml:space="preserve">
+    <value>طول عمر تا توکن هویت در ثانیه (پیش فرض به 300 ثانیه / 5 دقیقه)</value>
+  </data>
+  <data name="IdentityTokenLifetime_Label" xml:space="preserve">
+    <value>طول عمر توکن هویت</value>
+  </data>
+  <data name="IncludeJwtId_Info" xml:space="preserve">
+    <value>مشخص می کند که کدام توکن های دسترسی JWT باید دارای شناسه یکتاء تعبیه شده باشند (از طریق ادعای jti).</value>
+  </data>
+  <data name="IncludeJwtId_Label" xml:space="preserve">
+    <value>شامل Jwt Id</value>
+  </data>
+  <data name="LogoUri_Info" xml:space="preserve">
+    <value>URI به لوگوی سرویس گیرنده (در صفحه موافقت استفاده شده)</value>
+  </data>
+  <data name="LogoUri_Label" xml:space="preserve">
+    <value>لوگو Uri</value>
+  </data>
+  <data name="RefreshTokenExpiration_Info" xml:space="preserve">
+    <value>رفرش توکن خالص در یک نقطه ثابت زمان منقضی می شود (مشخص می شود با AbsoluteRefreshTokenLifetime)
+
+اسلایدینگ زمان تازه سازی توکن, طول عمر رفرش توکن تمدید می شود (با مقدار مشخص شده در SlidingRefreshTokenLifetime). طول عمر تجاوز نخواهد کرد از AbsoluteRefreshTokenLifetime.</value>
+  </data>
+  <data name="RefreshTokenExpiration_Label" xml:space="preserve">
+    <value>انقضاء رفرش توکن</value>
+  </data>
+  <data name="RefreshTokenUsage.Info" xml:space="preserve">
+    <value>استفاده مجدد از فرصت رفرش توکن همانند تازه سازی توکن ها خواهد شد
+
+یک مرتبه فرصت رفرش توکن بروزرسانی خواهد شد زمانی که توکن ها تازه سازی می شوند   </value>
+  </data>
+  <data name="RefreshTokenUsage.Label" xml:space="preserve">
+    <value>کاربرد رفرش توکن</value>
+  </data>
+  <data name="RefreshTokenUsage_Info" xml:space="preserve">
+    <value>استفاده مجدد از فرصت رفرش توکن همانند تازه سازی توکن ها خواهد شد
+
+یک مرتبه فرصت رفرش توکن بروزرسانی خواهد شد زمانی که توکن ها تازه سازی می شوند   </value>
+  </data>
+  <data name="RefreshTokenUsage_Label" xml:space="preserve">
+    <value>کاربرد رفرش توکن</value>
+  </data>
+  <data name="RequireClientSecret_Info" xml:space="preserve">
+    <value>مشخص می کند که آیا این سرویس گیرنده نیاز به یک رمز برای درخواست کردن توکن ها از توکن نقطه پایان دارد (پیش فرض true)</value>
+  </data>
+  <data name="RequireClientSecret_Label" xml:space="preserve">
+    <value>نیازمند رمز سرویس گیرنده</value>
+  </data>
+  <data name="RequireConsent_Info" xml:space="preserve">
+    <value>مشخص می کند که آیا یک صفحه موافقت نیاز است. پیش فرض true</value>
+  </data>
+  <data name="RequireConsent_Label" xml:space="preserve">
+    <value>نیازمند موافقت</value>
+  </data>
+  <data name="RequirePkce_Info" xml:space="preserve">
+    <value>مشخص می کند درحالی که سرویس گیرنده ها از یک کد مجوز بر پایه نوع واگذاری استفاده می کنند باید یک کلید اثبات ارسال کنند </value>
+  </data>
+  <data name="RequirePkce_Label" xml:space="preserve">
+    <value>نیازمند Pkce</value>
+  </data>
+  <data name="SlidingRefreshTokenLifetime_Info" xml:space="preserve">
+    <value>طول عمر اسلایدینگ یک رفرش توکن در ثانیه. پیش فرض 1296000 ثانیه / 15 روز</value>
+  </data>
+  <data name="SlidingRefreshTokenLifetime_Label" xml:space="preserve">
+    <value>طول عمر اسلایدینگ رفرش توکن</value>
+  </data>
+  <data name="UpdateAccessTokenClaimsOnRefresh_Info" xml:space="preserve">
+    <value>می دهد یا تنظیم می کند یک مقدار که نشان می دهد توکن دسترسی (و ادعاهای آن) باید بوسیله درخواست یک رفرش توکن بروز شود.</value>
+  </data>
+  <data name="UpdateAccessTokenClaimsOnRefresh_Label" xml:space="preserve">
+    <value>ادعاهای توکن دسترسی با تازه سازی بروز شود</value>
+  </data>
+  <data name="AllowedCorsOrigins_Info" xml:space="preserve">
+    <value>اگر مشخص شود, بصورت پیش فرض لا پیاده سازی های سرویس سیاست CORS استفاده خواهد شد (In-Memory و EF) برای ساخت یک سیاست CORS برای سرویس گیرنده ها JavaScript.</value>
+  </data>
+  <data name="AllowedCorsOrigins_Label" xml:space="preserve">
+    <value>مجاز Cors Origins</value>
+  </data>
+  <data name="AllowedGrantTypes_Info" xml:space="preserve">
+    <value>انواع واگذاری که سرویس گیرنده مجاز به استفاده است مشخص می کند. از کلاس GrantTypes برای ترکیب های معمول استفاده کنید. فهرست واگذاری های پیش فرض: واگذاری ضمنی - (implicit), واگذاری اعتبارات سرویس گیرنده - (client_credentials), واگذاری کد مجوز - (authorization_code), واگذاری ترکیبی - (hybrid), واگذاری گواهی نامه های کلمه عبور صاحب منبع - (password)</value>
+  </data>
+  <data name="AllowedGrantTypes_Label" xml:space="preserve">
+    <value>انواع واگذاری مجاز</value>
+  </data>
+  <data name="AllowedScopes_Info" xml:space="preserve">
+    <value>بصورت پیش فرض یک سرویس گیرنده به هیچ منبعی دسترسی ندارد - بوسیله اضافه کردن نام های اسکوپ های مربوطه منابع مجاز را مشخص کنید</value>
+  </data>
+  <data name="AllowedScopes_Label" xml:space="preserve">
+    <value>اسکوپ های مجاز</value>
+  </data>
+  <data name="Claims_Info" xml:space="preserve">
+    <value>تنظیمات ادعاهای سرویس گیرنده را مجاز می کند (در توکن دسترسی گنجانده خواهد شد).</value>
+  </data>
+  <data name="Claims_Label" xml:space="preserve">
+    <value>ادعاها</value>
+  </data>
+  <data name="ClientSecrets_Info" xml:space="preserve">
+    <value>فهرست رمزهای سرویس گیرنده - اعتبار دسترسی به توکن نقطه پایانی.</value>
+  </data>
+  <data name="ClientSecrets_Label" xml:space="preserve">
+    <value>رمزهای سرویس گیرنده</value>
+  </data>
+  <data name="IdentityProviderRestrictions_Info" xml:space="preserve">
+    <value>مشخص می کند که کدام IdP های خارجی را می توان با این سرویس گیرنده مورد استفاده قرار داد (اگر فهرست خالی باشد، تمام IdP ها مجاز می باشند). پیش فرض خالی است.</value>
+  </data>
+  <data name="IdentityProviderRestrictions_Label" xml:space="preserve">
+    <value>محدودیت های ارائه دهنده هویت</value>
+  </data>
+  <data name="PostLogoutRedirectUris_Info" xml:space="preserve">
+    <value>URI های مجاز به تغییر مسیر پس از خروج را مشخص می کند</value>
+  </data>
+  <data name="PostLogoutRedirectUris_Label" xml:space="preserve">
+    <value>Uri های تغییر مسیر خروج را ارسال می کند</value>
+  </data>
+  <data name="RedirectUris_Info" xml:space="preserve">
+    <value>URI های مجاز را برای بازگرداندن توکن ها یا کدهای مجوز به مشخص می کند</value>
+  </data>
+  <data name="RedirectUris_Label" xml:space="preserve">
+    <value>Uri های تغییر مسیر</value>
+  </data>
+  <data name="Type_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Type_Label" xml:space="preserve">
+    <value>نوع ادعا</value>
+  </data>
+  <data name="Value_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Value_Label" xml:space="preserve">
+    <value>مقدار ادعا</value>
+  </data>
+  <data name="SecretType_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SecretType_Label" xml:space="preserve">
+    <value>نوع رمز</value>
+  </data>
+  <data name="SecretValue_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SecretValue_Label" xml:space="preserve">
+    <value>مقدار رمز</value>
+  </data>
+  <data name="HashType_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="HashType_Label" xml:space="preserve">
+    <value>نوع هش</value>
+  </data>
+  <data name="RoleNormalizedName_Info" xml:space="preserve">
+    <value>نام نقش نرمال شده</value>
+  </data>
+  <data name="RoleNormalizedName_Label" xml:space="preserve">
+    <value>نام نرمال شده</value>
+  </data>
+  <data name="BackChannelLogoutSessionRequired_Info" xml:space="preserve">
+    <value>مشخص می کند که آیا شناسه سشن کاربر باید در درخواست به BackChannelLogoutUri ارسال شود. پیش فرض true.</value>
+  </data>
+  <data name="BackChannelLogoutSessionRequired_Label" xml:space="preserve">
+    <value>سشن کانال برگشت خروج ضروری است</value>
+  </data>
+  <data name="BackChannelLogoutUri_Info" xml:space="preserve">
+    <value>URI خروج سمت سرویس گیرنده را برای HTTP بر اساس back-channel خروج مشخص می کند . برای جزئیات بیشتر مشخصات OIDC Back-Channel را ببینید.</value>
+  </data>
+  <data name="BackChannelLogoutUri_Label" xml:space="preserve">
+    <value>Uri کانال برگشت خروج</value>
+  </data>
+  <data name="ClientClaimsPrefix_Info" xml:space="preserve">
+    <value>اگر تنظیم شود, پیشوند انواع ادعای سرویس گیرنده با آن پیشوند می شود. پیش فرض client_. هدف این است که اطمینان حاصل کنید که آنها به طور تصادفی با ادعاهای سرویس گیرنده برخورد نمی کنند.</value>
+  </data>
+  <data name="ClientClaimsPrefix_Label" xml:space="preserve">
+    <value>پیشوند ادعاهای سرویس گیرنده</value>
+  </data>
+  <data name="Description_Info" xml:space="preserve">
+    <value>شرح سرویس گیرنده</value>
+  </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>شرح</value>
+  </data>
+  <data name="FrontChannelLogoutSessionRequired_Info" xml:space="preserve">
+    <value>مشخص می کند که آیا شناسه سشن کاربر باید به FrontChannelLogoutUri ارسال شود. پیش فرض true.</value>
+  </data>
+  <data name="FrontChannelLogoutSessionRequired_Label" xml:space="preserve">
+    <value>سشن کانال جلو خروج ضروری است</value>
+  </data>
+  <data name="FrontChannelLogoutUri_Info" xml:space="preserve">
+    <value>URI خروج سمت سرویس گیرنده را برای HTTP بر اساس front-channel خروج مشخص می کند . برای جزئیات بیشتر مشخصات OIDC Front-Channel را ببینید.</value>
+  </data>
+  <data name="FrontChannelLogoutUri_Label" xml:space="preserve">
+    <value>Uri کانال جلو خروج</value>
+  </data>
+  <data name="PairWiseSubjectSalt_Info" xml:space="preserve">
+    <value>مقدار سالت استفاده شده در pair-wise subjectId تولید شده برای کاربران این سرویس گیرنده.</value>
+  </data>
+  <data name="PairWiseSubjectSalt_Label" xml:space="preserve">
+    <value>Pair Wise Subject Salt</value>
+  </data>
+  <data name="Properties_Info" xml:space="preserve">
+    <value>دیکشنری برای نگهداری هر مقدار client-specific سفارشی مورد نیاز</value>
+  </data>
+  <data name="Properties_Label" xml:space="preserve">
+    <value>خواص</value>
+  </data>
+  <data name="PropertyKey_Info" xml:space="preserve">
+    <value>کلید</value>
+  </data>
+  <data name="PropertyKey_Label" xml:space="preserve">
+    <value>کلید</value>
+  </data>
+  <data name="PropertyValue_Info" xml:space="preserve">
+    <value>مقدار</value>
+  </data>
+  <data name="PropertyValue_Label" xml:space="preserve">
+    <value>مقدار</value>
+  </data>
+  <data name="ProtocolType_Info" xml:space="preserve">
+    <value>پیش فرض پروتکل OpenID Connect</value>
+  </data>
+  <data name="ProtocolType_Label" xml:space="preserve">
+    <value>نوع پروتکل</value>
+  </data>
+  <data name="UserSsoLifetime_Info" xml:space="preserve">
+    <value>حداکثر مدت زمان (در ثانیه) از زمان آخرین تأیید هویت کاربر. پیش فرض null</value>
+  </data>
+  <data name="UserSsoLifetime_Label" xml:space="preserve">
+    <value>طول عمر Sso کاربر</value>
+  </data>
+  <data name="DeviceCodeLifetime_Info" xml:space="preserve">
+    <value>طول عمر به کد دستگاه در ثانیه (پیش فرض به 300 ثانیه / 5 دقیقه)</value>
+  </data>
+  <data name="DeviceCodeLifetime_Label" xml:space="preserve">
+    <value>طول عمر کد دستگاه</value>
+  </data>
+  <data name="UserCodeType_Info" xml:space="preserve">
+    <value>نوع کد کاربر را برای استفاده برای سرویس گیرنده مشخص می کند. در غیر این صورت به پیش فرض می رود.</value>
+  </data>
+  <data name="UserCodeType_Label" xml:space="preserve">
+    <value>نوع کد کاربر</value>
+  </data>
+</root>

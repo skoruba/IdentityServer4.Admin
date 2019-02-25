@@ -123,6 +123,12 @@
   <data name="AuthenticatorVerified" xml:space="preserve">
     <value>Your authenticator app has been verified.</value>
   </data>
+  <data name="ConfirmEmailBody" xml:space="preserve">
+    <value>Please confirm your account by &lt;a href='{0}'&gt;clicking here&lt;/a&gt;.</value>
+  </data>
+  <data name="ConfirmEmailTitle" xml:space="preserve">
+    <value>Confirm your email</value>
+  </data>
   <data name="DeletePersonalData" xml:space="preserve">
     <value>User with ID '{0}' deleted themselves.</value>
   </data>
