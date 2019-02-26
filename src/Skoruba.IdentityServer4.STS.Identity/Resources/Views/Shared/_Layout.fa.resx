@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="2FA" xml:space="preserve">
+    <value>احراز هویت دو-عاملی</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>تغییر کلمه عبور</value>
+  </data>
+  <data name="ExternalLogins" xml:space="preserve">
+    <value>ورودی های خارجی من</value>
+  </data>
   <data name="Footer" xml:space="preserve">
     <value>Skoruba IdentityServer4</value>
   </data>
@@ -125,6 +134,12 @@
   </data>
   <data name="Grants" xml:space="preserve">
     <value>واگذاری ها</value>
+     </data>
+  <data name="ManagePersonalData" xml:space="preserve">
+    <value>اطلاعات شخصی من</value>
+  </data>
+    <data name="ManageProfile" xml:space="preserve">
+    <value>پروفایل من</value>
   </data>
   <data name="Menu" xml:space="preserve">
     <value>فهرست</value>

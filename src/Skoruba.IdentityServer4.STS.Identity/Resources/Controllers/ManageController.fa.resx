@@ -121,7 +121,13 @@
     <value>کاربر با شناسه "{0}" اطلاعات شخصی شان را درخواست کرده است.</value>
   </data>
   <data name="AuthenticatorVerified" xml:space="preserve">
-    <value>برنامه تأیید هویت شما تأیید شده است.</value>
+    <value>برنامه تایید هویت شما تایید شده است.</value>
+  </data>
+   <data name="ConfirmEmailBody" xml:space="preserve">
+    <value>لطفا حساب خود را تایید کنید با &lt;a href='{0}'&gt;کلیک کردن اینجا&lt;/a&gt;.</value>
+  </data>
+  <data name="ConfirmEmailTitle" xml:space="preserve">
+    <value>ایمیل خود را تایید کنید</value>
   </data>
   <data name="DeletePersonalData" xml:space="preserve">
     <value>کاربر با شناسه '{0}' حذف شان کرده است.</value>
@@ -160,7 +166,7 @@
     <value>ورود خارجی حذف شد.</value>
   </data>
   <data name="InvalidVerificationCode" xml:space="preserve">
-    <value>کد تأیید نامعتبر است.</value>
+    <value>کد تایید نامعتبر است.</value>
   </data>
   <data name="PasswordChanged" xml:space="preserve">
     <value>کلمه عبور شما تغییر کرده است.</value>
@@ -184,10 +190,10 @@
     <value>مرورگر فعلی فراموش شده است. هنگامی که دوباره از این مرورگر وارد سیستم شوید، از شما کد 2fa خواسته خواهد شد.</value>
   </data>
   <data name="SuccessResetAuthenticationKey" xml:space="preserve">
-    <value>کاربر با شناسه {0} کلید برنامه تأیید اعتبار خود را تنظیم مجدد کرده است.</value>
+    <value>کاربر با شناسه {0} کلید برنامه تایید اعتبار خود را تنظیم مجدد کرده است.</value>
   </data>
   <data name="SuccessUserEnabled2FA" xml:space="preserve">
-    <value>کاربر با شناسه {0} 2FA را با یک برنامه تأیید هویت فعال کرده است.</value>
+    <value>کاربر با شناسه {0} 2FA را با یک برنامه تایید هویت فعال کرده است.</value>
   </data>
   <data name="UserGenerated2FACodes" xml:space="preserve">
     <value>کاربر با شناسه {0} کد جدید بازیابی 2FA را ایجاد کرده است.</value>
@@ -196,6 +202,6 @@
     <value>بارگذاری کاربر با شناسه {0} امکان پذیر نیست.</value>
   </data>
   <data name="VerificationSent" xml:space="preserve">
-    <value>ایمیل تأیید ارسال شد. لطفا ایمیل خود را چک کنید.</value>
+    <value>ایمیل تایید ارسال شد. لطفا ایمیل خود را چک کنید.</value>
   </data>
 </root>

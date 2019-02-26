@@ -166,7 +166,7 @@
     <value>اسکوپ ها</value>
   </data>
   <data name="Secrets_Info" xml:space="preserve">
-    <value>رمز API برای نقطه پایانی خودآزمایی استفاده می شود. API با استفاده از نام و رمز API میتواند با استفاده از خودآزمایی تأیید هویت شود.</value>
+    <value>رمز API برای نقطه پایانی خودآزمایی استفاده می شود. API با استفاده از نام و رمز API میتواند با استفاده از خودآزمایی تایید هویت شود.</value>
   </data>
   <data name="Secrets_Label" xml:space="preserve">
     <value>رمزها</value>

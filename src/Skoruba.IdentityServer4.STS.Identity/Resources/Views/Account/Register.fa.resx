@@ -117,10 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CheckEmailMessage" xml:space="preserve">
-    <value>لطفا ایمیل خود را برای تنظیم مجدد کلمه عبور خود بررسی کنید.</value>
+  <data name="Button" xml:space="preserve">
+    <value>ثبت نام</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>تایید کلمه عبور</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>ایمیل</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>کلمه عبور</value>
+  </data>
+  <data name="SubTitle" xml:space="preserve">
+    <value>ایجاد یک حساب کاربری جدید.</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>تایید کلمه عبور خود را فراموش کرده اید</value>
+    <value>ثبت نام</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>نام کاربری</value>
   </data>
 </root>

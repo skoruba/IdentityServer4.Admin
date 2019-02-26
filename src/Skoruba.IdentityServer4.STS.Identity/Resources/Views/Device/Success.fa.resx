@@ -121,6 +121,6 @@
     <value>موفق</value>
   </data>
   <data name="SuccessMessage" xml:space="preserve">
-    <value>شما با موفقیت دستگاه را تأیید کرده اید</value>
+    <value>شما با موفقیت دستگاه را تایید کرده اید</value>
   </data>
 </root>
