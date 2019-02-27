@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddAuthenticator" xml:space="preserve">
-    <value>اضافه کردن برنامه تأیید هویت</value>
+    <value>اضافه کردن برنامه تایید هویت</value>
   </data>
   <data name="AuthenticatorApp" xml:space="preserve">
-    <value>برنامه تأیید هویت</value>
+    <value>برنامه تایید هویت</value>
   </data>
   <data name="BeforeLogin" xml:space="preserve">
     <value>قبل از اینکه بتوانید با کد بازیابی وارد شوید</value>
@@ -145,13 +145,13 @@
     <value>کدهای بازیابی باقی مانده</value>
   </data>
   <data name="ResetAuthenticator" xml:space="preserve">
-    <value>تنظیم مجدد برنامه تأیید هویت</value>
+    <value>تنظیم مجدد برنامه تایید هویت</value>
   </data>
   <data name="ResetCodes" xml:space="preserve">
     <value>تنظیم مجدد کدهای بازیابی</value>
   </data>
   <data name="SetupAuthenticator" xml:space="preserve">
-    <value>راه اندازی برنامه تأیید هویت</value>
+    <value>راه اندازی برنامه تایید هویت</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>احراز هویت دو-عاملی (2FA)</value>

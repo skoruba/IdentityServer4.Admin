@@ -121,7 +121,7 @@
     <value>دسترسی به برنامه</value>
   </data>
   <data name="ConfirmCode" xml:space="preserve">
-    <value>لطفا تأیید کنید که درخواست مجوز به نقل از کد است:</value>
+    <value>لطفا تایید کنید که درخواست مجوز به نقل از کد است:</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>نه، اجازه نده</value>

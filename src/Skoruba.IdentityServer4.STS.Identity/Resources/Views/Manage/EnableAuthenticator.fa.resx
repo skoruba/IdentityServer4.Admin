@@ -121,27 +121,28 @@
     <value>کد تایید</value>
   </data>
   <data name="DownloadTitle" xml:space="preserve">
-    <value>دانلود کنید یک برنامه تأیید هویت دو-عاملی مانند Microsoft Authenticator for</value>
+    <value>دانلود کنید یک برنامه تایید هویت دو-عاملی مانند Microsoft Authenticator for</value>
   </data>
   <data name="GoogleAuthenticatorTitle" xml:space="preserve">
     <value>Google Authenticator برای</value>
   </data>
   <data name="Info" xml:space="preserve">
-    <value>هنگامی که شما کد QR را اسکن کردید یا کلید بالا را وارد کردید، برنامه تأیید هویت دو عاملی شما یک کد یکتاء فراهم می کند. کد را در جعبه تأیید در زیر وارد کنید.</value>
+    <value>هنگامی که شما کد QR را اسکن کردید یا کلید بالا را وارد کردید، برنامه تایید هویت دو عاملی شما یک کد یکتاء فراهم می کند.
+     کد را در جعبه تایید در زیر وارد کنید.</value>
   </data>
   <data name="ScanQR" xml:space="preserve">
     <value>کد QR را اسکن کنید یا این کلید را وارد کنید</value>
   </data>
   <data name="ScanQRSubTitle" xml:space="preserve">
-    <value>در برنامه تأیید هویت دو عاملی شما. فاصله ها یا بزرگ/کوچک مهم نیست.</value>
+    <value>در برنامه تایید هویت دو عاملی شما. فاصله ها یا بزرگ/کوچک مهم نیست.</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
-    <value>برای استفاده از یک برنامه تأیید هویت از مراحل زیر استفاده کنید:</value>
+    <value>برای استفاده از یک برنامه تایید هویت از مراحل زیر استفاده کنید:</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>پیکربندی برنامه تأیید هویت</value>
+    <value>پیکربندی برنامه تایید هویت</value>
   </data>
   <data name="Verify" xml:space="preserve">
-    <value>تأیید کنید</value>
+    <value>تایید کنید</value>
   </data>
 </root>
