@@ -117,37 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Cancel" xml:space="preserve">
-    <value>Отменить</value>
+  <data name="Code" xml:space="preserve">
+    <value>Код аутентификации</value>
   </data>
-  <data name="Email" xml:space="preserve">
-    <value>Email</value>
+  <data name="Info" xml:space="preserve">
+    <value>Ваш логин защищён приложением-аутентификатором. Введите код проверки подлинности указанный ниже.</value>
   </data>
-  <data name="ExternalLogin" xml:space="preserve">
-    <value>Внешний вход</value>
-  </data>
-  <data name="InvalidRequest" xml:space="preserve">
-    <value>Неверный запрос входа </value>
-  </data>
-  <data name="LocalLogin" xml:space="preserve">
-    <value>Локальное имя входа</value>
-  </data>
-  <data name="Login" xml:space="preserve">
+  <data name="LogIn" xml:space="preserve">
     <value>Вход</value>
   </data>
-  <data name="NoSchema" xml:space="preserve">
-    <value>Для этого клиента не настроены схемы входа</value>
+  <data name="LoginWithRecoveryCode" xml:space="preserve">
+    <value>Вход с помощью кода восстановления</value>
   </data>
-  <data name="Password" xml:space="preserve">
-    <value>Пароль</value>
+  <data name="NoAuthenticatorDevice" xml:space="preserve">
+    <value>Нет доступа к Вашему устройству аутентификации? Вы можете</value>
   </data>
   <data name="Remember" xml:space="preserve">
-    <value>Запомнить мой пароль</value>
+    <value>Запомнить это устройство</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Вход</value>
-  </data>
-  <data name="Username" xml:space="preserve">
-    <value>Имя Пользователя </value>
+    <value>Двухфакторная аутентификация</value>
   </data>
 </root>
