@@ -102,7 +102,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             }
         }
 
-        public ApiSecretsDto BuildApiSecretsViewModel(ApiSecretsDto apiSecrets)
+        public virtual ApiSecretsDto BuildApiSecretsViewModel(ApiSecretsDto apiSecrets)
         {
             apiSecrets.HashTypes = ClientService.GetHashTypes();
             apiSecrets.TypeList = ClientService.GetSecretTypes();
