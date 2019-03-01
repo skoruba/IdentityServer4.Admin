@@ -67,7 +67,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Resources
             };
         }
 
-        public ResourceMessage ApiResourcePropertyDoesNotExist()
+        public virtual ResourceMessage ApiResourcePropertyDoesNotExist()
         {
             return new ResourceMessage()
             {
@@ -76,7 +76,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Resources
             };
         }
 
-        public ResourceMessage ApiResourcePropertyExistsKey()
+        public virtual ResourceMessage ApiResourcePropertyExistsKey()
         {
             return new ResourceMessage()
             {
@@ -85,7 +85,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Resources
             };
         }
 
-        public ResourceMessage ApiResourcePropertyExistsValue()
+        public virtual ResourceMessage ApiResourcePropertyExistsValue()
         {
             return new ResourceMessage()
             {
