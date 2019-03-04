@@ -117,19 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ButtonDeleteClientSecret" xml:space="preserve">
-    <value>Удалить секрет Api </value>
+  <data name="Country" xml:space="preserve">
+    <value>Страна</value>
   </data>
-  <data name="NavigationApiResources" xml:space="preserve">
-    <value>Api ресурсы</value>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
   </data>
-  <data name="NavigationApiSecrets" xml:space="preserve">
-    <value>Api секреты</value>
+  <data name="Locality" xml:space="preserve">
+    <value>Город</value>
   </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>Удалить секрет Api</value>
+  <data name="Name" xml:space="preserve">
+    <value>Имя полностью</value>
   </data>
-  <data name="PanelDeleteApiSecret" xml:space="preserve">
-    <value>Удалить секрет Api</value>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Номер телефона</value>
+  </data>
+  <data name="PostalCode" xml:space="preserve">
+    <value>Почтовый индекс</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>URL профиля</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Регион</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="SendVerificationEmail" xml:space="preserve">
+    <value>Отправить письмо с подтверждением</value>
+  </data>
+  <data name="StreetAddress" xml:space="preserve">
+    <value>Адрес </value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Профиль</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Имя пользователя</value>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>URL вебсайта</value>
   </data>
 </root>

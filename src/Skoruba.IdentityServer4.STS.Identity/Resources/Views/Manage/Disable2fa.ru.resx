@@ -117,19 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ButtonDeleteClientSecret" xml:space="preserve">
-    <value>Удалить секрет Api </value>
+  <data name="Disable2FA" xml:space="preserve">
+    <value>Отключить двухфакторную аутентификацию</value>
   </data>
-  <data name="NavigationApiResources" xml:space="preserve">
-    <value>Api ресурсы</value>
+  <data name="Info" xml:space="preserve">
+    <value>Отключение 2FA не изменяет ключи, используемые в приложениях аутентификаторах. Если Вы хотите изменить ключ используемый в приложении аутентификаторе, Вам следует</value>
   </data>
-  <data name="NavigationApiSecrets" xml:space="preserve">
-    <value>Api секреты</value>
+  <data name="ResetLink" xml:space="preserve">
+    <value>восстановить ваши ключи проверки подлинности</value>
   </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>Удалить секрет Api</value>
+  <data name="SubTitle" xml:space="preserve">
+    <value>Это действие отключает только 2FA.</value>
   </data>
-  <data name="PanelDeleteApiSecret" xml:space="preserve">
-    <value>Удалить секрет Api</value>
+  <data name="Title" xml:space="preserve">
+    <value>Отключить двухфакторную аутентификацию (2FA)</value>
   </data>
 </root>

@@ -117,19 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ButtonDeleteClientSecret" xml:space="preserve">
-    <value>Удалить секрет Api </value>
+  <data name="Remove" xml:space="preserve">
+    <value>Удалить</value>
   </data>
-  <data name="NavigationApiResources" xml:space="preserve">
-    <value>Api ресурсы</value>
+  <data name="SubTitle" xml:space="preserve">
+    <value>Зарегистрированные учетные записи</value>
   </data>
-  <data name="NavigationApiSecrets" xml:space="preserve">
-    <value>Api секреты</value>
+  <data name="Title" xml:space="preserve">
+    <value>Управление Вашими внешними учетными записями</value>
   </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>Удалить секрет Api</value>
-  </data>
-  <data name="PanelDeleteApiSecret" xml:space="preserve">
-    <value>Удалить секрет Api</value>
+  <data name="TitleAddAnotherService" xml:space="preserve">
+    <value>Добавить другой сервис для входа.</value>
   </data>
 </root>

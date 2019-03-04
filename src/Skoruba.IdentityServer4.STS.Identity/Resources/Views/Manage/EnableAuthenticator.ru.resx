@@ -117,19 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ButtonDeleteClientSecret" xml:space="preserve">
-    <value>Удалить секрет Api </value>
+  <data name="Code" xml:space="preserve">
+    <value>Код подтверждения</value>
   </data>
-  <data name="NavigationApiResources" xml:space="preserve">
-    <value>Api ресурсы</value>
+  <data name="DownloadTitle" xml:space="preserve">
+    <value>Загрузите приложение двухфакторной аутентификации, например такое как Microsoft Authenticator, для</value>
   </data>
-  <data name="NavigationApiSecrets" xml:space="preserve">
-    <value>Api секреты</value>
+  <data name="GoogleAuthenticatorTitle" xml:space="preserve">
+    <value>Google Authenticator для</value>
   </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>Удалить секрет Api</value>
+  <data name="Info" xml:space="preserve">
+    <value>После того как Вы отсканировали QR-код или ввели ключи данные выше, Ваше приложение аутентификатор предоставит Вам уникальный код. Введите код в поле данном ниже для подтверждения.</value>
   </data>
-  <data name="PanelDeleteApiSecret" xml:space="preserve">
-    <value>Удалить секрет Api</value>
+  <data name="ScanQR" xml:space="preserve">
+    <value>Отсканируйте QR-код или введите ключ</value>
+  </data>
+  <data name="ScanQRSubTitle" xml:space="preserve">
+    <value>в ваше двухфакторное приложение аутентификатор. Пробелы и написание букв не имеет значения.</value>
+  </data>
+  <data name="SubTitle" xml:space="preserve">
+    <value>Для того чтобы использовать приложение аутентификатор выполните следующие действия:</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Настройка приложения аутентификатора</value>
+  </data>
+  <data name="Verify" xml:space="preserve">
+    <value>Проверить</value>
   </data>
 </root>

@@ -124,19 +124,19 @@
     <value>Skoruba IdentityServer4 Admin</value>
   </data>
   <data name="LinkApiResources" xml:space="preserve">
-    <value>Api Ресурсы</value>
+    <value>Api ресурсы</value>
   </data>
   <data name="LinkClients" xml:space="preserve">
     <value>Клиенты</value>
   </data>
   <data name="LinkIdentityResources" xml:space="preserve">
-    <value>Ресурсы Идентификации</value>
+    <value>Ресурсы идентификации</value>
   </data>
   <data name="LinkLogout" xml:space="preserve">
     <value>Выход</value>
   </data>
   <data name="LinkPersistedGrants" xml:space="preserve">
-    <value>Постоянные Права</value>
+    <value>Постоянные права</value>
   </data>
   <data name="LinkRoles" xml:space="preserve">
     <value>Роли</value>
@@ -154,7 +154,7 @@
     <value>Клиенты/Ресурсы</value>
   </data>
   <data name="TitleLogs" xml:space="preserve">
-    <value>Журналы Событий</value>
+    <value>Журналы событий</value>
   </data>
   <data name="TitleUsermanagement" xml:space="preserve">
     <value>Пользователи/Роли</value>

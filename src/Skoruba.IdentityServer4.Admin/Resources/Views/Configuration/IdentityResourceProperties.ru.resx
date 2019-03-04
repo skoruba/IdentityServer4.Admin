@@ -118,22 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonAddProperty" xml:space="preserve">
-    <value>Добавить Свойство Ресурса Идентификации</value>
+    <value>Добавить свойство ресурса идентификации</value>
   </data>
   <data name="NavigationIdentityResourceProperties" xml:space="preserve">
-    <value>Свойства Ресурса Идентификации</value>
+    <value>Свойства ресурса идентификации</value>
   </data>
   <data name="NavigationIdentityResources" xml:space="preserve">
-    <value>Ресурс Идентификации</value>
+    <value>Ресурс идентификации</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Свойства Ресурса Идентификации</value>
+    <value>Свойства ресурса идентификации</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
-    <value>Свойства Ресурса Идентификации </value>
+    <value>Свойства ресурса идентификации </value>
   </data>
   <data name="PanelTitleNew" xml:space="preserve">
-    <value>Свойство Ресурса Идентификации </value>
+    <value>Свойство ресурса идентификации </value>
   </data>
   <data name="TableButtonRemove" xml:space="preserve">
     <value>Удалить</value>

@@ -118,28 +118,28 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonDeleteApiResource" xml:space="preserve">
-    <value>Удалить Ресурсы Api</value>
+    <value>Удалить ресурсы Api</value>
   </data>
   <data name="ButtonManageProperties" xml:space="preserve">
-    <value>Изменить Свойства Ресурсов Api</value>
+    <value>Изменить свойства ресурсов Api</value>
   </data>
   <data name="ButtonManageScopes" xml:space="preserve">
-    <value>Изменить Области Api</value>
+    <value>Изменить области Api</value>
   </data>
   <data name="ButtonManageSecrets" xml:space="preserve">
-    <value>Изменить Секреты Api</value>
+    <value>Изменить секреты Api</value>
   </data>
   <data name="ButtonSaveApiResource" xml:space="preserve">
-    <value>Сохранить Ресурс Api</value>
+    <value>Сохранить ресурс Api</value>
   </data>
   <data name="NavigationApiResources" xml:space="preserve">
-    <value>Api Ресурсы</value>
+    <value>Api ресурсы</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Api Ресурс</value>
+    <value>Api ресурс</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
-    <value>Api Ресурс</value>
+    <value>Api ресурс</value>
   </data>
   <data name="PickerItemAlreadySelectedTitle" xml:space="preserve">
     <value>пункт уже выбран</value>

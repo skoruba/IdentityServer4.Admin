@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Code" xml:space="preserve">
-    <value>Код аутентификации</value>
+    <value>Код проверки подлинности</value>
   </data>
   <data name="Info" xml:space="preserve">
-    <value>Ваш логин защищён приложением-аутентификатором. Введите код проверки подлинности указанный ниже.</value>
+    <value>Ваш логин защищён приложением аутентификатором. Введите код проверки подлинности указанный ниже.</value>
   </data>
   <data name="LogIn" xml:space="preserve">
     <value>Вход</value>
@@ -130,7 +130,7 @@
     <value>Вход с помощью кода восстановления</value>
   </data>
   <data name="NoAuthenticatorDevice" xml:space="preserve">
-    <value>Нет доступа к Вашему устройству аутентификации? Вы можете</value>
+    <value>Нет доступа к вашему устройству проверки подлинности? Вы можете</value>
   </data>
   <data name="Remember" xml:space="preserve">
     <value>Запомнить это устройство</value>

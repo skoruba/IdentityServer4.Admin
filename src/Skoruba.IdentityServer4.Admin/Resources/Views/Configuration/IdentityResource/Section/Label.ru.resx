@@ -127,7 +127,7 @@
     <value>Данное значение будет использовано  например на экране подтверждения.</value>
   </data>
   <data name="DisplayName_Label" xml:space="preserve">
-    <value>Отобразить Имя</value>
+    <value>Отобразить имя</value>
   </data>
   <data name="Emphasize_Info" xml:space="preserve">
     <value>Указывает, будет ли экран подтверждения выделять эту область(если экран подтверждения хочет реализовать такую функцию). Используйте эту настройку для чувствительных или важных областей. По умолчанию значение равно false.</value>
@@ -175,12 +175,12 @@
     <value>Указывает отображается ли эта область в документе обнаружения. По умолчанию значение равно true.</value>
   </data>
   <data name="ShowInDiscoveryDocument_Label" xml:space="preserve">
-    <value>Показать в Документе Обнаружения</value>
+    <value>Показать в документе обнаружения</value>
   </data>
   <data name="UserClaims_Info" xml:space="preserve">
     <value>Список соответствующих типов утверждения пользователя, которые должны быть включены в токен идентичности.</value>
   </data>
   <data name="UserClaims_Label" xml:space="preserve">
-    <value>Утверждения Пользователя</value>
+    <value>Утверждения пользователя</value>
   </data>
 </root>

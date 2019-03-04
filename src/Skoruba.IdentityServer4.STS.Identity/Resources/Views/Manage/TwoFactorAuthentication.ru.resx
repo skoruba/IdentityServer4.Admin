@@ -117,19 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ButtonDeleteClientSecret" xml:space="preserve">
-    <value>Удалить секрет Api </value>
+  <data name="AddAuthenticator" xml:space="preserve">
+    <value>Добавить приложение аутентификатор</value>
   </data>
-  <data name="NavigationApiResources" xml:space="preserve">
-    <value>Api ресурсы</value>
+  <data name="AuthenticatorApp" xml:space="preserve">
+    <value>Приложение аутентификатор</value>
   </data>
-  <data name="NavigationApiSecrets" xml:space="preserve">
-    <value>Api секреты</value>
+  <data name="BeforeLogin" xml:space="preserve">
+    <value>до того как вы можете войти с кодом восстановления</value>
   </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>Удалить секрет Api</value>
+  <data name="Disable2FA" xml:space="preserve">
+    <value>Отлкючить 2FA</value>
   </data>
-  <data name="PanelDeleteApiSecret" xml:space="preserve">
-    <value>Удалить секрет Api</value>
+  <data name="ForgetBrowser" xml:space="preserve">
+    <value>Забыть этот браузер</value>
+  </data>
+  <data name="GenerateNewCodes" xml:space="preserve">
+    <value>создать новый набор кодов восстановления </value>
+  </data>
+  <data name="NoCodes" xml:space="preserve">
+    <value>У вас не осталось кодов восстановления </value>
+  </data>
+  <data name="OneCode" xml:space="preserve">
+    <value>У вас остался 1 код восстановления</value>
+  </data>
+  <data name="RecoveryCodeLeft" xml:space="preserve">
+    <value>остаток кодов восстановления </value>
+  </data>
+  <data name="ResetAuthenticator" xml:space="preserve">
+    <value>Сбросить приложение аутентификатор</value>
+  </data>
+  <data name="ResetCodes" xml:space="preserve">
+    <value>Сбросить коды восстановления </value>
+  </data>
+  <data name="SetupAuthenticator" xml:space="preserve">
+    <value>Установить приложение аутентификатор</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Двухфакторная аутентификация (2FA)</value>
+  </data>
+  <data name="YouCanGenerateCodes" xml:space="preserve">
+    <value>Вы можете создать новый набор кодов восстановления</value>
+  </data>
+  <data name="YouHave" xml:space="preserve">
+    <value>У вас есть</value>
+  </data>
+  <data name="YouMust" xml:space="preserve">
+    <value>Вы должны</value>
+  </data>
+  <data name="YouShould" xml:space="preserve">
+    <value>Вам следует</value>
   </data>
 </root>

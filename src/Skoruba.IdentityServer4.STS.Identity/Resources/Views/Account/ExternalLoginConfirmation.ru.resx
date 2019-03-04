@@ -118,12 +118,11 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Email" xml:space="preserve">
-    <value>Электронная почта</value>
+    <value>Email</value>
   </data>
   <data name="Info" xml:space="preserve">
     <value>Вы успешно прошли аутентификацию {0}.
-        Пожалуйста введите адрес электронной почты для этого сайта ниже и нажмите на кнопку Регистрация  для завершения входа в систему.
-        logging in.</value>
+        Пожалуйста, введите адрес электронной почты для этого сайта ниже и нажмите на кнопку Регистрация  для завершения входа в систему.</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Регистрация</value>
