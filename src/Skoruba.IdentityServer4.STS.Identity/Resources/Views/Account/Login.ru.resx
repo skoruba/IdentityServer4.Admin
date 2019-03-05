@@ -126,6 +126,9 @@
   <data name="ExternalLogin" xml:space="preserve">
     <value>Внешний вход</value>
   </data>
+  <data name="Forgot" xml:space="preserve">
+    <value>Забыли пароль</value>
+  </data>
   <data name="InvalidRequest" xml:space="preserve">
     <value>Неверный запрос входа </value>
   </data>
@@ -148,6 +151,6 @@
     <value>Вход</value>
   </data>
   <data name="Username" xml:space="preserve">
-    <value>Имя Пользователя </value>
+    <value>Имя пользователя </value>
   </data>
 </root>
