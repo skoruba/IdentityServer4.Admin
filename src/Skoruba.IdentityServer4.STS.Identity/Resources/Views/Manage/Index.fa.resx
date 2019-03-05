@@ -145,7 +145,7 @@
     <value>ذخیره</value>
   </data>
   <data name="SendVerificationEmail" xml:space="preserve">
-    <value>ارسال ایمیل تأیید</value>
+    <value>ارسال ایمیل تایید</value>
   </data>
   <data name="StreetAddress" xml:space="preserve">
     <value>آدرس خیایان</value>

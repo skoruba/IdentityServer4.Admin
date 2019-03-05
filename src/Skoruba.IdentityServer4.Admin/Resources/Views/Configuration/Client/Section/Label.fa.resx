@@ -430,7 +430,7 @@
     <value>نوع پروتکل</value>
   </data>
   <data name="UserSsoLifetime_Info" xml:space="preserve">
-    <value>حداکثر مدت زمان (در ثانیه) از زمان آخرین تأیید هویت کاربر. پیش فرض null</value>
+    <value>حداکثر مدت زمان (در ثانیه) از زمان آخرین تایید هویت کاربر. پیش فرض null</value>
   </data>
   <data name="UserSsoLifetime_Label" xml:space="preserve">
     <value>طول عمر Sso کاربر</value>

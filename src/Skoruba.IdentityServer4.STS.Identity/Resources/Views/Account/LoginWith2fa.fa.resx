@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Code" xml:space="preserve">
-    <value>کد تأیید هویت</value>
+    <value>کد تایید هویت</value>
   </data>
   <data name="Info" xml:space="preserve">
-    <value>ورود شما با یک برنامه تأیید هویت محافظت می شود. کد تأیید هویت خود را در زیر وارد کنید.</value>
+    <value>ورود شما با یک برنامه تایید هویت محافظت می شود. کد تایید هویت خود را در زیر وارد کنید.</value>
   </data>
   <data name="LogIn" xml:space="preserve">
     <value>ورود</value>
@@ -130,7 +130,7 @@
     <value>ورود بوسیله یک کد بازیابی</value>
   </data>
   <data name="NoAuthenticatorDevice" xml:space="preserve">
-    <value>دسترسی به دستگاه تأیید هویت خود را ندارید؟ شماه می توانید</value>
+    <value>دسترسی به دستگاه تایید هویت خود را ندارید؟ شماه می توانید</value>
   </data>
   <data name="Remember" xml:space="preserve">
     <value>این دستگاه را به یاد داشته باش</value>

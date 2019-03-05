@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ConfirmEmailBody" xml:space="preserve">
+    <value>لطفا حساب خود را تایید کنید با &lt;a href='{0}'&gt;کلیک کردن اینجا&lt;/a&gt;.</value>
+  </data>
+  <data name="ConfirmEmailTitle" xml:space="preserve">
+    <value>ایمیل خود را تایید کنید</value>
+  </data>
   <data name="EmailNotFound" xml:space="preserve">
     <value>کاربر وجود ندارد یا تایید نشده است</value>
   </data>
@@ -124,10 +130,16 @@
     <value>خطا از طرف ارائه دهنده خارجی: {0}}</value>
   </data>
   <data name="InvalidAuthenticatorCode" xml:space="preserve">
-    <value>کد تأیید هویت نامعتبر است.</value>
+    <value>کد تایید هویت نامعتبر است.</value>
   </data>
   <data name="InvalidRecoveryCode" xml:space="preserve">
     <value>کد بازیابی وارد شده نامعتبر است.</value>
+     </data>
+  <data name="ResetPasswordBody" xml:space="preserve">
+    <value>لطفا کلمه عبور خود را تنظیم مجدد کنید با &lt;a href='{0}'&gt;کلیک کردن اینجا&lt;/a&gt;.</value>
+  </data>
+  <data name="ResetPasswordTitle" xml:space="preserve">
+    <value>تنظیم مجدد کلمه عبور</value>
   </data>
   <data name="Unable2FA" xml:space="preserve">
     <value>بارگذاری احراز هویت دو-عاملی کاربر امکان پذیر نیست.</value>

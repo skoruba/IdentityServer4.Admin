@@ -117,10 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CheckEmailMessage" xml:space="preserve">
-    <value>لطفا ایمیل خود را برای تنظیم مجدد کلمه عبور خود بررسی کنید.</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>تایید کلمه عبور خود را فراموش کرده اید</value>
+  <data name="PanelTitle" xml:space="preserve">
+    <value>جریان دستگاه</value>
   </data>
 </root>
