@@ -124,7 +124,7 @@
     <value>Email</value>
   </data>
   <data name="ExternalLogin" xml:space="preserve">
-    <value>Внешний выход</value>
+    <value>Внешний вход</value>
   </data>
   <data name="InvalidRequest" xml:space="preserve">
     <value>Неверный запрос входа </value>

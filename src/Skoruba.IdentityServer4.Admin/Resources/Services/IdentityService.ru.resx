@@ -121,60 +121,60 @@
     <value>Ошибка</value>
   </data>
   <data name="RoleClaimDoesNotExist" xml:space="preserve">
-    <value>Утверждение Роли с id {0} не существует</value>
+    <value>Утверждение роли с id {0} не существует</value>
   </data>
   <data name="RoleClaimsCreateFailed" xml:space="preserve">
-    <value>Ошибка Создания Утверждений Роли</value>
+    <value>Ошибка создания утверждений роли</value>
   </data>
   <data name="RoleClaimsDeleteFailed" xml:space="preserve">
-    <value>Ошибка Удаления Утверждений Роли</value>
+    <value>Ошибка удаления утверждений роли</value>
   </data>
   <data name="RoleCreateFailed" xml:space="preserve">
-    <value>Ошибка Создания Роли</value>
+    <value>Ошибка создания роли</value>
   </data>
   <data name="RoleDeleteFailed" xml:space="preserve">
-    <value>Ошибка Удаления Роли</value>
+    <value>Ошибка удаления роли</value>
   </data>
   <data name="RoleDoesNotExist" xml:space="preserve">
     <value>Роль с id {0} не существует</value>
   </data>
   <data name="RoleUpdateFailed" xml:space="preserve">
-    <value>Ошибка обнолвения Роли </value>
+    <value>Ошибка обнолвения роли </value>
   </data>
   <data name="UserChangePasswordFailed" xml:space="preserve">
-    <value>Ошибка Изменения Пароля Пользователя </value>
+    <value>Ошибка изменения пароля пользователя </value>
   </data>
   <data name="UserClaimDoesNotExist" xml:space="preserve">
-    <value>Утверждение Пользователя с id {0} не существует</value>
+    <value>Утверждение пользователя с id {0} не существует</value>
   </data>
   <data name="UserClaimsCreateFailed" xml:space="preserve">
-    <value>Ошибка Создания Утверждений Пользователя </value>
+    <value>Ошибка создания утверждений пользователя </value>
   </data>
   <data name="UserClaimsDeleteFailed" xml:space="preserve">
-    <value>Ошибка Удаления Утверждений Пользователя </value>
+    <value>Ошибка удаления утверждений пользователя </value>
   </data>
   <data name="UserCreateFailed" xml:space="preserve">
-    <value>Ошибка создания Пользователя </value>
+    <value>Ошибка создания пользователя </value>
   </data>
   <data name="UserDeleteFailed" xml:space="preserve">
-    <value>Ошибка удаления Пользователя</value>
+    <value>Ошибка удаления пользователя</value>
   </data>
   <data name="UserDoesNotExist" xml:space="preserve">
     <value>Пользователь с id {0} не существует</value>
   </data>
   <data name="UserProviderDeleteFailed" xml:space="preserve">
-    <value>Ошибка удаления Поставщика Пользователя </value>
+    <value>Ошибка удаления поставщика пользователя </value>
   </data>
   <data name="UserProviderDoesNotExist" xml:space="preserve">
-    <value>Поставщик Пользователя с id {0} не существует</value>
+    <value>Поставщик пользователя с id {0} не существует</value>
   </data>
   <data name="UserRoleCreateFailed" xml:space="preserve">
-    <value>Ошибка создания Роли Пользователя </value>
+    <value>Ошибка создания роли пользователя </value>
   </data>
   <data name="UserRoleDeleteFailed" xml:space="preserve">
-    <value>Ошибка удаления Роли Пользователя </value>
+    <value>Ошибка удаления роли пользователя </value>
   </data>
   <data name="UserUpdateFailed" xml:space="preserve">
-    <value>Ошибка обновления Пользователя </value>
+    <value>Ошибка обновления пользователя </value>
   </data>
 </root>

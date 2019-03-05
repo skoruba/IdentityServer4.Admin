@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SuccessAddApiResource" xml:space="preserve">
-    <value>Api Ресурс {0} успешно сохранен!</value>
+    <value>Api ресурс {0} успешно сохранен!</value>
   </data>
   <data name="SuccessAddApiResourceProperty" xml:space="preserve">
-    <value>Api Свойство Ресурса {0} для api ресурса {1} успешно сохранено!</value>
+    <value>Api свойство ресурса {0} для api ресурса {1} успешно сохранено!</value>
   </data>
   <data name="SuccessAddApiScope" xml:space="preserve">
-    <value>Api Область {0} успешно сохранена!</value>
+    <value>Api область {0} успешно сохранена!</value>
   </data>
   <data name="SuccessAddApiSecret" xml:space="preserve">
     <value>Api Секрет успешно создан!</value>
@@ -133,19 +133,19 @@
     <value>Клиент {0} успешно создан!</value>
   </data>
   <data name="SuccessAddClientClaim" xml:space="preserve">
-    <value>Утверждение Клиента {0} для клиента {1} успешно сохранено!</value>
+    <value>Утверждение клиента {0} для клиента {1} успешно сохранено!</value>
   </data>
   <data name="SuccessAddClientProperty" xml:space="preserve">
-    <value>Свойство Клиента {0} для клиента {1} успешно сохранено!</value>
+    <value>Свойство клиента {0} для клиента {1} успешно сохранено!</value>
   </data>
   <data name="SuccessAddClientSecret" xml:space="preserve">
-    <value>Секрет Клиента для клиента {0} успешно сохранён!</value>
+    <value>Секрет клиента для клиента {0} успешно сохранён!</value>
   </data>
   <data name="SuccessAddIdentityResource" xml:space="preserve">
-    <value>Ресурс Идентификации {0} успешно сохранён!</value>
+    <value>Ресурс идентификации {0} успешно сохранён!</value>
   </data>
   <data name="SuccessAddIdentityResourceProperty" xml:space="preserve">
-    <value>Свойство Ресурса Идентификации {0} для api ресурса {1} успешно сохранено!</value>
+    <value>Свойство ресурса идентификации {0} для api ресурса {1} успешно сохранено!</value>
   </data>
   <data name="SuccessClientClone" xml:space="preserve">
     <value>Клиент {0} успешно продублирован!</value>
@@ -154,28 +154,28 @@
     <value>Клиент успешно удалён!</value>
   </data>
   <data name="SuccessDeleteApiResource" xml:space="preserve">
-    <value>Api Ресурс успешно удалён!</value>
+    <value>Api ресурс успешно удалён!</value>
   </data>
   <data name="SuccessDeleteApiResourceProperty" xml:space="preserve">
     <value>Api свойство ресурса успешно удалено!</value>
   </data>
   <data name="SuccessDeleteApiScope" xml:space="preserve">
-    <value>Api Область успешно удалена!</value>
+    <value>Api область успешно удалена!</value>
   </data>
   <data name="SuccessDeleteApiSecret" xml:space="preserve">
-    <value>Api Секрет успешно удалён!</value>
+    <value>Api секрет успешно удалён!</value>
   </data>
   <data name="SuccessDeleteClientClaim" xml:space="preserve">
-    <value>Утверждение Клиента успешно удалено!</value>
+    <value>Утверждение клиента успешно удалено!</value>
   </data>
   <data name="SuccessDeleteClientProperty" xml:space="preserve">
-    <value>Свойство Клиента успешно удалено!</value>
+    <value>Свойство клиента успешно удалено!</value>
   </data>
   <data name="SuccessDeleteClientSecret" xml:space="preserve">
-    <value>Секрет Клиента успешно удален!</value>
+    <value>Секрет клиента успешно удален!</value>
   </data>
   <data name="SuccessDeleteIdentityResource" xml:space="preserve">
-    <value>Ресурс Идентификации успешно удалён!</value>
+    <value>Ресурс идентификации успешно удалён!</value>
   </data>
   <data name="SuccessDeleteIdentityResourceProperty" xml:space="preserve">
     <value>Свойство ресурса идентификации успешно удалено!</value>

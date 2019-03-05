@@ -118,22 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonDelete" xml:space="preserve">
-    <value>Удалить Ресурс Идентификации</value>
+    <value>Удалить ресурс идентификации</value>
   </data>
   <data name="ButtonManageProperties" xml:space="preserve">
-    <value>Изменить Свойства Ресурса Идентификации</value>
+    <value>Изменить свойства ресурса идентификации</value>
   </data>
   <data name="ButtonSave" xml:space="preserve">
-    <value>Сохранить Ресурс  Идентификации</value>
+    <value>Сохранить ресурс  идентификации</value>
   </data>
   <data name="NavigationIdentityResources" xml:space="preserve">
-    <value>Ресурсы Идентификации</value>
+    <value>Ресурсы идентификации</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Ресурс Идентификации</value>
+    <value>Ресурс идентификации</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
-    <value>Ресурс Идентификации</value>
+    <value>Ресурс идентификации</value>
   </data>
   <data name="PickerItemAlreadySelectedTitle" xml:space="preserve">
     <value>пункт уже выбран</value>

@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ConfirmEmailBody" xml:space="preserve">
+    <value>Пожалуйста подтвердите вашу учетную запись нажатием &lt;a href='{0}'&gt;</value>
+  </data>
+  <data name="ConfirmEmailTitle" xml:space="preserve">
+    <value>Подтвердите ваш адрес электройнной почты</value>
+  </data>
   <data name="EmailNotFound" xml:space="preserve">
     <value>Пользователь не существует или не подтверждён</value>
   </data>
@@ -128,6 +134,12 @@
   </data>
   <data name="InvalidRecoveryCode" xml:space="preserve">
     <value>Введен неверный год восстановления.</value>
+  </data>
+  <data name="ResetPasswordBody" xml:space="preserve">
+    <value>Пожалуйста, сбросьте ваш пароль  &lt;a href='{0}'&gt; нажатием &lt;/a&gt;</value>
+  </data>
+  <data name="ResetPasswordTitle" xml:space="preserve">
+    <value>Сброс пароля</value>
   </data>
   <data name="Unable2FA" xml:space="preserve">
     <value>Не удаётся загрузить двухфакторную аутентификацию пользователя.</value>
