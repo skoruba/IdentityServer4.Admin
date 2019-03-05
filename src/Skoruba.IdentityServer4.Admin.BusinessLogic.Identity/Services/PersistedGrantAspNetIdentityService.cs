@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using System.Threading.Tasks;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Grant;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories.Interfaces;
@@ -12,52 +10,52 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
 {
     public class PersistedGrantAspNetIdentityService : IPersistedGrantAspNetIdentityService
     {
-        private readonly IPersistedGrantAspNetIdentityRepository _persistedGrantAspNetIdentityRepository;
-        private readonly IPersistedGrantAspNetIdentityServiceResources _persistedGrantAspNetIdentityServiceResources;
+        protected readonly IPersistedGrantAspNetIdentityRepository PersistedGrantAspNetIdentityRepository;
+        protected readonly IPersistedGrantAspNetIdentityServiceResources PersistedGrantAspNetIdentityServiceResources;
 
         public PersistedGrantAspNetIdentityService(IPersistedGrantAspNetIdentityRepository persistedGrantAspNetIdentityRepository,
             IPersistedGrantAspNetIdentityServiceResources persistedGrantAspNetIdentityServiceResources)
         {
-            _persistedGrantAspNetIdentityRepository = persistedGrantAspNetIdentityRepository;
-            _persistedGrantAspNetIdentityServiceResources = persistedGrantAspNetIdentityServiceResources;
+            PersistedGrantAspNetIdentityRepository = persistedGrantAspNetIdentityRepository;
+            PersistedGrantAspNetIdentityServiceResources = persistedGrantAspNetIdentityServiceResources;
         }
 
-        public async Task<PersistedGrantsDto> GetPersistedGrantsByUsers(string search, int page = 1, int pageSize = 10)
+        public virtual async Task<PersistedGrantsDto> GetPersistedGrantsByUsers(string search, int page = 1, int pageSize = 10)
         {
-            var pagedList = await _persistedGrantAspNetIdentityRepository.GetPersistedGrantsByUsers(search, page, pageSize);
+            var pagedList = await PersistedGrantAspNetIdentityRepository.GetPersistedGrantsByUsers(search, page, pageSize);
             var persistedGrantsDto = pagedList.ToModel();
 
             return persistedGrantsDto;
         }
 
-        public async Task<PersistedGrantsDto> GetPersistedGrantsByUser(string subjectId, int page = 1, int pageSize = 10)
+        public virtual async Task<PersistedGrantsDto> GetPersistedGrantsByUser(string subjectId, int page = 1, int pageSize = 10)
         {
-            var exists = await _persistedGrantAspNetIdentityRepository.ExistsPersistedGrantsAsync(subjectId);
-            if (!exists) throw new UserFriendlyErrorPageException(string.Format(_persistedGrantAspNetIdentityServiceResources.PersistedGrantWithSubjectIdDoesNotExist().Description, subjectId), _persistedGrantAspNetIdentityServiceResources.PersistedGrantWithSubjectIdDoesNotExist().Description);
+            var exists = await PersistedGrantAspNetIdentityRepository.ExistsPersistedGrantsAsync(subjectId);
+            if (!exists) throw new UserFriendlyErrorPageException(string.Format(PersistedGrantAspNetIdentityServiceResources.PersistedGrantWithSubjectIdDoesNotExist().Description, subjectId), PersistedGrantAspNetIdentityServiceResources.PersistedGrantWithSubjectIdDoesNotExist().Description);
 
-            var pagedList = await _persistedGrantAspNetIdentityRepository.GetPersistedGrantsByUser(subjectId, page, pageSize);
+            var pagedList = await PersistedGrantAspNetIdentityRepository.GetPersistedGrantsByUser(subjectId, page, pageSize);
             var persistedGrantsDto = pagedList.ToModel();
 
             return persistedGrantsDto;
         }
 
-        public async Task<PersistedGrantDto> GetPersistedGrantAsync(string key)
+        public virtual async Task<PersistedGrantDto> GetPersistedGrantAsync(string key)
         {
-            var persistedGrant = await _persistedGrantAspNetIdentityRepository.GetPersistedGrantAsync(key);
-            if (persistedGrant == null) throw new UserFriendlyErrorPageException(string.Format(_persistedGrantAspNetIdentityServiceResources.PersistedGrantDoesNotExist().Description, key), _persistedGrantAspNetIdentityServiceResources.PersistedGrantDoesNotExist().Description);
+            var persistedGrant = await PersistedGrantAspNetIdentityRepository.GetPersistedGrantAsync(key);
+            if (persistedGrant == null) throw new UserFriendlyErrorPageException(string.Format(PersistedGrantAspNetIdentityServiceResources.PersistedGrantDoesNotExist().Description, key), PersistedGrantAspNetIdentityServiceResources.PersistedGrantDoesNotExist().Description);
             var persistedGrantDto = persistedGrant.ToModel();
 
             return persistedGrantDto;
         }
 
-        public async Task<int> DeletePersistedGrantAsync(string key)
+        public virtual async Task<int> DeletePersistedGrantAsync(string key)
         {
-            return await _persistedGrantAspNetIdentityRepository.DeletePersistedGrantAsync(key);
+            return await PersistedGrantAspNetIdentityRepository.DeletePersistedGrantAsync(key);
         }
 
-        public async Task<int> DeletePersistedGrantsAsync(string userId)
+        public virtual async Task<int> DeletePersistedGrantsAsync(string userId)
         {
-            return await _persistedGrantAspNetIdentityRepository.DeletePersistedGrantsAsync(userId);
+            return await PersistedGrantAspNetIdentityRepository.DeletePersistedGrantsAsync(userId);
         }
     }
 }

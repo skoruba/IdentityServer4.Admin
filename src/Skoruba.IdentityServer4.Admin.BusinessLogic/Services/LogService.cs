@@ -8,16 +8,16 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 {
     public class LogService : ILogService
     {
-        private readonly ILogRepository _repository;
+        protected readonly ILogRepository Repository;
 
         public LogService(ILogRepository repository)
         {
-            _repository = repository;
+            Repository = repository;
         }
 
-        public async Task<LogsDto> GetLogsAsync(string search, int page = 1, int pageSize = 10)
+        public virtual async Task<LogsDto> GetLogsAsync(string search, int page = 1, int pageSize = 10)
         {
-            var pagedList = await _repository.GetLogsAsync(search, page, pageSize);
+            var pagedList = await Repository.GetLogsAsync(search, page, pageSize);
             var logs = pagedList.ToModel();
 
             return logs;
