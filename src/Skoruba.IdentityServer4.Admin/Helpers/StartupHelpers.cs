@@ -45,18 +45,18 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <typeparam name="TContext"></typeparam>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        public static void RegisterDbContexts<TContext>(this IServiceCollection services, IConfigurationRoot configuration)
+        public static void RegisterDbContexts<TContext>(this IServiceCollection services, IConfigurationRoot configuration, string migrationsAssembly)
             where TContext : DbContext
         {
-            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-
             var operationalStoreOptions = new OperationalStoreOptions();
             services.AddSingleton(operationalStoreOptions);
 
             var storeOptions = new ConfigurationStoreOptions();
             services.AddSingleton(storeOptions);
 
-            services.AddDbContext<TContext>(options => options.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey), optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
+            services.AddDbContext<TContext>(options => 
+				options.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey), 
+					optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
         }
 
         /// <summary>
@@ -88,14 +88,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <typeparam name="TLogDbContext"></typeparam>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        public static void RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(this IServiceCollection services, IConfigurationRoot configuration)
+        public static void RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(this IServiceCollection services, IConfigurationRoot configuration, string migrationsAssembly)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
         {
-            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-
             // Config DB for identity
             services.AddDbContext<TIdentityDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey),
@@ -256,7 +254,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             }
             else
             {
-                services.RegisterDbContexts<TContext>(configuration);
+                services.RegisterDbContexts<TContext>(configuration, Assembly.GetCallingAssembly().GetName().Name);
             }
         }
 
@@ -282,7 +280,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             }
             else
             {
-                services.RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(configuration);
+                services.RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(configuration, Assembly.GetCallingAssembly().GetName().Name);
             }
         }
 
