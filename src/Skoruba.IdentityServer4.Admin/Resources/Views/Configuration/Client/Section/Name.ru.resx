@@ -121,7 +121,7 @@
     <value>Имя</value>
   </data>
   <data name="TitleCode" xml:space="preserve">
-    <value>Authorization Code Flow with PKCE</value>
+    <value>Поток кода авторизации с PKCE (ключ подтверждения для обмена кодами)</value>
   </data>
   <data name="TitleDevice" xml:space="preserve">
     <value>ТВ и Применение Устройства с Ограниченным Вводом</value>

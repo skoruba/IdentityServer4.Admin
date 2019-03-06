@@ -120,4 +120,7 @@
   <data name="PageTitle" xml:space="preserve">
     <value>Access Denied!</value>
   </data>
+  <data name="ReturnToIdentityServer" xml:space="preserve">
+    <value>Return back to IdentityServer</value>
+  </data>
 </root>
