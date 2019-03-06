@@ -46,5 +46,18 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Common
         {
             return PutCookiesOnRequest(request, ExtractCookiesFromResponse(response));
         }
+
+        public static bool ExistsCookie(HttpResponseMessage responseMessage, string cookieName)
+        {
+            var existsCookie = false;
+            const string cookieHeader = "Set-Cookie";
+
+            if (responseMessage.Headers.TryGetValues(cookieHeader, out var cookies))
+            {
+                existsCookie = cookies.Any(x => x.Contains(cookieName));
+            }
+
+            return existsCookie;
+        }
     }
 }
