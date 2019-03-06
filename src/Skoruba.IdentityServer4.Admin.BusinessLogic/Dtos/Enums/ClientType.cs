@@ -3,11 +3,10 @@
     public enum ClientType
     {
         Empty = 0,
-        WebImplicit = 1,
-        WebHybrid = 2,
-        Spa = 3,
-        Native = 4,
-        Machine = 5,
-        Device = 6
+        WebHybrid = 1,
+        Spa = 2,
+        Native = 3,
+        Machine = 4,
+        Device = 5
     }
 }
