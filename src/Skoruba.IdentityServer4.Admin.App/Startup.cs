@@ -1,8 +1,10 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
@@ -40,7 +42,11 @@ namespace Skoruba.IdentityServer4.Admin
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureRootConfiguration(Configuration);
+			services.AddIdentityServerAdminUI();
+
+			///
+
+			services.ConfigureRootConfiguration(Configuration);
             var rootConfiguration = services.BuildServiceProvider().GetService<IRootConfiguration>();
 
             services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>(HostingEnvironment, Configuration);
@@ -64,13 +70,17 @@ namespace Skoruba.IdentityServer4.Admin
                 UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
                 UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
                 RoleClaimsDto<string>>();
-
+			
             services.AddAuthorizationPolicies();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.AddLogging(loggerFactory, Configuration);
+			app.UseIdentityServerAdminUI();
+			
+			///
+
+			app.AddLogging(loggerFactory, Configuration);
 
             if (env.IsDevelopment())
             {
@@ -82,7 +92,7 @@ namespace Skoruba.IdentityServer4.Admin
             }
 
             app.UseSecurityHeaders();
-            app.UseStaticFiles();
+            //app.UseStaticFiles();
             app.ConfigureAuthenticationServices(env);
             app.ConfigureLocalization();
 

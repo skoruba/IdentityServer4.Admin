@@ -33,6 +33,7 @@ using Skoruba.IdentityServer4.Admin.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.Helpers.Localization;
+using Microsoft.Extensions.FileProviders;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -340,6 +341,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             services.AddLocalization(opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; });
 
             services.TryAddTransient(typeof(IGenericControllerLocalizer<>), typeof(GenericControllerLocalizer<>));
+
+			services.Configure<RazorViewEngineOptions>(options => options.FileProviders.Add(new EmbeddedFileProvider(Assembly.GetExecutingAssembly())));
 
             services.AddMvc(o =>
                 {
