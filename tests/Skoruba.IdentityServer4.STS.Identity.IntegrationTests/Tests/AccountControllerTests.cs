@@ -203,17 +203,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
             var manageResponse = await _client.GetAsync(manageAction);
             var antiForgeryToken = await manageResponse.ExtractAntiForgeryToken();
 
-            var manageProfileData = new Dictionary<string, string>
-            {
-                {"Name", Guid.NewGuid().ToString()},
-                {UserMocks.AntiForgeryTokenKey, antiForgeryToken},
-                { "Email", registerFormData["Email"] }
-            };
-
+            var manageProfileData = UserMocks.GenerateManageProfileData(registerFormData["Email"], antiForgeryToken);
+            
             // Update profile
             var requestWithAntiForgeryCookie = PostRequestHelper.CreateWithCookiesFromResponse(manageAction, manageProfileData, manageResponse);
             var requestWithIdentityCookie = CookiesHelper.CopyCookiesFromResponse(requestWithAntiForgeryCookie, registerResponse);
-
             var responseMessage = await _client.SendAsync(requestWithIdentityCookie);
 
             // Assert      

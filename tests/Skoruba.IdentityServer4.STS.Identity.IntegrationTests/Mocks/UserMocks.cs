@@ -35,6 +35,18 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Mocks
             return loginDataForm;
         }
 
+        public static Dictionary<string, string> GenerateManageProfileData(string email, string antiForgeryToken)
+        {
+            var manageData = new Dictionary<string, string>
+            {
+                { "Name", Guid.NewGuid().ToString()},
+                { AntiForgeryTokenKey, antiForgeryToken},
+                { "Email", email }
+            };
+
+            return manageData;
+        }
+
         public static async Task<HttpResponseMessage> RegisterNewUserAsync(HttpClient client, Dictionary<string, string> registerDataForm)
         {
             const string accountRegisterAction = "/Account/Register";
