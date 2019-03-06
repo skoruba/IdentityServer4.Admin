@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using IdentityModel;
 using IdentityServer4.EntityFramework.Options;
 using IdentityServer4.EntityFramework.Storage;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
@@ -436,6 +437,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         options.RequireHttpsMetadata = true;
 #endif
                         options.ClientId = AuthenticationConsts.OidcClientId;
+                        options.ClientSecret = AuthenticationConsts.OidcClientSecret;
+                        options.ResponseType = AuthenticationConsts.OidcResponseType;
 
                         options.Scope.Clear();
                         options.Scope.Add(AuthenticationConsts.ScopeOpenId);
@@ -443,8 +446,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         options.Scope.Add(AuthenticationConsts.ScopeEmail);
                         options.Scope.Add(AuthenticationConsts.ScopeRoles);
 
+                        options.ClaimActions.MapJsonKey(AuthenticationConsts.RoleClaim, AuthenticationConsts.RoleClaim, AuthenticationConsts.RoleClaim);
+
                         options.SaveTokens = true;
 
+                        options.GetClaimsFromUserInfoEndpoint = true;
+                        
                         options.TokenValidationParameters = new TokenValidationParameters
                         {
                             NameClaimType = JwtClaimTypes.Name,

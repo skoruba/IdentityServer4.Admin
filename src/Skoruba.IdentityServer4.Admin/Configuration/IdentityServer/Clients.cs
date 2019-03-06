@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
@@ -26,8 +27,12 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.IdentityServer
                     ClientName = AuthenticationConsts.OidcClientId,
                     ClientUri = adminConfiguration.IdentityAdminBaseUrl,
 
-                    AllowedGrantTypes = GrantTypes.Implicit,
-                    AllowAccessTokensViaBrowser = true,
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+
+                    ClientSecrets = new List<Secret>
+                    {
+                        new Secret(AuthenticationConsts.OidcClientSecret.ToSha256())
+                    },
 
                     RedirectUris = { $"{adminConfiguration.IdentityAdminBaseUrl}/signin-oidc"},
                     FrontChannelLogoutUri = $"{adminConfiguration.IdentityAdminBaseUrl}/signout-oidc",
