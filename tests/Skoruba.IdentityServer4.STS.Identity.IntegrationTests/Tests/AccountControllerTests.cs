@@ -176,13 +176,51 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
             var containErrors = errorNodes.Select(x => x.InnerText).ToList().SequenceEqual(expectedErrorMessages);
 
             containErrors.Should().BeTrue();
-            
+
             // Check if response contain cookie with Identity
             const string identityCookieName = ".AspNetCore.Identity.Application";
             var existsCookie = CookiesHelper.ExistsCookie(responseMessage, identityCookieName);
 
             // Assert Identity cookie
             existsCookie.Should().BeFalse();
+        }
+
+        [Fact]
+        public async Task UserIsAbleToUpdateProfile()
+        {
+            // Clear headers
+            _client.DefaultRequestHeaders.Clear();
+
+            // Register new user
+            var registerFormData = UserMocks.GenerateRegisterData();
+            var registerResponse = await UserMocks.RegisterNewUserAsync(_client, registerFormData);
+
+            // Get cookie with user identity for next request
+            _client.PutCookiesOnRequest(registerResponse);
+            
+            // Prepare request to update profile
+            const string manageAction = "/Manage/Index";
+            var manageResponse = await _client.GetAsync(manageAction);
+            var antiForgeryToken = await manageResponse.ExtractAntiForgeryToken();
+
+            var manageProfileData = new Dictionary<string, string>
+            {
+                {"Name", Guid.NewGuid().ToString()},
+                {UserMocks.AntiForgeryTokenKey, antiForgeryToken},
+                { "Email", registerFormData["Email"] }
+            };
+
+            // Update profile
+            var requestWithAntiForgeryCookie = PostRequestHelper.CreateWithCookiesFromResponse(manageAction, manageProfileData, manageResponse);
+            var requestWithIdentityCookie = CookiesHelper.CopyCookiesFromResponse(requestWithAntiForgeryCookie, registerResponse);
+
+            var responseMessage = await _client.SendAsync(requestWithIdentityCookie);
+
+            // Assert      
+            responseMessage.StatusCode.Should().Be(HttpStatusCode.Redirect);
+
+            //The redirect to login
+            responseMessage.Headers.Location.ToString().Should().Be("/Manage");
         }
     }
 }

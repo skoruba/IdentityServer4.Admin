@@ -7,7 +7,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Common
 {
     public class PostRequestHelper
     {
-        public static HttpRequestMessage Create(String path, Dictionary<string, string> formPostBodyData)
+        public static HttpRequestMessage Create(string path, Dictionary<string, string> formPostBodyData)
         {
             var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, path)
             {
