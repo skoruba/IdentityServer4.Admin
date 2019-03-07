@@ -7,5 +7,6 @@
         string IdentityServerBaseUrl { get; }
 
         string IdentityAdminBaseUrl { get; }
+        string ClientId { get; }
     }
 }

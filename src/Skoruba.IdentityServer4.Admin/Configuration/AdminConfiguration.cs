@@ -9,5 +9,6 @@ namespace Skoruba.IdentityServer4.Admin.Configuration
         public string IdentityAdminRedirectUri { get; set; } = "http://localhost:9000/signin-oidc";
 
         public string IdentityServerBaseUrl { get; set; } = "http://localhost:5000";
+        public string ClientId { get; set; } = "skoruba_identity_admin";
     }
 }

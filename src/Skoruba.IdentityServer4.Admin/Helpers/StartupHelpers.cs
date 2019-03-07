@@ -435,7 +435,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 #else
                         options.RequireHttpsMetadata = true;
 #endif
-                        options.ClientId = AuthenticationConsts.OidcClientId;
+                        options.ClientId = adminConfiguration.ClientId;
 
                         options.Scope.Clear();
                         options.Scope.Add(AuthenticationConsts.ScopeOpenId);
