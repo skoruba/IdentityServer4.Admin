@@ -136,7 +136,7 @@
     <value>نقش ها</value>
   </data>
   <data name="ButtonUsers" xml:space="preserve">
-    <value>سرویس گیرنده ها</value>
+    <value>کاربران</value>
   </data>
   <data name="PageSubTitle" xml:space="preserve">
     <value>ادمین برای IdentityServer4 و Asp.Net Core Identity</value>
