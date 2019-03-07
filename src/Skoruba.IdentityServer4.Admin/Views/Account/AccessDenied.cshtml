@@ -34,6 +34,7 @@
                                 <span class="oi oi-circle-x" title="Warning" aria-hidden="true"></span>
                             </h1>
                             <a href="@ViewData["IdentityServerBaseUrl"]" class="btn btn-lg btn-block btn-danger">@Localizer["ReturnToIdentityServer"]</a>
+                            <a asp-controller="Account" asp-action="Logout" class="btn btn-lg btn-block btn-danger">@Localizer["Logout"]</a>
                         </div>
                     </div>
                 </div>
