@@ -121,6 +121,6 @@
     <value>دسترسی ممنوع!</value>
   </data>
   <data name="ReturnToIdentityServer" xml:space="preserve">
-    <value>Return back to IdentityServer</value>
+    <value>بازگشت به IdentityServer</value>
   </data>
 </root>
