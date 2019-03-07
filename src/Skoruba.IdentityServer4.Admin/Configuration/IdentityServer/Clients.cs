@@ -23,8 +23,8 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.IdentityServer
 	            new Client
                 {
 
-                    ClientId = AuthenticationConsts.OidcClientId,
-                    ClientName = AuthenticationConsts.OidcClientId,
+                    ClientId =adminConfiguration.ClientId,
+                    ClientName =adminConfiguration.ClientId,
                     ClientUri = adminConfiguration.IdentityAdminBaseUrl,
 
                     AllowedGrantTypes = GrantTypes.Hybrid,
