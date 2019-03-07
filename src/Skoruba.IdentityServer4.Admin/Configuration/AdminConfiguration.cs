@@ -1,4 +1,5 @@
-﻿using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
+﻿using Skoruba.IdentityServer4.Admin.Configuration.Constants;
+using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.Configuration
 {
@@ -9,6 +10,7 @@ namespace Skoruba.IdentityServer4.Admin.Configuration
         public string IdentityAdminRedirectUri { get; set; } = "http://localhost:9000/signin-oidc";
 
         public string IdentityServerBaseUrl { get; set; } = "http://localhost:5000";
-        public string ClientId { get; set; } = "skoruba_identity_admin";
+        public string ClientId { get; set; } = AuthenticationConsts.OidcClientId;
+        public string[] Scopes { get; set; } = AuthenticationConsts.Scopes.ToArray();
     }
 }

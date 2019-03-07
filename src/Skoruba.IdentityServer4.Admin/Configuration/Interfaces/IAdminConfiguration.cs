@@ -8,5 +8,6 @@
 
         string IdentityAdminBaseUrl { get; }
         string ClientId { get; }
+        string[] Scopes { get; }
     }
 }

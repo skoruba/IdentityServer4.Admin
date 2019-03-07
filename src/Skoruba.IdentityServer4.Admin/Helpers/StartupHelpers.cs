@@ -438,10 +438,10 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         options.ClientId = adminConfiguration.ClientId;
 
                         options.Scope.Clear();
-                        options.Scope.Add(AuthenticationConsts.ScopeOpenId);
-                        options.Scope.Add(AuthenticationConsts.ScopeProfile);
-                        options.Scope.Add(AuthenticationConsts.ScopeEmail);
-                        options.Scope.Add(AuthenticationConsts.ScopeRoles);
+                        foreach (var scope in adminConfiguration.Scopes)
+                        {
+                            options.Scope.Add(scope);
+                        }
 
                         options.SaveTokens = true;
 
