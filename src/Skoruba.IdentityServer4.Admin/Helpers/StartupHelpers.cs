@@ -34,6 +34,7 @@ using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.Helpers.Localization;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Mvc.Localization;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -342,6 +343,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
             services.TryAddTransient(typeof(IGenericControllerLocalizer<>), typeof(GenericControllerLocalizer<>));
 
+			services.AddTransient<IViewLocalizer, ResourceViewLocalizer>();
+
 			services.Configure<RazorViewEngineOptions>(options => options.FileProviders.Add(new EmbeddedFileProvider(Assembly.GetExecutingAssembly())));
 
             services.AddMvc(o =>
@@ -361,20 +364,20 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 });
 
             services.Configure<RequestLocalizationOptions>(
-            opts =>
-            {
-                var supportedCultures = new[]
-                {
-                        new CultureInfo("fa"),
-                        new CultureInfo("ru"),
-                        new CultureInfo("zh"),
-                        new CultureInfo("en")
-                };
+				opts =>
+				{
+					var supportedCultures = new[]
+					{
+							new CultureInfo("fa"),
+							new CultureInfo("ru"),
+							new CultureInfo("zh"),
+							new CultureInfo("en")
+					};
 
-                opts.DefaultRequestCulture = new RequestCulture("en");
-                opts.SupportedCultures = supportedCultures;
-                opts.SupportedUICultures = supportedCultures;
-            });
+					opts.DefaultRequestCulture = new RequestCulture("en");
+					opts.SupportedCultures = supportedCultures;
+					opts.SupportedUICultures = supportedCultures;
+				});
         }
 
         /// <summary>
