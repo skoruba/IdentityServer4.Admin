@@ -10,9 +10,11 @@ namespace Microsoft.AspNetCore.Builder
 	{
 		public static IApplicationBuilder UseIdentityServerAdminUI(this IApplicationBuilder app)
 		{
+			Assembly executingAssembly = Assembly.GetExecutingAssembly();
+
 			app.UseStaticFiles(new StaticFileOptions()
 			{
-				FileProvider = new EmbeddedFileProvider(Assembly.GetExecutingAssembly(), "Skoruba.IdentityServer4.Admin.wwwroot")
+				FileProvider = new EmbeddedFileProvider(executingAssembly, executingAssembly.GetName().Name + ".wwwroot")
 			});
 
 			return app;

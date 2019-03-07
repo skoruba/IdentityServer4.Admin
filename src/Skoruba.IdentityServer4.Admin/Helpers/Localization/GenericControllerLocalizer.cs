@@ -16,10 +16,6 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Localization
     {
         private IStringLocalizer _localizer;
 
-        /// <summary>
-        /// Creates a new <see cref="T:Microsoft.Extensions.Localization.StringLocalizer`1" />.
-        /// </summary>
-        /// <param name="factory">The <see cref="T:Microsoft.Extensions.Localization.IStringLocalizerFactory" /> to use.</param>
         public GenericControllerLocalizer(IStringLocalizerFactory factory)
         {
             if (factory == null) throw new ArgumentNullException(nameof(factory));
