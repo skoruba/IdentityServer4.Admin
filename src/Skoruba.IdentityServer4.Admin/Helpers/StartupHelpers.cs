@@ -436,9 +436,9 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 #else
                         options.RequireHttpsMetadata = true;
 #endif
-                        options.ClientId = AuthenticationConsts.OidcClientId;
-                        options.ClientSecret = AuthenticationConsts.OidcClientSecret;
-                        options.ResponseType = AuthenticationConsts.OidcResponseType;
+                        options.ClientId = adminConfiguration.ClientId;
+                        options.ClientSecret = adminConfiguration.ClientSecret;
+                        options.ResponseType = adminConfiguration.OidcResponseType;
 
                         options.Scope.Clear();
                         foreach (var scope in adminConfiguration.Scopes)
@@ -451,7 +451,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         options.SaveTokens = true;
 
                         options.GetClaimsFromUserInfoEndpoint = true;
-                        
+
                         options.TokenValidationParameters = new TokenValidationParameters
                         {
                             NameClaimType = JwtClaimTypes.Name,

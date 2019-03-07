@@ -8,6 +8,8 @@
 
         string IdentityAdminBaseUrl { get; }
         string ClientId { get; }
+        string ClientSecret { get; }
+        string OidcResponseType { get; }
         string[] Scopes { get; }
     }
 }
