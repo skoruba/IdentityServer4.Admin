@@ -108,7 +108,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
                 antiForgeryToken);
 
             // Login
-            var requestMessage = PostRequestHelper.CreateWithCookiesFromResponse(accountLoginAction, loginDataForm, loginResponse);
+            var requestMessage = RequestHelper.CreatePostRequestWithCookies(accountLoginAction, loginDataForm, loginResponse);
             var responseMessage = await _client.SendAsync(requestMessage);
 
             // Assert status code    
@@ -147,7 +147,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
             var loginDataForm = UserMocks.GenerateLoginData(registerFormData["UserName"], Guid.NewGuid().ToString(), antiForgeryToken);
 
             // Login
-            var requestMessage = PostRequestHelper.CreateWithCookiesFromResponse(accountLoginAction, loginDataForm, loginResponse);
+            var requestMessage = RequestHelper.CreatePostRequestWithCookies(accountLoginAction, loginDataForm, loginResponse);
             var responseMessage = await _client.SendAsync(requestMessage);
 
             // Get html content

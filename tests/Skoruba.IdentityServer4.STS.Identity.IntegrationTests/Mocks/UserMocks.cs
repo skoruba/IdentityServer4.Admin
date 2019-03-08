@@ -57,7 +57,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Mocks
             registerDataForm.Remove(AntiForgeryTokenKey);
             registerDataForm.Add(AntiForgeryTokenKey, antiForgeryToken);
 
-            var requestMessage = PostRequestHelper.CreateWithCookiesFromResponse(accountRegisterAction, registerDataForm, registerResponse);
+            var requestMessage = RequestHelper.CreatePostRequestWithCookies(accountRegisterAction, registerDataForm, registerResponse);
             var responseMessage = await client.SendAsync(requestMessage);
 
             return responseMessage;

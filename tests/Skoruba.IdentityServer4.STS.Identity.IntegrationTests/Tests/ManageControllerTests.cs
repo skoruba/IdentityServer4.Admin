@@ -81,7 +81,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
             var manageProfileData = UserMocks.GenerateManageProfileData(registerFormData["Email"], antiForgeryToken);
 
             // Update profile
-            var requestWithAntiForgeryCookie = PostRequestHelper.CreateWithCookiesFromResponse(manageAction, manageProfileData, manageResponse);
+            var requestWithAntiForgeryCookie = RequestHelper.CreatePostRequestWithCookies(manageAction, manageProfileData, manageResponse);
             var requestWithIdentityCookie = CookiesHelper.CopyCookiesFromResponse(requestWithAntiForgeryCookie, registerResponse);
             var responseMessage = await _client.SendAsync(requestWithIdentityCookie);
 
