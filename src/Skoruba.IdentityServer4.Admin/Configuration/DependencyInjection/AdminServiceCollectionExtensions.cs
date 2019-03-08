@@ -15,44 +15,6 @@ namespace Microsoft.Extensions.DependencyInjection
 {
 	public static class AdminServiceCollectionExtensions
 	{
-		//public static IIdentityServerAdminBuilder AddIdentityServerAdminUI(this IServiceCollection services)
-		//{
-		//	var builder = services
-		//			.AddIdentityServerAdminUIBuilder();
-
-		//	//builder.Services.AddMvcExceptionFilters();
-		//	//builder.Services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
-		//	//builder.Services.AddAuthorizationPolicies();
-
-		//	return builder;
-
-		//	//var rootConfiguration = services.BuildServiceProvider().GetService<IRootConfiguration>();
-
-		//	//services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>(HostingEnvironment, Configuration);
-
-		//	services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(HostingEnvironment, rootConfiguration.AdminConfiguration);
-
-		//	//services.AddMvcExceptionFilters();
-
-		//	//services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
-
-		//	services.AddAdminAspNetIdentityServices<AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, UserDto<string>, string, RoleDto<string>, string, string, string,
-		//						UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
-		//						UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
-		//						UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
-		//						UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-		//						RoleClaimsDto<string>, UserClaimDto<string>, RoleClaimDto<string>>();
-
-		//	services.AddMvcWithLocalization<UserDto<string>, string, RoleDto<string>, string, string, string,
-		//		UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
-		//		UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
-		//		UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
-		//		UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-		//		RoleClaimsDto<string>>();
-
-		//	//services.AddAuthorizationPolicies();
-		//}
-
 		public static IIdentityServerAdminBuilder AddIdentityServerAdminUI(this IServiceCollection services, IConfigurationRoot configuration, IHostingEnvironment env)
 		{
 			services.ConfigureRootConfiguration(configuration);
@@ -72,18 +34,6 @@ namespace Microsoft.Extensions.DependencyInjection
 		}
 
 		#region Builder Extensions
-
-		//public static IIdentityServerAdminBuilder AddIdentityServerInMemoryStores<TIdentityDbContext>(this IIdentityServerAdminBuilder builder)
-		//	where TIdentityDbContext : DbContext
-		//{
-		//	return builder.RegisterDbContextsStaging<TIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
-		//}
-
-		//public static IIdentityServerAdminBuilder AddIdentityServerStores<TIdentityDbContext>(this IIdentityServerAdminBuilder builder, IConfigurationRoot configurationRoot)
-		//	where TIdentityDbContext : DbContext
-		//{
-		//	return builder.RegisterDbContexts<TIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>(configurationRoot, Assembly.GetCallingAssembly().GetName().Name);
-		//}
 
 		public static IIdentityServerAdminBuilder AddIdentityServerStores<TIdentityDbContext>(this IIdentityServerAdminBuilder builder)
 			where TIdentityDbContext : DbContext

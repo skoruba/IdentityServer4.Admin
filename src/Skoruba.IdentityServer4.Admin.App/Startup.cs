@@ -50,63 +50,11 @@ namespace Skoruba.IdentityServer4.Admin
 
 			builder.AddAspNetIdentity<AdminIdentityDbContext, UserIdentity, UserIdentityRole, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken, string>();
 			
-			///
-
-			//services.ConfigureRootConfiguration(Configuration);
-
-			//var rootConfiguration = services.BuildServiceProvider().GetService<IRootConfiguration>();
-
-			//services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>(HostingEnvironment, Configuration);
-
-			//services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(HostingEnvironment, rootConfiguration.AdminConfiguration);
-
-			//services.AddMvcExceptionFilters();
-
-			//services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
-
-            //services.AddAdminAspNetIdentityServices<AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, UserDto<string>, string, RoleDto<string>, string, string, string,
-            //                    UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
-            //                    UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
-            //                    UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
-            //                    UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-            //                    RoleClaimsDto<string>, UserClaimDto<string>, RoleClaimDto<string>>();
-            
-            //services.AddMvcWithLocalization<UserDto<string>, string, RoleDto<string>, string, string, string,
-            //    UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
-            //    UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
-            //    UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
-            //    UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-            //    RoleClaimsDto<string>>();
-			
-            //services.AddAuthorizationPolicies();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-			app.UseIdentityServerAdminUI();
-			
-			///
-
-			app.AddLogging(loggerFactory, Configuration);
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
-
-            app.UseSecurityHeaders();
-            //app.UseStaticFiles();
-            app.ConfigureAuthenticationServices(env);
-            app.ConfigureLocalization();
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-            });
-        }
+			app.UseIdentityServerAdminUI(env, loggerFactory, Configuration);
+		}
     }
 }
