@@ -42,36 +42,43 @@ namespace Skoruba.IdentityServer4.Admin
 
         public void ConfigureServices(IServiceCollection services)
         {
-			services.AddIdentityServerAdminUI();
+			var builder = services.AddIdentityServerAdminUI(Configuration, HostingEnvironment);
 
+			builder.AddIdentityServerStores<AdminIdentityDbContext>();
+
+			builder.AddAuthentication<AdminIdentityDbContext, UserIdentity, UserIdentityRole>();
+
+			builder.AddAspNetIdentity<AdminIdentityDbContext, UserIdentity, UserIdentityRole, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken, string>();
+			
 			///
 
-			services.ConfigureRootConfiguration(Configuration);
-            var rootConfiguration = services.BuildServiceProvider().GetService<IRootConfiguration>();
+			//services.ConfigureRootConfiguration(Configuration);
 
-            services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>(HostingEnvironment, Configuration);
+			//var rootConfiguration = services.BuildServiceProvider().GetService<IRootConfiguration>();
 
-            services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(HostingEnvironment, rootConfiguration.AdminConfiguration);
+			//services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>(HostingEnvironment, Configuration);
+
+			//services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(HostingEnvironment, rootConfiguration.AdminConfiguration);
+
+			//services.AddMvcExceptionFilters();
+
+			//services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
+
+            //services.AddAdminAspNetIdentityServices<AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, UserDto<string>, string, RoleDto<string>, string, string, string,
+            //                    UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
+            //                    UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
+            //                    UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
+            //                    UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
+            //                    RoleClaimsDto<string>, UserClaimDto<string>, RoleClaimDto<string>>();
             
-            services.AddMvcExceptionFilters();
-
-            services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
-
-            services.AddAdminAspNetIdentityServices<AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, UserDto<string>, string, RoleDto<string>, string, string, string,
-                                UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
-                                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
-                                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
-                                UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-                                RoleClaimsDto<string>, UserClaimDto<string>, RoleClaimDto<string>>();
-            
-            services.AddMvcWithLocalization<UserDto<string>, string, RoleDto<string>, string, string, string,
-                UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
-                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
-                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
-                UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-                RoleClaimsDto<string>>();
+            //services.AddMvcWithLocalization<UserDto<string>, string, RoleDto<string>, string, string, string,
+            //    UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
+            //    UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
+            //    UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
+            //    UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
+            //    RoleClaimsDto<string>>();
 			
-            services.AddAuthorizationPolicies();
+            //services.AddAuthorizationPolicies();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

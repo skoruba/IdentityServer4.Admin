@@ -38,7 +38,7 @@ using Microsoft.AspNetCore.Mvc.Localization;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
-    public static class StartupHelpers
+    internal static class StartupHelpers
     {
         /// <summary>
         /// Register shared DbContext for IdentityServer ConfigurationStore and PersistedGrants, Identity and Logging
@@ -270,7 +270,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <param name="services"></param>
         /// <param name="hostingEnvironment"></param>
         /// <param name="configuration"></param>
-        public static void AddDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfigurationRoot configuration)
+        public static void AddDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfigurationRoot configuration, string migrationsAssembly)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
@@ -282,7 +282,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             }
             else
             {
-                services.RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(configuration, Assembly.GetCallingAssembly().GetName().Name);
+                services.RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(configuration, migrationsAssembly);
             }
         }
 
