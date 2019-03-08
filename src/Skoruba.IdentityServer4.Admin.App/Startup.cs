@@ -37,13 +37,7 @@ namespace Skoruba.IdentityServer4.Admin
 
         public void ConfigureServices(IServiceCollection services)
         {
-			var builder = services.AddIdentityServerAdminUI(Configuration, HostingEnvironment);
-
-			builder.AddIdentityServerStores<AdminIdentityDbContext>();
-
-			builder.AddAuthentication<AdminIdentityDbContext, UserIdentity, UserIdentityRole>();
-
-			builder.AddAspNetIdentity<AdminIdentityDbContext, UserIdentity, UserIdentityRole, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken, string>();
+			services.AddIdentityServerAdminUI<AdminIdentityDbContext, UserIdentity, UserIdentityRole, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken, string>(Configuration, HostingEnvironment);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

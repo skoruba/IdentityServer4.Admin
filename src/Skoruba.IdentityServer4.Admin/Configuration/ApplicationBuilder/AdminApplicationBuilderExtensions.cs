@@ -13,7 +13,7 @@ namespace Microsoft.AspNetCore.Builder
 	{
 		public static IApplicationBuilder UseIdentityServerAdminUI(this IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, Microsoft.Extensions.Configuration.IConfigurationRoot configuration)
 		{
-			Assembly executingAssembly = Assembly.GetExecutingAssembly();
+			// TODO: validate that the required services have been added, throw if not.
 
 			app.AddLogging(loggerFactory, configuration);
 
@@ -28,6 +28,7 @@ namespace Microsoft.AspNetCore.Builder
 
 			app.UseSecurityHeaders();
 
+			Assembly executingAssembly = Assembly.GetExecutingAssembly();
 			app.UseStaticFiles(new StaticFileOptions()
 			{
 				FileProvider = new EmbeddedFileProvider(executingAssembly, executingAssembly.GetName().Name + ".wwwroot")
