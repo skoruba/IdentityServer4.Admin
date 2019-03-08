@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
@@ -6,7 +7,7 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers
 {
     public static class AdminServicesExtensions
     {

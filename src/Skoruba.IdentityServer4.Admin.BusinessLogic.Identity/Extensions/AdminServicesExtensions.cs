@@ -15,7 +15,7 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Helpers
 {
     public static class AdminServicesExtensions
     {

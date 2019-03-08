@@ -1,20 +1,15 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
-using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
-using Skoruba.IdentityServer4.Admin.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin
 {
-    public class Startup
+	public class Startup
     {
         public Startup(IHostingEnvironment env)
         {
@@ -49,7 +44,6 @@ namespace Skoruba.IdentityServer4.Admin
 			builder.AddAuthentication<AdminIdentityDbContext, UserIdentity, UserIdentityRole>();
 
 			builder.AddAspNetIdentity<AdminIdentityDbContext, UserIdentity, UserIdentityRole, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken, string>();
-			
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
