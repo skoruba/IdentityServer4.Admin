@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using IdentityServer4.EntityFramework.Interfaces;
