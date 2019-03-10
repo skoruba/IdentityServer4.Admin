@@ -38,7 +38,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
             services.ConfigureRootConfiguration(Configuration);
 
             // Add DbContext for Asp.Net Core Identity
-            services.AddIdentityDbContext<AdminIdentityDbContext>(Configuration);
+            services.AddIdentityDbContext<AdminIdentityDbContext>(Configuration, Environment);
 
             // Add email senders which is currently setup for SendGrid and SMTP
             services.AddEmailSenders(Configuration);
