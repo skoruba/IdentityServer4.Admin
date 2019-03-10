@@ -93,6 +93,27 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories
             return pagedList;
         }
 
+        public virtual async Task<PagedList<TUser>> GetRoleUsersAsync(string roleId, string search, int page = 1, int pageSize = 10)
+        {
+            var id = ConvertRoleKeyFromString(roleId);
+            
+            var pagedList = new PagedList<TUser>();
+            var users = DbContext.Set<TUser>()
+                .Join(DbContext.Set<TUserRole>(), u => u.Id, ur => ur.UserId, (u, ur) => new {u, ur})
+                .Where(t => t.ur.RoleId.Equals(id))
+                .WhereIf(!string.IsNullOrEmpty(search), t => t.u.UserName.Contains(search) || t.u.Email.Contains(search))
+                .Select(t => t.u);
+
+            var pagedUsers = await users.PageBy(x => x.Id, page, pageSize)
+                .ToListAsync();
+
+            pagedList.Data.AddRange(pagedUsers);
+            pagedList.TotalCount = await users.CountAsync();
+            pagedList.PageSize = pageSize;
+
+            return pagedList;
+        }
+
         public virtual Task<List<TRole>> GetRolesAsync()
         {
             return RoleManager.Roles.ToListAsync();

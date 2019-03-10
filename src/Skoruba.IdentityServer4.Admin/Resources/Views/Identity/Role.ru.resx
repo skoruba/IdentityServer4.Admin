@@ -123,6 +123,9 @@
   <data name="ActionDeleteRole" xml:space="preserve">
     <value>Удалить роль</value>
   </data>
+  <data name="ActionRoleUsers" xml:space="preserve">
+    <value>Пользователь</value>
+  </data>
   <data name="ActionSaveRole" xml:space="preserve">
     <value>Сохранить роль</value>
   </data>

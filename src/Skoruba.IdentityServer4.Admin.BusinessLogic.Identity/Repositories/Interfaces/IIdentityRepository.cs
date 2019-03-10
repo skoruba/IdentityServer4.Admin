@@ -22,6 +22,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories.Inte
 
         Task<PagedList<TUser>> GetUsersAsync(string search, int page = 1, int pageSize = 10);
 
+        Task<PagedList<TUser>> GetRoleUsersAsync(string roleId, string search, int page = 1, int pageSize = 10);
+
         Task<PagedList<TRole>> GetRolesAsync(string search, int page = 1, int pageSize = 10);
 
         Task<(IdentityResult identityResult, TKey roleId)> CreateRoleAsync(TRole role);

@@ -77,6 +77,19 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             return usersDto;
         }
 
+        public virtual async Task<TUsersDto> GetRoleUsersAsync(string roleId, string search, int page = 1, int pageSize = 10)
+        {
+            var roleKey = ConvertToKeyFromString(roleId);
+
+            var userIdentityRole = await IdentityRepository.GetRoleAsync(roleKey);
+            if (userIdentityRole == null) throw new UserFriendlyErrorPageException(string.Format(IdentityServiceResources.RoleDoesNotExist().Description, roleId), IdentityServiceResources.RoleDoesNotExist().Description);
+
+            var pagedList = await IdentityRepository.GetRoleUsersAsync(roleId, search, page, pageSize);
+            var usersDto = Mapper.Map<TUsersDto>(pagedList);
+
+            return usersDto;
+        }
+
         public virtual async Task<TRolesDto> GetRolesAsync(string search, int page = 1, int pageSize = 10)
         {
             PagedList<TRole> pagedList = await IdentityRepository.GetRolesAsync(search, page, pageSize);

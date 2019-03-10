@@ -20,7 +20,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
     public class IdentityController<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto> : BaseController        
+            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto> : BaseController
         where TUserDto : UserDto<TUserDtoKey>, new()
         where TRoleDto : RoleDto<TRoleDtoKey>, new()
         where TUser : IdentityUser<TKey>
@@ -119,6 +119,18 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             var usersDto = await _identityService.GetUsersAsync(search, page ?? 1);
 
             return View(usersDto);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> RoleUsers(string roleId, int? page, string search)
+        {
+            ViewBag.Search = search;
+            var roleUsers = await _identityService.GetRoleUsersAsync(roleId, search, page ?? 1);
+
+            var roleDto = await _identityService.GetRoleAsync(roleId);
+            ViewData["RoleName"] = roleDto.Name;
+
+            return View(roleUsers);
         }
 
         [HttpPost]

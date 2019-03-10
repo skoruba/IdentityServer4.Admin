@@ -117,22 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ActionAddClaims" xml:space="preserve">
-    <value>添加角色声明</value>
+  <data name="ButtonSearch" xml:space="preserve">
+    <value>Поиск</value>
   </data>
-  <data name="ActionDeleteRole" xml:space="preserve">
-    <value>删除角色</value>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
   </data>
-  <data name="ActionRoleUsers" xml:space="preserve">
-    <value>用户</value>
-  </data>
-  <data name="ActionSaveRole" xml:space="preserve">
-    <value>保存角色</value>
+  <data name="InputSearchPlaceHolder" xml:space="preserve">
+    <value>Поиск</value>
   </data>
   <data name="NavigationRoles" xml:space="preserve">
-    <value>角色</value>
+    <value>Роли</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>角色</value>
+    <value>Роль пользователя</value>
+  </data>
+  <data name="UserId" xml:space="preserve">
+    <value>Идентификатор/ID пользователя</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Имя пользователя</value>
   </data>
 </root>

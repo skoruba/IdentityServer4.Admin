@@ -126,6 +126,9 @@
   <data name="TableButtonEdit" xml:space="preserve">
     <value>ویرایش</value>
   </data>
+  <data name="TableButtonUsers" xml:space="preserve">
+    <value>کاربران</value>
+  </data>
   <data name="TableName" xml:space="preserve">
     <value>نام</value>
   </data>
