@@ -22,6 +22,7 @@ using Serilog;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.ApplicationParts;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
+using Skoruba.IdentityServer4.STS.Identity.Configuration.Intefaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 using Skoruba.IdentityServer4.STS.Identity.Services;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
@@ -200,6 +201,24 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         }
 
         /// <summary>
+        /// Configuration root configuration
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public static IServiceCollection ConfigureRootConfiguration(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddOptions();
+
+            services.Configure<AdminConfiguration>(configuration.GetSection(ConfigurationConsts.AdminConfigurationKey));
+            services.Configure<RegisterConfiguration>(configuration.GetSection(ConfigurationConsts.RegisterConfiguration));
+
+            services.TryAddSingleton<IRootConfiguration, RootConfiguration>();
+
+            return services;
+        }
+
+        /// <summary>
         /// Add configuration for IdentityServer4
         /// </summary>
         /// <typeparam name="TUserIdentity"></typeparam>
@@ -330,6 +349,19 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
+        }
+
+        /// <summary>
+        /// Add authorization policies
+        /// </summary>
+        /// <param name="services"></param>
+        public static void AddAuthorizationPolicies(this IServiceCollection services)
+        {
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(AuthorizationConsts.AdministrationPolicy,
+                    policy => policy.RequireRole(AuthorizationConsts.AdministrationRole));
+            });
         }
     }
 }

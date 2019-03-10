@@ -35,6 +35,8 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureRootConfiguration(Configuration);
+
             // Add DbContext for Asp.Net Core Identity
             services.AddIdentityDbContext<AdminIdentityDbContext>(Configuration);
 
@@ -48,6 +50,9 @@ namespace Skoruba.IdentityServer4.STS.Identity
             // Including settings for MVC and Localization
             // If you want to change primary keys or use another db model for Asp.Net Core Identity:
             services.AddMvcWithLocalization<UserIdentity, string>();
+
+            // Add authorization policies for MVC
+            services.AddAuthorizationPolicies();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
