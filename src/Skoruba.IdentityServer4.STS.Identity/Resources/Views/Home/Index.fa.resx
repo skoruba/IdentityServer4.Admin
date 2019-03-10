@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="2FA" xml:space="preserve">
+    <value>احراز هویت دو-عاملی</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>تغییر کلمه عبور</value>
+  </data>
   <data name="Discovery" xml:space="preserve">
     <value>سند کشف</value>
   </data>
@@ -131,6 +137,15 @@
   </data>
   <data name="LinkTitle" xml:space="preserve">
     <value>در اینجا پیوندهایی آمده است به</value>
+    </data>
+  <data name="Login" xml:space="preserve">
+    <value>ورود</value>
+  </data>
+  <data name="ManagePersonalData" xml:space="preserve">
+    <value>اطلاعات شخصی من</value>
+  </data>
+  <data name="ManageProfile" xml:space="preserve">
+    <value>پروفایل من</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
     <value>خوش آمدید به Skoruba IdentityServer4</value>

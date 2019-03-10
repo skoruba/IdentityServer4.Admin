@@ -31,7 +31,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Resources
             };
         }
 
-        public ResourceMessage IdentityResourcePropertyDoesNotExist()
+        public virtual ResourceMessage IdentityResourcePropertyDoesNotExist()
         {
             return new ResourceMessage()
             {
@@ -40,7 +40,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Resources
             };
         }
 
-        public ResourceMessage IdentityResourcePropertyExistsValue()
+        public virtual ResourceMessage IdentityResourcePropertyExistsValue()
         {
             return new ResourceMessage()
             {
@@ -49,7 +49,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Resources
             };
         }
 
-        public ResourceMessage IdentityResourcePropertyExistsKey()
+        public virtual ResourceMessage IdentityResourcePropertyExistsKey()
         {
             return new ResourceMessage()
             {

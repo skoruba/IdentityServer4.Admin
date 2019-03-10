@@ -9,7 +9,6 @@ $gitProjectFolder = "Skoruba.IdentityServer4.Admin"
 $templateSrc = "template-build/content/src"
 $templateTests = "template-build/content/tests"
 $templateAdminProject = "template-build/content/src/Skoruba.IdentityServer4.Admin"
-$templateDataMigrationFolder = "Data/Migrations"
 
 function CleanBinObjFolders { 
 
@@ -38,13 +37,6 @@ Copy-Item ./$gitProjectFolder/tests/* $templateTests -recurse -force
 # Clean up created folders
 Remove-Item ./$gitProjectFolder -recurse -force
 
-# Add information about adding the ef migrations
-"Adding ef migrations"; 
-"This process may take a few minutes, please wait...";
-
-# Add dotnet ef migrations
-dotnet ef migrations add DbInit -c AdminDbContext -o $templateDataMigrationFolder -s $templateAdminProject -p $templateAdminProject
-
 # Clean solution and folders bin, obj
 CleanBinObjFolders
 
@@ -52,19 +44,14 @@ CleanBinObjFolders
 dotnet remove ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj reference ..\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.csproj
 dotnet remove ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj reference ..\Skoruba.IdentityServer4.Admin.BusinessLogic.Shared\Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.csproj
 dotnet remove ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj reference ..\Skoruba.IdentityServer4.Admin.BusinessLogic\Skoruba.IdentityServer4.Admin.BusinessLogic.csproj
-dotnet remove ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj reference ..\Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts\Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts.csproj
 
-dotnet remove ./$templateSrc/Skoruba.IdentityServer4.STS.Identity/Skoruba.IdentityServer4.STS.Identity.csproj reference ..\Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts\Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts.csproj
-dotnet remove ./$templateSrc/Skoruba.IdentityServer4.STS.Identity/Skoruba.IdentityServer4.STS.Identity.csproj reference ..\Skoruba.IdentityServer4.Admin.EntityFramework.Identity\Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj
 dotnet remove ./$templateSrc/Skoruba.IdentityServer4.STS.Identity/Skoruba.IdentityServer4.STS.Identity.csproj reference ..\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.IdentityServer4.Admin.EntityFramework.csproj
 
 # Add nuget packages
 dotnet add ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj package Skoruba.IdentityServer4.Admin.BusinessLogic -v 1.0.0-beta5
 dotnet add ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj package Skoruba.IdentityServer4.Admin.BusinessLogic.Identity -v 1.0.0-beta5
-dotnet add ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj package Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts -v 1.0.0-beta5
 
-dotnet add ./$templateSrc/Skoruba.IdentityServer4.STS.Identity/Skoruba.IdentityServer4.STS.Identity.csproj package Skoruba.IdentityServer4.Admin.EntityFramework.Identity -v 1.0.0-beta5
-dotnet add ./$templateSrc/Skoruba.IdentityServer4.STS.Identity/Skoruba.IdentityServer4.STS.Identity.csproj package Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts -v 1.0.0-beta5
+dotnet add ./$templateSrc/Skoruba.IdentityServer4.STS.Identity/Skoruba.IdentityServer4.STS.Identity.csproj package Skoruba.IdentityServer4.Admin.EntityFramework -v 1.0.0-beta5
 
 # Clean solution and folders bin, obj
 CleanBinObjFolders
@@ -74,6 +61,4 @@ Remove-Item ./$templateSrc/Skoruba.IdentityServer4.Admin.BusinessLogic -Force -r
 Remove-Item ./$templateSrc/Skoruba.IdentityServer4.Admin.BusinessLogic.Identity -Force -recurse
 Remove-Item ./$templateSrc/Skoruba.IdentityServer4.Admin.BusinessLogic.Shared -Force -recurse
 Remove-Item ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework -Force -recurse
-Remove-Item ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts -Force -recurse
-Remove-Item ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.Identity -Force -recurse
 Remove-Item ./$templateTests -Force -recurse
