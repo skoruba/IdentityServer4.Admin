@@ -144,6 +144,9 @@
   <data name="Password" xml:space="preserve">
     <value>Пароль</value>
   </data>
+  <data name="Register" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
   <data name="Remember" xml:space="preserve">
     <value>Запомнить мой пароль</value>
   </data>

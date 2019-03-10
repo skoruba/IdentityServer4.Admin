@@ -144,6 +144,9 @@
   <data name="Password" xml:space="preserve">
     <value>密码</value>
   </data>
+  <data name="Register" xml:space="preserve">
+    <value>注册</value>
+  </data>
   <data name="Remember" xml:space="preserve">
     <value>记住我的登录信息</value>
   </data>
