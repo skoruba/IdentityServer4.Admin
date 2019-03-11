@@ -19,7 +19,8 @@
             <a href="~/.well-known/openid-configuration" class="btn btn-lg btn-block btn-primary">@Localizer["Discovery"]</a>
         </div>
     </div>
-
+    @if (User.IsAuthenticated())
+    {
     <div class="card mb-4 box-shadow">
         <div class="card-header">
             <h4 class="my-0 font-weight-normal">@Localizer["Grants"]</h4>
@@ -31,6 +32,7 @@
             <a asp-controller="Grants" asp-action="Index" class="btn btn-lg btn-block btn-outline-primary">@Localizer["Grants"]</a>
         </div>
     </div>
+    }
     @if (!User.IsAuthenticated())
     {
         <div class="card mb-4 box-shadow">
