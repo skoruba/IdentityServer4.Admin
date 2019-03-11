@@ -31,7 +31,7 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.IdentityServer
 
                     ClientSecrets = new List<Secret>
                     {
-                        new Secret(AuthenticationConsts.OidcClientSecret.ToSha256())
+                        new Secret(adminConfiguration.ClientSecret.ToSha256())
                     },
 
                     RedirectUris = { $"{adminConfiguration.IdentityAdminBaseUrl}/signin-oidc"},
