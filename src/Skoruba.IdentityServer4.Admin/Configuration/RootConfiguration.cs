@@ -3,20 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
-using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.Configuration
 {
-    internal class RootConfiguration : IRootConfiguration
+    internal class RootConfiguration
     {
-        public IAdminConfiguration AdminConfiguration { get; set; }
+        public AdminConfiguration AdminConfiguration { get; set; }
 
 		public ConnectionStringsConfiguration ConnectionStrings { get; set; }
-
-		//internal RootConfiguration(IOptions<AdminConfiguration> adminConfiguration)
-  //      {
-  //          AdminConfiguration = adminConfiguration.Value;
-  //      }
 
 		internal RootConfiguration()
 		{

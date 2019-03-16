@@ -12,6 +12,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
 		public ConnectionStringsConfiguration ConnectionStrings => RootConfiguration.ConnectionStrings;
 
+		public AdminConfiguration AdminConfiguration => RootConfiguration.AdminConfiguration;
+
 		internal RootConfiguration RootConfiguration { get; }
 		private readonly IServiceCollection services;
 

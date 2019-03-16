@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Skoruba.IdentityServer4.Admin.Configuration;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.Configuration.Identity;
 using Skoruba.IdentityServer4.Admin.Configuration.IdentityServer;
-using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
@@ -78,7 +78,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 var context = scope.ServiceProvider.GetRequiredService<TIdentityServerDbContext>();
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<TUser>>();
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<TRole>>();
-                var rootConfiguration = scope.ServiceProvider.GetRequiredService<IRootConfiguration>();
+                var rootConfiguration = scope.ServiceProvider.GetRequiredService<RootConfiguration>();
 
                 await EnsureSeedIdentityServerData(context, rootConfiguration.AdminConfiguration);
                 await EnsureSeedIdentityData(userManager, roleManager);
@@ -122,7 +122,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <summary>
         /// Generate default clients, identity and api resources
         /// </summary>
-        private static async Task EnsureSeedIdentityServerData<TIdentityServerDbContext>(TIdentityServerDbContext context, IAdminConfiguration adminConfiguration)
+        private static async Task EnsureSeedIdentityServerData<TIdentityServerDbContext>(TIdentityServerDbContext context, AdminConfiguration adminConfiguration)
             where TIdentityServerDbContext : DbContext, IAdminConfigurationDbContext
         {
             if (!context.Clients.Any())
