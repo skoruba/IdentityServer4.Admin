@@ -90,7 +90,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <typeparam name="TLogDbContext"></typeparam>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        public static void RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(this IServiceCollection services, IConfigurationRoot configuration, string migrationsAssembly)
+        public static void RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(this IServiceCollection services, ConnectionStringsConfiguration connectionStrings, string migrationsAssembly)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
@@ -98,14 +98,14 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         {
             // Config DB for identity
             services.AddDbContext<TIdentityDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey),
+                options.UseSqlServer(connectionStrings.IdentityDbConnection,
                     sql => sql.MigrationsAssembly(migrationsAssembly)));
 
             // Config DB from existing connection
             services.AddConfigurationDbContext<TConfigurationDbContext>(options =>
             {
                 options.ConfigureDbContext = b =>
-                    b.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey),
+                    b.UseSqlServer(connectionStrings.ConfigurationDbConnection,
                         sql => sql.MigrationsAssembly(migrationsAssembly));
             });
 
@@ -113,14 +113,14 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             services.AddOperationalDbContext<TPersistedGrantDbContext>(options =>
             {
                 options.ConfigureDbContext = b =>
-                    b.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey),
+                    b.UseSqlServer(connectionStrings.PersistedGrantDbConnection,
                         sql => sql.MigrationsAssembly(migrationsAssembly));
             });
 
             // Log DB from existing connection
             services.AddDbContext<TLogDbContext>(options =>
                 options.UseSqlServer(
-                    configuration.GetConnectionString(ConfigurationConsts.AdminLogDbConnectionStringKey),
+                    connectionStrings.AdminLogDbConnection,
                     optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
         }
 
@@ -268,21 +268,20 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <typeparam name="TLogDbContext"></typeparam>
         /// <typeparam name="TIdentityDbContext"></typeparam>
         /// <param name="services"></param>
-        /// <param name="hostingEnvironment"></param>
-        /// <param name="configuration"></param>
-        public static void AddDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfigurationRoot configuration, string migrationsAssembly)
+        /// <param name="options"></param>
+        public static void AddDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(this IServiceCollection services, IdentityServerAdminOptions options, string migrationsAssembly)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
         {
-            if (hostingEnvironment.IsStaging())
+            if (options.IsStaging)
             {
                 services.RegisterDbContextsStaging<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>();
             }
             else
             {
-                services.RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(configuration, migrationsAssembly);
+                services.RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(options.ConnectionStrings, migrationsAssembly);
             }
         }
 
@@ -391,7 +390,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <param name="services"></param>
         /// <param name="hostingEnvironment"></param>
         /// <param name="adminConfiguration"></param>
-        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IAdminConfiguration adminConfiguration)
+        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IdentityServerAdminOptions adminOptions)
             where TContext : DbContext where TUserIdentity : class where TUserIdentityRole : class
         {
             services.AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
@@ -402,7 +401,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 .AddDefaultTokenProviders();
 
             //For integration tests use only cookie middleware
-            if (hostingEnvironment.IsStaging())
+            if (adminOptions.IsStaging)
             {
                 services.AddAuthentication(options =>
                 {
@@ -433,7 +432,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         options => { options.Cookie.Name = AuthenticationConsts.IdentityAdminCookieName; })
                     .AddOpenIdConnect(AuthenticationConsts.OidcAuthenticationScheme, options =>
                     {
-                        options.Authority = adminConfiguration.IdentityServerBaseUrl;
+                        options.Authority = adminOptions.RootConfiguration.AdminConfiguration.IdentityServerBaseUrl;
 #if DEBUG
                         options.RequireHttpsMetadata = false;
 #else
@@ -458,30 +457,20 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         options.Events = new OpenIdConnectEvents
                         {
                             OnMessageReceived = OnMessageReceived,
-                            OnRedirectToIdentityProvider = n => OnRedirectToIdentityProvider(n, adminConfiguration)
+                            OnRedirectToIdentityProvider = n => OnRedirectToIdentityProvider(n, adminOptions.RootConfiguration.AdminConfiguration)
                         };
                     });
             }
         }
 
-        /// <summary>
-        /// Configuration root configuration
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        public static IServiceCollection ConfigureRootConfiguration(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddOptions();
+		public static IServiceCollection ConfigureRootConfiguration(this IServiceCollection services, IdentityServerAdminOptions options)
+		{
+			services.TryAddSingleton<RootConfiguration>(options.RootConfiguration);
 
-            services.Configure<AdminConfiguration>(configuration.GetSection(ConfigurationConsts.AdminConfigurationKey));
+			return services;
+		}
 
-            services.TryAddSingleton<IRootConfiguration, RootConfiguration>();
-
-            return services;
-        }
-
-        private static Task OnMessageReceived(MessageReceivedContext context)
+		private static Task OnMessageReceived(MessageReceivedContext context)
         {
             context.Properties.IsPersistent = true;
             context.Properties.ExpiresUtc = new DateTimeOffset(DateTime.Now.AddHours(12));

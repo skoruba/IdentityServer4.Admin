@@ -1,6 +1,9 @@
-﻿namespace Skoruba.IdentityServer4.Admin.Configuration.Interfaces
+﻿using System;
+
+namespace Skoruba.IdentityServer4.Admin.Configuration.Interfaces
 {
-    public interface IRootConfiguration
+	[Obsolete]
+	public interface IRootConfiguration
     {
         IAdminConfiguration AdminConfiguration { get; }
     }
