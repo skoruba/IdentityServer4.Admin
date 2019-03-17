@@ -37,7 +37,7 @@ using Microsoft.AspNetCore.Mvc.Localization;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
-    public static class StartupHelpers
+    internal static class StartupHelpers
     {
         /// <summary>
         /// Register shared DbContext for IdentityServer ConfigurationStore and PersistedGrants, Identity and Logging
@@ -88,8 +88,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <typeparam name="TPersistedGrantDbContext"></typeparam>
         /// <typeparam name="TLogDbContext"></typeparam>
         /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        public static void RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(this IServiceCollection services, ConnectionStringsConfiguration connectionStrings, string migrationsAssembly)
+        /// <param name="connectionStrings"></param>
+        public static void RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(this IServiceCollection services, ConnectionStringsConfiguration connectionStrings)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
@@ -98,14 +98,14 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             // Config DB for identity
             services.AddDbContext<TIdentityDbContext>(options =>
                 options.UseSqlServer(connectionStrings.IdentityDbConnection,
-                    sql => sql.MigrationsAssembly(migrationsAssembly)));
+                    sql => sql.MigrationsAssembly(connectionStrings.IdentityDbMigrationsAssembly)));
 
             // Config DB from existing connection
             services.AddConfigurationDbContext<TConfigurationDbContext>(options =>
             {
                 options.ConfigureDbContext = b =>
                     b.UseSqlServer(connectionStrings.ConfigurationDbConnection,
-                        sql => sql.MigrationsAssembly(migrationsAssembly));
+                        sql => sql.MigrationsAssembly(connectionStrings.ConfigurationDbMigrationsAssembly));
             });
 
             // Operational DB from existing connection
@@ -113,14 +113,14 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             {
                 options.ConfigureDbContext = b =>
                     b.UseSqlServer(connectionStrings.PersistedGrantDbConnection,
-                        sql => sql.MigrationsAssembly(migrationsAssembly));
+                        sql => sql.MigrationsAssembly(connectionStrings.PersistedGrantDbMigrationsAssembly));
             });
 
             // Log DB from existing connection
             services.AddDbContext<TLogDbContext>(options =>
                 options.UseSqlServer(
                     connectionStrings.AdminLogDbConnection,
-                    optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
+                    optionsSql => optionsSql.MigrationsAssembly(connectionStrings.AdminLogDbMigrationsAssembly)));
         }
 
         /// <summary>
@@ -268,7 +268,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <typeparam name="TIdentityDbContext"></typeparam>
         /// <param name="services"></param>
         /// <param name="options"></param>
-        public static void AddDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(this IServiceCollection services, IdentityServerAdminOptions options, string migrationsAssembly)
+        public static void AddDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(this IServiceCollection services, IdentityServerAdminOptions options)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
@@ -280,7 +280,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             }
             else
             {
-                services.RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(options.ConnectionStrings, migrationsAssembly);
+                services.RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(options.ConnectionStrings);
             }
         }
 
