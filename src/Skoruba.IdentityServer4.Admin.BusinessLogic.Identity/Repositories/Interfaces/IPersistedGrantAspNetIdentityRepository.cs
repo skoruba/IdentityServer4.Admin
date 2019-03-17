@@ -20,9 +20,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories.Inte
 	    where TRoleClaim : IdentityRoleClaim<TKey>
 	    where TUserToken : IdentityUserToken<TKey>
     {
-		Task<PagedList<PersistedGrantDataView>> GetPersitedGrantsByUsers(string search, int page = 1, int pageSize = 10);
-		Task<PagedList<PersistedGrant>> GetPersitedGrantsByUser(string subjectId, int page = 1, int pageSize = 10);
-	    Task<PersistedGrant> GetPersitedGrantAsync(string key);
+		Task<PagedList<PersistedGrantDataView>> GetPersistedGrantsByUsers(string search, int page = 1, int pageSize = 10);
+		Task<PagedList<PersistedGrant>> GetPersistedGrantsByUser(string subjectId, int page = 1, int pageSize = 10);
+	    Task<PersistedGrant> GetPersistedGrantAsync(string key);
 	    Task<int> DeletePersistedGrantAsync(string key);
 	    Task<int> DeletePersistedGrantsAsync(string userId);
         Task<bool> ExistsPersistedGrantsAsync(string subjectId);

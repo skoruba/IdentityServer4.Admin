@@ -18,9 +18,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfac
         where TRoleClaim : IdentityRoleClaim<TKey>
         where TUserToken : IdentityUserToken<TKey>
     {
-        Task<PersistedGrantsDto> GetPersitedGrantsByUsers(string search, int page = 1, int pageSize = 10);
-        Task<PersistedGrantsDto> GetPersitedGrantsByUser(string subjectId, int page = 1, int pageSize = 10);
-        Task<PersistedGrantDto> GetPersitedGrantAsync(string key);
+        Task<PersistedGrantsDto> GetPersistedGrantsByUsers(string search, int page = 1, int pageSize = 10);
+        Task<PersistedGrantsDto> GetPersistedGrantsByUser(string subjectId, int page = 1, int pageSize = 10);
+        Task<PersistedGrantDto> GetPersistedGrantAsync(string key);
         Task<int> DeletePersistedGrantAsync(string key);
         Task<int> DeletePersistedGrantsAsync(string userId);
     }
