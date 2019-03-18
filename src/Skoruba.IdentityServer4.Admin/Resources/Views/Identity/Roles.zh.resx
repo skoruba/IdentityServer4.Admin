@@ -126,6 +126,9 @@
   <data name="TableButtonEdit" xml:space="preserve">
     <value>编辑</value>
   </data>
+  <data name="TableButtonUsers" xml:space="preserve">
+    <value>用户</value>
+  </data>
   <data name="TableName" xml:space="preserve">
     <value>名称</value>
   </data>

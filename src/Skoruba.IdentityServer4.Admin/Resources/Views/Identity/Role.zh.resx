@@ -123,6 +123,9 @@
   <data name="ActionDeleteRole" xml:space="preserve">
     <value>删除角色</value>
   </data>
+  <data name="ActionRoleUsers" xml:space="preserve">
+    <value>用户</value>
+  </data>
   <data name="ActionSaveRole" xml:space="preserve">
     <value>保存角色</value>
   </data>

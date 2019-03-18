@@ -123,28 +123,37 @@ namespace Microsoft.Extensions.DependencyInjection
 			where TUserToken : IdentityUserToken<TKey>
 			where TKey : IEquatable<TKey>
 		{
+			// Builds the options from user preferences or configuration.
 			IdentityServerAdminOptions options = new IdentityServerAdminOptions(services);
-
 			optionsAction(options);
 
+			// Register configuration from the options.
 			services.ConfigureRootConfiguration(options);
 
+			// Add DbContexts for Asp.Net Core Identity, Logging and IdentityServer - Configuration store and Operational store
 			services.AddDbContexts<TIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>(options);
 
+			// Add Asp.Net Core Identity Configuration and OpenIdConnect auth as well
 			services.AddAuthenticationServices<TIdentityDbContext, TUser, TRole>(options);
-			
+
+			// Add authorization policies for MVC
 			services.AddAuthorizationPolicies();
 
+			// Add exception filters in MVC
 			services.AddMvcExceptionFilters();
 
+			// Add all dependencies for IdentityServer Admin
 			services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
 
+			// Add all dependencies for Asp.Net Core Identity
 			services.AddAdminAspNetIdentityServices<TIdentityDbContext, IdentityServerPersistedGrantDbContext, UserDto<TKey>, TKey, RoleDto<TKey>, TKey, TKey,
 				TKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
 				UsersDto<UserDto<TKey>, TKey>, RolesDto<RoleDto<TKey>, TKey>, UserRolesDto<RoleDto<TKey>, TKey, TKey>,
 				UserClaimsDto<TKey>, UserProviderDto<TKey>, UserProvidersDto<TKey>, UserChangePasswordDto<TKey>,
 				RoleClaimsDto<TKey>, UserClaimDto<TKey>, RoleClaimDto<TKey>>();
 
+			// Add all dependencies for Asp.Net Core Identity in MVC - these dependencies are injected into generic Controllers
+			// Including settings for MVC and Localization
 			services.AddMvcWithLocalization<UserDto<TKey>, TKey, RoleDto<TKey>, TKey, TKey, TKey,
 				TUser, TRole, TKey, TUserClaim, TUserRole,
 				TUserLogin, TRoleClaim, TUserToken,

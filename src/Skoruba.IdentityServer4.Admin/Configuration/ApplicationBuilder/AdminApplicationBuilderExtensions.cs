@@ -34,14 +34,19 @@ namespace Microsoft.AspNetCore.Builder
 				app.UseExceptionHandler("/Home/Error");
 			}
 
+			// Add custom security headers
 			app.UseSecurityHeaders();
 
+			// Add serving of static files from this assembly's wwwroot folder.
 			app.UseStaticFiles(new StaticFileOptions()
 			{
 				FileProvider = StartupHelpers.GetEmbeddedFileProvider("wwwroot")
 			});
 
+			// Use authentication and for integration tests use custom middleware which is used only in Staging environment
 			app.ConfigureAuthenticationServices(options);
+
+			// Use Localization
 			app.ConfigureLocalization();
 
 			app.UseMvc(routes =>

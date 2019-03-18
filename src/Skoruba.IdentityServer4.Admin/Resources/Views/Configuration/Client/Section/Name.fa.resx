@@ -120,8 +120,11 @@
   <data name="PanelTitle" xml:space="preserve">
     <value>نام</value>
   </data>
+  <data name="TitleCode" xml:space="preserve">
+    <value>جریان کد مجوز با PKCE</value>
+  </data>
   <data name="TitleDevice" xml:space="preserve">
-    <value>TV and Limited-Input Device Application</value>
+    <value>تلویزیون و برنامه دستگاه محدود-ورودی</value>
   </data>
   <data name="TitleDeviceFlow" xml:space="preserve">
     <value>جریان دستگاه</value>

@@ -126,7 +126,7 @@
   <data name="ExternalLogin" xml:space="preserve">
     <value>ورودی خارجی</value>
   </data>
-    <data name="Forgot" xml:space="preserve">
+  <data name="Forgot" xml:space="preserve">
     <value>کلمه عبور را فراموش کرده اید</value>
   </data>
   <data name="InvalidRequest" xml:space="preserve">
@@ -143,6 +143,9 @@
   </data>
   <data name="Password" xml:space="preserve">
     <value>کلمه عبور</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>ثبت نام</value>
   </data>
   <data name="Remember" xml:space="preserve">
     <value>ورود من را به یاد داشته باش</value>

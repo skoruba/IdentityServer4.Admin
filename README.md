@@ -25,13 +25,13 @@ The application is written in the **Asp.Net Core MVC - using .NET Core 2.2**
 - Install the dotnet new template:
 
 ```sh
-dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-beta5-update2
+dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-beta6
 ```
 
 - Create new project:
 
 ```sh
-dotnet new skoruba.is4admin --name MyProject --title MyProject --adminrole MyRole --adminclientid MyClientId
+dotnet new skoruba.is4admin --name MyProject --title MyProject --adminrole MyRole --adminclientid MyClientId --adminclientsecret MyClientSecret
 ```
 
 Project template options:
@@ -40,18 +40,13 @@ Project template options:
 --name: [string value] for project name
 --title: [string value] for title and footer of the administration in UI
 --adminrole: [string value] for name of admin role, that is used to authorize the administration
---adminclientid: [string value] for client name, that is used in the IdentityServer4 configuration
+--adminclientid: [string value] for client name, that is used in the IdentityServer4 configuration for admin client
+--adminclientsecret: [string value] for client secret, that is used in the IdentityServer4 configuration for admin client
 ```
 
-### How to use existing IdentityServer4 instance
+## How to configure the Administration - IdentityServer4 and Asp.Net Core Identity
 
-- [Follow these steps for setup project to use existing IdentityServer4 instance](docs/Configure-To-Existing-IS4.md)
-
-### How to configure Asp.Net Core Identity - database, primary key data type
-
-- By default, it's used as the primary key `int`, but it's possible to change it:
-
-- [Follow these steps to configure Identity](docs/Configure-To-Existing-Identity.md)
+- [Follow these steps for setup project to use existing IdentityServer4 and Asp.Net Core Identity](docs/Configure-Administration.md)
 
 ### Template uses following list of nuget packages
 
@@ -72,7 +67,13 @@ Project template options:
 
 - This administration uses bootstrap 4
 
+- Admin UI
+
 ![Admin-preview](docs/Images/App/Skoruba-Home-Preview.PNG)
+
+- Security token service (STS)
+
+![Admin-preview](docs/Images/App/Skoruba-STS-Home-Preview.PNG)
 
 - Forms:
 
@@ -194,6 +195,34 @@ Migrations are not a part of the repository - they are ignored in `.gitignore`.
 - In the controllers is used the policy which name is stored in - `AuthorizationConsts.AdministrationPolicy`. In the policy - `AuthorizationConsts.AdministrationPolicy` is defined required role stored in - `AuthorizationConsts.AdministrationRole`.
 - With the default configuration, it is necessary to configure and run instance of IdentityServer4. It is possible to use initial migration for creating the client as it mentioned above
 
+### Login Configuration
+
+- In `Skoruba.IdentityServer4.STS.Identity` - in `appsettings.json` is possible to specify which column will be used for login (`Username` or `Email`):
+
+```
+  "LoginConfiguration": {
+    "ResolutionPolicy": "Username"
+  }
+```
+
+or using `Email`:
+
+```
+  "LoginConfiguration": {
+    "ResolutionPolicy": "Email"
+  }
+```
+
+### Register Configuration
+
+- In `Skoruba.IdentityServer4.STS.Identity` - in `appsettings.json` is possible to disable user registration (`default: true`):
+
+```
+ "RegisterConfiguration": {
+    "Enabled": false
+  }
+```
+
 ## Localizations - labels, messages
 
 - All labels and messages are stored in the resources `.resx` - locatated in `/Resources`
@@ -235,13 +264,15 @@ Migrations are not a part of the repository - they are ignored in `.gitignore`.
 
   - `Skoruba.IdentityServer4.Admin.EntityFramework.Identity` - EF Core data layer that contains Entities for the Asp.Net Core Identity
 
-  - `Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts` - project that contains AdminDbContext for the administration
+  - `Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts` - project that contains DbContexts for the IdentityServer4, Logging and Asp.Net Core Identity
 
 - Tests:
 
-  - `Skoruba.IdentityServer4.Admin.IntegrationTests` - xUnit project that contains the integration tests
+  - `Skoruba.IdentityServer4.Admin.IntegrationTests` - xUnit project that contains the integration tests for AdminUI
 
-  - `Skoruba.IdentityServer4.Admin.UnitTests` - xUnit project that contains the unit tests
+  - `Skoruba.IdentityServer4.Admin.UnitTests` - xUnit project that contains the unit tests for AdminUI
+
+  - `Skoruba.IdentityServer4.STS.IntegrationTests` - xUnit project that contains the integration tests for STS
 
 ### The admininistration contains the following sections:
 
@@ -254,9 +285,8 @@ Migrations are not a part of the repository - they are ignored in `.gitignore`.
 It is possible to define the configuration according the client type - by default the client types are used:
 
 - Empty
-- Web Application - Server side - Implicit flow
 - Web Application - Server side - Hybrid flow
-- Single Page Application - Javascript - Implicit flow
+- Single Page Application - Javascript - Authorization Code Flow with PKCE
 - Native Application - Mobile/Desktop - Hybrid flow
 - Machine/Robot - Resource Owner Password and Client Credentials flow
 - TV and Limited-Input Device Application - Device flow
@@ -326,9 +356,10 @@ It is possible to define the configuration according the client type - by defaul
   - [x] Persian
 - [x] Manage profile
 - [x] Password reset
-- [x] Account linking
+- [x] Link account to an external provider (example with Github)
 - [x] Two-Factor Authentication (2FA)
 - [x] User registration
+- [x] Email service
 
 ### 1.1.0:
 
