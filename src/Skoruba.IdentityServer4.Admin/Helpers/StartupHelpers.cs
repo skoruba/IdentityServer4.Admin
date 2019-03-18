@@ -37,7 +37,7 @@ using Microsoft.AspNetCore.Mvc.Localization;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
-	internal static class StartupHelpers
+	public static class StartupHelpers
     {
         /// <summary>
         /// Register DbContexts for IdentityServer ConfigurationStore and PersistedGrants, Identity and Logging
