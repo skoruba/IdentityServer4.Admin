@@ -37,6 +37,8 @@ namespace Skoruba.IdentityServer4.Admin
 
         public void ConfigureServices(IServiceCollection services)
         {
+			// Adds the IdentityServer Admin UI services by applying the configuration in appsettings.*.json
+			// and using the default identity model (IdentityUser*).
 			services.AddIdentityServerAdminUI(Configuration, HostingEnvironment);
         }
 
