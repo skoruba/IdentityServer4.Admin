@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
+using Serilog;
 using Skoruba.IdentityServer4.Admin.Configuration;
+using Skoruba.IdentityServer4.Admin.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -11,11 +14,18 @@ namespace Microsoft.Extensions.DependencyInjection
 	{
 		public bool IsStaging { get; set; }
 
+		public bool UseDeveloperExceptionPage { get; set; }
+
 		public ConnectionStringsConfiguration ConnectionStrings => RootConfiguration.ConnectionStrings;
 
 		public AdminConfiguration AdminConfiguration => RootConfiguration.AdminConfiguration;
 
+		public Action<LoggerConfiguration> SerilogConfigurationBuilder { get; set; }
+
+		public string LogFile { get; set; } = "Log\\skoruba_admin.txt";
+
 		internal RootConfiguration RootConfiguration { get; }
+
 		private readonly IServiceCollection services;
 
 		internal IdentityServerAdminOptions(IServiceCollection services)

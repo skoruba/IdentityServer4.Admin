@@ -42,7 +42,7 @@ namespace Skoruba.IdentityServer4.Admin
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-			app.UseIdentityServerAdminUI(env, loggerFactory, Configuration);
+			app.UseIdentityServerAdminUI();
 		}
     }
 }

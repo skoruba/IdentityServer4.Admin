@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Serilog;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Helpers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.Helpers;
 using System;
 using System.Reflection;
@@ -34,6 +33,8 @@ namespace Microsoft.Extensions.DependencyInjection
 				options.ApplyConfiguration(configuration);
 				options.SetMigrationsAssemblies(callingAssemblyName);
 				options.IsStaging = env.IsStaging();
+				options.UseDeveloperExceptionPage = env.IsDevelopment();
+				options.SerilogConfigurationBuilder = serilog => serilog.ReadFrom.Configuration(configuration);
 			});
 		}
 

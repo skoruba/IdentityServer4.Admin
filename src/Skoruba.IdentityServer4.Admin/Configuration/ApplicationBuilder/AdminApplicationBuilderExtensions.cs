@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
+using Skoruba.IdentityServer4.Admin.Configuration;
 using Skoruba.IdentityServer4.Admin.Helpers;
 using System;
 using System.Collections.Generic;
@@ -11,13 +14,13 @@ namespace Microsoft.AspNetCore.Builder
 {
 	public static class AdminApplicationBuilderExtensions
 	{
-		public static IApplicationBuilder UseIdentityServerAdminUI(this IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, Microsoft.Extensions.Configuration.IConfigurationRoot configuration)
+		public static IApplicationBuilder UseIdentityServerAdminUI(this IApplicationBuilder app)
 		{
-			// TODO: validate that the required services have been added, throw if not.
+			IdentityServerAdminOptions options = app.ApplicationServices.GetService<IdentityServerAdminOptions>();
 
-			app.AddLogging(loggerFactory, configuration);
+			app.UseLogging(options);
 
-			if (env.IsDevelopment())
+			if (options.UseDeveloperExceptionPage)
 			{
 				app.UseDeveloperExceptionPage();
 			}
@@ -28,13 +31,12 @@ namespace Microsoft.AspNetCore.Builder
 
 			app.UseSecurityHeaders();
 
-			Assembly executingAssembly = Assembly.GetExecutingAssembly();
 			app.UseStaticFiles(new StaticFileOptions()
 			{
-				FileProvider = new EmbeddedFileProvider(executingAssembly, executingAssembly.GetName().Name + ".wwwroot")
+				FileProvider = StartupHelpers.GetEmbeddedFileProvider("wwwroot")
 			});
 
-			app.ConfigureAuthenticationServices(env);
+			app.ConfigureAuthenticationServices(options);
 			app.ConfigureLocalization();
 
 			app.UseMvc(routes =>
