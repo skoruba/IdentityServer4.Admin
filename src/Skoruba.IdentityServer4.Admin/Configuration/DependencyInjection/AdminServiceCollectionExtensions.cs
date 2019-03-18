@@ -77,7 +77,7 @@ namespace Microsoft.Extensions.DependencyInjection
 				(services, options =>
 				{
 					options.ApplyConfiguration(configuration);
-					options.SetMigrationsAssemblies(callingAssemblyName);
+					options.ConnectionStrings.SetMigrationsAssemblies(callingAssemblyName);
 					options.IsStaging = env.IsStaging();
 					options.UseDeveloperExceptionPage = env.IsDevelopment();
 					options.SerilogConfigurationBuilder = serilog => serilog.ReadFrom.Configuration(configuration);
