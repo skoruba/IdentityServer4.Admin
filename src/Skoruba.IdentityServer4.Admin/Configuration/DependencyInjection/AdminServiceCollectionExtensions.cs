@@ -7,6 +7,7 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Helpers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.Helpers;
 using System;
 using System.Reflection;
@@ -15,6 +16,12 @@ namespace Microsoft.Extensions.DependencyInjection
 {
 	public static class AdminServiceCollectionExtensions
 	{
+		public static IServiceCollection AddIdentityServerAdminUI(this IServiceCollection services, IConfigurationRoot configuration, IHostingEnvironment env)
+		{
+			string callingAssemblyName = Assembly.GetCallingAssembly().GetName().Name;
+			return AddIdentityServerAdminUI<AdminIdentityDbContext, UserIdentity, UserIdentityRole, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken, string>(services, configuration, env, callingAssemblyName);
+		}
+
 		public static IServiceCollection AddIdentityServerAdminUI<TIdentityDbContext, TUser, TRole, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken, TKey>(this IServiceCollection services, IConfigurationRoot configuration, IHostingEnvironment env)
 			where TIdentityDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
 			where TUser : IdentityUser<TKey>
@@ -27,15 +34,29 @@ namespace Microsoft.Extensions.DependencyInjection
 			where TKey : IEquatable<TKey>
 		{
 			string callingAssemblyName = Assembly.GetCallingAssembly().GetName().Name;
+			return AddIdentityServerAdminUI<TIdentityDbContext, TUser, TRole, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken, TKey>(services, configuration, env, callingAssemblyName);
+		}
+
+		private static IServiceCollection AddIdentityServerAdminUI<TIdentityDbContext, TUser, TRole, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken, TKey>(this IServiceCollection services, IConfigurationRoot configuration, IHostingEnvironment env, string callingAssemblyName)
+			where TIdentityDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
+			where TUser : IdentityUser<TKey>
+			where TRole : IdentityRole<TKey>
+			where TUserClaim : IdentityUserClaim<TKey>
+			where TUserRole : IdentityUserRole<TKey>
+			where TUserLogin : IdentityUserLogin<TKey>
+			where TRoleClaim : IdentityRoleClaim<TKey>
+			where TUserToken : IdentityUserToken<TKey>
+			where TKey : IEquatable<TKey>
+		{
 			return AddIdentityServerAdminUI<TIdentityDbContext, TUser, TRole, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken, TKey>
 				(services, options =>
-			{
-				options.ApplyConfiguration(configuration);
-				options.SetMigrationsAssemblies(callingAssemblyName);
-				options.IsStaging = env.IsStaging();
-				options.UseDeveloperExceptionPage = env.IsDevelopment();
-				options.SerilogConfigurationBuilder = serilog => serilog.ReadFrom.Configuration(configuration);
-			});
+				{
+					options.ApplyConfiguration(configuration);
+					options.SetMigrationsAssemblies(callingAssemblyName);
+					options.IsStaging = env.IsStaging();
+					options.UseDeveloperExceptionPage = env.IsDevelopment();
+					options.SerilogConfigurationBuilder = serilog => serilog.ReadFrom.Configuration(configuration);
+				});
 		}
 
 		public static IServiceCollection AddIdentityServerAdminUI<TIdentityDbContext, TUser>(this IServiceCollection services, Action<IdentityServerAdminOptions> optionsAction)
