@@ -14,6 +14,11 @@ namespace Microsoft.AspNetCore.Builder
 {
 	public static class AdminApplicationBuilderExtensions
 	{
+		/// <summary>
+		/// Adds the Skoruba Identity Server Admin UI to the pipeline of this application.
+		/// </summary>
+		/// <param name="app"></param>
+		/// <returns></returns>
 		public static IApplicationBuilder UseIdentityServerAdminUI(this IApplicationBuilder app)
 		{
 			IdentityServerAdminOptions options = app.ApplicationServices.GetService<IdentityServerAdminOptions>();
