@@ -459,12 +459,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 #else
                         options.RequireHttpsMetadata = true;
 #endif
-                        options.ClientId = adminConfiguration.ClientId;
-                        options.ClientSecret = adminConfiguration.ClientSecret;
-                        options.ResponseType = adminConfiguration.OidcResponseType;
+                        options.ClientId = adminOptions.AdminConfiguration.ClientId;
+                        options.ClientSecret = adminOptions.AdminConfiguration.ClientSecret;
+                        options.ResponseType = adminOptions.AdminConfiguration.OidcResponseType;
 
                         options.Scope.Clear();
-                        foreach (var scope in adminConfiguration.Scopes)
+                        foreach (var scope in adminOptions.AdminConfiguration.Scopes)
                         {
                             options.Scope.Add(scope);
                         }

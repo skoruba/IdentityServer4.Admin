@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 
 namespace Skoruba.IdentityServer4.Admin.Configuration
 {
-    internal class RootConfiguration
+    public class RootConfiguration
     {
         public AdminConfiguration AdminConfiguration { get; set; }
 
