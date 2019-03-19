@@ -22,40 +22,20 @@ namespace Skoruba.IdentityServer4.Admin.Configuration
 
 		public string IdentityDbMigrationsAssembly { get; set; }
 
-		public void SetConnections(string commonConnectionString, string commonMigrationsAssembly)
+		public void SetConnections(string commonConnectionString)
 			=> SetConnections(commonConnectionString, commonConnectionString,
-				commonConnectionString, commonConnectionString,
-				commonMigrationsAssembly, commonMigrationsAssembly,
-				commonMigrationsAssembly, commonMigrationsAssembly);
-
-		public void SetConnections(
-			string configurationConnectionString, 
-			string persistedGrantConnectionString, 
-			string identityConnectionString, 
-			string adminLogConnectionString, 
-			string commonMigrationsAssembly)
-			=> SetConnections(
-				configurationConnectionString, persistedGrantConnectionString,
-				identityConnectionString, adminLogConnectionString,
-				commonMigrationsAssembly, commonMigrationsAssembly,
-				commonMigrationsAssembly, commonMigrationsAssembly);
+				commonConnectionString, commonConnectionString);
 
 		public void SetConnections(
 			string configurationConnectionString,
 			string persistedGrantConnectionString,
 			string identityConnectionString,
-			string adminLogConnectionString,
-			string configurationMigrationsAssembly,
-			string persistedGrantMigrationsAssembly,
-			string identityMigrationsAssembly,
-			string adminLogMigrationsAssembly)
+			string adminLogConnectionString)
 		{
 			ConfigurationDbConnection = configurationConnectionString;
 			PersistedGrantDbConnection = persistedGrantConnectionString;
 			IdentityDbConnection = identityConnectionString;
 			AdminLogDbConnection = adminLogConnectionString;
-
-			SetMigrationsAssemblies(configurationMigrationsAssembly, persistedGrantMigrationsAssembly, identityMigrationsAssembly, adminLogMigrationsAssembly);
 		}
 
 		public void SetMigrationsAssemblies(string commonMigrationsAssembly)
