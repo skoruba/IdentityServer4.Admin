@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using Serilog;
 using Skoruba.IdentityServer4.Admin.Configuration;
@@ -58,6 +59,12 @@ namespace Microsoft.Extensions.DependencyInjection
 		public void ApplyConfiguration(IConfigurationRoot configurationRoot)
 		{
 			configurationRoot.Bind(RootConfiguration);
+		}
+
+		public void ApplyHostingEnvironment(IHostingEnvironment env)
+		{
+			IsStaging = env.IsStaging();
+			UseDeveloperExceptionPage = env.IsDevelopment();
 		}
 	}
 }

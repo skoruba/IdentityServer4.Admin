@@ -76,10 +76,16 @@ namespace Microsoft.Extensions.DependencyInjection
 			return AddIdentityServerAdminUI<TIdentityDbContext, TUser, TRole, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken, TKey>
 				(services, options =>
 				{
+					// Sets the staging or development settings from the environment's constants.
+					options.ApplyHostingEnvironment(env);
+
+					// Applies the provided configuration into the options.
 					options.ApplyConfiguration(configuration);
+					
+					// Sets the migrations assemblies to the calling assembly by default.
 					options.ConnectionStrings.SetMigrationsAssemblies(callingAssemblyName);
-					options.IsStaging = env.IsStaging();
-					options.UseDeveloperExceptionPage = env.IsDevelopment();
+
+					// Adds a builder for Serilog to include additional sinks from the provided configuration.
 					options.SerilogConfigurationBuilder = serilog => serilog.ReadFrom.Configuration(configuration);
 				});
 		}
