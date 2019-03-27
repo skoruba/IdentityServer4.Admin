@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityModel;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -80,8 +81,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<TRole>>();
                 var rootConfiguration = scope.ServiceProvider.GetRequiredService<IRootConfiguration>();
 
-                await EnsureSeedIdentityServerData(context, rootConfiguration.AdminConfiguration);
-                await EnsureSeedIdentityData(userManager, roleManager);
+                await EnsureSeedIdentityServerData(context, rootConfiguration.AdminConfiguration, rootConfiguration.ClientDataConfiguration);
+                await EnsureSeedIdentityData(userManager, roleManager, rootConfiguration.UserDataConfiguration);
             }
         }
 
@@ -89,57 +90,72 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// Generate default admin user / role
         /// </summary>
         private static async Task EnsureSeedIdentityData<TUser, TRole>(UserManager<TUser> userManager,
-            RoleManager<TRole> roleManager)
+            RoleManager<TRole> roleManager, IUserDataConfiguration userDataConfiguration)
             where TUser : IdentityUser, new()
             where TRole : IdentityRole, new()
         {
-            // Create admin role
-            if (!await roleManager.RoleExistsAsync(AuthorizationConsts.AdministrationRole))
-            {
-                var role = new TRole { Name = AuthorizationConsts.AdministrationRole };
+            if (! await roleManager.Roles.AnyAsync()) { 
+                // adding roles from seed
+                foreach (var r in userDataConfiguration.Roles)
+                {
+                    if (! await roleManager.RoleExistsAsync(r.Name))
+                    {
+                        var role = new TRole
+                        {
+                            Name = r.Name
+                        };
 
-                await roleManager.CreateAsync(role);
+                        var res = await roleManager.CreateAsync(role);
+
+                        if (res.Succeeded)
+                        {
+                            foreach (var c in  r.Claims)
+                            {
+                                await roleManager.AddClaimAsync(role, new System.Security.Claims.Claim(c.Type, c.Value));
+                            }
+                        }
+                    }
+                }
             }
 
-            // Create admin user
-            if (await userManager.FindByNameAsync(Users.AdminUserName) != null) return;
-
-            var user = new TUser
+            if (!await userManager.Users.AnyAsync())
             {
-                UserName = Users.AdminUserName,
-                Email = Users.AdminEmail,
-                EmailConfirmed = true
-            };
+                // adding users from seed
+                foreach (var u in userDataConfiguration.Users)
+                {
+                    var us = new TUser
+                    {
+                        UserName = u.Username,
+                        Email = u.Email,
+                        EmailConfirmed = true
+                    };
 
-            var result = await userManager.CreateAsync(user, Users.AdminPassword);
+                    var res = await userManager.CreateAsync(us, u.Password);
+                    if (res.Succeeded)
+                    {
+                        foreach (var c in u.Claims)
+                        {
+                            await userManager.AddClaimAsync(us, new System.Security.Claims.Claim(c.Type, c.Value));
+                        }
 
-            if (result.Succeeded)
-            {
-                await userManager.AddToRoleAsync(user, AuthorizationConsts.AdministrationRole);
+                        foreach (var r in u.Roles)
+                        {
+                            await userManager.AddToRoleAsync(us, r);
+                        }
+                    }
+                }
             }
         }
 
         /// <summary>
         /// Generate default clients, identity and api resources
         /// </summary>
-        private static async Task EnsureSeedIdentityServerData<TIdentityServerDbContext>(TIdentityServerDbContext context, IAdminConfiguration adminConfiguration)
+        private static async Task EnsureSeedIdentityServerData<TIdentityServerDbContext>(TIdentityServerDbContext context, IAdminConfiguration adminConfiguration, IClientDataConfiguration clientDataConfiguration)
             where TIdentityServerDbContext : DbContext, IAdminConfigurationDbContext
         {
-            if (!context.Clients.Any())
-            {
-                foreach (var client in Clients.GetAdminClient(adminConfiguration).ToList())
-                {
-                    await context.Clients.AddAsync(client.ToEntity());
-                }
-
-                await context.SaveChangesAsync();
-            }
-
             if (!context.IdentityResources.Any())
             {
-                var identityResources = ClientResources.GetIdentityResources().ToList();
-
-                foreach (var resource in identityResources)
+                foreach (var resource in clientDataConfiguration.IdentityResources)
                 {
                     await context.IdentityResources.AddAsync(resource.ToEntity());
                 }
@@ -149,9 +165,23 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
             if (!context.ApiResources.Any())
             {
-                foreach (var resource in ClientResources.GetApiResources().ToList())
+                foreach (var resource in clientDataConfiguration.ApiResources)
                 {
                     await context.ApiResources.AddAsync(resource.ToEntity());
+                }
+
+                await context.SaveChangesAsync();
+            }
+
+            if (!context.Clients.Any())
+            {
+                foreach (var client in clientDataConfiguration.Clients)
+                {
+                    foreach (var secret in client.ClientSecrets)
+                    {
+                        secret.Value = secret.Value.ToSha256();
+                    }
+                    await context.Clients.AddAsync(client.ToEntity());
                 }
 
                 await context.SaveChangesAsync();

@@ -3,5 +3,7 @@
     public interface IRootConfiguration
     {
         IAdminConfiguration AdminConfiguration { get; }
+        IUserDataConfiguration UserDataConfiguration { get; }
+        IClientDataConfiguration ClientDataConfiguration { get; }
     }
 }

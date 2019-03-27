@@ -478,6 +478,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             services.AddOptions();
 
             services.Configure<AdminConfiguration>(configuration.GetSection(ConfigurationConsts.AdminConfigurationKey));
+            services.Configure<UserDataConfiguration>(configuration.GetSection(ConfigurationConsts.UserDataConfigurationKey));
+            services.Configure<ClientDataConfiguration>(configuration.GetSection(ConfigurationConsts.ClientDataConfigurationKey));
 
             services.TryAddSingleton<IRootConfiguration, RootConfiguration>();
 

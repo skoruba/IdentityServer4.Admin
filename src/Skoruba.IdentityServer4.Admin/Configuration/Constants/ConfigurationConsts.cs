@@ -15,5 +15,9 @@
         public const string ResourcesPath = "Resources";
 
         public const string AdminConfigurationKey = "AdminConfiguration";
+
+        public const string ClientDataConfigurationKey = "ClientData";
+
+        public const string UserDataConfigurationKey = "UserData";
     }
 }
