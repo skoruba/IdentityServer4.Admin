@@ -167,6 +167,11 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             {
                 foreach (var resource in clientDataConfiguration.ApiResources)
                 {
+                    foreach (var s in resource.ApiSecrets)
+                    {
+                        s.Value = s.Value.ToSha256();
+                    }
+
                     await context.ApiResources.AddAsync(resource.ToEntity());
                 }
 
