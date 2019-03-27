@@ -77,7 +77,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<TRole>>();
                 var rootConfiguration = scope.ServiceProvider.GetRequiredService<IRootConfiguration>();
 
-                await EnsureSeedIdentityServerData(context, rootConfiguration.AdminConfiguration, rootConfiguration.ClientDataConfiguration);
+                await EnsureSeedIdentityServerData(context, rootConfiguration.ClientDataConfiguration);
                 await EnsureSeedIdentityData(userManager, roleManager, rootConfiguration.UserDataConfiguration);
             }
         }
@@ -146,7 +146,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <summary>
         /// Generate default clients, identity and api resources
         /// </summary>
-        private static async Task EnsureSeedIdentityServerData<TIdentityServerDbContext>(TIdentityServerDbContext context, IAdminConfiguration adminConfiguration, IClientDataConfiguration clientDataConfiguration)
+        private static async Task EnsureSeedIdentityServerData<TIdentityServerDbContext>(TIdentityServerDbContext context, IClientDataConfiguration clientDataConfiguration)
             where TIdentityServerDbContext : DbContext, IAdminConfigurationDbContext
         {
             if (!context.IdentityResources.Any())
