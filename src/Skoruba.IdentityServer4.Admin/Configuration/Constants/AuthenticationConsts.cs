@@ -3,7 +3,6 @@
     public class AuthenticationConsts
     {
         public const string IdentityAdminCookieName = "IdentityServerAdmin";
-        public const string UserNameClaimType = "name";
         public const string SignInScheme = "Cookies";
 
         public const string OidcAuthenticationScheme = "oidc";
