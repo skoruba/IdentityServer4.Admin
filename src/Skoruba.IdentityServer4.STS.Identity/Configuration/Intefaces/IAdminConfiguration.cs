@@ -3,5 +3,6 @@
     public interface IAdminConfiguration
     {
         string IdentityAdminBaseUrl { get; }
+        string AdministrationRole { get; }
     }
 }
