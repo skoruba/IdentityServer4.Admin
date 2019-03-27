@@ -5,12 +5,8 @@ using IdentityModel;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Skoruba.IdentityServer4.Admin.Configuration.Constants;
-using Skoruba.IdentityServer4.Admin.Configuration.Identity;
-using Skoruba.IdentityServer4.Admin.Configuration.IdentityServer;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
