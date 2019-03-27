@@ -14,6 +14,7 @@ namespace Skoruba.IdentityServer4.Admin.Middlewares
         public const string TestUserId = "UserId";
         public const string TestUserName = "UserName";
         public const string TestUserRoles = "UserRoles";
+        public const string TestAdministrationRole = "SkorubaIdentityAdminAdministrator";
 
         public AuthenticatedTestRequestMiddleware(RequestDelegate next)
         {

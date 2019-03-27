@@ -11,5 +11,7 @@
         string ClientSecret { get; }
         string OidcResponseType { get; }
         string[] Scopes { get; }
+
+        string AdministrationRole { get; }
     }
 }

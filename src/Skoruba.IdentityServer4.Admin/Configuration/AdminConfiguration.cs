@@ -14,7 +14,7 @@ namespace Skoruba.IdentityServer4.Admin.Configuration
         public string[] Scopes { get; set; }
         public string ClientSecret { get; set; }
         public string OidcResponseType { get; set; } = AuthenticationConsts.OidcAuthenticationScheme;
-
+        public string AdministrationRole { get; set; }
 
     }
 }

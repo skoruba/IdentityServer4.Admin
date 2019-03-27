@@ -5,8 +5,8 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.Interfaces
 {
     public interface IClientDataConfiguration
     {
-        List<Client> Clients { get; set; }
-        List<IdentityResource> IdentityResources { get; set; }
-        List<ApiResource> ApiResources { get; set; }
+        List<Client> Clients { get; }
+        List<IdentityResource> IdentityResources { get; }
+        List<ApiResource> ApiResources { get;  }
     }
 }

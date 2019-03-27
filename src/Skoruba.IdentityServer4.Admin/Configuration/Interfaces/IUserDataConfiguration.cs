@@ -5,7 +5,7 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.Interfaces
 {
     public interface IUserDataConfiguration
     {
-        List<Role> Roles { get; set; }
-        List<User> Users { get; set; }
+        List<Role> Roles { get; }
+        List<User> Users { get;  }
     }
 }
