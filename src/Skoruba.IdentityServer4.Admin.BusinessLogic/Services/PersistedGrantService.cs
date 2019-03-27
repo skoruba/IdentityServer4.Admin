@@ -20,20 +20,20 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             PersistedGrantServiceResources = persistedGrantServiceResources;
         }
 
-        public virtual async Task<PersistedGrantsDto> GetPersistedGrantsByUsers(string search, int page = 1, int pageSize = 10)
+        public virtual async Task<PersistedGrantsDto> GetPersistedGrantsByUsersAsync(string search, int page = 1, int pageSize = 10)
         {
-            var pagedList = await PersistedGrantRepository.GetPersistedGrantsByUsers(search, page, pageSize);
+            var pagedList = await PersistedGrantRepository.GetPersistedGrantsByUsersAsync(search, page, pageSize);
             var persistedGrantsDto = pagedList.ToModel();
 
             return persistedGrantsDto;
         }
 
-        public virtual async Task<PersistedGrantsDto> GetPersistedGrantsByUser(string subjectId, int page = 1, int pageSize = 10)
+        public virtual async Task<PersistedGrantsDto> GetPersistedGrantsByUserAsync(string subjectId, int page = 1, int pageSize = 10)
         {
             var exists = await PersistedGrantRepository.ExistsPersistedGrantsAsync(subjectId);
             if (!exists) throw new UserFriendlyErrorPageException(string.Format(PersistedGrantServiceResources.PersistedGrantWithSubjectIdDoesNotExist().Description, subjectId), PersistedGrantServiceResources.PersistedGrantWithSubjectIdDoesNotExist().Description);
 
-            var pagedList = await PersistedGrantRepository.GetPersistedGrantsByUser(subjectId, page, pageSize);
+            var pagedList = await PersistedGrantRepository.GetPersistedGrantsByUserAsync(subjectId, page, pageSize);
             var persistedGrantsDto = pagedList.ToModel();
 
             return persistedGrantsDto;
