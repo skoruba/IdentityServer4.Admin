@@ -124,7 +124,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                     //Try delete persisted grant
                     await persistedGrantRepository.DeletePersistedGrantsAsync(subjectId.ToString());
 
-                    var grant = await persistedGrantRepository.GetPersistedGrantsByUser(subjectId.ToString());
+                    var grant = await persistedGrantRepository.GetPersistedGrantsByUserAsync(subjectId.ToString());
 
                     //Assert
                     grant.TotalCount.Should().Be(0);

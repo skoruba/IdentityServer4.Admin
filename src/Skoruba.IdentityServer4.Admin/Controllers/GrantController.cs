@@ -30,7 +30,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         public async Task<IActionResult> PersistedGrants(int? page, string search)
         {
             ViewBag.Search = search;
-            var persistedGrants = await _persistedGrantService.GetPersistedGrantsByUsers(search, page ?? 1);
+            var persistedGrants = await _persistedGrantService.GetPersistedGrantsByUsersAsync(search, page ?? 1);
 
             return View(persistedGrants);
         }
@@ -73,7 +73,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> PersistedGrant(string id, int? page)
         {
-            var persistedGrants = await _persistedGrantService.GetPersistedGrantsByUser(id, page ?? 1);
+            var persistedGrants = await _persistedGrantService.GetPersistedGrantsByUserAsync(id, page ?? 1);
             persistedGrants.SubjectId = id;
 
             return View(persistedGrants);

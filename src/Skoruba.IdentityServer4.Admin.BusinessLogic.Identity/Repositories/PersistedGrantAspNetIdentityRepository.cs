@@ -38,7 +38,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories
             PersistedGrantDbContext = persistedGrantDbContext;
         }
 
-        public virtual Task<PagedList<PersistedGrantDataView>> GetPersistedGrantsByUsers(string search, int page = 1, int pageSize = 10)
+        public virtual Task<PagedList<PersistedGrantDataView>> GetPersistedGrantsByUsersAsync(string search, int page = 1, int pageSize = 10)
         {
             return Task.Run(() =>
             {
@@ -74,7 +74,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories
             });
         }
 
-        public virtual async Task<PagedList<PersistedGrant>> GetPersistedGrantsByUser(string subjectId, int page = 1, int pageSize = 10)
+        public virtual async Task<PagedList<PersistedGrant>> GetPersistedGrantsByUserAsync(string subjectId, int page = 1, int pageSize = 10)
         {
             var pagedList = new PagedList<PersistedGrant>();
 

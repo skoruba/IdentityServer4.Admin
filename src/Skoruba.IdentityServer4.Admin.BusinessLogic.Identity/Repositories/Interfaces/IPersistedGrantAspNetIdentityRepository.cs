@@ -9,8 +9,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories.Inte
 {
 	public interface IPersistedGrantAspNetIdentityRepository
     {
-		Task<PagedList<PersistedGrantDataView>> GetPersistedGrantsByUsers(string search, int page = 1, int pageSize = 10);
-		Task<PagedList<PersistedGrant>> GetPersistedGrantsByUser(string subjectId, int page = 1, int pageSize = 10);
+		Task<PagedList<PersistedGrantDataView>> GetPersistedGrantsByUsersAsync(string search, int page = 1, int pageSize = 10);
+		Task<PagedList<PersistedGrant>> GetPersistedGrantsByUserAsync(string subjectId, int page = 1, int pageSize = 10);
 	    Task<PersistedGrant> GetPersistedGrantAsync(string key);
 	    Task<int> DeletePersistedGrantAsync(string key);
 	    Task<int> DeletePersistedGrantsAsync(string userId);
