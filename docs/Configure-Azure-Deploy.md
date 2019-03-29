@@ -13,12 +13,9 @@ If you don't have publicly accessible database you will need to create one. Foll
 
 Replace connection strings in `appSettings.json` with connection string to generated database.
 
-Then you can generate migrations and update the database. In `src/Skoruba.IdentityServer4.Admin` issue:
+Then you can generate migrations:
 
-```
-dotnet ef migrations add DbInit -c AdminDbContext -o Data/Migrations
-dotnet ef database update -c AdminDbContext
-```
+[Follow these steps for generating of DB migrations](/README.md#ef-core--data-access)
 
 ## Deploying webbaps to Azure App Service
 
