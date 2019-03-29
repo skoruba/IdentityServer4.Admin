@@ -74,10 +74,8 @@ In `src/Skoruba.IdentityServer4.Admin` and `src/Skoruba.IdentityServer4.STS.Iden
 
 ## Generate initial migrations 
 
-```
-dotnet ef migrations add DbInit -c AdminDbContext -o Data/Migrations
-dotnet ef database update -c AdminDbContext
-```
+[Follow these steps for generating of DB migrations](/README.md#ef-core--data-access)
+
 ## Run STS and Admin
 
 First run STS in `src/Skoruba.IdentityServer4.STS.Identity` launch:
