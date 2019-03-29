@@ -79,4 +79,6 @@ Last step before deploy - we need to update `src/Skoruba.IdentityServer4.STS.Ide
 }
 ```
 
+In `Helpers/IdentityServerBuilderExtensions.cs` - change loading certificates from `StoreLocation.LocalMachine` to `StoreLocation.CurrentUser`.
+
 Now we can (re)deploy both apps to Azure.
