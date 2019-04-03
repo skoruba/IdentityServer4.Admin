@@ -86,7 +86,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             });
 
             app.UseHsts(options => options.MaxAge(days: 365));
-            app.UseXfo(options => options.SameOrigin());
             app.UseReferrerPolicy(options => options.NoReferrer());
         }
 

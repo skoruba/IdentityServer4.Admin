@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -427,7 +428,13 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                     options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 })
                     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-                        options => { options.Cookie.Name = AuthenticationConsts.IdentityAdminCookieName; })
+                        options =>
+                        {
+                            options.Cookie.Name = AuthenticationConsts.IdentityAdminCookieName;
+                            
+                            // Issue: https://github.com/aspnet/Announcements/issues/318
+                            options.Cookie.SameSite = SameSiteMode.None;
+                        })
                     .AddOpenIdConnect(AuthenticationConsts.OidcAuthenticationScheme, options =>
                     {
                         options.Authority = adminConfiguration.IdentityServerBaseUrl;

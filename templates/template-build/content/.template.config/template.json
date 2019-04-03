@@ -41,13 +41,19 @@
     },
     {
       "path": "src/Skoruba.IdentityServer4.STS.Identity/Skoruba.IdentityServer4.STS.Identity.csproj"
+    },
+    {
+      "path": "src/Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts/Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts.csproj"
+    },
+    {
+      "path": "src/Skoruba.IdentityServer4.Admin.EntityFramework.Identity/Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj"
     }
   ],
   "postActions": [
     {
       "actionId": "D396686C-DE0E-4DE6-906D-291CD29FC5DE",
       "args": {
-        "primaryOutputIndexes": "0;1"
+        "primaryOutputIndexes": "0;1;2;3"
       },
       "continueOnError": false,
       "manualInstructions": [
