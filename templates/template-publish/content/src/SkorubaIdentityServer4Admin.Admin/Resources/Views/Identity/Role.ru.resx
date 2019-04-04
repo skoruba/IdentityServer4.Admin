@@ -118,13 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ActionAddClaims" xml:space="preserve">
-    <value>Добавить Утверждения Роли</value>
+    <value>Добавить утверждения роли</value>
   </data>
   <data name="ActionDeleteRole" xml:space="preserve">
-    <value>Удалить Роль</value>
+    <value>Удалить роль</value>
+  </data>
+  <data name="ActionRoleUsers" xml:space="preserve">
+    <value>Пользователь</value>
   </data>
   <data name="ActionSaveRole" xml:space="preserve">
-    <value>Сохранить Роль</value>
+    <value>Сохранить роль</value>
   </data>
   <data name="NavigationRoles" xml:space="preserve">
     <value>Роли</value>

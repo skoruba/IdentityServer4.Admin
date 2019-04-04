@@ -13,14 +13,14 @@ $templateAdminProject = "template-build/content/src/Skoruba.IdentityServer4.Admi
 function CleanBinObjFolders { 
 
     # Clean up after migrations
-    dotnet clean $templateAdminProject
+    dotnet.exe clean $templateAdminProject
 
     # Clean up bin, obj
-    Get-ChildItem .\ -include bin, obj -Recurse | ForEach-Object ($_) { remove-item $_.fullname -Force -Recurse }    
+    Get-ChildItem .\ -include bin, obj -Recurse | ForEach-Object ($_) { Remove-Item $_.fullname -Force -Recurse }    
 }
 
 # Clone the latest version from master branch
-git clone $gitProject $gitProjectFolder -b $gitBranchName
+git.exe clone $gitProject $gitProjectFolder -b $gitBranchName
 
 # Clean up src, tests folders
 if ((Test-Path -Path $templateSrc)) { Remove-Item ./$templateSrc -recurse -force }
@@ -44,10 +44,10 @@ Remove-Item ./$gitProjectFolder -recurse -force
 $templateDataMigrationFolder = "Data/Migrations"
 
 # Add dotnet ef migrations
-dotnet ef migrations add AspNetIdentityDbInit -c AdminIdentityDbContext -o $templateDataMigrationFolder/Identity -s $templateAdminProject -p $templateAdminProject
-dotnet ef migrations add LoggingDbInit -c AdminLogDbContext -o $templateDataMigrationFolder/Logging -s $templateAdminProject -p $templateAdminProject
-dotnet ef migrations add IdentityServerConfigurationDbInit -c IdentityServerConfigurationDbContext -o $templateDataMigrationFolder/IdentityServerConfiguration -s $templateAdminProject -p $templateAdminProject
-dotnet ef migrations add IdentityServerPersistedGrantsDbInit -c IdentityServerPersistedGrantDbContext -o $templateDataMigrationFolder/IdentityServerGrants -s $templateAdminProject -p $templateAdminProject
+dotnet.exe ef migrations add AspNetIdentityDbInit -c AdminIdentityDbContext -o $templateDataMigrationFolder/Identity -s $templateAdminProject -p $templateAdminProject
+dotnet.exe ef migrations add LoggingDbInit -c AdminLogDbContext -o $templateDataMigrationFolder/Logging -s $templateAdminProject -p $templateAdminProject
+dotnet.exe ef migrations add IdentityServerConfigurationDbInit -c IdentityServerConfigurationDbContext -o $templateDataMigrationFolder/IdentityServerConfiguration -s $templateAdminProject -p $templateAdminProject
+dotnet.exe ef migrations add IdentityServerPersistedGrantsDbInit -c IdentityServerPersistedGrantDbContext -o $templateDataMigrationFolder/IdentityServerGrants -s $templateAdminProject -p $templateAdminProject
 
 
 # Clean solution and folders bin, obj
@@ -55,23 +55,23 @@ CleanBinObjFolders
 
 # Remove references
 # Admin
-dotnet remove ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj reference ..\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.csproj
-dotnet remove ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj reference ..\Skoruba.IdentityServer4.Admin.BusinessLogic.Shared\Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.csproj
-dotnet remove ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj reference ..\Skoruba.IdentityServer4.Admin.BusinessLogic\Skoruba.IdentityServer4.Admin.BusinessLogic.csproj
+dotnet.exe remove ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj reference ..\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.csproj
+dotnet.exe remove ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj reference ..\Skoruba.IdentityServer4.Admin.BusinessLogic.Shared\Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.csproj
+dotnet.exe remove ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj reference ..\Skoruba.IdentityServer4.Admin.BusinessLogic\Skoruba.IdentityServer4.Admin.BusinessLogic.csproj
 
 # STS
-dotnet remove ./$templateSrc/Skoruba.IdentityServer4.STS.Identity/Skoruba.IdentityServer4.STS.Identity.csproj reference ..\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.IdentityServer4.Admin.EntityFramework.csproj
+dotnet.exe remove ./$templateSrc/Skoruba.IdentityServer4.STS.Identity/Skoruba.IdentityServer4.STS.Identity.csproj reference ..\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.IdentityServer4.Admin.EntityFramework.csproj
 
 # Dbcontexts
-dotnet remove ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts/Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts.csproj reference ..\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.IdentityServer4.Admin.EntityFramework.csproj
+dotnet.exe remove ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts/Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts.csproj reference ..\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.IdentityServer4.Admin.EntityFramework.csproj
 
 # Add nuget packages
-dotnet add ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj package Skoruba.IdentityServer4.Admin.BusinessLogic -v 1.0.0-beta5
-dotnet add ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj package Skoruba.IdentityServer4.Admin.BusinessLogic.Identity -v 1.0.0-beta5
+dotnet.exe add ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj package Skoruba.IdentityServer4.Admin.BusinessLogic -v 1.0.0-beta6
+dotnet.exe add ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj package Skoruba.IdentityServer4.Admin.BusinessLogic.Identity -v 1.0.0-beta6
 
-dotnet add ./$templateSrc/Skoruba.IdentityServer4.STS.Identity/Skoruba.IdentityServer4.STS.Identity.csproj package Skoruba.IdentityServer4.Admin.EntityFramework -v 1.0.0-beta5
+dotnet.exe add ./$templateSrc/Skoruba.IdentityServer4.STS.Identity/Skoruba.IdentityServer4.STS.Identity.csproj package Skoruba.IdentityServer4.Admin.EntityFramework -v 1.0.0-beta6
 
-dotnet add ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts/Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts.csproj package Skoruba.IdentityServer4.Admin.EntityFramework -v 1.0.0-beta5
+dotnet.exe add ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts/Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts.csproj package Skoruba.IdentityServer4.Admin.EntityFramework -v 1.0.0-beta6
 
 # Clean solution and folders bin, obj
 CleanBinObjFolders

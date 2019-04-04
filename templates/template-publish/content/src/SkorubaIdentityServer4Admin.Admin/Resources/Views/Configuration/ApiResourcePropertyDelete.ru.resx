@@ -118,18 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonDeleteProperty" xml:space="preserve">
-    <value>Удалить Api Свойство Ресурса</value>
+    <value>Удалить Api свойство ресурса</value>
   </data>
   <data name="NavigationApiResourceProperties" xml:space="preserve">
-    <value>Api Свойства Ресурса</value>
+    <value>Api свойства ресурса</value>
   </data>
   <data name="NavigationApiResources" xml:space="preserve">
-    <value>Api Ресурсы</value>
+    <value>Api ресурсы</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Удалить Api Свойство Ресурса</value>
+    <value>Удалить Api свойство ресурса</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
-    <value>Удалить Api Свойство Ресурса</value>
+    <value>Удалить Api свойство ресурса</value>
   </data>
 </root>

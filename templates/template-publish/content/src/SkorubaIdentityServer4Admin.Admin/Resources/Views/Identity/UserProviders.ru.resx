@@ -121,7 +121,7 @@
     <value>Пользователи</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Поставщики Пользователя</value>
+    <value>Поставщики пользователя</value>
   </data>
   <data name="TableButtonRemove" xml:space="preserve">
     <value>Удалить</value>
@@ -130,9 +130,9 @@
     <value>Поставщик входа</value>
   </data>
   <data name="TableProviderDisplayName" xml:space="preserve">
-    <value>Отображаемое Имя Поставщика</value>
+    <value>Отображаемое имя поставщика</value>
   </data>
   <data name="TableProviderKey" xml:space="preserve">
-    <value>Ключь Поставщика</value>
+    <value>Ключь поставщика</value>
   </data>
 </root>

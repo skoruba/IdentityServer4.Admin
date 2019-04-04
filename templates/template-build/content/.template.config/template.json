@@ -33,6 +33,13 @@
       "replaces": "skoruba_identity_admin",
       "isRequired": true,
       "description": "The name of client, that is be used in the IdentityServer4"
+    },
+    "adminclientsecret": {
+      "type": "parameter",
+      "defaultValue": "skoruba_admin_client_secret",
+      "replaces": "skoruba_admin_client_secret",
+      "isRequired": true,
+      "description": "The value of client secret, that is be used in the IdentityServer4"
     }
   },
   "primaryOutputs": [

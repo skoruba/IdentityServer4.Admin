@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AskForPersonalDataLog" xml:space="preserve">
+    <value>ID 为 '{0}' 的用户询问了他的个人数据。</value>
+  </data>
+  <data name="AuthenticatorVerified" xml:space="preserve">
+    <value>您的身份验证器应用已经过验证。</value>
+  </data>
+  <data name="ConfirmEmailBody" xml:space="preserve">
+    <value>请通过&lt;a href='{0}'&gt;点击此处&lt;/a&gt;确认您的帐户。</value>
+  </data>
+  <data name="ConfirmEmailTitle" xml:space="preserve">
+    <value>确认您的电子邮件</value>
+  </data>
+  <data name="DeletePersonalData" xml:space="preserve">
+    <value>ID 为 '{0}' 的用户自行删除。</value>
+  </data>
+  <data name="Error2FANotEnabled" xml:space="preserve">
+    <value>无法为 ID 为 {0} 的用户生成恢复码，因为他没有启用2FA。</value>
+  </data>
+  <data name="ErrorCode" xml:space="preserve">
+    <value>代码</value>
+  </data>
+  <data name="ErrorDeletingUser" xml:space="preserve">
+    <value>删除 ID 为 {0} 的用户时发生意外错误。</value>
+  </data>
+  <data name="ErrorDisable2FA" xml:space="preserve">
+    <value>禁用 ID 为 {0} 的用户 2FA 时发生意外错误。</value>
+  </data>
+  <data name="ErrorGenerateCodesWithout2FA" xml:space="preserve">
+    <value>无法为用户生成恢复代码，因为他没有启用 2FA。</value>
+  </data>
+  <data name="ErrorLoadingExternalLogin" xml:space="preserve">
+    <value>为 ID 为 {0} 的用户加载外部登录信息时发生意外错误。</value>
+  </data>
+  <data name="ErrorRemovingExternalLogin" xml:space="preserve">
+    <value>删除 ID 为 {0} 的用户的外部登录时发生意外错误。</value>
+  </data>
+  <data name="ErrorSettingEmail" xml:space="preserve">
+    <value>为 ID 为 {0} 的用户设置电子邮件时发生意外错误。</value>
+  </data>
+  <data name="ErrorSettingPhone" xml:space="preserve">
+    <value>为 ID 为 {0} 的用户设置电话号码时发生意外错误。</value>
+  </data>
+  <data name="ExternalLoginAdded" xml:space="preserve">
+    <value>外部登录已添加。</value>
+  </data>
+  <data name="ExternalLoginRemoved" xml:space="preserve">
+    <value>外部登录已删除。</value>
+  </data>
+  <data name="InvalidVerificationCode" xml:space="preserve">
+    <value>验证码无效。</value>
+  </data>
+  <data name="PasswordChanged" xml:space="preserve">
+    <value>您的密码已被更改。</value>
+  </data>
+  <data name="PasswordChangedLog" xml:space="preserve">
+    <value>用户 {0} 已成功更改其密码。</value>
+  </data>
+  <data name="PasswordNotCorrect" xml:space="preserve">
+    <value>密码不正确。</value>
+  </data>
+  <data name="PasswordSet" xml:space="preserve">
+    <value>您的密码已设置。</value>
+  </data>
+  <data name="ProfileUpdated" xml:space="preserve">
+    <value>你的个人资料已经更新</value>
+  </data>
+  <data name="SuccessDisabled2FA" xml:space="preserve">
+    <value>ID 为 {0} 的用户已禁用 2fa。</value>
+  </data>
+  <data name="SuccessForgetBrowser2FA" xml:space="preserve">
+    <value>目前的浏览器已被遗忘。 当您从此浏览器再次登录时，系统将提示您输入 2fa 代码。</value>
+  </data>
+  <data name="SuccessResetAuthenticationKey" xml:space="preserve">
+    <value>ID 为 {0} 的用户已重置其身份验证应用密钥。</value>
+  </data>
+  <data name="SuccessUserEnabled2FA" xml:space="preserve">
+    <value>ID 为 {0} 的用户已使用身份验证器应用启用了 2FA。</value>
+  </data>
+  <data name="UserGenerated2FACodes" xml:space="preserve">
+    <value>ID 为 {0} 的用户已生成新的 FA 恢复代码。</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>无法加载 ID 为 {0} 的用户。</value>
+  </data>
+  <data name="VerificationSent" xml:space="preserve">
+    <value>已发送验证邮件。 请检查您的电子邮件。</value>
+  </data>
+</root>

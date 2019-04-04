@@ -8,8 +8,6 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfaces;
 using SkorubaIdentityServer4Admin.Admin.ExceptionHandling;
 using SkorubaIdentityServer4Admin.Admin.Helpers;
 using SkorubaIdentityServer4Admin.Admin.Configuration.Constants;
-using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 
 namespace SkorubaIdentityServer4Admin.Admin.Controllers
 {
@@ -17,10 +15,10 @@ namespace SkorubaIdentityServer4Admin.Admin.Controllers
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
     public class GrantController : BaseController
     {
-        private readonly IPersistedGrantAspNetIdentityService<AdminDbContext, UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> _persistedGrantService;
+        private readonly IPersistedGrantAspNetIdentityService _persistedGrantService;
         private readonly IStringLocalizer<GrantController> _localizer;
 
-        public GrantController(IPersistedGrantAspNetIdentityService<AdminDbContext, UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> persistedGrantService,
+        public GrantController(IPersistedGrantAspNetIdentityService persistedGrantService,
             ILogger<ConfigurationController> logger,
             IStringLocalizer<GrantController> localizer) : base(logger)
         {
@@ -32,7 +30,7 @@ namespace SkorubaIdentityServer4Admin.Admin.Controllers
         public async Task<IActionResult> PersistedGrants(int? page, string search)
         {
             ViewBag.Search = search;
-            var persistedGrants = await _persistedGrantService.GetPersitedGrantsByUsers(search, page ?? 1);
+            var persistedGrants = await _persistedGrantService.GetPersistedGrantsByUsersAsync(search, page ?? 1);
 
             return View(persistedGrants);
         }
@@ -42,7 +40,7 @@ namespace SkorubaIdentityServer4Admin.Admin.Controllers
         {
             if (string.IsNullOrEmpty(id)) return NotFound();
 
-            var grant = await _persistedGrantService.GetPersitedGrantAsync(UrlHelpers.QueryStringUnSafeHash(id));
+            var grant = await _persistedGrantService.GetPersistedGrantAsync(UrlHelpers.QueryStringUnSafeHash(id));
             if (grant == null) return NotFound();
 
             return View(grant);
@@ -75,7 +73,7 @@ namespace SkorubaIdentityServer4Admin.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> PersistedGrant(string id, int? page)
         {
-            var persistedGrants = await _persistedGrantService.GetPersitedGrantsByUser(id, page ?? 1);
+            var persistedGrants = await _persistedGrantService.GetPersistedGrantsByUserAsync(id, page ?? 1);
             persistedGrants.SubjectId = id;
 
             return View(persistedGrants);

@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonAddClaim" xml:space="preserve">
-    <value>Добавить Утверждение Роли</value>
+    <value>Добавить утверждение роли</value>
   </data>
   <data name="NavigationRoles" xml:space="preserve">
     <value>Роли</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Утверждения Роли</value>
+    <value>Утверждения роли</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
-    <value>Утверждения Роли</value>
+    <value>Утверждения роли</value>
   </data>
   <data name="PanelTitleNew" xml:space="preserve">
     <value>Утверждения</value>
@@ -139,7 +139,7 @@
     <value>нет выбранного пункта/ов</value>
   </data>
   <data name="PickerRequiredMessage" xml:space="preserve">
-    <value>Требуется Тип</value>
+    <value>Требуется тип</value>
   </data>
   <data name="PickerSearchItemPlaceholder" xml:space="preserve">
     <value>Введите 2 или более символов</value>

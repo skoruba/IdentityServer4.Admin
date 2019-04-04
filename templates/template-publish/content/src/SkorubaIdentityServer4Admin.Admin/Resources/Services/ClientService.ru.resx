@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ClientClaimDoesNotExist" xml:space="preserve">
-    <value>Утверждение Клиента с ID {0} не существует</value>
+    <value>Утверждение клиента с ID {0} не существует</value>
   </data>
   <data name="ClientDoesNotExist" xml:space="preserve">
     <value>Клиент с ID {0} не существует</value>
@@ -130,9 +130,9 @@
     <value>Клиент с Id ({0}) уже существует</value>
   </data>
   <data name="ClientPropertyDoesNotExist" xml:space="preserve">
-    <value>Свойства Клиента с id {0} не существует</value>
+    <value>Свойства клиента с id {0} не существует</value>
   </data>
   <data name="ClientSecretDoesNotExist" xml:space="preserve">
-    <value>Секрет Клиента с id {0} не существует</value>
+    <value>Секрет клиента с id {0} не существует</value>
   </data>
 </root>
