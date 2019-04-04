@@ -14,7 +14,7 @@ This is currently in **beta version**
 
 The application is written in the **Asp.Net Core MVC - using .NET Core 2.2**
 
-**NOTE:** Works only with **IdentityServer4 version => 2.3.0** 🚀
+**NOTE:** Works only with **IdentityServer4 version 2.3.0 and higher** 🚀
 
 ## Requirements
 
