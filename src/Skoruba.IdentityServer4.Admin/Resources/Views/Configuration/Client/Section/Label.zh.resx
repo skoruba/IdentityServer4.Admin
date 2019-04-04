@@ -124,19 +124,19 @@
     <value>绝对刷新令牌生命周期</value>
   </data>
   <data name="AccessTokenLifetime_Info" xml:space="preserve">
-    <value>访问令牌的生命周期（以秒为单位）（默认为 3600 秒/1 小时）</value>
+    <value>访问令牌 access_token 的生命周期（以秒为单位）（默认为 3600 秒/1 小时）</value>
   </data>
   <data name="AccessTokenLifetime_Label" xml:space="preserve">
     <value>访问令牌生命周期</value>
   </data>
   <data name="AccessTokenTypes_Info" xml:space="preserve">
-    <value>指定访问令牌是引用令牌还是自包含 JWT 令牌（默认为 Jwt）。</value>
+    <value>指定访问令牌 access_token 是引用令牌还是自包含 JWT 令牌（默认为 Jwt）。</value>
   </data>
   <data name="AccessTokenTypes_Label" xml:space="preserve">
     <value>访问令牌类型</value>
   </data>
   <data name="AllowAccessTokensViaBrowser_Info" xml:space="preserve">
-    <value>指定是否允许此客户端通过浏览器接收访问令牌。 这对于强化允许多种响应类型的流是有用的（例如，通过禁止应该使用代码 id_token 的混合流客户端来添加令牌响应类型并因此将令牌泄漏到浏览器。）</value>
+    <value>指定是否允许此客户端通过浏览器接收访问令牌 access_token。 这对于强化允许多种响应类型的流是有用的（例如，通过禁止应该使用代码身份令牌 id_token 的混合流客户端来添加令牌响应类型并因此将令牌泄漏到浏览器。）</value>
   </data>
   <data name="AllowAccessTokensViaBrowser_Label" xml:space="preserve">
     <value>允许通过浏览器访问令牌</value>
@@ -160,10 +160,10 @@
     <value>允许记住同意</value>
   </data>
   <data name="AlwaysIncludeUserClaimsInIdToken_Info" xml:space="preserve">
-    <value />
+    <value>指定是否在身份令牌 id_token 中包含用户声明</value>
   </data>
   <data name="AlwaysIncludeUserClaimsInIdToken_Label" xml:space="preserve">
-    <value>始终在标识令牌中包含用户声明</value>
+    <value>始终在身份令牌中包含用户声明</value>
   </data>
   <data name="AlwaysSendClientClaims_Info" xml:space="preserve">
     <value>如果设置，将为每个流发送客户端声明。 如果不是，仅用于客户端凭证流（默认为 false）</value>
@@ -214,13 +214,13 @@
     <value>允许的作用域</value>
   </data>
   <data name="Claims_Info" xml:space="preserve">
-    <value>允许客户端的设置声明（将包含在访问令牌中）。</value>
+    <value>允许客户端的设置声明（将包含在访问令牌 access_token 中）。</value>
   </data>
   <data name="Claims_Label" xml:space="preserve">
     <value>声明</value>
   </data>
   <data name="ClientSecrets_Info" xml:space="preserve">
-    <value>客户端密钥列表 - 访问令牌端点的凭据。</value>
+    <value>客户端密钥列表 - 访问令牌 access_token 端点的凭据。</value>
   </data>
   <data name="ClientSecrets_Label" xml:space="preserve">
     <value>客户端密钥</value>
@@ -292,13 +292,13 @@
     <value>身份提供程序限制</value>
   </data>
   <data name="IdentityTokenLifetime_Info" xml:space="preserve">
-    <value>标识令牌的生命周期（以秒为单位）（默认为 300 秒/5 分钟）</value>
+    <value>身份令牌 id_token 的生命周期（以秒为单位）（默认为 300 秒/5 分钟）</value>
   </data>
   <data name="IdentityTokenLifetime_Label" xml:space="preserve">
     <value>身份令牌生命周期</value>
   </data>
   <data name="IncludeJwtId_Info" xml:space="preserve">
-    <value>指定 JWT 访问令牌是否应具有嵌入的唯一标识（通过 jti 声明）。</value>
+    <value>指定 JWT 访问令牌 access_token 是否应具有嵌入的唯一标识（通过 jti 声明）。</value>
   </data>
   <data name="IncludeJwtId_Label" xml:space="preserve">
     <value>包括 Jwt 标识</value>
@@ -352,9 +352,9 @@
     <value>重定向 Uri</value>
   </data>
   <data name="RefreshTokenExpiration_Info" xml:space="preserve">
-    <value>Absolute 刷新令牌将在固定时间点到期（由 AbsoluteRefreshTokenLifetime 指定）
+    <value>Absolute 绝对刷新令牌将在固定时间点到期（由“绝对刷新令牌生命周期”指定）
 
-Sliding 滚动刷新令牌，刷新令牌时生命周期将被更新（按 SlidingRefreshTokenLifetime 中指定的量）。 生命周期不会超过 AbsoluteRefreshTokenLifetime。</value>
+Sliding 滚动刷新令牌，刷新令牌时生命周期将被更新（按“滚动刷新令牌生命周期”中指定的量）。生命周期不会超过“绝对刷新令牌生命周期”。</value>
   </data>
   <data name="RefreshTokenExpiration_Label" xml:space="preserve">
     <value>刷新令牌过期</value>
@@ -424,7 +424,7 @@ OneTime 刷新令牌时将更新令牌句柄</value>
     <value>声明类型</value>
   </data>
   <data name="UpdateAccessTokenClaimsOnRefresh_Info" xml:space="preserve">
-    <value>获取或设置一个值，该值指示是否应在刷新令牌请求上更新访问令牌（及其声明）。</value>
+    <value>获取或设置一个值，该值指示是否应在刷新令牌请求上更新访问令牌 access_token（及其声明）。</value>
   </data>
   <data name="UpdateAccessTokenClaimsOnRefresh_Label" xml:space="preserve">
     <value>刷新时更新访问令牌声明</value>

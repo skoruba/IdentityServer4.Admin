@@ -120,6 +120,9 @@
   <data name="PanelTitle" xml:space="preserve">
     <value>Имя</value>
   </data>
+  <data name="TitleCode" xml:space="preserve">
+    <value>Поток кода авторизации с PKCE (ключ подтверждения для обмена кодами)</value>
+  </data>
   <data name="TitleDevice" xml:space="preserve">
     <value>ТВ и Применение Устройства с Ограниченным Вводом</value>
   </data>

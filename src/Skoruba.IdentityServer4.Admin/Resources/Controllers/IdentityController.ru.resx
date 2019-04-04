@@ -145,7 +145,7 @@
     <value>Утверждение успешно удалено!</value>
   </data>
   <data name="SuccessDeleteUserProviders" xml:space="preserve">
-    <value>Поставщик Пользователя успешно удалён!</value>
+    <value>Поставщик пользователя успешно удалён!</value>
   </data>
   <data name="SuccessDeleteUserRole" xml:space="preserve">
     <value>Роль успешно удалена!</value>
@@ -154,6 +154,6 @@
     <value>Успех</value>
   </data>
   <data name="SuccessUserChangePassword" xml:space="preserve">
-    <value>Новый Пароль успешно изменён!</value>
+    <value>Новый пароль успешно изменён!</value>
   </data>
 </root>

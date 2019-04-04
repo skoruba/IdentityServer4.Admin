@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonAddClaim" xml:space="preserve">
-    <value>Добавить Утверждение пользователя</value>
+    <value>Добавить утверждение пользователя</value>
   </data>
   <data name="NavigationUsers" xml:space="preserve">
     <value>Пользователи</value>
@@ -139,7 +139,7 @@
     <value>нет выбранного пункта/ов</value>
   </data>
   <data name="PickerRequiredMessage" xml:space="preserve">
-    <value>Требуется Тип</value>
+    <value>Требуется тип</value>
   </data>
   <data name="PickerSearchItemPlaceholder" xml:space="preserve">
     <value>Введите 2 или более символов</value>

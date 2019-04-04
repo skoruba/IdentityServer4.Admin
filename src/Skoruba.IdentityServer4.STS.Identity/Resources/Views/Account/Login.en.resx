@@ -120,8 +120,14 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
   <data name="ExternalLogin" xml:space="preserve">
     <value>External Login</value>
+  </data>
+  <data name="Forgot" xml:space="preserve">
+    <value>Forgot password</value>
   </data>
   <data name="InvalidRequest" xml:space="preserve">
     <value>Invalid login request</value>
@@ -137,6 +143,9 @@
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
   </data>
   <data name="Remember" xml:space="preserve">
     <value>Remember my login</value>

@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Serilog;
+using SkorubaIdentityServer4Admin.Admin.EntityFramework.DbContexts;
+using SkorubaIdentityServer4Admin.Admin.EntityFramework.Identity.Entities.Identity;
 using SkorubaIdentityServer4Admin.Admin.Helpers;
 
 namespace SkorubaIdentityServer4Admin.Admin
@@ -19,10 +21,10 @@ namespace SkorubaIdentityServer4Admin.Admin
             var host = BuildWebHost(args);
 
             // Uncomment this to seed upon startup, alternatively pass in `dotnet run /seed` to seed using CLI
-            // await DbMigrationHelpers.EnsureSeedData(host);
+            // await DbMigrationHelpers.EnsureSeedData<IdentityServerConfigurationDbContext, AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, UserIdentity, UserIdentityRole>(host);
             if (seed)
             {
-                await DbMigrationHelpers.EnsureSeedData(host);
+                await DbMigrationHelpers.EnsureSeedData<IdentityServerConfigurationDbContext, AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, UserIdentity, UserIdentityRole>(host);
             }
 
             host.Run();

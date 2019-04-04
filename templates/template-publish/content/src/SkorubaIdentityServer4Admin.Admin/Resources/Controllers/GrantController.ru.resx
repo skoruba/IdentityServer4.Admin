@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SuccessPersistedGrantDelete" xml:space="preserve">
-    <value>Постоянное Право успешно удалено!</value>
+    <value>Постоянное право успешно удалено!</value>
   </data>
   <data name="SuccessPersistedGrantsDelete" xml:space="preserve">
-    <value>Постоянные Права успешно удалены!</value>
+    <value>Постоянные права успешно удалены!</value>
   </data>
   <data name="SuccessTitle" xml:space="preserve">
     <value>Успех</value>

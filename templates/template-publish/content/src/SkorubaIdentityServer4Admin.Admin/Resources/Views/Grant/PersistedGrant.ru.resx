@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonDeleteAll" xml:space="preserve">
-    <value>Удалить Всё</value>
+    <value>Удалить всё</value>
   </data>
   <data name="DeleteDialogMessage" xml:space="preserve">
     <value>Вы уверены? Все постоянные права для этого объекта будут удалены.</value>
@@ -133,10 +133,10 @@
     <value>Да - удалить</value>
   </data>
   <data name="NavigationPersistedGrants" xml:space="preserve">
-    <value>Постоянные Права</value>
+    <value>Постоянные права</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Постоянные Права</value>
+    <value>Постоянные права</value>
   </data>
   <data name="TableClient" xml:space="preserve">
     <value>Клиенты</value>
@@ -148,7 +148,7 @@
     <value>Срок действия</value>
   </data>
   <data name="TableSubjectId" xml:space="preserve">
-    <value>Id Объекта</value>
+    <value>Id объекта</value>
   </data>
   <data name="TableType" xml:space="preserve">
     <value>Тип</value>

@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonDeleteGrant" xml:space="preserve">
-    <value>Удалить Постоянное Право</value>
+    <value>Удалить постоянное право</value>
   </data>
   <data name="NavigationPersistedGrants" xml:space="preserve">
-    <value>Постоянные Права</value>
+    <value>Постоянные права</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Удалить Постоянное Право</value>
+    <value>Удалить постоянное право</value>
   </data>
   <data name="TableClient" xml:space="preserve">
     <value>Клиент</value>
@@ -133,10 +133,10 @@
     <value>Дата</value>
   </data>
   <data name="TableExpiration" xml:space="preserve">
-    <value>Срок Действия</value>
+    <value>Срок действия</value>
   </data>
   <data name="TableSubjectId" xml:space="preserve">
-    <value>Id Объекта</value>
+    <value>Id объекта</value>
   </data>
   <data name="TableType" xml:space="preserve">
     <value>Тип</value>

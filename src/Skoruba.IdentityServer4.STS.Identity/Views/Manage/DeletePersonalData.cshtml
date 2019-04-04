@@ -1,0 +1,28 @@
+﻿@inject IViewLocalizer Localizer
+@using Microsoft.AspNetCore.Mvc.Localization
+@model Skoruba.IdentityServer4.STS.Identity.ViewModels.Manage.DeletePersonalDataViewModel
+@{
+    ViewData["Title"] = Localizer["Title"];
+}
+
+<h4>@ViewData["Title"]</h4>
+
+<div class="alert alert-danger" role="alert">
+    <span class="fa fa-exclamation-triangle"></span>
+    <strong>@Localizer["Alert"]</strong>
+</div>
+
+<div>
+    <form id="delete-user" method="post" class="form-group">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        @if (Model.RequirePassword)
+        {
+            <div class="form-group">
+                <label asp-for="Password">@Localizer["Password"]</label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+        }
+        <button class="btn btn-danger" type="submit">@Localizer["Delete"]</button>
+    </form>
+</div>

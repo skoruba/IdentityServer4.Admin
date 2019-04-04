@@ -1,0 +1,21 @@
+﻿@inject IViewLocalizer Localizer
+@using Microsoft.AspNetCore.Mvc.Localization
+@{
+    ViewData["Title"] = Localizer["Title"];
+}
+
+<h4>@ViewData["Title"]</h4>
+<div class="alert alert-warning" role="alert">
+    <p>
+        <span class="fa fa-exclamation-triangle"></span>
+        <strong>@Localizer["SubTitle"]</strong>
+    </p>
+    <p>
+        @Localizer["Info"]
+    </p>
+</div>
+<div>
+    <form asp-action="ResetAuthenticator" method="post" class="form-group">
+        <button class="btn btn-danger" type="submit">@Localizer["Reset"]</button>
+    </form>
+</div>

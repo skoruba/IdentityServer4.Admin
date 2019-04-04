@@ -120,6 +120,9 @@
   <data name="PanelTitle" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="TitleCode" xml:space="preserve">
+    <value>Authorization Code Flow with PKCE</value>
+  </data>
   <data name="TitleDevice" xml:space="preserve">
     <value>TV and Limited-Input Device Application</value>
   </data>

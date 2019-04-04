@@ -4,19 +4,24 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SkorubaIdentityServer4Admin.Admin.Configuration.Constants;
+using SkorubaIdentityServer4Admin.Admin.Configuration.Interfaces;
 
 namespace SkorubaIdentityServer4Admin.Admin.Controllers
 {
     [Authorize]
     public class AccountController : BaseController
     {
-        public AccountController(ILogger<ConfigurationController> logger) : base(logger)
-        {
+        private readonly IRootConfiguration _rootConfiguration;
 
+        public AccountController(ILogger<ConfigurationController> logger, IRootConfiguration rootConfiguration) : base(logger)
+        {
+            _rootConfiguration = rootConfiguration;
         }
 
         public IActionResult AccessDenied()
         {
+            ViewData["IdentityServerBaseUrl"] = _rootConfiguration.AdminConfiguration.IdentityServerBaseUrl;
+
             return View();
         }
 

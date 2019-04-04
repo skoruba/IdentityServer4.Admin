@@ -16,20 +16,20 @@ using Client = IdentityServer4.EntityFramework.Entities.Client;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
 {
-    public class ClientRepository<TDbContext> : IClientRepository<TDbContext>
+    public class ClientRepository<TDbContext> : IClientRepository
     where TDbContext : DbContext, IAdminConfigurationDbContext
     {
-        private readonly TDbContext _dbContext;
+        protected readonly TDbContext DbContext;
         public bool AutoSaveChanges { get; set; } = true;
 
         public ClientRepository(TDbContext dbContext)
         {
-            _dbContext = dbContext;
+            DbContext = dbContext;
         }
 
-        public Task<Client> GetClientAsync(int clientId)
+        public virtual Task<Client> GetClientAsync(int clientId)
         {
-            return _dbContext.Clients
+            return DbContext.Clients
                 .Include(x => x.AllowedGrantTypes)
                 .Include(x => x.RedirectUris)
                 .Include(x => x.PostLogoutRedirectUris)
@@ -43,27 +43,27 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<PagedList<Client>> GetClientsAsync(string search = "", int page = 1, int pageSize = 10)
+        public virtual async Task<PagedList<Client>> GetClientsAsync(string search = "", int page = 1, int pageSize = 10)
         {
             var pagedList = new PagedList<Client>();
 
             Expression<Func<Client, bool>> searchCondition = x => x.ClientId.Contains(search) || x.ClientName.Contains(search);
-            var clients = await _dbContext.Clients.WhereIf(!string.IsNullOrEmpty(search), searchCondition).PageBy(x => x.Id, page, pageSize).ToListAsync();
+            var clients = await DbContext.Clients.WhereIf(!string.IsNullOrEmpty(search), searchCondition).PageBy(x => x.Id, page, pageSize).ToListAsync();
             pagedList.Data.AddRange(clients);
-            pagedList.TotalCount = await _dbContext.Clients.WhereIf(!string.IsNullOrEmpty(search), searchCondition).CountAsync();
+            pagedList.TotalCount = await DbContext.Clients.WhereIf(!string.IsNullOrEmpty(search), searchCondition).CountAsync();
             pagedList.PageSize = pageSize;
 
             return pagedList;
         }
 
-        public async Task<List<string>> GetScopesAsync(string scope, int limit = 0)
+        public virtual async Task<List<string>> GetScopesAsync(string scope, int limit = 0)
         {
-            var identityResources = await _dbContext.IdentityResources
+            var identityResources = await DbContext.IdentityResources
                 .WhereIf(!string.IsNullOrEmpty(scope), x => x.Name.Contains(scope))
                 .TakeIf(x => x.Id, limit > 0, limit)
                 .Select(x => x.Name).ToListAsync();
 
-            var apiScopes = await _dbContext.ApiScopes
+            var apiScopes = await DbContext.ApiScopes
                 .WhereIf(!string.IsNullOrEmpty(scope), x => x.Name.Contains(scope))
                 .TakeIf(x => x.Id, limit > 0, limit)
                 .Select(x => x.Name).ToListAsync();
@@ -73,7 +73,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             return scopes;
         }
 
-        public List<string> GetGrantTypes(string grant, int limit = 0)
+        public virtual List<string> GetGrantTypes(string grant, int limit = 0)
         {
             var filteredGrants = ClientConsts.GetGrantTypes()
                 .WhereIf(!string.IsNullOrWhiteSpace(grant), x => x.Contains(grant))
@@ -83,12 +83,12 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             return filteredGrants;
         }
 
-        public List<SelectItem> GetProtocolTypes()
+        public virtual List<SelectItem> GetProtocolTypes()
         {
             return ClientConsts.GetProtocolTypes();
         }
 
-        public List<SelectItem> GetSecretTypes()
+        public virtual List<SelectItem> GetSecretTypes()
         {
             var secrets = new List<SelectItem>();
             secrets.AddRange(ClientConsts.GetSecretTypes().Select(x => new SelectItem(x, x)));
@@ -96,7 +96,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             return secrets;
         }
 
-        public List<string> GetStandardClaims(string claim, int limit = 0)
+        public virtual List<string> GetStandardClaims(string claim, int limit = 0)
         {
             var filteredClaims = ClientConsts.GetStandardClaims()
                 .WhereIf(!string.IsNullOrWhiteSpace(claim), x => x.Contains(claim))
@@ -106,183 +106,183 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             return filteredClaims;
         }
 
-        public List<SelectItem> GetAccessTokenTypes()
+        public virtual List<SelectItem> GetAccessTokenTypes()
         {
             var accessTokenTypes = EnumHelpers.ToSelectList<AccessTokenType>();
             return accessTokenTypes;
         }
 
-        public List<SelectItem> GetTokenExpirations()
+        public virtual List<SelectItem> GetTokenExpirations()
         {
             var tokenExpirations = EnumHelpers.ToSelectList<TokenExpiration>();
             return tokenExpirations;
         }
 
-        public List<SelectItem> GetTokenUsage()
+        public virtual List<SelectItem> GetTokenUsage()
         {
             var tokenUsage = EnumHelpers.ToSelectList<TokenUsage>();
             return tokenUsage;
         }
 
-        public List<SelectItem> GetHashTypes()
+        public virtual List<SelectItem> GetHashTypes()
         {
             var hashTypes = EnumHelpers.ToSelectList<HashType>();
             return hashTypes;
         }
 
-        public async Task<int> AddClientSecretAsync(int clientId, ClientSecret clientSecret)
+        public virtual async Task<int> AddClientSecretAsync(int clientId, ClientSecret clientSecret)
         {
-            var client = await _dbContext.Clients.Where(x => x.Id == clientId).SingleOrDefaultAsync();
+            var client = await DbContext.Clients.Where(x => x.Id == clientId).SingleOrDefaultAsync();
             clientSecret.Client = client;
 
-            await _dbContext.ClientSecrets.AddAsync(clientSecret);
+            await DbContext.ClientSecrets.AddAsync(clientSecret);
 
             return await AutoSaveChangesAsync();
         }
 
         private async Task<int> AutoSaveChangesAsync()
         {
-            return AutoSaveChanges ? await _dbContext.SaveChangesAsync() : (int)SavedStatus.WillBeSavedExplicitly;
+            return AutoSaveChanges ? await DbContext.SaveChangesAsync() : (int)SavedStatus.WillBeSavedExplicitly;
         }
 
-        public Task<ClientProperty> GetClientPropertyAsync(int clientPropertyId)
+        public virtual Task<ClientProperty> GetClientPropertyAsync(int clientPropertyId)
         {
-            return _dbContext.ClientProperties
+            return DbContext.ClientProperties
                 .Include(x => x.Client)
                 .Where(x => x.Id == clientPropertyId)
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<int> AddClientClaimAsync(int clientId, ClientClaim clientClaim)
+        public virtual async Task<int> AddClientClaimAsync(int clientId, ClientClaim clientClaim)
         {
-            var client = await _dbContext.Clients.Where(x => x.Id == clientId).SingleOrDefaultAsync();
+            var client = await DbContext.Clients.Where(x => x.Id == clientId).SingleOrDefaultAsync();
 
             clientClaim.Client = client;
-            await _dbContext.ClientClaims.AddAsync(clientClaim);
+            await DbContext.ClientClaims.AddAsync(clientClaim);
 
             return await AutoSaveChangesAsync();
         }
 
-        public async Task<int> AddClientPropertyAsync(int clientId, ClientProperty clientProperty)
+        public virtual async Task<int> AddClientPropertyAsync(int clientId, ClientProperty clientProperty)
         {
-            var client = await _dbContext.Clients.Where(x => x.Id == clientId).SingleOrDefaultAsync();
+            var client = await DbContext.Clients.Where(x => x.Id == clientId).SingleOrDefaultAsync();
 
             clientProperty.Client = client;
-            await _dbContext.ClientProperties.AddAsync(clientProperty);
+            await DbContext.ClientProperties.AddAsync(clientProperty);
 
             return await AutoSaveChangesAsync();
         }
 
-        public async Task<(string ClientId, string ClientName)> GetClientIdAsync(int clientId)
+        public virtual async Task<(string ClientId, string ClientName)> GetClientIdAsync(int clientId)
         {
-            var client = await _dbContext.Clients.Where(x => x.Id == clientId)
+            var client = await DbContext.Clients.Where(x => x.Id == clientId)
                 .Select(x => new { x.ClientId, x.ClientName })
                 .SingleOrDefaultAsync();
 
             return (client?.ClientId, client?.ClientName);
         }
 
-        public async Task<PagedList<ClientSecret>> GetClientSecretsAsync(int clientId, int page = 1, int pageSize = 10)
+        public virtual async Task<PagedList<ClientSecret>> GetClientSecretsAsync(int clientId, int page = 1, int pageSize = 10)
         {
             var pagedList = new PagedList<ClientSecret>();
 
-            var secrets = await _dbContext.ClientSecrets
+            var secrets = await DbContext.ClientSecrets
                 .Where(x => x.Client.Id == clientId)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
 
             pagedList.Data.AddRange(secrets);
-            pagedList.TotalCount = await _dbContext.ClientSecrets.Where(x => x.Client.Id == clientId).CountAsync();
+            pagedList.TotalCount = await DbContext.ClientSecrets.Where(x => x.Client.Id == clientId).CountAsync();
             pagedList.PageSize = pageSize;
 
             return pagedList;
         }
 
-        public Task<ClientSecret> GetClientSecretAsync(int clientSecretId)
+        public virtual Task<ClientSecret> GetClientSecretAsync(int clientSecretId)
         {
-            return _dbContext.ClientSecrets
+            return DbContext.ClientSecrets
                 .Include(x => x.Client)
                 .Where(x => x.Id == clientSecretId)
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<PagedList<ClientClaim>> GetClientClaimsAsync(int clientId, int page = 1, int pageSize = 10)
+        public virtual async Task<PagedList<ClientClaim>> GetClientClaimsAsync(int clientId, int page = 1, int pageSize = 10)
         {
             var pagedList = new PagedList<ClientClaim>();
 
-            var claims = await _dbContext.ClientClaims.Where(x => x.Client.Id == clientId).PageBy(x => x.Id, page, pageSize)
+            var claims = await DbContext.ClientClaims.Where(x => x.Client.Id == clientId).PageBy(x => x.Id, page, pageSize)
                 .ToListAsync();
 
             pagedList.Data.AddRange(claims);
-            pagedList.TotalCount = await _dbContext.ClientClaims.Where(x => x.Client.Id == clientId).CountAsync();
+            pagedList.TotalCount = await DbContext.ClientClaims.Where(x => x.Client.Id == clientId).CountAsync();
             pagedList.PageSize = pageSize;
 
             return pagedList;
         }
 
-        public async Task<PagedList<ClientProperty>> GetClientPropertiesAsync(int clientId, int page = 1, int pageSize = 10)
+        public virtual async Task<PagedList<ClientProperty>> GetClientPropertiesAsync(int clientId, int page = 1, int pageSize = 10)
         {
             var pagedList = new PagedList<ClientProperty>();
 
-            var properties = await _dbContext.ClientProperties.Where(x => x.Client.Id == clientId).PageBy(x => x.Id, page, pageSize)
+            var properties = await DbContext.ClientProperties.Where(x => x.Client.Id == clientId).PageBy(x => x.Id, page, pageSize)
                 .ToListAsync();
 
             pagedList.Data.AddRange(properties);
-            pagedList.TotalCount = await _dbContext.ClientProperties.Where(x => x.Client.Id == clientId).CountAsync();
+            pagedList.TotalCount = await DbContext.ClientProperties.Where(x => x.Client.Id == clientId).CountAsync();
             pagedList.PageSize = pageSize;
 
             return pagedList;
         }
 
-        public Task<ClientClaim> GetClientClaimAsync(int clientClaimId)
+        public virtual Task<ClientClaim> GetClientClaimAsync(int clientClaimId)
         {
-            return _dbContext.ClientClaims
+            return DbContext.ClientClaims
                 .Include(x => x.Client)
                 .Where(x => x.Id == clientClaimId)
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<int> DeleteClientSecretAsync(ClientSecret clientSecret)
+        public virtual async Task<int> DeleteClientSecretAsync(ClientSecret clientSecret)
         {
-            var secretToDelete = await _dbContext.ClientSecrets.Where(x => x.Id == clientSecret.Id).SingleOrDefaultAsync();
+            var secretToDelete = await DbContext.ClientSecrets.Where(x => x.Id == clientSecret.Id).SingleOrDefaultAsync();
 
-            _dbContext.ClientSecrets.Remove(secretToDelete);
+            DbContext.ClientSecrets.Remove(secretToDelete);
 
             return await AutoSaveChangesAsync();
         }
 
-        public async Task<int> DeleteClientClaimAsync(ClientClaim clientClaim)
+        public virtual async Task<int> DeleteClientClaimAsync(ClientClaim clientClaim)
         {
-            var claimToDelete = await _dbContext.ClientClaims.Where(x => x.Id == clientClaim.Id).SingleOrDefaultAsync();
+            var claimToDelete = await DbContext.ClientClaims.Where(x => x.Id == clientClaim.Id).SingleOrDefaultAsync();
 
-            _dbContext.ClientClaims.Remove(claimToDelete);
+            DbContext.ClientClaims.Remove(claimToDelete);
             return await AutoSaveChangesAsync();
         }
 
-        public async Task<int> DeleteClientPropertyAsync(ClientProperty clientProperty)
+        public virtual async Task<int> DeleteClientPropertyAsync(ClientProperty clientProperty)
         {
-            var propertyToDelete = await _dbContext.ClientProperties.Where(x => x.Id == clientProperty.Id).SingleOrDefaultAsync();
+            var propertyToDelete = await DbContext.ClientProperties.Where(x => x.Id == clientProperty.Id).SingleOrDefaultAsync();
 
-            _dbContext.ClientProperties.Remove(propertyToDelete);
+            DbContext.ClientProperties.Remove(propertyToDelete);
             return await AutoSaveChangesAsync();
         }
 
-        public async Task<int> SaveAllChangesAsync()
+        public virtual async Task<int> SaveAllChangesAsync()
         {
-            return await _dbContext.SaveChangesAsync();
+            return await DbContext.SaveChangesAsync();
         }
 
-        public async Task<bool> CanInsertClientAsync(Client client, bool isCloned = false)
+        public virtual async Task<bool> CanInsertClientAsync(Client client, bool isCloned = false)
         {
             if (client.Id == 0 || isCloned)
             {
-                var existsWithClientName = await _dbContext.Clients.Where(x => x.ClientId == client.ClientId).SingleOrDefaultAsync();
+                var existsWithClientName = await DbContext.Clients.Where(x => x.ClientId == client.ClientId).SingleOrDefaultAsync();
                 return existsWithClientName == null;
             }
             else
             {
-                var existsWithClientName = await _dbContext.Clients.Where(x => x.ClientId == client.ClientId && x.Id != client.Id).SingleOrDefaultAsync();
+                var existsWithClientName = await DbContext.Clients.Where(x => x.ClientId == client.ClientId && x.Id != client.Id).SingleOrDefaultAsync();
                 return existsWithClientName == null;
             }
         }
@@ -292,16 +292,16 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
         /// </summary>
         /// <param name="client"></param>
         /// <returns>This method return new client id</returns>
-        public async Task<int> AddClientAsync(Client client)
+        public virtual async Task<int> AddClientAsync(Client client)
         {
-            _dbContext.Clients.Add(client);
+            DbContext.Clients.Add(client);
 
             await AutoSaveChangesAsync();
 
             return client.Id;
         }
 
-        public async Task<int> CloneClientAsync(Client client,
+        public virtual async Task<int> CloneClientAsync(Client client,
             bool cloneClientCorsOrigins = true,
             bool cloneClientGrantTypes = true,
             bool cloneClientIdPRestrictions = true,
@@ -312,7 +312,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             bool cloneClientProperties = true
             )
         {
-            var clientToClone = await _dbContext.Clients
+            var clientToClone = await DbContext.Clients
                 .Include(x => x.AllowedGrantTypes)
                 .Include(x => x.RedirectUris)
                 .Include(x => x.PostLogoutRedirectUris)
@@ -383,7 +383,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
                 clientToClone.Properties.Clear();
             }
 
-            await _dbContext.Clients.AddAsync(clientToClone);
+            await DbContext.Clients.AddAsync(clientToClone);
 
             await AutoSaveChangesAsync();
 
@@ -395,44 +395,44 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
         private async Task RemoveClientRelationsAsync(Client client)
         {
             //Remove old allowed scopes
-            var clientScopes = await _dbContext.ClientScopes.Where(x => x.Client.Id == client.Id).ToListAsync();
-            _dbContext.ClientScopes.RemoveRange(clientScopes);
+            var clientScopes = await DbContext.ClientScopes.Where(x => x.Client.Id == client.Id).ToListAsync();
+            DbContext.ClientScopes.RemoveRange(clientScopes);
 
             //Remove old grant types
-            var clientGrantTypes = await _dbContext.ClientGrantTypes.Where(x => x.Client.Id == client.Id).ToListAsync();
-            _dbContext.ClientGrantTypes.RemoveRange(clientGrantTypes);
+            var clientGrantTypes = await DbContext.ClientGrantTypes.Where(x => x.Client.Id == client.Id).ToListAsync();
+            DbContext.ClientGrantTypes.RemoveRange(clientGrantTypes);
 
             //Remove old redirect uri
-            var clientRedirectUris = await _dbContext.ClientRedirectUris.Where(x => x.Client.Id == client.Id).ToListAsync();
-            _dbContext.ClientRedirectUris.RemoveRange(clientRedirectUris);
+            var clientRedirectUris = await DbContext.ClientRedirectUris.Where(x => x.Client.Id == client.Id).ToListAsync();
+            DbContext.ClientRedirectUris.RemoveRange(clientRedirectUris);
 
             //Remove old client cors
-            var clientCorsOrigins = await _dbContext.ClientCorsOrigins.Where(x => x.Client.Id == client.Id).ToListAsync();
-            _dbContext.ClientCorsOrigins.RemoveRange(clientCorsOrigins);
+            var clientCorsOrigins = await DbContext.ClientCorsOrigins.Where(x => x.Client.Id == client.Id).ToListAsync();
+            DbContext.ClientCorsOrigins.RemoveRange(clientCorsOrigins);
 
             //Remove old client id restrictions
-            var clientIdPRestrictions = await _dbContext.ClientIdPRestrictions.Where(x => x.Client.Id == client.Id).ToListAsync();
-            _dbContext.ClientIdPRestrictions.RemoveRange(clientIdPRestrictions);
+            var clientIdPRestrictions = await DbContext.ClientIdPRestrictions.Where(x => x.Client.Id == client.Id).ToListAsync();
+            DbContext.ClientIdPRestrictions.RemoveRange(clientIdPRestrictions);
 
             //Remove old client post logout redirect
-            var clientPostLogoutRedirectUris = await _dbContext.ClientPostLogoutRedirectUris.Where(x => x.Client.Id == client.Id).ToListAsync();
-            _dbContext.ClientPostLogoutRedirectUris.RemoveRange(clientPostLogoutRedirectUris);
+            var clientPostLogoutRedirectUris = await DbContext.ClientPostLogoutRedirectUris.Where(x => x.Client.Id == client.Id).ToListAsync();
+            DbContext.ClientPostLogoutRedirectUris.RemoveRange(clientPostLogoutRedirectUris);
         }
 
-        public async Task<int> UpdateClientAsync(Client client)
+        public virtual async Task<int> UpdateClientAsync(Client client)
         {
             //Remove old relations
             await RemoveClientRelationsAsync(client);
 
             //Update with new data
-            _dbContext.Clients.Update(client);
+            DbContext.Clients.Update(client);
 
             return await AutoSaveChangesAsync();
         }
 
-        public async Task<int> RemoveClientAsync(Client client)
+        public virtual async Task<int> RemoveClientAsync(Client client)
         {
-            _dbContext.Clients.Remove(client);
+            DbContext.Clients.Remove(client);
 
             return await AutoSaveChangesAsync();
         }

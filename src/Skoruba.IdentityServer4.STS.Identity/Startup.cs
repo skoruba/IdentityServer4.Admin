@@ -35,21 +35,38 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContexts<AdminDbContext>(Configuration);
-            services.AddAuthenticationServices<AdminDbContext, UserIdentity, UserIdentityRole>(Environment, Configuration, Logger);
-            services.AddMvcLocalization();
+            services.ConfigureRootConfiguration(Configuration);
+
+            // Add DbContext for Asp.Net Core Identity
+            services.AddIdentityDbContext<AdminIdentityDbContext>(Configuration, Environment);
+
+            // Add email senders which is currently setup for SendGrid and SMTP
+            services.AddEmailSenders(Configuration);
+
+            // Add services for authentication, including Identity model, IdentityServer4 and external providers
+            services.AddAuthenticationServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Environment, Configuration, Logger);
+
+            // Add all dependencies for Asp.Net Core Identity in MVC - these dependencies are injected into generic Controllers
+            // Including settings for MVC and Localization
+            // If you want to change primary keys or use another db model for Asp.Net Core Identity:
+            services.AddMvcWithLocalization<UserIdentity, string>();
+
+            // Add authorization policies for MVC
+            services.AddAuthorizationPolicies();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-			app.AddLogging(loggerFactory, Configuration);
+            app.AddLogging(loggerFactory, Configuration);
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
+            // Add custom security headers
             app.UseSecurityHeaders();
+
             app.UseStaticFiles();
             app.UseIdentityServer();
             app.UseMvcLocalizationServices();

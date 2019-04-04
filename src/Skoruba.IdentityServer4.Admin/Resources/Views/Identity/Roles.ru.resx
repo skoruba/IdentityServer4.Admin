@@ -118,13 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonAddRole" xml:space="preserve">
-    <value>Добавить Роль</value>
+    <value>Добавить роль</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Роли</value>
   </data>
   <data name="TableButtonEdit" xml:space="preserve">
     <value>Редактировать</value>
+  </data>
+  <data name="TableButtonUsers" xml:space="preserve">
+    <value>Пользователь</value>
   </data>
   <data name="TableName" xml:space="preserve">
     <value>Имя</value>

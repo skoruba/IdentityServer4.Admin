@@ -118,22 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonAddNewClaim" xml:space="preserve">
-    <value>Добавить Утверждение Клиента</value>
+    <value>Добавить утверждение клиента</value>
   </data>
   <data name="NavigationClientClaims" xml:space="preserve">
-    <value>Утверждения Клиента</value>
+    <value>Утверждения клиента</value>
   </data>
   <data name="NavigationClients" xml:space="preserve">
     <value>Клиенты</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Утверждения Клиента</value>
+    <value>Утверждения клиента</value>
   </data>
   <data name="PanelNewTitle" xml:space="preserve">
-    <value>Утверждение Клиента</value>
+    <value>Утверждение клиента</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
-    <value>Утверждения Клиента</value>
+    <value>Утверждения клиента</value>
   </data>
   <data name="PickerItemAlreadySelectedTitle" xml:space="preserve">
     <value>пункт уже выбран</value>

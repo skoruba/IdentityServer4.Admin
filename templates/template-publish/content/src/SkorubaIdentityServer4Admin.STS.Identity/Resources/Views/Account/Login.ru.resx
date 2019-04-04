@@ -120,8 +120,14 @@
   <data name="Cancel" xml:space="preserve">
     <value>Отменить</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
   <data name="ExternalLogin" xml:space="preserve">
-    <value>Внешний выход</value>
+    <value>Внешний вход</value>
+  </data>
+  <data name="Forgot" xml:space="preserve">
+    <value>Забыли пароль</value>
   </data>
   <data name="InvalidRequest" xml:space="preserve">
     <value>Неверный запрос входа </value>
@@ -138,6 +144,9 @@
   <data name="Password" xml:space="preserve">
     <value>Пароль</value>
   </data>
+  <data name="Register" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
   <data name="Remember" xml:space="preserve">
     <value>Запомнить мой пароль</value>
   </data>
@@ -145,6 +154,6 @@
     <value>Вход</value>
   </data>
   <data name="Username" xml:space="preserve">
-    <value>Имя Пользователя </value>
+    <value>Имя пользователя </value>
   </data>
 </root>

@@ -1,9 +1,6 @@
-﻿# Create the migration of database:
+# Create the migration of database:
 
-```
-Add-Migration Initial -context AdminDbContext -output Data/Migrations
-Update-Database -context AdminDbContext
-```
+[Follow these steps for generating of DB migrations](/README.md#ef-core--data-access)
 
 # Using other database engines
 
@@ -17,13 +14,8 @@ Npgsql.EntityFrameworkCore.PostgreSQL
 Npgsql.EntityFrameworkCore.PostgreSQL.Design
 ```
 
-Find `RegisterDbContexts` function in `Helpers\StartupHelpers.cs`
+In `Helpers\StartupHelpers.cs` - find all usage of `UseSqlServer` and change to `UseNpgsql`.
 
-```csharp
-services.AddDbContext<AdminDbContext>(options => options.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey), optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
-```
-
-and change  `UseSqlServer` to `UseNpgsql`.
 
 **Don't forget to update your connection string in appsettings.json and (re)generate migrations for new database**
 
@@ -38,13 +30,7 @@ Microsoft.EntityFrameworkCore.Sqlite
 Microsoft.EntityFrameworkCore.Sqlite.Design
 ```
 
-Find `RegisterDbContexts` function in `Helpers\StartupHelpers.cs`
-
-```csharp
-services.AddDbContext<AdminDbContext>(options => options.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey), optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
-```
-
-and change  `UseSqlServer` to `UseSqlite`.
+In `Helpers\StartupHelpers.cs` - find all usage of `UseSqlServer` and change to `UseSqlite`.
 
 **Don't forget to update your connection string in appsettings.json and (re)generate migrations for new database**
 
@@ -57,21 +43,6 @@ Pomelo.EntityFrameworkCore.MySql
 Pomelo.EntityFrameworkCore.MySql.Design
 ```
 
-Find `RegisterDbContexts` function in `Helpers\StartupHelpers.cs`
-
-```csharp
-services.AddDbContext<AdminDbContext>(options => options.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey), optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
-```
-
-and change  `UseSqlServer` to `UseMySql`.
-
-Find `Properties` in `Skoruba.IdentityServer4.Admin.EntityFramework\Entities\Log.cs`
-
-```csharp
-[Column(TypeName = "xml")]
-public string Properties { get; set; }
-```
-
-and remove the `[Column]` attribute. As MySQL and MariaDB don't know about a XML data type.
+In `Helpers\StartupHelpers.cs` - find all usage of `UseSqlServer` and change to `UseMySql`.
 
 **Don't forget to update your connection string in appsettings.json and (re)generate migrations for new database**

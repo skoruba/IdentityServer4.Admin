@@ -1,0 +1,85 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Interfaces.IUsersDto
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = Localizer["Title"];
+    Layout = "_Layout";
+    var roleId = Context.Request.Query["roleId"];
+}
+
+<div class="row">
+    <div class="col-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Identity" asp-action="Roles">@Localizer["NavigationRoles"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@ViewData["RoleName"]</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="col-12">
+        <h2>@Localizer["Title"] (@ViewData["RoleName"])</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <form asp-controller="Identity" asp-action="RoleUsers" method="get">
+            <div class="form-row">
+                <div class="col-12 mb-3">
+                    <input name="roleId" value="@roleId" type="hidden" />
+                    <input name="search" value="@ViewBag.Search" type="text" placeholder="@Localizer["InputSearchPlaceHolder"]" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-12 mb-3">
+                    <input type="submit" class="btn btn-primary" value="@Localizer["ButtonSearch"]" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>@Localizer["UserId"]</th>
+                        <th>@Localizer["UserName"]</th>
+                        <th>@Localizer["Email"]</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var user in Model.Users)
+                    {
+                        <tr>
+                            <td class="align-middle">
+                                <img-gravatar email="@user.Email" class="gravatar-image img-thumbnail" />
+                            </td>
+                            <td class="align-middle">@user.Id</td>
+                            <td class="align-middle">@user.UserName</td>
+                            <td class="align-middle">@user.Email</td>
+                            <td class="align-middle">
+                                <a class="btn btn-danger" asp-action="UserRolesDelete" asp-route-id="@user.Id" asp-route-roleId="@roleId"><span class="oi oi-x"></span></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        @await Html.PartialAsync("Common/Pager", new Pager { Action = "RoleUsers", PageSize = Model.PageSize, TotalCount = Model.TotalCount, EnableSearch = true, Search = ViewBag.Search })
+    </div>
+</div>

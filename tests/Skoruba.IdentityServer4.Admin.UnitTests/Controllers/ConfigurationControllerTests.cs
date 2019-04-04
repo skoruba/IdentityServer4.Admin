@@ -17,9 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Extensions;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Extensions;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.Controllers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
@@ -27,7 +25,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Skoruba.IdentityServer4.Admin.Helpers;
 using Xunit;
-  
+
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 {
     public class ConfigurationControllerTests
@@ -37,7 +35,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
             var newClient = await GenerateClient(dbContext);
 
             // Get controller
@@ -64,8 +62,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var clientService = serviceProvider.GetRequiredService<IClientService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var clientService = serviceProvider.GetRequiredService<IClientService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -91,8 +89,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var clientService = serviceProvider.GetRequiredService<IClientService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var clientService = serviceProvider.GetRequiredService<IClientService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -125,7 +123,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             //Get Services
             var serviceProvider = GetServices();
 
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -150,8 +148,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var clientService = serviceProvider.GetRequiredService<IClientService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var clientService = serviceProvider.GetRequiredService<IClientService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -177,8 +175,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var clientService = serviceProvider.GetRequiredService<IClientService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var clientService = serviceProvider.GetRequiredService<IClientService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -206,8 +204,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var clientService = serviceProvider.GetRequiredService<IClientService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var clientService = serviceProvider.GetRequiredService<IClientService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -235,8 +233,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var clientService = serviceProvider.GetRequiredService<IClientService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var clientService = serviceProvider.GetRequiredService<IClientService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -262,8 +260,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var clientService = serviceProvider.GetRequiredService<IClientService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var clientService = serviceProvider.GetRequiredService<IClientService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -291,8 +289,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var clientService = serviceProvider.GetRequiredService<IClientService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var clientService = serviceProvider.GetRequiredService<IClientService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -320,8 +318,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var clientService = serviceProvider.GetRequiredService<IClientService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var clientService = serviceProvider.GetRequiredService<IClientService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -347,8 +345,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var clientService = serviceProvider.GetRequiredService<IClientService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var clientService = serviceProvider.GetRequiredService<IClientService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -376,8 +374,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var clientService = serviceProvider.GetRequiredService<IClientService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var clientService = serviceProvider.GetRequiredService<IClientService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -427,8 +425,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var identityResourceService = serviceProvider.GetRequiredService<IIdentityResourceService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var identityResourceService = serviceProvider.GetRequiredService<IIdentityResourceService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -450,8 +448,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var identityResourceService = serviceProvider.GetRequiredService<IIdentityResourceService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var identityResourceService = serviceProvider.GetRequiredService<IIdentityResourceService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -463,7 +461,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             identityResourceId.Should().NotBe(0);
 
             identityResourceDto.Id = identityResourceId;
-            
+
             var result = await controller.IdentityResourceDelete(identityResourceDto);
 
             // Assert
@@ -479,8 +477,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -502,14 +500,14 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
             var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
             await apiResourceService.AddApiResourceAsync(apiResourceDto);
-            var apiResourceId = await dbContext.ApiResources.Where(x => x.Name == apiResourceDto.Name).Select(x=> x.Id).SingleOrDefaultAsync();
+            var apiResourceId = await dbContext.ApiResources.Where(x => x.Name == apiResourceDto.Name).Select(x => x.Id).SingleOrDefaultAsync();
 
             apiResourceId.Should().NotBe(0);
 
@@ -529,8 +527,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -556,8 +554,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -575,9 +573,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
                 var apiScopeDto = ApiResourceDtoMock.GenerateRandomApiScope(0, resource.Id);
                 await apiResourceService.AddApiScopeAsync(apiScopeDto);
             }
-            
+
             var result = await controller.ApiScopes(resource.Id, 1, null);
-            
+
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
             viewResult.ViewName.Should().BeNullOrEmpty();
@@ -592,8 +590,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -629,8 +627,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -639,7 +637,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var resource = await dbContext.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
             var apiScopeDto = ApiResourceDtoMock.GenerateRandomApiScope(0, resource.Id);
             await apiResourceService.AddApiScopeAsync(apiScopeDto);
-            
+
             var apiScopeId = await dbContext.ApiScopes.Where(x => x.Name == apiScopeDto.Name).Select(x => x.Id).SingleOrDefaultAsync();
 
             apiScopeId.Should().NotBe(0);
@@ -653,7 +651,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             viewResult.ActionName.Should().Be("ApiScopes");
 
             var apiScope = await dbContext.ApiScopes.Where(x => x.Id == apiScopeDto.ApiScopeId).SingleOrDefaultAsync();
-            apiScope.Should().BeNull(); 
+            apiScope.Should().BeNull();
         }
 
         [Fact]
@@ -661,8 +659,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -677,7 +675,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
                 var apiSecretsDto = ApiResourceDtoMock.GenerateRandomApiSecret(0, resource.Id);
                 await apiResourceService.AddApiSecretAsync(apiSecretsDto);
             }
-            
+
             var result = await controller.ApiSecrets(resource.Id, 1);
 
             // Assert
@@ -694,8 +692,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -713,7 +711,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var apiSecret = await dbContext.ApiSecrets.Where(x => x.Value == apiSecretsDto.Value).SingleOrDefaultAsync();
             var addedApiScope = await apiResourceService.GetApiSecretAsync(apiSecret.Id);
 
-            apiSecretsDto.ShouldBeEquivalentTo(addedApiScope, opts => opts.Excluding(x => x.ApiResourceId).Excluding(x=> x.ApiResourceName).Excluding(x => x.ApiSecretId));
+            apiSecretsDto.ShouldBeEquivalentTo(addedApiScope, opts => opts.Excluding(x => x.ApiResourceId).Excluding(x => x.ApiResourceName).Excluding(x => x.ApiSecretId));
         }
 
         [Fact]
@@ -721,8 +719,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<AdminDbContext>();
-            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService<AdminDbContext>>();
+            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
+            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
@@ -751,9 +749,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         private ConfigurationController PrepareConfigurationController(IServiceProvider serviceProvider)
         {
             // Arrange
-            var identityResourceService = serviceProvider.GetRequiredService<IIdentityResourceService<AdminDbContext>>();
-            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService<AdminDbContext>>();
-            var clientService = serviceProvider.GetRequiredService<IClientService<AdminDbContext>>();
+            var identityResourceService = serviceProvider.GetRequiredService<IIdentityResourceService>();
+            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService>();
+            var clientService = serviceProvider.GetRequiredService<IClientService>();
             var localizer = serviceProvider.GetRequiredService<IStringLocalizer<ConfigurationController>>();
             var logger = serviceProvider.GetRequiredService<ILogger<ConfigurationController>>();
             var tempDataDictionaryFactory = serviceProvider.GetRequiredService<ITempDataDictionaryFactory>();
@@ -769,7 +767,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             return controller;
         }
 
-        private async Task<Client> GenerateClient(AdminDbContext dbContext)
+        private async Task<Client> GenerateClient(IdentityServerConfigurationDbContext dbContext)
         {
             var client = ClientMock.GenerateRandomClient(id: 0);
 
@@ -788,7 +786,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             //Entity framework
             var efServiceProvider = new ServiceCollection().AddEntityFrameworkInMemoryDatabase().BuildServiceProvider();
             services.AddOptions();
-            services.AddDbContext<AdminDbContext>(b => b.UseInMemoryDatabase(Guid.NewGuid().ToString()).UseInternalServiceProvider(efServiceProvider));
+            services.AddDbContext<IdentityServerConfigurationDbContext>(b => b.UseInMemoryDatabase(Guid.NewGuid().ToString()).UseInternalServiceProvider(efServiceProvider));
 
             //Http Context
             var context = new DefaultHttpContext();
@@ -801,11 +799,14 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             //Add Admin services
             services.AddMvcExceptionFilters();
 
-            services.AddAdminServices<AdminDbContext>();
+            services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
 
-            services.AddAdminAspNetIdentityServices<AdminDbContext, UserDto<int>, int, RoleDto<int>, int, int, int,
-                UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole,
-                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>();
+            services.AddAdminAspNetIdentityServices<AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, UserDto<string>, string, RoleDto<string>, string, string, string,
+                UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
+                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
+                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
+                UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
+                RoleClaimsDto<string>, UserClaimDto<string>, RoleClaimDto<string>>();
 
             services.AddSession();
             services.AddMvc()

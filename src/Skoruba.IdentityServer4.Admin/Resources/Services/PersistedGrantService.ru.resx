@@ -118,9 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PersistedGrantDoesNotExist" xml:space="preserve">
-    <value>Постоянное Право с id {0} не существует</value>
+    <value>Постоянное право с id {0} не существует</value>
   </data>
   <data name="PersistedGrantWithSubjectIdDoesNotExist" xml:space="preserve">
-    <value>Постоянное Право с данным id объекта {0} не существует</value>
+    <value>Постоянное право с данным id объекта {0} не существует</value>
   </data>
 </root>

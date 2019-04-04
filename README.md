@@ -14,7 +14,7 @@ This is currently in **beta version**
 
 The application is written in the **Asp.Net Core MVC - using .NET Core 2.2**
 
-**NOTE:** Works only with **IdentityServer4 version => 2.3.0** 🚀
+**NOTE:** Works only with **IdentityServer4 version 2.3.0 and higher** 🚀
 
 ## Requirements
 
@@ -25,13 +25,13 @@ The application is written in the **Asp.Net Core MVC - using .NET Core 2.2**
 - Install the dotnet new template:
 
 ```sh
-dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-beta5-update2
+dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-beta6
 ```
 
 - Create new project:
 
 ```sh
-dotnet new skoruba.is4admin --name MyProject --title MyProject --adminrole MyRole --adminclientid MyClientId
+dotnet new skoruba.is4admin --name MyProject --title MyProject --adminrole MyRole --adminclientid MyClientId --adminclientsecret MyClientSecret
 ```
 
 Project template options:
@@ -40,18 +40,13 @@ Project template options:
 --name: [string value] for project name
 --title: [string value] for title and footer of the administration in UI
 --adminrole: [string value] for name of admin role, that is used to authorize the administration
---adminclientid: [string value] for client name, that is used in the IdentityServer4 configuration
+--adminclientid: [string value] for client name, that is used in the IdentityServer4 configuration for admin client
+--adminclientsecret: [string value] for client secret, that is used in the IdentityServer4 configuration for admin client
 ```
 
-### How to use existing IdentityServer4 instance
+## How to configure the Administration - IdentityServer4 and Asp.Net Core Identity
 
-- [Follow these steps for setup project to use existing IdentityServer4 instance](docs/Configure-To-Existing-IS4.md)
-
-### How to configure Asp.Net Core Identity - database, primary key data type
-
-- By default, it's used as the primary key `int`, but it's possible to change it:
-
-- [Follow these steps to configure Identity](docs/Configure-To-Existing-Identity.md)
+- [Follow these steps for setup project to use existing IdentityServer4 and Asp.Net Core Identity](docs/Configure-Administration.md)
 
 ### Template uses following list of nuget packages
 
@@ -72,7 +67,13 @@ Project template options:
 
 - This administration uses bootstrap 4
 
+- Admin UI
+
 ![Admin-preview](docs/Images/App/Skoruba-Home-Preview.PNG)
+
+- Security token service (STS)
+
+![Admin-preview](docs/Images/App/Skoruba-STS-Home-Preview.PNG)
 
 - Forms:
 
@@ -106,18 +107,73 @@ The following Gulp commands are available:
 
 ## EF Core & Data Access
 
-- Run entity framework migrations - for instance from Visual Studio command line (Nuget package manager):
+- The solution uses these `DbContexts`:
+
+  - `AdminIdentityDbContext`: for Asp.Net Core Identity
+  - `AdminLogDbContext`: for logging
+  - `IdentityServerConfigurationDbContext`: for IdentityServer configuration store
+  - `IdentityServerPersistedGrantDbContext`: for IdentityServer operational store
+
+- Run entity framework migrations:
+
+### Visual Studio command line (Nuget package manager):
+
+#### Migrations for Asp.Net Core Identity DbContext:
 
 ```powershell
-Add-Migration DbInit -context AdminDbContext -output Data/Migrations
-Update-Database -context AdminDbContext
+Add-Migration AspNetIdentityDbInit -context AdminIdentityDbContext -output Data/Migrations/Identity
+Update-Database -context AdminIdentityDbContext
 ```
 
-- Or via `dotnet CLI`:
+#### Migrations for Logging DbContext:
 
 ```powershell
-dotnet ef migrations add DbInit -c AdminDbContext -o Data/Migrations
-dotnet ef database update -c AdminDbContext
+Add-Migration LoggingDbInit -context AdminLogDbContext -output Data/Migrations/Logging
+Update-Database -context AdminLogDbContext
+```
+
+#### Migrations for IdentityServer configuration DbContext:
+
+```powershell
+Add-Migration IdentityServerConfigurationDbInit -context IdentityServerConfigurationDbContext -output Data/Migrations/IdentityServerConfiguration
+Update-Database -context IdentityServerConfigurationDbContext
+```
+
+#### Migrations for IdentityServer persisted grants DbContext:
+
+```powershell
+Add-Migration IdentityServerPersistedGrantsDbInit -context IdentityServerPersistedGrantDbContext -output Data/Migrations/IdentityServerGrants
+Update-Database -context IdentityServerPersistedGrantDbContext
+```
+
+### Or via `dotnet CLI`:
+
+#### Migrations for Asp.Net Core Identity DbContext:
+
+```powershell
+dotnet ef migrations add AspNetIdentityDbInit -c AdminIdentityDbContext -o Data/Migrations/Identity
+dotnet ef database update -c AdminIdentityDbContext
+```
+
+#### Migrations for Logging DbContext:
+
+```powershell
+dotnet ef migrations add LoggingDbInit -c AdminLogDbContext -o Data/Migrations/Logging
+dotnet ef database update -c AdminLogDbContext
+```
+
+#### Migrations for IdentityServer configuration DbContext:
+
+```powershell
+dotnet ef migrations add IdentityServerConfigurationDbInit -c IdentityServerConfigurationDbContext -o Data/Migrations/IdentityServerConfiguration
+dotnet ef database update -c IdentityServerConfigurationDbContext
+```
+
+#### Migrations for IdentityServer persisted grants DbContext:
+
+```powershell
+dotnet ef migrations add IdentityServerPersistedGrantsDbInit -c IdentityServerPersistedGrantDbContext -o Data/Migrations/IdentityServerGrants
+dotnet ef database update -c IdentityServerPersistedGrantDbContext
 ```
 
 Migrations are not a part of the repository - they are ignored in `.gitignore`.
@@ -138,6 +194,34 @@ Migrations are not a part of the repository - they are ignored in `.gitignore`.
 - `Constants/AuthorizationConsts.cs` contains configuration of constants connected with authorization - definition of the default name of admin policy
 - In the controllers is used the policy which name is stored in - `AuthorizationConsts.AdministrationPolicy`. In the policy - `AuthorizationConsts.AdministrationPolicy` is defined required role stored in - `AuthorizationConsts.AdministrationRole`.
 - With the default configuration, it is necessary to configure and run instance of IdentityServer4. It is possible to use initial migration for creating the client as it mentioned above
+
+### Login Configuration
+
+- In `Skoruba.IdentityServer4.STS.Identity` - in `appsettings.json` is possible to specify which column will be used for login (`Username` or `Email`):
+
+```
+  "LoginConfiguration": {
+    "ResolutionPolicy": "Username"
+  }
+```
+
+or using `Email`:
+
+```
+  "LoginConfiguration": {
+    "ResolutionPolicy": "Email"
+  }
+```
+
+### Register Configuration
+
+- In `Skoruba.IdentityServer4.STS.Identity` - in `appsettings.json` is possible to disable user registration (`default: true`):
+
+```
+ "RegisterConfiguration": {
+    "Enabled": false
+  }
+```
 
 ## Localizations - labels, messages
 
@@ -164,7 +248,7 @@ Migrations are not a part of the repository - they are ignored in `.gitignore`.
 
 - STS:
 
-  - `Skoruba.IdentityServer4.STS.Identity` - [Quickstart UI for the IdentityServer4 with Asp.Net Core Identity and EF Core storage](https://github.com/IdentityServer/IdentityServer4.Samples/tree/master/Quickstarts/Combined_AspId_and_EFStorage)
+  - `Skoruba.IdentityServer4.STS.Identity` - project that contains the instance of IdentityServer4 and combine these samples - [Quickstart UI for the IdentityServer4 with Asp.Net Core Identity and EF Core storage](https://github.com/IdentityServer/IdentityServer4.Samples/tree/master/Quickstarts/Combined_AspId_and_EFStorage) and [damienbod - IdentityServer4 and Identity template](https://github.com/damienbod/IdentityServer4AspNetCoreIdentityTemplate)
 
 - Admin UI:
 
@@ -180,13 +264,15 @@ Migrations are not a part of the repository - they are ignored in `.gitignore`.
 
   - `Skoruba.IdentityServer4.Admin.EntityFramework.Identity` - EF Core data layer that contains Entities for the Asp.Net Core Identity
 
-  - `Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts` - project that contains AdminDbContext for the administration
+  - `Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts` - project that contains DbContexts for the IdentityServer4, Logging and Asp.Net Core Identity
 
 - Tests:
 
-  - `Skoruba.IdentityServer4.Admin.IntegrationTests` - xUnit project that contains the integration tests
+  - `Skoruba.IdentityServer4.Admin.IntegrationTests` - xUnit project that contains the integration tests for AdminUI
 
-  - `Skoruba.IdentityServer4.Admin.UnitTests` - xUnit project that contains the unit tests
+  - `Skoruba.IdentityServer4.Admin.UnitTests` - xUnit project that contains the unit tests for AdminUI
+
+  - `Skoruba.IdentityServer4.STS.IntegrationTests` - xUnit project that contains the integration tests for STS
 
 ### The admininistration contains the following sections:
 
@@ -199,9 +285,8 @@ Migrations are not a part of the repository - they are ignored in `.gitignore`.
 It is possible to define the configuration according the client type - by default the client types are used:
 
 - Empty
-- Web Application - Server side - Implicit flow
 - Web Application - Server side - Hybrid flow
-- Single Page Application - Javascript - Implicit flow
+- Single Page Application - Javascript - Authorization Code Flow with PKCE
 - Native Application - Mobile/Desktop - Hybrid flow
 - Machine/Robot - Resource Owner Password and Client Credentials flow
 - TV and Limited-Input Device Application - Device flow
@@ -225,12 +310,14 @@ It is possible to define the configuration according the client type - by defaul
   - Api Scopes
   - Api Scope Claims
   - Api Secrets
+  - Api Properties
 
 **Identity Resources**
 
 - Actions: Add, Update, Remove
 - Entities:
   - Identity Claims
+  - Identity Properties
 
 ## Asp.Net Core Identity
 
@@ -266,15 +353,19 @@ It is possible to define the configuration according the client type - by defaul
   - [x] English
   - [x] Chinese
   - [x] Russian
+  - [x] Persian
+- [x] Manage profile
+- [x] Password reset
+- [x] Link account to an external provider (example with Github)
+- [x] Two-Factor Authentication (2FA)
+- [x] User registration
+- [x] Email service
 
 ### 1.1.0:
 
 - [ ] Add audit logs to track changes ([#61](https://github.com/skoruba/IdentityServer4.Admin/issues/61))
 - [ ] Create a project template using dotnet CLI - `dotnet new template`
   - [ ] Second template: The administration of the IdentityServer4 (without Asp.Net Core Identity) ([#79](https://github.com/skoruba/IdentityServer4.Admin/issues/79))
-- [ ] User registration / Password reset
-- [ ] Account linking
-- [ ] Manage profile
 
 ### 2.0.0:
 
@@ -294,7 +385,7 @@ It is possible to define the configuration according the client type - by defaul
 
 This repository is licensed under the terms of the [**MIT license**](LICENSE.md).
 
-**NOTE**: This repository uses the source code from https://github.com/IdentityServer/IdentityServer4.Quickstart.UI which is under the terms of the 
+**NOTE**: This repository uses the source code from https://github.com/IdentityServer/IdentityServer4.Quickstart.UI which is under the terms of the
 [**Apache License 2.0**](https://github.com/IdentityServer/IdentityServer4.Quickstart.UI/blob/master/LICENSE).
 
 ## Acknowledgements
@@ -321,7 +412,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 <!-- prettier-ignore-start -->
 | [<img src="https://avatars3.githubusercontent.com/u/35664089?s=460&v=3" width="100px;"/><br /><sub> Jan Škoruba</sub>](https://github.com/skoruba) <br /> 💻 💬 📖 💡 🤔 | [<img src="https://avatars0.githubusercontent.com/u/6831144?s=460&v=3" width="100px;"/><br /><sub> Tomáš Hübelbauer</sub>](https://github.com/TomasHubelbauer) <br /> 💻 👀 📖  🤔 | [<img src="https://avatars0.githubusercontent.com/u/1004852?s=460&v=3" width="100px;"/><br /><sub>Michał Drzał </sub>](https://github.com/xmichaelx) <br />💻 👀 📖 💡 🤔 | [<img src="https://avatars0.githubusercontent.com/u/2261603?s=460&v=3" width="100px;"/><br /><sub>cerginio </sub>](https://github.com/cerginio) <br /> 💻 🐛 💡 🤔 | [<img src="https://avatars3.githubusercontent.com/u/13407080?s=460&v=3" width="100px;"/><br /><sub>Sven Dummis </sub>](https://github.com/svendu) <br /> 📖| [<img src="https://avatars1.githubusercontent.com/u/1687087?s=460&v=3" width="100px;"/><br /><sub>Seaear</sub>](https://github.com/Seaear) <br />💻 🌍|
 | :---: | :---: | :---: | :---: | :---: | :---: |
-|[<img src="https://avatars1.githubusercontent.com/u/1150473?s=460&v=3" width="118px;"/><br /><sub>Rune Antonsen </sub>](https://github.com/ruant) <br />🐛|[<img src="https://avatars1.githubusercontent.com/u/5537607?s=460&v=3" width="118px;"/><br /><sub>Sindre Njøsen </sub>](https://github.com/Sindrenj) <br />💻|[<img src="https://avatars1.githubusercontent.com/u/40323674?s=460&v=3" width="118px;"/><br /><sub>Alevtina Brown </sub>](https://github.com/alev7ina) <br />🌍|
+|[<img src="https://avatars1.githubusercontent.com/u/1150473?s=460&v=3" width="118px;"/><br /><sub>Rune Antonsen </sub>](https://github.com/ruant) <br />🐛|[<img src="https://avatars1.githubusercontent.com/u/5537607?s=460&v=3" width="118px;"/><br /><sub>Sindre Njøsen </sub>](https://github.com/Sindrenj) <br />💻|[<img src="https://avatars1.githubusercontent.com/u/40323674?s=460&v=3" width="118px;"/><br /><sub>Alevtina Brown </sub>](https://github.com/alev7ina) <br />🌍|[<img src="https://avatars3.githubusercontent.com/u/29726153?s=460&v=3" width="118px;"/><br /><sub>Brice </sub>](https://github.com/Brice-xCIT) <br />💻|[<img src="https://avatars0.githubusercontent.com/u/17114154?s=460&v=3" width="118px;"/><br /><sub>TheEvilPenguin </sub>](https://github.com/TheEvilPenguin) <br />💻|[<img src="https://avatars3.githubusercontent.com/u/15545395?s=460&v=3" width="118px;"/><br /><sub>Saeed Rahmani </sub>](https://github.com/saeedrahmo) <br />🌍|
 <!-- prettier-ignore-end -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification.

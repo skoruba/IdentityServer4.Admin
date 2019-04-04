@@ -21,128 +21,141 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         public PersistedGrantServiceTests()
         {
             var databaseName = Guid.NewGuid().ToString();
+            var identityDatabaseName = Guid.NewGuid().ToString();
 
-            _dbContextOptions = new DbContextOptionsBuilder<AdminDbContext>()
+            _dbContextOptions = new DbContextOptionsBuilder<IdentityServerPersistedGrantDbContext>()
                 .UseInMemoryDatabase(databaseName)
+                .Options;
+
+            _identityDbContextOptions = new DbContextOptionsBuilder<AdminIdentityDbContext>()
+                .UseInMemoryDatabase(identityDatabaseName)
                 .Options;
 
             _storeOptions = new ConfigurationStoreOptions();
             _operationalStore = new OperationalStoreOptions();
         }
 
-        private readonly DbContextOptions<AdminDbContext> _dbContextOptions;
+        private readonly DbContextOptions<AdminIdentityDbContext> _identityDbContextOptions;
+        private readonly DbContextOptions<IdentityServerPersistedGrantDbContext> _dbContextOptions;
         private readonly ConfigurationStoreOptions _storeOptions;
         private readonly OperationalStoreOptions _operationalStore;
 
-        private IPersistedGrantAspNetIdentityRepository<AdminDbContext, UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> GetPersistedGrantRepository(AdminDbContext context)
+        private IPersistedGrantAspNetIdentityRepository GetPersistedGrantRepository(AdminIdentityDbContext identityDbContext, IdentityServerPersistedGrantDbContext context)
         {
-            var persistedGrantRepository = new PersistedGrantAspNetIdentityRepository<AdminDbContext, UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>(context);
+            var persistedGrantRepository = new PersistedGrantAspNetIdentityRepository<AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>(identityDbContext, context);
 
             return persistedGrantRepository;
         }
 
-        private IPersistedGrantAspNetIdentityService<AdminDbContext, UserIdentity, UserIdentityRole, int, UserIdentityUserClaim,
-                UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>
-            GetPersistedGrantService(IPersistedGrantAspNetIdentityRepository<AdminDbContext, UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> repository, IPersistedGrantAspNetIdentityServiceResources persistedGrantServiceResources)
+        private IPersistedGrantAspNetIdentityService
+            GetPersistedGrantService(IPersistedGrantAspNetIdentityRepository repository, IPersistedGrantAspNetIdentityServiceResources persistedGrantServiceResources)
         {
-            var persistedGrantService = new PersistedGrantAspNetIdentityService<AdminDbContext, UserIdentity, UserIdentityRole, int, UserIdentityUserClaim,
-                UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>(repository,
+            var persistedGrantService = new PersistedGrantAspNetIdentityService(repository,
                 persistedGrantServiceResources);
 
             return persistedGrantService;
         }
 
         [Fact]
-        public async Task GetPersitedGrantAsync()
+        public async Task GetPersistedGrantAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerPersistedGrantDbContext(_dbContextOptions, _operationalStore))
             {
-                var persistedGrantRepository = GetPersistedGrantRepository(context);
+                using (var identityDbContext = new AdminIdentityDbContext(_identityDbContextOptions))
+                {
+                    var persistedGrantRepository = GetPersistedGrantRepository(identityDbContext, context);
 
-                var localizerMock = new Mock<IPersistedGrantAspNetIdentityServiceResources>();
-                var localizer = localizerMock.Object;
+                    var localizerMock = new Mock<IPersistedGrantAspNetIdentityServiceResources>();
+                    var localizer = localizerMock.Object;
 
-                var persistedGrantService = GetPersistedGrantService(persistedGrantRepository, localizer);
+                    var persistedGrantService = GetPersistedGrantService(persistedGrantRepository, localizer);
 
-                //Generate persisted grant
-                var persistedGrantKey = Guid.NewGuid().ToString();
-                var persistedGrant = PersistedGrantMock.GenerateRandomPersistedGrant(persistedGrantKey);
+                    //Generate persisted grant
+                    var persistedGrantKey = Guid.NewGuid().ToString();
+                    var persistedGrant = PersistedGrantMock.GenerateRandomPersistedGrant(persistedGrantKey);
 
-                //Try add new persisted grant
-                await context.PersistedGrants.AddAsync(persistedGrant);
-                await context.SaveChangesAsync();
+                    //Try add new persisted grant
+                    await context.PersistedGrants.AddAsync(persistedGrant);
+                    await context.SaveChangesAsync();
 
-                //Try get persisted grant
-                var persistedGrantAdded = await persistedGrantService.GetPersitedGrantAsync(persistedGrantKey);
+                    //Try get persisted grant
+                    var persistedGrantAdded = await persistedGrantService.GetPersistedGrantAsync(persistedGrantKey);
 
-                //Assert
-                persistedGrant.ShouldBeEquivalentTo(persistedGrantAdded);
+                    //Assert
+                    persistedGrant.ShouldBeEquivalentTo(persistedGrantAdded);
+                }
             }
         }
 
         [Fact]
         public async Task DeletePersistedGrantAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerPersistedGrantDbContext(_dbContextOptions, _operationalStore))
             {
-                var persistedGrantRepository = GetPersistedGrantRepository(context);
+                using (var identityDbContext = new AdminIdentityDbContext(_identityDbContextOptions))
+                {
+                    var persistedGrantRepository = GetPersistedGrantRepository(identityDbContext, context);
 
-                var localizerMock = new Mock<IPersistedGrantAspNetIdentityServiceResources>();
-                var localizer = localizerMock.Object;
+                    var localizerMock = new Mock<IPersistedGrantAspNetIdentityServiceResources>();
+                    var localizer = localizerMock.Object;
 
-                var persistedGrantService = GetPersistedGrantService(persistedGrantRepository, localizer);
+                    var persistedGrantService = GetPersistedGrantService(persistedGrantRepository, localizer);
 
-                //Generate persisted grant
-                var persistedGrantKey = Guid.NewGuid().ToString();
-                var persistedGrant = PersistedGrantMock.GenerateRandomPersistedGrant(persistedGrantKey);
+                    //Generate persisted grant
+                    var persistedGrantKey = Guid.NewGuid().ToString();
+                    var persistedGrant = PersistedGrantMock.GenerateRandomPersistedGrant(persistedGrantKey);
 
-                //Try add new persisted grant
-                await context.PersistedGrants.AddAsync(persistedGrant);
-                await context.SaveChangesAsync();
+                    //Try add new persisted grant
+                    await context.PersistedGrants.AddAsync(persistedGrant);
+                    await context.SaveChangesAsync();
 
-                //Try delete persisted grant
-                await persistedGrantService.DeletePersistedGrantAsync(persistedGrantKey);
+                    //Try delete persisted grant
+                    await persistedGrantService.DeletePersistedGrantAsync(persistedGrantKey);
 
-                var grant = await persistedGrantRepository.GetPersitedGrantAsync(persistedGrantKey);
+                    var grant = await persistedGrantRepository.GetPersistedGrantAsync(persistedGrantKey);
 
-                //Assert
-                grant.Should().BeNull();
+                    //Assert
+                    grant.Should().BeNull();
+                }
             }
         }
 
         [Fact]
         public async Task DeletePersistedGrantsAsync()
         {
-            using (var context = new AdminDbContext(_dbContextOptions, _storeOptions, _operationalStore))
+            using (var context = new IdentityServerPersistedGrantDbContext(_dbContextOptions, _operationalStore))
             {
-                var persistedGrantRepository = GetPersistedGrantRepository(context);
-
-                var localizerMock = new Mock<IPersistedGrantAspNetIdentityServiceResources>();
-                var localizer = localizerMock.Object;
-
-                var persistedGrantService = GetPersistedGrantService(persistedGrantRepository, localizer);
-
-                const int subjectId = 1;
-
-                for (var i = 0; i < 4; i++)
+                using (var identityDbContext = new AdminIdentityDbContext(_identityDbContextOptions))
                 {
-                    //Generate persisted grant
-                    var persistedGrantKey = Guid.NewGuid().ToString();
-                    var persistedGrant = PersistedGrantMock.GenerateRandomPersistedGrant(persistedGrantKey, subjectId.ToString());
+                    var persistedGrantRepository = GetPersistedGrantRepository(identityDbContext, context);
 
-                    //Try add new persisted grant
-                    await context.PersistedGrants.AddAsync(persistedGrant);
+                    var localizerMock = new Mock<IPersistedGrantAspNetIdentityServiceResources>();
+                    var localizer = localizerMock.Object;
+
+                    var persistedGrantService = GetPersistedGrantService(persistedGrantRepository, localizer);
+
+                    const int subjectId = 1;
+
+                    for (var i = 0; i < 4; i++)
+                    {
+                        //Generate persisted grant
+                        var persistedGrantKey = Guid.NewGuid().ToString();
+                        var persistedGrant = PersistedGrantMock.GenerateRandomPersistedGrant(persistedGrantKey, subjectId.ToString());
+
+                        //Try add new persisted grant
+                        await context.PersistedGrants.AddAsync(persistedGrant);
+                    }
+
+                    await context.SaveChangesAsync();
+
+                    //Try delete persisted grant
+                    await persistedGrantService.DeletePersistedGrantsAsync(subjectId.ToString());
+
+                    var grant = await persistedGrantRepository.GetPersistedGrantsByUserAsync(subjectId.ToString());
+
+                    //Assert
+                    grant.TotalCount.Should().Be(0);
                 }
-
-                await context.SaveChangesAsync();
-
-                //Try delete persisted grant
-                await persistedGrantService.DeletePersistedGrantsAsync(subjectId.ToString());
-
-                var grant = await persistedGrantRepository.GetPersitedGrantsByUser(subjectId.ToString());
-
-                //Assert
-                grant.TotalCount.Should().Be(0);
             }
         }
     }
