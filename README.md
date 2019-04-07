@@ -371,7 +371,7 @@ It is possible to define the configuration according the client type - by defaul
 
 ### 2.0.0:
 
-- [ ] Add API ([#105](https://github.com/skoruba/IdentityServer4.Admin/issues/105)):
+- [ ] Add API ([#105](https://github.com/skoruba/IdentityServer4.Admin/issues/105))
   - [ ] IdentityServer4
   - [ ] Asp.Net Core Identity
   - [ ] Add swagger support
