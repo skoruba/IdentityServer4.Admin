@@ -378,10 +378,11 @@ It is possible to define the configuration according the client type - by defaul
 
 ### Future:
 
-- Add UI tests
-- Add more unit and integration tests :blush:
-- Extend administration for another protocols
-- Create separate UI using `Razor Class Library`
+- [ ] Add UI tests ([#97](https://github.com/skoruba/IdentityServer4.Admin/issues/97), [#116](https://github.com/skoruba/IdentityServer4.Admin/issues/116))
+
+- [ ] Add more unit and integration tests :blush:
+- [ ] Extend administration for another protocols
+- [ ] Create separate UI using `Razor Class Library` ([#28](https://github.com/skoruba/IdentityServer4.Admin/issues/28), [#133](https://github.com/skoruba/IdentityServer4.Admin/issues/133))
 
 ## Licence
 
