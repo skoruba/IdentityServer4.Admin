@@ -227,9 +227,9 @@ or using `Email`:
 
 - All labels and messages are stored in the resources `.resx` - locatated in `/Resources`
 
-  - Client label descriptions from - http://docs.identityserver.io/en/release/reference/client.html
-  - Api Resource label descriptions from - http://docs.identityserver.io/en/release/reference/api_resource.html
-  - Identity Resource label descriptions from - http://docs.identityserver.io/en/release/reference/identity_resource.html
+  - Client label descriptions from - http://docs.identityserver.io/en/latest/reference/client.html
+  - Api Resource label descriptions from - http://docs.identityserver.io/en/latest/reference/api_resource.html
+  - Identity Resource label descriptions from - http://docs.identityserver.io/en/latest/reference/identity_resource.html
 
 ## Tests
 
@@ -371,17 +371,17 @@ It is possible to define the configuration according the client type - by defaul
 
 ### 2.0.0:
 
-- [ ] Add API:
+- [ ] Add API ([#105](https://github.com/skoruba/IdentityServer4.Admin/issues/105))
   - [ ] IdentityServer4
   - [ ] Asp.Net Core Identity
   - [ ] Add swagger support
 
 ### Future:
 
-- Add UI tests
+- Add UI tests ([#97](https://github.com/skoruba/IdentityServer4.Admin/issues/97), [#116](https://github.com/skoruba/IdentityServer4.Admin/issues/116))
 - Add more unit and integration tests :blush:
 - Extend administration for another protocols
-- Create separate UI using `Razor Class Library`
+- Create separate UI using `Razor Class Library` ([#28](https://github.com/skoruba/IdentityServer4.Admin/issues/28), [#133](https://github.com/skoruba/IdentityServer4.Admin/issues/133))
 
 ## Licence
 
