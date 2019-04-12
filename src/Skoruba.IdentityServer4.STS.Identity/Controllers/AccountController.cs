@@ -459,7 +459,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             if (result.Succeeded)
             {
-                return LocalRedirect(model.ReturnUrl);
+                if (result.Succeeded) {
+                    if (model.ReturnUrl == null) { 
+                        return LocalRedirect("/");
+                    }
+                return LocalRedirect(model.ReturnUrl); }
             }
 
             if (result.IsLockedOut)
@@ -515,7 +519,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             if (result.Succeeded)
             {
-                return LocalRedirect(model.ReturnUrl);
+                if (result.Succeeded) {
+                     if (model.ReturnUrl == null) { 
+                         return LocalRedirect("/");
+                    }
+                return LocalRedirect(model.ReturnUrl); }
             }
 
             if (result.IsLockedOut)
