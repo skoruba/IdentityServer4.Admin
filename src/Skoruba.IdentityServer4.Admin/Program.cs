@@ -18,7 +18,7 @@ namespace Skoruba.IdentityServer4.Admin
             var seed = args.Any(x => x == SeedArgs);
             if (seed) args = args.Except(new[] { SeedArgs }).ToArray();
 
-            var host = BuildWebHost(args);
+            var host = CreateWebHostBuilder(args).Build();
 
             // Uncomment this to seed upon startup, alternatively pass in `dotnet run /seed` to seed using CLI
             // await DbMigrationHelpers.EnsureSeedData<IdentityServerConfigurationDbContext, AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, UserIdentity, UserIdentityRole>(host);
@@ -30,11 +30,10 @@ namespace Skoruba.IdentityServer4.Admin
             host.Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                    .UseKestrel(c => c.AddServerHeader = false)
                    .UseStartup<Startup>()
-                   .UseSerilog()
-                   .Build();
+                   .UseSerilog();
     }
 }

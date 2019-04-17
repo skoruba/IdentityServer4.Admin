@@ -2,18 +2,19 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Common;
 using Xunit;
 
 namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
 {
-    public class DiagnosticsControllerTests : IClassFixture<TestFixture>
+    public class DiagnosticsControllerTests : IClassFixture<WebApplicationFactory<Startup>>
     {
         private readonly HttpClient _client;
 
-        public DiagnosticsControllerTests(TestFixture fixture)
+        public DiagnosticsControllerTests(WebApplicationFactory<Startup> factory)
         {
-            _client = fixture.Client;
+            _client = factory.SetupClient();
         }
 
         [Fact]
