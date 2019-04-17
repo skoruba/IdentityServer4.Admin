@@ -126,7 +126,11 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         EmailConfirmed = true
                     };
 
-                    var res = await userManager.CreateAsync(us, u.Password);
+
+                    // if there is no password we create user without password
+                    // user can reset password later, because accounts have EmailConfirmed set to true
+                    var res = u.Password != null ? await userManager.CreateAsync(us, u.Password) : await userManager.CreateAsync(us);
+
                     if (res.Succeeded)
                     {
                         foreach (var c in u.Claims)
