@@ -56,9 +56,9 @@ namespace Microsoft.Extensions.DependencyInjection
 			this.RootConfiguration = new RootConfiguration();
 		}
 
-		public void ApplyConfiguration(IConfigurationRoot configurationRoot)
+		public void ApplyConfiguration(IConfiguration configuration)
 		{
-			configurationRoot.Bind(RootConfiguration);
+			configuration.Bind(RootConfiguration);
 		}
 
 		public void ApplyHostingEnvironment(IHostingEnvironment env)
