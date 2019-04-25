@@ -34,6 +34,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.Helpers.Localization;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Mvc.Localization;
+using Skoruba.IdentityServer4.Admin.Helpers.Razor;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -305,12 +306,13 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
 			services.AddTransient<IViewLocalizer, ResourceViewLocalizer>();
 
-			services.Configure<RazorViewEngineOptions>(options => options.FileProviders.Add(new EmbeddedFileProvider(Assembly.GetExecutingAssembly())));
+			services.ConfigureOptions(typeof(StaticFileProvidersConfigureOptions));
 
             services.AddMvc(o =>
                 {
                     o.Conventions.Add(new GenericControllerRouteConvention());
                 })
+				.WithRazorPagesRoot("/Views")
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddViewLocalization(
                     LanguageViewLocationExpanderFormat.Suffix,
