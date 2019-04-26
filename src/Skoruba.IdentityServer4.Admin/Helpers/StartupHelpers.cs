@@ -312,7 +312,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 {
                     o.Conventions.Add(new GenericControllerRouteConvention());
                 })
-				.WithRazorPagesRoot("/Views")
+                .WithRazorPagesRoot("/Views")
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddViewLocalization(
                     LanguageViewLocationExpanderFormat.Suffix,
