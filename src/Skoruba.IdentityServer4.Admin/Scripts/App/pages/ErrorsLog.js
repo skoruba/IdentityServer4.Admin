@@ -1,26 +1,32 @@
 ﻿$(function () {
 
-	$(".row-error-detail>td").each(function () {
+    $(".row-error-detail>td").each(function () {
 
-		const json = $(this).data("error-json");
-		const result = JSONTree.create(JSON.parse(json));
+        const json = $(this).data("error-json");
+        var result;
 
-		$(this).html(result);
-	});
+        try {
+            result = JSONTree.create(JSON.parse(json));
+        } catch (e) {
+            result = JSONTree.create(json);
+        }
 
-	$(".btn-error-detail").click(function (e) {
+        $(this).html(result);
+    });
 
-		e.preventDefault();
+    $(".btn-error-detail").click(function (e) {
 
-		var errorId = $(this).data("error-id");
+        e.preventDefault();
 
-		if ($(`.row-error-detail[data-error-id=${errorId}]`).is(":visible")) {
-			$(`.row-error-detail[data-error-id=${errorId}]`).addClass('d-none');
-		} else {
-			$(`.row-error-detail[data-error-id=${errorId}]`).removeClass('d-none');
-		}
+        var errorId = $(this).data("error-id");
 
-		return false;
-	});
+        if ($(`.row-error-detail[data-error-id=${errorId}]`).is(":visible")) {
+            $(`.row-error-detail[data-error-id=${errorId}]`).addClass('d-none');
+        } else {
+            $(`.row-error-detail[data-error-id=${errorId}]`).removeClass('d-none');
+        }
+
+        return false;
+    });
 
 });
