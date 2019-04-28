@@ -20,7 +20,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
@@ -384,15 +383,15 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl = null)
         {
-            if (ModelState.IsValid)
+            // Get the information about the user from the external login provider
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
             {
-                // Get the information about the user from the external login provider
-                var info = await _signInManager.GetExternalLoginInfoAsync();
-                if (info == null)
-                {
-                    return View("ExternalLoginFailure");
-                }
+                return View("ExternalLoginFailure");
+            }
 
+            if (ModelState.IsValid)
+            {               
                 var user = new TUser
                 {
                     UserName = model.UserName,
@@ -414,6 +413,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 AddErrors(result);
             }
 
+            ViewData["LoginProvider"] = info.LoginProvider;
             ViewData["ReturnUrl"] = returnUrl;
 
             return View(model);
