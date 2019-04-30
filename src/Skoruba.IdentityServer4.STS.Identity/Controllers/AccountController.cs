@@ -20,7 +20,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
@@ -29,7 +28,7 @@ using Skoruba.IdentityServer4.STS.Identity.ViewModels.Account;
 namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 {
     [SecurityHeaders]
-    [Authorize]    
+    [Authorize]
     public class AccountController<TUser, TKey> : Controller
         where TUser : IdentityUser<TKey>, new()
         where TKey : IEquatable<TKey>
@@ -130,7 +129,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userResolver.GetUserAsync(model.Username);
-                if (user != default(TUser)) { 
+                if (user != default(TUser))
+                {
                     var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberLogin, lockoutOnFailure: true);
                     if (result.Succeeded)
                     {
@@ -384,15 +384,17 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl = null)
         {
+            returnUrl = returnUrl ?? Url.Content("~/");
+
+            // Get the information about the user from the external login provider
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+                return View("ExternalLoginFailure");
+            }
+
             if (ModelState.IsValid)
             {
-                // Get the information about the user from the external login provider
-                var info = await _signInManager.GetExternalLoginInfoAsync();
-                if (info == null)
-                {
-                    return View("ExternalLoginFailure");
-                }
-
                 var user = new TUser
                 {
                     UserName = model.UserName,
@@ -414,6 +416,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 AddErrors(result);
             }
 
+            ViewData["LoginProvider"] = info.LoginProvider;
             ViewData["ReturnUrl"] = returnUrl;
 
             return View(model);
@@ -459,7 +462,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             if (result.Succeeded)
             {
-                return LocalRedirect(model.ReturnUrl);
+                return LocalRedirect(string.IsNullOrEmpty(model.ReturnUrl) ? "~/" : model.ReturnUrl);
             }
 
             if (result.IsLockedOut)
@@ -515,7 +518,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             if (result.Succeeded)
             {
-                return LocalRedirect(model.ReturnUrl);
+                return LocalRedirect(string.IsNullOrEmpty(model.ReturnUrl) ? "~/" : model.ReturnUrl);
             }
 
             if (result.IsLockedOut)
@@ -531,7 +534,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
-        {            
+        {
             if (!_registerConfiguration.Enabled) return View("RegisterFailure");
 
             ViewData["ReturnUrl"] = returnUrl;
@@ -544,6 +547,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
+            returnUrl = returnUrl ?? Url.Content("~/");
+
             ViewData["ReturnUrl"] = returnUrl;
 
             if (!ModelState.IsValid) return View(model);
