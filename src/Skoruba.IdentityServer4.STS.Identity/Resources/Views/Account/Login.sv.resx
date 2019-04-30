@@ -130,10 +130,10 @@
     <value>Glömt lösenord</value>
   </data>
   <data name="InvalidRequest" xml:space="preserve">
-    <value>Felaktigt inlogningsförsök</value>
+    <value>Felaktigt inloggningsförsök</value>
   </data>
   <data name="LocalLogin" xml:space="preserve">
-    <value>Lokal loggning</value>
+    <value>Lokal inloggning</value>
   </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
