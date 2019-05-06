@@ -12,7 +12,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Mappers
 
         internal static IMapper Mapper { get; }
         
-        public static T ToApiModel<T>(this object source)
+        public static T ToClientApiModel<T>(this object source)
         {
             return Mapper.Map<T>(source);
         }

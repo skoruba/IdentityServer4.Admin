@@ -25,7 +25,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         public async Task<ActionResult<ClientsApiDto>> Get(string searchText, int page = 1, int pageSize = 10)
         {
             var clientsDto = await _clientService.GetClientsAsync(searchText, page, pageSize);
-            var clientsApiDto = clientsDto.ToApiModel<ClientsApiDto>();
+            var clientsApiDto = clientsDto.ToClientApiModel<ClientsApiDto>();
 
             return Ok(clientsApiDto);
         }
@@ -34,7 +34,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         public async Task<ActionResult<ClientApiDto>> Get(int id)
         {
             var clientDto = await _clientService.GetClientAsync(id);
-            var clientApiDto = clientDto.ToApiModel<ClientApiDto>();
+            var clientApiDto = clientDto.ToClientApiModel<ClientApiDto>();
 
             return Ok(clientApiDto);
         }
@@ -42,7 +42,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]ClientApiDto client)
         {
-            var clientDto = client.ToApiModel<ClientDto>();
+            var clientDto = client.ToClientApiModel<ClientDto>();
             await _clientService.AddClientAsync(clientDto);
 
             return Ok();
@@ -51,7 +51,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put([FromBody]ClientApiDto client)
         {
-            var clientDto = client.ToApiModel<ClientDto>();
+            var clientDto = client.ToClientApiModel<ClientDto>();
             await _clientService.UpdateClientAsync(clientDto);
 
             return Ok();
@@ -71,7 +71,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         public async Task<ActionResult<ClientSecretsApiDto>> GetSecrets(int id, int page = 1, int pageSize = 10)
         {
             var clientSecretsDto = await _clientService.GetClientSecretsAsync(id, page, pageSize);
-            var clientSecretsApiDto = clientSecretsDto.ToApiModel<ClientSecretsApiDto>();
+            var clientSecretsApiDto = clientSecretsDto.ToClientApiModel<ClientSecretsApiDto>();
 
             return Ok(clientSecretsApiDto);
         }
@@ -80,7 +80,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         public async Task<ActionResult<ClientSecretApiDto>> GetSecret(int secretId)
         {
             var clientSecretsDto = await _clientService.GetClientSecretAsync(secretId);
-            var clientSecretDto = clientSecretsDto.ToApiModel<ClientSecretDto>();
+            var clientSecretDto = clientSecretsDto.ToClientApiModel<ClientSecretDto>();
 
             return Ok(clientSecretDto);
         }
@@ -88,7 +88,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [HttpPost("{id}/Secrets")]
         public async Task<IActionResult> PostSecret(int id, [FromBody]ClientSecretApiDto clientSecretApi)
         {
-            var secretsDto = clientSecretApi.ToApiModel<ClientSecretsDto>();
+            var secretsDto = clientSecretApi.ToClientApiModel<ClientSecretsDto>();
             secretsDto.ClientId = id;
 
             await _clientService.AddClientSecretAsync(secretsDto);
@@ -99,10 +99,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [HttpDelete("Secrets/{secretId}")]
         public async Task<IActionResult> DeleteSecret(int secretId)
         {
-            var clientSecretsDto = new ClientSecretsDto
-            {
-                ClientSecretId = secretId
-            };
+            var clientSecretsDto = new ClientSecretsDto { ClientSecretId = secretId };
 
             await _clientService.DeleteClientSecretAsync(clientSecretsDto);
 
@@ -113,7 +110,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         public async Task<ActionResult<ClientPropertiesApiDto>> GetProperties(int id, int page = 1, int pageSize = 10)
         {
             var clientPropertiesDto = await _clientService.GetClientPropertiesAsync(id, page, pageSize);
-            var clientPropertiesApiDto = clientPropertiesDto.ToApiModel<ClientPropertiesApiDto>();
+            var clientPropertiesApiDto = clientPropertiesDto.ToClientApiModel<ClientPropertiesApiDto>();
 
             return Ok(clientPropertiesApiDto);
         }
@@ -122,7 +119,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         public async Task<ActionResult<ClientPropertyApiDto>> GetProperty(int propertyId)
         {
             var clientPropertiesDto = await _clientService.GetClientPropertyAsync(propertyId);
-            var clientPropertyApiDto = clientPropertiesDto.ToApiModel<ClientPropertyApiDto>();
+            var clientPropertyApiDto = clientPropertiesDto.ToClientApiModel<ClientPropertyApiDto>();
 
             return Ok(clientPropertyApiDto);
         }
@@ -130,7 +127,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [HttpPost("{id}/Properties")]
         public async Task<IActionResult> PostProperty(int id, [FromBody]ClientPropertyApiDto clientPropertyApi)
         {
-            var clientPropertiesDto = clientPropertyApi.ToApiModel<ClientPropertiesDto>();
+            var clientPropertiesDto = clientPropertyApi.ToClientApiModel<ClientPropertiesDto>();
             clientPropertiesDto.ClientId = id;
 
             await _clientService.AddClientPropertyAsync(clientPropertiesDto);
@@ -141,10 +138,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [HttpDelete("Properties/{propertyId}")]
         public async Task<IActionResult> DeleteProperty(int propertyId)
         {
-            var clientPropertiesDto = new ClientPropertiesDto
-            {
-                ClientPropertyId = propertyId
-            };
+            var clientPropertiesDto = new ClientPropertiesDto { ClientPropertyId = propertyId };
 
             await _clientService.DeleteClientPropertyAsync(clientPropertiesDto);
 
@@ -155,7 +149,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         public async Task<ActionResult<ClientClaimsApiDto>> GetClaims(int id, int page = 1, int pageSize = 10)
         {
             var clientClaimsDto = await _clientService.GetClientClaimsAsync(id, page, pageSize);
-            var clientClaimsApiDto = clientClaimsDto.ToApiModel<ClientClaimsApiDto>();
+            var clientClaimsApiDto = clientClaimsDto.ToClientApiModel<ClientClaimsApiDto>();
 
             return Ok(clientClaimsApiDto);
         }
@@ -164,7 +158,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         public async Task<ActionResult<ClientClaimApiDto>> GetClaim(int claimId)
         {
             var clientClaimsDto = await _clientService.GetClientClaimAsync(claimId);
-            var clientClaimApiDto = clientClaimsDto.ToApiModel<ClientClaimApiDto>();
+            var clientClaimApiDto = clientClaimsDto.ToClientApiModel<ClientClaimApiDto>();
 
             return Ok(clientClaimApiDto);
         }
@@ -172,7 +166,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [HttpPost("{id}/Claims")]
         public async Task<IActionResult> PostClaim(int id, [FromBody]ClientClaimApiDto clientClaimApiDto)
         {
-            var clientClaimsDto = clientClaimApiDto.ToApiModel<ClientClaimsDto>();
+            var clientClaimsDto = clientClaimApiDto.ToClientApiModel<ClientClaimsDto>();
             clientClaimsDto.ClientId = id;
 
             await _clientService.AddClientClaimAsync(clientClaimsDto);
@@ -183,10 +177,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [HttpDelete("Claims/{claimId}")]
         public async Task<IActionResult> DeleteClaim(int claimId)
         {
-            var clientClaimsDto = new ClientClaimsDto
-            {
-                ClientClaimId = claimId
-            };
+            var clientClaimsDto = new ClientClaimsDto { ClientClaimId = claimId };
 
             await _clientService.DeleteClientClaimAsync(clientClaimsDto);
 
