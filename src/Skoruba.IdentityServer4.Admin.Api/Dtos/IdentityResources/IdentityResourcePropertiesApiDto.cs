@@ -13,6 +13,6 @@ namespace Skoruba.IdentityServer4.Admin.Api.Dtos.IdentityResources
 
         public int PageSize { get; set; }
 
-        public List<IdentityResourcePropertyApiDto> IdentityResourceProperties { get; set; } = new List<IdentityResourcePropertyApiDto>();
+        public List<IdentityResourcePropertyApiDto> IdentityResourceProperties { get; set; }
     }
 }
