@@ -65,5 +65,44 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
 
             return Ok();
         }
+
+        [HttpGet("{id}/Properties")]
+        public async Task<ActionResult<IdentityResourcePropertiesApiDto>> GetProperties(int id, int page = 1, int pageSize = 10)
+        {
+            var identityResourcePropertiesDto = await _identityResourceService.GetIdentityResourcePropertiesAsync(id, page, pageSize);
+            var identityResourcePropertiesApiDto = identityResourcePropertiesDto.ToIdentityResourceApiModel<IdentityResourcePropertiesApiDto>();
+
+            return Ok(identityResourcePropertiesApiDto);
+        }
+
+        [HttpGet("Properties/{propertyId}")]
+        public async Task<ActionResult<IdentityResourcePropertyApiDto>> GetProperty(int propertyId)
+        {
+            var identityResourcePropertiesDto = await _identityResourceService.GetIdentityResourcePropertyAsync(propertyId);
+            var identityResourcePropertyApiDto = identityResourcePropertiesDto.ToIdentityResourceApiModel<IdentityResourcePropertyApiDto>();
+
+            return Ok(identityResourcePropertyApiDto);
+        }
+
+        [HttpPost("{id}/Properties")]
+        public async Task<IActionResult> PostProperty(int id, [FromBody]IdentityResourcePropertyApiDto identityResourcePropertyApi)
+        {
+            var identityResourcePropertiesDto = identityResourcePropertyApi.ToIdentityResourceApiModel<IdentityResourcePropertiesDto>();
+            identityResourcePropertiesDto.IdentityResourceId = id;
+
+            await _identityResourceService.AddIdentityResourcePropertyAsync(identityResourcePropertiesDto);
+
+            return Ok();
+        }
+
+        [HttpDelete("Properties/{propertyId}")]
+        public async Task<IActionResult> DeleteProperty(int propertyId)
+        {
+            var identityResourcePropertiesDto = new IdentityResourcePropertiesDto { IdentityResourcePropertyId = propertyId };
+
+            await _identityResourceService.DeleteIdentityResourcePropertyAsync(identityResourcePropertiesDto);
+
+            return Ok();
+        }
     }
 }

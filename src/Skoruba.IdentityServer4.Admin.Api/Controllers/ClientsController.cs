@@ -67,6 +67,15 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
             return Ok();
         }
 
+        [HttpPost("Clone")]
+        public async Task<IActionResult> PostClientClone([FromBody]ClientCloneApiDto client)
+        {
+            var clientCloneDto = client.ToClientApiModel<ClientCloneDto>();
+            await _clientService.CloneClientAsync(clientCloneDto);
+
+            return Ok();
+        }
+
         [HttpGet("{id}/Secrets")]
         public async Task<ActionResult<ClientSecretsApiDto>> GetSecrets(int id, int page = 1, int pageSize = 10)
         {

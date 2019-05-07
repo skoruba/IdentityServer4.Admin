@@ -17,6 +17,9 @@ namespace Skoruba.IdentityServer4.Admin.Api.Mappers
             CreateMap<ClientsDto, ClientsApiDto>(MemberList.Destination)
                 .ReverseMap();
 
+            CreateMap<ClientCloneApiDto, ClientCloneDto>(MemberList.Destination)
+                .ReverseMap();
+
             // Client Secrets
             CreateMap<ClientSecretsDto, ClientSecretApiDto>(MemberList.Destination)
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ClientSecretId))
