@@ -117,6 +117,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories
             return PersistedGrantDbContext.PersistedGrants.AnyAsync(x => x.SubjectId == subjectId);
         }
 
+        public Task<bool> ExistsPersistedGrantAsync(string key)
+        {
+            return PersistedGrantDbContext.PersistedGrants.AnyAsync(x => x.Key == key);
+        }
+
         public virtual async Task<int> DeletePersistedGrantsAsync(string userId)
         {
             var grants = await PersistedGrantDbContext.PersistedGrants.Where(x => x.SubjectId == userId).ToListAsync();

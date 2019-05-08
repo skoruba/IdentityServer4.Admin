@@ -50,11 +50,17 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
 
         public virtual async Task<int> DeletePersistedGrantAsync(string key)
         {
+            var exists = await PersistedGrantAspNetIdentityRepository.ExistsPersistedGrantAsync(key);
+            if (!exists) throw new UserFriendlyErrorPageException(string.Format(PersistedGrantAspNetIdentityServiceResources.PersistedGrantDoesNotExist().Description, key), PersistedGrantAspNetIdentityServiceResources.PersistedGrantDoesNotExist().Description);
+
             return await PersistedGrantAspNetIdentityRepository.DeletePersistedGrantAsync(key);
         }
 
         public virtual async Task<int> DeletePersistedGrantsAsync(string userId)
         {
+            var exists = await PersistedGrantAspNetIdentityRepository.ExistsPersistedGrantsAsync(userId);
+            if (!exists) throw new UserFriendlyErrorPageException(string.Format(PersistedGrantAspNetIdentityServiceResources.PersistedGrantWithSubjectIdDoesNotExist().Description, userId), PersistedGrantAspNetIdentityServiceResources.PersistedGrantWithSubjectIdDoesNotExist().Description);
+
             return await PersistedGrantAspNetIdentityRepository.DeletePersistedGrantsAsync(userId);
         }
     }
