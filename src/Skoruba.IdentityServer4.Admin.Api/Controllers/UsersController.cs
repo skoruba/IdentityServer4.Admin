@@ -62,5 +62,111 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
            
             return Ok(user);
         }
+
+        [HttpGet]
+        public async Task<ActionResult<TUsersDto>> Get(string searchText, int page = 1, int pageSize = 10)
+        {
+            var usersDto = await _identityService.GetUsersAsync(searchText, page, pageSize);
+
+            return Ok(usersDto);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody]TUserDto user)
+        {
+            await _identityService.CreateUserAsync(user);
+
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put([FromBody]TUserDto user)
+        {
+            await _identityService.UpdateUserAsync(user);
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(TUserDtoKey id)
+        {
+            var user = new TUserDto { Id = id };
+
+            await _identityService.DeleteUserAsync(user.Id.ToString(), user);
+
+            return Ok();
+        }
+
+        [HttpGet("{id}/Roles")]
+        public async Task<ActionResult<TUserRolesDto>> GetUserRoles(string id, int page = 1, int pageSize = 10)
+        {
+            var userRoles = await _identityService.GetUserRolesAsync(id, page, pageSize);
+
+            return Ok(userRoles);
+        }
+
+        [HttpPost("Roles")]
+        public async Task<IActionResult> PostUserRoles([FromBody]TUserRolesDto role)
+        {
+            await _identityService.CreateUserRoleAsync(role);
+
+            return Ok();
+        }
+
+        [HttpDelete("Roles")]
+        public async Task<IActionResult> DeleteUserRoles([FromBody]TUserRolesDto role)
+        {
+            await _identityService.DeleteUserRoleAsync(role);
+
+            return Ok();
+        }
+
+        [HttpGet("{id}/Claims")]
+        public async Task<ActionResult<TUserClaimsDto>> GetUserClaims(TUserDtoKey id, int page = 1, int pageSize = 10)
+        {
+            var claims = await _identityService.GetUserClaimsAsync(id.ToString(), page, pageSize);
+
+            return Ok(claims);
+        }
+
+        [HttpPost("Claims")]
+        public async Task<IActionResult> PostUserClaims([FromBody]TUserClaimsDto claim)
+        {
+            await _identityService.CreateUserClaimsAsync(claim);
+
+            return Ok();
+        }
+
+        [HttpDelete("Claims")]
+        public async Task<IActionResult> DeleteUserClaims([FromBody]TUserClaimsDto claim)
+        {
+            await _identityService.DeleteUserClaimsAsync(claim);
+
+            return Ok();
+        }
+
+        [HttpGet("{id}/Providers")]
+        public async Task<ActionResult<TUserProvidersDto>> GetUserProviders(TUserDtoKey id)
+        {
+            var userProvidersDto = await _identityService.GetUserProvidersAsync(id.ToString());
+
+            return Ok(userProvidersDto);
+        }
+
+        [HttpDelete("Providers")]
+        public async Task<IActionResult> DeleteUserProviders([FromBody]TUserProviderDto provider)
+        {
+            await _identityService.DeleteUserProvidersAsync(provider);
+
+            return Ok();
+        }
+
+        [HttpPost("ChangePassword")]
+        public async Task<IActionResult> PostChangePassword([FromBody]TUserChangePasswordDto password)
+        {
+            await _identityService.UserChangePasswordAsync(password);
+
+            return Ok();
+        }
     }
 }

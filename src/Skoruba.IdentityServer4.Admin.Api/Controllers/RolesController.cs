@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Skoruba.IdentityServer4.Admin.Api.ExceptionHandling;
@@ -34,7 +35,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         where TUserProviderDto : UserProviderDto<TUserDtoKey>
         where TUserProvidersDto : UserProvidersDto<TUserDtoKey>
         where TUserChangePasswordDto : UserChangePasswordDto<TUserDtoKey>
-        where TRoleClaimsDto : RoleClaimsDto<TRoleDtoKey>
+        where TRoleClaimsDto : RoleClaimsDto<TRoleDtoKey>, new()
     {
         private readonly IIdentityService<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
@@ -52,6 +53,82 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         {
             _identityService = identityService;
             _localizer = localizer;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TRoleDto>> Get(TUserDtoKey id)
+        {
+            var role = await _identityService.GetRoleAsync(id.ToString());
+
+            return Ok(role);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<TRolesDto>> Get(string searchText, int page = 1, int pageSize = 10)
+        {
+            var rolesDto = await _identityService.GetRolesAsync(searchText, page, pageSize);
+
+            return Ok(rolesDto);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody]TRoleDto role)
+        {
+            await _identityService.CreateRoleAsync(role);
+
+            return Ok();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody]TRoleDto role)
+        {
+            await _identityService.UpdateRoleAsync(role);
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(TRoleDtoKey id)
+        {
+            var roleDto = new TRoleDto { Id = id };
+
+            await _identityService.DeleteRoleAsync(roleDto);
+
+            return Ok();
+        }
+
+        [HttpGet("{id}/Users")]
+        public async Task<ActionResult<TRolesDto>> GetRoleUsers(string id, string searchText, int page = 1, int pageSize = 10)
+        {
+            var usersDto = await _identityService.GetRoleUsersAsync(id, searchText, page, pageSize);
+
+            return Ok(usersDto);
+        }
+
+        [HttpGet("{id}/Claims")]
+        public async Task<ActionResult<TRoleClaimsDto>> GetRoleClaims(string id, int page = 1, int pageSize = 10)
+        {
+            var roleClaimsDto = await _identityService.GetRoleClaimsAsync(id, page, pageSize);
+
+            return Ok(roleClaimsDto);
+        }
+
+        [HttpPost("Claims")]
+        public async Task<IActionResult> PostRoleClaims([FromBody]TRoleClaimsDto roleClaims)
+        {
+            await _identityService.CreateRoleClaimsAsync(roleClaims);
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}/Claims")]
+        public async Task<IActionResult> DeleteRoleClaims(TRoleDtoKey id, int claimId)
+        {
+            var roleDto = new TRoleClaimsDto { ClaimId = claimId, RoleId = id };
+
+            await _identityService.DeleteRoleClaimsAsync(roleDto);
+
+            return Ok();
         }
     }
 }
