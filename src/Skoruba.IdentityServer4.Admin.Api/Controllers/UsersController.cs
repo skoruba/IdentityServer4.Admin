@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Skoruba.IdentityServer4.Admin.Api.Dtos.Users;
 using Skoruba.IdentityServer4.Admin.Api.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Api.Helpers.Localization;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
@@ -44,15 +46,18 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
             TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> _localizer;
 
+        private readonly IMapper _mapper;
+
         public UsersController(IIdentityService<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
                 TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto> identityService,
             IGenericControllerLocalizer<UsersController<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> localizer)
+                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> localizer, IMapper mapper)
         {
             _identityService = identityService;
             _localizer = localizer;
+            _mapper = mapper;
         }
 
         [HttpGet("{id}")]
@@ -122,11 +127,13 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpGet("{id}/Claims")]
-        public async Task<ActionResult<TUserClaimsDto>> GetUserClaims(TUserDtoKey id, int page = 1, int pageSize = 10)
+        public async Task<ActionResult<UserClaimsApiDto<string>>> GetUserClaims(TUserDtoKey id, int page = 1, int pageSize = 10)
         {
             var claims = await _identityService.GetUserClaimsAsync(id.ToString(), page, pageSize);
 
-            return Ok(claims);
+            var userClaimsApiDto = _mapper.Map<UserClaimsApiDto<string>>(claims);
+
+            return Ok(userClaimsApiDto);
         }
 
         [HttpPost("Claims")]

@@ -5,14 +5,24 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers.Configuration
 {
-    public interface IMapperConfigurationBuilder
+    public class MapperConfigurationBuilder : IMapperConfigurationBuilder
     {
-        HashSet<Type> ProfileTypes { get; }
+        public HashSet<Type> ProfileTypes { get; } = new HashSet<Type>();
 
-        IMapperConfigurationBuilder AddProfilesType(HashSet<Type> profileTypes);
+        public IMapperConfigurationBuilder AddProfilesType(HashSet<Type> profileTypes)
+        {
+            if (profileTypes == null) return this;
 
-        IMapperConfigurationBuilder UseIdentityMappingProfile<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUser, TRole,
-            TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
+            foreach (var profileType in profileTypes)
+            {
+                ProfileTypes.Add(profileType);
+            }
+
+            return this;
+        }
+
+        public IMapperConfigurationBuilder UseIdentityMappingProfile<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUser, TRole, TKey,
+            TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
             TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto,
             TUserClaimDto, TRoleClaimDto>()
@@ -35,6 +45,14 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers.Configura
             where TUserChangePasswordDto : UserChangePasswordDto<TUserDtoKey>
             where TRoleClaimsDto : RoleClaimsDto<TRoleDtoKey>
             where TUserClaimDto : UserClaimDto<TUserDtoKey>
-            where TRoleClaimDto : RoleClaimDto<TRoleDtoKey>;
+            where TRoleClaimDto : RoleClaimDto<TRoleDtoKey>
+        {
+            ProfileTypes.Add(typeof(IdentityMapperProfile<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUser, TRole, TKey,
+                TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
+                TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
+                TUserProviderDto, TUserProvidersDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>));
+
+            return this;
+        }
     }
 }
