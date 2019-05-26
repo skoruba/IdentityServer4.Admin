@@ -34,6 +34,23 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.IdentityServer
                     ApiSecrets = { new Secret("secret".Sha256()) }
                                 },
                 
+                new ApiResource()
+                {
+                    Name = "skoruba_identity_admin_api",
+                    Scopes = new List<Scope>()
+                    {
+                        new Scope()
+                        {
+                            Name = "skoruba_identity_admin_api",
+                            UserClaims = new List<string>()
+                            {
+                                "role"
+                            },
+                            Required = true
+                        }
+                    }
+                }, 
+
                 // expanded version if more control is needed
                 new ApiResource
                                 {

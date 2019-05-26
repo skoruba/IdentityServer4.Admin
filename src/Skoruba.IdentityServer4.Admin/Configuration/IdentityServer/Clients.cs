@@ -48,6 +48,23 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.IdentityServer
                     }
                 },
 
+                new Client
+                {
+                    ClientId = "skoruba_identity_admin_api",
+                    ClientName = "Skoruba IdentityServer4 Admin Api",
+                    
+                    AllowedGrantTypes = GrantTypes.Implicit,
+
+                    RedirectUris = new List<string>()
+                    {
+                        "http://localhost:5001/swagger/oauth2-redirect.html"
+                    },
+                    AllowedScopes =
+                    {
+                        "skoruba_identity_admin_api"
+                    },
+                    AllowAccessTokensViaBrowser = true
+                }
             };
 
         }
