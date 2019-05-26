@@ -87,6 +87,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]TUserDto user)
         {
+            await _identityService.GetUserAsync(user.Id.ToString());
             await _identityService.UpdateUserAsync(user);
 
             return Ok();
@@ -97,6 +98,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         {
             var user = new TUserDto { Id = id };
 
+            await _identityService.GetUserAsync(user.Id.ToString());
             await _identityService.DeleteUserAsync(user.Id.ToString(), user);
 
             return Ok();
@@ -124,6 +126,10 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         public async Task<IActionResult> DeleteUserRoles([FromBody]UserRoleApiDto<TUserDtoKey, TRoleDtoKey> role)
         {
             var userRolesDto = _mapper.Map<TUserRolesDto>(role);
+
+            await _identityService.GetUserAsync(userRolesDto.UserId.ToString());
+            await _identityService.GetRoleAsync(userRolesDto.RoleId.ToString());
+
             await _identityService.DeleteUserRoleAsync(userRolesDto);
 
             return Ok();
@@ -158,6 +164,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
                 UserId = id
             };
 
+            await _identityService.GetUserClaimAsync(id.ToString(), claimId);
             await _identityService.DeleteUserClaimsAsync(userClaimsDto);
 
             return Ok();
@@ -177,6 +184,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         {
             var providerDto = _mapper.Map<TUserProviderDto>(provider);
 
+            await _identityService.GetUserProviderAsync(providerDto.UserId.ToString(), providerDto.ProviderKey);
             await _identityService.DeleteUserProvidersAsync(providerDto);
 
             return Ok();

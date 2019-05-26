@@ -52,6 +52,8 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         public async Task<IActionResult> Put([FromBody]ClientApiDto client)
         {
             var clientDto = client.ToClientApiModel<ClientDto>();
+
+            await _clientService.GetClientAsync(clientDto.Id);
             await _clientService.UpdateClientAsync(clientDto);
 
             return Ok();
@@ -62,6 +64,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         {
             var clientDto = new ClientDto { Id = id };
 
+            await _clientService.GetClientAsync(clientDto.Id);
             await _clientService.RemoveClientAsync(clientDto);
 
             return Ok();
@@ -71,6 +74,8 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         public async Task<IActionResult> PostClientClone([FromBody]ClientCloneApiDto client)
         {
             var clientCloneDto = client.ToClientApiModel<ClientCloneDto>();
+
+            await _clientService.GetClientAsync(clientCloneDto.Id);
             await _clientService.CloneClientAsync(clientCloneDto);
 
             return Ok();
@@ -108,9 +113,10 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [HttpDelete("Secrets/{secretId}")]
         public async Task<IActionResult> DeleteSecret(int secretId)
         {
-            var clientSecretsDto = new ClientSecretsDto { ClientSecretId = secretId };
+            var clientSecret = new ClientSecretsDto { ClientSecretId = secretId };
 
-            await _clientService.DeleteClientSecretAsync(clientSecretsDto);
+            await _clientService.GetClientSecretAsync(clientSecret.ClientSecretId);
+            await _clientService.DeleteClientSecretAsync(clientSecret);
 
             return Ok();
         }
@@ -147,9 +153,10 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [HttpDelete("Properties/{propertyId}")]
         public async Task<IActionResult> DeleteProperty(int propertyId)
         {
-            var clientPropertiesDto = new ClientPropertiesDto { ClientPropertyId = propertyId };
+            var clientProperty = new ClientPropertiesDto { ClientPropertyId = propertyId };
 
-            await _clientService.DeleteClientPropertyAsync(clientPropertiesDto);
+            await _clientService.GetClientPropertyAsync(clientProperty.ClientPropertyId);
+            await _clientService.DeleteClientPropertyAsync(clientProperty);
 
             return Ok();
         }
@@ -188,6 +195,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         {
             var clientClaimsDto = new ClientClaimsDto { ClientClaimId = claimId };
 
+            await _clientService.GetClientClaimAsync(claimId);
             await _clientService.DeleteClientClaimAsync(clientClaimsDto);
 
             return Ok();

@@ -87,6 +87,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]TRoleDto role)
         {
+            await _identityService.GetRoleAsync(role.Id.ToString());
             await _identityService.UpdateRoleAsync(role);
 
             return Ok();
@@ -97,6 +98,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         {
             var roleDto = new TRoleDto { Id = id };
 
+            await _identityService.GetRoleAsync(id.ToString());
             await _identityService.DeleteRoleAsync(roleDto);
 
             return Ok();
@@ -133,6 +135,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         {
             var roleDto = new TRoleClaimsDto { ClaimId = claimId, RoleId = id };
 
+            await _identityService.GetRoleClaimAsync(roleDto.RoleId.ToString(), roleDto.ClaimId);
             await _identityService.DeleteRoleClaimsAsync(roleDto);
 
             return Ok();
