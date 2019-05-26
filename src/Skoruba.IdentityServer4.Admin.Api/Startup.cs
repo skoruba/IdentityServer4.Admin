@@ -54,7 +54,7 @@ namespace Skoruba.IdentityServer4.Admin.Api
 
             var profileTypes = new HashSet<Type>
             {
-                typeof(IdentityMapperProfile<string, UserClaimsDto<string>, UserClaimDto<string>>)
+                typeof(IdentityMapperProfile<RoleDto<string>, string, UserRolesDto<RoleDto<string>, string, string>, string, UserClaimsDto<string>, UserClaimDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,RoleClaimDto<string>, RoleClaimsDto<string>>)
             };
 
             services.AddAdminAspNetIdentityServices<AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, UserDto<string>, string, RoleDto<string>, string, string, string,
@@ -91,7 +91,7 @@ namespace Skoruba.IdentityServer4.Admin.Api
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", ApiConfigurationConsts.ApiName);
             });
-            
+
             app.UseMvc();
         }
     }

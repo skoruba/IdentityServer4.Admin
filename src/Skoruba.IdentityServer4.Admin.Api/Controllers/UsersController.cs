@@ -33,7 +33,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         where TUsersDto : UsersDto<TUserDto, TUserDtoKey>
         where TRolesDto : RolesDto<TRoleDto, TRoleDtoKey>
         where TUserRolesDto : UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey>
-        where TUserClaimsDto : UserClaimsDto<TUserDtoKey>
+        where TUserClaimsDto : UserClaimsDto<TUserDtoKey>, new()
         where TUserProviderDto : UserProviderDto<TUserDtoKey>
         where TUserProvidersDto : UserProvidersDto<TUserDtoKey>
         where TUserChangePasswordDto : UserChangePasswordDto<TUserDtoKey>
@@ -84,7 +84,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
             return Ok();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> Put([FromBody]TUserDto user)
         {
             await _identityService.UpdateUserAsync(user);
@@ -103,75 +103,91 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpGet("{id}/Roles")]
-        public async Task<ActionResult<TUserRolesDto>> GetUserRoles(string id, int page = 1, int pageSize = 10)
+        public async Task<ActionResult<UserRolesApiDto<TRoleDto>>> GetUserRoles(string id, int page = 1, int pageSize = 10)
         {
             var userRoles = await _identityService.GetUserRolesAsync(id, page, pageSize);
-
-            return Ok(userRoles);
+            var userRolesApiDto = _mapper.Map<UserRolesApiDto<TRoleDto>>(userRoles);
+            
+            return Ok(userRolesApiDto);
         }
 
         [HttpPost("Roles")]
-        public async Task<IActionResult> PostUserRoles([FromBody]TUserRolesDto role)
+        public async Task<IActionResult> PostUserRoles([FromBody]UserRoleApiDto<TUserDtoKey, TRoleDtoKey> role)
         {
-            await _identityService.CreateUserRoleAsync(role);
+            var userRolesDto = _mapper.Map<TUserRolesDto>(role);
+            await _identityService.CreateUserRoleAsync(userRolesDto);
 
             return Ok();
         }
 
         [HttpDelete("Roles")]
-        public async Task<IActionResult> DeleteUserRoles([FromBody]TUserRolesDto role)
+        public async Task<IActionResult> DeleteUserRoles([FromBody]UserRoleApiDto<TUserDtoKey, TRoleDtoKey> role)
         {
-            await _identityService.DeleteUserRoleAsync(role);
+            var userRolesDto = _mapper.Map<TUserRolesDto>(role);
+            await _identityService.DeleteUserRoleAsync(userRolesDto);
 
             return Ok();
         }
 
         [HttpGet("{id}/Claims")]
-        public async Task<ActionResult<UserClaimsApiDto<string>>> GetUserClaims(TUserDtoKey id, int page = 1, int pageSize = 10)
+        public async Task<ActionResult<UserClaimsApiDto<TUserDtoKey>>> GetUserClaims(TUserDtoKey id, int page = 1, int pageSize = 10)
         {
             var claims = await _identityService.GetUserClaimsAsync(id.ToString(), page, pageSize);
 
-            var userClaimsApiDto = _mapper.Map<UserClaimsApiDto<string>>(claims);
+            var userClaimsApiDto = _mapper.Map<UserClaimsApiDto<TUserDtoKey>>(claims);
 
             return Ok(userClaimsApiDto);
         }
 
         [HttpPost("Claims")]
-        public async Task<IActionResult> PostUserClaims([FromBody]TUserClaimsDto claim)
+        public async Task<IActionResult> PostUserClaims([FromBody]UserClaimApiDto<TUserDtoKey> claim)
         {
-            await _identityService.CreateUserClaimsAsync(claim);
+            var userClaimDto = _mapper.Map<TUserClaimsDto>(claim);
+
+            await _identityService.CreateUserClaimsAsync(userClaimDto);
 
             return Ok();
         }
 
-        [HttpDelete("Claims")]
-        public async Task<IActionResult> DeleteUserClaims([FromBody]TUserClaimsDto claim)
+        [HttpDelete("{id}/Claims")]
+        public async Task<IActionResult> DeleteUserClaims([FromRoute]TUserDtoKey id, int claimId)
         {
-            await _identityService.DeleteUserClaimsAsync(claim);
+            var userClaimsDto = new TUserClaimsDto
+            {
+                ClaimId = claimId,
+                UserId = id
+            };
+
+            await _identityService.DeleteUserClaimsAsync(userClaimsDto);
 
             return Ok();
         }
 
         [HttpGet("{id}/Providers")]
-        public async Task<ActionResult<TUserProvidersDto>> GetUserProviders(TUserDtoKey id)
+        public async Task<ActionResult<UserProvidersApiDto<TUserDtoKey>>> GetUserProviders(TUserDtoKey id)
         {
             var userProvidersDto = await _identityService.GetUserProvidersAsync(id.ToString());
-
-            return Ok(userProvidersDto);
+            var userProvidersApiDto = _mapper.Map<UserProvidersApiDto<TUserDtoKey>>(userProvidersDto);
+            
+            return Ok(userProvidersApiDto);
         }
 
         [HttpDelete("Providers")]
-        public async Task<IActionResult> DeleteUserProviders([FromBody]TUserProviderDto provider)
+        public async Task<IActionResult> DeleteUserProviders([FromBody]UserProviderDeleteApiDto<TUserDtoKey> provider)
         {
-            await _identityService.DeleteUserProvidersAsync(provider);
+            var providerDto = _mapper.Map<TUserProviderDto>(provider);
+
+            await _identityService.DeleteUserProvidersAsync(providerDto);
 
             return Ok();
         }
 
         [HttpPost("ChangePassword")]
-        public async Task<IActionResult> PostChangePassword([FromBody]TUserChangePasswordDto password)
+        public async Task<IActionResult> PostChangePassword([FromBody]UserChangePasswordApiDto<TUserDtoKey> password)
         {
-            await _identityService.UserChangePasswordAsync(password);
+            var userChangePasswordDto = _mapper.Map<TUserChangePasswordDto>(password);
+
+            await _identityService.UserChangePasswordAsync(userChangePasswordDto);
 
             return Ok();
         }
