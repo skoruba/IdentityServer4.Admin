@@ -110,5 +110,14 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                     configuration.GetConnectionString(ConfigurationConsts.AdminLogDbConnectionStringKey),
                     optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
         }
+
+        public static void AddAuthorizationPolicies(this IServiceCollection services)
+        {
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(AuthorizationConsts.AdministrationPolicy,
+                    policy => policy.RequireRole(AuthorizationConsts.AdministrationRole));
+            });
+        }
     }
 }
