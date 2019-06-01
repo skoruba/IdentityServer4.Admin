@@ -186,6 +186,11 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                     {
                         secret.Value = secret.Value.ToSha256();
                     }
+
+                    client.Claims = client.ClientClaims
+                        .Select(c => new System.Security.Claims.Claim(c.Type, c.Value))
+                        .ToList();
+
                     await context.Clients.AddAsync(client.ToEntity());
                 }
 
