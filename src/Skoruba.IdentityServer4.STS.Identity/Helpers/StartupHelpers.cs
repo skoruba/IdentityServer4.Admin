@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Reflection;
 using IdentityServer4.EntityFramework.Interfaces;
+using IdentityServer4.ResponseHandling;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -237,6 +238,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         {
             var builder = services.AddIdentityServer(options =>
                 {
+                    options.IssuerUri = configuration["IssuerUri"];
                     options.Events.RaiseErrorEvents = true;
                     options.Events.RaiseInformationEvents = true;
                     options.Events.RaiseFailureEvents = true;
@@ -244,6 +246,12 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 })
                 .AddAspNetIdentity<TUserIdentity>()
                 .AddIdentityServerStoresWithDbContexts<TConfigurationDbContext, TPersistedGrantDbContext>(configuration, hostingEnvironment);
+
+            builder.Services.Remove(new ServiceDescriptor(
+                typeof(IDiscoveryResponseGenerator), typeof(DiscoveryResponseGenerator),ServiceLifetime.Transient
+            ));
+
+            builder.Services.AddTransient<IDiscoveryResponseGenerator, SkorubaDiscoveryResponseGenerator>();
 
             builder.AddCustomSigningCredential(configuration, logger);
             builder.AddCustomValidationKey(configuration, logger);

@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+  admin:
+    build:
+      context: .
+      dockerfile: src/Skoruba.IdentityServer4.Admin/Dockerfile
+    ports:
+      - "5001:5001"
+    networks:
+      - host
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5001
+      - "ConnectionStrings:ConfigurationDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
+      - "ConnectionStrings:PersistedGrantDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
+      - "ConnectionStrings:IdentityDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
+      - "ConnectionStrings:AdminLogDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
+      - "AdminConfiguration:IdentityAdminBaseUrl=http://localhost:5001"
+      - "AdminConfiguration:IdentityAdminRedirectUri=http://localhost:5001/signin-oidc"
+      - "AdminConfiguration:IdentityServerBaseUrl=http://sts:5000"
+    command: dotnet Skoruba.IdentityServer4.Admin.dll 
+    depends_on:
+      - db
+      - sts
+
+  sts:
+    build:
+      context: .
+      dockerfile: src/Skoruba.IdentityServer4.STS.Identity/Dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      - host
+    depends_on:
+      - db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - IssuerUri=http://localhost:5000
+      - "ConnectionStrings:ConfigurationDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
+      - "ConnectionStrings:PersistedGrantDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
+      - "ConnectionStrings:IdentityDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
+
+  db:
+    image: "mcr.microsoft.com/mssql/server"
+    ports:
+      - 1433
+    networks:
+      - host
+    environment:
+      SA_PASSWORD: "Password_123"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - /home/xmichaelx/mssql:/var/opt/mssql
+
+networks:
+  host:
+    driver: bridge
