@@ -20,7 +20,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             var result = await base.CreateDiscoveryDocumentAsync(baseUrl, issuerUri);
 
             result[OidcConstants.Discovery.AuthorizationEndpoint] = issuerUri + "/connect/authorize";
-
+            result[OidcConstants.Discovery.EndSessionEndpoint] = issuerUri + "/connect/endsession";
+                            
             return result;
         }
     }
