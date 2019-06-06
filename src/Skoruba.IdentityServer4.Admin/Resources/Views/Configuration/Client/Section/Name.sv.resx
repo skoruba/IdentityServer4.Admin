@@ -124,7 +124,7 @@
     <value>Autentiseringskodflöde med PKCE</value>
   </data>
   <data name="TitleDevice" xml:space="preserve">
-    <value>TV och begränsad inmatningsenhetsapplikation</value>
+    <value>Applikation för TV och enheter med enklare inmatning</value>
   </data>
   <data name="TitleDeviceFlow" xml:space="preserve">
     <value>Enhetsflöde</value>
@@ -142,13 +142,13 @@
     <value>Maskin/Robot</value>
   </data>
   <data name="TitleNative" xml:space="preserve">
-    <value>Inbyggd applikation - Mobil/Desktop</value>
+    <value>Native applikation - Mobil/Desktop</value>
   </data>
   <data name="TitlePasswordAndClient" xml:space="preserve">
     <value>Resursägarlösenord och klientanspråksflöde</value>
   </data>
   <data name="TitleSpa" xml:space="preserve">
-    <value>En sides applikation - Javascript</value>
+    <value>Single Page applikation - Javascript</value>
   </data>
   <data name="TitleWebHybrid" xml:space="preserve">
     <value>Webbapplikation - Serversida</value>

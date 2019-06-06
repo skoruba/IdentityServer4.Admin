@@ -33,11 +33,12 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             var persistedGrantByUsers = (from pe in DbContext.PersistedGrants
                                          select new PersistedGrantDataView
                                          {
-                                             SubjectId = pe.SubjectId
+                                             SubjectId = pe.SubjectId,
+                                             SubjectName = string.Empty
                                          })
                                         .Distinct();
 
-            Expression<Func<PersistedGrantDataView, bool>> searchCondition = x => x.SubjectId.Contains(search) || x.SubjectName.Contains(search);
+            Expression<Func<PersistedGrantDataView, bool>> searchCondition = x => x.SubjectId.Contains(search);
 
             var persistedGrantsData = await persistedGrantByUsers.WhereIf(!string.IsNullOrEmpty(search), searchCondition).PageBy(x => x.SubjectId, page, pageSize).ToListAsync();
             var persistedGrantsDataCount = await persistedGrantByUsers.WhereIf(!string.IsNullOrEmpty(search), searchCondition).CountAsync();
