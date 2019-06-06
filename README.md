@@ -56,8 +56,8 @@ Project template options:
 
 - Set Startup projects:
   - Skoruba.IdentityServer4.Admin
-  - Skoruba.IdentityServer4.STS.Identity
   - Skoruba.IdentityServer4.Admin.Api
+  - Skoruba.IdentityServer4.STS.Identity
 
 ## Configuration of Administration for Deployment
 
@@ -253,7 +253,7 @@ or using `Email`:
 
 - Admin UI Api:
 
-- `Skoruba.IdentityServer4.Admin.Api` - project with Api for managing data of IdentityServer4 and Asp.Net Core Identity, with swagger support as well
+  - `Skoruba.IdentityServer4.Admin.Api` - project with Api for managing data of IdentityServer4 and Asp.Net Core Identity, with swagger support as well
 
 - Admin UI:
 
