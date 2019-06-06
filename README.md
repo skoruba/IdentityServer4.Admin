@@ -56,6 +56,7 @@ Project template options:
 
 - Set Startup projects:
   - Skoruba.IdentityServer4.Admin
+  - Skoruba.IdentityServer4.Admin.Api
   - Skoruba.IdentityServer4.STS.Identity
 
 ## Configuration of Administration for Deployment
@@ -250,6 +251,10 @@ or using `Email`:
 
   - `Skoruba.IdentityServer4.STS.Identity` - project that contains the instance of IdentityServer4 and combine these samples - [Quickstart UI for the IdentityServer4 with Asp.Net Core Identity and EF Core storage](https://github.com/IdentityServer/IdentityServer4.Samples/tree/master/Quickstarts/Combined_AspId_and_EFStorage) and [damienbod - IdentityServer4 and Identity template](https://github.com/damienbod/IdentityServer4AspNetCoreIdentityTemplate)
 
+- Admin UI Api:
+
+  - `Skoruba.IdentityServer4.Admin.Api` - project with Api for managing data of IdentityServer4 and Asp.Net Core Identity, with swagger support as well
+
 - Admin UI:
 
   - `Skoruba.IdentityServer4.Admin` - ASP.NET Core MVC application that contains Admin UI
@@ -362,10 +367,10 @@ It is possible to define the configuration according the client type - by defaul
 - [x] User registration
 - [x] Email service
   - [x] SendGrid
-- [ ] Add API ([#105](https://github.com/skoruba/IdentityServer4.Admin/issues/105))
-  - [ ] IdentityServer4
-  - [ ] Asp.Net Core Identity
-  - [ ] Add swagger support
+- [x] Add API
+  - [x] IdentityServer4
+  - [x] Asp.Net Core Identity
+  - [x] Add swagger support
 
 ### 1.1.0
 - [ ] Add audit logs to track changes ([#61](https://github.com/skoruba/IdentityServer4.Admin/issues/61))
