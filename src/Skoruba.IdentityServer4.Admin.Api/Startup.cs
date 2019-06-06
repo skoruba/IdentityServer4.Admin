@@ -121,7 +121,7 @@ namespace Skoruba.IdentityServer4.Admin.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", ApiConfigurationConsts.ApiName);
 
                 c.OAuthClientId(AuthorizationConsts.ApiClientId);
-                c.OAuthAppName("Skoruba IdentityServer Admin Api");
+                c.OAuthAppName(ApiConfigurationConsts.ApiName);
             });
 
             app.UseMvc();
