@@ -45,14 +45,14 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories
                 var pagedList = new PagedList<PersistedGrantDataView>();
 
                 var persistedGrantByUsers = (from pe in PersistedGrantDbContext.PersistedGrants.ToList()
-                                             join us in IdentityDbContext.Users.ToList() on pe.SubjectId equals us.Id.ToString() into per
-                                             from identity in per.DefaultIfEmpty()
-                                             select new PersistedGrantDataView
-                                             {
-                                                 SubjectId = pe.SubjectId,
-                                                 SubjectName = identity == null ? string.Empty : identity.UserName
-                                             })
-                    .Distinct();
+                        join us in IdentityDbContext.Users.ToList() on pe.SubjectId equals us.Id.ToString() into per
+                        from identity in per.DefaultIfEmpty()
+                        select new PersistedGrantDataView
+                        {
+                            SubjectId = pe.SubjectId,
+                            SubjectName = identity == null ? string.Empty : identity.UserName
+                        })
+                    .GroupBy(x => x.SubjectId).Select(g => g.First());
 
                 if (!string.IsNullOrEmpty(search))
                 {

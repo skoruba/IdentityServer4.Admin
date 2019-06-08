@@ -98,7 +98,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         public async Task<ActionResult<ClientSecretApiDto>> GetSecret(int secretId)
         {
             var clientSecretsDto = await _clientService.GetClientSecretAsync(secretId);
-            var clientSecretDto = clientSecretsDto.ToClientApiModel<ClientSecretDto>();
+            var clientSecretDto = clientSecretsDto.ToClientApiModel<ClientSecretApiDto>();
 
             return Ok(clientSecretDto);
         }

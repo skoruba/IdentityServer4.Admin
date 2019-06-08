@@ -29,6 +29,7 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.IdentityServer
                         new Scope
                         {
                             Name = adminConfiguration.IdentityAdminApiScope,
+                            DisplayName = adminConfiguration.IdentityAdminApiScope,
                             UserClaims = new List<string>
                             {
                                 "role"

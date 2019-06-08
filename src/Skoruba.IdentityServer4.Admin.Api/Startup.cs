@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Skoruba.IdentityServer4.Admin.Api.Configuration;
 using Skoruba.IdentityServer4.Admin.Api.Configuration.Authorization;
 using Skoruba.IdentityServer4.Admin.Api.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.Api.ExceptionHandling;
@@ -44,30 +45,15 @@ namespace Skoruba.IdentityServer4.Admin.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var adminApiConfiguration = Configuration.GetSection(nameof(AdminApiConfiguration)).Get<AdminApiConfiguration>();
+            services.AddSingleton(adminApiConfiguration);
+
             services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>(Configuration);
             services.AddScoped<ControllerExceptionFilterAttribute>();
 
-            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-                .AddIdentityServerAuthentication(options =>
-                {
-                    options.Authority = AuthorizationConsts.IdentityServerBaseUrl;
-                    options.ApiName = AuthorizationConsts.ApiName;
-#if DEBUG
-                    options.RequireHttpsMetadata = false;
-#else
-                    options.RequireHttpsMetadata = true;
-#endif
-                });
-
-            services.AddIdentity<UserIdentity, UserIdentityRole>(options =>
-                {
-                    options.User.RequireUniqueEmail = true;
-                })
-                .AddEntityFrameworkStores<AdminIdentityDbContext>()
-                .AddDefaultTokenProviders();
-
+            services.AddApiAuthentication<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(adminApiConfiguration);
             services.AddAuthorizationPolicies();
-            
+
             var profileTypes = new HashSet<Type>
             {
                 typeof(IdentityMapperProfile<RoleDto<string>, string, UserRolesDto<RoleDto<string>, string, string>, string, UserClaimsDto<string>, UserClaimDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,RoleClaimDto<string>, RoleClaimsDto<string>>)
@@ -96,9 +82,9 @@ namespace Skoruba.IdentityServer4.Admin.Api
                 options.AddSecurityDefinition("oauth2", new OAuth2Scheme
                 {
                     Flow = "implicit",
-                    AuthorizationUrl = $"{AuthorizationConsts.IdentityServerBaseUrl}/connect/authorize",
+                    AuthorizationUrl = $"{adminApiConfiguration.IdentityServerBaseUrl}/connect/authorize",
                     Scopes = new Dictionary<string, string> {
-                        { AuthorizationConsts.ApiName, ApiConfigurationConsts.ApiName }
+                        { adminApiConfiguration.OidcApiName, ApiConfigurationConsts.ApiName }
                     }
                 });
 
@@ -106,7 +92,7 @@ namespace Skoruba.IdentityServer4.Admin.Api
             });
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, AdminApiConfiguration adminApiConfiguration)
         {
             if (env.IsDevelopment())
             {
@@ -120,7 +106,7 @@ namespace Skoruba.IdentityServer4.Admin.Api
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", ApiConfigurationConsts.ApiName);
 
-                c.OAuthClientId(AuthorizationConsts.ApiClientId);
+                c.OAuthClientId(adminApiConfiguration.OidcSwaggerUIClientId);
                 c.OAuthAppName(ApiConfigurationConsts.ApiName);
             });
 

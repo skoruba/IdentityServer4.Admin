@@ -9,7 +9,6 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.IdentityServer
 {
     public class Clients
     {
-
         public static IEnumerable<Client> GetAdminClient(IAdminConfiguration adminConfiguration)
         {
 
