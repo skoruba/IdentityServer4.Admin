@@ -149,7 +149,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
             if (!context.ApiResources.Any())
             {
-                foreach (var resource in ClientResources.GetApiResources().ToList())
+                foreach (var resource in ClientResources.GetApiResources(adminConfiguration).ToList())
                 {
                     await context.ApiResources.AddAsync(resource.ToEntity());
                 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 
@@ -6,6 +7,10 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers.Configura
 {
     public interface IMapperConfigurationBuilder
     {
+        HashSet<Type> ProfileTypes { get; }
+
+        IMapperConfigurationBuilder AddProfilesType(HashSet<Type> profileTypes);
+
         IMapperConfigurationBuilder UseIdentityMappingProfile<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUser, TRole,
             TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,

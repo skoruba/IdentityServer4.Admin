@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Entities;
-using Microsoft.AspNetCore.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 
@@ -15,6 +14,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories.Inte
 	    Task<int> DeletePersistedGrantAsync(string key);
 	    Task<int> DeletePersistedGrantsAsync(string userId);
         Task<bool> ExistsPersistedGrantsAsync(string subjectId);
-	    Task<int> SaveAllChangesAsync();
+        Task<bool> ExistsPersistedGrantAsync(string key);
+        Task<int> SaveAllChangesAsync();
 	}
 }

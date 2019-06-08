@@ -44,6 +44,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             return DbContext.IdentityResources
                 .Include(x => x.UserClaims)
                 .Where(x => x.Id == identityResourceId)
+                .AsNoTracking()
                 .SingleOrDefaultAsync();
         }
 
