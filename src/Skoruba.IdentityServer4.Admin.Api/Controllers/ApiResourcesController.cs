@@ -52,7 +52,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
             return Ok();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> Put([FromBody]ApiResourceApiDto apiResourceApi)
         {
             var apiResourceDto = apiResourceApi.ToApiResourceApiModel<ApiResourceDto>();
