@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Adm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts", "src\Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts\Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts.csproj", "{81019B1A-C554-44BA-A9EF-6BE6A223AD20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skoruba.IdentityServer4.STS.Identity.IntegrationTests", "tests\Skoruba.IdentityServer4.STS.Identity.IntegrationTests\Skoruba.IdentityServer4.STS.Identity.IntegrationTests.csproj", "{83319150-92D2-408C-A944-52DBE6AB8B37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.STS.Identity.IntegrationTests", "tests\Skoruba.IdentityServer4.STS.Identity.IntegrationTests\Skoruba.IdentityServer4.STS.Identity.IntegrationTests.csproj", "{83319150-92D2-408C-A944-52DBE6AB8B37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skoruba.IdentityServer4.Admin.Api", "src\Skoruba.IdentityServer4.Admin.Api\Skoruba.IdentityServer4.Admin.Api.csproj", "{8F112368-2E45-4C3A-922E-85AB6056F559}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,10 @@ Global
 		{83319150-92D2-408C-A944-52DBE6AB8B37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83319150-92D2-408C-A944-52DBE6AB8B37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83319150-92D2-408C-A944-52DBE6AB8B37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F112368-2E45-4C3A-922E-85AB6056F559}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F112368-2E45-4C3A-922E-85AB6056F559}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F112368-2E45-4C3A-922E-85AB6056F559}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F112368-2E45-4C3A-922E-85AB6056F559}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +103,7 @@ Global
 		{CA63CC7B-BE27-4737-AE91-42E43F729A1E} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
 		{81019B1A-C554-44BA-A9EF-6BE6A223AD20} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
 		{83319150-92D2-408C-A944-52DBE6AB8B37} = {0BC0CC4E-A0F1-45E8-B41A-AE0FA76BF3E5}
+		{8F112368-2E45-4C3A-922E-85AB6056F559} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B3166EDE-037B-4C68-BEBA-5DE9C5E3DB82}

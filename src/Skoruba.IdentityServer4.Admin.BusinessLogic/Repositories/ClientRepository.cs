@@ -40,6 +40,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
                 .Include(x => x.AllowedCorsOrigins)
                 .Include(x => x.Properties)
                 .Where(x => x.Id == clientId)
+                .AsNoTracking()
                 .SingleOrDefaultAsync();
         }
 
@@ -204,6 +205,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             return DbContext.ClientSecrets
                 .Include(x => x.Client)
                 .Where(x => x.Id == clientSecretId)
+                .AsNoTracking()
                 .SingleOrDefaultAsync();
         }
 
@@ -240,6 +242,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             return DbContext.ClientClaims
                 .Include(x => x.Client)
                 .Where(x => x.Id == clientClaimId)
+                .AsNoTracking()
                 .SingleOrDefaultAsync();
         }
 

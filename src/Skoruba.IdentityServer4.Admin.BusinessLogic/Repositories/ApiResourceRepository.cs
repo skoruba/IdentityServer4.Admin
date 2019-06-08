@@ -44,6 +44,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             return DbContext.ApiResources
                 .Include(x => x.UserClaims)
                 .Where(x => x.Id == apiResourceId)
+                .AsNoTracking()
                 .SingleOrDefaultAsync();
         }
 
@@ -184,6 +185,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
                 .Include(x => x.UserClaims)
                 .Include(x => x.ApiResource)
                 .Where(x => x.Id == apiScopeId && x.ApiResource.Id == apiResourceId)
+                .AsNoTracking()
                 .SingleOrDefaultAsync();
         }
 
@@ -251,6 +253,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
             return DbContext.ApiSecrets
                 .Include(x => x.ApiResource)
                 .Where(x => x.Id == apiSecretId)
+                .AsNoTracking()
                 .SingleOrDefaultAsync();
         }
 

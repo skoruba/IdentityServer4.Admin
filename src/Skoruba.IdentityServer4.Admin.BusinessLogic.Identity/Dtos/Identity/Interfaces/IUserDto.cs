@@ -13,7 +13,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Int
         bool PhoneNumberConfirmed { get; set; }
         bool LockoutEnabled { get; set; }
         bool TwoFactorEnabled { get; set; }
-        string AccessFailedCount { get; set; }
+        int AccessFailedCount { get; set; }
         DateTimeOffset? LockoutEnd { get; set; }
     }
 }
