@@ -224,6 +224,53 @@ or using `Email`:
   }
 ```
 
+## How to configure an external provider in STS
+
+- In `Skoruba.IdentityServer4.STS.Identity/Helpers/StartupHelpers.cs` - is method called `AddExternalProviders` which contains the example with `GitHub` and in `appsettings.json`:
+
+```
+"ExternalProvidersConfiguration": {
+        "UseGitHubProvider": false,
+        "GitHubClientId": "",
+        "GitHubClientSecret": ""
+}
+```
+
+- It is possible to extend `ExternalProvidersConfiguration` with another configuration properties.
+
+### List of external providers for ASP.NET Core:
+  - https://github.com/aspnet-contrib/AspNet.Security.OAuth.Providers
+  - https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/
+ 
+### Azure AD
+- Great article how to set up Azure AD:
+  - https://azure.microsoft.com/cs-cz/resources/samples/active-directory-dotnet-webapp-openidconnect-aspnetcore/
+
+## Email service
+
+- It is possible to set up emails via:
+
+### SendGrid
+
+In STS project - in `appsettings.json`:
+```
+"SendgridConfiguration": {
+        "ApiKey": "",
+        "SourceEmail": "",
+        "SourceName": ""
+    }
+```
+
+### SMTP
+
+```
+"SmtpConfiguration": {
+        "Host": "",
+        "Login": "",
+        "Password": ""
+    }
+```
+
 ## Localizations - labels, messages
 
 - All labels and messages are stored in the resources `.resx` - locatated in `/Resources`
