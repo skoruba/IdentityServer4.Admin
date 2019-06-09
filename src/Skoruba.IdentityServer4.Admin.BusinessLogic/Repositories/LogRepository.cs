@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Log;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
@@ -18,6 +20,16 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
         public LogRepository(TDbContext dbContext)
         {
             DbContext = dbContext;
+        }
+
+        public virtual async Task DeleteLogsOlderThanAsync(DateTime deleteOlderThan)
+        {
+            var logsToDelete = await DbContext.Logs.Where(x => x.TimeStamp.DateTime.Date < deleteOlderThan.Date).ToListAsync();
+
+            if(logsToDelete.Count == 0) return;
+
+            DbContext.Logs.RemoveRange(logsToDelete);
+            await DbContext.SaveChangesAsync();
         }
 
         public virtual async Task<PagedList<Log>> GetLogsAsync(string search, int page = 1, int pageSize = 10)

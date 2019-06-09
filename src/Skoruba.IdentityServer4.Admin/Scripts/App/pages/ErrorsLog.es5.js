@@ -2,6 +2,20 @@
 
 $(function () {
 
+    $(".error-log-delete-button").click(function () {
+
+        $(".error-log-form").validate();
+
+        if ($(".error-log-form").validate().form()) {
+
+            $("#deleteLogsModal").modal("show");
+            return false;
+        } else {
+            $(this).submit();
+            return false;
+        }
+    });
+
     $(".row-error-detail>td").each(function () {
 
         var json = $(this).data("error-json");

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Log;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
@@ -21,6 +22,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             var logs = pagedList.ToModel();
 
             return logs;
+        }
+
+        public virtual async Task DeleteLogsOlderThanAsync(DateTime deleteOlderThan)
+        {
+            await Repository.DeleteLogsOlderThanAsync(deleteOlderThan);
         }
     }
 }

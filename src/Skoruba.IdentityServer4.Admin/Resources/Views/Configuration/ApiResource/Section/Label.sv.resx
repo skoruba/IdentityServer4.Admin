@@ -135,6 +135,12 @@
   <data name="Enabled_Label" xml:space="preserve">
     <value>Aktiverad</value>
   </data>
+  <data name="Expiration_Info" xml:space="preserve">
+    <value>Förfallodatum</value>
+  </data>
+  <data name="Expiration_Label" xml:space="preserve">
+    <value>Förfallodatum</value>
+  </data>
   <data name="Name_Info" xml:space="preserve">
     <value>API:ets unika namn. Detta värdet används för autentisering och tillgängligörs för åhörarna av den utgående åtkomsttoken.</value>
   </data>
@@ -164,6 +170,12 @@
   </data>
   <data name="Scopes_Label" xml:space="preserve">
     <value>Begränsningar</value>
+  </data>
+  <data name="SecretDescription_Info" xml:space="preserve">
+    <value>Beskrivning</value>
+  </data>
+  <data name="SecretDescription_Label" xml:space="preserve">
+    <value>Beskrivning</value>
   </data>
   <data name="Secrets_Info" xml:space="preserve">
     <value>API hemligheten används för självinspektionsändpunkten. API:et kan autentsiera självinspektionen med hjälp av API namnet och hemligheten.</value>

@@ -446,4 +446,16 @@ OneTime,  uppdateringstoken kommer att ändras när token uppdateras</value>
   <data name="UserCodeType_Label" xml:space="preserve">
     <value>Användarkodtyp</value>
   </data>
+  <data name="Expiration_Info" xml:space="preserve">
+    <value>Förfallodatum</value>
+  </data>
+  <data name="Expiration_Label" xml:space="preserve">
+    <value>Förfallodatum</value>
+  </data>
+  <data name="SecretDescription_Info" xml:space="preserve">
+    <value>Beskrivning</value>
+  </data>
+  <data name="SecretDescription_Label" xml:space="preserve">
+    <value>Beskrivning</value>
+  </data>
 </root>
