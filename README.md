@@ -25,7 +25,7 @@ The application is written in the **Asp.Net Core MVC - using .NET Core 2.2**
 - Install the dotnet new template:
 
 ```sh
-dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-beta6
+dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-beta7
 ```
 
 - Create new project:
@@ -291,6 +291,15 @@ In STS project - in `appsettings.json`:
 
 ## Localizations - labels, messages
 
+- The project has following translations:
+  - English
+  - Chinese
+  - Russian
+  - Persian
+  - Swedish
+  
+#### Feel free to send a PR with your translation. :blush:
+
 - All labels and messages are stored in the resources `.resx` - locatated in `/Resources`
 
   - Client label descriptions from - http://docs.identityserver.io/en/latest/reference/client.html
@@ -409,7 +418,7 @@ It is possible to define the configuration according the client type - by defaul
 
 ![Skoruba.IdentityServer4.Admin Diagram](docs/Images/Skoruba.IdentityServer4.Admin-App-Diagram.png)
 
-## Plan & Vision
+## Roadmap & Vision
 
 ### 1.0.0:
 
