@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Common;
 
-namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Constants
+namespace Skoruba.IdentityServer4.Admin.EntityFramework.Constants
 {
     public static class ClientConsts
     {

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Log;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Common;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
 {

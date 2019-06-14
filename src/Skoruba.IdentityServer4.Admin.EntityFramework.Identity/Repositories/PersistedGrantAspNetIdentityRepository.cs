@@ -6,14 +6,14 @@ using IdentityServer4.EntityFramework.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Enums;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Helpers;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories.Interfaces;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Common;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Enums;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Extensions;
 
-namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories
+namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
 {
     public class PersistedGrantAspNetIdentityRepository<TIdentityDbContext, TPersistedGrantDbContext, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> : IPersistedGrantAspNetIdentityRepository
         where TIdentityDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>

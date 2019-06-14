@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{588205D4-3A30-4DA4-849D-C7422C396DAA}"
 EndProject
@@ -31,7 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Adm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.STS.Identity.IntegrationTests", "tests\Skoruba.IdentityServer4.STS.Identity.IntegrationTests\Skoruba.IdentityServer4.STS.Identity.IntegrationTests.csproj", "{83319150-92D2-408C-A944-52DBE6AB8B37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skoruba.IdentityServer4.Admin.Api", "src\Skoruba.IdentityServer4.Admin.Api\Skoruba.IdentityServer4.Admin.Api.csproj", "{8F112368-2E45-4C3A-922E-85AB6056F559}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.Api", "src\Skoruba.IdentityServer4.Admin.Api\Skoruba.IdentityServer4.Admin.Api.csproj", "{8F112368-2E45-4C3A-922E-85AB6056F559}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skoruba.IdentityServer4.Admin.EntityFramework.Shared", "src\Skoruba.IdentityServer4.Admin.EntityFramework.Shared\Skoruba.IdentityServer4.Admin.EntityFramework.Shared.csproj", "{E18F8C70-7448-4039-9D78-1369D7F498EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,10 @@ Global
 		{8F112368-2E45-4C3A-922E-85AB6056F559}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F112368-2E45-4C3A-922E-85AB6056F559}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F112368-2E45-4C3A-922E-85AB6056F559}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E18F8C70-7448-4039-9D78-1369D7F498EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E18F8C70-7448-4039-9D78-1369D7F498EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E18F8C70-7448-4039-9D78-1369D7F498EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E18F8C70-7448-4039-9D78-1369D7F498EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +110,7 @@ Global
 		{81019B1A-C554-44BA-A9EF-6BE6A223AD20} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
 		{83319150-92D2-408C-A944-52DBE6AB8B37} = {0BC0CC4E-A0F1-45E8-B41A-AE0FA76BF3E5}
 		{8F112368-2E45-4C3A-922E-85AB6056F559} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
+		{E18F8C70-7448-4039-9D78-1369D7F498EF} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B3166EDE-037B-4C68-BEBA-5DE9C5E3DB82}

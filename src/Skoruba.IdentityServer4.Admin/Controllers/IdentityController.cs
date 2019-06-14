@@ -210,7 +210,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             var rolesDto = new UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey>
             {
                 UserId = id,
-                RolesList = roles.Select(x => new SelectItem(x.Id.ToString(), x.Name)).ToList(),
+                RolesList = roles.Select(x => new SelectItemDto(x.Id.ToString(), x.Name)).ToList(),
                 RoleId = roleId,
                 UserName = userDto.UserName
             };

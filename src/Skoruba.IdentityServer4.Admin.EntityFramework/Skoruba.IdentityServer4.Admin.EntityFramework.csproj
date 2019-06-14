@@ -15,4 +15,8 @@
     <PackageReference Include="IdentityServer4.EntityFramework" Version="2.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.Shared\Skoruba.IdentityServer4.Admin.EntityFramework.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

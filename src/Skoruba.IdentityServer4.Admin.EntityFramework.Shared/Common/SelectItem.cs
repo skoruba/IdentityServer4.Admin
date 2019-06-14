@@ -1,4 +1,4 @@
-﻿namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
+﻿namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Common
 {
 	public class SelectItem
 	{

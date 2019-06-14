@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
+using IdentityServer4.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Grant;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Common;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
 {
@@ -20,12 +21,12 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
             return grant == null ? null : Mapper.Map<PersistedGrantsDto>(grant);
         }
 
-        public static PersistedGrantsDto ToModel(this PagedList<global::IdentityServer4.EntityFramework.Entities.PersistedGrant> grant)
+        public static PersistedGrantsDto ToModel(this PagedList<PersistedGrant> grant)
         {
             return grant == null ? null : Mapper.Map<PersistedGrantsDto>(grant);
         }
 
-        public static PersistedGrantDto ToModel(this global::IdentityServer4.EntityFramework.Entities.PersistedGrant grant)
+        public static PersistedGrantDto ToModel(this PersistedGrant grant)
         {
             return grant == null ? null : Mapper.Map<PersistedGrantDto>(grant);
         }

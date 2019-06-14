@@ -7,6 +7,7 @@ using AutoMapper;
 using IdentityServer4.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Common;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
 {
@@ -17,6 +18,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
             // entity to model
             CreateMap<Client, ClientDto>(MemberList.Destination)
                 .ForMember(dest => dest.ProtocolType, opt => opt.Condition(srs => srs != null))
+                .ReverseMap();
+
+            CreateMap<SelectItem, SelectItemDto>(MemberList.Destination)
                 .ReverseMap();
 
             CreateMap<ClientGrantType, string>()

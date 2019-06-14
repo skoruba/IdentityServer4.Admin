@@ -4,14 +4,14 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Entities;
 using Microsoft.EntityFrameworkCore;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Enums;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Common;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Enums;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Extensions;
 
-namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories
+namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
 {
     public class PersistedGrantRepository<TDbContext> : IPersistedGrantRepository
         where TDbContext : DbContext, IAdminPersistedGrantDbContext

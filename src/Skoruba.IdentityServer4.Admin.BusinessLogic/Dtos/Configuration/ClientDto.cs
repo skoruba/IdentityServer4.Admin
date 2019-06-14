@@ -29,7 +29,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
         public int? ConsentLifetime { get; set; }
 
         public int AccessTokenType { get; set; }
-        public List<SelectItem> AccessTokenTypes { get; set; }
+        public List<SelectItemDto> AccessTokenTypes { get; set; }
 
         public bool AllowAccessTokensViaBrowser { get; set; }
         public bool AllowOfflineAccess { get; set; }
@@ -67,13 +67,13 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
 
         public string ProtocolType { get; set; } = "oidc";
 
-        public List<SelectItem> ProtocolTypes { get; set; }
+        public List<SelectItemDto> ProtocolTypes { get; set; }
 
         public int RefreshTokenExpiration { get; set; } = 1;
-        public List<SelectItem> RefreshTokenExpirations { get; set; }
+        public List<SelectItemDto> RefreshTokenExpirations { get; set; }
 
         public int RefreshTokenUsage { get; set; } = 1;
-        public List<SelectItem> RefreshTokenUsages { get; set; }
+        public List<SelectItemDto> RefreshTokenUsages { get; set; }
 
         public int SlidingRefreshTokenLifetime { get; set; } = 1296000;
 

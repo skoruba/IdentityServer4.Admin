@@ -1,10 +1,8 @@
 ﻿using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Entities;
-using Microsoft.EntityFrameworkCore;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Common;
 
-namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces
+namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
 {
     public interface IIdentityResourceRepository
     {

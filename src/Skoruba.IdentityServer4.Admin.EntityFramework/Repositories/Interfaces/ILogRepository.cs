@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Common;
 
-namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces
+namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
 {
     public interface ILogRepository
     {
