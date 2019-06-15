@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Common;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.Interfaces
 {

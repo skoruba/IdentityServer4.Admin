@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Entities;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Common;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
 using ApiResource = IdentityServer4.EntityFramework.Entities.ApiResource;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces

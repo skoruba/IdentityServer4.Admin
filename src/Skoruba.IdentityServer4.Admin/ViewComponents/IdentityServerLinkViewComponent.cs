@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.ViewComponents

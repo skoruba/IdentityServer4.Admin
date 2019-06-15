@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Skoruba.IdentityServer4.Admin.Api.Configuration;
@@ -13,8 +11,8 @@ using Skoruba.IdentityServer4.Admin.Api.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Api.Helpers;
 using Skoruba.IdentityServer4.Admin.Api.Mappers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
-using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Skoruba.IdentityServer4.Admin.Api

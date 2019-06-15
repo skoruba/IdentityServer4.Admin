@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Extensions
+namespace Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Extensions
 {
     public static class QueryableExtensions
     {

@@ -10,8 +10,8 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.ExceptionHandling;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.Interfaces;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Common;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
 {
