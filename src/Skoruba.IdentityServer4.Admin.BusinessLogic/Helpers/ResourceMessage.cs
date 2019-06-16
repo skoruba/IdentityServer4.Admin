@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers
+﻿namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers
 {
     public class ResourceMessage
     {
