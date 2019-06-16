@@ -11,14 +11,9 @@ with:
 Skoruba.IdentityServer4.Admin.EntityFramework
 
 # Replace:
-Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts
+Skoruba.IdentityServer4.Admin.EntityFramework.Shared
 with:
-SkorubaIdentityServer4Admin.Admin.EntityFramework.DbContexts
-
-# Replace:
-Skoruba.IdentityServer4.Admin.EntityFramework.Identity
-with:
-SkorubaIdentityServer4Admin.Admin.EntityFramework.Identity
+SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared
 
 # Fix nuget package name
 # Copy fixed src from SkorubaIdentityServer4Admin to template-publish
