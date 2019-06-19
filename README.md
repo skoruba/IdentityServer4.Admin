@@ -507,3 +507,9 @@ Contributions of any kind are welcome!
 I am happy to share my attempt of the implementation of the administration for IdentityServer4 and ASP.NET Core Identity.
 
 Any feedback is welcome - feel free to create an issue or send me an email - [jan@skoruba.com](mailto:jan@skoruba.com). Thank you :blush:
+
+## Support and Donation 🕊️
+
+If you like my work, you can support me by donation. 👍 
+
+https://www.paypal.me/skoruba
