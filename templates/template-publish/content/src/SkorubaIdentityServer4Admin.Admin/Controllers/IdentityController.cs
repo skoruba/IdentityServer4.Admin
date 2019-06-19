@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfaces;
@@ -210,7 +209,7 @@ namespace SkorubaIdentityServer4Admin.Admin.Controllers
             var rolesDto = new UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey>
             {
                 UserId = id,
-                RolesList = roles.Select(x => new SelectItem(x.Id.ToString(), x.Name)).ToList(),
+                RolesList = roles.Select(x => new SelectItemDto(x.Id.ToString(), x.Name)).ToList(),
                 RoleId = roleId,
                 UserName = userDto.UserName
             };
