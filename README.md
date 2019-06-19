@@ -342,8 +342,10 @@ In STS project - in `appsettings.json`:
   - `Skoruba.IdentityServer4.Admin.EntityFramework` - EF Core data layer that contains Entities for the IdentityServer4
 
   - `Skoruba.IdentityServer4.Admin.EntityFramework.Identity` - EF Core data layer that contains Entities for the Asp.Net Core Identity
+  
+  - `Skoruba.IdentityServer4.Admin.EntityFramework.Extensions` - project that contains extensions related to EntityFramework
 
-  - `Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts` - project that contains DbContexts for the IdentityServer4, Logging and Asp.Net Core Identity
+  - `Skoruba.IdentityServer4.Admin.EntityFramework.Shared` - project that contains DbContexts for the IdentityServer4, Logging and Asp.Net Core Identity, inluding shared Identity entities
 
 - Tests:
 
