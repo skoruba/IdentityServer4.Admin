@@ -31,15 +31,15 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
 
         List<string> GetGrantTypes(string grant, int limit = 0);
 
-        List<SelectItem> GetAccessTokenTypes();
+        List<SelectItemDto> GetAccessTokenTypes();
 
-        List<SelectItem> GetTokenExpirations();
+        List<SelectItemDto> GetTokenExpirations();
 
-        List<SelectItem> GetTokenUsage();
+        List<SelectItemDto> GetTokenUsage();
 
-        List<SelectItem> GetHashTypes();
+        List<SelectItemDto> GetHashTypes();
 
-        List<SelectItem> GetSecretTypes();
+        List<SelectItemDto> GetSecretTypes();
 
         List<string> GetStandardClaims(string claim, int limit = 0);
 
@@ -67,6 +67,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
 
         Task<int> DeleteClientPropertyAsync(ClientPropertiesDto clientProperty);
 
-        List<SelectItem> GetProtocolTypes();
+        List<SelectItemDto> GetProtocolTypes();
     }
 }

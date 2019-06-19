@@ -6,11 +6,12 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Enums;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.ExceptionHandling;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 {
@@ -236,44 +237,44 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return grantTypes;
         }
 
-        public virtual List<SelectItem> GetAccessTokenTypes()
+        public virtual List<SelectItemDto> GetAccessTokenTypes()
         {
-            var accessTokenTypes = ClientRepository.GetAccessTokenTypes();
+            var accessTokenTypes = ClientRepository.GetAccessTokenTypes().ToModel();
 
             return accessTokenTypes;
         }
 
-        public virtual List<SelectItem> GetTokenExpirations()
+        public virtual List<SelectItemDto> GetTokenExpirations()
         {
-            var tokenExpirations = ClientRepository.GetTokenExpirations();
+            var tokenExpirations = ClientRepository.GetTokenExpirations().ToModel();
 
             return tokenExpirations;
         }
 
-        public virtual List<SelectItem> GetTokenUsage()
+        public virtual List<SelectItemDto> GetTokenUsage()
         {
-            var tokenUsage = ClientRepository.GetTokenUsage();
+            var tokenUsage = ClientRepository.GetTokenUsage().ToModel();
 
             return tokenUsage;
         }
 
-        public virtual List<SelectItem> GetHashTypes()
+        public virtual List<SelectItemDto> GetHashTypes()
         {
-            var hashTypes = ClientRepository.GetHashTypes();
+            var hashTypes = ClientRepository.GetHashTypes().ToModel();
 
             return hashTypes;
         }
 
-        public virtual List<SelectItem> GetSecretTypes()
+        public virtual List<SelectItemDto> GetSecretTypes()
         {
-            var secretTypes = ClientRepository.GetSecretTypes();
+            var secretTypes = ClientRepository.GetSecretTypes().ToModel();
 
             return secretTypes;
         }
 
-        public virtual List<SelectItem> GetProtocolTypes()
+        public virtual List<SelectItemDto> GetProtocolTypes()
         {
-            var protocolTypes = ClientRepository.GetProtocolTypes();
+            var protocolTypes = ClientRepository.GetProtocolTypes().ToModel();
 
             return protocolTypes;
         }

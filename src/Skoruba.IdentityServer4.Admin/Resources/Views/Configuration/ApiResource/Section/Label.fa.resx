@@ -135,6 +135,12 @@
   <data name="Enabled_Label" xml:space="preserve">
     <value>فعال</value>
   </data>
+  <data name="Expiration_Info" xml:space="preserve">
+    <value>انقضاء</value>
+  </data>
+  <data name="Expiration_Label" xml:space="preserve">
+    <value>انقضاء</value>
+  </data>
   <data name="Name_Info" xml:space="preserve">
     <value>نام منحصر به فرد API. این مقدار برای احراز هویت با استفاده از خودآزمایی استفاده می شود و به توکن دسترسی خروجی مخاطبان اضافه می شود.</value>
   </data>
@@ -164,6 +170,12 @@
   </data>
   <data name="Scopes_Label" xml:space="preserve">
     <value>اسکوپ ها</value>
+  </data>
+  <data name="SecretDescription_Info" xml:space="preserve">
+    <value>شرح</value>
+  </data>
+  <data name="SecretDescription_Label" xml:space="preserve">
+    <value>شرح</value>
   </data>
   <data name="Secrets_Info" xml:space="preserve">
     <value>رمز API برای نقطه پایانی خودآزمایی استفاده می شود. API با استفاده از نام و رمز API میتواند با استفاده از خودآزمایی تایید هویت شود.</value>

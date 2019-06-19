@@ -36,27 +36,27 @@
 		<div class="col-12">
 			<table class="table table-striped">
 				<thead>
-					<tr>
-						<th>@Localizer["TableSubjectId"]</th>
-						<th>@Localizer["TableType"]</th>
-						<th>@Localizer["TableExpiration"]</th>
-						<th>@Localizer["TableData"]</th>
-						<th>@Localizer["TableClient"]</th>
-						<th></th>
-					</tr>
+                    <tr>
+                        <th></th>
+                        <th>@Localizer["TableSubjectId"]</th>
+                        <th>@Localizer["TableType"]</th>
+                        <th>@Localizer["TableExpiration"]</th>
+                        <th>@Localizer["TableData"]</th>
+                        <th>@Localizer["TableClient"]</th>
+                    </tr>
 				</thead>
 
 				<tbody>
 					@foreach (var persistedGrant in Model.PersistedGrants)
 					{
-						<tr>
-							<td>@persistedGrant.SubjectId</td>
-							<td>@persistedGrant.Type</td>
-							<td>@persistedGrant.Expiration</td>
-							<td>@persistedGrant.Data</td>
-							<td>@persistedGrant.ClientId</td>
-							<td><a class="btn btn-danger" asp-action="PersistedGrantDelete" asp-route-id="@UrlHelpers.QueryStringSafeHash(persistedGrant.Key)"><span class="oi oi-x"></span></a></td>
-						</tr>
+                    <tr>
+                        <td><a class="btn btn-danger" asp-action="PersistedGrantDelete" asp-route-id="@UrlHelpers.QueryStringSafeHash(persistedGrant.Key)"><span class="oi oi-x"></span></a></td>
+                        <td>@persistedGrant.SubjectId</td>
+                        <td>@persistedGrant.Type</td>
+                        <td>@persistedGrant.Expiration</td>
+                        <td>@persistedGrant.Data</td>
+                        <td>@persistedGrant.ClientId</td>
+                    </tr>
 					}
 				</tbody>
 			</table>

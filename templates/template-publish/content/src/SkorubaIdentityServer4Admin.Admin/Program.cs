@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Serilog;
-using SkorubaIdentityServer4Admin.Admin.EntityFramework.DbContexts;
-using SkorubaIdentityServer4Admin.Admin.EntityFramework.Identity.Entities.Identity;
+using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.DbContexts;
+using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Entities.Identity;
 using SkorubaIdentityServer4Admin.Admin.Helpers;
 
 namespace SkorubaIdentityServer4Admin.Admin

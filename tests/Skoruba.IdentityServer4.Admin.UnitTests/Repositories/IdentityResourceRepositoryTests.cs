@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Repositories.Interfaces;
-using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Xunit;
 
@@ -75,7 +75,11 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 var newIdentityResource = await identityResourceRepository.GetIdentityResourceAsync(identityResource.Id);
 
                 //Assert new identity resource
-                newIdentityResource.ShouldBeEquivalentTo(identityResource, options => options.Excluding(o => o.Id));
+                newIdentityResource.ShouldBeEquivalentTo(identityResource, options => options.Excluding(o => o.Id).Excluding(o => o.UserClaims));
+
+                newIdentityResource.UserClaims.ShouldBeEquivalentTo(identityResource.UserClaims,
+                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
+                        .Excluding(x => x.SelectedMemberPath.EndsWith("IdentityResource")));
             }
         }
 
@@ -162,10 +166,15 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
 				var resource = await identityResourceRepository.GetIdentityResourceAsync(identityResource.Id);
 
 				//Assert new identity resource
-				resource.ShouldBeEquivalentTo(identityResource, options => options.Excluding(o => o.Id));
+				resource.ShouldBeEquivalentTo(identityResource, options => options.Excluding(o => o.Id)
+                    .Excluding(o => o.UserClaims));
 
-				//Generate random new identity resource property
-				var identityResourceProperty = IdentityResourceMock.GenerateRandomIdentityResourceProperty(0);
+                resource.UserClaims.ShouldBeEquivalentTo(identityResource.UserClaims,
+                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
+                        .Excluding(x => x.SelectedMemberPath.EndsWith("IdentityResource")));
+
+                //Generate random new identity resource property
+                var identityResourceProperty = IdentityResourceMock.GenerateRandomIdentityResourceProperty(0);
 
 				//Add new identity resource property
 				await identityResourceRepository.AddIdentityResourcePropertyAsync(resource.Id, identityResourceProperty);
@@ -196,10 +205,14 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
 				var resource = await identityResourceRepository.GetIdentityResourceAsync(identityResource.Id);
 
 				//Assert new identity resource
-				resource.ShouldBeEquivalentTo(identityResource, options => options.Excluding(o => o.Id));
+				resource.ShouldBeEquivalentTo(identityResource, options => options.Excluding(o => o.Id).Excluding(o => o.UserClaims));
 
-				//Generate random new identity resource property
-				var identityResourceProperty = IdentityResourceMock.GenerateRandomIdentityResourceProperty(0);
+                resource.UserClaims.ShouldBeEquivalentTo(identityResource.UserClaims,
+                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
+                        .Excluding(x => x.SelectedMemberPath.EndsWith("IdentityResource")));
+
+                //Generate random new identity resource property
+                var identityResourceProperty = IdentityResourceMock.GenerateRandomIdentityResourceProperty(0);
 
 				//Add new identity resource property
 				await identityResourceRepository.AddIdentityResourcePropertyAsync(resource.Id, identityResourceProperty);
@@ -241,10 +254,14 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
 				var resource = await identityResourceRepository.GetIdentityResourceAsync(identityResource.Id);
 
 				//Assert new identity resource
-				resource.ShouldBeEquivalentTo(identityResource, options => options.Excluding(o => o.Id));
+				resource.ShouldBeEquivalentTo(identityResource, options => options.Excluding(o => o.Id).Excluding(o => o.UserClaims));
 
-				//Generate random new identity resource property
-				var identityResourceProperty = IdentityResourceMock.GenerateRandomIdentityResourceProperty(0);
+                resource.UserClaims.ShouldBeEquivalentTo(identityResource.UserClaims,
+                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
+                        .Excluding(x => x.SelectedMemberPath.EndsWith("IdentityResource")));
+
+                //Generate random new identity resource property
+                var identityResourceProperty = IdentityResourceMock.GenerateRandomIdentityResourceProperty(0);
 
 				//Add new identity resource property
 				await identityResourceRepository.AddIdentityResourcePropertyAsync(resource.Id, identityResourceProperty);
