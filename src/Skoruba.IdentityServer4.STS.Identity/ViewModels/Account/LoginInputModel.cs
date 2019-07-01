@@ -10,10 +10,17 @@ namespace Skoruba.IdentityServer4.STS.Identity.ViewModels.Account
 {
     public class LoginInputModel
     {
+        /// <summary>
+        /// Only required if MultiTenant is configured
+        /// </summary>
+        public string TenantCode { get; set; }
+
         [Required]
         public string Username { get; set; }
+
         [Required]
         public string Password { get; set; }
+
         public bool RememberLogin { get; set; }
         public string ReturnUrl { get; set; }
     }

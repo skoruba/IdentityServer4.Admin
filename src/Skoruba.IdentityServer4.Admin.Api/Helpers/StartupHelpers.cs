@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using IdentityServer4.AccessTokenValidation;
+using IdentityServer4.EntityFramework.Options;
 using IdentityServer4.EntityFramework.Storage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -20,53 +21,72 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
 {
     public static class StartupHelpers
     {
+        public static Action<DbContextOptionsBuilder> DefaultIdentityDbContextOptions(IConfiguration c) =>
+            o => o.UseSqlServer(c.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey),
+                sql => sql.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name));
 
-        /// <summary>
-        /// Register services for MVC
-        /// </summary>
-        /// <param name="services"></param>
-        public static void AddMvcServices<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey,
-            TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
-            TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>(
-            this IServiceCollection services)
-            where TUserDto : UserDto<TUserDtoKey>, new()
-            where TRoleDto : RoleDto<TRoleDtoKey>, new()
-            where TUser : IdentityUser<TKey>
-            where TRole : IdentityRole<TKey>
-            where TKey : IEquatable<TKey>
-            where TUserClaim : IdentityUserClaim<TKey>
-            where TUserRole : IdentityUserRole<TKey>
-            where TUserLogin : IdentityUserLogin<TKey>
-            where TRoleClaim : IdentityRoleClaim<TKey>
-            where TUserToken : IdentityUserToken<TKey>
-            where TRoleDtoKey : IEquatable<TRoleDtoKey>
-            where TUserDtoKey : IEquatable<TUserDtoKey>
-            where TUsersDto : UsersDto<TUserDto, TUserDtoKey>
-            where TRolesDto : RolesDto<TRoleDto, TRoleDtoKey>
-            where TUserRolesDto : UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey>
-            where TUserClaimsDto : UserClaimsDto<TUserDtoKey>
-            where TUserProviderDto : UserProviderDto<TUserDtoKey>
-            where TUserProvidersDto : UserProvidersDto<TUserDtoKey>
-            where TUserChangePasswordDto : UserChangePasswordDto<TUserDtoKey>
-            where TRoleClaimsDto : RoleClaimsDto<TRoleDtoKey>
-        {
-            services.TryAddTransient(typeof(IGenericControllerLocalizer<>), typeof(GenericControllerLocalizer<>));
+        public static Action<ConfigurationStoreOptions> DefaultIdentityServerConfigurationOptions(IConfiguration c) =>
+            o => o.ConfigureDbContext = b =>
+                   b.UseSqlServer(c.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey),
+                        sql => sql.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name));
 
-            services.AddMvc(o =>
-                {
-                    o.Conventions.Add(new GenericControllerRouteConvention());
-                })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddDataAnnotationsLocalization()
-                .ConfigureApplicationPartManager(m =>
-                {
-                    m.FeatureProviders.Add(new GenericTypeControllerFeatureProvider<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
-                        TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>());
-                });
-        }
+        public static Action<OperationalStoreOptions> DefaultIdentityServerOperationalStoreOptions(IConfiguration c) =>
+            o => o.ConfigureDbContext = b =>
+                b.UseSqlServer(c.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey),
+                    sql => sql.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name));
 
+        public static Action<DbContextOptionsBuilder> DefaultLogDbContextOptions(IConfiguration c) =>
+            o => o.UseSqlServer(c.GetConnectionString(ConfigurationConsts.AdminLogDbConnectionStringKey),
+                sql => sql.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name));
+
+        public static Action<IdentityOptions> DefaultIdentityOptions(IConfiguration c) =>
+            o => o.User.RequireUniqueEmail = true;
+
+        ///// <summary>
+        ///// Register services for MVC
+        ///// </summary>
+        ///// <param name="services"></param>
+        //public static void AddMvcServices<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey,
+        //    TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
+        //    TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
+        //    TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>(
+        //    this IServiceCollection services)
+        //    where TUserDto : UserDto<TUserDtoKey>, new()
+        //    where TRoleDto : RoleDto<TRoleDtoKey>, new()
+        //    where TUser : IdentityUser<TKey>
+        //    where TRole : IdentityRole<TKey>
+        //    where TKey : IEquatable<TKey>
+        //    where TUserClaim : IdentityUserClaim<TKey>
+        //    where TUserRole : IdentityUserRole<TKey>
+        //    where TUserLogin : IdentityUserLogin<TKey>
+        //    where TRoleClaim : IdentityRoleClaim<TKey>
+        //    where TUserToken : IdentityUserToken<TKey>
+        //    where TRoleDtoKey : IEquatable<TRoleDtoKey>
+        //    where TUserDtoKey : IEquatable<TUserDtoKey>
+        //    where TUsersDto : UsersDto<TUserDto, TUserDtoKey>
+        //    where TRolesDto : RolesDto<TRoleDto, TRoleDtoKey>
+        //    where TUserRolesDto : UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey>
+        //    where TUserClaimsDto : UserClaimsDto<TUserDtoKey>
+        //    where TUserProviderDto : UserProviderDto<TUserDtoKey>
+        //    where TUserProvidersDto : UserProvidersDto<TUserDtoKey>
+        //    where TUserChangePasswordDto : UserChangePasswordDto<TUserDtoKey>
+        //    where TRoleClaimsDto : RoleClaimsDto<TRoleDtoKey>
+        //{
+        //    services.TryAddTransient(typeof(IGenericControllerLocalizer<>), typeof(GenericControllerLocalizer<>));
+
+        //    services.AddMvc(o =>
+        //        {
+        //            o.Conventions.Add(new GenericControllerRouteConvention());
+        //        })
+        //        .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+        //        .AddDataAnnotationsLocalization()
+        //        .ConfigureApplicationPartManager(m =>
+        //        {
+        //            m.FeatureProviders.Add(new GenericTypeControllerFeatureProvider<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
+        //                TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
+        //                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>());
+        //        });
+        //}
 
         /// <summary>
         /// Register DbContexts for IdentityServer ConfigurationStore and PersistedGrants, Identity and Logging
@@ -117,16 +137,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
         /// <summary>
         /// Add authentication middleware for an API
         /// </summary>
-        /// <typeparam name="TIdentityDbContext">DbContext for an access to Identity</typeparam>
-        /// <typeparam name="TUser">Entity with User</typeparam>
-        /// <typeparam name="TRole">Entity with Role</typeparam>
-        /// <param name="services"></param>
-        /// <param name="adminApiConfiguration"></param>
-        public static void AddApiAuthentication<TIdentityDbContext, TUser, TRole>(this IServiceCollection services,
-            AdminApiConfiguration adminApiConfiguration) 
-            where TIdentityDbContext : DbContext 
-            where TRole : class 
-            where TUser : class
+        public static void AddApiAuthentication(this IServiceCollection services, AdminApiConfiguration adminApiConfiguration)
         {
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>
@@ -139,13 +150,6 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                     options.RequireHttpsMetadata = true;
 #endif
                 });
-
-            services.AddIdentity<TUser, TRole>(options =>
-                {
-                    options.User.RequireUniqueEmail = true;
-                })
-                .AddEntityFrameworkStores<TIdentityDbContext>()
-                .AddDefaultTokenProviders();
         }
 
         public static void AddAuthorizationPolicies(this IServiceCollection services)

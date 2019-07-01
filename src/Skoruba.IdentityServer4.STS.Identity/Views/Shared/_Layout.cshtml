@@ -10,7 +10,7 @@
         name = Context.User?.GetDisplayName();
     }
 }
-
+@*//TODO: Conditionally inject UserIdentity or refactor hasExternalLogins to inject*@
 @inject SignInManager<UserIdentity> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();

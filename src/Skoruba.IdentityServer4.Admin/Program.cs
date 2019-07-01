@@ -21,10 +21,14 @@ namespace Skoruba.IdentityServer4.Admin
             var host = BuildWebHost(args);
 
             // Uncomment this to seed upon startup, alternatively pass in `dotnet run /seed` to seed using CLI
-            // await DbMigrationHelpers.EnsureSeedData<IdentityServerConfigurationDbContext, AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, UserIdentity, UserIdentityRole>(host);
+            seed = true;
+            var seedMultiTenant = false;
             if (seed)
             {
-                await DbMigrationHelpers.EnsureSeedData<IdentityServerConfigurationDbContext, AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, UserIdentity, UserIdentityRole>(host);
+                if (seedMultiTenant)
+                    await DbMigrationHelpers.EnsureSeedData<IdentityServerConfigurationDbContext, MultiTenantUserIdentityDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, MultiTenantUserIdentity, UserIdentityRole>(host);
+                else
+                    await DbMigrationHelpers.EnsureSeedData<IdentityServerConfigurationDbContext, AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, UserIdentity, UserIdentityRole>(host);
             }
 
             host.Run();

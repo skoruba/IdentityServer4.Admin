@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Skoruba.IdentityServer4.Admin.Api.Configuration;
 using Skoruba.IdentityServer4.Admin.Api.Configuration.Authorization;
 using Skoruba.IdentityServer4.Admin.Api.Configuration.Constants;
+using Skoruba.IdentityServer4.Admin.Api.DependencyInjection;
 using Skoruba.IdentityServer4.Admin.Api.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Api.Helpers;
 using Skoruba.IdentityServer4.Admin.Api.Mappers;
@@ -46,32 +47,27 @@ namespace Skoruba.IdentityServer4.Admin.Api
             var adminApiConfiguration = Configuration.GetSection(nameof(AdminApiConfiguration)).Get<AdminApiConfiguration>();
             services.AddSingleton(adminApiConfiguration);
 
-            services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>(Configuration);
+            /// Single Tenant configuration
+            services.AddSingleTenantConfiguration(HostingEnvironment,
+                StartupHelpers.DefaultIdentityDbContextOptions(Configuration),
+                StartupHelpers.DefaultIdentityServerConfigurationOptions(Configuration),
+                StartupHelpers.DefaultIdentityServerOperationalStoreOptions(Configuration),
+                StartupHelpers.DefaultLogDbContextOptions(Configuration),
+                StartupHelpers.DefaultIdentityOptions(Configuration));
+
+            ///// Multi Tenant configuration
+            //services.AddMultiTenantConfiguration(HostingEnvironment,
+            //    StartupHelpers.DefaultIdentityDbContextOptions(Configuration),
+            //    StartupHelpers.DefaultIdentityServerConfigurationOptions(Configuration),
+            //    StartupHelpers.DefaultIdentityServerOperationalStoreOptions(Configuration),
+            //    StartupHelpers.DefaultLogDbContextOptions(Configuration),
+            //    StartupHelpers.DefaultIdentityOptions(Configuration));
+
+            //services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>(Configuration);
             services.AddScoped<ControllerExceptionFilterAttribute>();
 
-            services.AddApiAuthentication<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(adminApiConfiguration);
+            services.AddApiAuthentication(adminApiConfiguration);
             services.AddAuthorizationPolicies();
-
-            var profileTypes = new HashSet<Type>
-            {
-                typeof(IdentityMapperProfile<RoleDto<string>, string, UserRolesDto<RoleDto<string>, string, string>, string, UserClaimsDto<string>, UserClaimDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,RoleClaimDto<string>, RoleClaimsDto<string>>)
-            };
-
-            services.AddAdminAspNetIdentityServices<AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, UserDto<string>, string, RoleDto<string>, string, string, string,
-                UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
-                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
-                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
-                UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-                RoleClaimsDto<string>, UserClaimDto<string>, RoleClaimDto<string>>(profileTypes);
-
-            services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
-
-            services.AddMvcServices<UserDto<string>, string, RoleDto<string>, string, string, string,
-                UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
-                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
-                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
-                UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-                RoleClaimsDto<string>>();
 
             services.AddSwaggerGen(options =>
             {

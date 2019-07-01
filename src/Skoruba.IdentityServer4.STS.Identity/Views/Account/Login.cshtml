@@ -24,6 +24,22 @@
                             <input type="hidden" asp-for="ReturnUrl" />
 
                             <fieldset>
+                                @if (Model.IsTenantRequired)
+                                {
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="input-tenantcode">
+                                                        <i class="fa fa-building"></i>
+                                                    </span>
+                                                </div>
+                                                @*//TODO: Add localization for other languages*@
+                                                <input class="form-control" placeholder="@Localizer["TenantCode"]" asp-for="TenantCode" aria-label="TenantCode" aria-describedby="input-tenantcode" autofocus>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
                                 <div class="form-group row">
                                     <div class="col-sm-12">
                                         <div class="input-group">
@@ -69,7 +85,7 @@
                                     <div class="col-sm-12">
                                         <button class="btn btn-primary" name="button" value="login">@Localizer["Login"]</button>
                                         <button class="btn btn-secondary" name="button" value="cancel">@Localizer["Cancel"]</button>
-                                        <a asp-action="ForgotPassword" asp-controller="Account" class="btn btn-info" value="forgot">@Localizer["Forgot"]</a>                                        
+                                        <a asp-action="ForgotPassword" asp-controller="Account" class="btn btn-info" value="forgot">@Localizer["Forgot"]</a>
                                         @if (RootConfiguration.RegisterConfiguration.Enabled)
                                         {
                                             <a asp-action="Register" asp-controller="Account" class="btn btn-dark" value="forgot">@Localizer["Register"]</a>

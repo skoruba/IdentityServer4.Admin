@@ -25,6 +25,7 @@ using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Skoruba.IdentityServer4.Admin.Helpers;
 using Skoruba.IdentityServer4.Admin.Helpers.Localization;
 using Xunit;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Managers;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 {
@@ -45,7 +46,6 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
                 RoleClaimsDto<string>>>();
         }
 
-
         [Fact]
         public async Task AddUser()
         {
@@ -59,7 +59,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var userDto = IdentityDtoMock<string>.GenerateRandomUser();
             var result = await controller.UserProfile(userDto);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("UserProfile");
 
@@ -90,7 +90,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var result = await controller.UserDelete(userDto);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("Users");
 
@@ -118,7 +118,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var result = await controller.UserProfile(updatedUserDto);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("UserProfile");
 
@@ -148,7 +148,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             //Try call controller action
             var result = await controller.UserProfile(userId);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
             viewResult.ViewName.Should().Be("UserProfile");
             viewResult.ViewData.Should().NotBeNull();
@@ -173,7 +173,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var roleDto = IdentityDtoMock<string>.GenerateRandomRole();
             var result = await controller.Role(roleDto);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("Role");
 
@@ -201,7 +201,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var roleId = await dbContext.Roles.Where(x => x.Name == roleDto.Name).Select(x => x.Id).SingleOrDefaultAsync();
             var result = await controller.Role(roleId);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
             viewResult.ViewName.Should().BeNull();
             viewResult.ViewData.Should().NotBeNull();
@@ -232,7 +232,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var result = await controller.RoleDelete(roleDto);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("Roles");
 
@@ -259,7 +259,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var result = await controller.Role(updatedRoleDto);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("Role");
 
@@ -287,7 +287,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var userClaimsDto = IdentityDtoMock<string>.GenerateRandomUserClaim(0, user.Id);
             var result = await controller.UserClaims(userClaimsDto);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("UserClaims");
 
@@ -323,7 +323,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var userRoleDto = IdentityDtoMock<string>.GenerateRandomUserRole<RoleDto<string>>(roleDto.Id, user.Id);
             var result = await controller.UserRoles(userRoleDto);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("UserRoles");
 
@@ -364,7 +364,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var result = await controller.UserRolesDelete(userRoleDto);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("UserRoles");
 
@@ -396,7 +396,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var result = await controller.UserClaimsDelete(userClaimsDto);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("UserClaims");
 
@@ -424,7 +424,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var roleClaimsDto = IdentityDtoMock<string>.GenerateRandomRoleClaim(0, role.Id);
             var result = await controller.RoleClaims(roleClaimsDto);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("RoleClaims");
 
@@ -459,7 +459,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var result = await controller.RoleClaimsDelete(roleClaimsDto);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("RoleClaims");
 
@@ -488,7 +488,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var result = await controller.UserChangePassword(changePassword);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("UserProfile");
 
@@ -521,7 +521,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var providersDto = IdentityDtoMock<string>.GenerateRandomUserProviders(randomProviderKey, randomProviderLogin, userId);
             var result = await controller.UserProvidersDelete(providersDto);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("UserProviders");
 
@@ -546,6 +546,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var logger = serviceProvider.GetRequiredService<ILogger<ConfigurationController>>();
             var tempDataDictionaryFactory = serviceProvider.GetRequiredService<ITempDataDictionaryFactory>();
             var identityService = GetIdentityService(serviceProvider);
+            var tenantManagers = serviceProvider.GetServices<ITenantManager>();
 
             //Get Controller
             var controller = new IdentityController<UserDto<string>, string, RoleDto<string>, string, string, string,
@@ -553,7 +554,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
                 UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
                 UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
                 UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-                RoleClaimsDto<string>>(identityService, logger, localizer);
+                RoleClaimsDto<string>>(identityService, logger, localizer, tenantManagers);
 
             //Setup TempData for notofication in basecontroller
             var httpContext = serviceProvider.GetRequiredService<IHttpContextAccessor>().HttpContext;
@@ -587,7 +588,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
 
-            services.AddAdminAspNetIdentityServices<AdminIdentityDbContext, IdentityServerPersistedGrantDbContext,UserDto<string>, string, RoleDto<string>, string, string, string,
+            services.AddAdminAspNetIdentityServices<AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, UserDto<string>, string, RoleDto<string>, string, string, string,
                 UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
                 UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
                 UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,

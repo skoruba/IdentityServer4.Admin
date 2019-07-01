@@ -11,6 +11,10 @@ using Skoruba.IdentityServer4.Admin.Configuration.Identity;
 using Skoruba.IdentityServer4.Admin.Configuration.IdentityServer;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Tenants;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Managers;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Stores;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -20,7 +24,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// Generate migrations before running this method, you can use these steps bellow:
         /// https://github.com/skoruba/IdentityServer4.Admin#ef-core--data-access
         /// </summary>
-        /// <param name="host"></param>      
+        /// <param name="host"></param>
         public static async Task EnsureSeedData<TIdentityServerDbContext, TIdentityDbContext, TPersistedGrantDbContext, TLogDbContext, TUser, TRole>(IWebHost host)
             where TIdentityServerDbContext : DbContext, IAdminConfigurationDbContext
             where TIdentityDbContext : DbContext
@@ -78,9 +82,10 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<TUser>>();
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<TRole>>();
                 var rootConfiguration = scope.ServiceProvider.GetRequiredService<IRootConfiguration>();
+                var tenantManager = scope.ServiceProvider.GetService<ITenantManager>();
 
                 await EnsureSeedIdentityServerData(context, rootConfiguration.AdminConfiguration);
-                await EnsureSeedIdentityData(userManager, roleManager);
+                await EnsureSeedIdentityData(userManager, roleManager, tenantManager);
             }
         }
 
@@ -88,10 +93,32 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// Generate default admin user / role
         /// </summary>
         private static async Task EnsureSeedIdentityData<TUser, TRole>(UserManager<TUser> userManager,
-            RoleManager<TRole> roleManager)
+            RoleManager<TRole> roleManager, ITenantManager tenantManager)
             where TUser : IdentityUser, new()
             where TRole : IdentityRole, new()
         {
+            string tenantCode = "0000";
+            string tenantId = "2EBF8B61-BF2F-47C3-8D19-25C59DE646AD";
+            TUser user;
+
+            // Create Tenant for Multi Tenant usage
+            if (userManager.IsMultiTenant())
+            {
+                if (!await tenantManager.TenantCodeExistsAsync(tenantCode))
+                {
+                    var tenant = new Tenant
+                    {
+                        Name = "Identity Administration",
+                        Code = tenantCode,
+                        Id = tenantId,
+                        IsActive = true,
+                        DataBaseName = "N/A",
+                        DomainName = "localhost"
+                    };
+                    await tenantManager.CreateAsync(tenant);
+                }
+            }
+
             // Create admin role
             if (!await roleManager.RoleExistsAsync(AuthorizationConsts.AdministrationRole))
             {
@@ -101,14 +128,25 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             }
 
             // Create admin user
-            if (await userManager.FindByNameAsync(Users.AdminUserName) != null) return;
-
-            var user = new TUser
+            if (userManager.IsMultiTenant())
+            {
+                if (await userManager.FindByNameAsync(tenantCode, Users.AdminUserName) != null) return;
+            }
+            else
+            {
+                if (await userManager.FindByNameAsync(Users.AdminUserName) != null) return;
+            }
+            user = new TUser
             {
                 UserName = Users.AdminUserName,
                 Email = Users.AdminEmail,
                 EmailConfirmed = true
             };
+
+            if (userManager.IsMultiTenant())
+            {
+                (user as MultiTenantUserIdentity).TenantId = tenantId;
+            }
 
             var result = await userManager.CreateAsync(user, Users.AdminPassword);
 

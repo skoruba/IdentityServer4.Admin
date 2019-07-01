@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
+using System.Reflection;
+using Skoruba.IdentityServer4.STS.Identity.DependencyInjection;
 
 namespace Skoruba.IdentityServer4.STS.Identity
 {
@@ -37,19 +39,31 @@ namespace Skoruba.IdentityServer4.STS.Identity
         {
             services.ConfigureRootConfiguration(Configuration);
 
-            // Add DbContext for Asp.Net Core Identity
-            services.AddIdentityDbContext<AdminIdentityDbContext>(Configuration, Environment);
+            /// Add single tenant configuration
+            services.AddSingleTenantConfiguration(Configuration, Environment, Logger,
+                StartupHelpers.DefaultIdentityDbContextOptions(Configuration),
+                StartupHelpers.DefaultIdentityOptions(),
+                StartupHelpers.DefaultIdentityServerOptions(),
+                StartupHelpers.DefaultIdentityServerConfigurationOptions(Configuration),
+                StartupHelpers.DefaultIdentityServerOperationalStoreOptions(Configuration)
+                );
+
+            ///// Add multi tenant configuration
+            ///// Seeding data requires that you build the identity migration using the <see cref="MultiTenantUserIdentityDbContext"/>
+            ///// The _layout page requires the SignInManager to have the type specified to use the <see cref="MultiTenantUserIdentity"/>
+            //services.AddMultiTenantConfiguration(Configuration, Environment, Logger,
+            //    StartupHelpers.DefaultIdentityDbContextOptions(Configuration),
+            //    StartupHelpers.DefaultIdentityOptions(),
+            //    StartupHelpers.DefaultIdentityServerOptions(),
+            //    StartupHelpers.DefaultIdentityServerConfigurationOptions(Configuration),
+            //    StartupHelpers.DefaultIdentityServerOperationalStoreOptions(Configuration)
+            //    );
 
             // Add email senders which is currently setup for SendGrid and SMTP
             services.AddEmailSenders(Configuration);
 
             // Add services for authentication, including Identity model, IdentityServer4 and external providers
-            services.AddAuthenticationServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Environment, Configuration, Logger);
-
-            // Add all dependencies for Asp.Net Core Identity in MVC - these dependencies are injected into generic Controllers
-            // Including settings for MVC and Localization
-            // If you want to change primary keys or use another db model for Asp.Net Core Identity:
-            services.AddMvcWithLocalization<UserIdentity, string>();
+            services.AddAuthenticationServices(Configuration);
 
             // Add authorization policies for MVC
             services.AddAuthorizationPolicies();

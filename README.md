@@ -125,6 +125,12 @@ The following Gulp commands are available:
 Add-Migration AspNetIdentityDbInit -context AdminIdentityDbContext -output Data/Migrations/Identity
 Update-Database -context AdminIdentityDbContext
 ```
+#### Migrations for Asp.Net Core MultiTenant Identity DbContext:
+
+```powershell
+Add-Migration AspNetMultiTenantIdentityDbInit -context MultiTenantUserIdentityDbContext -output Data/Migrations/Identity
+Update-Database -context MultiTenantUserIdentityDbContext
+```
 
 #### Migrations for Logging DbContext:
 

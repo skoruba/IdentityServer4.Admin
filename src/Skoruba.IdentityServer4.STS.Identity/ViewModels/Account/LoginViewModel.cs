@@ -22,5 +22,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.ViewModels.Account
 
         public bool IsExternalLoginOnly => EnableLocalLogin == false && ExternalProviders?.Count() == 1;
         public string ExternalLoginScheme => IsExternalLoginOnly ? ExternalProviders?.SingleOrDefault()?.AuthenticationScheme : null;
+        public bool IsTenantRequired { get; set; } = false;
     }
 }

@@ -5,12 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Managers;
 using Skoruba.IdentityServer4.Admin.ExceptionHandling;
+using Skoruba.IdentityServer4.Admin.Helpers;
 using Skoruba.IdentityServer4.Admin.Helpers.Localization;
 
 namespace Skoruba.IdentityServer4.Admin.Controllers
@@ -44,9 +47,12 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         private readonly IIdentityService<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
             TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto> _identityService;
+
         private readonly IGenericControllerLocalizer<IdentityController<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
             TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> _localizer;
+
+        private readonly ITenantManager _tenantManager;
 
         public IdentityController(IIdentityService<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
@@ -54,10 +60,12 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             ILogger<ConfigurationController> logger,
             IGenericControllerLocalizer<IdentityController<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> localizer) : base(logger)
+                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> localizer,
+                IEnumerable<ITenantManager> tenantManagers) : base(logger)
         {
             _identityService = identityService;
             _localizer = localizer;
+            _tenantManager = tenantManagers.FirstOrDefault();
         }
 
         [HttpGet]
@@ -164,6 +172,8 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         {
             var newUser = new TUserDto();
 
+            SetTenantsTempData(newUser);
+
             return View("UserProfile", newUser);
         }
 
@@ -173,6 +183,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         {
             var user = await _identityService.GetUserAsync(id.ToString());
             if (user == null) return NotFound();
+            SetTenantsTempData(user);
 
             return View("UserProfile", user);
         }
@@ -433,6 +444,31 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             if (user == null) return NotFound();
 
             return View(user);
+        }
+
+        private void SetTenantsTempData(TUserDto user)
+        {
+            if (_tenantManager != null)
+            {
+                var currentTenantId = (user as MultiTenantUserDto<TKey>).TenantId;
+
+                TempData.Set<IEnumerable<SelectListItem>>("Tenants", _tenantManager.Tenants.Select(a => new SelectListItem() { Text = a.Name, Value = a.Id, Selected = a.Id == currentTenantId }));
+
+                //var currentUserTenantId = User.FindFirst("tenantid")?.Value;
+                //if (User.IsInRole(AuthorizationConsts.IdentitySuperAdministratorRole))
+                //{
+                //    TempData.Set<IEnumerable<SelectListItem>>("Tenants", _tenantManager.Tenants.Select(a => new SelectListItem() { Text = a.Name, Value = a.Id, Selected = a.Id == currentUserTenantId }));
+                //}
+                //else
+                //{
+                //    var tenant = await _tenantManager.FindByIdAsync(currentUserTenantId);
+                //    TempData.Set<IEnumerable<SelectListItem>>("Tenants", new[] { tenant }.Select(a => new SelectListItem() { Text = a.Name, Value = a.Id, Selected = true }));
+                //}
+            }
+            else
+            {
+                TempData.Set<IEnumerable<SelectListItem>>("Tenants", new List<SelectListItem>());
+            }
         }
     }
 }

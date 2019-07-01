@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Managers;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
@@ -45,6 +46,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         private readonly IGenericControllerLocalizer<AccountController<TUser, TKey>> _localizer;
         private readonly LoginConfiguration _loginConfiguration;
         private readonly RegisterConfiguration _registerConfiguration;
+        private bool _isMultiTenant => _userManager.IsMultiTenant();
 
         public AccountController(
             UserResolver<TUser> userResolver,
@@ -107,7 +109,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             {
                 if (context != null)
                 {
-                    // if the user cancels, send a result back into IdentityServer as if they 
+                    // if the user cancels, send a result back into IdentityServer as if they
                     // denied the consent (even if this client does not require consent).
                     // this will send back an access denied OIDC error response to the client.
                     await _interaction.GrantConsentAsync(context, ConsentResponse.Denied);
@@ -129,10 +131,30 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = await _userResolver.GetUserAsync(model.Username);
+                TUser user;
+                //TODO: Code smell.  Evaulate if this huge method can be refactored.
+                if (_isMultiTenant)
+                {
+                    user = await _userResolver.GetUserAsync(model.TenantCode, model.Username);
+                }
+                else
+                {
+                    user = await _userResolver.GetUserAsync(model.Username);
+                }
+
                 if (user != default(TUser))
                 {
-                    var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberLogin, lockoutOnFailure: true);
+                    Microsoft.AspNetCore.Identity.SignInResult result;
+
+                    if (_isMultiTenant)
+                    {
+                        result = await _signInManager.PasswordSignInAsync(model.TenantCode, user.UserName, model.Password, model.RememberLogin, lockoutOnFailure: true);
+                    }
+                    else
+                    {
+                        result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberLogin, lockoutOnFailure: true);
+                    }
+
                     if (result.Succeeded)
                     {
                         await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName));
@@ -183,7 +205,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             var vm = await BuildLoginViewModelAsync(model);
             return View(vm);
         }
-
 
         /// <summary>
         /// Show logout page
@@ -282,7 +303,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, HttpContext.Request.Scheme);
 
                 await _emailSender.SendEmailAsync(model.Email, _localizer["ResetPasswordTitle"], _localizer["ResetPasswordBody", HtmlEncoder.Default.Encode(callbackUrl)]);
-
 
                 return View("ForgotPasswordConfirmation");
             }
@@ -581,6 +601,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         /*****************************************/
         /* helper APIs for the AccountController */
         /*****************************************/
+
         private IActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
@@ -649,7 +670,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 ReturnUrl = returnUrl,
                 Username = context?.LoginHint,
                 LoginResolutionPolicy = _loginConfiguration.ResolutionPolicy,
-                ExternalProviders = providers.ToArray()
+                ExternalProviders = providers.ToArray(),
+                IsTenantRequired = _isMultiTenant
             };
         }
 

@@ -9,5 +9,6 @@
         public const string IdentityUserLogins = "UserLogins";
         public const string IdentityUserClaims = "UserClaims";
         public const string IdentityUserTokens = "UserTokens";
+        public const string Tenants = "Tenants";
     }
 }
