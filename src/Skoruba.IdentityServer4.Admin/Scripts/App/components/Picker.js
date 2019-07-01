@@ -248,6 +248,8 @@ ko.components.register('picker', {
                     break;
                 }
             }
+
+            self.sync();
         }
 
         //Remove selected item

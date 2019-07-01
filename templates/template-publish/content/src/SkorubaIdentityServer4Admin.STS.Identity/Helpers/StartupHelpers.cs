@@ -62,9 +62,10 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
                 {
                     var supportedCultures = new[]
                     {
+                        new CultureInfo("en"),
                         new CultureInfo("fa"),
                         new CultureInfo("ru"),
-                        new CultureInfo("en"),
+                        new CultureInfo("sv"),
                         new CultureInfo("zh")
                     };
 
@@ -96,14 +97,13 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
         /// <param name="configuration"></param>
         public static void AddEmailSenders(this IServiceCollection services, IConfiguration configuration)
         {
-            var sendgridConnectionString = configuration.GetConnectionString(ConfigurationConsts.SendgridConnectionStringKey);
             var smtpConfiguration = configuration.GetSection(nameof(SmtpConfiguration)).Get<SmtpConfiguration>();
-            var sendgridConfiguration = configuration.GetSection(nameof(SendgridConfiguration)).Get<SendgridConfiguration>();
+            var sendGridConfiguration = configuration.GetSection(nameof(SendgridConfiguration)).Get<SendgridConfiguration>();
 
-            if (!string.IsNullOrWhiteSpace(sendgridConnectionString))
+            if (sendGridConfiguration != null && !string.IsNullOrWhiteSpace(sendGridConfiguration.ApiKey))
             {
-                services.AddSingleton<ISendGridClient>(_ => new SendGridClient(sendgridConnectionString));
-                services.AddSingleton(sendgridConfiguration);
+                services.AddSingleton<ISendGridClient>(_ => new SendGridClient(sendGridConfiguration.ApiKey));
+                services.AddSingleton(sendGridConfiguration);
                 services.AddTransient<IEmailSender, SendgridEmailSender>();
             }
             else if (smtpConfiguration != null && !string.IsNullOrWhiteSpace(smtpConfiguration.Host))

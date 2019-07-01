@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.TagHelpers;
-using Microsoft.AspNetCore.Razor.TagHelpers;
+﻿using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers.TagHelpers
 {

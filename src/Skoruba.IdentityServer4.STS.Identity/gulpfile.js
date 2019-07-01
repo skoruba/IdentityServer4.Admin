@@ -2,7 +2,7 @@
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var sass = require('gulp-sass');
-var minifyCSS = require('gulp-minify-css');
+var minifyCSS = require('gulp-clean-css');
 var del = require('del');
 
 var distFolder = './wwwroot/dist/';
