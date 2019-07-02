@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Validators
 {
-    public class RequireTenant : IMultiUserValidator<MultiTenantUserIdentity>
+    public class RequireTenant : IUserValidator<MultiTenantUserIdentity>
     {
         public Task<IdentityResult> ValidateAsync(UserManager<MultiTenantUserIdentity> manager, MultiTenantUserIdentity user)
         {

@@ -13,13 +13,13 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Validators
     /// Provides validation services for user classes.
     /// </summary>
     /// <typeparam name="TUser">The type encapsulating a user.</typeparam>
-    public class UserValidator : IMultiUserValidator<MultiTenantUserIdentity>
+    public class MultiTenantUserValidator : IUserValidator<MultiTenantUserIdentity>
     {
         /// <summary>
         /// Creates a new instance of <see cref="UserValidator{TUser}"/>/
         /// </summary>
         /// <param name="errors">The <see cref="IdentityErrorDescriber"/> used to provider error messages.</param>
-        public UserValidator(IdentityErrorDescriber errors = null)
+        public MultiTenantUserValidator(IdentityErrorDescriber errors = null)
         {
             Describer = errors ?? new IdentityErrorDescriber();
         }

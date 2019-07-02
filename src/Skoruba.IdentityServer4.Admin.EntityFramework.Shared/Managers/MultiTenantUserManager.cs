@@ -18,7 +18,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Managers
         public MultiTenantUserManager(IUserStore<TUser> store,
             IOptions<IdentityOptions> optionsAccessor,
             IPasswordHasher<TUser> passwordHasher,
-            IEnumerable<IMultiUserValidator<TUser>> userValidators,
+            IEnumerable<IUserValidator<TUser>> userValidators,
             IEnumerable<IPasswordValidator<TUser>> passwordValidators,
             ILookupNormalizer keyNormalizer,
             IdentityErrorDescriber errors,

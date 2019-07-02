@@ -7,6 +7,8 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using IdentityServer4.EntityFramework.Options;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
+using System.Linq;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Validators;
 
 namespace Skoruba.IdentityServer4.Admin.Api.DependencyInjection
 {
@@ -36,6 +38,10 @@ namespace Skoruba.IdentityServer4.Admin.Api.DependencyInjection
                    UsersDto<MultiTenantUserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
                    UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
                    RoleClaimsDto<string>, UserClaimDto<string>, RoleClaimDto<string>>(ProfileTypes);
+
+            builder.Services.Remove(builder.Services.FirstOrDefault(d => d.ServiceType == typeof(IUserValidator<MultiTenantUserIdentity>)));
+            builder.AddUserValidator<MultiTenantUserIdentity, MultiTenantUserValidator>();
+            builder.AddUserValidator<MultiTenantUserIdentity, RequireTenant>();
 
             builder.Services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
 

@@ -47,21 +47,21 @@ namespace Skoruba.IdentityServer4.Admin.Api
             var adminApiConfiguration = Configuration.GetSection(nameof(AdminApiConfiguration)).Get<AdminApiConfiguration>();
             services.AddSingleton(adminApiConfiguration);
 
-            /// Single Tenant configuration
-            services.AddSingleTenantConfiguration(HostingEnvironment,
-                StartupHelpers.DefaultIdentityDbContextOptions(Configuration),
-                StartupHelpers.DefaultIdentityServerConfigurationOptions(Configuration),
-                StartupHelpers.DefaultIdentityServerOperationalStoreOptions(Configuration),
-                StartupHelpers.DefaultLogDbContextOptions(Configuration),
-                StartupHelpers.DefaultIdentityOptions(Configuration));
-
-            ///// Multi Tenant configuration
-            //services.AddMultiTenantConfiguration(HostingEnvironment,
+            ///// Single Tenant configuration
+            //services.AddSingleTenantConfiguration(HostingEnvironment,
             //    StartupHelpers.DefaultIdentityDbContextOptions(Configuration),
             //    StartupHelpers.DefaultIdentityServerConfigurationOptions(Configuration),
             //    StartupHelpers.DefaultIdentityServerOperationalStoreOptions(Configuration),
             //    StartupHelpers.DefaultLogDbContextOptions(Configuration),
             //    StartupHelpers.DefaultIdentityOptions(Configuration));
+
+            /// Multi Tenant configuration
+            services.AddMultiTenantConfiguration(HostingEnvironment,
+                StartupHelpers.DefaultIdentityDbContextOptions(Configuration),
+                StartupHelpers.DefaultIdentityServerConfigurationOptions(Configuration),
+                StartupHelpers.DefaultIdentityServerOperationalStoreOptions(Configuration),
+                StartupHelpers.DefaultLogDbContextOptions(Configuration),
+                StartupHelpers.DefaultIdentityOptions(Configuration));
 
             //services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>(Configuration);
             services.AddScoped<ControllerExceptionFilterAttribute>();

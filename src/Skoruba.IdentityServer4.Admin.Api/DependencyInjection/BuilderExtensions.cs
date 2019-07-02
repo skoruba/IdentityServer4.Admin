@@ -107,5 +107,13 @@ namespace Skoruba.IdentityServer4.Admin.Api.DependencyInjection
 
             return builder;
         }
+
+        public static IBuilder AddUserValidator<TUser, TValidator>(this IBuilder builder)
+            where TUser : class
+            where TValidator : class
+        {
+            builder.Services.AddScoped(typeof(IUserValidator<TUser>), typeof(TValidator));
+            return builder;
+        }
     }
 }

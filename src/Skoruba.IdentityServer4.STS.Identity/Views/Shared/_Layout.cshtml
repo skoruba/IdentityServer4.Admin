@@ -11,7 +11,7 @@
     }
 }
 @*//TODO: Conditionally inject UserIdentity or refactor hasExternalLogins to inject*@
-@inject SignInManager<UserIdentity> SignInManager
+@inject SignInManager<MultiTenantUserIdentity> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }

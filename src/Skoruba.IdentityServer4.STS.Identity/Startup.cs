@@ -39,25 +39,25 @@ namespace Skoruba.IdentityServer4.STS.Identity
         {
             services.ConfigureRootConfiguration(Configuration);
 
-            /// Add single tenant configuration
-            services.AddSingleTenantConfiguration(Configuration, Environment, Logger,
-                StartupHelpers.DefaultIdentityDbContextOptions(Configuration),
-                StartupHelpers.DefaultIdentityOptions(),
-                StartupHelpers.DefaultIdentityServerOptions(),
-                StartupHelpers.DefaultIdentityServerConfigurationOptions(Configuration),
-                StartupHelpers.DefaultIdentityServerOperationalStoreOptions(Configuration)
-                );
-
-            ///// Add multi tenant configuration
-            ///// Seeding data requires that you build the identity migration using the <see cref="MultiTenantUserIdentityDbContext"/>
-            ///// The _layout page requires the SignInManager to have the type specified to use the <see cref="MultiTenantUserIdentity"/>
-            //services.AddMultiTenantConfiguration(Configuration, Environment, Logger,
+            ///// Add single tenant configuration
+            //services.AddSingleTenantConfiguration(Configuration, Environment, Logger,
             //    StartupHelpers.DefaultIdentityDbContextOptions(Configuration),
             //    StartupHelpers.DefaultIdentityOptions(),
             //    StartupHelpers.DefaultIdentityServerOptions(),
             //    StartupHelpers.DefaultIdentityServerConfigurationOptions(Configuration),
             //    StartupHelpers.DefaultIdentityServerOperationalStoreOptions(Configuration)
             //    );
+
+            /// Add multi tenant configuration
+            /// Seeding data requires that you build the identity migration using the <see cref="MultiTenantUserIdentityDbContext"/>
+            /// The _layout page requires the SignInManager to have the type specified to use the <see cref="MultiTenantUserIdentity"/>
+            services.AddMultiTenantConfiguration(Configuration, Environment, Logger,
+                StartupHelpers.DefaultIdentityDbContextOptions(Configuration),
+                StartupHelpers.DefaultIdentityOptions(),
+                StartupHelpers.DefaultIdentityServerOptions(),
+                StartupHelpers.DefaultIdentityServerConfigurationOptions(Configuration),
+                StartupHelpers.DefaultIdentityServerOperationalStoreOptions(Configuration)
+                );
 
             // Add email senders which is currently setup for SendGrid and SMTP
             services.AddEmailSenders(Configuration);

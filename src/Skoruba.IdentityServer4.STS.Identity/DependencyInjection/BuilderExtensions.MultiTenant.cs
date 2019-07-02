@@ -14,6 +14,8 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Stores;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Managers;
 using IdentityServer4.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.STS.Identity.Services;
+using System.Linq;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Validators;
 
 namespace Skoruba.IdentityServer4.STS.Identity.DependencyInjection
 {
@@ -41,6 +43,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.DependencyInjection
                     (configuration, hostingEnvironment, logger, identityServerOptions, configurationStoreOptions, operationalStoreOptions)
                 .AddMvcWithLocalization
                     <MultiTenantUserIdentity, string>();
+
+            builder.Services.Remove(builder.Services.FirstOrDefault(d => d.ServiceType == typeof(IUserValidator<MultiTenantUserIdentity>)));
+            builder.AddUserValidator<MultiTenantUserIdentity, MultiTenantUserValidator>();
+            builder.AddUserValidator<MultiTenantUserIdentity, RequireTenant>();
 
             return builder;
         }

@@ -9,6 +9,8 @@ using IdentityServer4.EntityFramework.Options;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Stores;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Managers;
+using System.Linq;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Validators;
 
 namespace Skoruba.IdentityServer4.Admin.DependencyInjection
 {
@@ -62,6 +64,10 @@ namespace Skoruba.IdentityServer4.Admin.DependencyInjection
 
             builder.Services.AddScoped<ITenantStore, TenantStore>();
             builder.Services.AddScoped<ITenantManager, TenantManager>();
+
+            builder.Services.Remove(builder.Services.FirstOrDefault(d => d.ServiceType == typeof(IUserValidator<MultiTenantUserIdentity>)));
+            builder.AddUserValidator<MultiTenantUserIdentity, MultiTenantUserValidator>();
+            builder.AddUserValidator<MultiTenantUserIdentity, RequireTenant>();
 
             return builder;
         }

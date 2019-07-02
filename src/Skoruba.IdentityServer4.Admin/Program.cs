@@ -22,7 +22,7 @@ namespace Skoruba.IdentityServer4.Admin
 
             // Uncomment this to seed upon startup, alternatively pass in `dotnet run /seed` to seed using CLI
             seed = true;
-            var seedMultiTenant = false;
+            var seedMultiTenant = true;
             if (seed)
             {
                 if (seedMultiTenant)
