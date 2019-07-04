@@ -498,7 +498,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> LoginWith2fa(bool rememberMe, string returnUrl = null)
+        public async Task<IActionResult> LoginWith2fa(bool rememberMe, string returnUrl = null, string type = "app")
         {
             // Ensure the user has gone through the username & password screen first
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
@@ -508,11 +508,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 throw new InvalidOperationException(_localizer["Unable2FA"]);
             }
 
-            var model = new LoginWith2faViewModel()
-            {
-                ReturnUrl = returnUrl,
-                RememberMe = rememberMe
-            };
+            var model = await BuildLoginWith2faViewModelAsync(user, rememberMe, returnUrl, type);
 
             return View(model);
         }
@@ -535,7 +531,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             var authenticatorCode = model.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
 
-            var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, model.RememberMe, model.RememberMachine);
+            var result = await Get2faSigninResult(model.AuthenticationCodeType, authenticatorCode, model.RememberMe, model.RememberMachine);
 
             if (result.Succeeded)
             {
@@ -681,6 +677,61 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             vm.Username = model.Username;
             vm.RememberLogin = model.RememberLogin;
             return vm;
+        }
+
+        private async Task<Microsoft.AspNetCore.Identity.SignInResult> Get2faSigninResult(string type, string code, bool rememberMe, bool rememberMachine)
+        {
+            type = type.ToLower();
+            switch (type)
+            {
+                case "email":
+                    return await _signInManager.TwoFactorSignInAsync("Email", code, rememberMe, rememberMachine);
+
+                case "sms":
+                    return await _signInManager.TwoFactorSignInAsync("Sms", code, rememberMe, rememberMachine);
+
+                default:
+                    return await _signInManager.TwoFactorAuthenticatorSignInAsync(code, rememberMe, rememberMachine);
+            }
+        }
+
+        private async Task<LoginWith2faViewModel> BuildLoginWith2faViewModelAsync(TUser user, bool rememberMe, string returnUrl, string type)
+        {
+            type = type.ToLower();
+            string message = _localizer["App2faTitle"];
+            switch (type)
+            {
+                case "email":
+                    var code = await _userManager.GenerateTwoFactorTokenAsync(user, "Email");
+                    var userEmail = await _userManager.GetEmailAsync(user);
+                    if (code == null)
+                    {
+                        throw new InvalidOperationException(_localizer["Unable2FA"]);
+                    }
+                    await _emailSender.SendEmailAsync(userEmail, _localizer["Email2faSubject"], _localizer["Email2faMessage", code]);
+                    message = _localizer["Email2faTitle"];
+                    break;
+
+                case "sms":
+                    message = _localizer["Sms2faTitle"];
+                    break;
+
+                default:
+                    break;
+            }
+
+            var model = new LoginWith2faViewModel()
+            {
+                ReturnUrl = returnUrl,
+                RememberMe = rememberMe,
+                CanEmailTwoFactorCode = user.EmailConfirmed && _emailSender != null && type != "email",
+                //CanSmsTwoFactorCode = user.PhoneNumberConfirmed && _smsSender != null && type != "sms",
+                CanAppTwoFactorCode = type != "app" && type != default,
+                AuthenticationCodeMessage = message,
+                AuthenticationCodeType = type
+            };
+
+            return model;
         }
 
         private async Task<LogoutViewModel> BuildLogoutViewModelAsync(string logoutId)

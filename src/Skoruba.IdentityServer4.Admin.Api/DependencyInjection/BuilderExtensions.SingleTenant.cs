@@ -44,6 +44,9 @@ namespace Skoruba.IdentityServer4.Admin.Api.DependencyInjection
                 UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
                 RoleClaimsDto<string>>();
 
+            //Uncomment below to require 2fa
+            //builder.AddUserValidator<UserIdentity, MightRequireTwoFactorAuthentication<UserIdentity>>();
+
             return builder;
         }
     }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Tenants;
+using Microsoft.EntityFrameworkCore;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Managers
 {
@@ -173,6 +174,14 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Managers
         public Task<Tenant> FindByIdFromCacheAsync(string tenantId)
         {
             return Store.FindByIdFromCacheAsync(tenantId);
+        }
+
+        public async Task<bool> IsTwoFactorAuthenticationRequiredAsync(string tenantId, CancellationToken cancellationToken = default)
+        {
+            return await Store.Tenants
+                .Where(a => a.Id == tenantId)
+                .Select(a => a.RequireTwoFactorAuthentication)
+                .FirstOrDefaultAsync();
         }
     }
 }

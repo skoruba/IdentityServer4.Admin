@@ -135,6 +135,15 @@
   <data name="Remember" xml:space="preserve">
     <value>Remember this machine</value>
   </data>
+  <data name="Send2faApp" xml:space="preserve">
+    <value>Use authenticator</value>
+  </data>
+  <data name="Send2faEmail" xml:space="preserve">
+    <value>Send via email</value>
+  </data>
+  <data name="Send2faSms" xml:space="preserve">
+    <value>Send via sms</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>Two-factor authentication</value>
   </data>

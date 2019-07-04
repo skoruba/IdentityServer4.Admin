@@ -15,5 +15,7 @@
         public const string ResourcesPath = "Resources";
 
         public const string AdminConfigurationKey = "AdminConfiguration";
+
+        public const string TwoFactorAuthenticationConfiguration = "TwoFactorAuthenticationConfiguration";
     }
 }

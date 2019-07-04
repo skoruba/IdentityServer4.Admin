@@ -12,6 +12,9 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Managers;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Services
 {
+    /// <summary>
+    /// Adds additional tenant specific claims.  <seealso cref="PrincipalExtensions"/>
+    /// </summary>
     public class MultiTenantProfileService : IProfileService
     {
         /// <summary>
@@ -58,22 +61,22 @@ namespace Skoruba.IdentityServer4.STS.Identity.Services
                 var principal = await ClaimsFactory.CreateAsync(user);
                 if (principal == null) throw new Exception("ClaimsFactory failed to create a principal");
 
-                List<Claim> carecompleteClaims = new List<Claim>();
+                List<Claim> claims = new List<Claim>();
 
                 if (!string.IsNullOrEmpty(user.TenantId))
                 {
                     var tenant = await _tenantManager.FindByIdFromCacheAsync(user.TenantId);
-                    carecompleteClaims.Add(new Claim("tenantid", user.TenantId));
-                    carecompleteClaims.Add(new Claim("tenantname", tenant.Name));
-                    carecompleteClaims.Add(new Claim("dbname", tenant.DatabaseName));
+                    claims.Add(new Claim("tenantid", user.TenantId));
+                    claims.Add(new Claim("tenantname", tenant.Name));
+                    claims.Add(new Claim("dbname", tenant.DatabaseName));
                     // claims with null values throw errors
                     if (!string.IsNullOrWhiteSpace(user.ApplicationId))
                     {
-                        carecompleteClaims.Add(new Claim("applicationId", user.ApplicationId));
+                        claims.Add(new Claim("applicationid", user.ApplicationId));
                     }
                 }
                 context.AddRequestedClaims(principal.Claims);
-                context.AddRequestedClaims(carecompleteClaims);
+                context.AddRequestedClaims(claims);
             }
         }
 

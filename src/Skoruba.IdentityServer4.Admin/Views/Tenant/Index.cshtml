@@ -1,0 +1,57 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Tenant.TenantsDto
+@using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
+
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = Localizer["PageTitle"];
+    Layout = "_Layout";
+}
+
+<div class="welcome-block px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">@Localizer["PageTitle"]</h1>
+    <p class="lead">@Localizer["PageSubTitle"]</p>
+</div>
+
+<a class="btn btn-outline-primary mb-3 mt-3" asp-action="TenantProfile">@Localizer["ActionCreateTenant"]</a>
+
+<!-- Cards -->
+<div class="card-deck mb-3 text-center">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>@Localizer["TenantId"]</th>
+                <th>@Localizer["Name"]</th>
+                <th>@Localizer["Code"]</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var tenant in Model.Tenants)
+            {
+                <tr>
+                    <td class="align-middle">
+                        <a class="btn btn-primary" asp-action="TenantProfile" asp-route-id="@tenant.Id">@Localizer["ActionViewTenant"]</a>
+                    </td>
+                    @*<td class="align-middle">
+                            <img-gravatar email="@tenant.Name" class="gravatar-image img-thumbnail" />
+                        </td>*@
+                    <td class="align-middle">@tenant.Id</td>
+                    <td class="align-middle">@tenant.Name</td>
+                    <td class="align-middle">@tenant.Code</td>
+                    <td class="align-middle">
+                        <a class="btn btn-danger" asp-action="TenantDelete" asp-route-id="@tenant.Id"><span class="oi oi-x"></span></a>
+                    </td>
+                    <td class="align-middle">
+                        <a class="btn btn-danger" asp-action="TenantDelete" asp-route-id="@tenant.Id"><span class="oi oi-x"></span></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @await Html.PartialAsync("Common/Pager", new Pager { Action = "Tenants", PageSize = Model.PageSize, TotalCount = Model.TotalCount, EnableSearch = false, Search = ViewBag.Search })
+</div>

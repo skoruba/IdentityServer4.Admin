@@ -1,4 +1,5 @@
-﻿@inject IViewLocalizer Localizer
+﻿@using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants
+@inject IViewLocalizer Localizer
 @using Microsoft.AspNetCore.Mvc.Localization
 @{
     ViewData["Title"] = Localizer["Title"];
@@ -16,7 +17,7 @@
     </p>
 </div>
 
-<div>
+<div policy="@AuthorizationConsts.Can2faBeDisabledPolicy">
     <form asp-action="Disable2fa" method="post" class="form-group">
         <button class="btn btn-danger" type="submit">@Localizer["Disable2FA"]</button>
     </form>

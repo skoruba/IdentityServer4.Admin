@@ -8,8 +8,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.ViewModels.Account
         [StringLength(7, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
         [DataType(DataType.Text)]
         public string TwoFactorCode { get; set; }
+
         public bool RememberMachine { get; set; }
         public bool RememberMe { get; set; }
         public string ReturnUrl { get; set; }
+        public bool CanEmailTwoFactorCode { get; set; }
+        public bool CanSmsTwoFactorCode { get; set; }
+        public bool CanAppTwoFactorCode { get; set; }
+        public string AuthenticationCodeMessage { get; set; }
+        public string AuthenticationCodeType { get; set; }
     }
 }

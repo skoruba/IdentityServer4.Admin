@@ -98,7 +98,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Stores
             }
             Context.Tenants.Add(tenant);
             await Context.SaveChangesAsync(cancellationToken);
-            //ClearCache();
+            ClearCache();
         }
 
         public async Task DeleteAsync(Tenant tenant, CancellationToken cancellationToken)
@@ -110,7 +110,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Stores
             }
             Context.Tenants.Remove(tenant);
             await Context.SaveChangesAsync(cancellationToken);
-            //ClearCache();
+            ClearCache();
         }
 
         public async Task<Tenant> FindByIdAsync(string tenantId, CancellationToken cancellationToken)
@@ -151,7 +151,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Stores
             }
             Context.Entry(tenant).State = EntityState.Modified;
             await Context.SaveChangesAsync(cancellationToken);
-            // ClearCache();
+            ClearCache();
         }
 
         /// <summary>

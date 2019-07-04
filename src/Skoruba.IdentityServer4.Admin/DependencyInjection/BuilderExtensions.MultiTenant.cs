@@ -44,6 +44,8 @@ namespace Skoruba.IdentityServer4.Admin.DependencyInjection
                 UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
                 RoleClaimsDto<string>, UserClaimDto<string>, RoleClaimDto<string>>();
 
+            builder.Services.AddMultiTenantServiceDepencies();
+
             return builder;
         }
 
@@ -68,6 +70,7 @@ namespace Skoruba.IdentityServer4.Admin.DependencyInjection
             builder.Services.Remove(builder.Services.FirstOrDefault(d => d.ServiceType == typeof(IUserValidator<MultiTenantUserIdentity>)));
             builder.AddUserValidator<MultiTenantUserIdentity, MultiTenantUserValidator>();
             builder.AddUserValidator<MultiTenantUserIdentity, RequireTenant>();
+            builder.AddUserValidator<MultiTenantUserIdentity, MightRequireTwoFactorAuthentication<MultiTenantUserIdentity>>();
 
             return builder;
         }

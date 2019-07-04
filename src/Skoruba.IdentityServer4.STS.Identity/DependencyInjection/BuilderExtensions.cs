@@ -23,6 +23,8 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Builder;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Validators;
+using Skoruba.IdentityServer4.STS.Identity.Configuration.Intefaces;
 
 //TODO: Need to rethink and refactor builder extensions for each web project
 namespace Skoruba.IdentityServer4.STS.Identity.DependencyInjection

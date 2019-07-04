@@ -32,5 +32,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Managers
         Task<bool> TenantCodeExistsAsync(string tenantCode, CancellationToken cancellationToken = default);
 
         Task<IdentityResult> UpdateAsync(Tenant tenant, CancellationToken cancellationToken = default);
+
+        Task<bool> IsTwoFactorAuthenticationRequiredAsync(string tenantId, CancellationToken cancellationToken = default);
     }
 }

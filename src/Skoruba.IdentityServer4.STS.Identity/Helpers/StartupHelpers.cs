@@ -5,6 +5,7 @@ using IdentityServer4.Configuration;
 using IdentityServer4.EntityFramework.Interfaces;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -31,7 +32,7 @@ using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
-    public static class StartupHelpers
+    public static partial class StartupHelpers
     {
         public static Action<DbContextOptionsBuilder> DefaultIdentityDbContextOptions(IConfiguration c) =>
              o => o.UseSqlServer(c.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey));
@@ -293,6 +294,17 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             {
                 options.AddPolicy(AuthorizationConsts.AdministrationPolicy,
                     policy => policy.RequireRole(AuthorizationConsts.AdministrationRole));
+
+                //options.AddPolicy(AuthorizationConsts.TenantAdvancedUserPolicy,
+                //    policy => policy.RequireRole(
+                //        AuthorizationConsts.AdministrationRole,
+                //        AuthorizationConsts.TenantAdministratorRole,
+                //        AuthorizationConsts.TenantAdvancedUserRole));
+
+                options.AddPolicy(AuthorizationConsts.Can2faBeDisabledPolicy,
+                    policy => policy.Requirements.Add(new CheckIf2faCanBeDisabledRequirement()));
+
+                services.AddSingleton<IAuthorizationHandler, CheckIf2faCanBeDisabledHandler>();
             });
         }
     }

@@ -13,7 +13,9 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Tenants;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts
 {
-    public class MultiTenantUserIdentityDbContext : IdentityDbContext<MultiTenantUserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>
+    public class MultiTenantUserIdentityDbContext :
+        IdentityDbContext<MultiTenantUserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>,
+        IMultiTenantDbContext
     {
         public DbSet<Tenant> Tenants { get; set; }
 

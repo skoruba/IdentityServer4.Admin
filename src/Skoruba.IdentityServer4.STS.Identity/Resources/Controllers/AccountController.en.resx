@@ -117,11 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="App2faTitle" xml:space="preserve">
+    <value>Enter the code using your Authenticator App</value>
+  </data>
   <data name="ConfirmEmailBody" xml:space="preserve">
     <value>Please confirm your account by &lt;a href='{0}'&gt;clicking here&lt;/a&gt;.</value>
   </data>
   <data name="ConfirmEmailTitle" xml:space="preserve">
     <value>Confirm your email</value>
+  </data>
+  <data name="Email2faMessage" xml:space="preserve">
+    <value>Use the following code to login: {0}</value>
+  </data>
+  <data name="Email2faSubject" xml:space="preserve">
+    <value>Access Code</value>
+  </data>
+  <data name="Email2faTitle" xml:space="preserve">
+    <value>Enter the code from your email</value>
   </data>
   <data name="EmailNotFound" xml:space="preserve">
     <value>The user does not exist or is not confirmed</value>
@@ -140,6 +152,9 @@
   </data>
   <data name="ResetPasswordTitle" xml:space="preserve">
     <value>Reset Password</value>
+  </data>
+  <data name="Sms2faTitle" xml:space="preserve">
+    <value>Enter the code from your phone</value>
   </data>
   <data name="Unable2FA" xml:space="preserve">
     <value>Unable to load two-factor authentication user.</value>

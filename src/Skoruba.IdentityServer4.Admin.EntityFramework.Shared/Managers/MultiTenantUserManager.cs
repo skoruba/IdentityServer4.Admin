@@ -12,7 +12,6 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Managers
 {
     public class MultiTenantUserManager<TUser> : UserManager<TUser> where TUser : class
     {
-        private readonly ITenantManager _tenantManager;
         private readonly Dictionary<string, IUserTwoFactorTokenProvider<TUser>> _myProviders = new Dictionary<string, IUserTwoFactorTokenProvider<TUser>>();
 
         public MultiTenantUserManager(IUserStore<TUser> store,
@@ -23,12 +22,9 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Managers
             ILookupNormalizer keyNormalizer,
             IdentityErrorDescriber errors,
             IServiceProvider services,
-            ILogger<UserManager<TUser>> logger,
-            ITenantManager tenantManager)
+            ILogger<UserManager<TUser>> logger)
             : base(store, optionsAccessor, passwordHasher, userValidators, passwordValidators, keyNormalizer, errors, services, logger)
         {
-            _tenantManager = tenantManager;
-
             foreach (var providerName in Options.Tokens.ProviderMap.Keys)
             {
                 var description = Options.Tokens.ProviderMap[providerName];

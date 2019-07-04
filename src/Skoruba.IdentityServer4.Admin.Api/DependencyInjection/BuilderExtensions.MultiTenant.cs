@@ -9,6 +9,8 @@ using IdentityServer4.EntityFramework.Options;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using System.Linq;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Validators;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers;
+using System.Collections.Generic;
 
 namespace Skoruba.IdentityServer4.Admin.Api.DependencyInjection
 {
@@ -31,17 +33,23 @@ namespace Skoruba.IdentityServer4.Admin.Api.DependencyInjection
                      <MultiTenantUserIdentityDbContext, MultiTenantUserIdentity, UserIdentityRole>
                      (identityOptions);
 
+            HashSet<Type> profileTypes = ProfileTypes;
+            profileTypes.Add(typeof(TenantMapperProfile));
+
             builder.Services.AddAdminAspNetIdentityServices<MultiTenantUserIdentityDbContext, IdentityServerPersistedGrantDbContext,
                    MultiTenantUserDto<string>, string, RoleDto<string>, string, string, string,
                    MultiTenantUserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
                    UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
                    UsersDto<MultiTenantUserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
                    UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-                   RoleClaimsDto<string>, UserClaimDto<string>, RoleClaimDto<string>>(ProfileTypes);
+                   RoleClaimsDto<string>, UserClaimDto<string>, RoleClaimDto<string>>(profileTypes);
+
+            builder.Services.AddMultiTenantServiceDepencies();
 
             builder.Services.Remove(builder.Services.FirstOrDefault(d => d.ServiceType == typeof(IUserValidator<MultiTenantUserIdentity>)));
             builder.AddUserValidator<MultiTenantUserIdentity, MultiTenantUserValidator>();
             builder.AddUserValidator<MultiTenantUserIdentity, RequireTenant>();
+            builder.AddUserValidator<MultiTenantUserIdentity, MightRequireTwoFactorAuthentication<MultiTenantUserIdentity>>();
 
             builder.Services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
 

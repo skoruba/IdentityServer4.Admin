@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.STS.Identity.DependencyInjection;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Stores;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Validators;
 
 namespace Skoruba.IdentityServer4.STS.Identity.DependencyInjection
 {
@@ -36,6 +37,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.DependencyInjection
                     (configuration, hostingEnvironment, logger, identityServerOptions, configurationStoreOptions, operationalStoreOptions)
                 .AddMvcWithLocalization
                     <UserIdentity, string>();
+
+            ////Uncomment to require 2fa for users
+            //builder.AddUserValidator<UserIdentity, MightRequireTwoFactorAuthentication<UserIdentity>>();
 
             return builder;
         }

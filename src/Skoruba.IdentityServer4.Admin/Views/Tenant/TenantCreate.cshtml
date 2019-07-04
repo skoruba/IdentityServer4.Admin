@@ -1,0 +1,106 @@
+﻿@using Skoruba.IdentityServer4.Admin.Helpers;
+@using Microsoft.AspNetCore.Mvc.Localization
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Tenant.TenantDto
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = Localizer["PageTitle"];
+    Layout = "_Layout";
+    var tenants = TempData.Get<IEnumerable<SelectListItem>>("Tenants");
+    TempData.Keep();
+}
+
+<div class="row">
+    <div class="col-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Identity" asp-action="Users">@Localizer["NavigationUsers"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="col-12">
+        <h2>@Localizer["PageTitle"]</h2>
+    </div>
+</div>
+
+<form id="client-form" asp-controller="Identity" asp-action="UserProfile" Method="post">
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    @*@if (!Model.IsDefaultId())
+        {
+            <!--Button-->
+            <div class="form-group row">
+                <div class="col-md-12 col-m-b-10  col-m-t-10">
+                    <!--Option buttons here-->
+                    @*<a asp-action="UserClaims" asp-route-id="@Model.Id" class="btn btn-outline-primary">@Localizer["ButtonManageUserClaims"]</a>
+                    <a asp-action="UserRoles" asp-route-id="@Model.Id" class="btn btn-outline-primary">@Localizer["ButtonManageUserRoles"]</a>
+                    <a asp-action="UserProviders" asp-route-id="@Model.Id" class="btn btn-outline-primary">@Localizer["ButtonManageUserExternalProviders"]</a>
+                    <a asp-action="UserChangePassword" asp-route-id="@Model.Id" class="btn btn-dark">@Localizer["ButtonChangePassword"]</a>
+                    <a asp-action="UserDelete" asp-route-id="@Model.Id" class="btn btn-danger">@Localizer["ButtonDeleteUser"]</a>
+                </div>
+            </div>
+        }*@
+
+    <!--Hidden -->
+    <input type="hidden" asp-for="Id" />
+    <div class="card mt-3">
+        <h5 class="card-header">@Localizer["PanelTitle"]</h5>
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-lg-2 mb-3">
+                    <img-gravatar email="@Model.Id" class="img-thumbnail" size="150" />
+                </div>
+                <div class="col-sm-10">
+                    <!--Input - text -->
+                    <div class="form-group row">
+                        <label asp-for="Name" class="col-sm-3 col-form-label">
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" required class="form-control" asp-for="Name">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="Id" class="col-sm-3 col-form-label">
+                        </label>
+                        <div class="col-sm-9">
+                            <select asp-for="Id" asp-items="@tenants" class="form-control single-select"></select>
+                        </div>
+                    </div>
+
+                    <!--Input - int -->
+                    <div class="form-group row">
+                        <label asp-for="Code" class="col-sm-3 col-form-label">
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" asp-for="Code">
+                            <span asp-validation-for="Code" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!--Button-->
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">
+                        </label>
+                        <div class="col-sm-9">
+                            <button type="submit" class="btn btn-primary">@Localizer["ButtonSaveTenant"]</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section scripts
+    {
+    <script type="text/javascript">
+        $(function () {
+            $('#logoutend-picker').datetimepicker();
+        });
+    </script>
+}

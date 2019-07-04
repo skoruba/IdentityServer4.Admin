@@ -15,20 +15,38 @@
         <form method="post" asp-route-returnUrl="@Model.ReturnUrl">
             <input asp-for="RememberMe" type="hidden" />
             <input asp-for="ReturnUrl" type="hidden" />
+            <input asp-for="CanAppTwoFactorCode" type="hidden" />
+            <input asp-for="CanEmailTwoFactorCode" type="hidden" />
+            <input asp-for="CanSmsTwoFactorCode" type="hidden" />
+            <input asp-for="AuthenticationCodeType" type="hidden" />
             <div class="form-group">
-                <label asp-for="TwoFactorCode">@Localizer["Code"]</label>
+                <label asp-for="TwoFactorCode">@Model.AuthenticationCodeMessage</label>
                 <input asp-for="TwoFactorCode" class="form-control" autocomplete="off" />
                 <span asp-validation-for="TwoFactorCode" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <div class="checkbox">
-                    <div>                        
+                    <div>
                         @Localizer["Remember"]
                     </div>
                     <toggle-button>
                         <input asp-for="RememberMachine" />
                     </toggle-button>
                 </div>
+            </div>
+            <div class="form-group">
+                @if (Model.CanEmailTwoFactorCode)
+                {
+                    <a asp-controller="Account" asp-action="LoginWith2fa" asp-route-ReturnUrl="@Model.ReturnUrl" asp-route-Type="email">@Localizer["Send2faEmail"]</a>
+                }
+                @if (Model.CanAppTwoFactorCode)
+                {
+                    <a asp-controller="Account" asp-action="LoginWith2fa" asp-route-ReturnUrl="@Model.ReturnUrl" asp-route-Type="app">@Localizer["Send2faApp"]</a>
+                }
+                @if (Model.CanSmsTwoFactorCode)
+                {
+                    <a asp-controller="Account" asp-action="LoginWith2fa" asp-route-ReturnUrl="@Model.ReturnUrl" asp-route-Type="sms">@Localizer["Send2faSms"]</a>
+                }
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">@Localizer["LogIn"]</button>

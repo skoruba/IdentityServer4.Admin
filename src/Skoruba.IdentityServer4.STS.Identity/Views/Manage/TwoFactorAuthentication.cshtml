@@ -1,4 +1,5 @@
-﻿@inject IViewLocalizer Localizer
+﻿@using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants
+@inject IViewLocalizer Localizer
 @using Microsoft.AspNetCore.Mvc.Localization
 @model Skoruba.IdentityServer4.STS.Identity.ViewModels.Manage.TwoFactorAuthenticationViewModel
 @{
@@ -50,8 +51,8 @@
             </div>
         }
 
-        <div class="col-12">
-            <a asp-action="Disable2faWarning" class="btn btn-dark">@Localizer["Disable2FA"]</a>
+        <div class="col-12" >
+            <a policy="@AuthorizationConsts.Can2faBeDisabledPolicy" asp-action="Disable2faWarning" class="btn btn-dark">@Localizer["Disable2FA"]</a>
             <a asp-action="GenerateRecoveryCodesWarning" class="btn btn-danger">@Localizer["ResetCodes"]</a>
         </div>
     }

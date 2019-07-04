@@ -117,11 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="App2faTitle" xml:space="preserve">
+    <value>Ange koden med din Authenticator App</value>
+  </data>
   <data name="ConfirmEmailBody" xml:space="preserve">
     <value>Verifiera ditt konto genom att &lt;a href='{0}'&gt;klicka här&lt;/a&gt;.</value>
   </data>
   <data name="ConfirmEmailTitle" xml:space="preserve">
     <value>Verifiera din e-postadress</value>
+  </data>
+  <data name="Email2faMessage" xml:space="preserve">
+    <value>Använd följande kod för att logga in: {0}</value>
+  </data>
+  <data name="Email2faSubject" xml:space="preserve">
+    <value>Åtkomstkod</value>
+  </data>
+  <data name="Email2faTitle" xml:space="preserve">
+    <value>Ange koden från din e-postadress</value>
   </data>
   <data name="EmailNotFound" xml:space="preserve">
     <value>Användaren finns inte eller så er denne inte verifierad</value>
@@ -140,6 +152,9 @@
   </data>
   <data name="ResetPasswordTitle" xml:space="preserve">
     <value>Återställ lösenord</value>
+  </data>
+  <data name="Sms2faTitle" xml:space="preserve">
+    <value>Ange koden från din telefon</value>
   </data>
   <data name="Unable2FA" xml:space="preserve">
     <value>Kunde inte ladda användare via två faktorsautentiering.</value>

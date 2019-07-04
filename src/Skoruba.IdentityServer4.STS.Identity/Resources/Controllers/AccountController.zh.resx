@@ -117,11 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="App2faTitle" xml:space="preserve">
+    <value>使用Authenticator App输入代码</value>
+  </data>
   <data name="ConfirmEmailBody" xml:space="preserve">
     <value>请通过&lt;a href='{0}'&gt;点击此处&lt;/a&gt;确认您的帐户。</value>
   </data>
   <data name="ConfirmEmailTitle" xml:space="preserve">
     <value>确认您的电子邮件</value>
+  </data>
+  <data name="Email2faMessage" xml:space="preserve">
+    <value>使用以下代碼登錄: {0}</value>
+  </data>
+  <data name="Email2faSubject" xml:space="preserve">
+    <value>訪問代碼</value>
+  </data>
+  <data name="Email2faTitle" xml:space="preserve">
+    <value>輸入電子郵件中的代碼</value>
   </data>
   <data name="EmailNotFound" xml:space="preserve">
     <value>用户不存在或未确认</value>
@@ -140,6 +152,9 @@
   </data>
   <data name="ResetPasswordTitle" xml:space="preserve">
     <value>重置密码</value>
+  </data>
+  <data name="Sms2faTitle" xml:space="preserve">
+    <value>输入手机中的密码</value>
   </data>
   <data name="Unable2FA" xml:space="preserve">
     <value>无法加载双因素身份验证用户。</value>
