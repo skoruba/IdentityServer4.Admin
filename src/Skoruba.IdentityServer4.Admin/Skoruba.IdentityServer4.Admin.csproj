@@ -99,6 +99,7 @@
 	  <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.BusinessLogic.Shared\Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.csproj" />
 	  <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.BusinessLogic\Skoruba.IdentityServer4.Admin.BusinessLogic.csproj" />
 	  <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.Shared\Skoruba.IdentityServer4.Admin.EntityFramework.Shared.csproj" />
+	  <ProjectReference Include="..\Skoruba.IdentityServer4.Audit.EntityFramework\Skoruba.IdentityServer4.Audit.EntityFramework.csproj" />
 	</ItemGroup>
 
 </Project>

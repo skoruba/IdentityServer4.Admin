@@ -33,7 +33,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
 
         private IClientRepository GetClientRepository(IdentityServerConfigurationDbContext context)
         {
-            IClientRepository clientRepository = new ClientRepository<IdentityServerConfigurationDbContext>(context);
+            IClientRepository clientRepository = new ClientRepository<IdentityServerConfigurationDbContext>(context, new EventServiceMock());
 
             return clientRepository;
         }
@@ -198,7 +198,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 ClientCloneCompare(cloneClientEntity, clientToCompare);
             }
         }
-        
+
         [Fact]
         public async Task CloneClientWithoutCorsAsync()
         {
@@ -788,10 +788,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
             {
                 var clientRepository = GetClientRepository(context);
                 var identityResourceRepository = GetIdentityResourceRepository(context);
-                
+
                 var identityResource = IdentityResourceMock.GenerateRandomIdentityResource(0);
                 await identityResourceRepository.AddIdentityResourceAsync(identityResource);
-                
+
                 var identityScopes = await clientRepository.GetScopesAsync(identityResource.Name);
 
                 identityScopes[0].Should().Be(identityResource.Name);
@@ -805,7 +805,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
             {
                 var clientRepository = GetClientRepository(context);
                 var apiResourceRepository = GetApiResourceRepository(context);
-                
+
                 var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
                 await apiResourceRepository.AddApiResourceAsync(apiResource);
 
@@ -819,7 +819,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 apiScopes[0].Should().Be(apiScope.Name);
             }
         }
-        
+
         private void ClientCloneCompare(Client cloneClientEntity, Client clientToCompare, bool cloneClientCorsOrigins = true, bool cloneClientGrantTypes = true, bool cloneClientIdPRestrictions = true, bool cloneClientPostLogoutRedirectUris = true, bool cloneClientScopes = true, bool cloneClientRedirectUris = true, bool cloneClientClaims = true, bool cloneClientProperties = true)
         {
             //Assert cloned client
@@ -830,7 +830,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                     .Excluding(o => o.ClientName)
 
                     //Skip the collections because is not possible ignore property in list :-(
-                    //Note: I've found the solution above - try ignore property of the list using SelectedMemberPath                        
+                    //Note: I've found the solution above - try ignore property of the list using SelectedMemberPath
                     .Excluding(o => o.AllowedGrantTypes)
                     .Excluding(o => o.RedirectUris)
                     .Excluding(o => o.PostLogoutRedirectUris)
@@ -841,7 +841,6 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                     .Excluding(o => o.AllowedCorsOrigins)
                     .Excluding(o => o.Properties)
             );
-
 
             //New client relations have new id's and client relations therefore is required ignore them
             if (cloneClientGrantTypes)
@@ -944,7 +943,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                     .Excluding(o => o.ClientName)
 
                     //Skip the collections because is not possible ignore property in list :-(
-                    //Note: I've found the solution above - try ignore property of the list using SelectedMemberPath                        
+                    //Note: I've found the solution above - try ignore property of the list using SelectedMemberPath
                     .Excluding(o => o.AllowedGrantTypes)
                     .Excluding(o => o.RedirectUris)
                     .Excluding(o => o.PostLogoutRedirectUris)

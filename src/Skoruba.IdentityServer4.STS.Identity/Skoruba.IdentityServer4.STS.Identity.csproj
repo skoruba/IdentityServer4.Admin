@@ -7,6 +7,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="AspNet.Security.OAuth.GitHub" Version="2.0.1" />
+		<PackageReference Include="IdentityServer4" Version="2.4.0" />
 		<PackageReference Include="Microsoft.AspNetCore.App" />
 		<PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
 		<PackageReference Include="IdentityServer4.AspNetIdentity" Version="2.4.0" />
@@ -23,6 +24,7 @@
 		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.Identity\Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj" />
 		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.Shared\Skoruba.IdentityServer4.Admin.EntityFramework.Shared.csproj" />
 		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.IdentityServer4.Admin.EntityFramework.csproj" />
+		<ProjectReference Include="..\Skoruba.IdentityServer4.Audit.EntityFramework\Skoruba.IdentityServer4.Audit.EntityFramework.csproj" />
 	</ItemGroup>
 
 </Project>

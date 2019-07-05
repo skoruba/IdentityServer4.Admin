@@ -36,7 +36,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             {
                 return View(nameof(ErrorsLog), logs);
             }
-            
+
             await _logService.DeleteLogsOlderThanAsync(logs.DeleteOlderThan.Value);
 
             return RedirectToAction(nameof(ErrorsLog));

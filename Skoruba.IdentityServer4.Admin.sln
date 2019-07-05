@@ -33,7 +33,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Adm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.EntityFramework.Shared", "src\Skoruba.IdentityServer4.Admin.EntityFramework.Shared\Skoruba.IdentityServer4.Admin.EntityFramework.Shared.csproj", "{E18F8C70-7448-4039-9D78-1369D7F498EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skoruba.IdentityServer4.Admin.EntityFramework.Extensions", "src\Skoruba.IdentityServer4.Admin.EntityFramework.Extensions\Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.csproj", "{2DD3CB7D-462E-4039-B684-81B1E88C7C6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.EntityFramework.Extensions", "src\Skoruba.IdentityServer4.Admin.EntityFramework.Extensions\Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.csproj", "{2DD3CB7D-462E-4039-B684-81B1E88C7C6A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Audit.UnitTests", "tests\Skoruba.IdentityServer4.Audit.UnitTests\Skoruba.IdentityServer4.Audit.UnitTests.csproj", "{10A594F3-C4A0-4B59-80E0-9FCC202EA10C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Audit.Sink", "src\Skoruba.IdentityServer4.Audit.Sink\Skoruba.IdentityServer4.Audit.Sink.csproj", "{CBAAD64D-A4CF-4E4D-84A9-E3F515115EF8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Audit.EntityFramework", "src\Skoruba.IdentityServer4.Audit.EntityFramework\Skoruba.IdentityServer4.Audit.EntityFramework.csproj", "{333DC5C0-4BD3-44E2-9ECB-95AB7747C683}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Audit.Core", "src\Skoruba.IdentityServer4.Audit.Core\Skoruba.IdentityServer4.Audit.Core.csproj", "{650BE62C-893C-4122-90E2-447AF8254C4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +101,22 @@ Global
 		{2DD3CB7D-462E-4039-B684-81B1E88C7C6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DD3CB7D-462E-4039-B684-81B1E88C7C6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DD3CB7D-462E-4039-B684-81B1E88C7C6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10A594F3-C4A0-4B59-80E0-9FCC202EA10C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10A594F3-C4A0-4B59-80E0-9FCC202EA10C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10A594F3-C4A0-4B59-80E0-9FCC202EA10C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10A594F3-C4A0-4B59-80E0-9FCC202EA10C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBAAD64D-A4CF-4E4D-84A9-E3F515115EF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBAAD64D-A4CF-4E4D-84A9-E3F515115EF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBAAD64D-A4CF-4E4D-84A9-E3F515115EF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBAAD64D-A4CF-4E4D-84A9-E3F515115EF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{333DC5C0-4BD3-44E2-9ECB-95AB7747C683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{333DC5C0-4BD3-44E2-9ECB-95AB7747C683}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{333DC5C0-4BD3-44E2-9ECB-95AB7747C683}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{333DC5C0-4BD3-44E2-9ECB-95AB7747C683}.Release|Any CPU.Build.0 = Release|Any CPU
+		{650BE62C-893C-4122-90E2-447AF8254C4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{650BE62C-893C-4122-90E2-447AF8254C4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{650BE62C-893C-4122-90E2-447AF8254C4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{650BE62C-893C-4122-90E2-447AF8254C4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,6 +135,10 @@ Global
 		{8F112368-2E45-4C3A-922E-85AB6056F559} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
 		{E18F8C70-7448-4039-9D78-1369D7F498EF} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
 		{2DD3CB7D-462E-4039-B684-81B1E88C7C6A} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
+		{10A594F3-C4A0-4B59-80E0-9FCC202EA10C} = {0BC0CC4E-A0F1-45E8-B41A-AE0FA76BF3E5}
+		{CBAAD64D-A4CF-4E4D-84A9-E3F515115EF8} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
+		{333DC5C0-4BD3-44E2-9ECB-95AB7747C683} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
+		{650BE62C-893C-4122-90E2-447AF8254C4F} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B3166EDE-037B-4C68-BEBA-5DE9C5E3DB82}

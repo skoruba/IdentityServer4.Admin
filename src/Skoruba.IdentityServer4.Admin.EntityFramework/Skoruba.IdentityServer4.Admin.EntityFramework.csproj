@@ -12,10 +12,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CompareNETObjects" Version="4.61.0" />
     <PackageReference Include="IdentityServer4.EntityFramework" Version="2.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.Extensions\Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.csproj" />
+    <ProjectReference Include="..\Skoruba.IdentityServer4.Audit.Sink\Skoruba.IdentityServer4.Audit.Sink.csproj" />
   </ItemGroup>
 </Project>

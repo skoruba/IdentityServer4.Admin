@@ -25,6 +25,14 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Skoruba.IdentityServer4.Admin.Helpers;
 using Xunit;
+using IdentityServer4.Configuration;
+using IdentityServer4.Services;
+using IdentityServer4.Events;
+using Skoruba.IdentityServer4.Audit.Sink;
+using System.Collections.Generic;
+using Skoruba.IdentityServer4.Audit.Sink.Recorders;
+using Microsoft.AspNetCore.Authentication;
+using Skoruba.IdentityServer4.Audit.Sink.DependencyInjection;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 {
@@ -70,7 +78,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var clientDto = ClientDtoMock.GenerateRandomClient(0);
             var result = await controller.Client(clientDto);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be(nameof(Client));
 
@@ -103,7 +111,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var clientDto = ClientDtoMock.GenerateRandomClient(clientToAdd.Id);
             var result = await controller.Client(clientDto);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("Client");
 
@@ -158,7 +166,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var clientClaim = ClientDtoMock.GenerateRandomClientClaim(0, clientId);
             var result = await controller.ClientClaims(clientClaim);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("ClientClaims");
 
@@ -243,7 +251,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var clientSecret = ClientDtoMock.GenerateRandomClientSecret(0, clientId);
             var result = await controller.ClientSecrets(clientSecret);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("ClientSecrets");
 
@@ -328,7 +336,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var clientProperty = ClientDtoMock.GenerateRandomClientProperty(0, clientId);
             var result = await controller.ClientProperties(clientProperty);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("ClientProperties");
 
@@ -415,7 +423,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             //Action
             var result = await controller.Client(clientDto);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
             viewResult.ViewData.ModelState.IsValid.Should().BeFalse();
         }
@@ -832,6 +840,19 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             services.AddLogging();
 
+            //Auditing
+            services.AddSingleton<IEventService, EventServiceMock>();
+            //services.AddSingleton<ISystemClock>(new SystemClock());
+            //services.AddIdentityServer4Auditing(options =>
+            //    {
+            //        options.Events.RaiseErrorEvents = true;
+            //        options.Events.RaiseInformationEvents = true;
+            //        options.Events.RaiseFailureEvents = true;
+            //        options.Events.RaiseSuccessEvents = true;
+            //    })
+            //    //.AddConsoleSink()
+            //    //.AddDefaultIdentityServer4Sink()
+            //    ;
             return services.BuildServiceProvider();
         }
     }

@@ -37,7 +37,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 
         private IClientRepository GetClientRepository(IdentityServerConfigurationDbContext context)
         {
-            IClientRepository clientRepository = new ClientRepository<IdentityServerConfigurationDbContext>(context);
+            IClientRepository clientRepository = new ClientRepository<IdentityServerConfigurationDbContext>(context, new EventServiceMock());
 
             return clientRepository;
         }
@@ -139,7 +139,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                         .Excluding(o => o.ClientName)
 
                         //Skip the collections because is not possible ignore property in list :-(
-                        //Note: I've found the solution above - try ignore property of the list using SelectedMemberPath                        
+                        //Note: I've found the solution above - try ignore property of the list using SelectedMemberPath
                         .Excluding(o => o.AllowedGrantTypes)
                         .Excluding(o => o.RedirectUris)
                         .Excluding(o => o.PostLogoutRedirectUris)
@@ -150,7 +150,6 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                         .Excluding(o => o.AllowedCorsOrigins)
                         .Excluding(o => o.Properties)
                 );
-
 
                 //New client relations have new id's and client relations therefore is required ignore them
                 cloneClientEntity.AllowedGrantTypes.ShouldBeEquivalentTo(clientToCompare.AllowedGrantTypes,
@@ -347,7 +346,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 //Map entity to model
                 var claimsDto = claim.ToModel();
 
-                //Get new client claim    
+                //Get new client claim
                 var clientClaimsDto = await clientService.GetClientClaimAsync(claim.Id);
 
                 //Assert
@@ -396,7 +395,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 //Map entity to model
                 var claimsDto = claim.ToModel();
 
-                //Get new client claim    
+                //Get new client claim
                 var clientClaimsDto = await clientService.GetClientClaimAsync(claim.Id);
 
                 //Assert
@@ -453,7 +452,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 //Map entity to model
                 var claimsDto = claim.ToModel();
 
-                //Get new client claim    
+                //Get new client claim
                 var clientClaimsDto = await clientService.GetClientClaimAsync(claim.Id);
 
                 //Assert
@@ -501,11 +500,11 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 //Map entity to model
                 var propertyDto = property.ToModel();
 
-                //Get new client property    
+                //Get new client property
                 var clientPropertiesDto = await clientService.GetClientPropertyAsync(property.Id);
 
                 //Assert
-                clientPropertiesDto.ShouldBeEquivalentTo(propertyDto, options => 
+                clientPropertiesDto.ShouldBeEquivalentTo(propertyDto, options =>
                     options.Excluding(o => o.ClientPropertyId)
                            .Excluding(o => o.ClientName));
             }
@@ -550,7 +549,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 //Map entity to model
                 var propertyDto = property.ToModel();
 
-                //Get new client property    
+                //Get new client property
                 var clientPropertiesDto = await clientService.GetClientPropertyAsync(property.Id);
 
                 //Assert
@@ -598,7 +597,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 //Map entity to model
                 var propertiesDto = property.ToModel();
 
-                //Get new client Property    
+                //Get new client Property
                 var clientPropertiesDto = await clientService.GetClientPropertyAsync(property.Id);
 
                 //Assert
@@ -655,11 +654,11 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 //Map entity to model
                 var clientSecretsDto = secret.ToModel();
 
-                //Get new client secret    
+                //Get new client secret
                 var secretsDto = await clientService.GetClientSecretAsync(secret.Id);
 
                 //Assert
-                secretsDto.ShouldBeEquivalentTo(clientSecretsDto, options => 
+                secretsDto.ShouldBeEquivalentTo(clientSecretsDto, options =>
                     options.Excluding(o => o.ClientSecretId)
                            .Excluding(o => o.ClientName));
             }
@@ -704,7 +703,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 //Map entity to model
                 var clientSecretsDto = secret.ToModel();
 
-                //Get new client secret    
+                //Get new client secret
                 var secretsDto = await clientService.GetClientSecretAsync(secret.Id);
 
                 //Assert
@@ -752,7 +751,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 //Map entity to model
                 var secretsDto = secret.ToModel();
 
-                //Get new client secret    
+                //Get new client secret
                 var clientSecretsDto = await clientService.GetClientSecretAsync(secret.Id);
 
                 //Assert

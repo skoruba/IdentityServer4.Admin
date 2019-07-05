@@ -4,8 +4,13 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Entities;
+using IdentityServer4.EntityFramework.Mappers;
 using IdentityServer4.Models;
+using IdentityServer4.Services;
+using KellermanSoftware.CompareNetObjects;
+using KellermanSoftware.CompareNetObjects.Reports;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Constants;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Enums;
@@ -13,6 +18,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
+using Skoruba.IdentityServer4.Audit.Sink.Events;
 using Client = IdentityServer4.EntityFramework.Entities.Client;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
@@ -21,11 +27,14 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
     where TDbContext : DbContext, IAdminConfigurationDbContext
     {
         protected readonly TDbContext DbContext;
+        private readonly IEventService _eventService;
+
         public bool AutoSaveChanges { get; set; } = true;
 
-        public ClientRepository(TDbContext dbContext)
+        public ClientRepository(TDbContext dbContext, IEventService eventService)
         {
             DbContext = dbContext;
+            _eventService = eventService;
         }
 
         public virtual Task<Client> GetClientAsync(int clientId)
@@ -425,13 +434,31 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
 
         public virtual async Task<int> UpdateClientAsync(Client client)
         {
+            //Get changes
+            var changes = await GetChanges(client);
+
             //Remove old relations
             await RemoveClientRelationsAsync(client);
 
             //Update with new data
             DbContext.Clients.Update(client);
 
+            await _eventService.RaiseAsync(new ClientChangedEvent("sourceid", "sourcename", client.Id.ToString(), client.ClientName, changes));
+
             return await AutoSaveChangesAsync();
+        }
+
+        private async Task<string> GetChanges(Client client)
+        {
+            var original = await GetClientAsync(client.Id);
+            var compareLogic = new CompareLogic();
+            compareLogic.Config.MaxDifferences = 9999;
+            compareLogic.Config.MembersToIgnore.AddRange(new[] { "ClientId", "Id", "Client", "ClientSecrets", "Created", "Count" });
+
+            var compareResult = compareLogic.Compare(original, client);
+            var json = compareResult.Differences.Select(a => new { @Property = a.PropertyName, @OldValue = a.Object1Value, @NewValue = a.Object2Value });
+            var jsonSerialized = JsonConvert.SerializeObject(json);
+            return jsonSerialized;
         }
 
         public virtual async Task<int> RemoveClientAsync(Client client)

@@ -9,12 +9,20 @@ using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.Helpers;
+using MediatR;
+using Skoruba.IdentityServer4.Audit.Core;
+using Skoruba.IdentityServer4.Audit.EntityFramework.Handlers;
+using Skoruba.IdentityServer4.Audit.Sink.DependencyInjection;
+using Skoruba.IdentityServer4.Audit.EntityFramework.DependencyInjection;
+using Skoruba.IdentityServer4.Admin.Configuration.Constants;
 
 namespace Skoruba.IdentityServer4.Admin
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        private readonly ILoggerFactory _loggerFactory;
+
+        public Startup(IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
@@ -32,6 +40,7 @@ namespace Skoruba.IdentityServer4.Admin
             Configuration = builder.Build();
 
             HostingEnvironment = env;
+            _loggerFactory = loggerFactory;
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -49,7 +58,7 @@ namespace Skoruba.IdentityServer4.Admin
 
             // Add Asp.Net Core Identity Configuration and OpenIdConnect auth as well
             services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(HostingEnvironment, rootConfiguration.AdminConfiguration);
-            
+
             // Add exception filters in MVC
             services.AddMvcExceptionFilters();
 
@@ -74,6 +83,12 @@ namespace Skoruba.IdentityServer4.Admin
                 UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
                 UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
                 RoleClaimsDto<string>>();
+
+            services.AddIdentityServer4Auditing()
+                .AddIdentityServerOptions()
+                .AddConsoleSink()
+                .AddSerilogSinkWithDbContext(Configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey), HostingEnvironment.EnvironmentName)
+                .AddDefaultIdentityServer4Sink();
 
             // Add authorization policies for MVC
             services.AddAuthorizationPolicies();
