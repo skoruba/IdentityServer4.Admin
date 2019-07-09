@@ -12,10 +12,6 @@ using System.Text;
 
 namespace Skoruba.IdentityServer4.Audit.Sink.DependencyInjection
 {
-    public class IdentityServer4AuditOptions
-    {
-    }
-
     public static class IdentityServer4AuditSinkServiceCollectionExtensions
     {
         public static IIdentityServer4AuditSinkBuilder AddIdentityServer4Auditing(this IServiceCollection services)
@@ -53,7 +49,7 @@ namespace Skoruba.IdentityServer4.Audit.Sink.DependencyInjection
 
         public static IIdentityServer4AuditSinkBuilder AddConsoleSink(this IIdentityServer4AuditSinkBuilder builder)
         {
-            builder.Services.AddTransient<IConsoleRecorder, ConsoleRecorder>();
+            builder.Services.AddSingleton<ConsoleRecorder>();
             builder.Services.AddTransient<IAuditSink, ConsoleSink>();
             return builder;
         }

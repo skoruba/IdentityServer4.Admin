@@ -5,7 +5,7 @@ namespace Skoruba.IdentityServer4.Audit.Sink.Sinks
 {
     public class ConsoleSink : AuditSinkBase
     {
-        public ConsoleSink(IConsoleRecorder auditRecorder, IHttpContextAccessor httpContext) : base(auditRecorder, httpContext)
+        public ConsoleSink(ConsoleRecorder auditRecorder, IHttpContextAccessor httpContext) : base(auditRecorder, httpContext)
         {
         }
     }

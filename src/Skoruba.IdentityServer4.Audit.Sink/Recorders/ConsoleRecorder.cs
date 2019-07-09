@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Skoruba.IdentityServer4.Audit.Sink.Recorders
 {
-    public class ConsoleRecorder : IConsoleRecorder
+    public class ConsoleRecorder : IRecordAuditActions
     {
         public Task RecordFailure(IAuditArgs auditEventArguments)
         {
