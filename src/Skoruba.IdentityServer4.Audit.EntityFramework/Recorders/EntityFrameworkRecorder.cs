@@ -1,5 +1,6 @@
 ﻿using Skoruba.IdentityServer4.Audit.Sink;
 using Skoruba.IdentityServer4.Audit.Sink.Recorders;
+using System;
 using System.Threading.Tasks;
 
 namespace Skoruba.IdentityServer4.Audit.EntityFramework.Recorders
@@ -25,7 +26,7 @@ namespace Skoruba.IdentityServer4.Audit.EntityFramework.Recorders
 
         private Task Write(IAuditArgs args, bool success)
         {
-            return Task.CompletedTask;
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using AutoMapper;
 using FluentAssertions;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
@@ -24,7 +25,11 @@ namespace Skoruba.IdentityServer4.Audit.UnitTests.Mappers
 
             //Assert
             auditEntityDto.Should().NotBeNull();
-            auditEntity.ShouldBeEquivalentTo(auditEntityDto);
+            auditEntity.ShouldBeEquivalentTo(auditEntityDto, options =>
+                options.Excluding(x => x.Message)
+                    .Excluding(x => x.MessageTemplate)
+                    //.Using<DateTime>(d => d.Subject.Should().BeCloseTo(d.Expectation)).WhenTypeIs<DateTimeOffset>());
+                    .Excluding(x => x.TimeStamp)); // <-- how to compare properly
         }
     }
 }

@@ -55,13 +55,26 @@
             </div>
         </div>
 
-        <!--Menu item -->
+        <!--Audits Menu item -->
+        <div class="menu-item my-2 my-md-0 mr-md-3 dropdown">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                @Localizer["TitleLogs"]
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" asp-area="" asp-controller="Audit" asp-action="Index">@Localizer["TitleAudits"]</a>
+                <a class="dropdown-item" asp-area="" asp-controller="Logs" asp-action="ErrorsLog">@Localizer["TitleLogs"]</a>
+            </div>
+        </div>
+
+        @*
+        <!--Logs Menu item -->
         <a class="menu-item btn btn-primary mr-md-3" asp-area="" asp-controller="Log" asp-action="ErrorsLog">@Localizer["TitleLogs"]</a>
+        *@
 
         <!--Menu item -->
         @if (User.Identity.IsAuthenticated)
         {
-            <a class="menu-item my-2 btn btn-outline-primary" asp-action="Logout" asp-controller="Account">@User.GetDisplayName() - @Localizer["LinkLogout"]</a>
+        <a class="menu-item my-2 btn btn-outline-primary" asp-action="Logout" asp-controller="Account">@User.GetDisplayName() - @Localizer["LinkLogout"]</a>
         }
 
         <!--Menu button - show in < MD -->
@@ -83,8 +96,6 @@
                     @await Html.PartialAsync("Common/SelectLanguage")
                 </div>
             </div>
-
-
         </footer>
     </div>
 

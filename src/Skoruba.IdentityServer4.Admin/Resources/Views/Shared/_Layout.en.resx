@@ -150,6 +150,9 @@
   <data name="PageTitle" xml:space="preserve">
     <value>Skoruba IdentityServer4 Admin</value>
   </data>
+  <data name="TitleAudits" xml:space="preserve">
+    <value>Audits</value>
+  </data>
   <data name="TitleConfiguration" xml:space="preserve">
     <value>Clients/Resources</value>
   </data>

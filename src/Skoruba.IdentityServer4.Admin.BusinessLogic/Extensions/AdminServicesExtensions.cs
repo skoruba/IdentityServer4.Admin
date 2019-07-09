@@ -5,6 +5,8 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
+using Skoruba.IdentityServer4.Audit.Core.Interfaces;
+using Skoruba.IdentityServer4.Audit.EntityFramework.Repository;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -14,7 +16,6 @@ namespace Microsoft.Extensions.DependencyInjection
             this IServiceCollection services)
             where TAdminDbContext : DbContext, IAdminPersistedGrantDbContext, IAdminConfigurationDbContext, IAdminLogDbContext
         {
-
             return services.AddAdminServices<TAdminDbContext, TAdminDbContext, TAdminDbContext>();
         }
 
@@ -29,6 +30,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddTransient<IApiResourceRepository, ApiResourceRepository<TConfigurationDbContext>>();
             services.AddTransient<IPersistedGrantRepository, PersistedGrantRepository<TPersistedGrantDbContext>>();
             services.AddTransient<ILogRepository, LogRepository<TLogDbContext>>();
+            services.AddTransient<IAuditRepository, AuditRepository>();
 
             //Services
             services.AddTransient<IClientService, ClientService>();
@@ -36,6 +38,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddTransient<IIdentityResourceService, IdentityResourceService>();
             services.AddTransient<IPersistedGrantService, PersistedGrantService>();
             services.AddTransient<ILogService, LogService>();
+            services.AddTransient<IAuditService, AuditService>();
 
             //Resources
             services.AddScoped<IApiResourceServiceResources, ApiResourceServiceResources>();

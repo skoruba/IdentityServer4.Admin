@@ -120,16 +120,19 @@
   <data name="PageTitle" xml:space="preserve">
     <value>Audits</value>
   </data>
-  <data name="TableLevel" xml:space="preserve">
-    <value>Level</value>
+  <data name="TableAction" xml:space="preserve">
+    <value>Action</value>
   </data>
-  <data name="TableLogged" xml:space="preserve">
-    <value>Logged</value>
-  </data>
-  <data name="TableMessage" xml:space="preserve">
-    <value>Message</value>
+  <data name="TableActor" xml:space="preserve">
+    <value>Actor</value>
   </data>
   <data name="TableShowDetail" xml:space="preserve">
     <value>Show Detail</value>
+  </data>
+  <data name="TableSubject" xml:space="preserve">
+    <value>Subject</value>
+  </data>
+  <data name="TableTimestamp" xml:space="preserve">
+    <value>Timestamp</value>
   </data>
 </root>

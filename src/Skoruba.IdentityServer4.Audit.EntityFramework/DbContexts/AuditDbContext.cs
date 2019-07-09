@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using Skoruba.IdentityServer4.Audit.Core.Entities;
+using Skoruba.IdentityServer4.Audit.EntityFramework.Constants;
+using System;
 
 namespace Skoruba.IdentityServer4.Audit.EntityFramework
 {
@@ -25,8 +27,11 @@ namespace Skoruba.IdentityServer4.Audit.EntityFramework
         {
             builder.Entity<AuditEntity>(audit =>
             {
-                audit.ToTable("Audits");
+                audit.ToTable(ConfigurationConsts.AuditLogTableName);
                 audit.HasKey(x => x.Id);
+                audit
+                    .Property(p => p.TimeStamp)
+                    .HasConversion(c => c, c => DateTime.SpecifyKind(c, DateTimeKind.Utc));
             });
         }
     }

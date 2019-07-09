@@ -1,6 +1,7 @@
 ﻿using Serilog;
 using Serilog.Core;
 using Serilog.Sinks.MSSqlServer;
+using Skoruba.IdentityServer4.Audit.EntityFramework.Constants;
 using Skoruba.IdentityServer4.Audit.Sink;
 using Skoruba.IdentityServer4.Audit.Sink.Recorders;
 using System;
@@ -19,7 +20,6 @@ namespace Skoruba.IdentityServer4.Audit.EntityFramework.Recorders
             {
                 AdditionalColumns = new Collection<SqlColumn>
                 {
-                    //new SqlColumn("Id", System.Data.SqlDbType.BigInt, true),
                     new SqlColumn("TimeStamp", System.Data.SqlDbType.DateTime, false),
                     new SqlColumn("Category", System.Data.SqlDbType.NVarChar, true),
                     new SqlColumn("Action", System.Data.SqlDbType.NVarChar, true),
@@ -33,17 +33,16 @@ namespace Skoruba.IdentityServer4.Audit.EntityFramework.Recorders
                     new SqlColumn("SubjectType", System.Data.SqlDbType.NVarChar, true, 100),
                     new SqlColumn("SubjectId", System.Data.SqlDbType.NVarChar, true, 100),
                     new SqlColumn("Subject", System.Data.SqlDbType.NVarChar, true, 100),
-                    //new SqlColumn("Description", System.Data.SqlDbType.NVarChar, true),
                     new SqlColumn("RemoteIpAddress", System.Data.SqlDbType.NVarChar, true, 100),
                     new SqlColumn("LocalIpAddress", System.Data.SqlDbType.NVarChar, true, 100),
                     new SqlColumn("Changes", System.Data.SqlDbType.NVarChar, true)
                 },
             };
-
             options.Store.Remove(StandardColumn.TimeStamp);
             options.Store.Remove(StandardColumn.Exception);
             options.Store.Remove(StandardColumn.Properties);
             options.Store.Add(StandardColumn.LogEvent);
+            options.Id.DataType = System.Data.SqlDbType.BigInt;
 
             return options;
         }
@@ -55,7 +54,7 @@ namespace Skoruba.IdentityServer4.Audit.EntityFramework.Recorders
                 .AuditTo.MSSqlServer(
                     autoCreateSqlTable: true,
                     connectionString: connectionString,
-                    tableName: "AuditLogs",
+                    tableName: ConfigurationConsts.AuditLogTableName,
                     columnOptions: ColumnOptions()
                     )
                 .CreateLogger();

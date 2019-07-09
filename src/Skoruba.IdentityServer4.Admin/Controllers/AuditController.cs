@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.ViewModels.Audit;
@@ -25,12 +26,31 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var query = new GetAudits() { Page = 1, PageSize = 25 };
+            var query = new GetAudits() { Page = 1, PageSize = 10 };
+            ViewBag.Search = JsonConvert.SerializeObject(query);
             var result = await _auditService.GetAuditsAsync(query);
             var model = new IndexViewModel();
             model.Audits = result;
             model.GetAudits = query;
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAudits(int? page, string search)
+        {
+            var query = new GetAudits() { Page = page ?? 1, PageSize = 10 };
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                query = JsonConvert.DeserializeObject<GetAudits>(search);
+                query.Page = page ?? 1;
+            }
+            ViewBag.Search = JsonConvert.SerializeObject(query);
+
+            var result = await _auditService.GetAuditsAsync(query);
+            var model = new IndexViewModel();
+            model.Audits = result;
+            model.GetAudits = query;
+            return View("Index", model);
         }
 
         //[HttpGet]

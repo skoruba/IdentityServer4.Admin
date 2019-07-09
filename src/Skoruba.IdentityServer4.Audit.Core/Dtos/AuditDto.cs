@@ -5,10 +5,9 @@ namespace Skoruba.IdentityServer4.Audit.Core.Dtos
     public class AuditDto
     {
         public long Id { get; set; }
-        public string Message { get; set; }
-        public string MessageTemplate { get; set; }
         public string Level { get; set; }
-        public DateTime TimeStamp { get; set; }
+        public string LogEvent { get; set; }
+        public DateTimeOffset TimeStamp { get; set; }
         public string Category { get; set; }
         public string Action { get; set; }
         public string EventType { get; set; }

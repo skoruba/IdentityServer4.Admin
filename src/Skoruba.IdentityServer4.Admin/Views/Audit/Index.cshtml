@@ -13,38 +13,36 @@
 
 <div class="row">
     <div class="col-12">
-        @await Html.PartialAsync("Common/Search", new Search { Action = "Index", Controller = "Audit" })
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th></th>
-                        <th>@Localizer["TableLevel"]</th>
-                        <th>@Localizer["TableLogged"]</th>
-                        <th>@Localizer["TableMessage"]</th>
+                        <th>@Localizer["TableTimestamp"]</th>
+                        <th>@Localizer["TableAction"]</th>
+                        <th>@Localizer["TableActor"]</th>
+                        <th>@Localizer["TableSubject"]</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var client in Model.Audits.Audits)
+                    @foreach (var audit in Model.Audits.Audits)
                     {
                         <tr>
-                            <td><a href="#" data-error-id="@client.Id" class="btn btn-primary btn-error-detail">@Localizer["TableShowDetail"]</a></td>
-                            <td>@client.Action</td>
-                            @*<td>
-                                    <span class="local-datetime" title="@client.TimeStamp" data-utc="@client.TimeStamp.GetEpochTicks()" data-toggle="tooltip" data-placement="top">
-                                        @client.TimeStamp
-                                    </span>
-                                    <span class="oi oi-clock" title="@client.TimeStamp" data-toggle="tooltip" data-placement="top"></span>
-                                </td>*@
-                            <td>@client.Category</td>
+                            <td>
+                                <a href="#" data-error-id="@audit.Id" class="btn btn-primary btn-error-detail">@Localizer["TableShowDetail"]</a>
+                            </td>
+                            <td>
+                                <span class="local-datetime" title="@audit.TimeStamp" data-utc="@audit.TimeStamp.GetEpochTicks()" data-toggle="tooltip" data-placement="top">
+                                    @audit.TimeStamp.LocalDateTime
+                                </span>
+                                <span class="oi oi-clock" title="@audit.TimeStamp" data-toggle="tooltip" data-placement="top"></span>
+                            </td>
+                            <td>@audit.Action</td>
+                            <td>@audit.Actor</td>
+                            <td>@audit.Subject</td>
                         </tr>
-                        <tr class="row-error-detail d-none" data-error-id="@client.Id">
-                            <td colspan="4" data-error-json="@client.EventType"></td>
+                        <tr class="row-error-detail d-none" data-error-id="@audit.Id">
+                            <td colspan="5" data-error-json="@audit.LogEvent"></td>
                         </tr>
                     }
                 </tbody>

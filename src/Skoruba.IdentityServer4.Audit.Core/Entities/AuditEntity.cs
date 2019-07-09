@@ -1,5 +1,7 @@
-﻿using Skoruba.IdentityServer4.Audit.Sink;
+﻿using Newtonsoft.Json;
+using Skoruba.IdentityServer4.Audit.Sink;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Skoruba.IdentityServer4.Audit.Core.Entities
 {
@@ -12,6 +14,7 @@ namespace Skoruba.IdentityServer4.Audit.Core.Entities
                     message: null,
                     messageTemplate: null,
                     level: null,
+                    logEvent: JsonConvert.SerializeObject(audit),
                     timeStamp: audit.EventDetail.TimeStamp,
                     category: audit.EventDetail.Category,
                     action: audit.EventDetail.Name,
@@ -35,11 +38,12 @@ namespace Skoruba.IdentityServer4.Audit.Core.Entities
         {
         }
 
-        public AuditEntity(string message, string messageTemplate, string level, DateTime timeStamp, string category, string action, string eventType, string sourceType, string sourceId, string source, string actorType, string actorId, string actor, string subjectType, string subjectId, string subject, string remoteIpAddress, string localIpAddress, string changes)
+        public AuditEntity(string message, string messageTemplate, string level, string logEvent, DateTime timeStamp, string category, string action, string eventType, string sourceType, string sourceId, string source, string actorType, string actorId, string actor, string subjectType, string subjectId, string subject, string remoteIpAddress, string localIpAddress, string changes)
         {
             Message = message;
             MessageTemplate = messageTemplate;
             Level = level;
+            LogEvent = logEvent;
             TimeStamp = timeStamp;
             Category = category;
             Action = action;
@@ -58,10 +62,13 @@ namespace Skoruba.IdentityServer4.Audit.Core.Entities
             Changes = changes;
         }
 
+        [Key]
         public long Id { get; set; }
+
         public string Message { get; set; }
         public string MessageTemplate { get; set; }
         public string Level { get; set; }
+        public string LogEvent { get; set; }
         public DateTime TimeStamp { get; set; }
 
         /// <summary>
