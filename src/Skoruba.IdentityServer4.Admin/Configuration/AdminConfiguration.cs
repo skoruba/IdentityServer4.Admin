@@ -18,7 +18,5 @@ namespace Skoruba.IdentityServer4.Admin.Configuration
 
         public string ClientSecret { get; set; } = AuthenticationConsts.OidcClientSecret;
         public string OidcResponseType { get; set; } = AuthenticationConsts.OidcResponseType;
-
-
     }
 }

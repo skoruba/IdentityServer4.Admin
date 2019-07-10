@@ -5,7 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
+using Skoruba.IdentityServer4.Admin.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
+using Skoruba.IdentityServer4.Admin.Configuration.SeedModels;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.Helpers;
@@ -30,6 +32,8 @@ namespace Skoruba.IdentityServer4.Admin
                     .SetBasePath(env.ContentRootPath)
                     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                     .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                    .AddJsonFile($"appsettingsseed.json", optional: false, reloadOnChange: false)
+                    .AddJsonFile($"appsettingsseed.{env.EnvironmentName}.json", optional: true, reloadOnChange: false)
                     .AddEnvironmentVariables();
 
             if (env.IsDevelopment())
@@ -92,6 +96,8 @@ namespace Skoruba.IdentityServer4.Admin
 
             // Add authorization policies for MVC
             services.AddAuthorizationPolicies();
+
+            services.Configure<SeedData>(Configuration.GetSection(ConfigurationConsts.SeedDataConfigurationKey));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
