@@ -1,16 +1,16 @@
-﻿using IdentityModel;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
+using Skoruba.IdentityServer4.Admin.Configuration.Constants;
+using Skoruba.IdentityServer4.Admin.Configuration.Identity;
+using Skoruba.IdentityServer4.Admin.Configuration.IdentityServer;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
-using Skoruba.IdentityServer4.Admin.Configuration.SeedModels;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -20,7 +20,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// Generate migrations before running this method, you can use these steps bellow:
         /// https://github.com/skoruba/IdentityServer4.Admin#ef-core--data-access
         /// </summary>
-        /// <param name="host"></param>
+        /// <param name="host"></param>      
         public static async Task EnsureSeedData<TIdentityServerDbContext, TIdentityDbContext, TPersistedGrantDbContext, TLogDbContext, TUser, TRole>(IWebHost host)
             where TIdentityServerDbContext : DbContext, IAdminConfigurationDbContext
             where TIdentityDbContext : DbContext
@@ -78,11 +78,9 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<TUser>>();
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<TRole>>();
                 var rootConfiguration = scope.ServiceProvider.GetRequiredService<IRootConfiguration>();
-                //var tenantManager = scope.ServiceProvider.GetRequiredService<ITenantManager>();
-                var seedData = scope.ServiceProvider.GetRequiredService<IOptions<SeedData>>();
 
-                await EnsureSeedIdentityServerData(context, seedData.Value, rootConfiguration.AdminConfiguration);
-                await EnsureSeedIdentityData(userManager, roleManager/*, tenantManager*/, rootConfiguration, seedData.Value);
+                await EnsureSeedIdentityServerData(context, rootConfiguration.AdminConfiguration);
+                await EnsureSeedIdentityData(userManager, roleManager);
             }
         }
 
@@ -90,93 +88,57 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// Generate default admin user / role
         /// </summary>
         private static async Task EnsureSeedIdentityData<TUser, TRole>(UserManager<TUser> userManager,
-            RoleManager<TRole> roleManager,
-            //ITenantManager tenantManager,
-            IRootConfiguration rootConfiguration,
-            SeedData seedData)
+            RoleManager<TRole> roleManager)
             where TUser : IdentityUser, new()
             where TRole : IdentityRole, new()
         {
-            if (!await roleManager.Roles.AnyAsync())
+            // Create admin role
+            if (!await roleManager.RoleExistsAsync(AuthorizationConsts.AdministrationRole))
             {
-                // adding roles from seed
-                foreach (var r in seedData.Roles)
-                {
-                    var role = new TRole
-                    {
-                        Name = r.Name
-                    };
+                var role = new TRole { Name = AuthorizationConsts.AdministrationRole };
 
-                    var res = await roleManager.CreateAsync(role);
-
-                    if (res.Succeeded)
-                    {
-                        foreach (var c in r.Claims)
-                        {
-                            await roleManager.AddClaimAsync(role, new System.Security.Claims.Claim(c.Type, c.Value));
-                        }
-                    }
-                }
+                await roleManager.CreateAsync(role);
             }
 
-            //if (!await tenantManager.Tenants.AnyAsync())
-            //{
-            //    foreach (var tenant in seedData.Tenants)
-            //    {
-            //        var t = new EntityFramework.Shared.Entities.Tenants.Tenant
-            //        {
-            //            Id = tenant.Id,
-            //            Name = tenant.Name,
-            //            IsActive = tenant.IsActive,
-            //            DataBaseName = tenant.CareCompleteDbName,
-            //            Code = tenant.Code
-            //        };
-            //        await tenantManager.CreateAsync(t);
-            //    }
-            //}
+            // Create admin user
+            if (await userManager.FindByNameAsync(Users.AdminUserName) != null) return;
 
-            if (!await userManager.Users.AnyAsync())
+            var user = new TUser
             {
-                // adding users from seed
-                foreach (var u in seedData.Users)
-                {
-                    var us = new TUser
-                    {
-                        UserName = u.UserName,
-                        Email = u.Email,
-                        EmailConfirmed = true
-                    };
+                UserName = Users.AdminUserName,
+                Email = Users.AdminEmail,
+                EmailConfirmed = true
+            };
 
-                    //(us as UserIdentity).TenantId = u.TenantId;
-                    // if there is no password we create user without password
-                    // user can reset password later, because accounts have EmailConfirmed set to true
-                    var res = u.Password != null ? await userManager.CreateAsync(us, u.Password) : await userManager.CreateAsync(us);
+            var result = await userManager.CreateAsync(user, Users.AdminPassword);
 
-                    if (res.Succeeded)
-                    {
-                        foreach (var c in u.Claims)
-                        {
-                            await userManager.AddClaimAsync(us, new System.Security.Claims.Claim(c.Type, c.Value));
-                        }
-
-                        foreach (var r in u.Roles)
-                        {
-                            await userManager.AddToRoleAsync(us, r);
-                        }
-                    }
-                }
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(user, AuthorizationConsts.AdministrationRole);
             }
         }
 
         /// <summary>
         /// Generate default clients, identity and api resources
         /// </summary>
-        private static async Task EnsureSeedIdentityServerData<TIdentityServerDbContext>(TIdentityServerDbContext context, ISeedData seedData, IAdminConfiguration adminConfiguration)
+        private static async Task EnsureSeedIdentityServerData<TIdentityServerDbContext>(TIdentityServerDbContext context, IAdminConfiguration adminConfiguration)
             where TIdentityServerDbContext : DbContext, IAdminConfigurationDbContext
         {
+            if (!context.Clients.Any())
+            {
+                foreach (var client in Clients.GetAdminClient(adminConfiguration).ToList())
+                {
+                    await context.Clients.AddAsync(client.ToEntity());
+                }
+
+                await context.SaveChangesAsync();
+            }
+
             if (!context.IdentityResources.Any())
             {
-                foreach (var resource in seedData.IdentityResources)
+                var identityResources = ClientResources.GetIdentityResources().ToList();
+
+                foreach (var resource in identityResources)
                 {
                     await context.IdentityResources.AddAsync(resource.ToEntity());
                 }
@@ -186,34 +148,11 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
             if (!context.ApiResources.Any())
             {
-                foreach (var resource in seedData.ApiResources)
+                foreach (var resource in ClientResources.GetApiResources(adminConfiguration).ToList())
                 {
-                    foreach (var s in resource.ApiSecrets)
-                    {
-                        s.Value = s.Value.ToSha256();
-                    }
-
                     await context.ApiResources.AddAsync(resource.ToEntity());
                 }
 
-                await context.SaveChangesAsync();
-            }
-
-            if (!context.Clients.Any())
-            {
-                foreach (var client in seedData.Clients)
-                {
-                    foreach (var secret in client.ClientSecrets)
-                    {
-                        secret.Value = secret.Value.ToSha256();
-                    }
-
-                    client.Claims = client.ClientClaims
-                        .Select(c => new System.Security.Claims.Claim(c.Type, c.Value))
-                        .ToList();
-
-                    await context.Clients.AddAsync(client.ToEntity());
-                }
                 await context.SaveChangesAsync();
             }
         }

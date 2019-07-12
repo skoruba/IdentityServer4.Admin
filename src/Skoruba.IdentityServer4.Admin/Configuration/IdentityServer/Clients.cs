@@ -11,13 +11,16 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.IdentityServer
     {
         public static IEnumerable<Client> GetAdminClient(IAdminConfiguration adminConfiguration)
         {
+
             return new List<Client>
             {
+
 	            ///////////////////////////////////////////
 	            // Skoruba.IdentityServer4.Admin Client
 	            //////////////////////////////////////////
 	            new Client
                 {
+
                     ClientId =adminConfiguration.ClientId,
                     ClientName =adminConfiguration.ClientId,
                     ClientUri = adminConfiguration.IdentityAdminBaseUrl,
@@ -47,7 +50,7 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.IdentityServer
                 {
                     ClientId = adminConfiguration.IdentityAdminApiSwaggerUIClientId,
                     ClientName = adminConfiguration.IdentityAdminApiSwaggerUIClientId,
-
+                    
                     AllowedGrantTypes = GrantTypes.Implicit,
 
                     RedirectUris = new List<string>
@@ -61,6 +64,7 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.IdentityServer
                     AllowAccessTokensViaBrowser = true
                 }
             };
+
         }
     }
 }
