@@ -12,7 +12,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Tenants
 
         public string DomainName { get; set; }
 
-        public string DataBaseName { get; set; }
+        public string DatabaseName { get; set; }
 
         [Required]
         [MaxLength(4)]

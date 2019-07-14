@@ -42,6 +42,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Services
             Logger = logger;
         }
 
+        //TODO: Convert strings to consts and localize
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
             var sub = context.Subject?.GetSubjectId();
@@ -50,7 +51,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Services
             var user = await UserManager.FindByIdAsync(sub);
             if (user == null)
             {
-                //TODO: Convert strings to consts & localize
                 Logger?.LogWarning("No user found matching subject Id: {0}", sub);
             }
             else
@@ -62,16 +62,15 @@ namespace Skoruba.IdentityServer4.STS.Identity.Services
 
                 if (!string.IsNullOrEmpty(user.TenantId))
                 {
-                    //TODO: Convert strings to consts
-                    carecompleteClaims.Add(new Claim("tenantid", user.TenantId));
-                }
-
-                if (!string.IsNullOrEmpty(user.TenantId))
-                {
                     var tenant = await _tenantManager.FindByIdFromCacheAsync(user.TenantId);
-                    //TODO: Convert strings to consts
+                    carecompleteClaims.Add(new Claim("tenantid", user.TenantId));
                     carecompleteClaims.Add(new Claim("tenantname", tenant.Name));
-                    carecompleteClaims.Add(new Claim("dbname", tenant.DataBaseName));
+                    carecompleteClaims.Add(new Claim("dbname", tenant.DatabaseName));
+                    // claims with null values throw errors
+                    if (!string.IsNullOrWhiteSpace(user.ApplicationId))
+                    {
+                        carecompleteClaims.Add(new Claim("applicationId", user.ApplicationId));
+                    }
                 }
                 context.AddRequestedClaims(principal.Claims);
                 context.AddRequestedClaims(carecompleteClaims);

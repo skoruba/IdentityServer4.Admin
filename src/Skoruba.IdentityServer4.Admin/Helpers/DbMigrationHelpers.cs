@@ -112,7 +112,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         Code = tenantCode,
                         Id = tenantId,
                         IsActive = true,
-                        DataBaseName = "N/A",
+                        DatabaseName = "N/A",
                         DomainName = "localhost"
                     };
                     await tenantManager.CreateAsync(tenant);

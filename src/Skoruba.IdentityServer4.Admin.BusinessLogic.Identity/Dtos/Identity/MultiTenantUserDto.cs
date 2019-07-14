@@ -8,5 +8,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
     public class MultiTenantUserDto<TKey> : UserDto<TKey>, IMultiTenantUserDto
     {
         public string TenantId { get; set; }
+        public string ApplicationId { get; set; }
     }
 }
