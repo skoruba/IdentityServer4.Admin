@@ -17,5 +17,7 @@
         public const string AdminConfigurationKey = "AdminConfiguration";
 
         public const string TwoFactorAuthenticationConfiguration = "TwoFactorAuthenticationConfiguration";
+
+        public const string SeedDataConfigurationKey = "SeedData";
     }
 }

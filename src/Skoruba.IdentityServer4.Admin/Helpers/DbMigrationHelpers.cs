@@ -1,20 +1,18 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using IdentityModel;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Skoruba.IdentityServer4.Admin.Configuration.Constants;
-using Skoruba.IdentityServer4.Admin.Configuration.Identity;
-using Skoruba.IdentityServer4.Admin.Configuration.IdentityServer;
+using Microsoft.Extensions.Options;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
+using Skoruba.IdentityServer4.Admin.Configuration.SeedModels;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Tenants;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Managers;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Stores;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -82,10 +80,11 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<TUser>>();
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<TRole>>();
                 var rootConfiguration = scope.ServiceProvider.GetRequiredService<IRootConfiguration>();
-                var tenantManager = scope.ServiceProvider.GetService<ITenantManager>();
+                var tenantManager = scope.ServiceProvider.GetRequiredService<ITenantManager>();
+                var seedData = scope.ServiceProvider.GetRequiredService<IOptions<SeedData>>();
 
-                await EnsureSeedIdentityServerData(context, rootConfiguration.AdminConfiguration);
-                await EnsureSeedIdentityData(userManager, roleManager, tenantManager);
+                await EnsureSeedIdentityServerData(context, seedData.Value, rootConfiguration.AdminConfiguration);
+                await EnsureSeedIdentityData(userManager, roleManager, tenantManager, rootConfiguration, seedData.Value);
             }
         }
 
@@ -93,90 +92,100 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// Generate default admin user / role
         /// </summary>
         private static async Task EnsureSeedIdentityData<TUser, TRole>(UserManager<TUser> userManager,
-            RoleManager<TRole> roleManager, ITenantManager tenantManager)
+            RoleManager<TRole> roleManager,
+            ITenantManager tenantManager,
+            IRootConfiguration rootConfiguration,
+            SeedData seedData)
             where TUser : IdentityUser, new()
             where TRole : IdentityRole, new()
         {
-            string tenantCode = "0000";
-            string tenantId = "2EBF8B61-BF2F-47C3-8D19-25C59DE646AD";
-            TUser user;
-
-            // Create Tenant for Multi Tenant usage
-            if (userManager.IsMultiTenant())
+            if (!await roleManager.Roles.AnyAsync())
             {
-                if (!await tenantManager.TenantCodeExistsAsync(tenantCode))
+                // adding roles from seed
+                foreach (var r in seedData.Roles)
                 {
-                    var tenant = new Tenant
+                    var role = new TRole
                     {
-                        Name = "Identity Administration",
-                        Code = tenantCode,
-                        Id = tenantId,
-                        IsActive = true,
-                        DatabaseName = "N/A",
-                        DomainName = "localhost"
+                        Name = r.Name
                     };
-                    await tenantManager.CreateAsync(tenant);
+
+                    var res = await roleManager.CreateAsync(role);
+
+                    if (res.Succeeded)
+                    {
+                        foreach (var c in r.Claims)
+                        {
+                            await roleManager.AddClaimAsync(role, new System.Security.Claims.Claim(c.Type, c.Value));
+                        }
+                    }
                 }
             }
 
-            // Create admin role
-            if (!await roleManager.RoleExistsAsync(AuthorizationConsts.AdministrationRole))
+            if (!await tenantManager.Tenants.AnyAsync())
             {
-                var role = new TRole { Name = AuthorizationConsts.AdministrationRole };
-
-                await roleManager.CreateAsync(role);
+                foreach (var tenant in seedData.Tenants)
+                {
+                    var t = new EntityFramework.Shared.Entities.Tenants.Tenant
+                    {
+                        Id = tenant.Id,
+                        Name = tenant.Name,
+                        IsActive = tenant.IsActive,
+                        DatabaseName = tenant.DatabaseName,
+                        Code = tenant.Code,
+                        RequireTwoFactorAuthentication = tenant.RequireTwoFactorAuthentication
+                    };
+                    await tenantManager.CreateAsync(t);
+                }
             }
 
-            // Create admin user
-            if (userManager.IsMultiTenant())
+            if (!await userManager.Users.AnyAsync())
             {
-                if (await userManager.FindByNameAsync(tenantCode, Users.AdminUserName) != null) return;
-            }
-            else
-            {
-                if (await userManager.FindByNameAsync(Users.AdminUserName) != null) return;
-            }
-            user = new TUser
-            {
-                UserName = Users.AdminUserName,
-                Email = Users.AdminEmail,
-                EmailConfirmed = true
-            };
+                // adding users from seed
+                foreach (var u in seedData.Users)
+                {
+                    var us = new TUser
+                    {
+                        UserName = u.UserName,
+                        Email = u.Email,
+                        EmailConfirmed = u.EmailConfirmed,
+                        TwoFactorEnabled = u.TwoFactorEnabled
+                    };
 
-            if (userManager.IsMultiTenant())
-            {
-                (user as MultiTenantUserIdentity).TenantId = tenantId;
-            }
+                    if (userManager.IsMultiTenant())
+                    {
+                        (us as MultiTenantUserIdentity).TenantId = u.TenantId;
+                        (us as MultiTenantUserIdentity).ApplicationId = u.ApplicationId;
+                    }
 
-            var result = await userManager.CreateAsync(user, Users.AdminPassword);
+                    // if there is no password we create user without password
+                    // user can reset password later, because accounts have EmailConfirmed set to true
+                    var res = u.Password != null ? await userManager.CreateAsync(us, u.Password) : await userManager.CreateAsync(us);
 
-            if (result.Succeeded)
-            {
-                await userManager.AddToRoleAsync(user, AuthorizationConsts.AdministrationRole);
+                    if (res.Succeeded)
+                    {
+                        foreach (var c in u.Claims)
+                        {
+                            await userManager.AddClaimAsync(us, new System.Security.Claims.Claim(c.Type, c.Value));
+                        }
+
+                        foreach (var r in u.Roles)
+                        {
+                            await userManager.AddToRoleAsync(us, r);
+                        }
+                    }
+                }
             }
         }
 
         /// <summary>
         /// Generate default clients, identity and api resources
         /// </summary>
-        private static async Task EnsureSeedIdentityServerData<TIdentityServerDbContext>(TIdentityServerDbContext context, IAdminConfiguration adminConfiguration)
+        private static async Task EnsureSeedIdentityServerData<TIdentityServerDbContext>(TIdentityServerDbContext context, ISeedData seedData, IAdminConfiguration adminConfiguration)
             where TIdentityServerDbContext : DbContext, IAdminConfigurationDbContext
         {
-            if (!context.Clients.Any())
-            {
-                foreach (var client in Clients.GetAdminClient(adminConfiguration).ToList())
-                {
-                    await context.Clients.AddAsync(client.ToEntity());
-                }
-
-                await context.SaveChangesAsync();
-            }
-
             if (!context.IdentityResources.Any())
             {
-                var identityResources = ClientResources.GetIdentityResources().ToList();
-
-                foreach (var resource in identityResources)
+                foreach (var resource in seedData.IdentityResources)
                 {
                     await context.IdentityResources.AddAsync(resource.ToEntity());
                 }
@@ -186,11 +195,34 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
             if (!context.ApiResources.Any())
             {
-                foreach (var resource in ClientResources.GetApiResources(adminConfiguration).ToList())
+                foreach (var resource in seedData.ApiResources)
                 {
+                    foreach (var s in resource.ApiSecrets)
+                    {
+                        s.Value = s.Value.ToSha256();
+                    }
+
                     await context.ApiResources.AddAsync(resource.ToEntity());
                 }
 
+                await context.SaveChangesAsync();
+            }
+
+            if (!context.Clients.Any())
+            {
+                foreach (var client in seedData.Clients)
+                {
+                    foreach (var secret in client.ClientSecrets)
+                    {
+                        secret.Value = secret.Value.ToSha256();
+                    }
+
+                    client.Claims = client.ClientClaims
+                        .Select(c => new System.Security.Claims.Claim(c.Type, c.Value))
+                        .ToList();
+
+                    await context.Clients.AddAsync(client.ToEntity());
+                }
                 await context.SaveChangesAsync();
             }
         }

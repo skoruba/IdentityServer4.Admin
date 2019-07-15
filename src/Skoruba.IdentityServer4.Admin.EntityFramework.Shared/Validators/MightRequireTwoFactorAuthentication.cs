@@ -33,7 +33,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Validators
 
 #if DEBUG
             // Ignore seeded email
-            if (user.Email == "admin@example.com")
+            if (user.Email.EndsWith("@example.com"))
             {
                 return IdentityResult.Success;
             }
