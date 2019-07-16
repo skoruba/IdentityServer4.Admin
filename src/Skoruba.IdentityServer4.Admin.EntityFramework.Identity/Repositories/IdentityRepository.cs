@@ -254,6 +254,14 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             return pagedList;
         }
 
+        public virtual Task<List<TUserClaim>> GetUserClaimByType(string userId, string claimType)
+        {
+            var userIdConverted = ConvertUserKeyFromString(userId);
+
+            return DbContext.Set<TUserClaim>().Where(x => x.UserId.Equals(userIdConverted) && x.ClaimType == claimType)
+                .ToListAsync();
+        }
+
         public virtual Task<TUserClaim> GetUserClaimAsync(string userId, int claimId)
         {
             var userIdConverted = ConvertUserKeyFromString(userId);

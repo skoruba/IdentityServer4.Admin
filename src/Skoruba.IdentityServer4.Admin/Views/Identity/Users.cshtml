@@ -41,7 +41,14 @@
                                 <a class="btn btn-primary" asp-action="UserProfile" asp-route-id="@user.Id">@Localizer["ActionEditUser"]</a>
                             </td>
                             <td class="align-middle">
-                                <img-gravatar email="@user.Email" class="gravatar-image img-thumbnail" />
+                                @if (!string.IsNullOrEmpty(user.PhotoUrl))
+                                {
+                                    <img class="img-thumbnail" size="150" src="@user.PhotoUrl" />
+                                }
+                                else
+                                {
+                                    <img-gravatar email="@user.Email" class="img-thumbnail" size="150" />
+                                }                                
                             </td>
                             <td class="align-middle">@user.Id</td>
                             <td class="align-middle">@user.UserName</td>
