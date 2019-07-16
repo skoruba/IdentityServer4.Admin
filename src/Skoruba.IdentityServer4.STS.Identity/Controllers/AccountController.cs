@@ -381,11 +381,15 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             }
 
             // If the user does not have an account, then ask the user to create an account.
-            ViewData["ReturnUrl"] = returnUrl;
-            ViewData["LoginProvider"] = info.LoginProvider;
-            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            if (_registerConfiguration.Enabled)
+            {
+                ViewData["ReturnUrl"] = returnUrl;
+                ViewData["LoginProvider"] = info.LoginProvider;
+                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
 
-            return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
+                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
+            }
+            return RedirectToLocal(returnUrl);
         }
 
         [HttpPost]
@@ -422,19 +426,22 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                     Email = model.Email
                 };
 
-                var result = await _userManager.CreateAsync(user);
-                if (result.Succeeded)
+                if (_registerConfiguration.Enabled)
                 {
-                    result = await _userManager.AddLoginAsync(user, info);
+                    var result = await _userManager.CreateAsync(user);
                     if (result.Succeeded)
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        result = await _userManager.AddLoginAsync(user, info);
+                        if (result.Succeeded)
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false);
 
-                        return RedirectToLocal(returnUrl);
+                            return RedirectToLocal(returnUrl);
+                        }
                     }
-                }
 
-                AddErrors(result);
+                    AddErrors(result);
+                }
             }
 
             ViewData["LoginProvider"] = info.LoginProvider;
