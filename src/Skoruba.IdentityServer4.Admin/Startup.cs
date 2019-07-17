@@ -73,7 +73,7 @@ namespace Skoruba.IdentityServer4.Admin
                 UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
                 UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
                 UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-                RoleClaimsDto<string>>();
+                RoleClaimsDto<string>>(Configuration);
 
             // Add authorization policies for MVC
             services.AddAuthorizationPolicies();
