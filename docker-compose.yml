@@ -1,4 +1,4 @@
-version: '3.4'
+﻿version: '3.4'
 
 services:
   skoruba.identityserver4.admin:
@@ -17,7 +17,7 @@ services:
       - "ConnectionStrings:AdminLogDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
       - "AdminConfiguration:IdentityAdminBaseUrl=http://localhost:9000"
       - "AdminConfiguration:IdentityAdminRedirectUri=http://localhost:9000/signin-oidc"
-      - "AdminConfiguration:IdentityServerBaseUrl=http://id.example.com"
+      - "AdminConfiguration:IdentityServerBaseUrl=http://127.0.0.1.xip.io"
     command: dotnet Skoruba.IdentityServer4.Admin.dll /seed
     depends_on:
       - db
@@ -41,7 +41,7 @@ services:
     networks:
       default:
         aliases:
-          - id.example.com
+          - 127.0.0.1.xip.io
 
   db:
     image: "mcr.microsoft.com/mssql/server"
