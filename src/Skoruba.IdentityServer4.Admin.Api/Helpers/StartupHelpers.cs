@@ -136,7 +136,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
 #if DEBUG
                     options.RequireHttpsMetadata = false;
 #else
-                    options.RequireHttpsMetadata = true;
+                    options.RequireHttpsMetadata = adminApiConfiguration.IdentityRequireHttpsMetadata;
 #endif
                 });
 

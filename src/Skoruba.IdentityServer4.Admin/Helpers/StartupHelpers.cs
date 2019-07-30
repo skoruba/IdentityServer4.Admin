@@ -442,7 +442,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 #if DEBUG
                         options.RequireHttpsMetadata = false;
 #else
-                        options.RequireHttpsMetadata = true;
+                        options.RequireHttpsMetadata = adminConfiguration.IdentityRequireHttpsMetadata;
 #endif
                         options.ClientId = adminConfiguration.ClientId;
                         options.ClientSecret = adminConfiguration.ClientSecret;
@@ -455,7 +455,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         }
 
                         options.ClaimActions.MapJsonKey(AuthenticationConsts.RoleClaim, AuthenticationConsts.RoleClaim, AuthenticationConsts.RoleClaim);
-
+                       
                         options.SaveTokens = true;
 
                         options.GetClaimsFromUserInfoEndpoint = true;

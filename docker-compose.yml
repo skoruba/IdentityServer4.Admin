@@ -15,8 +15,8 @@ services:
       - "ConnectionStrings:PersistedGrantDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
       - "ConnectionStrings:IdentityDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
       - "ConnectionStrings:AdminLogDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
-      - "AdminConfiguration:IdentityAdminBaseUrl=http://localhost:9000"
-      - "AdminConfiguration:IdentityAdminRedirectUri=http://localhost:9000/signin-oidc"
+      - "AdminConfiguration:IdentityAdminBaseUrl=http://127.0.0.1.xip.io:9000"
+      - "AdminConfiguration:IdentityAdminRedirectUri=http://127.0.0.1.xip.io:9000/signin-oidc"
       - "AdminConfiguration:IdentityServerBaseUrl=http://127.0.0.1.xip.io"
     command: dotnet Skoruba.IdentityServer4.Admin.dll /seed
     depends_on:
