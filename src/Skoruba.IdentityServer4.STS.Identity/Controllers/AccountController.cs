@@ -367,6 +367,16 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 return RedirectToAction(nameof(Login));
             }
 
+            var externalResult = await HttpContext.AuthenticateAsync(IdentityConstants.ExternalScheme);
+            if (externalResult.Succeeded)
+            {
+                if (externalResult.Properties.Items.ContainsKey("returnUrl"))
+                    returnUrl = externalResult.Properties.Items["returnUrl"];
+
+                // We no longer need the external cookie
+                await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+            }
+
             // Sign in the user with this external login provider if the user already has a login.
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
             if (result.Succeeded)
