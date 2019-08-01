@@ -359,12 +359,13 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             {
                 ModelState.AddModelError(string.Empty, _localizer["ErrorExternalProvider", remoteError]);
 
-                return View(nameof(Login));
+                var vm = await BuildLoginViewModelAsync(returnUrl);
+                return View(nameof(Login), vm);
             }
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
-                return RedirectToAction(nameof(Login));
+                return RedirectToAction(nameof(Login), new { returnUrl });
             }
 
             var externalResult = await HttpContext.AuthenticateAsync(IdentityConstants.ExternalScheme);
@@ -389,10 +390,12 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             var email = info.Principal.FindFirstValue(ClaimTypes.Email) ?? info.Principal.FindFirstValue(JwtClaimTypes.Email);
             if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(email))
             {
-
                 var user = await ProvideExternalUserAsync(info, username, email);
                 if (user == null)
-                    return View(nameof(Login));
+                {
+                    var vm = await BuildLoginViewModelAsync(returnUrl);
+                    return View(nameof(Login), vm);
+                }
 
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return RedirectToLocal(returnUrl);
