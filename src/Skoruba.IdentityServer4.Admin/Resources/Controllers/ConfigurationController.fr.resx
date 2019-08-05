@@ -118,72 +118,74 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SuccessAddApiResource" xml:space="preserve">
-    <value>Api Resource {0} is successfully saved!</value>
+    <value>Ressource Api {0} sauvegardée avec succès !</value>
   </data>
   <data name="SuccessAddApiResourceProperty" xml:space="preserve">
-    <value>Api Resource property {0} for api resource {1} is successfully saved!</value>
+    <value>Propriété de ressource Api {0} pour la ressource Api {1} sauvegardée avec succès !</value>
   </data>
   <data name="SuccessAddApiScope" xml:space="preserve">
-    <value>Api Scope {0} is successfully saved!</value>
+    <value>Scope Api {0} enregistré avec succès !</value>
+    <comment>Portée , étendue, droits d'accès, scope API, API scope</comment>
   </data>
   <data name="SuccessAddApiSecret" xml:space="preserve">
-    <value>Api Secret is successfully created!</value>
+    <value>Secret Api créé avec succès !</value>
   </data>
   <data name="SuccessAddClient" xml:space="preserve">
-    <value>Client {0} is successfully created!</value>
+    <value>Client {0} créé avec succès !</value>
   </data>
   <data name="SuccessAddClientClaim" xml:space="preserve">
-    <value>Client claim {0} for client {1} is successfully saved!</value>
+    <value>Claim client {0} pour le client {1} sauvegardée avec succès !</value>
+    <comment>Revendication, Claim</comment>
   </data>
   <data name="SuccessAddClientProperty" xml:space="preserve">
-    <value>Client property {0} for client {1} is successfully saved!</value>
+    <value>Propriété client {0} pour le client {1} sauvegardée avec succès !</value>
   </data>
   <data name="SuccessAddClientSecret" xml:space="preserve">
-    <value>Client secret for client {0} is successfully saved!</value>
+    <value>Secret client pour le client {0} sauvegardé avec succès !</value>
   </data>
   <data name="SuccessAddIdentityResource" xml:space="preserve">
-    <value>Identity Resource {0} is successfully saved!</value>
+    <value>Identity resource {0} sauvegardé avec succès !</value>
   </data>
   <data name="SuccessAddIdentityResourceProperty" xml:space="preserve">
-    <value>Identity Resource property {0} for api resource {1} is successfully saved!</value>
+    <value>Propriété de l'Identity resource {0} pour la ressource api {1} sauvegardée avec succès !</value>
   </data>
   <data name="SuccessClientClone" xml:space="preserve">
-    <value>Client {0} is successfully cloned!</value>
+    <value>Client {0} cloné avec succès !</value>
   </data>
   <data name="SuccessClientDelete" xml:space="preserve">
-    <value>Client is successfully deleted!</value>
+    <value>Client  supprimé avec succès !</value>
   </data>
   <data name="SuccessDeleteApiResource" xml:space="preserve">
-    <value>Api Resource is successfully deleted!</value>
+    <value>Ressource Api supprimée avec succès !</value>
   </data>
   <data name="SuccessDeleteApiResourceProperty" xml:space="preserve">
-    <value>Api resource property is successfully deleted!</value>
+    <value>Propriété de la ressource API supprimée avec succès !</value>
   </data>
   <data name="SuccessDeleteApiScope" xml:space="preserve">
-    <value>Api Scope is successfully deleted!</value>
+    <value>Scope API supprimé avec succès !</value>
   </data>
   <data name="SuccessDeleteApiSecret" xml:space="preserve">
-    <value>Api Secret is successfully deleted!</value>
+    <value>Secret Api supprimé avec succès !</value>
   </data>
   <data name="SuccessDeleteClientClaim" xml:space="preserve">
-    <value>Client claim is successfully deleted!</value>
+    <value>Claim client supprimé avec succès !</value>
   </data>
   <data name="SuccessDeleteClientProperty" xml:space="preserve">
-    <value>Client property is successfully deleted!</value>
+    <value>Propriété du client supprimée avec succès !</value>
   </data>
   <data name="SuccessDeleteClientSecret" xml:space="preserve">
-    <value>Client secret is successfully deleted!</value>
+    <value>Secret du client effacé avec succès !</value>
   </data>
   <data name="SuccessDeleteIdentityResource" xml:space="preserve">
-    <value>Identity Resource is successfully deleted!</value>
+    <value>Identity Resource supprimé avec succès !</value>
   </data>
   <data name="SuccessDeleteIdentityResourceProperty" xml:space="preserve">
-    <value>Identity resource property is successfully deleted!</value>
+    <value>Propriété de l'Identity resource supprimé avec succès !</value>
   </data>
   <data name="SuccessTitle" xml:space="preserve">
-    <value>Success</value>
+    <value>Succès</value>
   </data>
   <data name="SuccessUpdateClient" xml:space="preserve">
-    <value>Client {0} is successfully updated!</value>
+    <value>Client {0} mis à jour avec succès !</value>
   </data>
 </root>
