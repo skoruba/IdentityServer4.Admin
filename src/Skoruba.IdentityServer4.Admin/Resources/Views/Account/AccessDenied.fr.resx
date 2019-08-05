@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Logout" xml:space="preserve">
-    <value>Logout</value>
+    <value>Déconnexion</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Access Denied!</value>
+    <value>Accès refusé !</value>
   </data>
   <data name="ReturnToIdentityServer" xml:space="preserve">
-    <value>Return back to IdentityServer</value>
+    <value>Retourner à IdentityServer</value>
   </data>
 </root>
