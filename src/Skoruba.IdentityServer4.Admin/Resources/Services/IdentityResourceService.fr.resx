@@ -124,7 +124,7 @@
     <value>Identity resource {0} existe déjà</value>
   </data>
   <data name="IdentityResourcePropertyDoesNotExist" xml:space="preserve">
-    <value>Propriété de l'Identity resource avec l'Id {0} n'existe pas</value>
+    <value>Propriété de l'Identity resource avec l'ID {0} n'existe pas</value>
   </data>
   <data name="IdentityResourcePropertyExistsKey" xml:space="preserve">
     <value>Propriété de l'Identity resource existe déjà</value>

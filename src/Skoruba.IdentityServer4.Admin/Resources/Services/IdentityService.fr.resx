@@ -118,63 +118,65 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="IdentityErrorKey" xml:space="preserve">
-    <value>Error</value>
+    <value>Erreur</value>
   </data>
   <data name="RoleClaimDoesNotExist" xml:space="preserve">
-    <value>Role claim with id {0} doesn't exist</value>
+    <value>Role Claim avec l'ID {0} n'existe pas</value>
   </data>
   <data name="RoleClaimsCreateFailed" xml:space="preserve">
-    <value>Role Claims creating failed</value>
+    <value>Échec de la création des Role Claim</value>
   </data>
   <data name="RoleClaimsDeleteFailed" xml:space="preserve">
-    <value>Role Claims deleting failed</value>
+    <value>Échec de la suppression des Role Claims</value>
   </data>
   <data name="RoleCreateFailed" xml:space="preserve">
-    <value>Role creating failed</value>
+    <value>Échec de la création du rôle</value>
   </data>
   <data name="RoleDeleteFailed" xml:space="preserve">
-    <value>Role deleting failed</value>
+    <value>Échec de la suppression du rôle</value>
   </data>
   <data name="RoleDoesNotExist" xml:space="preserve">
-    <value>Role with id {0} doesn't exist</value>
+    <value>Rôle avec l'ID {0} n'existe pas</value>
   </data>
   <data name="RoleUpdateFailed" xml:space="preserve">
-    <value>Role updating failed</value>
+    <value>Échec de la mise à jour du rôle</value>
+    <comment>des rôles ?</comment>
   </data>
   <data name="UserChangePasswordFailed" xml:space="preserve">
-    <value>User Change Password failed</value>
+    <value>Échec du changement de mot de passe de l'utilisateur</value>
+    <comment>Échec du changement de mot de passe (de l'utilisateur)</comment>
   </data>
   <data name="UserClaimDoesNotExist" xml:space="preserve">
-    <value>User claim with id {0} doesn't exist</value>
+    <value>L'user claim avec l'ID {0} n'existe pas</value>
   </data>
   <data name="UserClaimsCreateFailed" xml:space="preserve">
-    <value>User Claims creating failed</value>
+    <value>Échec de la création des User Claims</value>
   </data>
   <data name="UserClaimsDeleteFailed" xml:space="preserve">
-    <value>User Claims deleting failed</value>
+    <value>Échec de la suppression des User Claims</value>
   </data>
   <data name="UserCreateFailed" xml:space="preserve">
-    <value>User creating failed</value>
+    <value>Échec de la création de l'utilisateur</value>
   </data>
   <data name="UserDeleteFailed" xml:space="preserve">
-    <value>User deleting failed</value>
+    <value>Échec de la suppression de l'utilisateur</value>
   </data>
   <data name="UserDoesNotExist" xml:space="preserve">
-    <value>User with id {0} doesn't exist</value>
+    <value>L'utilisateur avec l'ID {0} n'existe pas</value>
   </data>
   <data name="UserProviderDeleteFailed" xml:space="preserve">
-    <value>User Provider deleting failed</value>
+    <value>Échec de la suppression de l'User Provider</value>
   </data>
   <data name="UserProviderDoesNotExist" xml:space="preserve">
-    <value>User provider with id {0} doesn't exist</value>
+    <value>User provider avec l'ID {0} n'existe pas</value>
   </data>
   <data name="UserRoleCreateFailed" xml:space="preserve">
-    <value>User Role creating failed</value>
+    <value>Échec de la création d'un rôle utilisateur</value>
   </data>
   <data name="UserRoleDeleteFailed" xml:space="preserve">
-    <value>User Role deleting failed</value>
+    <value>Échec de la suppression du rôle utilisateur</value>
   </data>
   <data name="UserUpdateFailed" xml:space="preserve">
-    <value>User updating failed</value>
+    <value>Échec de la mise à jour de l'utilisateur</value>
   </data>
 </root>
