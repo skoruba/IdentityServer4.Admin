@@ -118,42 +118,42 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SuccessCreateRole" xml:space="preserve">
-    <value>Role {0} is successfully saved!</value>
+    <value>Rôle {0} sauvegardé avec succès !</value>
   </data>
   <data name="SuccessCreateRoleClaims" xml:space="preserve">
-    <value>Claim {0} - {1} is successfully saved!</value>
+    <value>Claim {0} - {1} sauvegardée avec succès !</value>
   </data>
   <data name="SuccessCreateUser" xml:space="preserve">
-    <value>User {0} is successfully saved!</value>
+    <value>Utilisateur {0} enregistré avec succès !</value>
   </data>
   <data name="SuccessCreateUserClaims" xml:space="preserve">
-    <value>Claim {0} - {1} is successfully saved!</value>
+    <value>Claim {0} - {1} sauvegardée avec succès !</value>
   </data>
   <data name="SuccessCreateUserRole" xml:space="preserve">
-    <value>Role is successfully saved!</value>
+    <value>Rôle sauvegardé avec succès !</value>
   </data>
   <data name="SuccessDeleteRole" xml:space="preserve">
-    <value>Role is successfully deleted!</value>
+    <value>Rôle supprimé avec succès !</value>
   </data>
   <data name="SuccessDeleteRoleClaims" xml:space="preserve">
-    <value>Claim is successfully deleted!</value>
+    <value>Claim  supprimé avec succès !</value>
   </data>
   <data name="SuccessDeleteUser" xml:space="preserve">
-    <value>User is successfully deleted!</value>
+    <value>Rôle supprimé avec succès !</value>
   </data>
   <data name="SuccessDeleteUserClaims" xml:space="preserve">
-    <value>Claim is successfully deleted!</value>
+    <value>Claim supprimé avec succès !</value>
   </data>
   <data name="SuccessDeleteUserProviders" xml:space="preserve">
-    <value>User Provider is successfully deleted!</value>
+    <value>User Provider supprimé avec succès !</value>
   </data>
   <data name="SuccessDeleteUserRole" xml:space="preserve">
-    <value>Role is successfully deleted!</value>
+    <value>Rôle supprimé avec succès !</value>
   </data>
   <data name="SuccessTitle" xml:space="preserve">
-    <value>Success</value>
+    <value>Succès</value>
   </data>
   <data name="SuccessUserChangePassword" xml:space="preserve">
-    <value>New Password is successfully changed!</value>
+    <value>Nouveau mot de passe changé avec succès !</value>
   </data>
 </root>
