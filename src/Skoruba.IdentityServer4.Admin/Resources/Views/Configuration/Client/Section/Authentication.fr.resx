@@ -124,7 +124,7 @@
     <value>élément déjà sélectionné</value>
   </data>
   <data name="PickerNoItemSelectedTitle" xml:space="preserve">
-    <value>Aucun(s) article(s) sélectionné(s)</value>
+    <value>Aucun(s) élément(s) sélectionné(s)</value>
   </data>
   <data name="PickerSearchItemPlaceholder" xml:space="preserve">
     <value>Entrez 2 caractères et plus</value>
