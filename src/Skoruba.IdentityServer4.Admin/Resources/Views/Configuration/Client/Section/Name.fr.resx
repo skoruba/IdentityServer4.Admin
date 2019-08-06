@@ -118,42 +118,45 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PanelTitle" xml:space="preserve">
-    <value>Name</value>
+    <value>Nom</value>
   </data>
   <data name="TitleCode" xml:space="preserve">
-    <value>Authorization Code Flow with PKCE</value>
+    <value>Authorization Code Flow avec PKCE</value>
+    <comment>Code d'autorisation Flux, Flux code d'autorisation</comment>
   </data>
   <data name="TitleDevice" xml:space="preserve">
-    <value>TV and Limited-Input Device Application</value>
+    <value>TV et appareils à entrée limitée</value>
+    <comment>(TV and Limited-Input Device) Application, TV and (Limited-Input Device Application)</comment>
   </data>
   <data name="TitleDeviceFlow" xml:space="preserve">
     <value>Device flow</value>
   </data>
   <data name="TitleEmpty" xml:space="preserve">
-    <value>Empty - Default</value>
+    <value>Vide - Par défaut</value>
   </data>
   <data name="TitleHybrid" xml:space="preserve">
-    <value>Hybrid flow</value>
+    <value>Flow hybride</value>
   </data>
   <data name="TitleImplicit" xml:space="preserve">
-    <value>Implicit flow</value>
+    <value>Flow Implicite</value>
   </data>
   <data name="TitleMachine" xml:space="preserve">
     <value>Machine/Robot</value>
   </data>
   <data name="TitleNative" xml:space="preserve">
-    <value>Native Application - Mobile/Desktop</value>
+    <value>Application native - Mobile/Desktop</value>
   </data>
   <data name="TitlePasswordAndClient" xml:space="preserve">
-    <value>Resource Owner Password and Client Credentials flow</value>
+    <value>Resource Owner Password et Client Credentials flow</value>
+    <comment>(Resource Owner Password) and (Client Credentials flow), (Resource Owner Password and Client) Credentials flow</comment>
   </data>
   <data name="TitleSpa" xml:space="preserve">
-    <value>Single Page Application - Javascript</value>
+    <value>Application web monopage - Javascript</value>
   </data>
   <data name="TitleWebHybrid" xml:space="preserve">
-    <value>Web Application - Server side</value>
+    <value>Application web - Côté serveur</value>
   </data>
   <data name="TitleWebImplicit" xml:space="preserve">
-    <value>Web Application - Server side</value>
+    <value>Application web - Côté serveur</value>
   </data>
 </root>
