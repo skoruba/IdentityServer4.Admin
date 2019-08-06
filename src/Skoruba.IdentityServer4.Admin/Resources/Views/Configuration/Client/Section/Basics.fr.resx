@@ -140,7 +140,7 @@
     <value>Entrez 2 caractères et plus</value>
   </data>
   <data name="PickerSearchResultTitle" xml:space="preserve">
-    <value>Résultat de la recherche : (cliquez sur l'élément pour sélectionner)</value>
+    <value>Résultat de la recherche : (cliquez sur l'élément pour le sélectionner)</value>
   </data>
   <data name="PickerSelectedItemsTitle" xml:space="preserve">
     <value>Élément(s) sélectionné(s) :</value>
