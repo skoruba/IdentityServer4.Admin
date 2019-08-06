@@ -118,67 +118,70 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Description_Info" xml:space="preserve">
-    <value>This value will be used e.g. on the consent screen.</value>
+    <value>Cette valeur sera utilisée (par exemple sur l'écran de consentement).</value>
   </data>
   <data name="Description_Label" xml:space="preserve">
     <value>Description</value>
   </data>
   <data name="DisplayName_Info" xml:space="preserve">
-    <value>This value will be used e.g. on the consent screen.</value>
+    <value>Cette valeur sera utilisée (par exemple sur l'écran de consentement).</value>
   </data>
   <data name="DisplayName_Label" xml:space="preserve">
-    <value>Display Name</value>
+    <value>Nom affiché</value>
+    <comment>Nom d'affichage</comment>
   </data>
   <data name="Emphasize_Info" xml:space="preserve">
-    <value>Specifies whether the consent screen will emphasize this scope (if the consent screen wants to implement such a feature). Use this setting for sensitive or important scopes. Defaults to false.</value>
+    <value>Indique si l'écran de consentement mettra en évidence ce scope (si l'écran de consentement veut utiliser cette fonctionnalité). Utilisez ce paramètre pour les scope sensibles ou importants. La valeur par défaut est Faux.</value>
   </data>
   <data name="Emphasize_Label" xml:space="preserve">
-    <value>Emphasize</value>
+    <value>Mettre en évidence</value>
+    <comment>mettre en évidence, mettre en avant, mettre l'accent, insister, souligner, valoriser, accentuer, faire ressortir</comment>
   </data>
   <data name="Enabled_Info" xml:space="preserve">
-    <value>Indicates if this resource is enabled and can be requested. Defaults to true.</value>
+    <value>Indique si cette ressource est activée et accessible. La valeur par défaut est Vrai.</value>
   </data>
   <data name="Enabled_Label" xml:space="preserve">
-    <value>Enabled</value>
+    <value>Activé</value>
   </data>
   <data name="Name_Info" xml:space="preserve">
-    <value>The unique name of the identity resource. This is the value a client will use for the scope parameter in the authorize request.</value>
+    <value>Le nom unique de l'identity resource. C'est la valeur qu'un client utilisera pour le paramètre scope dans la requête d'autorisation.</value>
   </data>
   <data name="Name_Label" xml:space="preserve">
-    <value>Name</value>
+    <value>Nom</value>
   </data>
   <data name="Properties_Info" xml:space="preserve">
-    <value>Dictionary to hold any custom identity resource-specific values as needed.</value>
+    <value>Dictionnaire pour contenir toutes les valeurs personnalisées spécifiques à l'identity resource.</value>
   </data>
   <data name="Properties_Label" xml:space="preserve">
-    <value>Properties</value>
+    <value>Propriétés</value>
   </data>
   <data name="PropertyKey_Info" xml:space="preserve">
-    <value>Key</value>
+    <value>Clé</value>
   </data>
   <data name="PropertyKey_Label" xml:space="preserve">
-    <value>Key</value>
+    <value>Clé</value>
   </data>
   <data name="PropertyValue_Info" xml:space="preserve">
-    <value>Value</value>
+    <value>Valeur</value>
   </data>
   <data name="PropertyValue_Label" xml:space="preserve">
-    <value>Value</value>
+    <value>Valeur</value>
   </data>
   <data name="Required_Info" xml:space="preserve">
-    <value>Specifies whether the user can de-select the scope on the consent screen (if the consent screen wants to implement such a feature). Defaults to false.</value>
+    <value>Indique si l'utilisateur peut désélectionner le scope sur l'écran de consentement (si l'écran de consentement veut utiliser cette fonctionnalité). La valeur par défaut est Faux.</value>
   </data>
   <data name="Required_Label" xml:space="preserve">
-    <value>Required</value>
+    <value>Requis</value>
+    <comment>Requis, Nécessaire, Obligatoire, Exigé</comment>
   </data>
   <data name="ShowInDiscoveryDocument_Info" xml:space="preserve">
-    <value>Specifies whether this scope is shown in the discovery document. Defaults to true.</value>
+    <value>Indique si ce scope est affiché dans le discovery document. La valeur par défaut est Vrai.</value>
   </data>
   <data name="ShowInDiscoveryDocument_Label" xml:space="preserve">
-    <value>Show In Discovery Document</value>
+    <value>Afficher dans le discovery document</value>
   </data>
   <data name="UserClaims_Info" xml:space="preserve">
-    <value>List of associated user claim types that should be included in the identity token.</value>
+    <value>Liste des type d'user claim associés qui doivent être inclus dans le jeton d'identité.</value>
   </data>
   <data name="UserClaims_Label" xml:space="preserve">
     <value>User Claims</value>
