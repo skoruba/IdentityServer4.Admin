@@ -122,16 +122,16 @@
     <comment>Supprimer une ressource Api</comment>
   </data>
   <data name="ButtonManageProperties" xml:space="preserve">
-    <value>Gérer les propriétés des ressources Api</value>
+    <value>Gérer Propriétés Ressources Api</value>
   </data>
   <data name="ButtonManageScopes" xml:space="preserve">
-    <value>Gérer les Scopes Api</value>
+    <value>Gérer Scopes Api</value>
   </data>
   <data name="ButtonManageSecrets" xml:space="preserve">
-    <value>Gérer les Secrets Api</value>
+    <value>Gérer Secrets Api</value>
   </data>
   <data name="ButtonSaveApiResource" xml:space="preserve">
-    <value>Sauvegarder la ressource Api</value>
+    <value>Enregistrer Ressource Api</value>
   </data>
   <data name="NavigationApiResources" xml:space="preserve">
     <value>Ressources Api</value>
