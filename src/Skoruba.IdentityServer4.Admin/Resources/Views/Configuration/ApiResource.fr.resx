@@ -118,48 +118,51 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonDeleteApiResource" xml:space="preserve">
-    <value>Delete Api Resource</value>
+    <value>Supprimer Ressource Api </value>
+    <comment>Supprimer une ressource Api</comment>
   </data>
   <data name="ButtonManageProperties" xml:space="preserve">
-    <value>Manage Api Resource Properties</value>
+    <value>Gérer les propriétés des ressources Api</value>
   </data>
   <data name="ButtonManageScopes" xml:space="preserve">
-    <value>Manage Api Scopes</value>
+    <value>Gérer les Scopes Api</value>
   </data>
   <data name="ButtonManageSecrets" xml:space="preserve">
-    <value>Manage Api Secrets</value>
+    <value>Gérer les Secrets Api</value>
   </data>
   <data name="ButtonSaveApiResource" xml:space="preserve">
-    <value>Save Api Resource</value>
+    <value>Sauvegarder la ressource Api</value>
   </data>
   <data name="NavigationApiResources" xml:space="preserve">
-    <value>Api Resources</value>
+    <value>Ressources Api</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Api Resource</value>
+    <value>Resource Api</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
-    <value>Api Resource</value>
+    <value>Resource Api</value>
   </data>
   <data name="PickerItemAlreadySelectedTitle" xml:space="preserve">
-    <value>item already selected</value>
+    <value>élément déjà sélectionné</value>
   </data>
   <data name="PickerNoItemSelectedTitle" xml:space="preserve">
-    <value>No item/s selected</value>
+    <value>Aucun(s) élément(s) sélectionné(s)</value>
+    <comment>Aucun élément sélectionné</comment>
   </data>
   <data name="PickerSearchItemPlaceholder" xml:space="preserve">
-    <value>Enter 2 and more characters</value>
+    <value>Entrez 2 caractères et plus</value>
   </data>
   <data name="PickerSearchResultTitle" xml:space="preserve">
-    <value>Search result: (click on the item to select)</value>
+    <value>Résultat de la recherche : (cliquez sur l'élément pour le sélectionner)</value>
   </data>
   <data name="PickerSelectedItemsTitle" xml:space="preserve">
-    <value>Selected item/s: </value>
+    <value>Élément(s) sélectionné(s) :</value>
   </data>
   <data name="PickerShowAllItemsTitle" xml:space="preserve">
-    <value>more</value>
+    <value>plus</value>
+    <comment>voir plus</comment>
   </data>
   <data name="PickerSuggestedItemsTitle" xml:space="preserve">
-    <value>Suggested items: </value>
+    <value>Éléments suggérés :</value>
   </data>
 </root>
