@@ -118,18 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Click" xml:space="preserve">
-    <value>Click</value>
+    <value>Cliquez</value>
   </data>
   <data name="Here" xml:space="preserve">
-    <value>here</value>
+    <value>ici</value>
   </data>
   <data name="Return" xml:space="preserve">
-    <value>to return to the</value>
+    <value>pour revenir à</value>
+    <comment>"to return to the" ??</comment>
   </data>
   <data name="SubTitle" xml:space="preserve">
-    <value>You are now logged out</value>
+    <value>Vous êtes maintenant déconnecté</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Logout</value>
+    <value>Déconnexion</value>
   </data>
 </root>
