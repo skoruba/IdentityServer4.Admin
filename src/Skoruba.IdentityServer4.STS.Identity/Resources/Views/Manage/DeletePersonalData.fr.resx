@@ -118,15 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Alert" xml:space="preserve">
-    <value>Deleting this data will permanently remove your account, and this cannot be recovered.</value>
+    <value>La suppression de ces données supprimera définitivement votre compte, cette action sera irrécupérable.</value>
+    <comment>rétabli, restauré, réparé, corrigé, annulé, rectifié</comment>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Delete data and close my account</value>
+    <value>Supprimer des données et fermer mon compte</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Password</value>
+    <value>Mot de passe</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Delete Personal Data</value>
+    <value>Supprimer les données personnelles</value>
   </data>
 </root>
