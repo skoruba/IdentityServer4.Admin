@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Code" xml:space="preserve">
-    <value>Recovery Code</value>
+    <value>Code de récupération</value>
   </data>
   <data name="Info" xml:space="preserve">
-    <value>You have requested to log in with a recovery code. This login will not be remembered until you provide
-    an authenticator app code at log in or disable 2FA and log in again.</value>
+    <value>Vous avez demandé à vous connecter avec un code de récupération. Cette connexion ne sera pas mémorisée tant que vous n'aurez pas fourni
+    un code d'authentification de l'application lors de la connexion ou désactivez 2FA puis reconnectez-vous.</value>
   </data>
   <data name="LogIn" xml:space="preserve">
-    <value>Log in</value>
+    <value>Se connecter</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Recovery code verification</value>
+    <value>Vérification du code de récupération</value>
   </data>
 </root>
