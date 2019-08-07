@@ -118,24 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Button" xml:space="preserve">
-    <value>Register</value>
+    <value>S'inscrire</value>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
-    <value>Confirm Password</value>
+    <value>Confirmer le mot de passe</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>Email</value>
+    <value>E-mail</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Password</value>
+    <value>Mot de passe</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
-    <value>Create a new account.</value>
+    <value>Créez un nouveau compte.</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Register</value>
+    <value>S'inscrire</value>
   </data>
   <data name="UserName" xml:space="preserve">
-    <value>Username</value>
+    <value>Nom d'utilisateur</value>
   </data>
 </root>
