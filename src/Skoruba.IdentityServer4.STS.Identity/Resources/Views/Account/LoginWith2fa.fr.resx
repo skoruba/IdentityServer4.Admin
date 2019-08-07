@@ -118,24 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Code" xml:space="preserve">
-    <value>Authenticator code</value>
+    <value>Code d'authentification</value>
   </data>
   <data name="Info" xml:space="preserve">
-    <value>Your login is protected with an authenticator app. Enter your authenticator code below.</value>
+    <value>Votre connexion est protégée par une application d'authentification. Entrez votre code d'authentification ci-dessous.</value>
   </data>
   <data name="LogIn" xml:space="preserve">
-    <value>Log in</value>
+    <value>Se connecter</value>
   </data>
   <data name="LoginWithRecoveryCode" xml:space="preserve">
-    <value>log in with a recovery code</value>
+    <value>vous connectez-vous avec un code de récupération</value>
   </data>
   <data name="NoAuthenticatorDevice" xml:space="preserve">
-    <value>Don't have access to your authenticator device? You can</value>
+    <value>Vous n'avez pas accès à votre dispositif d'authentification ? Vous pouvez</value>
   </data>
   <data name="Remember" xml:space="preserve">
-    <value>Remember this machine</value>
+    <value>Se souvenir de cette appareil</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Two-factor authentication</value>
+    <value>Authentification à deux facteurs</value>
   </data>
 </root>
