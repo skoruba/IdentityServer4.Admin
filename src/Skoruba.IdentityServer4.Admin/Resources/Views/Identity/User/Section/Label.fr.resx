@@ -118,117 +118,121 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="RoleName_Info" xml:space="preserve">
-    <value>Name of the role</value>
+    <value>Nom du rôle</value>
   </data>
   <data name="RoleName_Label" xml:space="preserve">
-    <value>Role Name</value>
+    <value>Nom du rôle</value>
   </data>
   <data name="RolesList_Info" xml:space="preserve">
-    <value>Role</value>
+    <value>Rôle</value>
   </data>
   <data name="RolesList_Label" xml:space="preserve">
-    <value>Role</value>
+    <value>Rôle</value>
   </data>
   <data name="Type_Info" xml:space="preserve">
     <value />
   </data>
   <data name="Type_Label" xml:space="preserve">
-    <value>Claim Type</value>
+    <value>Type Claim</value>
+    <comment>Type (du) Claim, Type (de) Claim</comment>
   </data>
   <data name="UserAccessFailedCount_Info" xml:space="preserve">
-    <value>User Access Failed Count</value>
+    <value>Nombre d'échecs d'accès des utilisateurs</value>
   </data>
   <data name="UserAccessFailedCount_Label" xml:space="preserve">
-    <value>User Access Failed Count</value>
+    <value>Nombre d'échecs d'accès des utilisateurs</value>
   </data>
   <data name="UserChangePasswordConfirmPassword_Info" xml:space="preserve">
-    <value>Confirm Password</value>
+    <value>Confirmer le mot de passe</value>
   </data>
   <data name="UserChangePasswordConfirmPassword_Label" xml:space="preserve">
-    <value>Confirm Password</value>
+    <value>Confirmer le mot de passe</value>
   </data>
   <data name="UserChangePasswordPassword_Info" xml:space="preserve">
-    <value>Password</value>
+    <value>Mot de passe</value>
   </data>
   <data name="UserChangePasswordPassword_Label" xml:space="preserve">
-    <value>Password</value>
+    <value>Mot de passe</value>
   </data>
   <data name="UserChangePasswordUserName_Info" xml:space="preserve">
-    <value>User Name</value>
+    <value>Nom d'utilisateur</value>
   </data>
   <data name="UserChangePasswordUserName_Label" xml:space="preserve">
-    <value>User Name</value>
+    <value>Nom d'utilisateur</value>
   </data>
   <data name="UserEmailConfirmed_Info" xml:space="preserve">
-    <value>User Email Confirmed</value>
+    <value>Email de l'utilisateur validé</value>
+    <comment>Email validé de l'utilisateur </comment>
   </data>
   <data name="UserEmailConfirmed_Label" xml:space="preserve">
-    <value>User Email Confirmed</value>
+    <value>Email de l'utilisateur validé</value>
+    <comment>Email validé de l'utilisateur</comment>
   </data>
   <data name="UserEmail_Info" xml:space="preserve">
-    <value>Email</value>
+    <value>E-mail</value>
   </data>
   <data name="UserEmail_Label" xml:space="preserve">
-    <value>Email</value>
+    <value>E-mail</value>
   </data>
   <data name="UserLockoutEnabled_Info" xml:space="preserve">
-    <value>User Lockout Enabled</value>
+    <value>Verrouillage utilisateur activé</value>
   </data>
   <data name="UserLockoutEnabled_Label" xml:space="preserve">
-    <value>User Lockout Enabled</value>
+    <value>Verrouillage utilisateur activé</value>
   </data>
   <data name="UserLockoutEnd_Info" xml:space="preserve">
-    <value>User Lockout End</value>
+    <value>Fin du verrouillage de l'utilisateur</value>
   </data>
   <data name="UserLockoutEnd_Label" xml:space="preserve">
-    <value>User Lockout End</value>
+    <value>Fin du verrouillage de l'utilisateur</value>
   </data>
   <data name="UserPhoneNumberConfirmed_Info" xml:space="preserve">
-    <value>User Phone Number Confirmed</value>
+    <value>Numéro de téléphone de l'utilisateur Validé</value>
   </data>
   <data name="UserPhoneNumberConfirmed_Label" xml:space="preserve">
-    <value>User Phone Number Confirmed</value>
+    <value>Numéro de téléphone de l'utilisateur Validé</value>
   </data>
   <data name="UserPhoneNumber_Info" xml:space="preserve">
-    <value>User Phone Number</value>
+    <value>Numéro de téléphone de l'utilisateur</value>
   </data>
   <data name="UserPhoneNumber_Label" xml:space="preserve">
-    <value>User Phone Number</value>
+    <value>Numéro de téléphone de l'utilisateur</value>
   </data>
   <data name="UserProviderLoginProvider_Info" xml:space="preserve">
-    <value>Login Provider</value>
+    <value>Fournisseur d'accès</value>
   </data>
   <data name="UserProviderLoginProvider_Label" xml:space="preserve">
-    <value>Login Provider</value>
+    <value>Fournisseur d'accès</value>
   </data>
   <data name="UserProviderProviderDisplayName_Info" xml:space="preserve">
-    <value>Display Name</value>
+    <value>Nom affiché</value>
   </data>
   <data name="UserProviderProviderDisplayName_Label" xml:space="preserve">
-    <value>Display Name</value>
+    <value>Nom affiché</value>
   </data>
   <data name="UserProviderProviderKey_Info" xml:space="preserve">
-    <value>Provider Key</value>
+    <value>Clé du fournisseur</value>
   </data>
   <data name="UserProviderProviderKey_Label" xml:space="preserve">
-    <value>Provider Key</value>
+    <value>Clé du fournisseur</value>
   </data>
   <data name="UserTwoFactorEnabled_Info" xml:space="preserve">
-    <value>User Two Factor Enabled</value>
+    <value>Facteur deux activé pour l'utilisateur</value>
   </data>
   <data name="UserTwoFactorEnabled_Label" xml:space="preserve">
-    <value>User Two Factor Enabled</value>
+    <value>Facteur deux activé pour l'utilisateur</value>
   </data>
   <data name="UserUserName_Info" xml:space="preserve">
-    <value>User Name</value>
+    <value>Nom d'utilisateur</value>
   </data>
   <data name="UserUserName_Label" xml:space="preserve">
-    <value>User Name</value>
+    <value>Nom d'utilisateur</value>
   </data>
   <data name="Value_Info" xml:space="preserve">
     <value />
   </data>
   <data name="Value_Label" xml:space="preserve">
-    <value>Claim Value</value>
+    <value>Valeur Claim</value>
+    <comment>Valeur (du) Claim</comment>
   </data>
 </root>
