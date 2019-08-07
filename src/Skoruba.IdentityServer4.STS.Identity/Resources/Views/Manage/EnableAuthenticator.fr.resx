@@ -118,31 +118,31 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Code" xml:space="preserve">
-    <value>Verification Code</value>
+    <value>Code de vérification</value>
   </data>
   <data name="DownloadTitle" xml:space="preserve">
-    <value>Download a two-factor authenticator app like Microsoft Authenticator for</value>
+    <value>Téléchargez une application d'authentification à deux facteurs comme Microsoft Authenticator pour</value>
   </data>
   <data name="GoogleAuthenticatorTitle" xml:space="preserve">
-    <value>Google Authenticator for</value>
+    <value>Google Authenticator pour</value>
   </data>
   <data name="Info" xml:space="preserve">
-    <value>Once you have scanned the QR code or input the key above, your two factor authentication app will provide you
-                with a unique code. Enter the code in the confirmation box below.</value>
+    <value>Une fois que vous avez scanné le code QR ou entré la clé ci-dessus, votre application d'authentification à deux facteurs vous fournira
+                un code unique. Entrez le code dans le champ de confirmation ci-dessous.</value>
   </data>
   <data name="ScanQR" xml:space="preserve">
-    <value>Scan the QR Code or enter this key</value>
+    <value>Scannez le QR Code ou entrez cette clé</value>
   </data>
   <data name="ScanQRSubTitle" xml:space="preserve">
-    <value>into your two factor authenticator app. Spaces and casing do not matter.</value>
+    <value>dans votre application d'authentification à deux facteurs. Les espaces et la casse n'ont pas d'importance.</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
-    <value>To use an authenticator app go through the following steps:</value>
+    <value>Pour utiliser une application d'authentification, suivez les étapes suivantes :</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Configure authenticator app</value>
+    <value>Configurer l'application d'authentification</value>
   </data>
   <data name="Verify" xml:space="preserve">
-    <value>Verify</value>
+    <value>Vérifier</value>
   </data>
 </root>
