@@ -118,33 +118,35 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DeleteButton" xml:space="preserve">
-    <value>Delete logs older than</value>
+    <value>Supprimer les logs plus anciens que</value>
   </data>
   <data name="DeleteDialogMessage" xml:space="preserve">
-    <value>Are you sure?</value>
+    <value>Êtes-vous sûr ?</value>
   </data>
   <data name="DeleteDialogNo" xml:space="preserve">
-    <value>No - close</value>
+    <value>Non - fermer</value>
   </data>
   <data name="DeleteDialogTitle" xml:space="preserve">
-    <value>Warning</value>
+    <value>Avertissement</value>
   </data>
   <data name="DeleteDialogYes" xml:space="preserve">
-    <value>Yes - delete</value>
+    <value>Oui - supprimer</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Logs</value>
   </data>
   <data name="TableLevel" xml:space="preserve">
-    <value>Level</value>
+    <value>Niveau</value>
   </data>
   <data name="TableLogged" xml:space="preserve">
-    <value>Logged</value>
+    <value>Enregistré</value>
+    <comment>Logged</comment>
   </data>
   <data name="TableMessage" xml:space="preserve">
     <value>Message</value>
   </data>
   <data name="TableShowDetail" xml:space="preserve">
-    <value>Show Detail</value>
+    <value>Afficher le détail</value>
+    <comment>Montrer Detail</comment>
   </data>
 </root>
