@@ -118,21 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ActionAddUser" xml:space="preserve">
-    <value>Add User</value>
+    <value>Ajouter Utilisateur</value>
   </data>
   <data name="ActionEditUser" xml:space="preserve">
-    <value>Edit</value>
+    <value>Modifier</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>Email</value>
+    <value>E-mail</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Users</value>
+    <value>Utilisateurs</value>
   </data>
   <data name="UserId" xml:space="preserve">
-    <value>UserId</value>
+    <value>ID Utilisateur</value>
   </data>
   <data name="UserName" xml:space="preserve">
-    <value>UserName</value>
+    <value>Nom Utilisateur</value>
   </data>
 </root>
