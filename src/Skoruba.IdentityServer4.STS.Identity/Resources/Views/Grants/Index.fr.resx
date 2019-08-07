@@ -121,24 +121,24 @@
     <value>API Grants</value>
   </data>
   <data name="Created" xml:space="preserve">
-    <value>Created:</value>
+    <value>Créé :</value>
   </data>
   <data name="Expires" xml:space="preserve">
-    <value>Expires:</value>
+    <value>Expire :</value>
   </data>
   <data name="IdentityGrants" xml:space="preserve">
     <value>Identity Grants</value>
   </data>
   <data name="NoGrants" xml:space="preserve">
-    <value>You have not given access to any applications</value>
+    <value>Vous n'avez donné accès à aucune application</value>
   </data>
   <data name="RevokeAccess" xml:space="preserve">
-    <value>Revoke Access</value>
+    <value>Révoquer l'accès</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
-    <value>Below is the list of applications you have given access to and the names of the resources they have access to.</value>
+    <value>Vous trouverez ci-dessous la liste des applications auxquelles vous avez donné accès et les noms des ressources auxquelles elles ont accès.</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Client Application Access</value>
+    <value>Accès aux applications client</value>
   </data>
 </root>
