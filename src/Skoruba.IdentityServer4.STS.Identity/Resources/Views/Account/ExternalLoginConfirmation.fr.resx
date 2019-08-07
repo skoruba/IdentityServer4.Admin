@@ -118,23 +118,23 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Email" xml:space="preserve">
-    <value>Email</value>
+    <value>E-mail</value>
   </data>
   <data name="Info" xml:space="preserve">
-    <value>You've successfully authenticated with {0}.
-        Please enter an email address for this site below and click the Register button to finish
-        logging in.</value>
+    <value>Vous avez réussi à vous authentifier avec {0}.
+        Veuillez entrer une adresse e-mail pour ce site ci-dessous et cliquez sur le bouton S'inscrire pour terminer
+        de vous connecter.</value>
   </data>
   <data name="Register" xml:space="preserve">
-    <value>Register</value>
+    <value>S'inscrire</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
-    <value>Associate your {0} account.</value>
+    <value>Associez votre compte {0}.</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Register</value>
+    <value>S'inscrire</value>
   </data>
   <data name="UserName" xml:space="preserve">
-    <value>UserName</value>
+    <value>Nom d'utilisateur</value>
   </data>
 </root>
