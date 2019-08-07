@@ -118,21 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="NavigationUsers" xml:space="preserve">
-    <value>Users</value>
+    <value>Utilisateurs</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
     <value>User Providers</value>
   </data>
   <data name="TableButtonRemove" xml:space="preserve">
-    <value>Delete</value>
+    <value>Supprimer</value>
   </data>
   <data name="TableLoginProvider" xml:space="preserve">
-    <value>Login Provider</value>
+    <value>Fournisseur d'accès</value>
   </data>
   <data name="TableProviderDisplayName" xml:space="preserve">
-    <value>Provider Display Name</value>
+    <value>Nom d'affichage du fournisseur</value>
   </data>
   <data name="TableProviderKey" xml:space="preserve">
-    <value>Provider Key</value>
+    <value>Clé du fournisseur</value>
   </data>
 </root>
