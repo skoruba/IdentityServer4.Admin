@@ -118,9 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Success" xml:space="preserve">
-    <value>Success</value>
+    <value>Succès</value>
   </data>
   <data name="SuccessMessage" xml:space="preserve">
-    <value>You have successfully authorized the device</value>
+    <value>Vous avez autorisé avec succès l'appareil</value>
   </data>
 </root>
