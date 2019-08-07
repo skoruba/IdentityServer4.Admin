@@ -118,18 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Supprimer</value>
   </data>
   <data name="Download" xml:space="preserve">
-    <value>Download</value>
+    <value>Télécharger</value>
   </data>
   <data name="Info" xml:space="preserve">
-    <value>Your account contains personal data that you have given us. This page allows you to download or delete that data.</value>
+    <value>Votre compte contient des données personnelles que vous nous avez fournies. Cette page vous permet de télécharger ou de supprimer ces données.</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Personal Data</value>
+    <value>Données personnelles</value>
   </data>
   <data name="Warning" xml:space="preserve">
-    <value>Deleting this data will permanently remove your account, and this cannot be recovered.</value>
+    <value>La suppression de ces données supprimera définitivement votre compte, ce qui est irrécupérable.</value>
   </data>
 </root>
