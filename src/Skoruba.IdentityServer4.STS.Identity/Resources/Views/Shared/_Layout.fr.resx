@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="2FA" xml:space="preserve">
-    <value>Two-factor authentication</value>
+    <value>Authentification à deux facteurs</value>
   </data>
   <data name="ChangePassword" xml:space="preserve">
-    <value>Change password</value>
+    <value>Modifier le mot de passe</value>
   </data>
   <data name="ExternalLogins" xml:space="preserve">
-    <value>My external logins</value>
+    <value>Mes identifiants externes</value>
   </data>
   <data name="Footer" xml:space="preserve">
     <value>Skoruba IdentityServer4</value>
@@ -136,10 +136,10 @@
     <value>Grants</value>
   </data>
   <data name="ManagePersonalData" xml:space="preserve">
-    <value>My personal data</value>
+    <value>Mes données personnelles</value>
   </data>
   <data name="ManageProfile" xml:space="preserve">
-    <value>My profile</value>
+    <value>Mon profil</value>
   </data>
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>
@@ -148,10 +148,10 @@
     <value>IdentityServer4</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Settings</value>
+    <value>Réglages</value>
   </data>
   <data name="Signout" xml:space="preserve">
-    <value>logout</value>
+    <value>déconnexion</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Skoruba IdentityServer4</value>
