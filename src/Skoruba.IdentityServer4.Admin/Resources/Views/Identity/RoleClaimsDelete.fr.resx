@@ -118,18 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonDeleteRoleClaim" xml:space="preserve">
-    <value>Delete Role Claim</value>
+    <value>Supprimer Role Claim</value>
   </data>
   <data name="NavigationRoleClaims" xml:space="preserve">
     <value>Role Claims</value>
   </data>
   <data name="NavigationRoles" xml:space="preserve">
-    <value>Roles</value>
+    <value>Rôles</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Delete Role Claim</value>
+    <value>Supprimer Role Claim</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
-    <value>Delete Role Claim</value>
+    <value>Supprimer Role Claim</value>
   </data>
 </root>
