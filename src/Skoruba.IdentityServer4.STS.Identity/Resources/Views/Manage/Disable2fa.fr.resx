@@ -118,18 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Disable2FA" xml:space="preserve">
-    <value>Disable 2FA</value>
+    <value>Désactiver 2FA</value>
   </data>
   <data name="Info" xml:space="preserve">
-    <value>Disabling 2FA does not change the keys used in authenticator apps. If you wish to change the key used in an authenticator app you should</value>
+    <value>Désactiver 2FA ne change pas les clés utilisées dans les applications d'authentification. Si vous souhaitez changer la clé utilisée dans une application d'authentification, vous devez</value>
   </data>
   <data name="ResetLink" xml:space="preserve">
-    <value>reset your authenticator keys</value>
+    <value>réinitialiser vos clés d'authentification</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
-    <value>This action only disables 2FA.</value>
+    <value>Cette action désactive uniquement 2FA.</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Disable two-factor authentication (2FA)</value>
+    <value>Désactiver l'authentification à deux facteurs (2FA)</value>
   </data>
 </root>
