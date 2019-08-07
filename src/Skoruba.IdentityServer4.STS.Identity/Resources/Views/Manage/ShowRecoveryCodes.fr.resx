@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Info" xml:space="preserve">
-    <value>If you lose your device and don't have the recovery codes you will lose access to your account.</value>
+    <value>Si vous perdez votre appareil et n'avez pas les codes de récupération, vous perdrez l'accès à votre compte.</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
-    <value>Put these codes in a safe place.</value>
+    <value>Mettez ces codes en lieu sûr.</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Recovery codes</value>
+    <value>Codes de récupération</value>
   </data>
 </root>
