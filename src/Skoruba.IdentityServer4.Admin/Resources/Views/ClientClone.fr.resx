@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonClone" xml:space="preserve">
-    <value>Clone Client</value>
+    <value>Dupliquer Client</value>
   </data>
   <data name="InfoDescription" xml:space="preserve">
-    <value>The client secrets will not be cloned.</value>
+    <value>Les secrets client ne seront pas dupliqués.</value>
   </data>
   <data name="InfoTitle" xml:space="preserve">
     <value>Info:</value>
@@ -130,31 +130,32 @@
     <value>Client Claims</value>
   </data>
   <data name="LabelCloneClientCorsOrigins" xml:space="preserve">
-    <value>Client Cors Origins</value>
+    <value>Origines Client Cors </value>
   </data>
   <data name="LabelCloneClientGrantTypes" xml:space="preserve">
-    <value>Client Grant Types</value>
+    <value>Types Client Grant</value>
   </data>
   <data name="LabelCloneClientIdPRestrictions" xml:space="preserve">
-    <value>Client IdP Restrictions</value>
+    <value>Restrictions Client IdP </value>
   </data>
   <data name="LabelCloneClientPostLogoutRedirectUris" xml:space="preserve">
-    <value>Client Post Logout Redirect Uris</value>
+    <value>Uris Client de Redirection (Post Déconnexion)</value>
+    <comment>Client Post Logout Redirect Uris</comment>
   </data>
   <data name="LabelCloneClientProperties" xml:space="preserve">
-    <value>Client Properties</value>
+    <value>Propriétés Client</value>
   </data>
   <data name="LabelCloneClientRedirectUris" xml:space="preserve">
-    <value>Client Redirect Uris</value>
+    <value>Uris Client de Redirection</value>
   </data>
   <data name="LabelCloneClientScopes" xml:space="preserve">
-    <value>Client Scopes</value>
+    <value>Scopes Client</value>
   </data>
   <data name="NavigationClients" xml:space="preserve">
     <value>Clients</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Clone Client</value>
+    <value>Dupliquer Client</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
     <value>Client</value>
