@@ -121,12 +121,14 @@
     <value>Persisted Grants</value>
   </data>
   <data name="TableButtonDetail" xml:space="preserve">
-    <value>Detail</value>
+    <value>Détail</value>
   </data>
   <data name="TableSubjectId" xml:space="preserve">
-    <value>Subject Id</value>
+    <value>ID sujet</value>
+    <comment>ID (du) sujet</comment>
   </data>
   <data name="TableSubjectName" xml:space="preserve">
-    <value>Subject Name</value>
+    <value>Nom sujet</value>
+    <comment>Nom (du) sujet</comment>
   </data>
 </root>
