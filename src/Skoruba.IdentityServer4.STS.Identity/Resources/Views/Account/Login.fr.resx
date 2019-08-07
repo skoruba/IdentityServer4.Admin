@@ -118,42 +118,43 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Annuler</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>Email</value>
+    <value>E-mail</value>
   </data>
   <data name="ExternalLogin" xml:space="preserve">
-    <value>External Login</value>
+    <value>Connexion externe</value>
   </data>
   <data name="Forgot" xml:space="preserve">
-    <value>Forgot password</value>
+    <value>Mot de passe oublié</value>
   </data>
   <data name="InvalidRequest" xml:space="preserve">
-    <value>Invalid login request</value>
+    <value>Demande de connexion invalide</value>
   </data>
   <data name="LocalLogin" xml:space="preserve">
-    <value>Local Login</value>
+    <value>Connexion locale</value>
   </data>
   <data name="Login" xml:space="preserve">
-    <value>Login</value>
+    <value>Connexion</value>
   </data>
   <data name="NoSchema" xml:space="preserve">
-    <value>There are no login schemes configured for this client.</value>
+    <value>Il n'y a pas de schéma de connexion configuré pour ce client.</value>
+    <comment>There are no login schemes configured for this client.</comment>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Password</value>
+    <value>Mot de passe</value>
   </data>
   <data name="Register" xml:space="preserve">
-    <value>Register</value>
+    <value>S'inscrire</value>
   </data>
   <data name="Remember" xml:space="preserve">
-    <value>Remember my login</value>
+    <value>Se rappeler de mon identifiant</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Login</value>
+    <value>Connexion</value>
   </data>
   <data name="Username" xml:space="preserve">
-    <value>Username</value>
+    <value>Nom d'utilisateur</value>
   </data>
 </root>
