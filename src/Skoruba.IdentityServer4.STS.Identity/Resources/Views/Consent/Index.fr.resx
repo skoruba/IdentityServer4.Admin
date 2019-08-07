@@ -118,24 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ApplicationAccess" xml:space="preserve">
-    <value>Application Access</value>
+    <value>Accès aux applications</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>No, Do Not Allow</value>
+    <value>Non, ne pas autoriser</value>
   </data>
   <data name="PersonalInformation" xml:space="preserve">
-    <value>Personal Information</value>
+    <value>Informations personnelles</value>
   </data>
   <data name="Remember" xml:space="preserve">
-    <value>Remember My Decision</value>
+    <value>Se souvenir de ma décision</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
-    <value>is requesting your permission</value>
+    <value>demande votre permission</value>
   </data>
   <data name="UnCheckPermission" xml:space="preserve">
-    <value>Uncheck the permissions you do not wish to grant.</value>
+    <value>Décochez les permissions que vous ne souhaitez pas accorder.</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Yes, Allow</value>
+    <value>Oui, Autoriser</value>
   </data>
 </root>
