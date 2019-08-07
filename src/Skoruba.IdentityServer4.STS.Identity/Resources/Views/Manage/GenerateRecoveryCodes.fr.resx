@@ -118,21 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="GenerateCodes" xml:space="preserve">
-    <value>Generate Recovery Codes</value>
+    <value>Générer des codes de récupération</value>
   </data>
   <data name="GenerateRecoveryCodeInfo" xml:space="preserve">
-    <value>Generating new recovery codes does not change the keys used in authenticator apps. If you wish to change the key used in an authenticator app you should</value>
+    <value>La génération de nouveaux codes de récupération ne modifie pas les clés utilisées dans les applications d'authentification. Si vous souhaitez changer la clé utilisée dans une application d'authentification, vous devez</value>
   </data>
   <data name="LostInfo" xml:space="preserve">
-    <value>If you lose your device and don't have the recovery codes you will lose access to your account.</value>
+    <value>Si vous perdez votre appareil et que vous n'avez pas les codes de récupération, vous perdrez l'accès à votre compte.</value>
   </data>
   <data name="ResetKeys" xml:space="preserve">
-    <value>reset your authenticator keys.</value>
+    <value>réinitialiser vos clés d'authentification.</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
-    <value>Put these codes in a safe place.</value>
+    <value>Mettez ces codes en lieu sûr.</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Generate two-factor authentication (2FA) recovery codes</value>
+    <value>Générer des codes de récupération d'authentification à deux facteurs (2FA)</value>
   </data>
 </root>
