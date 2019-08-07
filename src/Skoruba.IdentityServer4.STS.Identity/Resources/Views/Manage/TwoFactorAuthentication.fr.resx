@@ -118,54 +118,54 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddAuthenticator" xml:space="preserve">
-    <value>Add authenticator app</value>
+    <value>Ajouter une application d'authentification</value>
   </data>
   <data name="AuthenticatorApp" xml:space="preserve">
-    <value>Authenticator app</value>
+    <value>Application d'authentification</value>
   </data>
   <data name="BeforeLogin" xml:space="preserve">
-    <value>before you can log in with a recovery code</value>
+    <value>avant de pouvoir vous connecter avec un code de récupération</value>
   </data>
   <data name="Disable2FA" xml:space="preserve">
-    <value>Disable 2FA</value>
+    <value>Désactiver 2FA</value>
   </data>
   <data name="ForgetBrowser" xml:space="preserve">
-    <value>Forget this browser</value>
+    <value>Oublier ce navigateur</value>
   </data>
   <data name="GenerateNewCodes" xml:space="preserve">
-    <value>generate a new set of recovery codes</value>
+    <value>générer un nouvel ensemble de codes de récupération</value>
   </data>
   <data name="NoCodes" xml:space="preserve">
-    <value>You have no recovery codes left</value>
+    <value>Vous n'avez plus de codes de récupération</value>
   </data>
   <data name="OneCode" xml:space="preserve">
-    <value>You have 1 recovery code left</value>
+    <value>Il vous reste 1 code de récupération</value>
   </data>
   <data name="RecoveryCodeLeft" xml:space="preserve">
-    <value>recovery codes left</value>
+    <value>codes de récupération restants</value>
   </data>
   <data name="ResetAuthenticator" xml:space="preserve">
-    <value>Reset authenticator app</value>
+    <value>Réinitialiser l'application d'authentification</value>
   </data>
   <data name="ResetCodes" xml:space="preserve">
-    <value>Reset recovery codes</value>
+    <value>Réinitialiser les codes de récupération</value>
   </data>
   <data name="SetupAuthenticator" xml:space="preserve">
-    <value>Setup authenticator app</value>
+    <value>Configurer l'application d'authentification</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Two-factor authentication (2FA)</value>
+    <value>Authentification à deux facteurs (2FA)</value>
   </data>
   <data name="YouCanGenerateCodes" xml:space="preserve">
-    <value>You can generate a new set of recovery codes</value>
+    <value>Vous pouvez générer un nouvel ensemble de codes de récupération</value>
   </data>
   <data name="YouHave" xml:space="preserve">
-    <value>You have</value>
+    <value>Vous avez</value>
   </data>
   <data name="YouMust" xml:space="preserve">
-    <value>You must</value>
+    <value>Vous devez</value>
   </data>
   <data name="YouShould" xml:space="preserve">
-    <value>You should</value>
+    <value>Vous devriez</value>
   </data>
 </root>
