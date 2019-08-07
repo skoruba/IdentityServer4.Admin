@@ -118,25 +118,25 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonDeleteGrant" xml:space="preserve">
-    <value>Delete Persisted Grant</value>
+    <value>Supprimer Persisted Grant</value>
   </data>
   <data name="NavigationPersistedGrants" xml:space="preserve">
     <value>Persisted Grants</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Delete Persisted Grant</value>
+    <value>Supprimer Persisted Grant</value>
   </data>
   <data name="TableClient" xml:space="preserve">
     <value>Client</value>
   </data>
   <data name="TableData" xml:space="preserve">
-    <value>Data</value>
+    <value>Données</value>
   </data>
   <data name="TableExpiration" xml:space="preserve">
     <value>Expiration</value>
   </data>
   <data name="TableSubjectId" xml:space="preserve">
-    <value>Subject Id</value>
+    <value>ID sujet</value>
   </data>
   <data name="TableType" xml:space="preserve">
     <value>Type</value>
