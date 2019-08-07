@@ -118,45 +118,45 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Country" xml:space="preserve">
-    <value>Country</value>
+    <value>Pays</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>Email</value>
+    <value>E-mail</value>
   </data>
   <data name="Locality" xml:space="preserve">
-    <value>City</value>
+    <value>Ville</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Full name</value>
+    <value>Nom et prénom</value>
   </data>
   <data name="PhoneNumber" xml:space="preserve">
-    <value>Phone Number</value>
+    <value>Numéro de téléphone</value>
   </data>
   <data name="PostalCode" xml:space="preserve">
-    <value>Postal code</value>
+    <value>Code postal</value>
   </data>
   <data name="Profile" xml:space="preserve">
-    <value>Profile URL</value>
+    <value>URL du profil</value>
   </data>
   <data name="Region" xml:space="preserve">
-    <value>Region</value>
+    <value>Région</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Sauvegarder</value>
   </data>
   <data name="SendVerificationEmail" xml:space="preserve">
-    <value>Send verification email</value>
+    <value>Envoyer un e-mail de vérification</value>
   </data>
   <data name="StreetAddress" xml:space="preserve">
-    <value>Street address</value>
+    <value>Adresse postale</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Profile</value>
+    <value>Profil</value>
   </data>
   <data name="UserName" xml:space="preserve">
-    <value>UserName</value>
+    <value>Nom d'utilisateur</value>
   </data>
   <data name="Website" xml:space="preserve">
-    <value>Website URL</value>
+    <value>URL du site</value>
   </data>
 </root>
