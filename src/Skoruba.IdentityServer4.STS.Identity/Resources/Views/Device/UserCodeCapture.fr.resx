@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="EnterCode" xml:space="preserve">
-    <value>Please enter the code displayed on your device</value>
+    <value>Veuillez entrer le code affiché sur votre appareil</value>
   </data>
   <data name="Submit" xml:space="preserve">
-    <value>Submit</value>
+    <value>Valider</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>User Code</value>
+    <value>Code utilisateur</value>
   </data>
 </root>
