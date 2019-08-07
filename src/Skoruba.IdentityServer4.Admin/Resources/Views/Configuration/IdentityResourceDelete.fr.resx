@@ -118,15 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonDelete" xml:space="preserve">
-    <value>Delete Identity Resource</value>
+    <value>Supprimer Identity Resource</value>
   </data>
   <data name="NavigationIdentityResources" xml:space="preserve">
     <value>Identity Resources</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Delete Identity Resource</value>
+    <value>Supprimer Identity Resource</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
-    <value>Delete Identity Resource</value>
+    <value>Supprimer Identity Resource</value>
   </data>
 </root>
