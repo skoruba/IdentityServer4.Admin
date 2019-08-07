@@ -121,7 +121,8 @@
     <value>Accès aux applications</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>Non, ne pas autoriser</value>
+    <value>Non, Refuser</value>
+    <comment>Non, ne pas autoriser</comment>
   </data>
   <data name="PersonalInformation" xml:space="preserve">
     <value>Informations personnelles</value>
