@@ -118,30 +118,32 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ConfirmEmailBody" xml:space="preserve">
-    <value>Please confirm your account by &lt;a href='{0}'&gt;clicking here&lt;/a&gt;.</value>
+    <value>Veuillez confirmer votre compte par &lt;a href='{0}'&gt;en cliquant ici&lt;/a&gt;.</value>
   </data>
   <data name="ConfirmEmailTitle" xml:space="preserve">
-    <value>Confirm your email</value>
+    <value>Confirmez votre e-mail</value>
   </data>
   <data name="EmailNotFound" xml:space="preserve">
-    <value>The user does not exist or is not confirmed</value>
+    <value>L'utilisateur n'existe pas ou n'est pas valide</value>
   </data>
   <data name="ErrorExternalProvider" xml:space="preserve">
-    <value>Error from external provider: {0}</value>
+    <value>Erreur de la part d'un fournisseur externe : {0}</value>
   </data>
   <data name="InvalidAuthenticatorCode" xml:space="preserve">
-    <value>Invalid authenticator code.</value>
+    <value>Code d'authentification invalide.</value>
   </data>
   <data name="InvalidRecoveryCode" xml:space="preserve">
-    <value>Invalid recovery code entered.</value>
+    <value>Code de récupération invalide.</value>
+    <comment>Code de récupération saisi non valide.</comment>
   </data>
   <data name="ResetPasswordBody" xml:space="preserve">
-    <value>Please reset your password by &lt;a href='{0}'&gt;clicking here&lt;/a&gt;.</value>
+    <value>Veuillez réinitialiser votre mot de passe &lt;a href='{0}'&gt;en cliquant ici&lt;/a&gt;.</value>
   </data>
   <data name="ResetPasswordTitle" xml:space="preserve">
-    <value>Reset Password</value>
+    <value>Réinitialiser le mot de passe</value>
+    <comment>Réinitialiser Mot de passe</comment>
   </data>
   <data name="Unable2FA" xml:space="preserve">
-    <value>Unable to load two-factor authentication user.</value>
+    <value>Impossible de charger l'utilisateur d'authentification à deux facteurs.</value>
   </data>
 </root>
