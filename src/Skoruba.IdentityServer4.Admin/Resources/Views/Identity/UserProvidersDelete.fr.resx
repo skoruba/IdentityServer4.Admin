@@ -118,18 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonDeleteUserProvider" xml:space="preserve">
-    <value>Delete User Provider</value>
+    <value>Supprimer User Provider</value>
   </data>
   <data name="NavigationUserProviders" xml:space="preserve">
     <value>User Providers</value>
   </data>
   <data name="NavigationUsers" xml:space="preserve">
-    <value>Users</value>
+    <value>Utilisateurs</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Delete User Provider</value>
+    <value>Supprimer User Provider</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
-    <value>Delete User Provider</value>
+    <value>Supprimer User Provider</value>
   </data>
 </root>
