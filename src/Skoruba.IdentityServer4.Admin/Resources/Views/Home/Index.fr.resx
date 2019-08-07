@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonApiResources" xml:space="preserve">
-    <value>Api Resources</value>
+    <value>Ressources Api</value>
   </data>
   <data name="ButtonClients" xml:space="preserve">
     <value>Clients</value>
@@ -127,7 +127,7 @@
     <value>Identity Resources</value>
   </data>
   <data name="ButtonManage" xml:space="preserve">
-    <value>Manage</value>
+    <value>Gérer</value>
   </data>
   <data name="ButtonPersistedGrants" xml:space="preserve">
     <value>Persisted Grants</value>
@@ -136,10 +136,10 @@
     <value>Roles</value>
   </data>
   <data name="ButtonUsers" xml:space="preserve">
-    <value>Users</value>
+    <value>Utilisateurs</value>
   </data>
   <data name="PageSubTitle" xml:space="preserve">
-    <value>The administration for the IdentityServer4 and Asp.Net Core Identity</value>
+    <value>L'administration pour IdentityServer4 et Asp.Net Core Identity</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Skoruba IdentityServer4 Admin</value>
