@@ -130,8 +130,8 @@
     <value>Persisted Grants</value>
   </data>
   <data name="LinkSamples" xml:space="preserve">
-    <value>les échantillons disponibles</value>
-    <comment>échantillons prêts à l'emploi</comment>
+    <value>échantillons disponibles</value>
+    <comment>(les/des) échantillons disponibles</comment>
   </data>
   <data name="LinkSource" xml:space="preserve">
     <value>le dépôt de code source</value>
