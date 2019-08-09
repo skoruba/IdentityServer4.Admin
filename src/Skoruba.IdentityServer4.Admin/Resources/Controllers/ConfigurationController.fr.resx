@@ -171,10 +171,10 @@
     <value>Claim client supprimé avec succès !</value>
   </data>
   <data name="SuccessDeleteClientProperty" xml:space="preserve">
-    <value>Propriété du client supprimée avec succès !</value>
+    <value>Propriété client supprimée avec succès !</value>
   </data>
   <data name="SuccessDeleteClientSecret" xml:space="preserve">
-    <value>Secret du client effacé avec succès !</value>
+    <value>Secret client effacé avec succès !</value>
   </data>
   <data name="SuccessDeleteIdentityResource" xml:space="preserve">
     <value>Identity Resource supprimé avec succès !</value>
