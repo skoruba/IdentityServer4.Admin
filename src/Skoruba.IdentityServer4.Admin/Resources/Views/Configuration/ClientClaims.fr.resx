@@ -152,7 +152,7 @@
     <value>Résultat de la recherche : (cliquez sur l'élément pour le sélectionner)</value>
   </data>
   <data name="PickerSelectedItemsTitle" xml:space="preserve">
-    <value>Élément(s) sélectionné(s) :< /value>
+    <value>Élément(s) sélectionné(s) :</value>
   </data>
   <data name="PickerShowAllItemsTitle" xml:space="preserve">
     <value>plus</value>
