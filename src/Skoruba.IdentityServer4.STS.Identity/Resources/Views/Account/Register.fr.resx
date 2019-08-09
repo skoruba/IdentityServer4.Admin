@@ -121,7 +121,8 @@
     <value>S'inscrire</value>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
-    <value>Confirmer le mot de passe</value>
+    <value>Confirmer mot de passe</value>
+    <comment>Confirmer (le) mot de passe</comment>
   </data>
   <data name="Email" xml:space="preserve">
     <value>E-mail</value>

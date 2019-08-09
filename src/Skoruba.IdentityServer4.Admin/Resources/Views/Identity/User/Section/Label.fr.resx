@@ -143,10 +143,12 @@
     <value>Nombre d'échecs d'accès des utilisateurs</value>
   </data>
   <data name="UserChangePasswordConfirmPassword_Info" xml:space="preserve">
-    <value>Confirmer le mot de passe</value>
+    <value>Confirmer mot de passe</value>
+    <comment>Confirmer (le) mot de passe</comment>
   </data>
   <data name="UserChangePasswordConfirmPassword_Label" xml:space="preserve">
-    <value>Confirmer le mot de passe</value>
+    <value>Confirmer mot de passe</value>
+    <comment>Confirmer (le) mot de passe</comment>
   </data>
   <data name="UserChangePasswordPassword_Info" xml:space="preserve">
     <value>Mot de passe</value>
