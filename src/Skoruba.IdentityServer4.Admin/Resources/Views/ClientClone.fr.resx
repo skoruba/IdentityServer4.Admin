@@ -127,13 +127,13 @@
     <value>Info:</value>
   </data>
   <data name="LabelCloneClientClaims" xml:space="preserve">
-    <value>Client Claims</value>
+    <value>Claims Client</value>
   </data>
   <data name="LabelCloneClientCorsOrigins" xml:space="preserve">
     <value>Origines Client Cors </value>
   </data>
   <data name="LabelCloneClientGrantTypes" xml:space="preserve">
-    <value>Types Client Grant</value>
+    <value>Types Grant Client</value>
   </data>
   <data name="LabelCloneClientIdPRestrictions" xml:space="preserve">
     <value>Restrictions Client IdP </value>
