@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 using Skoruba.IdentityServer4.Admin.Api.Configuration;
 using Skoruba.IdentityServer4.Admin.Api.Configuration.Authorization;
 using Skoruba.IdentityServer4.Admin.Api.Configuration.Constants;
@@ -13,7 +14,8 @@ using Skoruba.IdentityServer4.Admin.Api.Mappers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
-using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore;
+
 
 namespace Skoruba.IdentityServer4.Admin.Api
 {
@@ -21,6 +23,7 @@ namespace Skoruba.IdentityServer4.Admin.Api
     {
         public Startup(IHostingEnvironment env)
         {
+            
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -75,17 +78,20 @@ namespace Skoruba.IdentityServer4.Admin.Api
 
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc(ApiConfigurationConsts.ApiVersionV1, new Info { Title = ApiConfigurationConsts.ApiName, Version = ApiConfigurationConsts.ApiVersionV1 });
+                options.SwaggerDoc(ApiConfigurationConsts.ApiVersionV1, new OpenApiInfo { Title = ApiConfigurationConsts.ApiName, Version = ApiConfigurationConsts.ApiVersionV1 });
 
-                options.AddSecurityDefinition("oauth2", new OAuth2Scheme
+                options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
-                    Flow = "implicit",
-                    AuthorizationUrl = $"{adminApiConfiguration.IdentityServerBaseUrl}/connect/authorize",
-                    Scopes = new Dictionary<string, string> {
-                        { adminApiConfiguration.OidcApiName, ApiConfigurationConsts.ApiName }
+                    Type = SecuritySchemeType.OAuth2,
+                    Flows = new OpenApiOAuthFlows {
+                        Implicit = new OpenApiOAuthFlow {
+                            AuthorizationUrl = new Uri($"{adminApiConfiguration.IdentityServerBaseUrl}/connect/authorize"),
+                            Scopes = new Dictionary<string, string> {
+                                { adminApiConfiguration.OidcApiName, ApiConfigurationConsts.ApiName }
+                            }
+                        } 
                     }
-                });
-
+                }) ;
                 options.OperationFilter<AuthorizeCheckOperationFilter>();
             });
         }

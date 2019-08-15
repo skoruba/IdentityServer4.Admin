@@ -2,10 +2,10 @@
     "iisSettings": {
         "windowsAuthentication": false,
         "anonymousAuthentication": true,
-        "iisExpress": {
-            "applicationUrl": "http://localhost:5001",
-            "sslPort": 0
-        }
+      "iisExpress": {
+        "applicationUrl": "http://localhost:5001",
+        "sslPort": 44391
+      }
     },
     "$schema": "http://json.schemastore.org/launchsettings.json",
     "profiles": {

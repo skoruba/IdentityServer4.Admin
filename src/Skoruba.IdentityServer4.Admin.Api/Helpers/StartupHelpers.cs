@@ -56,8 +56,9 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
             services.AddMvc(o =>
                 {
                     o.Conventions.Add(new GenericControllerRouteConvention());
+                    o.EnableEndpointRouting = false;
                 })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddDataAnnotationsLocalization()
                 .ConfigureApplicationPartManager(m =>
                 {

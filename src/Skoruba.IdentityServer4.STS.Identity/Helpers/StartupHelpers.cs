@@ -46,8 +46,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             services.AddMvc(o =>
                 {
                     o.Conventions.Add(new GenericControllerRouteConvention());
+                    o.EnableEndpointRouting = false;
                 })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddViewLocalization(
                     LanguageViewLocationExpanderFormat.Suffix,
                     opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; })

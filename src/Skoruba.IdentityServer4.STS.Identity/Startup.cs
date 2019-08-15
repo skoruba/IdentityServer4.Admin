@@ -35,6 +35,16 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                // this defines a CORS policy called "default"
+                options.AddPolicy("default", policy =>
+                {
+                    policy.WithOrigins("https://localhost:3000", "https://localhost:44353");
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
+                });
+            });
             services.ConfigureRootConfiguration(Configuration);
 
             // Add DbContext for Asp.Net Core Identity
@@ -57,13 +67,14 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            app.UseHttpsRedirection();
             app.AddLogging(loggerFactory, Configuration);
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors("default");
             // Add custom security headers
             app.UseSecurityHeaders();
 
