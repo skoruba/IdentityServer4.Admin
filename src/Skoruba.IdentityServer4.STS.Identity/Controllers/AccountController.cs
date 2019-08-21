@@ -51,6 +51,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         private readonly RegisterConfiguration _registerConfiguration;
         private readonly IADUtilities _ADUtilities;
 
+
         public AccountController(
             UserResolver<TUser> userResolver,
             UserManager<TUser> userManager,
@@ -198,6 +199,72 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             return View(vm);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult WindowsLogin(string returnUrl)
+        {
+            LoginInputModel vm = new LoginInputModel { ReturnUrl = returnUrl };
+            return View(vm);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> WindowsLogin(LoginInputModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                // Username can be in the format domain\username or just the Windows username.
+                // In the latter case, the host domain will be used.
+                var usernameParts = vm.Username.Split('\\', StringSplitOptions.RemoveEmptyEntries);
+                if (usernameParts.Length > 2)
+                    ModelState.AddModelError("Username", _localizer["InvalidUsernameFormat"]);
+                else
+                {
+                    var wi = _ADUtilities.LogonWindowsUser(usernameParts.Length > 1 ? usernameParts[1] : usernameParts[0], 
+                        vm.Password, 
+                        usernameParts.Length > 1 ? usernameParts[0] : null);
+                    if (wi != null)
+                        return await IssueExternalCookie(vm.ReturnUrl, wi);
+
+                    ModelState.AddModelError(string.Empty, _localizer["WindowsAuthenticationFailed"]);
+                }
+            }
+            
+            return View(vm);
+        }
+
+        private async Task<IActionResult> IssueExternalCookie(string returnUrl, IIdentity wi)
+        {
+            var adProperties = _ADUtilities.GetUserInfoFromAD(wi.Name);
+
+            var id = new ClaimsIdentity(AccountOptions.WindowsAuthenticationSchemeName);
+            var name = wi.Name;
+            name = name.Substring(name.IndexOf('\\') + 1);
+
+            id.AddClaim(new Claim(JwtClaimTypes.Subject, name));
+            id.AddClaim(new Claim(ClaimTypes.NameIdentifier, name));
+            id.AddClaim(new Claim(JwtClaimTypes.Name, adProperties.DisplayName));
+            id.AddClaim(new Claim(JwtClaimTypes.Email, adProperties.Email));
+
+            // we will issue the external cookie and then redirect the
+            // user back to the external callback, in essence, treating windows
+            // auth the same as any other external authentication mechanism
+            var props = new AuthenticationProperties()
+            {
+                RedirectUri = Url.Action("ExternalLoginCallback"),
+                Items =
+                    {
+                        { "returnUrl", returnUrl },
+                        { "LoginProvider", AccountOptions.WindowsAuthenticationSchemeName },
+                    }
+            };
+            await HttpContext.SignInAsync(
+                IdentityConstants.ExternalScheme,
+                new ClaimsPrincipal(id),
+                props);
+
+            return Redirect(props.RedirectUri);
+        }
 
         /// <summary>
         /// Show logout page
@@ -775,41 +842,20 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             var result = await HttpContext.AuthenticateAsync(AccountOptions.WindowsAuthenticationSchemeName);
             if (result?.Principal is WindowsPrincipal wp)
             {
-                var adProperties = _ADUtilities.GetUserInfoFromAD(wp.Identity.Name);
-
-                var id = new ClaimsIdentity(AccountOptions.WindowsAuthenticationSchemeName);
-                var name = wp.Identity.Name;
-                name = name.Substring(name.IndexOf('\\') + 1);
-
-                id.AddClaim(new Claim(JwtClaimTypes.Subject, name));
-                id.AddClaim(new Claim(ClaimTypes.NameIdentifier, name));
-                id.AddClaim(new Claim(JwtClaimTypes.Name, adProperties.DisplayName));
-                id.AddClaim(new Claim(JwtClaimTypes.Email, adProperties.Email));
-
-                // we will issue the external cookie and then redirect the
-                // user back to the external callback, in essence, treating windows
-                // auth the same as any other external authentication mechanism
-                var props = new AuthenticationProperties()
-                {
-                    RedirectUri = Url.Action("ExternalLoginCallback"),
-                    Items =
-                    {
-                        { "returnUrl", returnUrl },
-                        { "LoginProvider", AccountOptions.WindowsAuthenticationSchemeName },
-                    }
-                };
-                await HttpContext.SignInAsync(
-                    IdentityConstants.ExternalScheme,
-                    new ClaimsPrincipal(id),
-                    props);
-                return Redirect(props.RedirectUri);
+                return await IssueExternalCookie(returnUrl, wp.Identity);
             }
-            else
+            else if (Request.IsFromLocalSubnet())
             {
                 // trigger windows auth
                 // since windows auth don't support the redirect uri,
                 // this URL is re-triggered when we call challenge
                 return Challenge(AccountOptions.WindowsAuthenticationSchemeName);
+            }
+            else
+            {
+                // if the request comes from another network, the Windows scheme cannot be challenged,
+                // so we redirect the user to a Windows login form
+                return RedirectToAction("WindowsLogin", new { returnUrl = returnUrl });
             }
         }
 
