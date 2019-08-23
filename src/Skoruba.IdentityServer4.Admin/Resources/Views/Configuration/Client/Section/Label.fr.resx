@@ -273,11 +273,11 @@ OneTime, la gestion des refresh token sera mise à jour lors de la régénérati
     <value>Exiger le consentement</value>
   </data>
   <data name="RequirePkce_Info" xml:space="preserve">
-    <value>Indique si les clients qui utilisent un grant type basé sur un code d'autorisation doivent envoyer une proof key.</value>
+    <value>Indique si les clients qui utilisent un type d'octroi basé sur un code d'autorisation doivent envoyer une proof key.</value>
     <comment>basé ?</comment>
   </data>
   <data name="RequirePkce_Label" xml:space="preserve">
-    <value>Nécessite Pkce</value>
+    <value>Nécessite PKCE</value>
   </data>
   <data name="SlidingRefreshTokenLifetime_Info" xml:space="preserve">
     <value>Sliding, Durée de vie du refresh token en secondes. La valeur par défaut est 1296000 secondes / 15 jours.</value>
@@ -298,14 +298,14 @@ OneTime, la gestion des refresh token sera mise à jour lors de la régénérati
     <comment>utilisé par l'implémentations par défaut</comment>
   </data>
   <data name="AllowedCorsOrigins_Label" xml:space="preserve">
-    <value>Origines Cors autorisées</value>
+    <value>Origines CORS autorisées</value>
   </data>
   <data name="AllowedGrantTypes_Info" xml:space="preserve">
-    <value>Indique les types de grant que le client est autorisé à utiliser. Utilisez la class GrantTypes pour les combinaisons courantes. Liste des grants par défaut: Grant Implicite  - (implicit), Client Credentials Grant - (client_credentials), Authorization Code Grant - (authorization_code), Grant hybride  - (hybrid), Resource Owner Password Credentials Grant - (password)</value>
+    <value>Indique les types d'octroi que le client peut utiliser. Utilisez la class GrantTypes pour les combinaisons courantes. Liste des octroi par défaut: Octroi implicite - (implicit), Octroi par identifiants - (client_credentials), Octroi par code - (authorization_code), Octroi hybride - (hybrid), Resource Owner Password Credentials Grant - (password)</value>
     <comment>Indique les types de grant que le client est autorisé à utiliser. Utilisez la classe GrantTypes pour les combinaisons courantes. Liste des grants par défaut : Grant implicite - (implicit), Grant relative aux justificatifs d'identité du client - (justificatifs d'identité du client), Grant relatif aux codes d'autorisations - (code autorisation), Grant hybride - (hybride), Grant relatif aux justificatifs du propriétaire des ressources - (mot de passe)</comment>
   </data>
   <data name="AllowedGrantTypes_Label" xml:space="preserve">
-    <value>Types de grants autorisés</value>
+    <value>Types d'octroi autorisés</value>
   </data>
   <data name="AllowedScopes_Info" xml:space="preserve">
     <value>Par défaut, un client n'a accès à aucune ressource - indiquez les ressources accessibles en ajoutant les noms de scopes correspondants.</value>

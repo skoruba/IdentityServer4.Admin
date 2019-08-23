@@ -133,7 +133,8 @@
     <value>© 2019</value>
   </data>
   <data name="Grants" xml:space="preserve">
-    <value>Grants</value>
+    <value>Consentements</value>
+    <comment>Octrois. Explicit mistake for clarity</comment>
   </data>
   <data name="ManagePersonalData" xml:space="preserve">
     <value>Mes données personnelles</value>

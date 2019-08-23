@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SuccessPersistedGrantDelete" xml:space="preserve">
-    <value>Persisted Grant supprimé avec succès !</value>
+    <value>Octroi persistant supprimé avec succès !</value>
   </data>
   <data name="SuccessPersistedGrantsDelete" xml:space="preserve">
-    <value>Persisted Grants supprimés avec succès !</value>
+    <value>Octrois persistants supprimés avec succès !</value>
   </data>
   <data name="SuccessTitle" xml:space="preserve">
     <value>Succès</value>

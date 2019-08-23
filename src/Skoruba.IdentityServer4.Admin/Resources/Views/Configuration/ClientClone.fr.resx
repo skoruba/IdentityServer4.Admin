@@ -133,7 +133,7 @@
     <value>Origines Cors Client</value>
   </data>
   <data name="LabelCloneClientGrantTypes" xml:space="preserve">
-    <value>Types Grant Client</value>
+    <value>Types d'octroi Client</value>
   </data>
   <data name="LabelCloneClientIdPRestrictions" xml:space="preserve">
     <value>Restrictions IdP Client</value>

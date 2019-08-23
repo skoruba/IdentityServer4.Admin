@@ -127,7 +127,8 @@
     <value>Discovery Document</value>
   </data>
   <data name="Grants" xml:space="preserve">
-    <value>Persisted Grants</value>
+    <value>Consentements</value>
+    <comment>Octrois persistants. Explicit mistake for clarity</comment>
   </data>
   <data name="LinkSamples" xml:space="preserve">
     <value>échantillons disponibles</value>
