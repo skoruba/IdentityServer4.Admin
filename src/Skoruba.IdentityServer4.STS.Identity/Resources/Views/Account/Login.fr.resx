@@ -156,6 +156,7 @@
     <value>Connexion</value>
   </data>
   <data name="Username" xml:space="preserve">
-    <value>Nom d'utilisateur</value>
+    <value>Identifiant</value>
+    <comment>Nom d'utilisateur</comment>
   </data>
 </root>

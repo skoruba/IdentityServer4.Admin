@@ -137,6 +137,7 @@
     <value>S'inscrire</value>
   </data>
   <data name="UserName" xml:space="preserve">
-    <value>Nom d'utilisateur</value>
+    <value>Identifiant</value>
+    <comment>Nom d'utilisateur</comment>
   </data>
 </root>

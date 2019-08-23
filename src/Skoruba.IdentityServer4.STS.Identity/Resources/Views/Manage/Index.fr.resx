@@ -154,7 +154,8 @@
     <value>Profil</value>
   </data>
   <data name="UserName" xml:space="preserve">
-    <value>Nom d'utilisateur</value>
+    <value>Identifiant</value>
+    <comment>Nom d'utilisateur</comment>
   </data>
   <data name="Website" xml:space="preserve">
     <value>URL du site</value>

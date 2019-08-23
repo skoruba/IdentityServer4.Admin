@@ -133,6 +133,7 @@
     <value>ID Utilisateur</value>
   </data>
   <data name="UserName" xml:space="preserve">
-    <value>Nom Utilisateur</value>
+    <value>Identifiant</value>
+    <comment>Nom Utilisateur</comment>
   </data>
 </root>

@@ -157,17 +157,19 @@
     <value>Mot de passe</value>
   </data>
   <data name="UserChangePasswordUserName_Info" xml:space="preserve">
-    <value>Nom d'utilisateur</value>
+    <value>Identifiant</value>
+    <comment>Nom d'utilisateur</comment>
   </data>
   <data name="UserChangePasswordUserName_Label" xml:space="preserve">
-    <value>Nom d'utilisateur</value>
+    <value>Identifiant</value>
+    <comment>Nom d'utilisateur</comment>
   </data>
   <data name="UserEmailConfirmed_Info" xml:space="preserve">
-    <value>Email de l'utilisateur validé</value>
+    <value>Email de l'utilisateur confirmé</value>
     <comment>Email validé de l'utilisateur </comment>
   </data>
   <data name="UserEmailConfirmed_Label" xml:space="preserve">
-    <value>Email de l'utilisateur validé</value>
+    <value>Email de l'utilisateur confirmé</value>
     <comment>Email validé de l'utilisateur</comment>
   </data>
   <data name="UserEmail_Info" xml:space="preserve">
@@ -198,7 +200,7 @@
     <value>Numéro de téléphone de l'utilisateur</value>
   </data>
   <data name="UserPhoneNumber_Label" xml:space="preserve">
-    <value>Numéro de téléphone de l'utilisateur</value>
+    <value>Numéro de téléphone</value>
   </data>
   <data name="UserProviderLoginProvider_Info" xml:space="preserve">
     <value>Fournisseur d'accès</value>
@@ -225,10 +227,12 @@
     <value>Authentification à deux facteurs (A2F) activée pour l'utilisateur</value>
   </data>
   <data name="UserUserName_Info" xml:space="preserve">
-    <value>Nom d'utilisateur</value>
+    <value>Identifiant</value>
+    <comment>Nom Utilisateur</comment>
   </data>
   <data name="UserUserName_Label" xml:space="preserve">
-    <value>Nom d'utilisateur</value>
+    <value>Identifiant</value>
+    <comment>Nom Utilisateur</comment>
   </data>
   <data name="Value_Info" xml:space="preserve">
     <value />
