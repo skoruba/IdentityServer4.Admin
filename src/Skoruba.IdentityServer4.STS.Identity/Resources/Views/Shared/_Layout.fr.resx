@@ -151,7 +151,7 @@
     <value>Réglages</value>
   </data>
   <data name="Signout" xml:space="preserve">
-    <value>déconnexion</value>
+    <value>Déconnexion</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Skoruba IdentityServer4</value>
