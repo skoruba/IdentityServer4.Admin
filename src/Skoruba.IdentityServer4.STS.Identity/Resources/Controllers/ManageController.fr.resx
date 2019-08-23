@@ -133,7 +133,7 @@
     <value>L'utilisateur avec l'ID '{0}' s'est supprimé.</value>
   </data>
   <data name="Error2FANotEnabled" xml:space="preserve">
-    <value>Impossible de générer des codes de récupération pour l'utilisateur avec l'ID {0} car 2FA n'est pas activé.</value>
+    <value>Impossible de générer des codes de récupération pour l'utilisateur avec l'ID {0} car A2F n'est pas activé.</value>
   </data>
   <data name="ErrorCode" xml:space="preserve">
     <value>Code</value>
@@ -142,10 +142,10 @@
     <value>Une erreur inattendue s'est produite lors de la suppression de l'utilisateur avec l'ID {0}.</value>
   </data>
   <data name="ErrorDisable2FA" xml:space="preserve">
-    <value>Une erreur inattendue s'est produite en désactivant 2FA pour l'utilisateur avec l'ID {0}.</value>
+    <value>Une erreur inattendue s'est produite en désactivant A2F pour l'utilisateur avec l'ID {0}.</value>
   </data>
   <data name="ErrorGenerateCodesWithout2FA" xml:space="preserve">
-    <value>Impossible de générer des codes de récupération pour l'utilisateur car 2FA n'est pas activé.</value>
+    <value>Impossible de générer des codes de récupération pour l'utilisateur car A2F n'est pas activé.</value>
   </data>
   <data name="ErrorLoadingExternalLogin" xml:space="preserve">
     <value>Une erreur inattendue s'est produite lors du chargement des informations de connexion externe de l'utilisateur avec l'ID {0}.</value>
@@ -184,21 +184,21 @@
     <value>Votre profil a été mis à jour</value>
   </data>
   <data name="SuccessDisabled2FA" xml:space="preserve">
-    <value>L'utilisateur avec l'ID {0} a désactivé 2fa.</value>
+    <value>L'utilisateur avec l'ID {0} a désactivé A2F.</value>
   </data>
   <data name="SuccessForgetBrowser2FA" xml:space="preserve">
-    <value>Le navigateur actuel a été oublié. Lorsque vous vous reconnectez à partir de ce navigateur, vous serez invité à entrer votre code 2fa.</value>
+    <value>Le navigateur actuel a été oublié. Lorsque vous vous reconnectez à partir de ce navigateur, vous serez invité à entrer votre code A2F.</value>
   </data>
   <data name="SuccessResetAuthenticationKey" xml:space="preserve">
     <value>L'utilisateur avec l'ID {0} a réinitialisé sa clé d'application d'authentification.</value>
   </data>
   <data name="SuccessUserEnabled2FA" xml:space="preserve">
-    <value>L'utilisateur avec ID {0} a activé 2FA avec une application d'authentification.</value>
-    <comment>L'utilisateur avec l'ID {0} a activé 2FA avec une application d'authentification.</comment>
+    <value>L'utilisateur avec ID {0} a activé A2F avec une application d'authentification.</value>
+    <comment>L'utilisateur avec l'ID {0} a activé A2F avec une application d'authentification.</comment>
   </data>
   <data name="UserGenerated2FACodes" xml:space="preserve">
-    <value>L'utilisateur avec ID {0} a généré de nouveaux codes de récupération 2FA.</value>
-    <comment>L'utilisateur avec l'ID {0} a généré de nouveaux codes de récupération 2FA.</comment>
+    <value>L'utilisateur avec ID {0} a généré de nouveaux codes de récupération A2F.</value>
+    <comment>L'utilisateur avec l'ID {0} a généré de nouveaux codes de récupération A2F.</comment>
   </data>
   <data name="UserNotFound" xml:space="preserve">
     <value>Impossible de charger l'utilisateur avec ID {0}.</value>

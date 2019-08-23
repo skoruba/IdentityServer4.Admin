@@ -219,10 +219,10 @@
     <value>Clé du fournisseur</value>
   </data>
   <data name="UserTwoFactorEnabled_Info" xml:space="preserve">
-    <value>Facteur deux activé pour l'utilisateur</value>
+    <value>A2F activé</value>
   </data>
   <data name="UserTwoFactorEnabled_Label" xml:space="preserve">
-    <value>Facteur deux activé pour l'utilisateur</value>
+    <value>Authentification à deux facteurs (A2F) activée pour l'utilisateur</value>
   </data>
   <data name="UserUserName_Info" xml:space="preserve">
     <value>Nom d'utilisateur</value>
