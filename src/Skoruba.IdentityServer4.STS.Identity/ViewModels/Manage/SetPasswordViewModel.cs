@@ -13,6 +13,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.ViewModels.Manage
         [Compare("NewPassword")]
         public string ConfirmPassword { get; set; }
 
-        public string StatusMessage { get; set; }
+        public StatusViewModel Status { get; set; }
     }
 }

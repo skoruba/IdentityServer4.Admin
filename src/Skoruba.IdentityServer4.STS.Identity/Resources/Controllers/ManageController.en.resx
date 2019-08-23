@@ -135,6 +135,9 @@
   <data name="Error2FANotEnabled" xml:space="preserve">
     <value>Cannot generate recovery codes for user with ID {0} because they do not have 2FA enabled.</value>
   </data>
+  <data name="ErrorChangingPassword" xml:space="preserve">
+    <value>Error changing password.</value>
+  </data>
   <data name="ErrorCode" xml:space="preserve">
     <value>Code</value>
   </data>
@@ -155,6 +158,9 @@
   </data>
   <data name="ErrorSettingEmail" xml:space="preserve">
     <value>Unexpected error occurred setting email for user with ID {0}.</value>
+  </data>
+  <data name="ErrorSettingPassword" xml:space="preserve">
+    <value>Error setting password.</value>
   </data>
   <data name="ErrorSettingPhone" xml:space="preserve">
     <value>Unexpected error occurred setting phone number for user with ID {0}.</value>

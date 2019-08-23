@@ -31,9 +31,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
-        [TempData]
-        public string StatusMessage { get; set; }
-
         public ManageController(UserManager<TUser> userManager, SignInManager<TUser> signInManager, IEmailSender emailSender, ILogger<ManageController<TUser, TKey>> logger, IGenericControllerLocalizer<ManageController<TUser, TKey>> localizer, UrlEncoder urlEncoder)
         {
             _userManager = userManager;
@@ -45,7 +42,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(StatusViewModel status)
         {
             var user = await _userManager.GetUserAsync(User);
 
@@ -54,51 +51,46 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
             }
 
-            var model = await BuildManageIndexViewModelAsync(user);
+            var model = await BuildManageIndexViewModelAsync(user, status);
 
             return View(model);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(IndexViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(model);
-            }
+                model.Status = new StatusViewModel { Message = _localizer["ProfileUpdated"] };
 
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
-            }
-
-            var email = user.Email;
-            if (model.Email != email)
-            {
-                var setEmailResult = await _userManager.SetEmailAsync(user, model.Email);
-                if (!setEmailResult.Succeeded)
+                var user = await _userManager.GetUserAsync(User);
+                if (user == null)
                 {
-                    throw new ApplicationException(_localizer["ErrorSettingEmail", user.Id]);
+                    return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
+                }
+
+                var email = user.Email;
+                if (model.Email != email)
+                {
+                    var setEmailResult = await _userManager.SetEmailAsync(user, model.Email);
+                    UpdateStatusFromIdentityResult(setEmailResult, model.Status, _localizer["ErrorSettingEmail", user.Id]);
+                }
+
+                var phoneNumber = user.PhoneNumber;
+                if (model.PhoneNumber != phoneNumber)
+                {
+                    var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, model.PhoneNumber);
+                    UpdateStatusFromIdentityResult(setPhoneResult, model.Status, _localizer["ErrorSettingPhone", user.Id]);
+                }
+
+                if (ModelState.IsValid)
+                {
+                    await UpdateUserClaimsAsync(model, user);
                 }
             }
 
-            var phoneNumber = user.PhoneNumber;
-            if (model.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, model.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    throw new ApplicationException(_localizer["ErrorSettingPhone", user.Id]);
-                }
-            }
-            
-            await UpdateUserClaimsAsync(model, user);
-
-            StatusMessage = _localizer["ProfileUpdated"];
-
-            return RedirectToAction(nameof(Index));
+            return View(model);
         }
         
         [HttpPost]
@@ -121,9 +113,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             await _emailSender.SendEmailAsync(model.Email, _localizer["ConfirmEmailTitle"], _localizer["ConfirmEmailBody", HtmlEncoder.Default.Encode(callbackUrl)]);
 
-            StatusMessage = _localizer["VerificationSent"];
+            var status = new StatusViewModel { Message = _localizer["VerificationSent"] };
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), status);
         }
 
         [HttpGet]
@@ -141,7 +133,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 return RedirectToAction(nameof(SetPassword));
             }
 
-            var model = new ChangePasswordViewModel { StatusMessage = StatusMessage };
+            var model = new ChangePasswordViewModel();
             return View(model);
         }
 
@@ -160,19 +152,20 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
             }
 
+            model.Status = new StatusViewModel { Message = _localizer["PasswordChanged"] };
+
             var changePasswordResult = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
-            if (!changePasswordResult.Succeeded)
+            if (changePasswordResult.Succeeded)
             {
-                AddErrors(changePasswordResult);
-                return View(model);
+                await _signInManager.RefreshSignInAsync(user);
+                _logger.LogInformation(_localizer["PasswordChangedLog", user.UserName]);
             }
-
-            await _signInManager.RefreshSignInAsync(user);
-            _logger.LogInformation(_localizer["PasswordChangedLog", user.UserName]);
-
-            StatusMessage = _localizer["PasswordChanged"];
-
-            return RedirectToAction(nameof(ChangePassword));
+            else
+            {
+                UpdateStatusFromIdentityResult(changePasswordResult, model.Status, _localizer["ErrorChangingPassword"]);                
+            }
+            
+            return View(model);
         }
 
         [HttpGet]
@@ -191,7 +184,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 return RedirectToAction(nameof(ChangePassword));
             }
 
-            var model = new SetPasswordViewModel { StatusMessage = StatusMessage };
+            var model = new SetPasswordViewModel();
             return View(model);
         }
 
@@ -209,18 +202,19 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             {
                 return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
             }
+            model.Status = new StatusViewModel { Message = _localizer["PasswordSet"] };
 
             var addPasswordResult = await _userManager.AddPasswordAsync(user, model.NewPassword);
-            if (!addPasswordResult.Succeeded)
+            if (addPasswordResult.Succeeded)
             {
-                AddErrors(addPasswordResult);
-                return View(model);
+                await _signInManager.RefreshSignInAsync(user);
+            }
+            else
+            {
+                UpdateStatusFromIdentityResult(addPasswordResult, model.Status, _localizer["ErrorSettingPassword"]);
             }
 
-            await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = _localizer["PasswordSet"];
-
-            return RedirectToAction(nameof(SetPassword));
+            return View(model);
         }
 
         [HttpGet]
@@ -322,9 +316,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = _localizer["ExternalLoginRemoved"];
+            var status = new StatusViewModel { Message = _localizer["ExternalLoginRemoved"] };
 
-            return RedirectToAction(nameof(ExternalLogins));
+            return RedirectToAction(nameof(ExternalLogins), status);
         }
 
         [HttpGet]
@@ -351,13 +345,13 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-            StatusMessage = _localizer["ExternalLoginAdded"];
+            var status = new StatusViewModel { Message = _localizer["ExternalLoginAdded"] };
 
-            return RedirectToAction(nameof(ExternalLogins));
+            return RedirectToAction(nameof(ExternalLogins), status);
         }
 
         [HttpGet]
-        public async Task<IActionResult> ExternalLogins()
+        public async Task<IActionResult> ExternalLogins(StatusViewModel status)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -375,7 +369,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 .ToList();
 
             model.ShowRemoveButton = await _userManager.HasPasswordAsync(user) || model.CurrentLogins.Count > 1;
-            model.StatusMessage = StatusMessage;
+            model.Status = status;
 
             return View(model);
         }
@@ -434,7 +428,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> TwoFactorAuthentication()
+        public async Task<IActionResult> TwoFactorAuthentication(StatusViewModel status)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -447,7 +441,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 HasAuthenticator = await _userManager.GetAuthenticatorKeyAsync(user) != null,
                 Is2faEnabled = user.TwoFactorEnabled,
                 RecoveryCodesLeft = await _userManager.CountRecoveryCodesAsync(user),
-                IsMachineRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user)
+                IsMachineRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user),
+                Status = status
             };
 
             return View(model);
@@ -463,10 +458,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             }
 
             await _signInManager.ForgetTwoFactorClientAsync();
+            var status = new StatusViewModel { Message = _localizer["SuccessForgetBrowser2FA"] };
 
-            StatusMessage = _localizer["SuccessForgetBrowser2FA"];
-
-            return RedirectToAction(nameof(TwoFactorAuthentication));
+            return RedirectToAction(nameof(TwoFactorAuthentication), status);
         }
 
         [HttpGet]
@@ -496,15 +490,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
             }
 
+            StatusViewModel status = new StatusViewModel { IsSuccess = true, Message = _localizer["SuccessDisabled2FA", user.Id] };
             var disable2faResult = await _userManager.SetTwoFactorEnabledAsync(user, false);
-            if (!disable2faResult.Succeeded)
-            {
-                throw new ApplicationException(_localizer["ErrorDisable2FA", user.Id]);
-            }
+            if (disable2faResult.Succeeded)
+                _logger.LogInformation(_localizer["SuccessDisabled2FA", user.Id]);                
+            else
+                UpdateStatusFromIdentityResult(disable2faResult, status, _localizer["ErrorDisable2FA", user.Id]);
 
-            _logger.LogInformation(_localizer["SuccessDisabled2FA", user.Id]);
-
-            return RedirectToAction(nameof(TwoFactorAuthentication));
+            return RedirectToAction(nameof(TwoFactorAuthentication), status);
         }
 
         [HttpPost]
@@ -578,7 +571,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             _logger.LogInformation(_localizer["SuccessUserEnabled2FA"], userId);
 
-            StatusMessage = _localizer["AuthenticatorVerified"];
+            var status = new StatusViewModel { Message = _localizer["AuthenticatorVerified"] };
 
             if (await _userManager.CountRecoveryCodesAsync(user) == 0)
             {
@@ -588,7 +581,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 return RedirectToAction(nameof(ShowRecoveryCodes));
             }
 
-            return RedirectToAction(nameof(TwoFactorAuthentication));
+            return RedirectToAction(nameof(TwoFactorAuthentication), status);
         }
 
         [HttpGet]
@@ -621,7 +614,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             model.AuthenticatorUri = GenerateQrCodeUri(user.Email, unformattedKey);
         }
 
-        private async Task<IndexViewModel> BuildManageIndexViewModelAsync(TUser user)
+        private async Task<IndexViewModel> BuildManageIndexViewModelAsync(TUser user, StatusViewModel status)
         {
             var claims = await _userManager.GetClaimsAsync(user);
             var profile = OpenIdClaimHelpers.ExtractProfileInfo(claims);
@@ -632,7 +625,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 IsEmailConfirmed = user.EmailConfirmed,
-                StatusMessage = StatusMessage,
+                Status = status,
                 Name = profile.FullName,
                 Website = profile.Website,
                 Profile = profile.Profile,
@@ -640,7 +633,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 Region = profile.Region,
                 PostalCode = profile.PostalCode,
                 Locality = profile.Locality,
-                StreetAddress = profile.StreetAddress
+                StreetAddress = profile.StreetAddress                
             };
             return model;
         }
@@ -713,6 +706,20 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         private void AddError(string description, string title = "")
         {
             ModelState.AddModelError(title, description);
+        }
+
+        private void UpdateStatusFromIdentityResult(IdentityResult result, StatusViewModel status, string title)
+        {
+            if (!result.Succeeded)
+            {
+                status.IsSuccess = false;
+                status.Message = title;
+
+                foreach (var error in result.Errors)
+                {
+                    status.ErrorsDetails.Add(error.Description);
+                }
+            }
         }
     }
 }
