@@ -137,10 +137,10 @@
     <comment>Type (du) Claim, Type (de) Claim</comment>
   </data>
   <data name="UserAccessFailedCount_Info" xml:space="preserve">
-    <value>Nombre d'échecs d'accès des utilisateurs</value>
+    <value>Nombre d'échecs d'accès de l'utilisateur</value>
   </data>
   <data name="UserAccessFailedCount_Label" xml:space="preserve">
-    <value>Nombre d'échecs d'accès des utilisateurs</value>
+    <value>Nombre d'échecs d'accès</value>
   </data>
   <data name="UserChangePasswordConfirmPassword_Info" xml:space="preserve">
     <value>Confirmer mot de passe</value>
@@ -169,7 +169,7 @@
     <comment>Email validé de l'utilisateur </comment>
   </data>
   <data name="UserEmailConfirmed_Label" xml:space="preserve">
-    <value>Email de l'utilisateur confirmé</value>
+    <value>Email confirmé</value>
     <comment>Email validé de l'utilisateur</comment>
   </data>
   <data name="UserEmail_Info" xml:space="preserve">
@@ -182,19 +182,19 @@
     <value>Verrouillage utilisateur activé</value>
   </data>
   <data name="UserLockoutEnabled_Label" xml:space="preserve">
-    <value>Verrouillage utilisateur activé</value>
+    <value>Verrouillage</value>
   </data>
   <data name="UserLockoutEnd_Info" xml:space="preserve">
     <value>Fin du verrouillage de l'utilisateur</value>
   </data>
   <data name="UserLockoutEnd_Label" xml:space="preserve">
-    <value>Fin du verrouillage de l'utilisateur</value>
+    <value>Fin du verrouillage</value>
   </data>
   <data name="UserPhoneNumberConfirmed_Info" xml:space="preserve">
-    <value>Numéro de téléphone de l'utilisateur Validé</value>
+    <value>Numéro de téléphone de l'utilisateur Confirmé</value>
   </data>
   <data name="UserPhoneNumberConfirmed_Label" xml:space="preserve">
-    <value>Numéro de téléphone de l'utilisateur Validé</value>
+    <value>Numéro de téléphone confirmé</value>
   </data>
   <data name="UserPhoneNumber_Info" xml:space="preserve">
     <value>Numéro de téléphone de l'utilisateur</value>
@@ -221,10 +221,10 @@
     <value>Clé du fournisseur</value>
   </data>
   <data name="UserTwoFactorEnabled_Info" xml:space="preserve">
-    <value>A2F activé</value>
+    <value>Authentification à deux facteurs (A2F) activée pour l'utilisateur</value>
   </data>
   <data name="UserTwoFactorEnabled_Label" xml:space="preserve">
-    <value>Authentification à deux facteurs (A2F) activée pour l'utilisateur</value>
+    <value>A2F</value>
   </data>
   <data name="UserUserName_Info" xml:space="preserve">
     <value>Identifiant</value>
