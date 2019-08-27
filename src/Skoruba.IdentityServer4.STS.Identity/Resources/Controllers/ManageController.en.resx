@@ -156,6 +156,9 @@
   <data name="ErrorRemovingExternalLogin" xml:space="preserve">
     <value>Unexpected error occurred removing external login for user with ID {0}.</value>
   </data>
+  <data name="ErrorSendingVerificationEmail" xml:space="preserve">
+    <value>An error occurred sending the verification email.</value>
+  </data>
   <data name="ErrorSettingEmail" xml:space="preserve">
     <value>Unexpected error occurred setting email for user with ID {0}.</value>
   </data>

@@ -129,6 +129,12 @@
   <data name="ErrorExternalProvider" xml:space="preserve">
     <value>Error from external provider: {0}</value>
   </data>
+  <data name="ErrorSendingResetEmail" xml:space="preserve">
+    <value>An error occurred sending the email with the instructions to reset your password: {0}</value>
+  </data>
+  <data name="ErrorSendingVerificationEmail" xml:space="preserve">
+    <value>An error occurred sending the verification email: {0}</value>
+  </data>
   <data name="InvalidAuthenticatorCode" xml:space="preserve">
     <value>Invalid authenticator code.</value>
   </data>

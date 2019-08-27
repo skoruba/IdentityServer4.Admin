@@ -111,9 +111,17 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, HttpContext.Request.Scheme);
 
-            await _emailSender.SendEmailAsync(model.Email, _localizer["ConfirmEmailTitle"], _localizer["ConfirmEmailBody", HtmlEncoder.Default.Encode(callbackUrl)]);
-
             var status = new StatusViewModel { Message = _localizer["VerificationSent"] };
+            try
+            {
+                await _emailSender.SendEmailAsync(model.Email, _localizer["ConfirmEmailTitle"], _localizer["ConfirmEmailBody", HtmlEncoder.Default.Encode(callbackUrl)]);
+            }
+            catch (Exception ex)
+            {
+                status = new StatusViewModel { IsSuccess = false, Message = _localizer["ErrorSendingVerificationEmail"]};
+                status.ErrorsDetails.Add(ex.Message);
+            }
+            
 
             return RedirectToAction(nameof(Index), status);
         }

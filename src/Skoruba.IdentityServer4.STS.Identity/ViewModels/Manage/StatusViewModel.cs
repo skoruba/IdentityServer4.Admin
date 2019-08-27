@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 namespace Skoruba.IdentityServer4.STS.Identity.ViewModels.Manage
 {
-    [Serializable]
     public class StatusViewModel
     {
         public bool IsSuccess { get; set; } = true;
