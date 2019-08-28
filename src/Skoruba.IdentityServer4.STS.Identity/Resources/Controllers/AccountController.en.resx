@@ -126,8 +126,20 @@
   <data name="EmailNotFound" xml:space="preserve">
     <value>The user does not exist or is not confirmed</value>
   </data>
+  <data name="ErrorAddingRoleClaim" xml:space="preserve">
+    <value>It was not possible to add role claim '{0}' for user '{1}'</value>
+  </data>
   <data name="ErrorExternalProvider" xml:space="preserve">
     <value>Error from external provider: {0}</value>
+  </data>
+  <data name="ErrorRemovingRoleClaim" xml:space="preserve">
+    <value>It was not possible to remove role claim '{0}' from user '{1}'</value>
+  </data>
+  <data name="ErrorSyncingUserProfile" xml:space="preserve">
+    <value>It was not possible to update profile of user '{0}' with the new values coming from AD</value>
+  </data>
+  <data name="ErrorUpdatingClaim" xml:space="preserve">
+    <value>It was not possible to update claim of type '{0}' for user '{1}' with new value '{2}'</value>
   </data>
   <data name="InvalidAuthenticatorCode" xml:space="preserve">
     <value>Invalid authenticator code.</value>

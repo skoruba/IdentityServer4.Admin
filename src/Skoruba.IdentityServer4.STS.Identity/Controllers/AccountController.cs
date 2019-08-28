@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.ADUtilities;
@@ -50,7 +51,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         private readonly LoginConfiguration _loginConfiguration;
         private readonly RegisterConfiguration _registerConfiguration;
         private readonly IADUtilities _ADUtilities;
-
+        private readonly ILogger<AccountController<TUser, TKey>> _logger;
 
         public AccountController(
             UserResolver<TUser> userResolver,
@@ -64,7 +65,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             IGenericControllerLocalizer<AccountController<TUser, TKey>> localizer,
             LoginConfiguration loginConfiguration,
             RegisterConfiguration registerConfiguration,
-            IADUtilities adUtilities)
+            IADUtilities adUtilities,
+            ILogger<AccountController<TUser, TKey>> logger)
         {
             _userResolver = userResolver;
             _userManager = userManager;
@@ -78,6 +80,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             _loginConfiguration = loginConfiguration;
             _registerConfiguration = registerConfiguration;
             _ADUtilities = adUtilities;
+            _logger = logger;
         }
 
         /// <summary>
@@ -452,44 +455,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 if (info.LoginProvider == AccountOptions.WindowsAuthenticationSchemeName &&
                     _loginConfiguration.SyncUserProfileWithWindows)
                 {
-                    var adInfo = _ADUtilities.GetUserInfoFromAD(info.ProviderKey);
-                    var user = await _userResolver.GetUserAsync(info.ProviderKey);
-
-                    user.Email = adInfo.Email;
-                    user.NormalizedEmail = adInfo.Email?.ToUpper();
-                    user.EmailConfirmed = !string.IsNullOrEmpty(adInfo.Email);
-                    user.PhoneNumber = adInfo.PhoneNumber;
-
-                    var currentClaims = await _userManager.GetClaimsAsync(user);
-                    await UpdateUserClaim(user, currentClaims, JwtClaimTypes.Email, adInfo.Email);
-                    await UpdateUserClaim(user, currentClaims, JwtClaimTypes.Picture, adInfo.Photo);
-                    await UpdateUserClaim(user, currentClaims, JwtClaimTypes.WebSite, adInfo.WebSite);
-                    await UpdateUserClaim(user, currentClaims, JwtClaimTypes.Address, 
-                        (!string.IsNullOrEmpty(adInfo.Country) || !string.IsNullOrEmpty(adInfo.StreetAddress)) ? 
-                        Newtonsoft.Json.JsonConvert.SerializeObject(new { country = adInfo.Country, street_address = adInfo.StreetAddress }) :
-                        null);
-
-                    if (_loginConfiguration.IncludeWindowsGroups)
-                    {
-                        // Remove the groups that the user doesn't belong to anymore.
-                        // If a policy has been configured for choosing which AD groups should become user claims 
-                        // (via WindowsGroupsPrefix and WindowsGroupsOURoot settings), only those complying with that policy will be removed
-                        foreach (var currentGroup in _ADUtilities.FilterADGroups(currentClaims.Where(c => c.Type == JwtClaimTypes.Role).Select(c => c.Value)))
-                        {
-                            if (!adInfo.Groups.Contains(currentGroup))
-                                await _userManager.RemoveClaimAsync(user, currentClaims.First(c => c.Type == JwtClaimTypes.Role && c.Value == currentGroup));
-                        }
-                        
-
-                        // Add new groups
-                        foreach (var newGroup in adInfo.Groups)
-                        {
-                            if (currentClaims.FirstOrDefault(c => c.Type == JwtClaimTypes.Role && c.Value == newGroup) == null)
-                                await _userManager.AddClaimAsync(user, new Claim(JwtClaimTypes.Role, newGroup));
-                        }
-                    }
-
-                    await _userManager.UpdateAsync(user);
+                    await SyncUserProfileWithAD(info);
                 }
                 return RedirectToLocal(returnUrl);
             }
@@ -517,19 +483,99 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email, UserName = username });
         }
 
-        private async Task UpdateUserClaim(TUser user, IList<Claim> currentClaims, string claimType, string claimNewValue)
+        private async Task SyncUserProfileWithAD(ExternalLoginInfo info)
         {
+            var adInfo = _ADUtilities.GetUserInfoFromAD(info.ProviderKey);
+            var user = await _userResolver.GetUserAsync(info.ProviderKey);
+
+            user.Email = adInfo.Email;
+            user.NormalizedEmail = adInfo.Email?.ToUpper();
+            user.EmailConfirmed = !string.IsNullOrEmpty(adInfo.Email);
+            user.PhoneNumber = adInfo.PhoneNumber;
+
+            var currentClaims = await _userManager.GetClaimsAsync(user);
+            await UpdateUserClaim(user, currentClaims, JwtClaimTypes.Email, adInfo.Email);
+            await UpdateUserClaim(user, currentClaims, JwtClaimTypes.Picture, adInfo.Photo);
+            await UpdateUserClaim(user, currentClaims, JwtClaimTypes.WebSite, adInfo.WebSite);
+            await UpdateUserClaim(user, currentClaims, JwtClaimTypes.Address,
+                (!string.IsNullOrEmpty(adInfo.Country) || !string.IsNullOrEmpty(adInfo.StreetAddress)) ?
+                Newtonsoft.Json.JsonConvert.SerializeObject(new { country = adInfo.Country, street_address = adInfo.StreetAddress }) :
+                null);
+
+            if (_loginConfiguration.IncludeWindowsGroups)
+            {
+                // Remove the groups that the user doesn't belong to anymore.
+                // If a policy has been configured for choosing which AD groups should become user claims 
+                // (via WindowsGroupsPrefix and WindowsGroupsOURoot settings), only those complying with that policy will be removed
+                foreach (var currentGroup in _ADUtilities.FilterADGroups(currentClaims.Where(c => c.Type == JwtClaimTypes.Role).Select(c => c.Value)))
+                {
+                    if (!adInfo.Groups.Contains(currentGroup))
+                    {
+                        var removeClaimRes = await _userManager.RemoveClaimAsync(user, currentClaims.First(c => c.Type == JwtClaimTypes.Role && c.Value == currentGroup));
+                        if (!removeClaimRes.Succeeded)
+                        {
+                            _logger.LogError(_localizer["ErrorRemovingRoleClaim", currentGroup, user.UserName]);
+                            foreach (var error in removeClaimRes.Errors)
+                            {
+                                _logger.LogError(error.Description);
+                            }
+                        }
+                    }
+                }
+
+                // Add new groups
+                foreach (var newGroup in adInfo.Groups)
+                {
+                    if (currentClaims.FirstOrDefault(c => c.Type == JwtClaimTypes.Role && c.Value == newGroup) == null)
+                    {
+                        var addClaimRes = await _userManager.AddClaimAsync(user, new Claim(JwtClaimTypes.Role, newGroup));
+                        if (!addClaimRes.Succeeded)
+                        {
+                            _logger.LogError(_localizer["ErrorAddingRoleClaim", newGroup, user.UserName]);
+                            foreach (var error in addClaimRes.Errors)
+                            {
+                                _logger.LogError(error.Description);
+                            }
+                        }
+                    }
+                }
+            }
+
+            var updateUserRes = await _userManager.UpdateAsync(user);
+            if (!updateUserRes.Succeeded)
+            {
+                _logger.LogError(_localizer["ErrorSyncingUserProfile", user.UserName]);
+                foreach (var error in updateUserRes.Errors)
+                {
+                    _logger.LogError(error.Description);
+                }
+            }
+        }
+
+        private async Task<IdentityResult> UpdateUserClaim(TUser user, IList<Claim> currentClaims, string claimType, string claimNewValue)
+        {
+            IdentityResult res = IdentityResult.Success;
             var currentClaim = currentClaims.FirstOrDefault(c => c.Type == claimType);
             if (currentClaim != null)
             {
                 if (string.IsNullOrEmpty(claimNewValue))
-                    await _userManager.RemoveClaimAsync(user, currentClaim);
+                    res = await _userManager.RemoveClaimAsync(user, currentClaim);
                 else if (currentClaim.Value != claimNewValue)
-                    await _userManager.ReplaceClaimAsync(user, currentClaim, new Claim(claimType, claimNewValue));
+                    res = await _userManager.ReplaceClaimAsync(user, currentClaim, new Claim(claimType, claimNewValue));
             }
             else if (!string.IsNullOrEmpty(claimNewValue))
-                await _userManager.AddClaimAsync(user, new Claim(claimType, claimNewValue));
-        }
+                res = await _userManager.AddClaimAsync(user, new Claim(claimType, claimNewValue));
+
+            if (!res.Succeeded)
+            {
+                _logger.LogError(_localizer["ErrorUpdatingClaim", claimType, user.UserName, claimNewValue]);
+                foreach (var error in res.Errors)
+                {
+                    _logger.LogError(error.Description);
+                }
+            }
+            return res;
+        }        
 
         [HttpPost]
         [HttpGet]
