@@ -449,6 +449,48 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
             if (result.Succeeded)
             {
+                if (info.LoginProvider == AccountOptions.WindowsAuthenticationSchemeName &&
+                    _loginConfiguration.SyncUserProfileWithWindows)
+                {
+                    var adInfo = _ADUtilities.GetUserInfoFromAD(info.ProviderKey);
+                    var user = await _userResolver.GetUserAsync(info.ProviderKey);
+
+                    user.Email = adInfo.Email;
+                    user.NormalizedEmail = adInfo.Email?.ToUpper();
+                    user.EmailConfirmed = !string.IsNullOrEmpty(adInfo.Email);
+                    user.PhoneNumber = adInfo.PhoneNumber;
+
+                    var currentClaims = await _userManager.GetClaimsAsync(user);
+                    await UpdateUserClaim(user, currentClaims, JwtClaimTypes.Email, adInfo.Email);
+                    await UpdateUserClaim(user, currentClaims, JwtClaimTypes.Picture, adInfo.Photo);
+                    await UpdateUserClaim(user, currentClaims, JwtClaimTypes.WebSite, adInfo.WebSite);
+                    await UpdateUserClaim(user, currentClaims, JwtClaimTypes.Address, 
+                        (!string.IsNullOrEmpty(adInfo.Country) || !string.IsNullOrEmpty(adInfo.StreetAddress)) ? 
+                        Newtonsoft.Json.JsonConvert.SerializeObject(new { country = adInfo.Country, street_address = adInfo.StreetAddress }) :
+                        null);
+
+                    if (_loginConfiguration.IncludeWindowsGroups)
+                    {
+                        // Remove the groups that the user doesn't belong to anymore.
+                        // If a policy has been configured for choosing which AD groups should become user claims 
+                        // (via WindowsGroupsPrefix and WindowsGroupsOURoot settings), only those complying with that policy will be removed
+                        foreach (var currentGroup in _ADUtilities.FilterADGroups(currentClaims.Where(c => c.Type == JwtClaimTypes.Role).Select(c => c.Value)))
+                        {
+                            if (!adInfo.Groups.Contains(currentGroup))
+                                await _userManager.RemoveClaimAsync(user, currentClaims.First(c => c.Type == JwtClaimTypes.Role && c.Value == currentGroup));
+                        }
+                        
+
+                        // Add new groups
+                        foreach (var newGroup in adInfo.Groups)
+                        {
+                            if (currentClaims.FirstOrDefault(c => c.Type == JwtClaimTypes.Role && c.Value == newGroup) == null)
+                                await _userManager.AddClaimAsync(user, new Claim(JwtClaimTypes.Role, newGroup));
+                        }
+                    }
+
+                    await _userManager.UpdateAsync(user);
+                }
                 return RedirectToLocal(returnUrl);
             }
 
@@ -473,6 +515,20 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             ViewData["LoginProvider"] = info.LoginProvider;
 
             return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email, UserName = username });
+        }
+
+        private async Task UpdateUserClaim(TUser user, IList<Claim> currentClaims, string claimType, string claimNewValue)
+        {
+            var currentClaim = currentClaims.FirstOrDefault(c => c.Type == claimType);
+            if (currentClaim != null)
+            {
+                if (string.IsNullOrEmpty(claimNewValue))
+                    await _userManager.RemoveClaimAsync(user, currentClaim);
+                else if (currentClaim.Value != claimNewValue)
+                    await _userManager.ReplaceClaimAsync(user, currentClaim, new Claim(claimType, claimNewValue));
+            }
+            else if (!string.IsNullOrEmpty(claimNewValue))
+                await _userManager.AddClaimAsync(user, new Claim(claimType, claimNewValue));
         }
 
         [HttpPost]

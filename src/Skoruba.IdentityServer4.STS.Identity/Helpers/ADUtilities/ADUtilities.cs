@@ -133,7 +133,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers.ADUtilities
             }
         }
 
-        private IEnumerable<string> FilterADGroups(IEnumerable<string> adGroups)
+        public IEnumerable<string> FilterADGroups(IEnumerable<string> adGroups)
         {
             if (_loginConfiguration.IncludeWindowsGroups)
             {

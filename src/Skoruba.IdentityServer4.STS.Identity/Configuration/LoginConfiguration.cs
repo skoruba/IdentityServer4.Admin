@@ -16,5 +16,7 @@
         // if we load the groups from Windows, load only the groups under this OU.
         // It is possible to specify multiple OUs separating them by a pipe character ('|')
         public string WindowsGroupsOURoot { get; set; } = null;
+
+        public bool SyncUserProfileWithWindows { get; set; } = false;
     }
 }
