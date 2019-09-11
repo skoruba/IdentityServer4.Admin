@@ -19,17 +19,17 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers.ADUtilities
         //This parameter causes LogonUser to create a primary token.     
         const int LOGON32_LOGON_INTERACTIVE = 2;
 
-        protected readonly LoginConfiguration _loginConfiguration;
+        protected readonly WindowsAuthConfiguration _windowsAuthConfiguration;
 
         protected readonly List<string> _AllowedWindowsGroups = new List<string>();
         
-        public ADUtilities(LoginConfiguration loginConfiguration)
+        public ADUtilities(WindowsAuthConfiguration windowsAuthConfiguration)
         {
-            _loginConfiguration = loginConfiguration;
+            _windowsAuthConfiguration = windowsAuthConfiguration;
 
-            if (!string.IsNullOrEmpty(_loginConfiguration.WindowsGroupsOURoot))
+            if (!string.IsNullOrEmpty(_windowsAuthConfiguration.WindowsGroupsOURoot))
             {
-                foreach (var searchRoot in _loginConfiguration.WindowsGroupsOURoot.Split('|', StringSplitOptions.RemoveEmptyEntries))
+                foreach (var searchRoot in _windowsAuthConfiguration.WindowsGroupsOURoot.Split('|', StringSplitOptions.RemoveEmptyEntries))
                 {
                     try
                     {
@@ -48,7 +48,15 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers.ADUtilities
             var userIdParts = userId.Split('\\', StringSplitOptions.RemoveEmptyEntries);
             var domainName = userIdParts.Length > 1 ? userIdParts.First().ToLower() : string.Empty;
             var userName = userIdParts.Last().ToLower();
-            var searcher = new DirectorySearcher($"LDAP://{domainName}")
+
+            string ADSPath = $"LDAP://{domainName}";
+            DirectoryEntry entry = new DirectoryEntry(ADSPath);
+            if (!string.IsNullOrEmpty(_windowsAuthConfiguration.DomainUserName))
+            {
+                entry.Username = _windowsAuthConfiguration.DomainUserName;
+                entry.Password = _windowsAuthConfiguration.DomainUserPassword;
+            }
+            DirectorySearcher searcher = new DirectorySearcher(entry)
             {
                 Filter = $"(&(ObjectClass=person)(sAMAccountName={userName}))"
             };
@@ -69,7 +77,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers.ADUtilities
 
                 ret.Photo = $"data:image/png;base64,{Convert.ToBase64String(photoBytes)}";
 
-                if (_loginConfiguration.IncludeWindowsGroups)
+                if (_windowsAuthConfiguration.IncludeWindowsGroups)
                 {
                     foreach (string dn in result.Properties["memberOf"])
                     {
@@ -115,15 +123,25 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers.ADUtilities
 
         private IEnumerable<string> ReadADGroupsFromRoot(string searchroot)
         {
-            DirectorySearcher ds = new DirectorySearcher();
-            var adsearchRoot = new DirectoryEntry(string.Format("LDAP://{0}", searchroot));
-            ds.SearchRoot = adsearchRoot;
-            ds.SearchScope = SearchScope.Subtree;
-            ds.Filter = "(objectCategory=group)";
-            var sr = ds.FindAll();
-            foreach (var entry in sr)
+            string ADSPath = $"LDAP://{searchroot}";
+            DirectoryEntry entry = new DirectoryEntry(ADSPath);
+            if (!string.IsNullOrEmpty(_windowsAuthConfiguration.DomainUserName))
             {
-                if (entry is SearchResult res)
+                entry.Username = _windowsAuthConfiguration.DomainUserName;
+                entry.Password = _windowsAuthConfiguration.DomainUserPassword;
+            }
+
+            DirectorySearcher searcher = new DirectorySearcher(entry)
+            {
+                SearchScope = SearchScope.Subtree,
+                Filter = "(objectCategory=group)"
+            };
+            
+
+            var sr = searcher.FindAll();
+            foreach (var groupEntry in sr)
+            {
+                if (groupEntry is SearchResult res)
                 {
                     if (res.Properties.Contains("cn") && res.Properties["cn"].Count > 0)
                     {
@@ -135,11 +153,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers.ADUtilities
 
         public IEnumerable<string> FilterADGroups(IEnumerable<string> adGroups)
         {
-            if (_loginConfiguration.IncludeWindowsGroups)
+            if (_windowsAuthConfiguration.IncludeWindowsGroups)
             {
                 foreach (var group in adGroups)
                 {
-                    if (string.IsNullOrEmpty(_loginConfiguration.WindowsGroupsPrefix) || group.ToLower().StartsWith(_loginConfiguration.WindowsGroupsPrefix))
+                    if (string.IsNullOrEmpty(_windowsAuthConfiguration.WindowsGroupsPrefix) || group.ToLower().StartsWith(_windowsAuthConfiguration.WindowsGroupsPrefix))
                     {
                         if (_AllowedWindowsGroups == null || _AllowedWindowsGroups.Count == 0)
                             yield return group;

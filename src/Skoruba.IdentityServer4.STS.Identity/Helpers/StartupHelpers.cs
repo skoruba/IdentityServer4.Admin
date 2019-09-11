@@ -139,10 +139,12 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         {
             var loginConfiguration = GetLoginConfiguration(configuration);
             var registrationConfiguration = GetRegistrationConfiguration(configuration);
+            var windowsAuthConfiguration = GetWindowsAuthConfiguration(configuration);
 
             services
                 .AddSingleton(registrationConfiguration)
                 .AddSingleton(loginConfiguration)
+                .AddSingleton(windowsAuthConfiguration)
                 .AddSingleton<IADUtilities, ADUtilities.ADUtilities>()
                 .AddScoped<UserResolver<TUserIdentity>>()
                 .AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
@@ -181,6 +183,24 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             }
 
             return loginConfiguration;
+        }
+
+        /// <summary>
+        /// Get configuration for login
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        private static WindowsAuthConfiguration GetWindowsAuthConfiguration(IConfiguration configuration)
+        {
+            var windowsAuthConfiguration = configuration.GetSection(nameof(WindowsAuthConfiguration)).Get<WindowsAuthConfiguration>();
+
+            // Cannot load configuration - use default configuration values
+            if (windowsAuthConfiguration == null)
+            {
+                return new WindowsAuthConfiguration();
+            }
+
+            return windowsAuthConfiguration;
         }
 
         /// <summary>

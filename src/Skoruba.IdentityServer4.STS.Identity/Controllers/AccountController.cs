@@ -50,6 +50,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         private readonly IGenericControllerLocalizer<AccountController<TUser, TKey>> _localizer;
         private readonly LoginConfiguration _loginConfiguration;
         private readonly RegisterConfiguration _registerConfiguration;
+        private readonly WindowsAuthConfiguration _windowsAuthConfiguration;
         private readonly IADUtilities _ADUtilities;
         private readonly ILogger<AccountController<TUser, TKey>> _logger;
 
@@ -65,6 +66,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             IGenericControllerLocalizer<AccountController<TUser, TKey>> localizer,
             LoginConfiguration loginConfiguration,
             RegisterConfiguration registerConfiguration,
+            WindowsAuthConfiguration windowsAuthConfiguration,
             IADUtilities adUtilities,
             ILogger<AccountController<TUser, TKey>> logger)
         {
@@ -79,6 +81,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             _localizer = localizer;
             _loginConfiguration = loginConfiguration;
             _registerConfiguration = registerConfiguration;
+            _windowsAuthConfiguration = windowsAuthConfiguration;
             _ADUtilities = adUtilities;
             _logger = logger;
         }
@@ -93,7 +96,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl, bool forceLoginScreen = false)
         {
-            if (_loginConfiguration.AutomaticWindowsLogin && !forceLoginScreen && Request.IsFromLocalSubnet())
+            if (_windowsAuthConfiguration.AutomaticWindowsLogin && !forceLoginScreen && Request.IsFromLocalSubnet())
             {
                 return RedirectToAction("ExternalLogin", new { provider = AccountOptions.WindowsAuthenticationSchemeName, returnUrl });
             }
@@ -453,7 +456,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             if (result.Succeeded)
             {
                 if (info.LoginProvider == AccountOptions.WindowsAuthenticationSchemeName &&
-                    _loginConfiguration.SyncUserProfileWithWindows)
+                    _windowsAuthConfiguration.SyncUserProfileWithWindows)
                 {
                     await SyncUserProfileWithAD(info);
                 }
@@ -502,7 +505,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 Newtonsoft.Json.JsonConvert.SerializeObject(new { country = adInfo.Country, street_address = adInfo.StreetAddress }) :
                 null);
 
-            if (_loginConfiguration.IncludeWindowsGroups)
+            if (_windowsAuthConfiguration.IncludeWindowsGroups)
             {
                 // Remove the groups that the user doesn't belong to anymore.
                 // If a policy has been configured for choosing which AD groups should become user claims 
