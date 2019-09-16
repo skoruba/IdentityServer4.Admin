@@ -65,7 +65,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
             }
 
             // Add custom security headers
-            app.UseSecurityHeaders();
+            app.UseSecurityHeaders(Configuration);
 
             app.UseStaticFiles();
             app.UseIdentityServer();
