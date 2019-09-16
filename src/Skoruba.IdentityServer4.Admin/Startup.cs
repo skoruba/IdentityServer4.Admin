@@ -93,7 +93,7 @@ namespace Skoruba.IdentityServer4.Admin
             }
 
             // Add custom security headers
-            app.UseSecurityHeaders();
+            app.UseSecurityHeaders(Configuration);
 
             app.UseStaticFiles();
 

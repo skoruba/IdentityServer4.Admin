@@ -162,12 +162,22 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// Using of Forwarded Headers, Hsts, XXssProtection and Csp
         /// </summary>
         /// <param name="app"></param>
-        public static void UseSecurityHeaders(this IApplicationBuilder app)
+        public static void UseSecurityHeaders(this IApplicationBuilder app, IConfigurationRoot configurationRoot)
         {
-            app.UseForwardedHeaders(new ForwardedHeadersOptions()
+            var forwaredHeaderOptions = new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
+            };
+
+            //https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/proxy-load-balancer?view=aspnetcore-2.2#forward-the-scheme-for-linux-and-non-iis-reverse-proxies
+            if (configurationRoot.GetValue<bool>("ASPNETCORE_FORWARDEDHEADERS_ENABLED", false))
+            {
+                forwaredHeaderOptions.KnownNetworks.Clear();
+                forwaredHeaderOptions.KnownProxies.Clear();
+            }
+
+            app.UseForwardedHeaders(forwaredHeaderOptions);
+
             app.UseHsts(options => options.MaxAge(days: 365));
             app.UseXXssProtection(options => options.EnabledWithBlockMode());
             app.UseXContentTypeOptions();

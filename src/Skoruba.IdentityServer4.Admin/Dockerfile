@@ -16,4 +16,5 @@ RUN dotnet publish Skoruba.IdentityServer4.Admin.csproj -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
+ENV ASPNETCORE_FORWARDEDHEADERS_ENABLED=true
 ENTRYPOINT ["dotnet", "Skoruba.IdentityServer4.Admin.dll"]
