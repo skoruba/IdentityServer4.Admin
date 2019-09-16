@@ -32,7 +32,7 @@
         },
         getLanguage: function () {
             //Defaults to en if no UiCulture found.
-            var language = this.getUiCultureFromAspNetCoreCultureCookie() || 'en';
+            var language = adminDatePicker.getUiCultureFromAspNetCoreCultureCookie() || 'en';
             // bootstrap DatePicker supports Taiwanese chinese as well as Mainland. 
             // Defaults to Mainland as we currently have no way of specifying variants.
             if (language === 'zh') language = 'zh-CN';
@@ -42,7 +42,7 @@
             $('.datepicker').datepicker({
                 autoclose: true,
                 todayHighlight: true,
-                language: getLanguage()
+                language: adminDatePicker.getLanguage()
             });
         }
 
