@@ -21,19 +21,20 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// https://github.com/skoruba/IdentityServer4.Admin#ef-core--data-access
         /// </summary>
         /// <param name="host"></param>      
-        public static async Task EnsureSeedData<TIdentityServerDbContext, TIdentityDbContext, TPersistedGrantDbContext, TLogDbContext, TUser, TRole>(IWebHost host)
+        public static async Task EnsureSeedData<TIdentityServerDbContext, TIdentityDbContext, TPersistedGrantDbContext, TLogDbContext, TUser, TRole,TKey>(IWebHost host)
             where TIdentityServerDbContext : DbContext, IAdminConfigurationDbContext
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
-            where TUser : IdentityUser, new()
-            where TRole : IdentityRole, new()
+            where TUser : IdentityUser<TKey>, new()
+            where TRole : IdentityRole<TKey>, new()
+            where TKey : IEquatable<TKey>
         {
             using (var serviceScope = host.Services.CreateScope())
             {
                 var services = serviceScope.ServiceProvider;
                 await EnsureDatabasesMigrated<TIdentityDbContext, TIdentityServerDbContext, TPersistedGrantDbContext, TLogDbContext>(services);
-                await EnsureSeedData<TIdentityServerDbContext, TUser, TRole>(services);
+                await EnsureSeedData<TIdentityServerDbContext, TUser, TRole, TKey>(services);
             }
         }
 
@@ -67,10 +68,11 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             }
         }
 
-        public static async Task EnsureSeedData<TIdentityServerDbContext, TUser, TRole>(IServiceProvider serviceProvider)
+        public static async Task EnsureSeedData<TIdentityServerDbContext, TUser, TRole, TKey>(IServiceProvider serviceProvider)
         where TIdentityServerDbContext : DbContext, IAdminConfigurationDbContext
-        where TUser : IdentityUser, new()
-        where TRole : IdentityRole, new()
+            where TUser : IdentityUser<TKey>, new()
+            where TRole : IdentityRole<TKey>, new()
+            where TKey : IEquatable<TKey>
         {
             using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
@@ -80,17 +82,18 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 var rootConfiguration = scope.ServiceProvider.GetRequiredService<IRootConfiguration>();
 
                 await EnsureSeedIdentityServerData(context, rootConfiguration.AdminConfiguration);
-                await EnsureSeedIdentityData(userManager, roleManager);
+                await EnsureSeedIdentityData<TUser, TRole, TKey>(userManager, roleManager);
             }
         }
 
         /// <summary>
         /// Generate default admin user / role
         /// </summary>
-        private static async Task EnsureSeedIdentityData<TUser, TRole>(UserManager<TUser> userManager,
+        private static async Task EnsureSeedIdentityData<TUser, TRole,TKey>(UserManager<TUser> userManager,
             RoleManager<TRole> roleManager)
-            where TUser : IdentityUser, new()
-            where TRole : IdentityRole, new()
+            where TUser : IdentityUser<TKey>, new()
+            where TRole : IdentityRole<TKey>, new()
+            where TKey : IEquatable<TKey>
         {
             // Create admin role
             if (!await roleManager.RoleExistsAsync(AuthorizationConsts.AdministrationRole))

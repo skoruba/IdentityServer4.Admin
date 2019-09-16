@@ -12,7 +12,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 {
     public static class IdentityMock
     {
-        public static Faker<UserIdentityUserLogin> GetUserProvidersFaker(string key, string loginProvider, string userId)
+        public static Faker<UserIdentityUserLogin> GetUserProvidersFaker(string key, string loginProvider, long userId)
         {
             var userProvidersFaker = new Faker<UserIdentityUserLogin>()
                 .RuleFor(o => o.LoginProvider, f => loginProvider)
@@ -23,7 +23,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             return userProvidersFaker;
         }
 
-        public static UserIdentityUserLogin GenerateRandomUserProviders(string key, string loginProvider, string userId)
+        public static UserIdentityUserLogin GenerateRandomUserProviders(string key, string loginProvider, long userId)
         {
             var provider = GetUserProvidersFaker(key, loginProvider, userId).Generate();
 

@@ -16,8 +16,8 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.Interf
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
 {
-    public class IdentityRepository<TIdentityDbContext, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
-        : IIdentityRepository<TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
+    public class IdentityRepository<TIdentityDbContext, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
+        : IIdentityRepository<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
         where TIdentityDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
         where TUser : IdentityUser<TKey>
         where TRole : IdentityRole<TKey>
@@ -46,36 +46,36 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             Mapper = mapper;
         }
 
-        public virtual TUserKey ConvertUserKeyFromString(string id)
+        //public virtual TKey ConvertUserKeyFromString(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return default(TKey);
+        //    }
+        //    return (TKey)TypeDescriptor.GetConverter(typeof(TKey)).ConvertFromInvariantString(id);
+        //}
+
+        //public virtual TKey ConvertRoleKeyFromString(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return default(TKey);
+        //    }
+        //    return (TKey)TypeDescriptor.GetConverter(typeof(TKey)).ConvertFromInvariantString(id);
+        //}
+
+        public virtual Task<bool> ExistsUserAsync(TKey userId)
         {
-            if (id == null)
-            {
-                return default(TUserKey);
-            }
-            return (TUserKey)TypeDescriptor.GetConverter(typeof(TUserKey)).ConvertFromInvariantString(id);
+           // var id = ConvertUserKeyFromString(userId);
+
+            return UserManager.Users.AnyAsync(x => x.Id.Equals(userId));
         }
 
-        public virtual TRoleKey ConvertRoleKeyFromString(string id)
+        public virtual Task<bool> ExistsRoleAsync(TKey roleId)
         {
-            if (id == null)
-            {
-                return default(TRoleKey);
-            }
-            return (TRoleKey)TypeDescriptor.GetConverter(typeof(TRoleKey)).ConvertFromInvariantString(id);
-        }
+           // var id = ConvertRoleKeyFromString(roleId);
 
-        public virtual Task<bool> ExistsUserAsync(string userId)
-        {
-            var id = ConvertUserKeyFromString(userId);
-
-            return UserManager.Users.AnyAsync(x => x.Id.Equals(id));
-        }
-
-        public virtual Task<bool> ExistsRoleAsync(string roleId)
-        {
-            var id = ConvertRoleKeyFromString(roleId);
-
-            return RoleManager.Roles.AnyAsync(x => x.Id.Equals(id));
+            return RoleManager.Roles.AnyAsync(x => x.Id.Equals(roleId));
         }
 
         public virtual async Task<PagedList<TUser>> GetUsersAsync(string search, int page = 1, int pageSize = 10)
@@ -93,14 +93,14 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             return pagedList;
         }
 
-        public virtual async Task<PagedList<TUser>> GetRoleUsersAsync(string roleId, string search, int page = 1, int pageSize = 10)
+        public virtual async Task<PagedList<TUser>> GetRoleUsersAsync(TKey roleId, string search, int page = 1, int pageSize = 10)
         {
-            var id = ConvertRoleKeyFromString(roleId);
+            //var id = ConvertRoleKeyFromString(roleId);
             
             var pagedList = new PagedList<TUser>();
             var users = DbContext.Set<TUser>()
                 .Join(DbContext.Set<TUserRole>(), u => u.Id, ur => ur.UserId, (u, ur) => new {u, ur})
-                .Where(t => t.ur.RoleId.Equals(id))
+                .Where(t => t.ur.RoleId.Equals(roleId))
                 .WhereIf(!string.IsNullOrEmpty(search), t => t.u.UserName.Contains(search) || t.u.Email.Contains(search))
                 .Select(t => t.u);
 
@@ -161,9 +161,9 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             return await RoleManager.DeleteAsync(thisRole);
         }
 
-        public virtual Task<TUser> GetUserAsync(string userId)
+        public virtual Task<TUser> GetUserAsync(TKey userId)
         {
-            return UserManager.FindByIdAsync(userId);
+            return UserManager.FindByIdAsync(userId.ToString());
         }
 
         /// <summary>
@@ -187,22 +187,22 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             return (identityResult, user.Id);
         }
 
-        public virtual async Task<IdentityResult> CreateUserRoleAsync(string userId, string roleId)
+        public virtual async Task<IdentityResult> CreateUserRoleAsync(TKey userId, TKey roleId)
         {
-            var user = await UserManager.FindByIdAsync(userId);
-            var selectRole = await RoleManager.FindByIdAsync(roleId);
+            var user = await UserManager.FindByIdAsync(userId.ToString());
+            var selectRole = await RoleManager.FindByIdAsync(roleId.ToString());
 
             return await UserManager.AddToRoleAsync(user, selectRole.Name);
         }
 
-        public virtual async Task<PagedList<TRole>> GetUserRolesAsync(string userId, int page = 1, int pageSize = 10)
+        public virtual async Task<PagedList<TRole>> GetUserRolesAsync(TKey userId, int page = 1, int pageSize = 10)
         {
-            var id = ConvertUserKeyFromString(userId);
+           // var id = ConvertUserKeyFromString(userId);
 
             var pagedList = new PagedList<TRole>();
             var roles = from r in DbContext.Set<TRole>()
                         join ur in DbContext.Set<TUserRole>() on r.Id equals ur.RoleId
-                        where ur.UserId.Equals(id)
+                        where ur.UserId.Equals(userId)
                         select r;
 
             var userIdentityRoles = await roles.PageBy(x => x.Id, page, pageSize)
@@ -215,17 +215,17 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             return pagedList;
         }
 
-        public virtual async Task<IdentityResult> DeleteUserRoleAsync(string userId, string roleId)
+        public virtual async Task<IdentityResult> DeleteUserRoleAsync(TKey userId, TKey roleId)
         {
-            var role = await RoleManager.FindByIdAsync(roleId);
-            var user = await UserManager.FindByIdAsync(userId);
+            var role = await RoleManager.FindByIdAsync(roleId.ToString());
+            var user = await UserManager.FindByIdAsync(userId.ToString());
 
             return await UserManager.RemoveFromRoleAsync(user, role.Name);
         }
 
-        public virtual async Task<PagedList<TUserClaim>> GetUserClaimsAsync(string userId, int page, int pageSize)
+        public virtual async Task<PagedList<TUserClaim>> GetUserClaimsAsync(TKey userId, int page, int pageSize)
         {
-            var id = ConvertUserKeyFromString(userId);
+            var id = userId; //ConvertUserKeyFromString(userId);
             var pagedList = new PagedList<TUserClaim>();
 
             var claims = await DbContext.Set<TUserClaim>().Where(x => x.UserId.Equals(id))
@@ -239,9 +239,9 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             return pagedList;
         }
 
-        public virtual async Task<PagedList<TRoleClaim>> GetRoleClaimsAsync(string roleId, int page = 1, int pageSize = 10)
+        public virtual async Task<PagedList<TRoleClaim>> GetRoleClaimsAsync(TKey roleId, int page = 1, int pageSize = 10)
         {
-            var id = ConvertRoleKeyFromString(roleId);
+            var id = roleId;//ConvertRoleKeyFromString(roleId);
             var pagedList = new PagedList<TRoleClaim>();
             var claims = await DbContext.Set<TRoleClaim>().Where(x => x.RoleId.Equals(id))
                 .PageBy(x => x.Id, page, pageSize)
@@ -254,17 +254,17 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             return pagedList;
         }
 
-        public virtual Task<TUserClaim> GetUserClaimAsync(string userId, int claimId)
+        public virtual Task<TUserClaim> GetUserClaimAsync(TKey userId, int claimId)
         {
-            var userIdConverted = ConvertUserKeyFromString(userId);
+            var userIdConverted = userId;//ConvertUserKeyFromString(userId);
 
             return DbContext.Set<TUserClaim>().Where(x => x.UserId.Equals(userIdConverted) && x.Id == claimId)
                 .SingleOrDefaultAsync();
         }
 
-        public virtual Task<TRoleClaim> GetRoleClaimAsync(string roleId, int claimId)
+        public virtual Task<TRoleClaim> GetRoleClaimAsync(TKey roleId, int claimId)
         {
-            var roleIdConverted = ConvertRoleKeyFromString(roleId);
+            var roleIdConverted = roleId;// ConvertRoleKeyFromString(roleId);
 
             return DbContext.Set<TRoleClaim>().Where(x => x.RoleId.Equals(roleIdConverted) && x.Id == claimId)
                 .SingleOrDefaultAsync();
@@ -282,7 +282,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             return await RoleManager.AddClaimAsync(role, new Claim(claims.ClaimType, claims.ClaimValue));
         }
 
-        public virtual async Task<int> DeleteUserClaimsAsync(string userId, int claimId)
+        public virtual async Task<int> DeleteUserClaimsAsync(TKey userId, int claimId)
         {
             var userClaim = await DbContext.Set<TUserClaim>().Where(x => x.Id == claimId).SingleOrDefaultAsync();
 
@@ -291,7 +291,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             return await AutoSaveChangesAsync();
         }
 
-        public virtual async Task<int> DeleteRoleClaimsAsync(string roleId, int claimId)
+        public virtual async Task<int> DeleteRoleClaimsAsync(TKey roleId, int claimId)
         {
             var roleClaim = await DbContext.Set<TRoleClaim>().Where(x => x.Id == claimId).SingleOrDefaultAsync();
 
@@ -300,42 +300,42 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             return await AutoSaveChangesAsync();
         }
 
-        public virtual async Task<List<UserLoginInfo>> GetUserProvidersAsync(string userId)
+        public virtual async Task<List<UserLoginInfo>> GetUserProvidersAsync(TKey userId)
         {
-            var user = await UserManager.FindByIdAsync(userId);
+            var user = await UserManager.FindByIdAsync(userId.ToString());
             var userLoginInfos = await UserManager.GetLoginsAsync(user);
 
             return userLoginInfos.ToList();
         }
 
-        public virtual Task<TUserLogin> GetUserProviderAsync(string userId, string providerKey)
+        public virtual Task<TUserLogin> GetUserProviderAsync(TKey userId, string providerKey)
         {
-            var userIdConverted = ConvertUserKeyFromString(userId);
+            var userIdConverted = userId;// ConvertUserKeyFromString(userId);
 
             return DbContext.Set<TUserLogin>().Where(x => x.UserId.Equals(userIdConverted) && x.ProviderKey == providerKey)
                 .SingleOrDefaultAsync();
         }
 
-        public virtual async Task<IdentityResult> DeleteUserProvidersAsync(string userId, string providerKey, string loginProvider)
+        public virtual async Task<IdentityResult> DeleteUserProvidersAsync(TKey userId, string providerKey, string loginProvider)
         {
-            var userIdConverted = ConvertUserKeyFromString(userId);
+            var userIdConverted = userId;// ConvertUserKeyFromString(userId);
 
-            var user = await UserManager.FindByIdAsync(userId);
+            var user = await UserManager.FindByIdAsync(userId.ToString());
             var login = await DbContext.Set<TUserLogin>().Where(x => x.UserId.Equals(userIdConverted) && x.ProviderKey == providerKey && x.LoginProvider == loginProvider).SingleOrDefaultAsync();
             return await UserManager.RemoveLoginAsync(user, login.LoginProvider, login.ProviderKey);
         }
 
-        public virtual async Task<IdentityResult> UserChangePasswordAsync(string userId, string password)
+        public virtual async Task<IdentityResult> UserChangePasswordAsync(TKey userId, string password)
         {
-            var user = await UserManager.FindByIdAsync(userId);
+            var user = await UserManager.FindByIdAsync(userId.ToString());
             var token = await UserManager.GeneratePasswordResetTokenAsync(user);
 
             return await UserManager.ResetPasswordAsync(user, token, password);
         }
 
-        public virtual async Task<IdentityResult> DeleteUserAsync(string userId)
+        public virtual async Task<IdentityResult> DeleteUserAsync(TKey userId)
         {
-            var userIdentity = await UserManager.FindByIdAsync(userId);
+            var userIdentity = await UserManager.FindByIdAsync(userId.ToString());
 
             return await UserManager.DeleteAsync(userIdentity);
         }
