@@ -2,7 +2,7 @@
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity
 {
-	public class UserIdentityRole : IdentityRole
+	public class UserIdentityRole : IdentityRole<long>
 	{
 		
 	}
