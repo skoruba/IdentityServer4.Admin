@@ -1,0 +1,462 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AbsoluteRefreshTokenLifetime_Info" xml:space="preserve">
+    <value>刷新令牌的最長生命周期，以秒為單位。 預設為 2592000 秒/30 天</value>
+  </data>
+  <data name="AbsoluteRefreshTokenLifetime_Label" xml:space="preserve">
+    <value>絕對刷新令牌生命周期</value>
+  </data>
+  <data name="AccessTokenLifetime_Info" xml:space="preserve">
+    <value>訪問令牌 access_token 的生命周期（以秒為單位）（預設為 3600 秒/1 小時）</value>
+  </data>
+  <data name="AccessTokenLifetime_Label" xml:space="preserve">
+    <value>訪問令牌生命周期</value>
+  </data>
+  <data name="AccessTokenTypes_Info" xml:space="preserve">
+    <value>指定訪問令牌 access_token 是引用令牌还是自包含 JWT 令牌（預設為 Jwt）。</value>
+  </data>
+  <data name="AccessTokenTypes_Label" xml:space="preserve">
+    <value>訪問令牌類型</value>
+  </data>
+  <data name="AllowAccessTokensViaBrowser_Info" xml:space="preserve">
+    <value>指定是否允許此客戶端通過瀏覽器接收訪問令牌 access_token。 這對於强化允許多种回應類型的流是有用的（例如，通過禁止應該使用代碼身份令牌 id_token 的混合流客戶端來增加令牌回應類型並因此將令牌泄漏到瀏覽器。）</value>
+  </data>
+  <data name="AllowAccessTokensViaBrowser_Label" xml:space="preserve">
+    <value>允許通過瀏覽器訪問令牌</value>
+  </data>
+  <data name="AllowOfflineAccess_Info" xml:space="preserve">
+    <value>指定此客戶端是否可以請求刷新令牌（請求 offline_access 作用域）</value>
+  </data>
+  <data name="AllowOfflineAccess_Label" xml:space="preserve">
+    <value>允許離線訪問</value>
+  </data>
+  <data name="AllowPlainTextPkce_Info" xml:space="preserve">
+    <value>指定使用 PKCE 的客戶端是否可以使用純文本代碼諮詢（不推薦 - 預設為 false）</value>
+  </data>
+  <data name="AllowPlainTextPkce_Label" xml:space="preserve">
+    <value>允許純文本 Pkce</value>
+  </data>
+  <data name="AllowRememberConsent_Info" xml:space="preserve">
+    <value>指定用戶是否可以選擇存储同意决策。 預設為 true。</value>
+  </data>
+  <data name="AllowRememberConsent_Label" xml:space="preserve">
+    <value>允許記住同意</value>
+  </data>
+  <data name="AlwaysIncludeUserClaimsInIdToken_Info" xml:space="preserve">
+    <value>指定是否在身份令牌 id_token 中包含用戶聲明</value>
+  </data>
+  <data name="AlwaysIncludeUserClaimsInIdToken_Label" xml:space="preserve">
+    <value>始终在身份令牌中包含用戶聲明</value>
+  </data>
+  <data name="AlwaysSendClientClaims_Info" xml:space="preserve">
+    <value>如果設置，將為每个流發送客戶端聲明。 如果不是，僅用於客戶端憑證流（預設為 false）</value>
+  </data>
+  <data name="AlwaysSendClientClaims_Label" xml:space="preserve">
+    <value>始终發送客戶端聲明</value>
+  </data>
+  <data name="AuthorizationCodeLifetime_Info" xml:space="preserve">
+    <value>授權碼的生命周期（以秒為單位）（預設為 300 秒/5 分鍾）</value>
+  </data>
+  <data name="AuthorizationCodeLifetime_Label" xml:space="preserve">
+    <value>授權碼生命周期</value>
+  </data>
+  <data name="ClientId_Info" xml:space="preserve">
+    <value>客戶端的唯一標識</value>
+  </data>
+  <data name="ClientId_Label" xml:space="preserve">
+    <value>客戶端標識</value>
+  </data>
+  <data name="ClientName_Info" xml:space="preserve">
+    <value>客戶端顯示名稱（用於記錄和同意螢幕）</value>
+  </data>
+  <data name="ClientName_Label" xml:space="preserve">
+    <value>客戶端名稱</value>
+  </data>
+  <data name="ClientUri_Info" xml:space="preserve">
+    <value>有關客戶端的更多資訊的URI（在同意螢幕上使用）</value>
+  </data>
+  <data name="ClientUri_Label" xml:space="preserve">
+    <value>客戶端 Uri</value>
+  </data>
+  <data name="AllowedCorsOrigins_Info" xml:space="preserve">
+    <value>如果指定，將由預設 CORS 策略服務實現（In-Memory 和 EF）用於為 JavaScript 客戶端建構 CORS 策略。</value>
+  </data>
+  <data name="AllowedCorsOrigins_Label" xml:space="preserve">
+    <value>允許跨域來源</value>
+  </data>
+  <data name="AllowedGrantTypes_Info" xml:space="preserve">
+    <value>指定允許客戶端使用的授權類型。 使用 GrantTypes 類進行常見组合。 預設授權列表：隱式授權 - (implicit)，客戶端憑證授權 - (client_credentials)，授權碼授權 - (authorization_code)，混合授權 - (hybrid)，資源所有者密碼憑證授權 - (password)</value>
+  </data>
+  <data name="AllowedGrantTypes_Label" xml:space="preserve">
+    <value>允許的授權類型</value>
+  </data>
+  <data name="AllowedScopes_Info" xml:space="preserve">
+    <value>預設情况下，客戶端無權訪問任何資源 - 通過增加相應的作用域名稱來指定允許的資源</value>
+  </data>
+  <data name="AllowedScopes_Label" xml:space="preserve">
+    <value>允許的作用域</value>
+  </data>
+  <data name="Claims_Info" xml:space="preserve">
+    <value>允許客戶端的設置聲明（將包含在訪問令牌 access_token 中）。</value>
+  </data>
+  <data name="Claims_Label" xml:space="preserve">
+    <value>聲明</value>
+  </data>
+  <data name="ClientSecrets_Info" xml:space="preserve">
+    <value>客戶端金鑰列表 - 訪問令牌 access_token 端點的憑據。</value>
+  </data>
+  <data name="ClientSecrets_Label" xml:space="preserve">
+    <value>客戶端金鑰</value>
+  </data>
+  <data name="BackChannelLogoutSessionRequired_Info" xml:space="preserve">
+    <value>指定是否應在請求中將用戶的會話 ID 發送到 BackChannelLogoutUri。 預設為 true。</value>
+  </data>
+  <data name="BackChannelLogoutSessionRequired_Label" xml:space="preserve">
+    <value>需要後端通道登出會話</value>
+  </data>
+  <data name="BackChannelLogoutUri_Info" xml:space="preserve">
+    <value>指定客戶端的登出 URI，以用於基於 HTTP 的後端通道登出。 有關詳細資訊，請參閱 OIDC Back-Channel 規範。</value>
+  </data>
+  <data name="BackChannelLogoutUri_Label" xml:space="preserve">
+    <value>後端通道退出 Uri</value>
+  </data>
+  <data name="ClientClaimsPrefix_Info" xml:space="preserve">
+    <value>如果設置，客戶端聲明類型將以此為前綴。 預設為 client_。 目的是确保它们不會意外地與用戶聲明冲突。</value>
+  </data>
+  <data name="ClientClaimsPrefix_Label" xml:space="preserve">
+    <value>客戶端聲明前綴</value>
+  </data>
+  <data name="Description_Info" xml:space="preserve">
+    <value>客戶端描述</value>
+  </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="DeviceCodeLifetime_Info" xml:space="preserve">
+    <value>設備代碼的生命周期（以秒為單位）（預設為 300 秒/5 分鍾）</value>
+  </data>
+  <data name="DeviceCodeLifetime_Label" xml:space="preserve">
+    <value>設備代碼生命周期</value>
+  </data>
+  <data name="Enabled_Info" xml:space="preserve">
+    <value>指定是否啟用客戶端。 預設為 true。</value>
+  </data>
+  <data name="Enabled_Label" xml:space="preserve">
+    <value>啟用</value>
+  </data>
+  <data name="EnableLocalLogin_Info" xml:space="preserve">
+    <value>指定此客戶端是否可以使用本地帳戶或僅外部 IdPs。 預設為 true。</value>
+  </data>
+  <data name="EnableLocalLogin_Label" xml:space="preserve">
+    <value>啟用本地登入</value>
+  </data>
+  <data name="FrontChannelLogoutSessionRequired_Info" xml:space="preserve">
+    <value>指定是否應將用戶的會話標識發送到 FrontChannelLogoutUri。 預設為 true。</value>
+  </data>
+  <data name="FrontChannelLogoutSessionRequired_Label" xml:space="preserve">
+    <value>需要前端通道登出會話</value>
+  </data>
+  <data name="FrontChannelLogoutUri_Info" xml:space="preserve">
+    <value>指定客戶端的登出 URI，以用於基於 HTTP 的前端通道登出。 有關詳細資訊，請參閱 OIDC Front-Channel 規範。</value>
+  </data>
+  <data name="FrontChannelLogoutUri_Label" xml:space="preserve">
+    <value>前端通道登出 Uri</value>
+  </data>
+  <data name="HashType_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="HashType_Label" xml:space="preserve">
+    <value>哈希類型</value>
+  </data>
+  <data name="IdentityProviderRestrictions_Info" xml:space="preserve">
+    <value>指定可以與此客戶端一起使用的外部 IdPs（如果列表為空，則允許所有 IdPs）。 預設為空。</value>
+  </data>
+  <data name="IdentityProviderRestrictions_Label" xml:space="preserve">
+    <value>身份提供程式限制</value>
+  </data>
+  <data name="IdentityTokenLifetime_Info" xml:space="preserve">
+    <value>身份令牌 id_token 的生命周期（以秒為單位）（預設為 300 秒/5 分鍾）</value>
+  </data>
+  <data name="IdentityTokenLifetime_Label" xml:space="preserve">
+    <value>身份令牌生命周期</value>
+  </data>
+  <data name="IncludeJwtId_Info" xml:space="preserve">
+    <value>指定 JWT 訪問令牌 access_token 是否應具有嵌入的唯一標識（通過 jti 聲明）。</value>
+  </data>
+  <data name="IncludeJwtId_Label" xml:space="preserve">
+    <value>包括 Jwt 標識</value>
+  </data>
+  <data name="LogoUri_Info" xml:space="preserve">
+    <value>客戶端徽標 URI（在同意螢幕上使用）</value>
+  </data>
+  <data name="LogoUri_Label" xml:space="preserve">
+    <value>徽標 Uri</value>
+  </data>
+  <data name="PairWiseSubjectSalt_Info" xml:space="preserve">
+    <value>對於此客戶端的用戶，在配對主體標識生成中使用的鹽值。</value>
+  </data>
+  <data name="PairWiseSubjectSalt_Label" xml:space="preserve">
+    <value>配對主體鹽</value>
+  </data>
+  <data name="PostLogoutRedirectUris_Info" xml:space="preserve">
+    <value>指定在登出後重定向到允許的 URI</value>
+  </data>
+  <data name="PostLogoutRedirectUris_Label" xml:space="preserve">
+    <value>登出重定向 Uri</value>
+  </data>
+  <data name="Properties_Info" xml:space="preserve">
+    <value>字典可根據需要儲存任何自定義客戶端特定值。</value>
+  </data>
+  <data name="Properties_Label" xml:space="preserve">
+    <value>屬性</value>
+  </data>
+  <data name="PropertyKey_Info" xml:space="preserve">
+    <value>鍵值</value>
+  </data>
+  <data name="PropertyKey_Label" xml:space="preserve">
+    <value>鍵值</value>
+  </data>
+  <data name="PropertyValue_Info" xml:space="preserve">
+    <value>值</value>
+  </data>
+  <data name="PropertyValue_Label" xml:space="preserve">
+    <value>值</value>
+  </data>
+  <data name="ProtocolType_Info" xml:space="preserve">
+    <value>預設為 OpenID Connect 協議</value>
+  </data>
+  <data name="ProtocolType_Label" xml:space="preserve">
+    <value>協議類型</value>
+  </data>
+  <data name="RedirectUris_Info" xml:space="preserve">
+    <value>指定允許的 URI 以返回令牌或授權碼</value>
+  </data>
+  <data name="RedirectUris_Label" xml:space="preserve">
+    <value>重定向 Uri</value>
+  </data>
+  <data name="RefreshTokenExpiration_Info" xml:space="preserve">
+    <value>Absolute 絕對刷新令牌將在固定時間點到期（由“絕對刷新令牌生命周期”指定）
+
+Sliding 滾動刷新令牌，刷新令牌時生命周期將被更新（按“滾動刷新令牌生命周期”中指定的量）。生命周期不會超過“絕對刷新令牌生命周期”。</value>
+  </data>
+  <data name="RefreshTokenExpiration_Label" xml:space="preserve">
+    <value>刷新令牌過期</value>
+  </data>
+  <data name="RefreshTokenUsage.Info" xml:space="preserve">
+    <value>ReUse 刷新令牌時，令牌句柄將保持不变
+
+OneTime 刷新令牌時將更新令牌句柄</value>
+  </data>
+  <data name="RefreshTokenUsage.Label" xml:space="preserve">
+    <value>刷新令牌使用情况</value>
+  </data>
+  <data name="RefreshTokenUsage_Info" xml:space="preserve">
+    <value>ReUse 刷新令牌時，令牌句柄將保持不变
+
+OneTime 刷新令牌時將更新令牌句柄</value>
+  </data>
+  <data name="RefreshTokenUsage_Label" xml:space="preserve">
+    <value>刷新令牌使用情况</value>
+  </data>
+  <data name="RequireClientSecret_Info" xml:space="preserve">
+    <value>指定此客戶端是否需要金鑰才能從令牌端點請求令牌（預設為 true）</value>
+  </data>
+  <data name="RequireClientSecret_Label" xml:space="preserve">
+    <value>需要客戶端金鑰</value>
+  </data>
+  <data name="RequireConsent_Info" xml:space="preserve">
+    <value>指定是否需要同意螢幕。 預設為 true。</value>
+  </data>
+  <data name="RequireConsent_Label" xml:space="preserve">
+    <value>需要同意</value>
+  </data>
+  <data name="RequirePkce_Info" xml:space="preserve">
+    <value>指定使用基於授權代碼的授權類型的客戶端是否必須發送校验金鑰</value>
+  </data>
+  <data name="RequirePkce_Label" xml:space="preserve">
+    <value>需要 Pkce</value>
+  </data>
+  <data name="RoleNormalizedName_Info" xml:space="preserve">
+    <value>規範化角色名稱</value>
+  </data>
+  <data name="RoleNormalizedName_Label" xml:space="preserve">
+    <value>規範化名稱</value>
+  </data>
+  <data name="SecretType_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SecretType_Label" xml:space="preserve">
+    <value>金鑰類型</value>
+  </data>
+  <data name="SecretValue_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SecretValue_Label" xml:space="preserve">
+    <value>金鑰值</value>
+  </data>
+  <data name="SlidingRefreshTokenLifetime_Info" xml:space="preserve">
+    <value>滾動刷新生命周期是多少秒鍾刷新令牌。 預設為 1296000 秒/15 天</value>
+  </data>
+  <data name="SlidingRefreshTokenLifetime_Label" xml:space="preserve">
+    <value>滾動刷新令牌生命周期</value>
+  </data>
+  <data name="Type_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Type_Label" xml:space="preserve">
+    <value>聲明類型</value>
+  </data>
+  <data name="UpdateAccessTokenClaimsOnRefresh_Info" xml:space="preserve">
+    <value>獲取或設置一个值，該值指示是否應在刷新令牌請求上更新訪問令牌 access_token（及其聲明）。</value>
+  </data>
+  <data name="UpdateAccessTokenClaimsOnRefresh_Label" xml:space="preserve">
+    <value>刷新時更新訪問令牌聲明</value>
+  </data>
+  <data name="UserCodeType_Info" xml:space="preserve">
+    <value>指定用於客戶端的用戶代碼的類型。 否則回落到預設值。</value>
+  </data>
+  <data name="UserCodeType_Label" xml:space="preserve">
+    <value>用戶代碼類型</value>
+  </data>
+  <data name="UserSsoLifetime_Info" xml:space="preserve">
+    <value>自上次用戶進行身份驗證以來的最長持續時間（以秒為單位）。 預設為 null</value>
+  </data>
+  <data name="UserSsoLifetime_Label" xml:space="preserve">
+    <value>用戶 SSO 生命周期</value>
+  </data>
+  <data name="Value_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Value_Label" xml:space="preserve">
+    <value>聲明值</value>
+  </data>
+  <data name="Expiration_Info" xml:space="preserve">
+    <value>到期</value>
+  </data>
+  <data name="Expiration_Label" xml:space="preserve">
+    <value>到期</value>
+  </data>
+  <data name="SecretDescription_Info" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="SecretDescription_Label" xml:space="preserve">
+    <value>描述</value>
+  </data>
+</root>
