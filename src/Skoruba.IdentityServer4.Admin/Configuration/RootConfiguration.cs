@@ -5,9 +5,9 @@ namespace Skoruba.IdentityServer4.Admin.Configuration
 {
     public class RootConfiguration : IRootConfiguration
     {
-        public IAdminConfiguration AdminConfiguration { get; set; }
+        public IAdminAppConfiguration AdminConfiguration { get; set; }
 
-        public RootConfiguration(IOptions<AdminConfiguration> adminConfiguration)
+        public RootConfiguration(IOptions<AdminAppConfiguration> adminConfiguration)
         {
             AdminConfiguration = adminConfiguration.Value;
         }

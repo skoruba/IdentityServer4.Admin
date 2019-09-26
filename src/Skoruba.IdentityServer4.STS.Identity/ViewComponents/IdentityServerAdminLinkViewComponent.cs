@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Skoruba.IdentityServer4.STS.Identity.Configuration.Intefaces;
+using Skoruba.IdentityServer4.Shared.Configuration.Interfaces;
 
 namespace Skoruba.IdentityServer4.STS.Identity.ViewComponents
 {
@@ -14,7 +14,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            var identityAdminUrl = _configuration.AdminConfiguration.IdentityAdminBaseUrl;
+            var identityAdminUrl = _configuration.AdminAppConfiguration.IdentityAdminBaseUrl;
 
             return View(model: identityAdminUrl);
         }

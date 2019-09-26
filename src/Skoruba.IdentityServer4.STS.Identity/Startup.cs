@@ -1,17 +1,19 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
+using Skoruba.IdentityServer4.Shared.Configuration.Interfaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 
 namespace Skoruba.IdentityServer4.STS.Identity
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
+        public IConfigurationRoot Configuration { get; }
         public IHostingEnvironment Environment { get; }
         public ILogger Logger { get; set; }
 
@@ -36,6 +38,11 @@ namespace Skoruba.IdentityServer4.STS.Identity
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureRootConfiguration(Configuration);
+            // Get Configuration
+            var rootConfiguration = services.BuildServiceProvider().GetService<IRootConfiguration>();
+
+            // Add DbContexts for Asp.Net Core Identity, Logging and IdentityServer - Configuration store and Operational store
+            services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>(Environment, Configuration);
 
             // Add DbContext for Asp.Net Core Identity
             services.AddIdentityDbContext<AdminIdentityDbContext>(Configuration, Environment);
@@ -45,6 +52,9 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
             // Add services for authentication, including Identity model, IdentityServer4 and external providers
             services.AddAuthenticationServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Environment, Configuration, Logger);
+
+            // Add all dependencies for IdentityServer Admin
+            services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
 
             // Add all dependencies for Asp.Net Core Identity in MVC - these dependencies are injected into generic Controllers
             // Including settings for MVC and Localization

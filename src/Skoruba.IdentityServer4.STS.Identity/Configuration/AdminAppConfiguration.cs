@@ -2,7 +2,7 @@
 
 namespace Skoruba.IdentityServer4.STS.Identity.Configuration
 {
-    public class AdminConfiguration : IAdminConfiguration
+    public class AdminAppConfiguration : IAdminAppConfiguration
     {
         public string IdentityAdminBaseUrl { get; set; } = "http://localhost:9000";
     }

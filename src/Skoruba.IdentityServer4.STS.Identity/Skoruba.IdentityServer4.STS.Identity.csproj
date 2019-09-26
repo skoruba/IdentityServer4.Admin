@@ -6,6 +6,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Configuration\AdminAppConfiguration.cs" />
+	  <Compile Remove="Configuration\Constants\AuthorizationConsts.cs" />
+	  <Compile Remove="Configuration\Constants\ConfigurationConsts.cs" />
+	  <Compile Remove="Configuration\Intefaces\IAdminAppConfiguration.cs" />
+	  <Compile Remove="Configuration\Intefaces\IRegisterConfiguration.cs" />
+	  <Compile Remove="Configuration\Intefaces\IRootConfiguration.cs" />
+	  <Compile Remove="Configuration\RegisterConfiguration.cs" />
+	  <Compile Remove="Configuration\RootConfiguration.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="AspNet.Security.OAuth.GitHub" Version="2.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.App" />
 		<PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
@@ -20,9 +31,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\IdentityServer4.Shared\Skoruba.IdentityServer4.Shared.csproj" />
+		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.BusinessLogic\Skoruba.IdentityServer4.Admin.BusinessLogic.csproj" />
 		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.Identity\Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj" />
 		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.Shared\Skoruba.IdentityServer4.Admin.EntityFramework.Shared.csproj" />
 		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.IdentityServer4.Admin.EntityFramework.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Configuration\Intefaces\" />
 	</ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
-﻿namespace Skoruba.IdentityServer4.Admin.Configuration.Interfaces
+﻿namespace Skoruba.IdentityServer4.Shared.Configuration.Interfaces
 {
-    public interface IAdminConfiguration
+    public interface IAdminAppConfiguration
     {
         string IdentityAdminRedirectUri { get; }
         string IdentityServerBaseUrl { get; }

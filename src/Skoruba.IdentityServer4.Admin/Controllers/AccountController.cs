@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Skoruba.IdentityServer4.Admin.Configuration.Constants;
-using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
+using Skoruba.IdentityServer4.Shared.Configuration.Constants;
+using Skoruba.IdentityServer4.Shared.Configuration.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.Controllers
 {
@@ -20,7 +20,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         public IActionResult AccessDenied()
         {
-            ViewData["IdentityServerBaseUrl"] = _rootConfiguration.AdminConfiguration.IdentityServerBaseUrl;
+            ViewData["IdentityServerBaseUrl"] = _rootConfiguration.AdminAppConfiguration.IdentityServerBaseUrl;
 
             return View();
         }

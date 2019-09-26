@@ -2,6 +2,6 @@
 {
     public interface IRootConfiguration
     {
-        IAdminConfiguration AdminConfiguration { get; }
+        IAdminAppConfiguration AdminConfiguration { get; }
     }
 }

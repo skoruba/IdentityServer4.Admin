@@ -7,7 +7,7 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Grant;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Helpers;
-using Skoruba.IdentityServer4.Admin.Configuration.Constants;
+using Skoruba.IdentityServer4.Shared.Configuration.Constants;
 
 namespace Skoruba.IdentityServer4.Admin.Controllers
 {

@@ -31,10 +31,11 @@ using Skoruba.IdentityServer4.Admin.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Middlewares;
 using Skoruba.IdentityServer4.Admin.Configuration;
 using Skoruba.IdentityServer4.Admin.Configuration.ApplicationParts;
-using Skoruba.IdentityServer4.Admin.Configuration.Constants;
-using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.Helpers.Localization;
+using Skoruba.IdentityServer4.Shared.Configuration.Constants;
+using Skoruba.IdentityServer4.Shared.Configuration.Interfaces;
+using Skoruba.IdentityServer4.Shared.Configuration;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -390,7 +391,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <param name="services"></param>
         /// <param name="hostingEnvironment"></param>
         /// <param name="adminConfiguration"></param>
-        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IAdminConfiguration adminConfiguration)
+        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IAdminAppConfiguration adminConfiguration)
             where TContext : DbContext where TUserIdentity : class where TUserIdentityRole : class
         {
             services.AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
@@ -481,11 +482,11 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <param name="services"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public static IServiceCollection ConfigureRootConfiguration(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection ConfigureAdminRootConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddOptions();
 
-            services.Configure<AdminConfiguration>(configuration.GetSection(ConfigurationConsts.AdminConfigurationKey));
+            services.Configure<AdminAppConfiguration>(configuration.GetSection(ConfigurationConsts.AdminConfigurationKey));
 
             services.TryAddSingleton<IRootConfiguration, RootConfiguration>();
 
@@ -500,7 +501,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             return Task.FromResult(0);
         }
 
-        private static Task OnRedirectToIdentityProvider(RedirectContext n, IAdminConfiguration adminConfiguration)
+        private static Task OnRedirectToIdentityProvider(RedirectContext n, IAdminAppConfiguration adminConfiguration)
         {
             n.ProtocolMessage.RedirectUri = adminConfiguration.IdentityAdminRedirectUri;
 

@@ -1,4 +1,4 @@
-﻿namespace Skoruba.IdentityServer4.STS.Identity.Configuration.Intefaces
+﻿namespace Skoruba.IdentityServer4.Admin.Configuration.Intefaces
 {
     public interface IRegisterConfiguration
     {

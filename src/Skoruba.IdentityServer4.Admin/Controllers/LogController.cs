@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Log;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
-using Skoruba.IdentityServer4.Admin.Configuration.Constants;
+using Skoruba.IdentityServer4.Shared.Configuration.Constants;
 
 namespace Skoruba.IdentityServer4.Admin.Controllers
 {

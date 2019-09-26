@@ -1,9 +1,10 @@
-﻿using Skoruba.IdentityServer4.Admin.Configuration.Constants;
-using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
+﻿
+using Skoruba.IdentityServer4.Shared.Configuration.Constants;
+using Skoruba.IdentityServer4.Shared.Configuration.Interfaces;
 
-namespace Skoruba.IdentityServer4.Admin.Configuration
+namespace Skoruba.IdentityServer4.Shared.Configuration
 {
-    public class AdminConfiguration : IAdminConfiguration
+    public class AdminAppConfiguration : IAdminAppConfiguration
     {
         public string IdentityAdminBaseUrl { get; set; } = "http://localhost:9000";
         public string IdentityAdminRedirectUri { get; set; } = "http://localhost:9000/signin-oidc";

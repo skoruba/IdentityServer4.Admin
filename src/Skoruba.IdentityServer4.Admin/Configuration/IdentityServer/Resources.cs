@@ -17,7 +17,7 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.IdentityServer
             };
         }
 
-        public static IEnumerable<ApiResource> GetApiResources(IAdminConfiguration adminConfiguration)
+        public static IEnumerable<ApiResource> GetApiResources(IAdminAppConfiguration adminConfiguration)
         {
             return new[]
             {

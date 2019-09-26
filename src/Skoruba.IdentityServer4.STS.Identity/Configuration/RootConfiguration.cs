@@ -5,13 +5,13 @@ namespace Skoruba.IdentityServer4.STS.Identity.Configuration
 {
     public class RootConfiguration : IRootConfiguration
     {      
-        public IAdminConfiguration AdminConfiguration { get; set; }
+        public IAdminAppConfiguration AdminAppConfiguration { get; set; }
         public IRegisterConfiguration RegisterConfiguration { get; }
 
-        public RootConfiguration(IOptions<AdminConfiguration> adminConfiguration, IOptions<RegisterConfiguration> registerConfiguration)
+        public RootConfiguration(IOptions<AdminAppConfiguration> adminConfiguration, IOptions<RegisterConfiguration> registerConfiguration)
         {
             RegisterConfiguration = registerConfiguration.Value;
-            AdminConfiguration = adminConfiguration.Value;
+            AdminAppConfiguration = adminConfiguration.Value;
         }
     }
 }

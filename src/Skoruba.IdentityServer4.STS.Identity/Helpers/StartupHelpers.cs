@@ -2,6 +2,8 @@
 using System.Globalization;
 using System.Reflection;
 using IdentityServer4.EntityFramework.Interfaces;
+using IdentityServer4.EntityFramework.Options;
+using IdentityServer4.EntityFramework.Storage;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,10 +21,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using Serilog;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
+using Skoruba.IdentityServer4.Shared.Configuration;
+using Skoruba.IdentityServer4.Shared.Configuration.Constants;
+using Skoruba.IdentityServer4.Shared.Configuration.Interfaces;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.ApplicationParts;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
-using Skoruba.IdentityServer4.STS.Identity.Configuration.Intefaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 using Skoruba.IdentityServer4.STS.Identity.Services;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
@@ -209,7 +214,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         {
             services.AddOptions();
 
-            services.Configure<AdminConfiguration>(configuration.GetSection(ConfigurationConsts.AdminConfigurationKey));
+            services.Configure<AdminAppConfiguration>(configuration.GetSection(ConfigurationConsts.AdminConfigurationKey));
             services.Configure<RegisterConfiguration>(configuration.GetSection(ConfigurationConsts.RegisterConfiguration));
 
             services.TryAddSingleton<IRootConfiguration, RootConfiguration>();
@@ -430,6 +435,177 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 options.AddPolicy(AuthorizationConsts.AdministrationPolicy,
                     policy => policy.RequireRole(AuthorizationConsts.AdministrationRole));
             });
+        }
+
+
+
+
+
+
+
+        /// <summary>
+        /// Register shared DbContext for IdentityServer ConfigurationStore and PersistedGrants, Identity and Logging
+        /// Configure the connection string in AppSettings.json - use AdminConnection key
+        /// </summary>
+        /// <typeparam name="TContext"></typeparam>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        public static void RegisterDbContexts<TContext>(this IServiceCollection services, IConfigurationRoot configuration)
+            where TContext : DbContext
+        {
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
+            var operationalStoreOptions = new OperationalStoreOptions();
+            services.AddSingleton(operationalStoreOptions);
+
+            var storeOptions = new ConfigurationStoreOptions();
+            services.AddSingleton(storeOptions);
+
+            services.AddDbContext<TContext>(options => options.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey), optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
+        }
+
+        /// <summary>
+        /// Register shared in Memory DbContext for IdentityServer ConfigurationStore and PersistedGrants, Identity and Logging
+        /// For testing purpose only
+        /// </summary>
+        /// <typeparam name="TContext"></typeparam>
+        /// <param name="services"></param>
+        public static void RegisterDbContextsStaging<TContext>(this IServiceCollection services)
+            where TContext : DbContext
+        {
+            var databaseName = Guid.NewGuid().ToString();
+
+            var operationalStoreOptions = new OperationalStoreOptions();
+            services.AddSingleton(operationalStoreOptions);
+
+            var storeOptions = new ConfigurationStoreOptions();
+            services.AddSingleton(storeOptions);
+
+            services.AddDbContext<TContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(databaseName));
+        }
+
+        /// <summary>
+        /// Register DbContexts for IdentityServer ConfigurationStore and PersistedGrants, Identity and Logging
+        /// Configure the connection strings in AppSettings.json
+        /// </summary>
+        /// <typeparam name="TConfigurationDbContext"></typeparam>
+        /// <typeparam name="TPersistedGrantDbContext"></typeparam>
+        /// <typeparam name="TLogDbContext"></typeparam>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        public static void RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(this IServiceCollection services, IConfigurationRoot configuration)
+            where TIdentityDbContext : DbContext
+            where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
+            where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
+            where TLogDbContext : DbContext, IAdminLogDbContext
+        {
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
+            // Config DB for identity
+            services.AddDbContext<TIdentityDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey),
+                    sql => sql.MigrationsAssembly(migrationsAssembly)));
+
+            // Config DB from existing connection
+            services.AddConfigurationDbContext<TConfigurationDbContext>(options =>
+            {
+                options.ConfigureDbContext = b =>
+                    b.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey),
+                        sql => sql.MigrationsAssembly(migrationsAssembly));
+            });
+
+            // Operational DB from existing connection
+            services.AddOperationalDbContext<TPersistedGrantDbContext>(options =>
+            {
+                options.ConfigureDbContext = b =>
+                    b.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey),
+                        sql => sql.MigrationsAssembly(migrationsAssembly));
+            });
+
+            // Log DB from existing connection
+            services.AddDbContext<TLogDbContext>(options =>
+                options.UseSqlServer(
+                    configuration.GetConnectionString(ConfigurationConsts.AdminLogDbConnectionStringKey),
+                    optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
+        }
+
+        /// <summary>
+        /// Register in memory DbContexts for IdentityServer ConfigurationStore and PersistedGrants, Identity and Logging
+        /// For testing purpose only
+        /// </summary>
+        /// <typeparam name="TConfigurationDbContext"></typeparam>
+        /// <typeparam name="TPersistedGrantDbContext"></typeparam>
+        /// <typeparam name="TLogDbContext"></typeparam>
+        /// <typeparam name="TIdentityDbContext"></typeparam>
+        /// <param name="services"></param>
+        public static void RegisterDbContextsStaging<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(this IServiceCollection services)
+            where TIdentityDbContext : DbContext
+            where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
+            where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
+            where TLogDbContext : DbContext, IAdminLogDbContext
+        {
+            var persistedGrantsDatabaseName = Guid.NewGuid().ToString();
+            var configurationDatabaseName = Guid.NewGuid().ToString();
+            var logDatabaseName = Guid.NewGuid().ToString();
+            var identityDatabaseName = Guid.NewGuid().ToString();
+
+            var operationalStoreOptions = new OperationalStoreOptions();
+            services.AddSingleton(operationalStoreOptions);
+
+            var storeOptions = new ConfigurationStoreOptions();
+            services.AddSingleton(storeOptions);
+
+            services.AddDbContext<TIdentityDbContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(identityDatabaseName));
+            services.AddDbContext<TPersistedGrantDbContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(persistedGrantsDatabaseName));
+            services.AddDbContext<TConfigurationDbContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(configurationDatabaseName));
+            services.AddDbContext<TLogDbContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(logDatabaseName));
+        }
+
+
+        /// <summary>
+        /// Register shared DbContext
+        /// </summary>
+        /// <typeparam name="TContext"></typeparam>
+        /// <param name="services"></param>
+        /// <param name="hostingEnvironment"></param>
+        /// <param name="configuration"></param>
+        public static void AddDbContexts<TContext>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfigurationRoot configuration)
+        where TContext : DbContext
+        {
+            if (hostingEnvironment.IsStaging())
+            {
+                services.RegisterDbContextsStaging<TContext>();
+            }
+            else
+            {
+                services.RegisterDbContexts<TContext>(configuration);
+            }
+        }
+
+        /// <summary>
+        /// Register DbContexts
+        /// </summary>
+        /// <typeparam name="TConfigurationDbContext"></typeparam>
+        /// <typeparam name="TPersistedGrantDbContext"></typeparam>
+        /// <typeparam name="TLogDbContext"></typeparam>
+        /// <typeparam name="TIdentityDbContext"></typeparam>
+        /// <param name="services"></param>
+        /// <param name="hostingEnvironment"></param>
+        /// <param name="configuration"></param>
+        public static void AddDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfigurationRoot configuration)
+            where TIdentityDbContext : DbContext
+            where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
+            where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
+            where TLogDbContext : DbContext, IAdminLogDbContext
+        {
+            if (hostingEnvironment.IsStaging())
+            {
+                services.RegisterDbContextsStaging<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>();
+            }
+            else
+            {
+                services.RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(configuration);
+            }
         }
     }
 }

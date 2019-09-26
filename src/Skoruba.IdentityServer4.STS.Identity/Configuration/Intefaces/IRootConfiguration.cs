@@ -2,7 +2,7 @@
 {
     public interface IRootConfiguration
     {
-        IAdminConfiguration AdminConfiguration { get; }
+        IAdminAppConfiguration AdminAppConfiguration { get; }
 
         IRegisterConfiguration RegisterConfiguration { get; }
     }
