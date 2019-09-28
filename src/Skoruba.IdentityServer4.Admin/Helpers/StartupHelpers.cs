@@ -443,7 +443,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 #if DEBUG
                         options.RequireHttpsMetadata = false;
 #else
-                        options.RequireHttpsMetadata = true;
+                        options.RequireHttpsMetadata = adminConfiguration.IdentityRequireHttpsMetadata;
 #endif
                         options.ClientId = adminConfiguration.ClientId;
                         options.ClientSecret = adminConfiguration.ClientSecret;

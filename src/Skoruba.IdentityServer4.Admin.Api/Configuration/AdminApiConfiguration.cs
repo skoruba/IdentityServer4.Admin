@@ -9,5 +9,6 @@ namespace Skoruba.IdentityServer4.Admin.Api.Configuration
         public string OidcSwaggerUIClientId { get; set; } = AuthorizationConsts.OidcSwaggerUIClientId;
 
         public string OidcApiName { get; set; } = AuthorizationConsts.OidcApiName;
+        public bool IdentityRequireHttpsMetadata { get; set; } = true;
     }
 }

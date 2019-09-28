@@ -4,6 +4,9 @@
 		<TargetFramework>netcoreapp2.2</TargetFramework>
 		<LangVersion>latest</LangVersion>
 		<UserSecretsId>8fe260ca-ef4c-4fa3-9364-029146f8d339</UserSecretsId>
+		<DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileContext>..\..</DockerfileContext>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -13,6 +16,7 @@
 		<PackageReference Include="IdentityServer4.EntityFramework" Version="2.5.3" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
 		<PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
 		<PackageReference Include="NWebsec.AspNetCore.Middleware" Version="2.0.0" />
 		<PackageReference Include="Serilog.AspNetCore" Version="3.0.0" />
