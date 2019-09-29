@@ -11,10 +11,10 @@ services:
     container_name: skoruba-identityserver4-admin
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:ConfigurationDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
-      - "ConnectionStrings:PersistedGrantDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
-      - "ConnectionStrings:IdentityDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
-      - "ConnectionStrings:AdminLogDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
+      - "ConnectionStrings:ConfigurationDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+      - "ConnectionStrings:PersistedGrantDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+      - "ConnectionStrings:IdentityDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+      - "ConnectionStrings:AdminLogDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
       - "AdminConfiguration:IdentityAdminBaseUrl=http://127.0.0.1.xip.io:9000"
       - "AdminConfiguration:IdentityAdminRedirectUri=http://127.0.0.1.xip.io:9000/signin-oidc"
       - "AdminConfiguration:IdentityServerBaseUrl=http://127.0.0.1.xip.io"
@@ -34,10 +34,10 @@ services:
     environment:
       - "AdminApiConfiguration:IdentityRequireHttpsMetadata=false"
       - "AdminApiConfiguration:IdentityServerBaseUrl=http://127.0.0.1.xip.io:5000"
-      - "ConnectionStrings:ConfigurationDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
-      - "ConnectionStrings:PersistedGrantDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
-      - "ConnectionStrings:IdentityDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
-      - "ConnectionStrings:AdminLogDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
+      - "ConnectionStrings:ConfigurationDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+      - "ConnectionStrings:PersistedGrantDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+      - "ConnectionStrings:IdentityDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+      - "ConnectionStrings:AdminLogDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
     container_name: skoruba-identityserver4-admin-api
 
   skoruba.identityserver4.sts.identity:
@@ -50,9 +50,9 @@ services:
     container_name: skoruba-identityserver4-sts-identity
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:ConfigurationDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
-      - "ConnectionStrings:PersistedGrantDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
-      - "ConnectionStrings:IdentityDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true"
+      - "ConnectionStrings:ConfigurationDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+      - "ConnectionStrings:PersistedGrantDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+      - "ConnectionStrings:IdentityDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
       - "AdminConfiguration:IdentityAdminBaseUrl=http://127.0.0.1.xip.io:9000"
     depends_on:
       - db
@@ -66,7 +66,7 @@ services:
       - 1433
     container_name: skoruba-identityserver4-db
     environment:
-      SA_PASSWORD: "Password_123"
+      SA_PASSWORD: "${DB_PASSWORD:-Password_123}"
       ACCEPT_EULA: "Y"
     volumes:
       - dbdata:/var/opt/mssql
