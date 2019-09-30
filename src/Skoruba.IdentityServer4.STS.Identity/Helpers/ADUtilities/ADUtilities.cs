@@ -45,17 +45,28 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers.ADUtilities
         public ADProperties GetUserInfoFromAD(string userId)
         {
             var ret = new ADProperties();
-            var userIdParts = userId.Split('\\', StringSplitOptions.RemoveEmptyEntries);
-            var domainName = userIdParts.Length > 1 ? userIdParts.First().ToLower() : string.Empty;
-            var userName = userIdParts.Last().ToLower();
+            
+            string OURoot;
+            if (string.IsNullOrEmpty(_windowsAuthConfiguration.WindowsUsersOURoot))
+            {
+                DirectoryEntry rootDSE = new DirectoryEntry("LDAP://rootDSE");
+                OURoot = rootDSE.Properties["defaultNamingContext"].Value.ToString();                
+            }
+            else
+            {
+                OURoot = _windowsAuthConfiguration.WindowsUsersOURoot;
+            }
 
-            string ADSPath = $"LDAP://{domainName}";
+            string ADSPath = $"LDAP://{OURoot}";
             DirectoryEntry entry = new DirectoryEntry(ADSPath);
             if (!string.IsNullOrEmpty(_windowsAuthConfiguration.DomainUserName))
             {
                 entry.Username = _windowsAuthConfiguration.DomainUserName;
                 entry.Password = _windowsAuthConfiguration.DomainUserPassword;
             }
+
+            var userName = userId.Split('\\', StringSplitOptions.RemoveEmptyEntries).Last().ToLower();
+
             DirectorySearcher searcher = new DirectorySearcher(entry)
             {
                 Filter = $"(&(ObjectClass=person)(sAMAccountName={userName}))"

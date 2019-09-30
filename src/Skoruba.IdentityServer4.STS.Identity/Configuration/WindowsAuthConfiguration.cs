@@ -10,6 +10,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Configuration
         // When integrated Windows authentication is enabled, automatically prefer it to login when request is coming from same domain
         public bool AutomaticWindowsLogin { get; set; } = false;
 
+        // If specified, users will be searched under this OU, otherwise the RootDSE will be used
+        public string WindowsUsersOURoot { get; set; } = null;
+
         // if user uses Windows authentication, should we load the groups from Windows
         public bool IncludeWindowsGroups { get; set; } = false;
 
