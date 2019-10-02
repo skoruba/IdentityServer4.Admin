@@ -8,23 +8,17 @@
 
 	<ItemGroup>
 	  <Compile Remove="Configuration\Constants\**" />
-	  <Compile Remove="Configuration\IdentityServer\**" />
 	  <Compile Remove="Configuration\Identity\**" />
 	  <Content Remove="Configuration\Constants\**" />
-	  <Content Remove="Configuration\IdentityServer\**" />
 	  <Content Remove="Configuration\Identity\**" />
 	  <EmbeddedResource Remove="Configuration\Constants\**" />
-	  <EmbeddedResource Remove="Configuration\IdentityServer\**" />
 	  <EmbeddedResource Remove="Configuration\Identity\**" />
 	  <None Remove="Configuration\Constants\**" />
-	  <None Remove="Configuration\IdentityServer\**" />
 	  <None Remove="Configuration\Identity\**" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Compile Remove="Configuration\AdminAppConfiguration.cs" />
-	  <Compile Remove="Configuration\Interfaces\IAdminAppConfiguration.cs" />
-	  <Compile Remove="Configuration\Interfaces\IRootConfiguration.cs" />
 	  <Compile Remove="Configuration\RootConfiguration.cs" />
 	  <Compile Remove="Helpers\DbMigrationHelpers.cs" />
 	</ItemGroup>
@@ -118,7 +112,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\IdentityServer4.Shared\Skoruba.IdentityServer4.Shared.csproj" />
+	  <ProjectReference Include="..\IdentityServer4.Shared\Skoruba.IdentityServer4.Shared.csproj" />
 	  <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.csproj" />
 	  <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.BusinessLogic.Shared\Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.csproj" />
 	  <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.BusinessLogic\Skoruba.IdentityServer4.Admin.BusinessLogic.csproj" />
@@ -126,8 +120,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Configuration\IdentityServer\" />
-	  <Folder Include="Configuration\Interfaces\" />
+	  <Folder Include="Log\" />
 	</ItemGroup>
 
 </Project>

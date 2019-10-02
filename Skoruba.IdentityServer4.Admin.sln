@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Adm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.EntityFramework.Extensions", "src\Skoruba.IdentityServer4.Admin.EntityFramework.Extensions\Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.csproj", "{2DD3CB7D-462E-4039-B684-81B1E88C7C6A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Shared", "IdentityServer4.Shared\Skoruba.IdentityServer4.Shared.csproj", "{DE814B6E-6C09-4A19-97B3-788E50B0343D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Shared", "src\IdentityServer4.Shared\Skoruba.IdentityServer4.Shared.csproj", "{DE814B6E-6C09-4A19-97B3-788E50B0343D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -117,6 +117,7 @@ Global
 		{8F112368-2E45-4C3A-922E-85AB6056F559} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
 		{E18F8C70-7448-4039-9D78-1369D7F498EF} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
 		{2DD3CB7D-462E-4039-B684-81B1E88C7C6A} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
+		{DE814B6E-6C09-4A19-97B3-788E50B0343D} = {588205D4-3A30-4DA4-849D-C7422C396DAA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B3166EDE-037B-4C68-BEBA-5DE9C5E3DB82}
