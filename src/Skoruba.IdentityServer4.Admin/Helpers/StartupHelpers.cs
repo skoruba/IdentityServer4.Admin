@@ -371,7 +371,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         new CultureInfo("fr"),
                         new CultureInfo("ru"),
                         new CultureInfo("sv"),
-                        new CultureInfo("zh")
+                        new CultureInfo("zh"),
+                        new CultureInfo("es")
                 };
 
                 opts.DefaultRequestCulture = new RequestCulture("en");
