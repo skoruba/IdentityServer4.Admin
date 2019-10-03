@@ -84,9 +84,12 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers.ADUtilities
                 ret.Country = ReadADProperty(result.Properties, "co", "c");
                 ret.StreetAddress = ReadADProperty(result.Properties, "street");
 
-                var photoBytes = result.Properties["thumbnailPhoto"]?[0] as byte[];
-
-                ret.Photo = $"data:image/png;base64,{Convert.ToBase64String(photoBytes)}";
+                if (_windowsAuthConfiguration.GetPhotoThumbnailFromAD && result.Properties.Contains("thumbnailPhoto"))
+                {
+                    var photoBytes = result.Properties["thumbnailPhoto"]?[0] as byte[];
+                    if(photoBytes.Length > 0)
+                        ret.Photo = $"data:image/png;base64,{Convert.ToBase64String(photoBytes)}";
+                }
 
                 if (_windowsAuthConfiguration.IncludeWindowsGroups)
                 {

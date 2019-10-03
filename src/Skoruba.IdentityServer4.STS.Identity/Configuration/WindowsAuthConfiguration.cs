@@ -30,5 +30,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Configuration
         // in order to access the Active Directory
         public string DomainUserName { get; set; } = null;
         public string DomainUserPassword { get; set; } = null;
+
+        public bool GetPhotoThumbnailFromAD { get; set; } = false;
     }
 }
