@@ -12,7 +12,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
                 .RuleFor(o => o.Id, id)
                 .RuleFor(o => o.UserName, f => Guid.NewGuid().ToString())
                 .RuleFor(o => o.Email, f => f.Internet.Email())
-                .RuleFor(o => o.AccessFailedCount, f => f.Random.Int().ToString())
+                .RuleFor(o => o.AccessFailedCount, f => f.Random.Int())
                 .RuleFor(o => o.EmailConfirmed, f => f.Random.Bool())
                 .RuleFor(o => o.PhoneNumberConfirmed, f => f.Random.Bool())
                 .RuleFor(o => o.TwoFactorEnabled, f => f.Random.Bool())

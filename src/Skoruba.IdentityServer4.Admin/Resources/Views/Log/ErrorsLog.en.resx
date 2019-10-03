@@ -117,6 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DeleteButton" xml:space="preserve">
+    <value>Delete logs older than</value>
+  </data>
+  <data name="DeleteDialogMessage" xml:space="preserve">
+    <value>Are you sure?</value>
+  </data>
+  <data name="DeleteDialogNo" xml:space="preserve">
+    <value>No - close</value>
+  </data>
+  <data name="DeleteDialogTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="DeleteDialogYes" xml:space="preserve">
+    <value>Yes - delete</value>
+  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Logs</value>
   </data>

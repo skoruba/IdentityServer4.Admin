@@ -6,8 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using SkorubaIdentityServer4Admin.Admin.Configuration.Interfaces;
-using SkorubaIdentityServer4Admin.Admin.EntityFramework.DbContexts;
-using SkorubaIdentityServer4Admin.Admin.EntityFramework.Identity.Entities.Identity;
+using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.DbContexts;
+using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Entities.Identity;
 using SkorubaIdentityServer4Admin.Admin.Helpers;
 
 namespace SkorubaIdentityServer4Admin.Admin

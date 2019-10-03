@@ -447,4 +447,16 @@
   <data name="UserCodeType_Label" xml:space="preserve">
     <value>نوع کد کاربر</value>
   </data>
+  <data name="Expiration_Info" xml:space="preserve">
+    <value>انقضاء</value>
+  </data>
+  <data name="Expiration_Label" xml:space="preserve">
+    <value>انقضاء</value>
+  </data>
+  <data name="SecretDescription_Info" xml:space="preserve">
+    <value>شرح</value>
+  </data>
+  <data name="SecretDescription_Label" xml:space="preserve">
+    <value>شرح</value>
+  </data>
 </root>

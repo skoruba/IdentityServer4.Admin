@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Bogus;
 using IdentityServer4.EntityFramework.Entities;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Constants;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Constants;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 {

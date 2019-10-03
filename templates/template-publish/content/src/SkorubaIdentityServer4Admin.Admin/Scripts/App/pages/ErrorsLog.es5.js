@@ -2,27 +2,47 @@
 
 $(function () {
 
-	$(".row-error-detail>td").each(function () {
+    $(".error-log-delete-button").click(function () {
 
-		var json = $(this).data("error-json");
-		var result = JSONTree.create(JSON.parse(json));
+        $(".error-log-form").validate();
 
-		$(this).html(result);
-	});
+        if ($(".error-log-form").validate().form()) {
 
-	$(".btn-error-detail").click(function (e) {
+            $("#deleteLogsModal").modal("show");
+            return false;
+        } else {
+            $(this).submit();
+            return false;
+        }
+    });
 
-		e.preventDefault();
+    $(".row-error-detail>td").each(function () {
 
-		var errorId = $(this).data("error-id");
+        var json = $(this).data("error-json");
+        var result;
 
-		if ($(".row-error-detail[data-error-id=" + errorId + "]").is(":visible")) {
-			$(".row-error-detail[data-error-id=" + errorId + "]").addClass('d-none');
-		} else {
-			$(".row-error-detail[data-error-id=" + errorId + "]").removeClass('d-none');
-		}
+        try {
+            result = JSONTree.create(JSON.parse(json));
+        } catch (e) {
+            result = JSONTree.create(json);
+        }
 
-		return false;
-	});
+        $(this).html(result);
+    });
+
+    $(".btn-error-detail").click(function (e) {
+
+        e.preventDefault();
+
+        var errorId = $(this).data("error-id");
+
+        if ($(".row-error-detail[data-error-id=" + errorId + "]").is(":visible")) {
+            $(".row-error-detail[data-error-id=" + errorId + "]").addClass('d-none');
+        } else {
+            $(".row-error-detail[data-error-id=" + errorId + "]").removeClass('d-none');
+        }
+
+        return false;
+    });
 });
 

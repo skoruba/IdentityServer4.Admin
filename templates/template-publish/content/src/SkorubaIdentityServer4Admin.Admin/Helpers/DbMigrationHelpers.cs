@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SkorubaIdentityServer4Admin.Admin.Configuration.Constants;
@@ -149,7 +148,7 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers
 
             if (!context.ApiResources.Any())
             {
-                foreach (var resource in ClientResources.GetApiResources().ToList())
+                foreach (var resource in ClientResources.GetApiResources(adminConfiguration).ToList())
                 {
                     await context.ApiResources.AddAsync(resource.ToEntity());
                 }
