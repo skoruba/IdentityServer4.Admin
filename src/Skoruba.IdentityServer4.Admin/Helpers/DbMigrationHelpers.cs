@@ -90,24 +90,25 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             where TUser : IdentityUser, new()
             where TRole : IdentityRole, new()
         {
-            if (! await roleManager.Roles.AnyAsync()) { 
+            if (!await roleManager.Roles.AnyAsync())
+            {
                 // adding roles from seed
                 foreach (var r in userDataConfiguration.Roles)
                 {
-                    if (! await roleManager.RoleExistsAsync(r.Name))
+                    if (!await roleManager.RoleExistsAsync(r.Name))
                     {
                         var role = new TRole
                         {
                             Name = r.Name
                         };
 
-                        var res = await roleManager.CreateAsync(role);
+                        var result = await roleManager.CreateAsync(role);
 
-                        if (res.Succeeded)
+                        if (result.Succeeded)
                         {
-                            foreach (var c in  r.Claims)
+                            foreach (var claim in r.Claims)
                             {
-                                await roleManager.AddClaimAsync(role, new System.Security.Claims.Claim(c.Type, c.Value));
+                                await roleManager.AddClaimAsync(role, new System.Security.Claims.Claim(claim.Type, claim.Value));
                             }
                         }
                     }
@@ -117,30 +118,31 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             if (!await userManager.Users.AnyAsync())
             {
                 // adding users from seed
-                foreach (var u in userDataConfiguration.Users)
+                foreach (var user in userDataConfiguration.Users)
                 {
-                    var us = new TUser
+                    var identityUser = new TUser
                     {
-                        UserName = u.Username,
-                        Email = u.Email,
+                        UserName = user.Username,
+                        Email = user.Email,
                         EmailConfirmed = true
                     };
 
-
                     // if there is no password we create user without password
                     // user can reset password later, because accounts have EmailConfirmed set to true
-                    var res = u.Password != null ? await userManager.CreateAsync(us, u.Password) : await userManager.CreateAsync(us);
+                    var result = !string.IsNullOrEmpty(user.Password)
+                        ? await userManager.CreateAsync(identityUser, user.Password)
+                        : await userManager.CreateAsync(identityUser);
 
-                    if (res.Succeeded)
+                    if (result.Succeeded)
                     {
-                        foreach (var c in u.Claims)
+                        foreach (var claim in user.Claims)
                         {
-                            await userManager.AddClaimAsync(us, new System.Security.Claims.Claim(c.Type, c.Value));
+                            await userManager.AddClaimAsync(identityUser, new System.Security.Claims.Claim(claim.Type, claim.Value));
                         }
 
-                        foreach (var r in u.Roles)
+                        foreach (var role in user.Roles)
                         {
-                            await userManager.AddToRoleAsync(us, r);
+                            await userManager.AddToRoleAsync(identityUser, role);
                         }
                     }
                 }
