@@ -9,5 +9,10 @@
         string OidcResponseType { get; }
         string[] Scopes { get; }
         string AdministrationRole { get; }
+        bool RequireHttpsMetadata { get; }
+        string IdentityAdminCookieName { get; }
+        double IdentityAdminCookieExpiresUtcHours { get; }
+        string TokenValidationClaimName { get; }
+        string TokenValidationClaimRole { get; }
     }
 }
