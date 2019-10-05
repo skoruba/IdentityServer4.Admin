@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
+﻿namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
 {
     public class OpenIdProfile
     {

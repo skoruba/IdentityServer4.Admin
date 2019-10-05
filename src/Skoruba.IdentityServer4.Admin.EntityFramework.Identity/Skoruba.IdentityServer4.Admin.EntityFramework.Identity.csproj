@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<Version>1.0.0-beta6</Version>
+		<Version>1.0.0-beta7</Version>
 		<Authors>Jan Škoruba</Authors>
 		<Description>Entity Framework layer for the administration of the Asp.Net Core Identity and IdentityServer4</Description>
 		<PackageTags>IdentityServer4 Admin OpenIDConnect OAuth2 Identity</PackageTags>
@@ -12,8 +12,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="IdentityServer4.EntityFramework" Version="2.4.0" />
+		<PackageReference Include="IdentityServer4.EntityFramework" Version="2.5.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+        <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.IdentityServer4.Admin.EntityFramework.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -62,9 +62,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 {
                     var supportedCultures = new[]
                     {
-                        new CultureInfo("fa"),
-                        new CultureInfo("ru"),
                         new CultureInfo("en"),
+                        new CultureInfo("fa"),
+                        new CultureInfo("fr"),
+                        new CultureInfo("ru"),
+                        new CultureInfo("sv"),
                         new CultureInfo("zh")
                     };
 
@@ -96,14 +98,13 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <param name="configuration"></param>
         public static void AddEmailSenders(this IServiceCollection services, IConfiguration configuration)
         {
-            var sendgridConnectionString = configuration.GetConnectionString(ConfigurationConsts.SendgridConnectionStringKey);
             var smtpConfiguration = configuration.GetSection(nameof(SmtpConfiguration)).Get<SmtpConfiguration>();
-            var sendgridConfiguration = configuration.GetSection(nameof(SendgridConfiguration)).Get<SendgridConfiguration>();
+            var sendGridConfiguration = configuration.GetSection(nameof(SendgridConfiguration)).Get<SendgridConfiguration>();
 
-            if (!string.IsNullOrWhiteSpace(sendgridConnectionString))
+            if (sendGridConfiguration != null && !string.IsNullOrWhiteSpace(sendGridConfiguration.ApiKey))
             {
-                services.AddSingleton<ISendGridClient>(_ => new SendGridClient(sendgridConnectionString));
-                services.AddSingleton(sendgridConfiguration);
+                services.AddSingleton<ISendGridClient>(_ => new SendGridClient(sendGridConfiguration.ApiKey));
+                services.AddSingleton(sendGridConfiguration);
                 services.AddTransient<IEmailSender, SendgridEmailSender>();
             }
             else if (smtpConfiguration != null && !string.IsNullOrWhiteSpace(smtpConfiguration.Host))
@@ -423,12 +424,13 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// Add authorization policies
         /// </summary>
         /// <param name="services"></param>
-        public static void AddAuthorizationPolicies(this IServiceCollection services)
+        public static void AddAuthorizationPolicies(this IServiceCollection services,
+                IRootConfiguration rootConfiguration)
         {
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(AuthorizationConsts.AdministrationPolicy,
-                    policy => policy.RequireRole(AuthorizationConsts.AdministrationRole));
+                    policy => policy.RequireRole(rootConfiguration.AdminConfiguration.AdministrationRole));
             });
         }
     }

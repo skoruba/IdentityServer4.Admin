@@ -1,7 +1,11 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "Jan Skoruba",
-  "classifications": ["Web", "IdentityServer4", "Admin"],
+  "classifications": [
+    "Web",
+    "IdentityServer4",
+    "Admin"
+  ],
   "name": "Skoruba IdentityServer4 Admin",
   "identity": "Skoruba.IdentityServer4.Admin",
   "groupIdentity": "Skoruba.IdentityServer4.Admin",
@@ -50,10 +54,10 @@
       "path": "src/Skoruba.IdentityServer4.STS.Identity/Skoruba.IdentityServer4.STS.Identity.csproj"
     },
     {
-      "path": "src/Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts/Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts.csproj"
+      "path": "src/Skoruba.IdentityServer4.Admin.Api/Skoruba.IdentityServer4.Admin.Api.csproj"
     },
     {
-      "path": "src/Skoruba.IdentityServer4.Admin.EntityFramework.Identity/Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj"
+      "path": "src/Skoruba.IdentityServer4.Admin.EntityFramework.Shared/Skoruba.IdentityServer4.Admin.EntityFramework.Shared.csproj"
     }
   ],
   "postActions": [

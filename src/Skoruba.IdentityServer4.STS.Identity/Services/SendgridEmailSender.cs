@@ -29,7 +29,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Services
              );
 
             var response = await _client.SendEmailAsync(msg);
-            if ((response.StatusCode == System.Net.HttpStatusCode.OK) || (response.StatusCode == System.Net.HttpStatusCode.Created))
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK 
+                || response.StatusCode == System.Net.HttpStatusCode.Created
+                || response.StatusCode == System.Net.HttpStatusCode.Accepted)
             {
                 _logger.LogInformation($"Email: {email}, subject: {subject}, message: {htmlMessage} successfully sent");
             } else

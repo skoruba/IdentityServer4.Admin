@@ -10,6 +10,7 @@
 Install following NuGet package:
 
 ```
+Npgsql.EntityFrameworkCore.PostgreSQL
 Npgsql.EntityFrameworkCore.PostgreSQL.Design
 ```
 
@@ -25,6 +26,7 @@ In `Helpers\StartupHelpers.cs` - find all usage of `UseSqlServer` and change to 
 Install following NuGet package:
 
 ```
+Microsoft.EntityFrameworkCore.Sqlite
 Microsoft.EntityFrameworkCore.Sqlite.Design
 ```
 
@@ -38,6 +40,7 @@ In `Helpers\StartupHelpers.cs` - find all usage of `UseSqlServer` and change to 
 Install the following NuGet package:
 ```
 Pomelo.EntityFrameworkCore.MySql
+Pomelo.EntityFrameworkCore.MySql.Design
 ```
 
 In `Helpers\StartupHelpers.cs` - find all usage of `UseSqlServer` and change to `UseMySql`.

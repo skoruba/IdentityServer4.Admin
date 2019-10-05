@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using SkorubaIdentityServer4Admin.Admin.EntityFramework.DbContexts;
-using SkorubaIdentityServer4Admin.Admin.EntityFramework.Identity.Entities.Identity;
+using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.DbContexts;
+using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Entities.Identity;
 using SkorubaIdentityServer4Admin.STS.Identity.Helpers;
 
 namespace SkorubaIdentityServer4Admin.STS.Identity
