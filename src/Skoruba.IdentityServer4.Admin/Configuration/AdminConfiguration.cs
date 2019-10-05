@@ -10,17 +10,15 @@ namespace Skoruba.IdentityServer4.Admin.Configuration
         public string IdentityAdminRedirectUri { get; set; }
         public string[] Scopes { get; set; }
 
-        public string IdentityAdminApiSwaggerUIClientId { get; } = AuthenticationConsts.IdentityAdminApiSwaggerClientId;
-        public string IdentityAdminApiSwaggerUIRedirectUrl { get; } = "http://localhost:5001/swagger/oauth2-redirect.html";
-        public string IdentityAdminApiScope { get; } = AuthenticationConsts.IdentityAdminApiScope;
+        public string IdentityAdminApiSwaggerUIClientId { get; }
+        public string IdentityAdminApiSwaggerUIRedirectUrl { get; }
+        public string IdentityAdminApiScope { get; }
+        public string AdministrationRole { get; }
 
 
         public string IdentityServerBaseUrl { get; set; }
         public string ClientId { get; set; } 
-        public string[] Scopes { get; set; }
         public string ClientSecret { get; set; }
         public string OidcResponseType { get; set; } = AuthenticationConsts.OidcAuthenticationScheme;
-        public string AdministrationRole { get; set; }
-
     }
 }

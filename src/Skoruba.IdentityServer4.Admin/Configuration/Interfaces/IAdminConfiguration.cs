@@ -12,5 +12,6 @@
         string IdentityAdminApiSwaggerUIClientId { get; }
         string IdentityAdminApiSwaggerUIRedirectUrl { get; }
         string IdentityAdminApiScope { get; }
+        string AdministrationRole { get; }
     }
 }
