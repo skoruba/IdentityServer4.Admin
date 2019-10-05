@@ -133,11 +133,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                 {
                     options.Authority = adminApiConfiguration.IdentityServerBaseUrl;
                     options.ApiName = adminApiConfiguration.OidcApiName;
-#if DEBUG
-                    options.RequireHttpsMetadata = false;
-#else
-                    options.RequireHttpsMetadata = true;
-#endif
+                    options.RequireHttpsMetadata = adminApiConfiguration.RequireHttpsMetadata;
                 });
 
             services.AddIdentity<TUser, TRole>(options =>

@@ -6,6 +6,7 @@ using Skoruba.IdentityServer4.Admin.Api.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.Api.Dtos.Clients;
 using Skoruba.IdentityServer4.Admin.Api.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Api.Mappers;
+using Skoruba.IdentityServer4.Admin.Api.Resources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 
@@ -19,10 +20,12 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
     public class ClientsController : ControllerBase
     {
         private readonly IClientService _clientService;
+        private readonly IApiErrorResources _errorResources;
 
-        public ClientsController(IClientService clientService)
+        public ClientsController(IClientService clientService, IApiErrorResources errorResources)
         {
             _clientService = clientService;
+            _errorResources = errorResources;
         }
 
         [HttpGet]
@@ -47,6 +50,12 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         public async Task<IActionResult> Post([FromBody]ClientApiDto client)
         {
             var clientDto = client.ToClientApiModel<ClientDto>();
+
+            if (!clientDto.Id.Equals(default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
+
             await _clientService.AddClientAsync(clientDto);
 
             return Ok();
@@ -109,6 +118,11 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
             var secretsDto = clientSecretApi.ToClientApiModel<ClientSecretsDto>();
             secretsDto.ClientId = id;
 
+            if (!secretsDto.ClientSecretId.Equals(default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
+
             await _clientService.AddClientSecretAsync(secretsDto);
 
             return Ok();
@@ -149,6 +163,11 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
             var clientPropertiesDto = clientPropertyApi.ToClientApiModel<ClientPropertiesDto>();
             clientPropertiesDto.ClientId = id;
 
+            if (!clientPropertiesDto.ClientPropertyId.Equals(default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
+
             await _clientService.AddClientPropertyAsync(clientPropertiesDto);
 
             return Ok();
@@ -188,6 +207,11 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         {
             var clientClaimsDto = clientClaimApiDto.ToClientApiModel<ClientClaimsDto>();
             clientClaimsDto.ClientId = id;
+
+            if (!clientClaimsDto.ClientClaimId.Equals(default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
 
             await _clientService.AddClientClaimAsync(clientClaimsDto);
 
