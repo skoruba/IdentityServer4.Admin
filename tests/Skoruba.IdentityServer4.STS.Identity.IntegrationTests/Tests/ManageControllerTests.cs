@@ -1,21 +1,18 @@
 ﻿using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Common;
 using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Mocks;
+using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests.Base;
 using Xunit;
 
 namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
 {
-    public class ManageControllerTests : IClassFixture<WebApplicationFactory<Startup>>
+    public class ManageControllerTests : BaseClassFixture
     {
-        private readonly HttpClient _client;
-
-        public ManageControllerTests(WebApplicationFactory<Startup> factory)
+        public ManageControllerTests(WebApplicationFactory<Startup> factory) : base(factory)
         {
-            _client = factory.SetupClient();
         }
 
         [Fact]
