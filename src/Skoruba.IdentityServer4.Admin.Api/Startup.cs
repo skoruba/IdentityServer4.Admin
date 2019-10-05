@@ -93,6 +93,8 @@ namespace Skoruba.IdentityServer4.Admin.Api
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, AdminApiConfiguration adminApiConfiguration)
         {
+            app.AddLogging(Configuration);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

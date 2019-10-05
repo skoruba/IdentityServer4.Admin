@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
+using Serilog;
 using Skoruba.IdentityServer4.Admin.Api.Configuration;
 using Skoruba.IdentityServer4.Admin.Api.Configuration.ApplicationParts;
 using Skoruba.IdentityServer4.Admin.Api.Configuration.Constants;
@@ -67,6 +69,17 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                 });
         }
 
+        /// <summary>
+        /// Add configuration for logging
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="configuration"></param>
+        public static void AddLogging(this IApplicationBuilder app,IConfiguration configuration)
+        {
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
+        }
 
         /// <summary>
         /// Register DbContexts for IdentityServer ConfigurationStore and PersistedGrants, Identity and Logging
