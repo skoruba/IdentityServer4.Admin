@@ -75,14 +75,14 @@ namespace Skoruba.IdentityServer4.Admin.Api
 
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc(ApiConfigurationConsts.ApiVersionV1, new Info { Title = ApiConfigurationConsts.ApiName, Version = ApiConfigurationConsts.ApiVersionV1 });
+                options.SwaggerDoc(adminApiConfiguration.ApiVersion, new Info { Title = adminApiConfiguration.ApiName, Version = adminApiConfiguration.ApiVersion });
 
                 options.AddSecurityDefinition("oauth2", new OAuth2Scheme
                 {
                     Flow = "implicit",
                     AuthorizationUrl = $"{adminApiConfiguration.IdentityServerBaseUrl}/connect/authorize",
                     Scopes = new Dictionary<string, string> {
-                        { adminApiConfiguration.OidcApiName, ApiConfigurationConsts.ApiName }
+                        { adminApiConfiguration.OidcApiName, adminApiConfiguration.ApiName }
                     }
                 });
 
@@ -102,10 +102,10 @@ namespace Skoruba.IdentityServer4.Admin.Api
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", ApiConfigurationConsts.ApiName);
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", adminApiConfiguration.ApiName);
 
                 c.OAuthClientId(adminApiConfiguration.OidcSwaggerUIClientId);
-                c.OAuthAppName(ApiConfigurationConsts.ApiName);
+                c.OAuthAppName(adminApiConfiguration.ApiName);
             });
 
             app.UseMvc();
