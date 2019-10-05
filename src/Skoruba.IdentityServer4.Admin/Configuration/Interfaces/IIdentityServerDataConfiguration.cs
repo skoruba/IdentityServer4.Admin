@@ -4,7 +4,7 @@ using Client = Skoruba.IdentityServer4.Admin.Configuration.IdentityServer.Client
 
 namespace Skoruba.IdentityServer4.Admin.Configuration.Interfaces
 {
-    public interface IClientDataConfiguration
+    public interface IIdentityServerDataConfiguration
     {
         List<Client> Clients { get; }
         List<IdentityResource> IdentityResources { get; }

@@ -77,8 +77,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<TRole>>();
                 var rootConfiguration = scope.ServiceProvider.GetRequiredService<IRootConfiguration>();
 
-                await EnsureSeedIdentityServerData(context, rootConfiguration.ClientDataConfiguration);
-                await EnsureSeedIdentityData(userManager, roleManager, rootConfiguration.UserDataConfiguration);
+                await EnsureSeedIdentityServerData(context, rootConfiguration.IdentityServerDataConfiguration);
+                await EnsureSeedIdentityData(userManager, roleManager, rootConfiguration.IdentityDataConfiguration);
             }
         }
 
@@ -86,14 +86,14 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// Generate default admin user / role
         /// </summary>
         private static async Task EnsureSeedIdentityData<TUser, TRole>(UserManager<TUser> userManager,
-            RoleManager<TRole> roleManager, IUserDataConfiguration userDataConfiguration)
+            RoleManager<TRole> roleManager, IIdentityDataConfiguration identityDataConfiguration)
             where TUser : IdentityUser, new()
             where TRole : IdentityRole, new()
         {
             if (!await roleManager.Roles.AnyAsync())
             {
                 // adding roles from seed
-                foreach (var r in userDataConfiguration.Roles)
+                foreach (var r in identityDataConfiguration.Roles)
                 {
                     if (!await roleManager.RoleExistsAsync(r.Name))
                     {
@@ -118,7 +118,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             if (!await userManager.Users.AnyAsync())
             {
                 // adding users from seed
-                foreach (var user in userDataConfiguration.Users)
+                foreach (var user in identityDataConfiguration.Users)
                 {
                     var identityUser = new TUser
                     {
@@ -152,12 +152,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <summary>
         /// Generate default clients, identity and api resources
         /// </summary>
-        private static async Task EnsureSeedIdentityServerData<TIdentityServerDbContext>(TIdentityServerDbContext context, IClientDataConfiguration clientDataConfiguration)
+        private static async Task EnsureSeedIdentityServerData<TIdentityServerDbContext>(TIdentityServerDbContext context, IIdentityServerDataConfiguration identityServerDataConfiguration)
             where TIdentityServerDbContext : DbContext, IAdminConfigurationDbContext
         {
             if (!context.IdentityResources.Any())
             {
-                foreach (var resource in clientDataConfiguration.IdentityResources)
+                foreach (var resource in identityServerDataConfiguration.IdentityResources)
                 {
                     await context.IdentityResources.AddAsync(resource.ToEntity());
                 }
@@ -167,7 +167,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
             if (!context.ApiResources.Any())
             {
-                foreach (var resource in clientDataConfiguration.ApiResources)
+                foreach (var resource in identityServerDataConfiguration.ApiResources)
                 {
                     foreach (var s in resource.ApiSecrets)
                     {
@@ -182,7 +182,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
             if (!context.Clients.Any())
             {
-                foreach (var client in clientDataConfiguration.Clients)
+                foreach (var client in identityServerDataConfiguration.Clients)
                 {
                     foreach (var secret in client.ClientSecrets)
                     {

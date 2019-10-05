@@ -16,8 +16,8 @@
 
         public const string AdminConfigurationKey = "AdminConfiguration";
 
-        public const string ClientDataConfigurationKey = "ClientData";
+        public const string IdentityServerDataConfigurationKey = "IdentityServerData";
 
-        public const string UserDataConfigurationKey = "UserData";
+        public const string IdentityDataConfigurationKey = "IdentityData";
     }
 }
