@@ -5,29 +5,26 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.IntegrationTests.Common;
+using Skoruba.IdentityServer4.Admin.IntegrationTests.Tests.Base;
 using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Tests
 {
-    public class IdentityControllerTests : IClassFixture<WebApplicationFactory<Startup>>
+    public class IdentityControllerTests : BaseClassFixture
     {
-        private readonly HttpClient _client;
-
-        public IdentityControllerTests(WebApplicationFactory<Startup> factory)
+        public IdentityControllerTests(WebApplicationFactory<Startup> factory) : base(factory)
         {
-            _client = factory.SetupClient();
         }
 
         [Fact]
         public async Task ReturnSuccessWithAdminRole()
         {
-            //Get claims for admin
-            _client.SetAdminClaimsViaHeaders();
+            SetupAdminClaimsViaHeaders();
 
             foreach (var route in RoutesConstants.GetIdentityRoutes())
             {
                 // Act
-                var response = await _client.GetAsync($"/Identity/{route}");
+                var response = await Client.GetAsync($"/Identity/{route}");
 
                 // Assert
                 response.EnsureSuccessStatusCode();
@@ -39,12 +36,12 @@ namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Tests
         public async Task ReturnRedirectWithoutAdminRole()
         {
             //Remove
-            _client.DefaultRequestHeaders.Clear();
+            Client.DefaultRequestHeaders.Clear();
 
             foreach (var route in RoutesConstants.GetIdentityRoutes())
             {
                 // Act
-                var response = await _client.GetAsync($"/Identity/{route}");
+                var response = await Client.GetAsync($"/Identity/{route}");
 
                 // Assert           
                 response.StatusCode.Should().Be(HttpStatusCode.Redirect);
