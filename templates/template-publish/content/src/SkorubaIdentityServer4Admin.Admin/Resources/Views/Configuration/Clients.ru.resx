@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonAddNewClient" xml:space="preserve">
-    <value>Добавить Клиента</value>
+    <value>Добавить клиента</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Клиенты</value>
@@ -127,9 +127,9 @@
     <value>Редактировать</value>
   </data>
   <data name="TableClientId" xml:space="preserve">
-    <value>Id Клиента</value>
+    <value>Id клиента</value>
   </data>
   <data name="TableClientName" xml:space="preserve">
-    <value>Имя Клиента</value>
+    <value>Имя клиента</value>
   </data>
 </root>

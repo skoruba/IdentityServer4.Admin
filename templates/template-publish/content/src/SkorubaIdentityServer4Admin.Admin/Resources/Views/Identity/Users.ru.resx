@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ActionAddUser" xml:space="preserve">
-    <value>Добавить Пользователя</value>
+    <value>Добавить пользователя</value>
   </data>
   <data name="ActionEditUser" xml:space="preserve">
     <value>Редактировать</value>
@@ -130,9 +130,9 @@
     <value>Пользователь</value>
   </data>
   <data name="UserId" xml:space="preserve">
-    <value>Идентификатор/ID Пользователя</value>
+    <value>Идентификатор/ID пользователя</value>
   </data>
   <data name="UserName" xml:space="preserve">
-    <value>Имя Пользователя</value>
+    <value>Имя пользователя</value>
   </data>
 </root>

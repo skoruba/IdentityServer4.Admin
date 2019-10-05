@@ -21,7 +21,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
         [Required]
 		public string Type { get; set; } = "SharedSecret";
 
-        public List<SelectItem> TypeList { get; set; }
+        public List<SelectItemDto> TypeList { get; set; }
 
         public string Description { get; set; }
 
@@ -30,7 +30,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
 
 		public string HashType { get; set; }
 
-		public List<SelectItem> HashTypes { get; set; }
+		public List<SelectItemDto> HashTypes { get; set; }
 
 		public DateTime? Expiration { get; set; }
 

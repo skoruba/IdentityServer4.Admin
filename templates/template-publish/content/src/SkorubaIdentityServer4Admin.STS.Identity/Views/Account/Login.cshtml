@@ -1,6 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using SkorubaIdentityServer4Admin.STS.Identity.Configuration.Intefaces
+@using SkorubaIdentityServer4Admin.STS.Identity.Helpers.Localization
 @inject IViewLocalizer Localizer
-@model SkorubaIdentityServer4Admin.STS.Identity.Quickstart.Account.LoginViewModel
+@model SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Account.LoginViewModel
+@inject IRootConfiguration RootConfiguration
 
 <div class="login-page">
     <div class="page-header">
@@ -29,7 +32,7 @@
                                                     <i class="fa fa-user"></i>
                                                 </span>
                                             </div>
-                                            <input class="form-control" placeholder="@Localizer["Username"]" asp-for="Username" aria-label="Username" aria-describedby="input-username" autofocus>
+                                            <input class="form-control" placeholder="@Localizer[LoginPolicyResolutionLocalizer.GetUserNameLocalizationKey(Model.LoginResolutionPolicy)]" asp-for="Username" aria-label="Username" aria-describedby="input-username" autofocus>
                                         </div>
                                     </div>
                                 </div>
@@ -65,7 +68,12 @@
                                 <div class="form-group row">
                                     <div class="col-sm-12">
                                         <button class="btn btn-primary" name="button" value="login">@Localizer["Login"]</button>
-                                        <button class="btn btn-default" name="button" value="cancel">@Localizer["Cancel"]</button>
+                                        <button class="btn btn-secondary" name="button" value="cancel">@Localizer["Cancel"]</button>
+                                        <a asp-action="ForgotPassword" asp-controller="Account" class="btn btn-info" value="forgot">@Localizer["Forgot"]</a>                                        
+                                        @if (RootConfiguration.RegisterConfiguration.Enabled)
+                                        {
+                                            <a asp-action="Register" asp-controller="Account" class="btn btn-dark" value="forgot">@Localizer["Register"]</a>
+                                        }
                                     </div>
                                 </div>
                             </fieldset>
@@ -86,8 +94,7 @@
                             {
                                 <li class="list-inline-item">
                                     <a class="btn btn-primary"
-                                       asp-controller="External"
-                                       asp-action="Challenge"
+                                       asp-action="ExternalLogin"
                                        asp-route-provider="@provider.AuthenticationScheme"
                                        asp-route-returnUrl="@Model.ReturnUrl">
                                         @provider.DisplayName

@@ -117,7 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Logout" xml:space="preserve">
+    <value>Выход</value>
+  </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Доступ Отклонён!</value>
+    <value>Доступ отклонён!</value>
+  </data>
+  <data name="ReturnToIdentityServer" xml:space="preserve">
+    <value>Вернуться к IdentityServer</value>
   </data>
 </root>

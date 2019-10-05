@@ -3,9 +3,7 @@
     public class ConfigurationConsts
     {
         public const string AdminConnectionStringKey = "AdminConnection";
-
-        public const string SendgridConnectionStringKey = "Sendgrid";
-
+        
         public const string ConfigurationDbConnectionStringKey = "ConfigurationDbConnection";
 
         public const string PersistedGrantDbConnectionStringKey = "PersistedGrantDbConnection";

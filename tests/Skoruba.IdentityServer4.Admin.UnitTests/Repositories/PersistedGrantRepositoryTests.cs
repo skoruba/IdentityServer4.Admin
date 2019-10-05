@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Repositories.Interfaces;
-using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Xunit;
 
@@ -124,7 +124,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                     //Try delete persisted grant
                     await persistedGrantRepository.DeletePersistedGrantsAsync(subjectId.ToString());
 
-                    var grant = await persistedGrantRepository.GetPersistedGrantsByUser(subjectId.ToString());
+                    var grant = await persistedGrantRepository.GetPersistedGrantsByUserAsync(subjectId.ToString());
 
                     //Assert
                     grant.TotalCount.Should().Be(0);

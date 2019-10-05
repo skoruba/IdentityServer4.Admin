@@ -4,12 +4,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Extensions;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Extensions;
 using SkorubaIdentityServer4Admin.Admin.Configuration.Interfaces;
-using Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entities.Identity;
+using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.DbContexts;
+using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Entities.Identity;
 using SkorubaIdentityServer4Admin.Admin.Helpers;
 
 namespace SkorubaIdentityServer4Admin.Admin
@@ -42,20 +40,42 @@ namespace SkorubaIdentityServer4Admin.Admin
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // Get Configuration
             services.ConfigureRootConfiguration(Configuration);
             var rootConfiguration = services.BuildServiceProvider().GetService<IRootConfiguration>();
 
-            services.AddDbContexts<AdminDbContext>(HostingEnvironment, Configuration);
-            services.AddAuthenticationServices<AdminDbContext, UserIdentity, UserIdentityRole>(HostingEnvironment, rootConfiguration.AdminConfiguration);
+            // Add DbContexts for Asp.Net Core Identity, Logging and IdentityServer - Configuration store and Operational store
+            services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>(HostingEnvironment, Configuration);
+
+            // Add Asp.Net Core Identity Configuration and OpenIdConnect auth as well
+            services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(HostingEnvironment, rootConfiguration.AdminConfiguration);
+            
+            // Add exception filters in MVC
             services.AddMvcExceptionFilters();
 
-            services.AddAdminServices<AdminDbContext>();
+            // Add all dependencies for IdentityServer Admin
+            services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
 
-            services.AddAdminAspNetIdentityServices<AdminDbContext, UserDto<int>, int, RoleDto<int>, int, int, int,
-                                UserIdentity, UserIdentityRole, int, UserIdentityUserClaim, UserIdentityUserRole,
-                                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>();
+            // Add all dependencies for Asp.Net Core Identity
+            // If you want to change primary keys or use another db model for Asp.Net Core Identity:
+            services.AddAdminAspNetIdentityServices<AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, UserDto<string>, string, RoleDto<string>, string, string, string,
+                                UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
+                                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
+                                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
+                                UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
+                                RoleClaimsDto<string>, UserClaimDto<string>, RoleClaimDto<string>>();
 
-            services.AddMvcLocalization();
+            // Add all dependencies for Asp.Net Core Identity in MVC - these dependencies are injected into generic Controllers
+            // Including settings for MVC and Localization
+            // If you want to change primary keys or use another db model for Asp.Net Core Identity:
+            services.AddMvcWithLocalization<UserDto<string>, string, RoleDto<string>, string, string, string,
+                UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
+                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
+                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
+                UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
+                RoleClaimsDto<string>>();
+
+            // Add authorization policies for MVC
             services.AddAuthorizationPolicies();
         }
 
@@ -72,9 +92,15 @@ namespace SkorubaIdentityServer4Admin.Admin
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            // Add custom security headers
             app.UseSecurityHeaders();
+
             app.UseStaticFiles();
-            app.ConfigureAuthentificationServices(env);
+
+            // Use authentication and for integration tests use custom middleware which is used only in Staging environment
+            app.ConfigureAuthenticationServices(env);
+
+            // Use Localization
             app.ConfigureLocalization();
 
             app.UseMvc(routes =>

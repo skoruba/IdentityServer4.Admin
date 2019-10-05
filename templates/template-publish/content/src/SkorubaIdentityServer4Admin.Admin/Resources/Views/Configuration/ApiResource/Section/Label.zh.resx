@@ -135,8 +135,14 @@
   <data name="Enabled_Label" xml:space="preserve">
     <value>启用</value>
   </data>
+  <data name="Expiration_Info" xml:space="preserve">
+    <value>到期</value>
+  </data>
+  <data name="Expiration_Label" xml:space="preserve">
+    <value>到期</value>
+  </data>
   <data name="Name_Info" xml:space="preserve">
-    <value>API 的唯一名称。 此值用于内省身份验证，并将添加到传出访问令牌的受众。</value>
+    <value>API 的唯一名称。 此值用于自我认证，并将添加到传给受众的访问令牌 access_token 中。</value>
   </data>
   <data name="Name_Label" xml:space="preserve">
     <value>名称</value>
@@ -164,6 +170,12 @@
   </data>
   <data name="Scopes_Label" xml:space="preserve">
     <value>作用域</value>
+  </data>
+  <data name="SecretDescription_Info" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="SecretDescription_Label" xml:space="preserve">
+    <value>描述</value>
   </data>
   <data name="Secrets_Info" xml:space="preserve">
     <value>API 密钥用于内省端点。 API 可以使用 API 名称和密钥进行内省验证。</value>

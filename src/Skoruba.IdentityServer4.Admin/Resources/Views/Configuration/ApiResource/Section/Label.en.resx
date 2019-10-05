@@ -135,6 +135,12 @@
   <data name="Enabled_Label" xml:space="preserve">
     <value>Enabled</value>
   </data>
+  <data name="Expiration_Info" xml:space="preserve">
+    <value>Expiration</value>
+  </data>
+  <data name="Expiration_Label" xml:space="preserve">
+    <value>Expiration</value>
+  </data>
   <data name="Name_Info" xml:space="preserve">
     <value>The unique name of the API. This value is used for authentication with introspection and will be added to the audience of the outgoing access token.</value>
   </data>
@@ -164,6 +170,12 @@
   </data>
   <data name="Scopes_Label" xml:space="preserve">
     <value>Scopes</value>
+  </data>
+  <data name="SecretDescription_Info" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="SecretDescription_Label" xml:space="preserve">
+    <value>Description</value>
   </data>
   <data name="Secrets_Info" xml:space="preserve">
     <value>The API secret is used for the introspection endpoint. The API can authenticate with introspection using the API name and secret.</value>

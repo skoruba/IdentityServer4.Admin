@@ -6,6 +6,8 @@
         public const string SignInScheme = "Cookies";
 
         public const string OidcAuthenticationScheme = "oidc";
+        public const string IdentityAdminApiScope = "skoruba_identity_admin_api";
+
 
         public const string RoleClaim = "role";
 

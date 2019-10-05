@@ -1,3 +1,3 @@
-$templateLocalName = "Skoruba.IdentityServer4.Admin.Templates.1.0.0-beta5-update2.nupkg"
+$templateLocalName = "Skoruba.IdentityServer4.Admin.Templates.1.0.0-beta7.nupkg"
 
-dotnet new -i $templateLocalName
+dotnet.exe new -i $templateLocalName

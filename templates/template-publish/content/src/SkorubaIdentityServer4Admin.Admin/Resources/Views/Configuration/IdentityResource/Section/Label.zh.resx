@@ -178,7 +178,7 @@
     <value>在发现文档中显示</value>
   </data>
   <data name="UserClaims_Info" xml:space="preserve">
-    <value>应包含在身份令牌中的关联用户声明类型的列表。</value>
+    <value>应包含在身份令牌 id_token 中的关联用户声明类型的列表。</value>
   </data>
   <data name="UserClaims_Label" xml:space="preserve">
     <value>用户声明</value>

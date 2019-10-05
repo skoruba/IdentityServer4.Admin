@@ -1,7 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
-@model RolesDto<RoleDto<int>, int>
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Interfaces.IRolesDto
 @inject IViewLocalizer Localizer
 
 @{
@@ -34,7 +33,10 @@
 					@foreach (var role in Model.Roles)
 					{
 						<tr>
-							<th><a class="btn btn-primary" asp-action="Role" asp-route-id="@role.Id">@Localizer["TableButtonEdit"]</a></th>
+						    <th>
+						        <a class="btn btn-primary" asp-action="Role" asp-route-id="@role.Id">@Localizer["TableButtonEdit"]</a>
+						        <a class="btn btn-primary" asp-action="RoleUsers" asp-route-roleId="@role.Id">@Localizer["TableButtonUsers"]</a>
+						    </th>
 							<td>@role.Name</td>
 							<td>
 								<a class="btn btn-danger" asp-action="RoleDelete" asp-route-id="@role.Id"><span class="oi oi-x"></span></a>

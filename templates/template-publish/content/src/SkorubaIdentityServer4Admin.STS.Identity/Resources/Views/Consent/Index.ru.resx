@@ -118,24 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ApplicationAccess" xml:space="preserve">
-    <value>Доступ к Приложению</value>
+    <value>Доступ к приложению</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>Нет, Не Разрешать </value>
+    <value>Нет, не разрешать </value>
   </data>
   <data name="PersonalInformation" xml:space="preserve">
-    <value>Личная Информация</value>
+    <value>Личная информация</value>
   </data>
   <data name="Remember" xml:space="preserve">
-    <value>Запомнить Мой Выбор</value>
+    <value>Запомнить мой выбор</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
-    <value>запрашивает Ваше разрешение</value>
+    <value>запрашивает ваше разрешение</value>
   </data>
   <data name="UnCheckPermission" xml:space="preserve">
     <value>Снять флажки с разрешений, которые Вы не хотите предоставлять</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Да, Разрешить</value>
+    <value>Да, разрешить</value>
   </data>
 </root>

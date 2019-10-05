@@ -33,6 +33,13 @@
       "replaces": "skoruba_identity_admin",
       "isRequired": true,
       "description": "The name of client, that is be used in the IdentityServer4"
+    },
+    "adminclientsecret": {
+      "type": "parameter",
+      "defaultValue": "skoruba_admin_client_secret",
+      "replaces": "skoruba_admin_client_secret",
+      "isRequired": true,
+      "description": "The value of client secret, that is be used in the IdentityServer4"
     }
   },
   "primaryOutputs": [
@@ -41,13 +48,19 @@
     },
     {
       "path": "src/SkorubaIdentityServer4Admin.STS.Identity/SkorubaIdentityServer4Admin.STS.Identity.csproj"
+    },
+    {
+      "path": "src/SkorubaIdentityServer4Admin.Admin.Api/SkorubaIdentityServer4Admin.Admin.Api.csproj"
+    },
+    {
+      "path": "src/SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared/SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.csproj"
     }
   ],
   "postActions": [
     {
       "actionId": "D396686C-DE0E-4DE6-906D-291CD29FC5DE",
       "args": {
-        "primaryOutputIndexes": "0;1"
+        "primaryOutputIndexes": "0;1;2;3"
       },
       "continueOnError": false,
       "manualInstructions": [

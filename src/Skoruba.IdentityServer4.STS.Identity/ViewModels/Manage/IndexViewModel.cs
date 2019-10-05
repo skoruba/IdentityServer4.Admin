@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Skoruba.IdentityServer4.STS.Identity.ViewModels.Manage
 {
