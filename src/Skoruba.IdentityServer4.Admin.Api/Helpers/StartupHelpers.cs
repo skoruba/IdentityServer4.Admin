@@ -150,10 +150,12 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
 
         public static void AddAuthorizationPolicies(this IServiceCollection services)
         {
+            var adminApiConfiguration = services.BuildServiceProvider().GetService<AdminApiConfiguration>();
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(AuthorizationConsts.AdministrationPolicy,
-                    policy => policy.RequireRole(AuthorizationConsts.AdministrationRole));
+                    policy => policy.RequireRole(adminApiConfiguration.AdministrationRole));
             });
         }
     }

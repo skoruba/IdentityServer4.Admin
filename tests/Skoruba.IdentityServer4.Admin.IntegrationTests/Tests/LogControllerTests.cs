@@ -1,30 +1,27 @@
 ﻿using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
-using Skoruba.IdentityServer4.Admin.IntegrationTests.Common;
+using Skoruba.IdentityServer4.Admin.IntegrationTests.Tests.Base;
 using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Tests
 {
-    public class LogControllerTests : IClassFixture<TestFixture>
+    public class LogControllerTests : BaseClassFixture
     {
-        private readonly HttpClient _client;
-
-        public LogControllerTests(TestFixture fixture)
+        public LogControllerTests(WebApplicationFactory<Startup> factory) : base(factory)
         {
-            _client = fixture.Client;
         }
 
         [Fact]
         public async Task ReturnRedirectInErrorsLogWithoutAdminRole()
         {
             //Remove
-            _client.DefaultRequestHeaders.Clear();
+            Client.DefaultRequestHeaders.Clear();
 
             // Act
-            var response = await _client.GetAsync("/log/errorslog");
+            var response = await Client.GetAsync("/log/errorslog");
 
             // Assert           
             response.StatusCode.Should().Be(HttpStatusCode.Redirect);
@@ -36,11 +33,10 @@ namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Tests
         [Fact]
         public async Task ReturnSuccessInErrorsLogWithAdminRole()
         {
-            //Get claims for admin
-            _client.SetAdminClaimsViaHeaders();
+            SetupAdminClaimsViaHeaders();
 
             // Act
-            var response = await _client.GetAsync("/log/errorslog");
+            var response = await Client.GetAsync("/log/errorslog");
 
             // Assert
             response.EnsureSuccessStatusCode();
