@@ -370,7 +370,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         new CultureInfo("fa"),
                         new CultureInfo("ru"),
                         new CultureInfo("sv"),
-                        new CultureInfo("zh")
+                        new CultureInfo("zh"),
+                        new CultureInfo("zh-Hant")
                 };
 
                 opts.DefaultRequestCulture = new RequestCulture("en");
@@ -432,7 +433,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         options =>
                         {
                             options.Cookie.Name = AuthenticationConsts.IdentityAdminCookieName;
-                            
+
                             // Issue: https://github.com/aspnet/Announcements/issues/318
                             options.Cookie.SameSite = SameSiteMode.None;
                         })
