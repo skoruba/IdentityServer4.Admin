@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using IdentityServer4.AccessTokenValidation;
+using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -100,6 +101,10 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(TUserDtoKey id)
         {
+            var currentUserId = User.GetSubjectId();
+            if (id.ToString() == currentUserId)
+                return StatusCode((int)System.Net.HttpStatusCode.Forbidden);
+
             var user = new TUserDto { Id = id };
 
             await _identityService.GetUserAsync(user.Id.ToString());
