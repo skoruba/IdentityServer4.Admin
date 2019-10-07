@@ -2,31 +2,32 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
+using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.IntegrationTests.Common;
+using Skoruba.IdentityServer4.Admin.IntegrationTests.Tests.Base;
 using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Tests
 {
-    public class ConfigurationControllerTests : IClassFixture<TestFixture>
+    public class ConfigurationControllerTests : BaseClassFixture
     {
-        private readonly HttpClient _client;
-
-        public ConfigurationControllerTests(TestFixture fixture)
+        public ConfigurationControllerTests(WebApplicationFactory<Startup> factory) 
+            : base(factory)
         {
-            _client = fixture.Client;
         }
 
         [Fact]
         public async Task ReturnSuccessWithAdminRole()
         {
-            //Get claims for admin
-            _client.SetAdminClaimsViaHeaders();
+            SetupAdminClaimsViaHeaders();
 
             foreach (var route in RoutesConstants.GetConfigureRoutes())
             {
                 // Act
-                var response = await _client.GetAsync($"/Configuration/{route}");
+                var response = await Client.GetAsync($"/Configuration/{route}");
 
                 // Assert
                 response.EnsureSuccessStatusCode();
@@ -34,16 +35,17 @@ namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Tests
             }
         }
 
+
         [Fact]
         public async Task ReturnRedirectWithoutAdminRole()
         {
             //Remove
-            _client.DefaultRequestHeaders.Clear();
+            Client.DefaultRequestHeaders.Clear();
 
             foreach (var route in RoutesConstants.GetConfigureRoutes())
             {
                 // Act
-                var response = await _client.GetAsync($"/Configuration/{route}");
+                var response = await Client.GetAsync($"/Configuration/{route}");
 
                 // Assert           
                 response.StatusCode.Should().Be(HttpStatusCode.Redirect);

@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
+using Skoruba.IdentityServer4.STS.Identity.Configuration.Intefaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 
 namespace Skoruba.IdentityServer4.STS.Identity
@@ -52,7 +53,8 @@ namespace Skoruba.IdentityServer4.STS.Identity
             services.AddMvcWithLocalization<UserIdentity, string>(Configuration);
 
             // Add authorization policies for MVC
-            services.AddAuthorizationPolicies();
+            var rootConfiguration = services.BuildServiceProvider().GetService<IRootConfiguration>();
+            services.AddAuthorizationPolicies(rootConfiguration);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

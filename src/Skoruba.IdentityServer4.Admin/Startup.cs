@@ -76,7 +76,7 @@ namespace Skoruba.IdentityServer4.Admin
                 RoleClaimsDto<string>>(Configuration);
 
             // Add authorization policies for MVC
-            services.AddAuthorizationPolicies();
+            services.AddAuthorizationPolicies(rootConfiguration);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

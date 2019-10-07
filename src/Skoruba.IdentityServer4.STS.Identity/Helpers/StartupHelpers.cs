@@ -433,12 +433,13 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// Add authorization policies
         /// </summary>
         /// <param name="services"></param>
-        public static void AddAuthorizationPolicies(this IServiceCollection services)
+        public static void AddAuthorizationPolicies(this IServiceCollection services,
+                IRootConfiguration rootConfiguration)
         {
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(AuthorizationConsts.AdministrationPolicy,
-                    policy => policy.RequireRole(AuthorizationConsts.AdministrationRole));
+                    policy => policy.RequireRole(rootConfiguration.AdminConfiguration.AdministrationRole));
             });
         }
     }
