@@ -292,12 +292,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// Add authorization policies
         /// </summary>
         /// <param name="services"></param>
-        public static void AddAuthorizationPolicies(this IServiceCollection services)
+        public static void AddAuthorizationPolicies(this IServiceCollection services, IRootConfiguration rootConfiguration)
         {
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(AuthorizationConsts.AdministrationPolicy,
-                    policy => policy.RequireRole(AuthorizationConsts.AdministrationRole));
+                    policy => policy.RequireRole(rootConfiguration.AdminConfiguration.AdministrationRole));
             });
         }
 
@@ -371,7 +371,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         new CultureInfo("fr"),
                         new CultureInfo("ru"),
                         new CultureInfo("sv"),
-                        new CultureInfo("zh")
+                        new CultureInfo("zh"),
+                        new CultureInfo("es")
                 };
 
                 opts.DefaultRequestCulture = new RequestCulture("en");
@@ -415,7 +416,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                     options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 })
                     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-                        options => { options.Cookie.Name = AuthenticationConsts.IdentityAdminCookieName; });
+                        options => { options.Cookie.Name = adminConfiguration.IdentityAdminCookieName; });
             }
             else
             {
@@ -432,19 +433,15 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
                         options =>
                         {
-                            options.Cookie.Name = AuthenticationConsts.IdentityAdminCookieName;
-                            
+                            options.Cookie.Name = adminConfiguration.IdentityAdminCookieName;
+
                             // Issue: https://github.com/aspnet/Announcements/issues/318
                             options.Cookie.SameSite = SameSiteMode.None;
                         })
                     .AddOpenIdConnect(AuthenticationConsts.OidcAuthenticationScheme, options =>
                     {
                         options.Authority = adminConfiguration.IdentityServerBaseUrl;
-#if DEBUG
-                        options.RequireHttpsMetadata = false;
-#else
-                        options.RequireHttpsMetadata = true;
-#endif
+                        options.RequireHttpsMetadata = adminConfiguration.RequireHttpsMetadata;
                         options.ClientId = adminConfiguration.ClientId;
                         options.ClientSecret = adminConfiguration.ClientSecret;
                         options.ResponseType = adminConfiguration.OidcResponseType;
@@ -455,7 +452,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                             options.Scope.Add(scope);
                         }
 
-                        options.ClaimActions.MapJsonKey(AuthenticationConsts.RoleClaim, AuthenticationConsts.RoleClaim, AuthenticationConsts.RoleClaim);
+                        options.ClaimActions.MapJsonKey(adminConfiguration.TokenValidationClaimRole, adminConfiguration.TokenValidationClaimRole, adminConfiguration.TokenValidationClaimRole);
 
                         options.SaveTokens = true;
 
@@ -463,14 +460,14 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
                         options.TokenValidationParameters = new TokenValidationParameters
                         {
-                            NameClaimType = JwtClaimTypes.Name,
-                            RoleClaimType = JwtClaimTypes.Role,
+                            NameClaimType = adminConfiguration.TokenValidationClaimName,
+                            RoleClaimType = adminConfiguration.TokenValidationClaimRole
                         };
 
                         options.Events = new OpenIdConnectEvents
                         {
-                            OnMessageReceived = OnMessageReceived,
-                            OnRedirectToIdentityProvider = n => OnRedirectToIdentityProvider(n, adminConfiguration)
+                            OnMessageReceived = context => OnMessageReceived(context, adminConfiguration),
+                            OnRedirectToIdentityProvider = context => OnRedirectToIdentityProvider(context, adminConfiguration)
                         };
                     });
             }
@@ -487,16 +484,18 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             services.AddOptions();
 
             services.Configure<AdminConfiguration>(configuration.GetSection(ConfigurationConsts.AdminConfigurationKey));
+            services.Configure<IdentityDataConfiguration>(configuration.GetSection(ConfigurationConsts.IdentityDataConfigurationKey));
+            services.Configure<IdentityServerDataConfiguration>(configuration.GetSection(ConfigurationConsts.IdentityServerDataConfigurationKey));
 
             services.TryAddSingleton<IRootConfiguration, RootConfiguration>();
 
             return services;
         }
 
-        private static Task OnMessageReceived(MessageReceivedContext context)
+        private static Task OnMessageReceived(MessageReceivedContext context, IAdminConfiguration adminConfiguration)
         {
             context.Properties.IsPersistent = true;
-            context.Properties.ExpiresUtc = new DateTimeOffset(DateTime.Now.AddHours(12));
+            context.Properties.ExpiresUtc = new DateTimeOffset(DateTime.Now.AddHours(adminConfiguration.IdentityAdminCookieExpiresUtcHours));
 
             return Task.FromResult(0);
         }

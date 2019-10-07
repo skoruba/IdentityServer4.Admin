@@ -2,23 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
 using HtmlAgilityPack;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Common;
 using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Mocks;
+using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests.Base;
 using Xunit;
 
 namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
 {
-    public class AccountControllerTests : IClassFixture<TestFixture>
+    public class AccountControllerTests : BaseClassFixture
     {
-        private readonly HttpClient _client;
-
-        public AccountControllerTests(TestFixture fixture)
+        public AccountControllerTests(WebApplicationFactory<Startup> factory) : base(factory)
         {
-            _client = fixture.Client;
         }
 
         [Fact]
