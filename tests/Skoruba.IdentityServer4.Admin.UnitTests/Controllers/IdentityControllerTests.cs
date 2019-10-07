@@ -25,6 +25,7 @@ using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Skoruba.IdentityServer4.Admin.Helpers;
 using Skoruba.IdentityServer4.Admin.Helpers.Localization;
 using Xunit;
+using System.Security.Claims;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 {
@@ -88,13 +89,28 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var userId = await dbContext.Users.Where(x => x.UserName == userDto.UserName).Select(x => x.Id).SingleOrDefaultAsync();
             userDto.Id = userId;
 
+            // A user cannot delete own account
+            var subjectClaim = new Claim(IdentityModel.JwtClaimTypes.Subject, userDto.Id);
+            ProvideControllerContextWithClaimsPrincipal(controller, subjectClaim);            
+            
             var result = await controller.UserDelete(userDto);
 
             // Assert            
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
-            viewResult.ActionName.Should().Be("Users");
+            viewResult.ActionName.Should().Be("UserDelete", "Users cannot delete their own account");
 
             var user = await dbContext.Users.Where(x => x.Id == userDto.Id).SingleOrDefaultAsync();
+            user.Should().NotBeNull();
+
+            subjectClaim = new Claim(IdentityModel.JwtClaimTypes.Subject, "1");
+            ProvideControllerContextWithClaimsPrincipal(controller, subjectClaim);
+            result = await controller.UserDelete(userDto);
+
+            // Assert            
+            viewResult = Assert.IsType<RedirectToActionResult>(result);
+            viewResult.ActionName.Should().Be("Users");
+
+            user = await dbContext.Users.Where(x => x.Id == userDto.Id).SingleOrDefaultAsync();
             user.Should().BeNull();
         }
 
@@ -626,6 +642,18 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             services.AddLogging();
 
             return services.BuildServiceProvider();
+        }
+
+        private void ProvideControllerContextWithClaimsPrincipal(ControllerBase controller, params Claim[] claims)
+        {
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = new System.Security.Claims.ClaimsPrincipal(
+                        new ClaimsIdentity(claims, "mock"))
+                }
+            };
         }
     }
 }
