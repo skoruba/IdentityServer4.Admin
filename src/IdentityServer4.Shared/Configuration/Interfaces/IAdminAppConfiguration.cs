@@ -1,4 +1,4 @@
-﻿namespace Skoruba.IdentityServer4.Shared.Configuration.Interfaces
+﻿namespace IdentityServer4.Shared.Configuration.Interfaces
 {
     public interface IAdminAppConfiguration
     {

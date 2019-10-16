@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using IdentityServer4.Models;
-using Skoruba.IdentityServer4.Shared.Configuration.Interfaces;
+using IdentityServer4.Shared.Configuration.Interfaces;
 
-namespace Skoruba.IdentityServer4.Shared.Configuration.IdentityServer
+namespace IdentityServer4.Shared.Configuration.IdentityServer
 {
     public class ClientResources
     {

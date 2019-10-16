@@ -1,6 +1,6 @@
-﻿using Skoruba.IdentityServer4.Shared.Configuration.Intefaces;
+﻿using IdentityServer4.Shared.Configuration.Intefaces;
 
-namespace Skoruba.IdentityServer4.STS.Identity.Configuration
+namespace IdentityServer4.STS.Identity.Configuration
 {
     public class RegisterConfiguration : IRegisterConfiguration
     {

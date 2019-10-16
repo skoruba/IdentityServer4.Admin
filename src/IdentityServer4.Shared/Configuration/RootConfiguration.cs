@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Options;
-using Skoruba.IdentityServer4.Shared.Configuration.Intefaces;
-using Skoruba.IdentityServer4.Shared.Configuration.Interfaces;
-using Skoruba.IdentityServer4.STS.Identity.Configuration;
+using IdentityServer4.Shared.Configuration.Intefaces;
+using IdentityServer4.Shared.Configuration.Interfaces;
+using IdentityServer4.STS.Identity.Configuration;
 
-namespace Skoruba.IdentityServer4.Shared.Configuration
+namespace IdentityServer4.Shared.Configuration
 {
     public class RootConfiguration : IRootConfiguration
     {

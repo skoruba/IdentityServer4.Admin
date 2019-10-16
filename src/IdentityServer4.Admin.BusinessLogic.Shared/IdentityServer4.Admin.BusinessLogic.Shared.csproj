@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>	
+	  <PackageTags>IdentityServer4 Admin OpenIDConnect OAuth2 Identity</PackageTags>
+	  <Description>Shared Business Logic layer for the administration of the IdentityServer4 and Asp.Net Core Identity</Description>
+  </PropertyGroup>
+
+</Project>

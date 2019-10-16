@@ -1,4 +1,4 @@
-﻿namespace Skoruba.IdentityServer4.Shared.Configuration.Identity
+﻿namespace IdentityServer4.Shared.Configuration.Identity
 {
     public class Users
     {
