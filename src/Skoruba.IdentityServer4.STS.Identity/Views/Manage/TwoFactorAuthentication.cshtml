@@ -6,10 +6,10 @@
 }
 
 <div class="row">
-
     <div class="col-12">
         <h3>@ViewData["Title"]</h3>
     </div>
+    @await Html.PartialAsync("_StatusMessage", Model.Status)
 
     @if (Model.Is2faEnabled)
     {
@@ -55,7 +55,6 @@
             <a asp-action="GenerateRecoveryCodesWarning" class="btn btn-danger">@Localizer["ResetCodes"]</a>
         </div>
     }
-
 </div>
 
 <div class="row">

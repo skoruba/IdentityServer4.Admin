@@ -281,10 +281,16 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, HttpContext.Request.Scheme);
 
-                await _emailSender.SendEmailAsync(model.Email, _localizer["ResetPasswordTitle"], _localizer["ResetPasswordBody", HtmlEncoder.Default.Encode(callbackUrl)]);
+                try
+                {
+                    await _emailSender.SendEmailAsync(model.Email, _localizer["ResetPasswordTitle"], _localizer["ResetPasswordBody", HtmlEncoder.Default.Encode(callbackUrl)]);
 
-
-                return View("ForgotPasswordConfirmation");
+                    return View("ForgotPasswordConfirmation");
+                }
+                catch(Exception ex)
+                {
+                    ModelState.AddModelError("", _localizer["ErrorSendingResetEmail", ex.Message]);
+                }                
             }
 
             return View(model);
@@ -574,12 +580,21 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, HttpContext.Request.Scheme);
 
-                await _emailSender.SendEmailAsync(model.Email, _localizer["ConfirmEmailTitle"], _localizer["ConfirmEmailBody", HtmlEncoder.Default.Encode(callbackUrl)]);
+                try
+                {
+                    await _emailSender.SendEmailAsync(model.Email, _localizer["ConfirmEmailTitle"], _localizer["ConfirmEmailBody", HtmlEncoder.Default.Encode(callbackUrl)]);
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", _localizer["ErrorSendingVerificationEmail", ex.Message]);
+                    return View(model);
+                }
+
                 await _signInManager.SignInAsync(user, isPersistent: false);
 
                 return RedirectToLocal(returnUrl);
             }
-
+            
             AddErrors(result);
 
             // If we got this far, something failed, redisplay form

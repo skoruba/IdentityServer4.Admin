@@ -84,10 +84,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
             var responseMessage = await _client.SendAsync(requestWithIdentityCookie);
 
             // Assert      
-            responseMessage.StatusCode.Should().Be(HttpStatusCode.Redirect);
-
-            //The redirect to login
-            responseMessage.Headers.Location.ToString().Should().Be("/Manage");
+            responseMessage.StatusCode.Should().Be(HttpStatusCode.OK);
         }
     }
 }

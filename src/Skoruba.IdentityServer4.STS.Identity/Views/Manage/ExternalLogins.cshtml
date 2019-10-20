@@ -5,7 +5,7 @@
     ViewData["Title"] = Localizer["Title"];
 }
 
-@await Html.PartialAsync("_StatusMessage", Model.StatusMessage)
+@await Html.PartialAsync("_StatusMessage", Model.Status)
 
 @if (Model.CurrentLogins?.Count > 0)
 {

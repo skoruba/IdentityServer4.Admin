@@ -12,6 +12,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.ViewModels.Manage
 
         public bool ShowRemoveButton { get; set; }
 
-        public string StatusMessage { get; set; }
+        public StatusViewModel Status { get; set; }
     }
 }

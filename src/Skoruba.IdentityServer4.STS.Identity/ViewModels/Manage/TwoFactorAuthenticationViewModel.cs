@@ -9,5 +9,7 @@
         public bool Is2faEnabled { get; set; }
 
         public bool IsMachineRemembered { get; set; }
+
+        public StatusViewModel Status { get; set; }
     }
 }
