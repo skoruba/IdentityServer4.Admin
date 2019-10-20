@@ -41,9 +41,8 @@
     <div class="menu d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
         <!--Site name -->
         <h3 class="menu-logo my-0 mr-md-auto font-weight-normal"><a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Title"]</a></h3>
-
         <!--Menu item -->
-        @if (User.Identity.IsAuthenticated)
+        @if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(name))
         {
             <!--Menu item -->
             <vc:identity-server-admin-link></vc:identity-server-admin-link>
@@ -67,6 +66,10 @@
             </div>
 
             <a class="menu-item my-2 btn btn-outline-primary" asp-action="Logout" asp-controller="Account">@Localizer["Signout"]</a>
+        }
+        else
+        {
+            <a class="menu-item my-2 btn btn-outline-primary" asp-action="Login" asp-controller="Account" asp-route-returnUrl="~/" asp-route-forceLoginScreen="true">@Localizer["Login"]</a>
         }
 
         <!--Menu button - show in < MD -->
