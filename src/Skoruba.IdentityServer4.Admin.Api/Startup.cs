@@ -6,10 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Skoruba.IdentityServer4.Admin.Api.Configuration;
 using Skoruba.IdentityServer4.Admin.Api.Configuration.Authorization;
-using Skoruba.IdentityServer4.Admin.Api.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.Api.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Api.Helpers;
 using Skoruba.IdentityServer4.Admin.Api.Mappers;
+using Skoruba.IdentityServer4.Admin.Api.Resources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
@@ -48,6 +48,7 @@ namespace Skoruba.IdentityServer4.Admin.Api
 
             services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>(Configuration);
             services.AddScoped<ControllerExceptionFilterAttribute>();
+            services.AddScoped<IApiErrorResources, ApiErrorResources>();
 
             services.AddApiAuthentication<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(adminApiConfiguration);
             services.AddAuthorizationPolicies();
@@ -92,6 +93,8 @@ namespace Skoruba.IdentityServer4.Admin.Api
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, AdminApiConfiguration adminApiConfiguration)
         {
+            app.AddLogging(Configuration);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
