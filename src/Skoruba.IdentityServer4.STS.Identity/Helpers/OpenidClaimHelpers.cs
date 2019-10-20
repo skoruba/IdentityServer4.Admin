@@ -16,27 +16,27 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             var addressJson = new JObject();
             if (!string.IsNullOrWhiteSpace(profile.StreetAddress))
             {
-                 addressJson[AddressClaimConstants.StreetAddress] = profile.StreetAddress;
+                addressJson[AddressClaimConstants.StreetAddress] = profile.StreetAddress;
             }
 
             if (!string.IsNullOrWhiteSpace(profile.Locality))
             {
-                 addressJson[AddressClaimConstants.Locality] = profile.Locality;
+                addressJson[AddressClaimConstants.Locality] = profile.Locality;
             }
 
             if (!string.IsNullOrWhiteSpace(profile.Region))
             {
-                 addressJson[AddressClaimConstants.Region] = profile.Region;
+                addressJson[AddressClaimConstants.Region] = profile.Region;
             }
 
             if (!string.IsNullOrWhiteSpace(profile.PostalCode))
             {
-                 addressJson[AddressClaimConstants.PostalCode] = profile.PostalCode;
+                addressJson[AddressClaimConstants.PostalCode] = profile.PostalCode;
             }
 
             if (!string.IsNullOrWhiteSpace(profile.Country))
             {
-                 addressJson[AddressClaimConstants.Country] = profile.Country;
+                addressJson[AddressClaimConstants.Country] = profile.Country;
             }
 
 
@@ -54,7 +54,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             {
                 FullName = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Name)?.Value,
                 Website = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.WebSite)?.Value,
-                Profile = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Profile)?.Value
+                Profile = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Profile)?.Value,
+                Picture = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Picture)?.Value
             };
 
             var address = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Address)?.Value;
@@ -175,7 +176,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <param name="oldClaims"></param>
         /// <param name="newProfile"></param>
         /// <returns></returns>
-        public static IList<Tuple<Claim,Claim>> ExtractClaimsToReplace(IList<Claim> oldClaims, OpenIdProfile newProfile)
+        public static IList<Tuple<Claim, Claim>> ExtractClaimsToReplace(IList<Claim> oldClaims, OpenIdProfile newProfile)
         {
             var oldProfile = ExtractProfileInfo(oldClaims);
             var claimsToReplace = new List<Tuple<Claim, Claim>>();
