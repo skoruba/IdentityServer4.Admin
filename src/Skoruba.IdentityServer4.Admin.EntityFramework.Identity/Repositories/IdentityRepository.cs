@@ -284,20 +284,20 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
 
         public virtual async Task<int> DeleteUserClaimsAsync(string userId, int claimId)
         {
-            var user = await UserManager.FindByIdAsync(userId).ConfigureAwait(false);;
+            var user = await UserManager.FindByIdAsync(userId);
             var userClaim = await DbContext.Set<TUserClaim>().Where(x => x.Id == claimId).SingleOrDefaultAsync();
 
-            await UserManager.RemoveClaimAsync(user, new Claim(userClaim.ClaimType, userClaim.ClaimValue)).ConfigureAwait(false);
+            await UserManager.RemoveClaimAsync(user, new Claim(userClaim.ClaimType, userClaim.ClaimValue));
 
             return await AutoSaveChangesAsync();
         }
 
         public virtual async Task<int> DeleteRoleClaimsAsync(string roleId, int claimId)
         {
-            var role = await RoleManager.FindByIdAsync(roleId).ConfigureAwait(false);
+            var role = await RoleManager.FindByIdAsync(roleId);
             var roleClaim = await DbContext.Set<TRoleClaim>().Where(x => x.Id == claimId).SingleOrDefaultAsync();
 
-            await RoleManager.RemoveClaimAsync(role, new Claim(roleClaim.ClaimType, roleClaim.ClaimValue)).ConfigureAwait(false);
+            await RoleManager.RemoveClaimAsync(role, new Claim(roleClaim.ClaimType, roleClaim.ClaimValue));
 
             return await AutoSaveChangesAsync();
         }
