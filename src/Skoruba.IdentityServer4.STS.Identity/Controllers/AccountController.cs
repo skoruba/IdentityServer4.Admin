@@ -540,7 +540,15 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             ViewData["ReturnUrl"] = returnUrl;
 
-            return View();
+            switch (_loginConfiguration.ResolutionPolicy)
+            {
+                case LoginResolutionPolicy.Username:
+                    return View();
+                case LoginResolutionPolicy.Email:
+                    return View("RegisterWithoutUsername");
+                default:
+                    return View("RegisterFailure");
+            }
         }
 
         [HttpPost]
@@ -577,6 +585,23 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterWithoutUsername(RegisterWithoutUsernameViewModel model, string returnUrl = null)
+        {
+            var registerModel = new RegisterViewModel
+            {
+                UserName = model.Email,
+                Email = model.Email,
+                Password = model.Password,
+                ConfirmPassword = model.ConfirmPassword
+            };
+
+            return await Register(registerModel, returnUrl);
+        }
+        
 
         /*****************************************/
         /* helper APIs for the AccountController */

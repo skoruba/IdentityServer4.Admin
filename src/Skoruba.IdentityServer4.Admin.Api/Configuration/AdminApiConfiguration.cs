@@ -8,6 +8,8 @@
 
         public string IdentityServerBaseUrl { get; set; }
 
+        public string ApiBaseUrl { get; set; }
+
         public string OidcSwaggerUIClientId { get; set; }
 
         public bool RequireHttpsMetadata { get; set; }
