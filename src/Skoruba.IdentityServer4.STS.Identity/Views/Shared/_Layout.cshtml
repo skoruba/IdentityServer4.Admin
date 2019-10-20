@@ -67,10 +67,6 @@
 
             <a class="menu-item my-2 btn btn-outline-primary" asp-action="Logout" asp-controller="Account">@Localizer["Signout"]</a>
         }
-        else
-        {
-            <a class="menu-item my-2 btn btn-outline-primary" asp-action="Login" asp-controller="Account" asp-route-returnUrl="~/" asp-route-forceLoginScreen="true">@Localizer["Login"]</a>
-        }
 
         <!--Menu button - show in < MD -->
         <a class="my-2 btn btn-outline-primary menu-button" href="#">
