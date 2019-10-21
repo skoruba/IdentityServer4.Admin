@@ -12,5 +12,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers.ADUtilities
         // Given a list of roles, returns only those that are Windows groups that comply with the configured policy
         IEnumerable<string> FilterADGroups(IEnumerable<string> adGroups);
         WindowsIdentity LogonWindowsUser(string username, string password, string domain = null);
+        IEnumerable<string> ReadAllUsernamesFromAD();
     }
 }

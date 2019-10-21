@@ -42,6 +42,46 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers.ADUtilities
                 }
             }
         }
+
+        public IEnumerable<string> ReadAllUsernamesFromAD()
+        {
+            string OURoot;
+            if (string.IsNullOrEmpty(_windowsAuthConfiguration.WindowsUsersOURoot))
+            {
+                DirectoryEntry rootDSE = new DirectoryEntry("LDAP://rootDSE");
+                OURoot = rootDSE.Properties["defaultNamingContext"].Value.ToString();
+            }
+            else
+            {
+                OURoot = _windowsAuthConfiguration.WindowsUsersOURoot;
+            }
+
+            string ADSPath = $"LDAP://{OURoot}";
+            DirectoryEntry entry = new DirectoryEntry(ADSPath);
+            if (!string.IsNullOrEmpty(_windowsAuthConfiguration.DomainUserName))
+            {
+                entry.Username = _windowsAuthConfiguration.DomainUserName;
+                entry.Password = _windowsAuthConfiguration.DomainUserPassword;
+            }
+
+            DirectorySearcher searcher = new DirectorySearcher(entry)
+            {
+                Filter = $"(ObjectClass=person)"
+            };
+            foreach (var userEntry in searcher.FindAll())
+            {
+                if (userEntry is SearchResult res)
+                {
+                    if (res.Properties.Contains("displayName") &&
+                        res.Properties.Contains("mail") &&
+                        res.Properties.Contains("sAMAccountName"))
+                    {
+                        yield return res.Properties["sAMAccountName"][0].ToString();
+                    }
+                }
+            }
+        }
+
         public ADProperties GetUserInfoFromAD(string userId)
         {
             var ret = new ADProperties();
