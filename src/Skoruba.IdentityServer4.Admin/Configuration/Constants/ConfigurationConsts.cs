@@ -19,5 +19,7 @@
         public const string IdentityServerDataConfigurationKey = "IdentityServerData";
 
         public const string IdentityDataConfigurationKey = "IdentityData";
+
+        public const string AuditLoggingDbConnectionStringKey = "AuditLoggingDbConnection";
     }
 }
