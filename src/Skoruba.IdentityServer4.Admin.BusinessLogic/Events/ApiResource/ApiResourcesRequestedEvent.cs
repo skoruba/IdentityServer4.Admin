@@ -3,9 +3,9 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Events.ApiResource
 {
-    public class ApiResourcesRequested : AuditEvent
+    public class ApiResourcesRequestedEvent : AuditEvent
     {
-        public ApiResourcesRequested(ApiResourcesDto apiResources)
+        public ApiResourcesRequestedEvent(ApiResourcesDto apiResources)
         {
             ApiResources = apiResources;
         }

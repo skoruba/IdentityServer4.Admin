@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
+using Skoruba.AuditLogging.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Events.IdentityResource;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
@@ -13,18 +15,23 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
     {
         protected readonly IIdentityResourceRepository IdentityResourceRepository;
         protected readonly IIdentityResourceServiceResources IdentityResourceServiceResources;
+        protected readonly IAuditEventLogger AuditEventLogger;
 
         public IdentityResourceService(IIdentityResourceRepository identityResourceRepository,
-            IIdentityResourceServiceResources identityResourceServiceResources)
+            IIdentityResourceServiceResources identityResourceServiceResources,
+            IAuditEventLogger auditEventLogger)
         {
             IdentityResourceRepository = identityResourceRepository;
             IdentityResourceServiceResources = identityResourceServiceResources;
+            AuditEventLogger = auditEventLogger;
         }
 
         public virtual async Task<IdentityResourcesDto> GetIdentityResourcesAsync(string search, int page = 1, int pageSize = 10)
         {
             var pagedList = await IdentityResourceRepository.GetIdentityResourcesAsync(search, page, pageSize);
             var identityResourcesDto = pagedList.ToModel();
+
+            await AuditEventLogger.LogEventAsync(new IdentityResourcesRequestedEvent(identityResourcesDto));
 
             return identityResourcesDto;
         }
@@ -36,6 +43,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var identityResourceDto = identityResource.ToModel();
 
+            await AuditEventLogger.LogEventAsync(new IdentityResourceRequestedEvent(identityResourceDto));
+
             return identityResourceDto;
         }
 
@@ -45,11 +54,13 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             if (identityResource == null) throw new UserFriendlyErrorPageException(string.Format(IdentityResourceServiceResources.IdentityResourceDoesNotExist().Description, identityResourceId), IdentityResourceServiceResources.IdentityResourceDoesNotExist().Description);
 
             var pagedList = await IdentityResourceRepository.GetIdentityResourcePropertiesAsync(identityResourceId, page, pageSize);
-            var apiResourcePropertiesDto = pagedList.ToModel();
-            apiResourcePropertiesDto.IdentityResourceId = identityResourceId;
-            apiResourcePropertiesDto.IdentityResourceName = identityResource.Name;
+            var identityResourcePropertiesAsync = pagedList.ToModel();
+            identityResourcePropertiesAsync.IdentityResourceId = identityResourceId;
+            identityResourcePropertiesAsync.IdentityResourceName = identityResource.Name;
 
-            return apiResourcePropertiesDto;
+            await AuditEventLogger.LogEventAsync(new IdentityResourcePropertiesRequestedEvent(identityResourcePropertiesAsync));
+
+            return identityResourcePropertiesAsync;
         }
 
         public virtual async Task<IdentityResourcePropertiesDto> GetIdentityResourcePropertyAsync(int identityResourcePropertyId)
@@ -62,6 +73,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             var identityResourcePropertiesDto = identityResourceProperty.ToModel();
             identityResourcePropertiesDto.IdentityResourceId = identityResourceProperty.IdentityResourceId;
             identityResourcePropertiesDto.IdentityResourceName = identityResource.Name;
+
+            await AuditEventLogger.LogEventAsync(new IdentityResourcePropertyRequestedEvent(identityResourcePropertiesDto));
 
             return identityResourcePropertiesDto;
         }
@@ -77,7 +90,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var identityResourceProperty = identityResourceProperties.ToEntity();
 
-            return await IdentityResourceRepository.AddIdentityResourcePropertyAsync(identityResourceProperties.IdentityResourceId, identityResourceProperty);
+            var added = await IdentityResourceRepository.AddIdentityResourcePropertyAsync(identityResourceProperties.IdentityResourceId, identityResourceProperty);
+
+            await AuditEventLogger.LogEventAsync(new IdentityResourcePropertyAddedEvent(identityResourceProperties));
+
+            return added;
         }
 
         private async Task BuildIdentityResourcePropertiesViewModelAsync(IdentityResourcePropertiesDto identityResourceProperties)
@@ -98,7 +115,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
         {
             var propertyEntity = identityResourceProperty.ToEntity();
 
-            return await IdentityResourceRepository.DeleteIdentityResourcePropertyAsync(propertyEntity);
+            var deleted = await IdentityResourceRepository.DeleteIdentityResourcePropertyAsync(propertyEntity);
+
+            await AuditEventLogger.LogEventAsync(new IdentityResourcePropertyDeletedEvent(identityResourceProperty));
+
+            return deleted;
         }
 
         public virtual async Task<bool> CanInsertIdentityResourceAsync(IdentityResourceDto identityResource)
@@ -118,7 +139,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var resource = identityResource.ToEntity();
 
-            return await IdentityResourceRepository.AddIdentityResourceAsync(resource);
+            var saved = await IdentityResourceRepository.AddIdentityResourceAsync(resource);
+
+            await AuditEventLogger.LogEventAsync(new IdentityResourceAddedEvent(identityResource));
+
+            return saved;
         }
 
         public virtual async Task<int> UpdateIdentityResourceAsync(IdentityResourceDto identityResource)
@@ -131,14 +156,24 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var resource = identityResource.ToEntity();
 
-            return await IdentityResourceRepository.UpdateIdentityResourceAsync(resource);
+            var updated = await IdentityResourceRepository.UpdateIdentityResourceAsync(resource);
+
+            var originalIdentityResource = await GetIdentityResourceAsync(resource.Id);
+
+            await AuditEventLogger.LogEventAsync(new IdentityResourceUpdatedEvent(originalIdentityResource, identityResource));
+
+            return updated;
         }
 
         public virtual async Task<int> DeleteIdentityResourceAsync(IdentityResourceDto identityResource)
         {
             var resource = identityResource.ToEntity();
 
-            return await IdentityResourceRepository.DeleteIdentityResourceAsync(resource);
+            var deleted = await IdentityResourceRepository.DeleteIdentityResourceAsync(resource);
+
+            await AuditEventLogger.LogEventAsync(new IdentityResourceDeletedEvent(identityResource));
+
+            return deleted;
         }
 
         public virtual IdentityResourceDto BuildIdentityResourceViewModel(IdentityResourceDto identityResource)

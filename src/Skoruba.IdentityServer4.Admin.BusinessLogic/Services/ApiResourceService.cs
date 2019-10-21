@@ -2,7 +2,6 @@
 using IdentityServer4.Models;
 using Skoruba.AuditLogging.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Events;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Events.ApiResource;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
@@ -38,7 +37,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             var pagedList = await ApiResourceRepository.GetApiResourcesAsync(search, page, pageSize);
             var apiResourcesDto = pagedList.ToModel();
 
-            await AuditEventLogger.LogEventAsync(new ApiResourcesRequested(apiResourcesDto));
+            await AuditEventLogger.LogEventAsync(new ApiResourcesRequestedEvent(apiResourcesDto));
 
             return apiResourcesDto;
         }
@@ -53,7 +52,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             apiResourcePropertiesDto.ApiResourceId = apiResourceId;
             apiResourcePropertiesDto.ApiResourceName = await ApiResourceRepository.GetApiResourceNameAsync(apiResourceId);
 
-            await AuditEventLogger.LogEventAsync(new ApiResourcePropertiesRequested(apiResourceId, apiResourcePropertiesDto));
+            await AuditEventLogger.LogEventAsync(new ApiResourcePropertiesRequestedEvent(apiResourceId, apiResourcePropertiesDto));
 
             return apiResourcePropertiesDto;
         }
@@ -67,7 +66,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             apiResourcePropertiesDto.ApiResourceId = apiResourceProperty.ApiResourceId;
             apiResourcePropertiesDto.ApiResourceName = await ApiResourceRepository.GetApiResourceNameAsync(apiResourceProperty.ApiResourceId);
 
-            await AuditEventLogger.LogEventAsync(new ApiResourcePropertyRequested(apiResourcePropertyId, apiResourcePropertiesDto));
+            await AuditEventLogger.LogEventAsync(new ApiResourcePropertyRequestedEvent(apiResourcePropertyId, apiResourcePropertiesDto));
 
             return apiResourcePropertiesDto;
         }
@@ -85,8 +84,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var saved = await ApiResourceRepository.AddApiResourcePropertyAsync(apiResourceProperties.ApiResourceId, apiResourceProperty);
 
-            await AuditEventLogger.LogEventAsync(new ApiResourcePropertyAdded(apiResourceProperties));
-                
+            await AuditEventLogger.LogEventAsync(new ApiResourcePropertyAddedEvent(apiResourceProperties));
+
             return saved;
         }
 
@@ -96,7 +95,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var deleted = await ApiResourceRepository.DeleteApiResourcePropertyAsync(propertyEntity);
 
-            await AuditEventLogger.LogEventAsync(new ApiResourcePropertyDeleted(apiResourceProperty));
+            await AuditEventLogger.LogEventAsync(new ApiResourcePropertyDeletedEvent(apiResourceProperty));
 
             return deleted;
         }
@@ -136,7 +135,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             if (apiResource == null) throw new UserFriendlyErrorPageException(ApiResourceServiceResources.ApiResourceDoesNotExist().Description, ApiResourceServiceResources.ApiResourceDoesNotExist().Description);
             var apiResourceDto = apiResource.ToModel();
 
-            await AuditEventLogger.LogEventAsync(new ApiResourceRequested(apiResourceId, apiResourceDto));
+            await AuditEventLogger.LogEventAsync(new ApiResourceRequestedEvent(apiResourceId, apiResourceDto));
 
             return apiResourceDto;
         }
@@ -153,7 +152,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var added = await ApiResourceRepository.AddApiResourceAsync(resource);
 
-            await AuditEventLogger.LogEventAsync(new ApiResourceAdded(apiResource));
+            await AuditEventLogger.LogEventAsync(new ApiResourceAddedEvent(apiResource));
 
             return added;
         }
@@ -170,7 +169,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var originalApiResource = await GetApiResourceAsync(apiResource.Id);
 
-            await AuditEventLogger.LogEventAsync(new ApiResourceUpdated(originalApiResource, apiResource));
+            await AuditEventLogger.LogEventAsync(new ApiResourceUpdatedEvent(originalApiResource, apiResource));
 
             return await ApiResourceRepository.UpdateApiResourceAsync(resource);
         }
@@ -181,7 +180,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var deleted = await ApiResourceRepository.DeleteApiResourceAsync(resource);
 
-            await AuditEventLogger.LogEventAsync(new ApiResourceDeleted(apiResource));
+            await AuditEventLogger.LogEventAsync(new ApiResourceDeletedEvent(apiResource));
 
             return deleted;
         }
@@ -204,6 +203,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             apiScopesDto.ApiResourceId = apiResourceId;
             apiScopesDto.ResourceName = await GetApiResourceNameAsync(apiResourceId);
 
+            await AuditEventLogger.LogEventAsync(new ApiScopesRequestedEvent(apiScopesDto));
+
             return apiScopesDto;
         }
 
@@ -217,6 +218,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var apiScopesDto = apiScope.ToModel();
             apiScopesDto.ResourceName = await GetApiResourceNameAsync(apiResourceId);
+
+            await AuditEventLogger.LogEventAsync(new ApiScopeRequestedEvent(apiScopesDto));
 
             return apiScopesDto;
         }
@@ -232,7 +235,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var scope = apiScope.ToEntity();
 
-            return await ApiResourceRepository.AddApiScopeAsync(apiScope.ApiResourceId, scope);
+            var added = await ApiResourceRepository.AddApiScopeAsync(apiScope.ApiResourceId, scope);
+
+            await AuditEventLogger.LogEventAsync(new ApiScopeAddedEvent(apiScope));
+
+            return added;
         }
 
         public virtual ApiScopesDto BuildApiScopeViewModel(ApiScopesDto apiScope)
@@ -270,14 +277,24 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var scope = apiScope.ToEntity();
 
-            return await ApiResourceRepository.UpdateApiScopeAsync(apiScope.ApiResourceId, scope);
+            var updated = await ApiResourceRepository.UpdateApiScopeAsync(apiScope.ApiResourceId, scope);
+
+            var originalApiScope = await GetApiScopeAsync(apiScope.ApiResourceId, apiScope.ApiScopeId);
+            
+            await AuditEventLogger.LogEventAsync(new ApiScopeUpdatedEvent(originalApiScope, apiScope));
+
+            return updated;
         }
 
         public virtual async Task<int> DeleteApiScopeAsync(ApiScopesDto apiScope)
         {
             var scope = apiScope.ToEntity();
 
-            return await ApiResourceRepository.DeleteApiScopeAsync(scope);
+            var deleted = await ApiResourceRepository.DeleteApiScopeAsync(scope);
+
+            await AuditEventLogger.LogEventAsync(new ApiScopeDeletedEvent(apiScope));
+
+            return deleted;
         }
 
         public virtual async Task<ApiSecretsDto> GetApiSecretsAsync(int apiResourceId, int page = 1, int pageSize = 10)
@@ -291,6 +308,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             apiSecretsDto.ApiResourceId = apiResourceId;
             apiSecretsDto.ApiResourceName = await ApiResourceRepository.GetApiResourceNameAsync(apiResourceId);
 
+            await AuditEventLogger.LogEventAsync(new ApiSecretsRequestedEvent(apiSecretsDto));
+
             return apiSecretsDto;
         }
 
@@ -300,7 +319,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var secret = apiSecret.ToEntity();
 
-            return await ApiResourceRepository.AddApiSecretAsync(apiSecret.ApiResourceId, secret);
+            var added = await ApiResourceRepository.AddApiSecretAsync(apiSecret.ApiResourceId, secret);
+
+            await AuditEventLogger.LogEventAsync(new ApiSecretAddedEvent(apiSecret));
+
+            return added;
         }
 
         public virtual async Task<ApiSecretsDto> GetApiSecretAsync(int apiSecretId)
@@ -309,6 +332,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             if (apiSecret == null) throw new UserFriendlyErrorPageException(string.Format(ApiResourceServiceResources.ApiSecretDoesNotExist().Description, apiSecretId), ApiResourceServiceResources.ApiSecretDoesNotExist().Description);
             var apiSecretsDto = apiSecret.ToModel();
 
+            await AuditEventLogger.LogEventAsync(new ApiSecretRequestedEvent(apiSecretsDto));
+
             return apiSecretsDto;
         }
 
@@ -316,7 +341,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
         {
             var secret = apiSecret.ToEntity();
 
-            return await ApiResourceRepository.DeleteApiSecretAsync(secret);
+            var deleted = await ApiResourceRepository.DeleteApiSecretAsync(secret);
+
+            await AuditEventLogger.LogEventAsync(new ApiSecretDeletedEvent(apiSecret));
+
+            return deleted;
         }
 
         public virtual async Task<bool> CanInsertApiScopeAsync(ApiScopesDto apiScopes)

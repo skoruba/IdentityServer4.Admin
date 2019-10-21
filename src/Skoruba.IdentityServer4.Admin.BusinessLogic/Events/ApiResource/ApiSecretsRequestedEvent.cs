@@ -3,13 +3,13 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Events.ApiResource
 {
-    public class ApiResourceAdded : AuditEvent
+    public class ApiSecretsRequestedEvent : AuditEvent
     {
-        public ApiResourceDto ApiResource { get; }
+        public ApiSecretsDto ApiSecrets { get; set; }
 
-        public ApiResourceAdded(ApiResourceDto apiResource)
+        public ApiSecretsRequestedEvent(ApiSecretsDto apiSecrets)
         {
-            ApiResource = apiResource;
+            ApiSecrets = apiSecrets;
         }
     }
 }
