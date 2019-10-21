@@ -185,7 +185,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
         {
             var clientEntity = client.ToEntity();
 
-            return await ClientRepository.RemoveClientAsync(clientEntity);
+            var deleted = await ClientRepository.RemoveClientAsync(clientEntity);
+
+            await AuditEventLogger.LogEventAsync(new ClientDeletedEvent(client));
+
+            return deleted;
         }
 
         public virtual async Task<int> CloneClientAsync(ClientCloneDto client)
@@ -208,6 +212,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
                 client.CloneClientPostLogoutRedirectUris,
                 client.CloneClientScopes, client.CloneClientRedirectUris, client.CloneClientClaims, client.CloneClientProperties);
 
+            await AuditEventLogger.LogEventAsync(new ClientClonedEvent(client));
+
             return clonedClientId;
         }
 
@@ -226,6 +232,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var clientDto = client.ToModel();
 
+            await AuditEventLogger.LogEventAsync(new ClientRequestedEvent(clientDto));
+
             return clientDto;
         }
 
@@ -233,6 +241,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
         {
             var pagedList = await ClientRepository.GetClientsAsync(search, page, pageSize);
             var clientsDto = pagedList.ToModel();
+
+            await AuditEventLogger.LogEventAsync(new ClientsRequestedEvent(clientsDto));
 
             return clientsDto;
         }
@@ -305,14 +315,22 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             HashClientSharedSecret(clientSecret);
 
             var clientSecretEntity = clientSecret.ToEntity();
-            return await ClientRepository.AddClientSecretAsync(clientSecret.ClientId, clientSecretEntity);
+            var added = await ClientRepository.AddClientSecretAsync(clientSecret.ClientId, clientSecretEntity);
+
+            await AuditEventLogger.LogEventAsync(new ClientSecretAddedEvent(clientSecret));
+
+            return added;
         }
 
         public virtual async Task<int> DeleteClientSecretAsync(ClientSecretsDto clientSecret)
         {
             var clientSecretEntity = clientSecret.ToEntity();
 
-            return await ClientRepository.DeleteClientSecretAsync(clientSecretEntity);
+            var deleted = await ClientRepository.DeleteClientSecretAsync(clientSecretEntity);
+
+            await AuditEventLogger.LogEventAsync(new ClientSecretDeletedEvent(clientSecret));
+
+            return deleted;
         }
 
         public virtual async Task<ClientSecretsDto> GetClientSecretsAsync(int clientId, int page = 1, int pageSize = 10)
