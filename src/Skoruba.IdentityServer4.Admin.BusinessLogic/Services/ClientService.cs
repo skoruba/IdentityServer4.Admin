@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using IdentityServer4.Models;
+using Skoruba.AuditLogging.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Enums;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Events.Client;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
@@ -19,12 +21,14 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
     {
         protected readonly IClientRepository ClientRepository;
         protected readonly IClientServiceResources ClientServiceResources;
+        protected readonly IAuditEventLogger AuditEventLogger;
         private const string SharedSecret = "SharedSecret";
 
-        public ClientService(IClientRepository clientRepository, IClientServiceResources clientServiceResources)
+        public ClientService(IClientRepository clientRepository, IClientServiceResources clientServiceResources, IAuditEventLogger auditEventLogger)
         {
             ClientRepository = clientRepository;
             ClientServiceResources = clientServiceResources;
+            AuditEventLogger = auditEventLogger;
         }
 
         private void HashClientSharedSecret(ClientSecretsDto clientSecret)
@@ -151,7 +155,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             PrepareClientTypeForNewClient(client);
             var clientEntity = client.ToEntity();
 
-            return await ClientRepository.AddClientAsync(clientEntity);
+            var added = await ClientRepository.AddClientAsync(clientEntity);
+
+            await AuditEventLogger.LogEventAsync(new ClientAddedEvent(client));
+
+            return added;
         }
 
         public virtual async Task<int> UpdateClientAsync(ClientDto client)
@@ -164,7 +172,13 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var clientEntity = client.ToEntity();
 
-            return await ClientRepository.UpdateClientAsync(clientEntity);
+            var originalClient = await GetClientAsync(client.Id);
+
+            var updated = await ClientRepository.UpdateClientAsync(clientEntity);
+
+            await AuditEventLogger.LogEventAsync(new ClientUpdatedEvent(originalClient, client));
+
+            return updated;
         }
 
         public virtual async Task<int> RemoveClientAsync(ClientDto client)

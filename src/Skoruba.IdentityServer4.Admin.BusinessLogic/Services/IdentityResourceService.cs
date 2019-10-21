@@ -156,10 +156,10 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var resource = identityResource.ToEntity();
 
-            var updated = await IdentityResourceRepository.UpdateIdentityResourceAsync(resource);
-
             var originalIdentityResource = await GetIdentityResourceAsync(resource.Id);
 
+            var updated = await IdentityResourceRepository.UpdateIdentityResourceAsync(resource);
+            
             await AuditEventLogger.LogEventAsync(new IdentityResourceUpdatedEvent(originalIdentityResource, identityResource));
 
             return updated;

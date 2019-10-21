@@ -169,9 +169,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var originalApiResource = await GetApiResourceAsync(apiResource.Id);
 
+            var updated = await ApiResourceRepository.UpdateApiResourceAsync(resource);
+
             await AuditEventLogger.LogEventAsync(new ApiResourceUpdatedEvent(originalApiResource, apiResource));
 
-            return await ApiResourceRepository.UpdateApiResourceAsync(resource);
+            return updated;
         }
 
         public virtual async Task<int> DeleteApiResourceAsync(ApiResourceDto apiResource)
@@ -276,11 +278,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             }
 
             var scope = apiScope.ToEntity();
+            
+            var originalApiScope = await GetApiScopeAsync(apiScope.ApiResourceId, apiScope.ApiScopeId);
 
             var updated = await ApiResourceRepository.UpdateApiScopeAsync(apiScope.ApiResourceId, scope);
 
-            var originalApiScope = await GetApiScopeAsync(apiScope.ApiResourceId, apiScope.ApiScopeId);
-            
             await AuditEventLogger.LogEventAsync(new ApiScopeUpdatedEvent(originalApiScope, apiScope));
 
             return updated;
