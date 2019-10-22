@@ -343,6 +343,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             clientSecretsDto.ClientId = clientId;
             clientSecretsDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
 
+            await AuditEventLogger.LogEventAsync(new ClientSecretsRequestedEvent(clientSecretsDto));
+
             return clientSecretsDto;
         }
 
@@ -358,6 +360,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             clientSecretsDto.ClientId = clientSecret.Client.Id;
             clientSecretsDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
 
+            await AuditEventLogger.LogEventAsync(new ClientSecretRequestedEvent(clientSecretsDto));
+
             return clientSecretsDto;
         }
 
@@ -371,6 +375,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             clientClaimsDto.ClientId = clientId;
             clientClaimsDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
 
+            await AuditEventLogger.LogEventAsync(new ClientClaimsRequestedEvent(clientClaimsDto));
+
             return clientClaimsDto;
         }
 
@@ -383,6 +389,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             var clientPropertiesDto = pagedList.ToModel();
             clientPropertiesDto.ClientId = clientId;
             clientPropertiesDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
+
+            await AuditEventLogger.LogEventAsync(new ClientPropertiesRequestedEvent(clientPropertiesDto));
 
             return clientPropertiesDto;
         }
@@ -399,6 +407,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             clientClaimsDto.ClientId = clientClaim.Client.Id;
             clientClaimsDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
 
+            await AuditEventLogger.LogEventAsync(new ClientClaimRequestedEvent(clientClaimsDto));
+
             return clientClaimsDto;
         }
 
@@ -414,6 +424,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             clientPropertiesDto.ClientId = clientProperty.Client.Id;
             clientPropertiesDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
 
+            await AuditEventLogger.LogEventAsync(new ClientPropertyRequestedEvent(clientPropertiesDto));
+
             return clientPropertiesDto;
         }
 
@@ -421,28 +433,44 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
         {
             var clientClaimEntity = clientClaim.ToEntity();
 
-            return await ClientRepository.AddClientClaimAsync(clientClaim.ClientId, clientClaimEntity);
+            var saved = await ClientRepository.AddClientClaimAsync(clientClaim.ClientId, clientClaimEntity);
+
+            await AuditEventLogger.LogEventAsync(new ClientClaimAddedEvent(clientClaim));
+
+            return saved;
         }
 
         public virtual async Task<int> AddClientPropertyAsync(ClientPropertiesDto clientProperties)
         {
             var clientProperty = clientProperties.ToEntity();
 
-            return await ClientRepository.AddClientPropertyAsync(clientProperties.ClientId, clientProperty);
+            var saved = await ClientRepository.AddClientPropertyAsync(clientProperties.ClientId, clientProperty);
+
+            await AuditEventLogger.LogEventAsync(new ClientPropertyAddedEvent(clientProperties));
+
+            return saved;
         }
 
         public virtual async Task<int> DeleteClientClaimAsync(ClientClaimsDto clientClaim)
         {
             var clientClaimEntity = clientClaim.ToEntity();
 
-            return await ClientRepository.DeleteClientClaimAsync(clientClaimEntity);
+            var deleted = await ClientRepository.DeleteClientClaimAsync(clientClaimEntity);
+
+            await AuditEventLogger.LogEventAsync(new ClientClaimDeletedEvent(clientClaim));
+
+            return deleted;
         }
 
         public virtual async Task<int> DeleteClientPropertyAsync(ClientPropertiesDto clientProperty)
         {
             var clientPropertyEntity = clientProperty.ToEntity();
 
-            return await ClientRepository.DeleteClientPropertyAsync(clientPropertyEntity);
+            var deleted = await ClientRepository.DeleteClientPropertyAsync(clientPropertyEntity);
+
+            await AuditEventLogger.LogEventAsync(new ClientPropertyDeletedEvent(clientProperty));
+
+            return deleted;
         }
     }
 }
