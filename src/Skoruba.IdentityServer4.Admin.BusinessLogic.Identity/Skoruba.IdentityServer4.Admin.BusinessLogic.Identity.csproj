@@ -14,6 +14,7 @@
 	<ItemGroup>
 		<PackageReference Include="IdentityServer4.EntityFramework" Version="2.5.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
+		<PackageReference Include="Skoruba.AuditLogging" Version="1.0.0-beta5" />
 	</ItemGroup>
 
 	<ItemGroup>

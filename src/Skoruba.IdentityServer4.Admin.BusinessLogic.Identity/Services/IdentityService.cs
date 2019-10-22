@@ -5,7 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Skoruba.AuditLogging.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Events.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
@@ -44,14 +46,17 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
         protected readonly IIdentityRepository<TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> IdentityRepository;
         protected readonly IIdentityServiceResources IdentityServiceResources;
         protected readonly IMapper Mapper;
+        protected readonly IAuditEventLogger AuditEventLogger;
 
         public IdentityService(IIdentityRepository<TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> identityRepository,
             IIdentityServiceResources identityServiceResources,
-            IMapper mapper)
+            IMapper mapper,
+            IAuditEventLogger auditEventLogger)
         {
             IdentityRepository = identityRepository;
             IdentityServiceResources = identityServiceResources;
             Mapper = mapper;
+            AuditEventLogger = auditEventLogger;
         }
 
         public virtual async Task<bool> ExistsUserAsync(string userId)
@@ -75,6 +80,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             var pagedList = await IdentityRepository.GetUsersAsync(search, page, pageSize);
             var usersDto = Mapper.Map<TUsersDto>(pagedList);
 
+            await AuditEventLogger.LogEventAsync(new UsersRequestedEvent<TUsersDto>(usersDto));
+
             return usersDto;
         }
 
@@ -88,6 +95,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             var pagedList = await IdentityRepository.GetRoleUsersAsync(roleId, search, page, pageSize);
             var usersDto = Mapper.Map<TUsersDto>(pagedList);
 
+            await AuditEventLogger.LogEventAsync(new RoleUsersRequestedEvent<TUsersDto>(usersDto));
+
             return usersDto;
         }
 
@@ -96,6 +105,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             PagedList<TRole> pagedList = await IdentityRepository.GetRolesAsync(search, page, pageSize);
             var rolesDto = Mapper.Map<TRolesDto>(pagedList);
 
+            await AuditEventLogger.LogEventAsync(new RolesRequestedEvent<TRolesDto>(rolesDto));
+            
             return rolesDto;
         }
 
@@ -104,6 +115,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             var roleEntity = Mapper.Map<TRole>(role);
             var (identityResult, roleId) = await IdentityRepository.CreateRoleAsync(roleEntity);
             var handleIdentityError = HandleIdentityError(identityResult, IdentityServiceResources.RoleCreateFailed().Description, IdentityServiceResources.IdentityErrorKey().Description, role);
+
+            await AuditEventLogger.LogEventAsync(new RoleAddedEvent<TRoleDto>(role));
 
             return (handleIdentityError, roleId);
         }
@@ -125,6 +138,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
 
             var roleDto = Mapper.Map<TRoleDto>(userIdentityRole);
 
+            await AuditEventLogger.LogEventAsync(new RoleRequestedEvent<TRoleDto>(roleDto));
+
             return roleDto;
         }
 
@@ -132,6 +147,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
         {
             var roles = await IdentityRepository.GetRolesAsync();
             var roleDtos = Mapper.Map<List<TRoleDto>>(roles);
+
+            await AuditEventLogger.LogEventAsync(new AllRolesRequestedEvent<TRoleDto>(roleDtos));
 
             return roleDtos;
         }
