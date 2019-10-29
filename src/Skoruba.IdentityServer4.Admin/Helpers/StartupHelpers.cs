@@ -57,7 +57,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 .AddDefaultHttpEventData(subjectOptions =>
                     {
                         subjectOptions.SubjectIdentifierClaim = auditLoggingConfiguration.SubjectIdentifierClaim;
-                        subjectOptions.SubjectNameClaim = auditLoggingConfiguration.SubjectIdentifierClaim;
+                        subjectOptions.SubjectNameClaim = auditLoggingConfiguration.SubjectNameClaim;
                     },
                     actionOptions =>
                     {
