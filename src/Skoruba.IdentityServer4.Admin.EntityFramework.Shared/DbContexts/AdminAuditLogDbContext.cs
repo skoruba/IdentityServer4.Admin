@@ -6,9 +6,9 @@ using Skoruba.AuditLogging.EntityFramework.Entities;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts
 {
-    public class AuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
+    public class AdminAuditLogDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
     {
-        public AuditLoggingDbContext(DbContextOptions<AuditLoggingDbContext> dbContextOptions)
+        public AdminAuditLogDbContext(DbContextOptions<AdminAuditLogDbContext> dbContextOptions)
             : base(dbContextOptions)
         {
 

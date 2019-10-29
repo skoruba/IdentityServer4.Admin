@@ -20,6 +20,6 @@
 
         public const string IdentityDataConfigurationKey = "IdentityData";
 
-        public const string AuditLoggingDbConnectionStringKey = "AuditLoggingDbConnection";
+        public const string AdminAuditLogDbConnectionStringKey = "AdminAuditLogDbConnection";
     }
 }

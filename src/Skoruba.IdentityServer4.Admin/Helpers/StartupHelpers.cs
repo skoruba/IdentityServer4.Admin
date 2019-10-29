@@ -155,7 +155,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             // Audit logging connection
             services.AddDbContext<TAuditLoggingDbContext>(options =>
                 options.UseSqlServer(
-                    configuration.GetConnectionString(ConfigurationConsts.AuditLoggingDbConnectionStringKey),
+                    configuration.GetConnectionString(ConfigurationConsts.AdminAuditLogDbConnectionStringKey),
                     optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
         }
 

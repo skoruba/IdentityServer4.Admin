@@ -46,7 +46,7 @@ namespace Skoruba.IdentityServer4.Admin
             var rootConfiguration = services.BuildServiceProvider().GetService<IRootConfiguration>();
 
             // Add DbContexts for Asp.Net Core Identity, Logging and IdentityServer - Configuration store and Operational store
-            services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AuditLoggingDbContext>(HostingEnvironment, Configuration);
+            services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext>(HostingEnvironment, Configuration);
 
             // Add Asp.Net Core Identity Configuration and OpenIdConnect auth as well
             services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(HostingEnvironment, rootConfiguration.AdminConfiguration);
@@ -80,7 +80,7 @@ namespace Skoruba.IdentityServer4.Admin
             services.AddAuthorizationPolicies(rootConfiguration);
 
             // Add audit logging
-            services.AddAuditEventLogging<AuditLoggingDbContext, AuditLog>(Configuration);
+            services.AddAuditEventLogging<AdminAuditLogDbContext, AuditLog>(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
