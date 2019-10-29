@@ -12,7 +12,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Skoruba.AuditLogging.EntityFramework" Version="1.0.0-beta5" />
+      <PackageReference Include="Skoruba.AuditLogging.EntityFramework" Version="1.0.0-beta6" />
     </ItemGroup>
 
     <ItemGroup>

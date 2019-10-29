@@ -47,16 +47,25 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 {
     public static class StartupHelpers
     {
-        public static IServiceCollection AddAuditEventLogging<TAuditLoggingDbContext, TAuditLog>(this IServiceCollection services, IConfiguration configuration) 
+        public static IServiceCollection AddAuditEventLogging<TAuditLoggingDbContext, TAuditLog>(this IServiceCollection services, IConfiguration configuration)
             where TAuditLog : AuditLog, new()
             where TAuditLoggingDbContext : IAuditLoggingDbContext<TAuditLog>
         {
-            services.AddAuditLogging()
-                .AddDefaultHttpEventData(options =>
+            var auditLoggingConfiguration = configuration.GetSection(nameof(AuditLoggingConfiguration)).Get<AuditLoggingConfiguration>();
+
+            services.AddAuditLogging(options =>
                 {
-                    options.SubjectIdentifierClaim = JwtClaimTypes.Subject;
-                    options.SubjectNameClaim = JwtClaimTypes.Name;
+                    options.Source = auditLoggingConfiguration.Source
                 })
+                .AddDefaultHttpEventData(subjectOptions =>
+                    {
+                        subjectOptions.SubjectIdentifierClaim = auditLoggingConfiguration.SubjectIdentifierClaim;
+                        subjectOptions.SubjectNameClaim = auditLoggingConfiguration.SubjectIdentifierClaim;
+                    },
+                    actionOptions =>
+                    {
+                        actionOptions.IncludeFormVariables = auditLoggingConfiguration.IncludeFormVariables;
+                    })
                 .AddAuditSinks<DatabaseAuditEventLoggerSink<TAuditLog>>();
 
             services.AddTransient<IAuditLoggingRepository<TAuditLog>, AuditLoggingRepository<TAuditLoggingDbContext, TAuditLog>>();
