@@ -16,6 +16,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using Skoruba.AuditLogging.EntityFramework.Entities;
+using Skoruba.AuditLogging.EntityFramework.Extensions;
+using Skoruba.AuditLogging.EntityFramework.Repositories;
+using Skoruba.AuditLogging.EntityFramework.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.Controllers;
@@ -573,6 +577,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var efServiceProvider = new ServiceCollection().AddEntityFrameworkInMemoryDatabase().BuildServiceProvider();
             services.AddOptions();
             services.AddDbContext<AdminIdentityDbContext>(b => b.UseInMemoryDatabase(Guid.NewGuid().ToString()).UseInternalServiceProvider(efServiceProvider));
+            services.AddDbContext<AuditLoggingDbContext>(b => b.UseInMemoryDatabase(Guid.NewGuid().ToString()).UseInternalServiceProvider(efServiceProvider));
 
             //Http Context
             var context = new DefaultHttpContext();
@@ -581,6 +586,13 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             //IdentityServer4 EntityFramework configuration
             services.AddSingleton<ConfigurationStoreOptions>();
             services.AddSingleton<OperationalStoreOptions>();
+
+            //Audit logging
+            services.AddAuditLogging()
+                .AddDefaultEventData()
+                .AddAuditSinks<DatabaseAuditEventLoggerSink<AuditLog>>();
+            services.AddTransient<IAuditLoggingRepository<AuditLog>, AuditLoggingRepository<AuditLoggingDbContext, AuditLog>>();
+
 
             //Add Admin services
             services.AddMvcExceptionFilters();
