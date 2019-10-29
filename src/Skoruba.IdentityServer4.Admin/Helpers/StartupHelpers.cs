@@ -53,10 +53,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         {
             var auditLoggingConfiguration = configuration.GetSection(nameof(AuditLoggingConfiguration)).Get<AuditLoggingConfiguration>();
 
-            services.AddAuditLogging(options =>
-                {
-                    options.Source = auditLoggingConfiguration.Source
-                })
+            services.AddAuditLogging(options => { options.Source = auditLoggingConfiguration.Source; })
                 .AddDefaultHttpEventData(subjectOptions =>
                     {
                         subjectOptions.SubjectIdentifierClaim = auditLoggingConfiguration.SubjectIdentifierClaim;
