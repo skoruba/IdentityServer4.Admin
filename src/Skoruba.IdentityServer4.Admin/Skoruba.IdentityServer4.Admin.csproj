@@ -13,13 +13,12 @@
 		<PackageReference Include="IdentityServer4.EntityFramework" Version="2.5.3" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
 		<PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
-		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
 		<PackageReference Include="NWebsec.AspNetCore.Middleware" Version="2.0.0" />
 		<PackageReference Include="Serilog.AspNetCore" Version="3.0.0" />
 		<PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
 		<PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
 		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.1.3-dev-00236" />
-		<PackageReference Include="Skoruba.AuditLogging.EntityFramework" Version="1.0.0-beta6" />
 	</ItemGroup>
 
 	<ItemGroup>

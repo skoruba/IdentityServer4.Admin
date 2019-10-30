@@ -72,21 +72,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var client in Model.Logs)
+                    @foreach (var log in Model.Logs)
                     {
                         <tr>
-                            <td><a href="#" data-error-id="@client.Id" class="btn btn-primary btn-error-detail">@Localizer["TableShowDetail"]</a></td>
-                            <td>@client.Level</td>
+                            <td><a href="#" data-error-id="@log.Id" class="btn btn-primary btn-error-detail">@Localizer["TableShowDetail"]</a></td>
+                            <td>@log.Level</td>
                             <td>
-                                <span class="local-datetime" title="@client.TimeStamp" data-utc="@client.TimeStamp.GetEpochTicks()" data-toggle="tooltip" data-placement="top">
-                                    @client.TimeStamp
+                                <span class="local-datetime" title="@log.TimeStamp" data-utc="@log.TimeStamp.GetEpochTicks()" data-toggle="tooltip" data-placement="top">
+                                    @log.TimeStamp
                                 </span>
-                                <span class="oi oi-clock" title="@client.TimeStamp" data-toggle="tooltip" data-placement="top"></span>
+                                <span class="oi oi-clock" title="@log.TimeStamp" data-toggle="tooltip" data-placement="top"></span>
                             </td>
-                            <td>@client.Message</td>
+                            <td>@log.Message</td>
                         </tr>
-                        <tr class="row-error-detail d-none" data-error-id="@client.Id">
-                            <td colspan="4" data-error-json="@client.LogEvent"></td>
+                        <tr class="row-error-detail d-none" data-error-id="@log.Id">
+                            <td colspan="4" data-error-json="@log.LogEvent"></td>
                         </tr>
                     }
                 </tbody>

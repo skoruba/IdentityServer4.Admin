@@ -1,0 +1,66 @@
+﻿@using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Log.AuditLogsDto
+
+@{
+    ViewData["Title"] = "Audit Log";
+}
+
+    <h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-12">
+        @await Html.PartialAsync("Common/Search", new Search { Action = "AuditLog", Controller = "Log" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Source</th>
+                        <th>Subject Type</th>
+                        <th>Subject Identifier</th>
+                        <th>Subject Name</th>
+                        <th>Subject Additional Data</th>
+                        <th>Action</th>
+                        <th>Created</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var auditLog in Model.Logs)
+                    {
+                    <tr>
+                        <td><a href="#" data-error-id="@auditLog.Id" class="btn btn-primary btn-error-detail">Detail</a></td>
+                        <td>@auditLog.Source</td>
+                        <td>@auditLog.SubjectType</td>
+                        <td>@auditLog.SubjectIdentifier</td>
+                        <td>@auditLog.SubjectName</td>
+                        <td>@auditLog.SubjectAdditionalData</td>
+                        <td>@auditLog.Action</td>
+                        <td>
+                            <span class="local-datetime" title="@auditLog.Created" data-utc="@auditLog.Created" data-toggle="tooltip" data-placement="top">
+                                @auditLog.Created
+                            </span>
+                            <span class="oi oi-clock" title="@auditLog.Created" data-toggle="tooltip" data-placement="top"></span>
+                        </td>
+                        <td>@auditLog.Event</td>
+                    </tr>
+                        <tr class="row-error-detail d-none" data-error-id="@auditLog.Id">
+                            <td colspan="4" data-error-json="@auditLog.Data"></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        @await Html.PartialAsync("Common/Pager", new Pager { Action = "AuditLog", PageSize = Model.PageSize, TotalCount = Model.TotalCount, EnableSearch = true, Search = ViewBag.Search })
+    </div>
+</div>

@@ -12,11 +12,14 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
     public class LogController : BaseController
     {
         private readonly ILogService _logService;
+        private readonly IAuditLogService _auditLogService;
 
         public LogController(ILogService logService,
-            ILogger<ConfigurationController> logger) : base(logger)
+            ILogger<ConfigurationController> logger,
+            IAuditLogService auditLogService) : base(logger)
         {
             _logService = logService;
+            _auditLogService = auditLogService;
         }
 
         [HttpGet]
@@ -24,6 +27,15 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         {
             ViewBag.Search = search;
             var logs = await _logService.GetLogsAsync(search, page ?? 1);
+
+            return View(logs);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AuditLog(int? page, string search)
+        {
+            ViewBag.Search = search;
+            var logs = await _auditLogService.GetAsync(page ?? 1);
 
             return View(logs);
         }
