@@ -1,6 +1,6 @@
 ﻿var auditLog = {
 
-    createJsonTree: function(json) {
+    createJsonTree: function (json) {
         var result;
 
         try {
@@ -12,7 +12,7 @@
         return result;
     },
 
-    initJsonTrees: function() {
+    initJsonTrees: function () {
         $(".json-tree").each(function () {
 
             var json = $(this).data("json-tree");
@@ -22,28 +22,29 @@
         });
     },
 
-    eventHandlers: function() {
+    eventHandlers: function () {
         $(".audit-subject-button").click(function () {
             var subjectId = $(this).data("subject-identifier");
+            var subjectName = $(this).data("subject-name");
             var subjectType = $(this).data("subject-type");
             var json = $(this).data("subject-additional-data");
 
-            $(".audit-modal-title").html(subjectId + " (" + subjectType + ")");
+            $(".modal-title").html(subjectName + " - " + subjectId + " - " + "(" + subjectType + ")");
             $(".audit-modal-value").html(auditLog.createJsonTree(json));
             $(".audit-modal").modal("show");
         });
 
         $(".audit-action-button").click(function () {
             var json = $(this).data("action");
-            $(".audit-modal-title").html("");
+            $(".modal-title").html("");
             $(".audit-modal-value").html(auditLog.createJsonTree(json));
             $(".audit-modal").modal("show");
         });
     },
 
-    init: function() {
+    init: function () {
 
-        $(function() {
+        $(function () {
             auditLog.eventHandlers();
             auditLog.initJsonTrees();
         });
