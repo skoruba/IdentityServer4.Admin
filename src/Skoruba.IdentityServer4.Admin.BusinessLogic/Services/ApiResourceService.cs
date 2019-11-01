@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using IdentityServer4.Models;
 using Skoruba.AuditLogging.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
@@ -310,7 +311,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             apiSecretsDto.ApiResourceId = apiResourceId;
             apiSecretsDto.ApiResourceName = await ApiResourceRepository.GetApiResourceNameAsync(apiResourceId);
 
-            await AuditEventLogger.LogEventAsync(new ApiSecretsRequestedEvent(apiSecretsDto));
+            await AuditEventLogger.LogEventAsync(new ApiSecretsRequestedEvent(apiSecretsDto.ApiResourceId, apiSecretsDto.ApiSecrets.Select(x => (x.Id, x.Type, x.Expiration)).ToList()));
 
             return apiSecretsDto;
         }
@@ -323,7 +324,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var added = await ApiResourceRepository.AddApiSecretAsync(apiSecret.ApiResourceId, secret);
 
-            await AuditEventLogger.LogEventAsync(new ApiSecretAddedEvent(apiSecret));
+            await AuditEventLogger.LogEventAsync(new ApiSecretAddedEvent(apiSecret.ApiResourceId, apiSecret.Type, apiSecret.Expiration));
 
             return added;
         }
@@ -334,7 +335,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             if (apiSecret == null) throw new UserFriendlyErrorPageException(string.Format(ApiResourceServiceResources.ApiSecretDoesNotExist().Description, apiSecretId), ApiResourceServiceResources.ApiSecretDoesNotExist().Description);
             var apiSecretsDto = apiSecret.ToModel();
 
-            await AuditEventLogger.LogEventAsync(new ApiSecretRequestedEvent(apiSecretsDto));
+            await AuditEventLogger.LogEventAsync(new ApiSecretRequestedEvent(apiSecretsDto.ApiResourceId, apiSecretsDto.ApiSecretId, apiSecretsDto.Type, apiSecretsDto.Expiration));
 
             return apiSecretsDto;
         }
@@ -345,7 +346,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var deleted = await ApiResourceRepository.DeleteApiSecretAsync(secret);
 
-            await AuditEventLogger.LogEventAsync(new ApiSecretDeletedEvent(apiSecret));
+            await AuditEventLogger.LogEventAsync(new ApiSecretDeletedEvent(apiSecret.ApiResourceId, apiSecret.ApiSecretId));
 
             return deleted;
         }

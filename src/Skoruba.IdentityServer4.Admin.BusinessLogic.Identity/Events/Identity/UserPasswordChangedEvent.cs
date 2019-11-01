@@ -2,13 +2,13 @@
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Events.Identity
 {
-    public class UserPasswordChangedEvent<TUserChangePasswordDto> : AuditEvent
+    public class UserPasswordChangedEvent : AuditEvent
     {
-        public TUserChangePasswordDto UserPassword { get; set; }
+        public string UserName { get; set; }
 
-        public UserPasswordChangedEvent(TUserChangePasswordDto userPassword)
+        public UserPasswordChangedEvent(string userName)
         {
-            UserPassword = userPassword;
+            UserName = userName;
         }
     }
 }

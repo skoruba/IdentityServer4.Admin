@@ -398,7 +398,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
 
             var identityResult = await IdentityRepository.UserChangePasswordAsync(userPassword.UserId.ToString(), userPassword.Password);
 
-            await AuditEventLogger.LogEventAsync(new UserPasswordChangedEvent<TUserChangePasswordDto>(userPassword));
+            await AuditEventLogger.LogEventAsync(new UserPasswordChangedEvent(userPassword.UserName));
 
             return HandleIdentityError(identityResult, IdentityServiceResources.UserChangePasswordFailed().Description, IdentityServiceResources.IdentityErrorKey().Description, userPassword);
         }

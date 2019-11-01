@@ -1,15 +1,17 @@
 ﻿using Skoruba.AuditLogging.Events;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Events.ApiResource
 {
     public class ApiSecretDeletedEvent : AuditEvent
     {
-        public ApiSecretsDto ApiSecret { get; set; }
+        public int ApiResourceId { get; set; }
 
-        public ApiSecretDeletedEvent(ApiSecretsDto apiSecret)
+        public int ApiSecretId { get; set; }
+
+        public ApiSecretDeletedEvent(int apiResourceId, int apiSecretId)
         {
-            ApiSecret = apiSecret;
+            ApiResourceId = apiResourceId;
+            ApiSecretId = apiSecretId;
         }
     }
 }

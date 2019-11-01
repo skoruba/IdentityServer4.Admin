@@ -1,15 +1,21 @@
-﻿using Skoruba.AuditLogging.Events;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
+﻿using System;
+using Skoruba.AuditLogging.Events;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Events.ApiResource
 {
     public class ApiSecretAddedEvent : AuditEvent
     {
-        public ApiSecretsDto ApiSecret { get; set; }
+        public string Type { get; set; }
 
-        public ApiSecretAddedEvent(ApiSecretsDto apiSecret)
+        public DateTime? Expiration { get; set; }
+
+        public int ApiResourceId { get; set; }
+
+        public ApiSecretAddedEvent(int apiResourceId, string type, DateTime? expiration)
         {
-            ApiSecret = apiSecret;
+            ApiResourceId = apiResourceId;
+            Type = type;
+            Expiration = expiration;
         }
     }
 }

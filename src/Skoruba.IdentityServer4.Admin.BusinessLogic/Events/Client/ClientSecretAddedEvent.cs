@@ -1,15 +1,21 @@
-﻿using Skoruba.AuditLogging.Events;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
+﻿using System;
+using Skoruba.AuditLogging.Events;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Events.Client
 {
     public class ClientSecretAddedEvent : AuditEvent
     {
-        public ClientSecretsDto ClientSecret { get; set; }
+        public string Type { get; set; }
 
-        public ClientSecretAddedEvent(ClientSecretsDto clientSecret)
+        public DateTime? Expiration { get; set; }
+
+        public int ClientId { get; set; }
+
+        public ClientSecretAddedEvent(int clientId, string type, DateTime? expiration)
         {
-            ClientSecret = clientSecret;
+            ClientId = clientId;
+            Type = type;
+            Expiration = expiration;
         }
     }
 }

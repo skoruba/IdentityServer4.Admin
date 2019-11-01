@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4.Models;
 using Skoruba.AuditLogging.Services;
@@ -55,7 +56,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
                     client.AllowedGrantTypes.AddRange(GrantTypes.Hybrid);
                     break;
                 case ClientType.Spa:
-                    client.AllowedGrantTypes.AddRange(GrantTypes.Code);                    
+                    client.AllowedGrantTypes.AddRange(GrantTypes.Code);
                     client.RequirePkce = true;
                     client.RequireClientSecret = false;
                     break;
@@ -317,7 +318,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             var clientSecretEntity = clientSecret.ToEntity();
             var added = await ClientRepository.AddClientSecretAsync(clientSecret.ClientId, clientSecretEntity);
 
-            await AuditEventLogger.LogEventAsync(new ClientSecretAddedEvent(clientSecret));
+            await AuditEventLogger.LogEventAsync(new ClientSecretAddedEvent(clientSecret.ClientId, clientSecret.Type, clientSecret.Expiration));
 
             return added;
         }
@@ -328,7 +329,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var deleted = await ClientRepository.DeleteClientSecretAsync(clientSecretEntity);
 
-            await AuditEventLogger.LogEventAsync(new ClientSecretDeletedEvent(clientSecret));
+            await AuditEventLogger.LogEventAsync(new ClientSecretDeletedEvent(clientSecret.ClientId, clientSecret.ClientSecretId));
 
             return deleted;
         }
@@ -343,7 +344,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             clientSecretsDto.ClientId = clientId;
             clientSecretsDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
 
-            await AuditEventLogger.LogEventAsync(new ClientSecretsRequestedEvent(clientSecretsDto));
+            await AuditEventLogger.LogEventAsync(new ClientSecretsRequestedEvent(clientSecretsDto.ClientId, clientSecretsDto.ClientSecrets.Select(x => (x.Id, x.Type, x.Expiration)).ToList()));
 
             return clientSecretsDto;
         }
@@ -360,7 +361,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             clientSecretsDto.ClientId = clientSecret.Client.Id;
             clientSecretsDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
 
-            await AuditEventLogger.LogEventAsync(new ClientSecretRequestedEvent(clientSecretsDto));
+            await AuditEventLogger.LogEventAsync(new ClientSecretRequestedEvent(clientSecretsDto.ClientId, clientSecretsDto.ClientSecretId, clientSecretsDto.Type, clientSecretsDto.Expiration));
 
             return clientSecretsDto;
         }
