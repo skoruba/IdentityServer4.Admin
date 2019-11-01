@@ -5,7 +5,7 @@
     ViewData["Title"] = "Audit Log";
 }
 
-    <h2>@ViewData["Title"]</h2>
+<h2>@ViewData["Title"]</h2>
 
 <div class="row">
     <div class="col-12">
@@ -20,37 +20,28 @@
                 <thead>
                     <tr>
                         <th></th>
+                        <th>Event</th>
                         <th>Source</th>
-                        <th>Subject Type</th>
-                        <th>Subject Identifier</th>
-                        <th>Subject Name</th>
-                        <th>Subject Additional Data</th>
+                        <th>Subject</th>
                         <th>Action</th>
                         <th>Created</th>
-                        <th>Data</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var auditLog in Model.Logs)
                     {
-                    <tr>
-                        <td><a href="#" data-error-id="@auditLog.Id" class="btn btn-primary btn-error-detail">Detail</a></td>
-                        <td>@auditLog.Source</td>
-                        <td>@auditLog.SubjectType</td>
-                        <td>@auditLog.SubjectIdentifier</td>
-                        <td>@auditLog.SubjectName</td>
-                        <td>@auditLog.SubjectAdditionalData</td>
-                        <td>@auditLog.Action</td>
-                        <td>
-                            <span class="local-datetime" title="@auditLog.Created" data-utc="@auditLog.Created" data-toggle="tooltip" data-placement="top">
+                        <tr>
+                            <td><a href="#" data-error-id="@auditLog.Id" class="btn btn-primary btn-error-detail">Detail</a></td>
+                            <td>@auditLog.Event</td>
+                            <td>@auditLog.Source</td>
+                            <td><button class="audit-subject-button btn btn-outline-primary" data-subject-identifier="@auditLog.SubjectIdentifier" data-subject-type="@auditLog.SubjectType" data-subject-additional-data="@auditLog.SubjectAdditionalData">@auditLog.SubjectName - Show detail <i class="fa fa-eye"></i></button></td>
+                            <td><button class="audit-action-button btn btn-outline-primary" data-action="@auditLog.Action">Show detail <i class="fa fa-eye"></i></button></td>
+                            <td>
                                 @auditLog.Created
-                            </span>
-                            <span class="oi oi-clock" title="@auditLog.Created" data-toggle="tooltip" data-placement="top"></span>
-                        </td>
-                        <td>@auditLog.Event</td>
-                    </tr>
+                            </td>
+                        </tr>
                         <tr class="row-error-detail d-none" data-error-id="@auditLog.Id">
-                            <td colspan="4" data-error-json="@auditLog.Data"></td>
+                            <td colspan="6" data-error-json="@auditLog.Data"></td>
                         </tr>
                     }
                 </tbody>
@@ -64,3 +55,30 @@
         @await Html.PartialAsync("Common/Pager", new Pager { Action = "AuditLog", PageSize = Model.PageSize, TotalCount = Model.TotalCount, EnableSearch = true, Search = ViewBag.Search })
     </div>
 </div>
+
+<div class="audit-modal modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2 class="audit-modal-title"></h2>
+                <div class="audit-modal-value"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .modal-dialog{
+        overflow-y: initial !important
+    }
+    .modal-body{
+        max-height: calc(100vh - 200px);
+        overflow-y: auto;
+    }
+</style>
