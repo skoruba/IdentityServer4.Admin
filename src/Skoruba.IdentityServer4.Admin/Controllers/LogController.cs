@@ -32,10 +32,15 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AuditLog(int? page, string search)
+        public async Task<IActionResult> AuditLog([FromQuery]AuditLogFilterDto filters)
         {
-            ViewBag.Search = search;
-            var logs = await _auditLogService.GetAsync(page ?? 1);
+            ViewBag.SubjectIdentifier = filters.SubjectIdentifier;
+            ViewBag.SubjectName = filters.SubjectName;
+            ViewBag.Event = filters.Event;
+            ViewBag.Source = filters.Source;
+            ViewBag.Category = filters.Category;
+
+            var logs = await _auditLogService.GetAsync(filters);
 
             return View(logs);
         }
@@ -52,6 +57,20 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             await _logService.DeleteLogsOlderThanAsync(logs.DeleteOlderThan.Value);
 
             return RedirectToAction(nameof(ErrorsLog));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteAuditLogs(AuditLogsDto logs)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(nameof(AuditLog), logs);
+            }
+
+            await _auditLogService.DeleteLogsOlderThanAsync(logs.DeleteOlderThan.Value);
+
+            return RedirectToAction(nameof(AuditLog));
         }
     }
 }

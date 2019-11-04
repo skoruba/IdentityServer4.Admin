@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Log
 {
@@ -9,6 +11,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Log
             Logs = new List<AuditLogDto>();
         }
 
+        [Required]
+        public DateTime? DeleteOlderThan { get; set; }
 
         public List<AuditLogDto> Logs { get; set; }
 

@@ -117,55 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Action" xml:space="preserve">
-    <value>Action</value>
+  <data name="FirstButtonText" xml:space="preserve">
+    <value>First</value>
   </data>
-  <data name="Are you sure?" xml:space="preserve">
-    <value>Are you sure?</value>
-  </data>
-  <data name="Audit Log" xml:space="preserve">
-    <value>Audit Log</value>
-  </data>
-  <data name="Category" xml:space="preserve">
-    <value>Category</value>
-  </data>
-  <data name="Created" xml:space="preserve">
-    <value>Created</value>
-  </data>
-  <data name="Delete logs older than" xml:space="preserve">
-    <value>Delete logs older than</value>
-  </data>
-  <data name="Detail" xml:space="preserve">
-    <value>Detail</value>
-  </data>
-  <data name="Event" xml:space="preserve">
-    <value>Event</value>
-  </data>
-  <data name="No - close" xml:space="preserve">
-    <value>No - close</value>
-  </data>
-  <data name="Search" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="Show detail" xml:space="preserve">
-    <value>Show detail</value>
-  </data>
-  <data name="Source" xml:space="preserve">
-    <value>Source</value>
-  </data>
-  <data name="Subject" xml:space="preserve">
-    <value>Subject</value>
-  </data>
-  <data name="Subject Identifier" xml:space="preserve">
-    <value>Subject Identifier</value>
-  </data>
-  <data name="Subject Name" xml:space="preserve">
-    <value>Subject Name</value>
-  </data>
-  <data name="Warning" xml:space="preserve">
-    <value>Warning</value>
-  </data>
-  <data name="Yes - delete" xml:space="preserve">
-    <value>Yes - delete</value>
+  <data name="LastButtonText" xml:space="preserve">
+    <value>Last</value>
   </data>
 </root>

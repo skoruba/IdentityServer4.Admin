@@ -36,9 +36,25 @@
 
         $(".audit-action-button").click(function () {
             var json = $(this).data("action");
-            $(".modal-title").html("");
+            var actionTitle = $(this).data("action-title");
+
+            $(".modal-title").html(actionTitle);
             $(".audit-modal-value").html(auditLog.createJsonTree(json));
             $(".audit-modal").modal("show");
+        });
+
+        $(".audit-log-delete-button").click(function () {
+
+            $(".audit-log-form").validate();
+
+            if ($(".audit-log-form").validate().form()) {
+
+                $("#deleteLogsModal").modal("show");
+                return false;
+            } else {
+                $(this).submit();
+                return false;
+            }
         });
     },
 
