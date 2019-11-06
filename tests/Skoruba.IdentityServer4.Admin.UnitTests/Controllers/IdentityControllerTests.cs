@@ -614,8 +614,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             services.TryAddTransient(typeof(IGenericControllerLocalizer<>), typeof(GenericControllerLocalizer<>));
 
-            services.AddMvc()
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+            services.AddControllersWithViews()
             .AddViewLocalization(
                 LanguageViewLocationExpanderFormat.Suffix,
                 opts => { opts.ResourcesPath = "Resources"; })
