@@ -72,10 +72,10 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
             app.UseStaticFiles();
             app.UseIdentityServer();
-            app.UseAuthorization();
             app.UseMvcLocalizationServices();
 
             app.UseRouting();
+            app.UseAuthorization();
             app.UseEndpoints(endpoint => { endpoint.MapDefaultControllerRoute(); });
         }
     }

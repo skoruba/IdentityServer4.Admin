@@ -111,7 +111,6 @@ namespace Skoruba.IdentityServer4.Admin.Api
             }
 
             app.UseAuthentication();
-            app.UseAuthorization();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -122,6 +121,7 @@ namespace Skoruba.IdentityServer4.Admin.Api
             });
 
             app.UseRouting();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapDefaultControllerRoute(); });
         }
     }

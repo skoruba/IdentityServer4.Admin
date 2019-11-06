@@ -21,7 +21,7 @@ namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Tests.Base
 
         protected virtual void SetupAdminClaimsViaHeaders()
         {
-            using (var scope = Factory.Server.Host.Services.CreateScope())
+            using (var scope = Factory.Services.CreateScope())
             {
                 var configuration = scope.ServiceProvider.GetRequiredService<IRootConfiguration>();
                 Client.SetAdminClaimsViaHeaders(configuration.AdminConfiguration);

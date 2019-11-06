@@ -105,12 +105,11 @@ namespace Skoruba.IdentityServer4.Admin
             // Use authentication and for integration tests use custom middleware which is used only in Staging environment
             app.ConfigureAuthenticationServices(env);
 
-            app.UseAuthorization();
-            
             // Use Localization
             app.ConfigureLocalization();
 
             app.UseRouting();
+            app.UseAuthorization();
             app.UseEndpoints(endpoint => { endpoint.MapDefaultControllerRoute(); });
         }
     }
