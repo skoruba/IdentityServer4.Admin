@@ -16,5 +16,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
 		public string Value { get; set; }
 
 		public DateTime? Expiration { get; set; }
+
+        public DateTime Created { get; set; }
 	}
 }

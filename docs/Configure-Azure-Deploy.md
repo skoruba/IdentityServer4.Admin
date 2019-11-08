@@ -79,6 +79,17 @@ Last step before deploy - we need to update `src/Skoruba.IdentityServer4.STS.Ide
 }
 ```
 
-In `Helpers/IdentityServerBuilderExtensions.cs` - change loading certificates from `StoreLocation.LocalMachine` to `StoreLocation.CurrentUser`.
+In `src/Skoruba.IdentityServer4.STS.Identity/Helpers/IdentityServerBuilderExtensions.cs` - change loading certificates from `StoreLocation.LocalMachine` to `StoreLocation.CurrentUser`.
+
+And change in method: `AddCustomSigningCredential` 
+from:
+```
+var certCollection = certStore.Certificates.Find(X509FindType.FindByThumbprint, certificateConfiguration.SigningCertificateThumbprint, true);
+```
+to:
+```
+var certCollection = certStore.Certificates.Find(X509FindType.FindByThumbprint, certificateConfiguration.SigningCertificateThumbprint, false);
+```
+
 
 Now we can (re)deploy both apps to Azure.

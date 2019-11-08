@@ -447,4 +447,16 @@ OneTime 刷新令牌时将更新令牌句柄</value>
   <data name="Value_Label" xml:space="preserve">
     <value>声明值</value>
   </data>
+  <data name="Expiration_Info" xml:space="preserve">
+    <value>到期</value>
+  </data>
+  <data name="Expiration_Label" xml:space="preserve">
+    <value>到期</value>
+  </data>
+  <data name="SecretDescription_Info" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="SecretDescription_Label" xml:space="preserve">
+    <value>描述</value>
+  </data>
 </root>

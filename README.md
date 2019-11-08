@@ -25,7 +25,7 @@ The application is written in the **Asp.Net Core MVC - using .NET Core 2.2**
 - Install the dotnet new template:
 
 ```sh
-dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-beta6
+dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-beta7
 ```
 
 - Create new project:
@@ -56,6 +56,7 @@ Project template options:
 
 - Set Startup projects:
   - Skoruba.IdentityServer4.Admin
+  - Skoruba.IdentityServer4.Admin.Api
   - Skoruba.IdentityServer4.STS.Identity
 
 ## Configuration of Administration for Deployment
@@ -223,7 +224,81 @@ or using `Email`:
   }
 ```
 
+## How to configure API & Swagger
+
+- For development is running on url - `http://localhost:5001` and swagger UI is available on url - `http://localhost:5001/swagger`
+- For swagger UI is configured a client and an API in STS:
+
+```
+"AdminApiConfiguration": {
+  "IdentityServerBaseUrl": "http://localhost:5000",
+  "OidcSwaggerUIClientId": "skoruba_identity_admin_api_swaggerui",
+  "OidcApiName": "skoruba_identity_admin_api"
+}
+```
+
+- Swagger UI contains following endpoints:
+
+![SwaggerUI-preview](docs/Images/Admin-Swagger-UI.PNG)
+
+
+## How to configure an external provider in STS
+
+- In `Skoruba.IdentityServer4.STS.Identity/Helpers/StartupHelpers.cs` - is method called `AddExternalProviders` which contains the example with `GitHub` and in `appsettings.json`:
+
+```
+"ExternalProvidersConfiguration": {
+        "UseGitHubProvider": false,
+        "GitHubClientId": "",
+        "GitHubClientSecret": ""
+}
+```
+
+- It is possible to extend `ExternalProvidersConfiguration` with another configuration properties.
+
+### List of external providers for ASP.NET Core:
+  - https://github.com/aspnet-contrib/AspNet.Security.OAuth.Providers
+  - https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/
+ 
+### Azure AD
+- Great article how to set up Azure AD:
+  - https://azure.microsoft.com/cs-cz/resources/samples/active-directory-dotnet-webapp-openidconnect-aspnetcore/
+
+## Email service
+
+- It is possible to set up emails via:
+
+### SendGrid
+
+In STS project - in `appsettings.json`:
+```
+"SendgridConfiguration": {
+        "ApiKey": "",
+        "SourceEmail": "",
+        "SourceName": ""
+    }
+```
+
+### SMTP
+
+```
+"SmtpConfiguration": {
+        "Host": "",
+        "Login": "",
+        "Password": ""
+    }
+```
+
 ## Localizations - labels, messages
+
+- The project has following translations:
+  - English
+  - Chinese
+  - Russian
+  - Persian
+  - Swedish
+  
+#### Feel free to send a PR with your translation. :blush:
 
 - All labels and messages are stored in the resources `.resx` - locatated in `/Resources`
 
@@ -248,7 +323,11 @@ or using `Email`:
 
 - STS:
 
-  - `Skoruba.IdentityServer4.STS.Identity` - project that contains the instance of IdentityServer4 and combine these samples - [Quickstart UI for the IdentityServer4 with Asp.Net Core Identity and EF Core storage](https://github.com/IdentityServer/IdentityServer4.Samples/tree/master/Quickstarts/Combined_AspId_and_EFStorage) and [damienbod - IdentityServer4 and Identity template](https://github.com/damienbod/IdentityServer4AspNetCoreIdentityTemplate)
+  - `Skoruba.IdentityServer4.STS.Identity` - project that contains the instance of IdentityServer4 and combine these samples - [Quickstart UI for the IdentityServer4 with Asp.Net Core Identity and EF Core storage](https://github.com/IdentityServer/IdentityServer4/tree/master/samples/Quickstarts/9_Combined_AspId_and_EFStorage) and [damienbod - IdentityServer4 and Identity template](https://github.com/damienbod/IdentityServer4AspNetCoreIdentityTemplate)
+
+- Admin UI Api:
+
+  - `Skoruba.IdentityServer4.Admin.Api` - project with Api for managing data of IdentityServer4 and Asp.Net Core Identity, with swagger support as well
 
 - Admin UI:
 
@@ -262,9 +341,11 @@ or using `Email`:
 
   - `Skoruba.IdentityServer4.Admin.EntityFramework` - EF Core data layer that contains Entities for the IdentityServer4
 
-  - `Skoruba.IdentityServer4.Admin.EntityFramework.Identity` - EF Core data layer that contains Entities for the Asp.Net Core Identity
+  - `Skoruba.IdentityServer4.Admin.EntityFramework.Identity` - EF Core data layer that contains Repositories for the Asp.Net Core Identity
+  
+  - `Skoruba.IdentityServer4.Admin.EntityFramework.Extensions` - project that contains extensions related to EntityFramework
 
-  - `Skoruba.IdentityServer4.Admin.EntityFramework.DbContexts` - project that contains DbContexts for the IdentityServer4, Logging and Asp.Net Core Identity
+  - `Skoruba.IdentityServer4.Admin.EntityFramework.Shared` - project that contains DbContexts for the IdentityServer4, Logging and Asp.Net Core Identity, inluding shared Identity entities
 
 - Tests:
 
@@ -339,7 +420,7 @@ It is possible to define the configuration according the client type - by defaul
 
 ![Skoruba.IdentityServer4.Admin Diagram](docs/Images/Skoruba.IdentityServer4.Admin-App-Diagram.png)
 
-## Plan & Vision
+## Roadmap & Vision
 
 ### 1.0.0:
 
@@ -354,27 +435,27 @@ It is possible to define the configuration according the client type - by defaul
   - [x] Chinese
   - [x] Russian
   - [x] Persian
+  - [x] Swedish
 - [x] Manage profile
 - [x] Password reset
 - [x] Link account to an external provider (example with Github)
 - [x] Two-Factor Authentication (2FA)
 - [x] User registration
 - [x] Email service
+  - [x] SendGrid
+- [x] Add API
+  - [x] IdentityServer4
+  - [x] Asp.Net Core Identity
+  - [x] Add swagger support
 
-### 1.1.0:
-
-- [ ] Docker support ([#121](https://github.com/skoruba/IdentityServer4.Admin/issues/121))
+### 1.1.0
 - [ ] Add audit logs to track changes ([#61](https://github.com/skoruba/IdentityServer4.Admin/issues/61))
-- [ ] Create a project template using dotnet CLI - `dotnet new template`
-  - [ ] Second template: The administration of the IdentityServer4 (without Asp.Net Core Identity) ([#79](https://github.com/skoruba/IdentityServer4.Admin/issues/79))
-
-
+  
 ### 2.0.0:
 
-- [ ] Add API ([#105](https://github.com/skoruba/IdentityServer4.Admin/issues/105))
-  - [ ] IdentityServer4
-  - [ ] Asp.Net Core Identity
-  - [ ] Add swagger support
+- [ ] Docker support ([#121](https://github.com/skoruba/IdentityServer4.Admin/issues/121))
+- [ ] Create a project template using dotnet CLI - `dotnet new template`
+  - [ ] Second template: The administration of the IdentityServer4 (without Asp.Net Core Identity) ([#79](https://github.com/skoruba/IdentityServer4.Admin/issues/79))
 
 ### Future:
 
@@ -415,6 +496,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 | [<img src="https://avatars3.githubusercontent.com/u/35664089?s=460&v=3" width="100px;"/><br /><sub> Jan Škoruba</sub>](https://github.com/skoruba) <br /> 💻 💬 📖 💡 🤔 | [<img src="https://avatars0.githubusercontent.com/u/6831144?s=460&v=3" width="100px;"/><br /><sub> Tomáš Hübelbauer</sub>](https://github.com/TomasHubelbauer) <br /> 💻 👀 📖  🤔 | [<img src="https://avatars0.githubusercontent.com/u/1004852?s=460&v=3" width="100px;"/><br /><sub>Michał Drzał </sub>](https://github.com/xmichaelx) <br />💻 👀 📖 💡 🤔 | [<img src="https://avatars0.githubusercontent.com/u/2261603?s=460&v=3" width="100px;"/><br /><sub>cerginio </sub>](https://github.com/cerginio) <br /> 💻 🐛 💡 🤔 | [<img src="https://avatars3.githubusercontent.com/u/13407080?s=460&v=3" width="100px;"/><br /><sub>Sven Dummis </sub>](https://github.com/svendu) <br /> 📖| [<img src="https://avatars1.githubusercontent.com/u/1687087?s=460&v=3" width="100px;"/><br /><sub>Seaear</sub>](https://github.com/Seaear) <br />💻 🌍|
 | :---: | :---: | :---: | :---: | :---: | :---: |
 |[<img src="https://avatars1.githubusercontent.com/u/1150473?s=460&v=3" width="118px;"/><br /><sub>Rune Antonsen </sub>](https://github.com/ruant) <br />🐛|[<img src="https://avatars1.githubusercontent.com/u/5537607?s=460&v=3" width="118px;"/><br /><sub>Sindre Njøsen </sub>](https://github.com/Sindrenj) <br />💻|[<img src="https://avatars1.githubusercontent.com/u/40323674?s=460&v=3" width="118px;"/><br /><sub>Alevtina Brown </sub>](https://github.com/alev7ina) <br />🌍|[<img src="https://avatars3.githubusercontent.com/u/29726153?s=460&v=3" width="118px;"/><br /><sub>Brice </sub>](https://github.com/Brice-xCIT) <br />💻|[<img src="https://avatars0.githubusercontent.com/u/17114154?s=460&v=3" width="118px;"/><br /><sub>TheEvilPenguin </sub>](https://github.com/TheEvilPenguin) <br />💻|[<img src="https://avatars3.githubusercontent.com/u/15545395?s=460&v=3" width="118px;"/><br /><sub>Saeed Rahmani </sub>](https://github.com/saeedrahmo) <br />🌍|
+|[<img src="https://avatars0.githubusercontent.com/u/15867612?s=460&v=3" width="118px;"/><br /><sub>Andy Yu </sub>](https://github.com/Zyxious) <br />🌍|
 <!-- prettier-ignore-end -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification.
@@ -425,3 +507,9 @@ Contributions of any kind are welcome!
 I am happy to share my attempt of the implementation of the administration for IdentityServer4 and ASP.NET Core Identity.
 
 Any feedback is welcome - feel free to create an issue or send me an email - [jan@skoruba.com](mailto:jan@skoruba.com). Thank you :blush:
+
+## Support and Donation 🕊️
+
+If you like my work, you can support me by donation. 👍 
+
+https://www.paypal.me/skoruba

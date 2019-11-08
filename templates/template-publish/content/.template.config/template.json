@@ -50,10 +50,10 @@
       "path": "src/SkorubaIdentityServer4Admin.STS.Identity/SkorubaIdentityServer4Admin.STS.Identity.csproj"
     },
     {
-      "path": "src/SkorubaIdentityServer4Admin.Admin.EntityFramework.DbContexts/SkorubaIdentityServer4Admin.Admin.EntityFramework.DbContexts.csproj"
+      "path": "src/SkorubaIdentityServer4Admin.Admin.Api/SkorubaIdentityServer4Admin.Admin.Api.csproj"
     },
     {
-      "path": "src/SkorubaIdentityServer4Admin.Admin.EntityFramework.Identity/SkorubaIdentityServer4Admin.Admin.EntityFramework.Identity.csproj"
+      "path": "src/SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared/SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.csproj"
     }
   ],
   "postActions": [

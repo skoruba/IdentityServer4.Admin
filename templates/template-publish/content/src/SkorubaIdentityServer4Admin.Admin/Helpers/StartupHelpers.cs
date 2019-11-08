@@ -366,10 +366,11 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers
             {
                 var supportedCultures = new[]
                 {
+                        new CultureInfo("en"),
                         new CultureInfo("fa"),
                         new CultureInfo("ru"),
-                        new CultureInfo("zh"),
-                        new CultureInfo("en")
+                        new CultureInfo("sv"),
+                        new CultureInfo("zh")
                 };
 
                 opts.DefaultRequestCulture = new RequestCulture("en");
@@ -439,7 +440,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers
                     {
                         options.Authority = adminConfiguration.IdentityServerBaseUrl;
 
-                        // NOTE: For production use - setup https metadata to true!
+                        // NOTE: This is only for development set for false
+                        // For production use - set RequireHttpsMetadata to true!
                         options.RequireHttpsMetadata = false;
                         options.ClientId = adminConfiguration.ClientId;
                         options.ClientSecret = adminConfiguration.ClientSecret;
