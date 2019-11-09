@@ -19,6 +19,7 @@ services:
       - "AdminConfiguration:IdentityAdminRedirectUri=http://127.0.0.1.xip.io:9000/signin-oidc"
       - "AdminConfiguration:IdentityServerBaseUrl=http://127.0.0.1.xip.io"
       - "AdminConfiguration:IdentityRequireHttpsMetadata=false"
+      - "AdminConfiguration:IdentityAdminApiSwaggerUIRedirectUrl=http://127.0.0.1.xip.io:5000/swagger/oauth2-redirect.html"
     command: dotnet Skoruba.IdentityServer4.Admin.dll /seed
     depends_on:
       - db
