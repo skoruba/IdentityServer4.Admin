@@ -6,6 +6,7 @@ using Skoruba.IdentityServer4.Admin.Api.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.Api.Dtos.ApiResources;
 using Skoruba.IdentityServer4.Admin.Api.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Api.Mappers;
+using Skoruba.IdentityServer4.Admin.Api.Resources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 
@@ -19,10 +20,12 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
     public class ApiResourcesController : ControllerBase
     {
         private readonly IApiResourceService _apiResourceService;
+        private readonly IApiErrorResources _errorResources;
 
-        public ApiResourcesController(IApiResourceService apiResourceService)
+        public ApiResourcesController(IApiResourceService apiResourceService, IApiErrorResources errorResources)
         {
             _apiResourceService = apiResourceService;
+            _errorResources = errorResources;
         }
 
         [HttpGet]
@@ -47,6 +50,12 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         public async Task<IActionResult> Post([FromBody]ApiResourceApiDto apiResourceApi)
         {
             var apiResourceDto = apiResourceApi.ToApiResourceApiModel<ApiResourceDto>();
+
+            if (!apiResourceDto.Id.Equals(default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
+
             await _apiResourceService.AddApiResourceAsync(apiResourceDto);
 
             return Ok();
@@ -97,6 +106,11 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         {
             var apiScope = apiScopeApi.ToApiResourceApiModel<ApiScopesDto>();
             apiScope.ApiResourceId = id;
+
+            if (!apiScope.ApiScopeId.Equals(default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
 
             await _apiResourceService.GetApiResourceAsync(apiScope.ApiResourceId);
             await _apiResourceService.AddApiScopeAsync(apiScope);
@@ -155,6 +169,11 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
             var secretsDto = clientSecretApi.ToApiResourceApiModel<ApiSecretsDto>();
             secretsDto.ApiResourceId = id;
 
+            if (!secretsDto.ApiSecretId.Equals(default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
+
             await _apiResourceService.AddApiSecretAsync(secretsDto);
 
             return Ok();
@@ -194,6 +213,11 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         {
             var apiResourcePropertiesDto = apiPropertyApi.ToApiResourceApiModel<ApiResourcePropertiesDto>();
             apiResourcePropertiesDto.ApiResourceId = id;
+
+            if (!apiResourcePropertiesDto.ApiResourcePropertyId.Equals(default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
 
             await _apiResourceService.AddApiResourcePropertyAsync(apiResourcePropertiesDto);
 

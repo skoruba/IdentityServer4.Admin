@@ -284,18 +284,20 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
 
         public virtual async Task<int> DeleteUserClaimsAsync(string userId, int claimId)
         {
+            var user = await UserManager.FindByIdAsync(userId);
             var userClaim = await DbContext.Set<TUserClaim>().Where(x => x.Id == claimId).SingleOrDefaultAsync();
 
-            DbContext.UserClaims.Remove(userClaim);
+            await UserManager.RemoveClaimAsync(user, new Claim(userClaim.ClaimType, userClaim.ClaimValue));
 
             return await AutoSaveChangesAsync();
         }
 
         public virtual async Task<int> DeleteRoleClaimsAsync(string roleId, int claimId)
         {
+            var role = await RoleManager.FindByIdAsync(roleId);
             var roleClaim = await DbContext.Set<TRoleClaim>().Where(x => x.Id == claimId).SingleOrDefaultAsync();
 
-            DbContext.Set<TRoleClaim>().Remove(roleClaim);
+            await RoleManager.RemoveClaimAsync(role, new Claim(roleClaim.ClaimType, roleClaim.ClaimValue));
 
             return await AutoSaveChangesAsync();
         }

@@ -4,14 +4,15 @@
     {
         string IdentityAdminRedirectUri { get; }
         string IdentityServerBaseUrl { get; }
-        string IdentityAdminBaseUrl { get; }
         string ClientId { get; }
         string ClientSecret { get; }
         string OidcResponseType { get; }
         string[] Scopes { get; }
-        string IdentityAdminApiSwaggerUIClientId { get; }
-        string IdentityAdminApiSwaggerUIRedirectUrl { get; }
-        string IdentityAdminApiScope { get; }
-        bool IdentityRequireHttpsMetadata { get; }
+        string AdministrationRole { get; }
+        bool RequireHttpsMetadata { get; }
+        string IdentityAdminCookieName { get; }
+        double IdentityAdminCookieExpiresUtcHours { get; }
+        string TokenValidationClaimName { get; }
+        string TokenValidationClaimRole { get; }
     }
 }
