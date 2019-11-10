@@ -26,6 +26,7 @@ using Skoruba.IdentityServer4.STS.Identity.Configuration.Intefaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 using Skoruba.IdentityServer4.STS.Identity.Services;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
+using Microsoft.Extensions.Hosting;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
@@ -42,12 +43,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             services.AddLocalization(opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; });
 
             services.TryAddTransient(typeof(IGenericControllerLocalizer<>), typeof(GenericControllerLocalizer<>));
-
-            services.AddMvc(o =>
+            
+            services.AddControllersWithViews(o =>
                 {
                     o.Conventions.Add(new GenericControllerRouteConvention());
                 })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddViewLocalization(
                     LanguageViewLocationExpanderFormat.Suffix,
                     opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; })
@@ -63,6 +63,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     var supportedCultures = new[]
                     {
                         new CultureInfo("en"),
+                        new CultureInfo("da"),
                         new CultureInfo("fa"),
                         new CultureInfo("fr"),
                         new CultureInfo("ru"),
@@ -131,7 +132,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <param name="hostingEnvironment"></param>
         /// <param name="configuration"></param>
         /// <param name="logger"></param>
-        public static void AddAuthenticationServices<TConfigurationDbContext, TPersistedGrantDbContext, TIdentityDbContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfiguration configuration, ILogger logger)
+        public static void AddAuthenticationServices<TConfigurationDbContext, TPersistedGrantDbContext, TIdentityDbContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IWebHostEnvironment hostingEnvironment, IConfiguration configuration, ILogger logger)
             where TPersistedGrantDbContext : DbContext, IPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IConfigurationDbContext
             where TIdentityDbContext : DbContext
@@ -231,7 +232,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <param name="hostingEnvironment"></param>
         private static void AddIdentityServer<TConfigurationDbContext, TPersistedGrantDbContext, TUserIdentity>(
             IServiceCollection services,
-            IConfiguration configuration, ILogger logger, IHostingEnvironment hostingEnvironment)
+            IConfiguration configuration, ILogger logger, IWebHostEnvironment hostingEnvironment)
             where TUserIdentity : class
             where TPersistedGrantDbContext : DbContext, IPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IConfigurationDbContext
@@ -279,7 +280,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <param name="configuration"></param>
         /// <param name="hostingEnvironment"></param>
         public static void AddIdentityDbContext<TContext>(this IServiceCollection services,
-            IConfiguration configuration, IHostingEnvironment hostingEnvironment)
+            IConfiguration configuration, IWebHostEnvironment hostingEnvironment)
             where TContext : DbContext
         {
             if (hostingEnvironment.IsStaging())
@@ -329,7 +330,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <param name="hostingEnvironment"></param>
         public static IIdentityServerBuilder AddIdentityServerStoresWithDbContexts<TConfigurationDbContext,
             TPersistedGrantDbContext>(this IIdentityServerBuilder builder, IConfiguration configuration,
-            IHostingEnvironment hostingEnvironment)
+            IWebHostEnvironment hostingEnvironment)
             where TPersistedGrantDbContext : DbContext, IPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IConfigurationDbContext
         {

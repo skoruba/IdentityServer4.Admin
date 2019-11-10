@@ -15,6 +15,7 @@ namespace Skoruba.IdentityServer4.Admin.Api
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseIISIntegration()
                 .UseStartup<Startup>();
     }
 }

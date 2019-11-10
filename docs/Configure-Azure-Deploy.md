@@ -69,6 +69,13 @@ While we're at it we can allow only https traffic to our STS and admin:
 
 ![Always https](Images/https_always.PNG)
 
+Then head to "Application Settings" section within your Azure App Service and create a new Application setting with the following parameters:
+
+```
+Name: WEBSITE_LOAD_CERTIFICATES
+Value: *
+```
+
 Last step before deploy - we need to update `src/Skoruba.IdentityServer4.STS.Identity/appsettings.json` and modify following lines:
 
 ```json
