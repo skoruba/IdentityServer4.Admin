@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using IdentityModel;
 using IdentityServer4.EntityFramework.Options;
 using IdentityServer4.EntityFramework.Storage;
 using Microsoft.AspNetCore.Authentication;
@@ -44,8 +42,8 @@ using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.Helpers.Localization;
+using Microsoft.Extensions.Hosting;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -261,7 +259,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public static void ConfigureAuthenticationServices(this IApplicationBuilder app, IHostingEnvironment env)
+        public static void ConfigureAuthenticationServices(this IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseAuthentication();
 
@@ -301,7 +299,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <param name="services"></param>
         /// <param name="hostingEnvironment"></param>
         /// <param name="configuration"></param>
-        public static void AddDbContexts<TContext>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfigurationRoot configuration)
+        public static void AddDbContexts<TContext>(this IServiceCollection services, IWebHostEnvironment hostingEnvironment, IConfigurationRoot configuration)
         where TContext : DbContext
         {
             if (hostingEnvironment.IsStaging())
@@ -325,7 +323,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <param name="services"></param>
         /// <param name="hostingEnvironment"></param>
         /// <param name="configuration"></param>
-        public static void AddDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IConfigurationRoot configuration)
+        public static void AddDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext>(this IServiceCollection services, IWebHostEnvironment hostingEnvironment, IConfigurationRoot configuration)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
@@ -399,11 +397,10 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
             services.TryAddTransient(typeof(IGenericControllerLocalizer<>), typeof(GenericControllerLocalizer<>));
 
-            services.AddMvc(o =>
+            services.AddControllersWithViews(o =>
                 {
                     o.Conventions.Add(new GenericControllerRouteConvention());
                 })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddViewLocalization(
                     LanguageViewLocationExpanderFormat.Suffix,
                     opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; })
@@ -446,7 +443,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <param name="services"></param>
         /// <param name="hostingEnvironment"></param>
         /// <param name="adminConfiguration"></param>
-        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IHostingEnvironment hostingEnvironment, IAdminConfiguration adminConfiguration)
+        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IWebHostEnvironment hostingEnvironment, IAdminConfiguration adminConfiguration)
             where TContext : DbContext where TUserIdentity : class where TUserIdentityRole : class
         {
             services.AddIdentity<TUserIdentity, TUserIdentityRole>(options =>

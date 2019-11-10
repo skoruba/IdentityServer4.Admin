@@ -15,7 +15,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.AuditLogging
             var clientIdClaim = accessor.HttpContext.User.FindFirst(auditLoggingConfiguration.ClientIdClaim);
 
             SubjectIdentifier = subClaim == null ? clientIdClaim.Value : subClaim.Value;
-            SubjectName = subClaim == null ? clientIdClaim.Value : nameClaim.Value;
+            SubjectName = subClaim == null ? clientIdClaim.Value : nameClaim?.Value;
             SubjectType = subClaim == null ? AuditSubjectTypes.Machine : AuditSubjectTypes.User;
 
             SubjectAdditionalData = new

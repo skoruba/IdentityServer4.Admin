@@ -47,28 +47,28 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteLogs(LogsDto logs)
+        public async Task<IActionResult> DeleteLogs(LogsDto log)
         {
             if (!ModelState.IsValid)
             {
-                return View(nameof(ErrorsLog), logs);
+                return View(nameof(ErrorsLog), log);
             }
             
-            await _logService.DeleteLogsOlderThanAsync(logs.DeleteOlderThan.Value);
+            await _logService.DeleteLogsOlderThanAsync(log.DeleteOlderThan.Value);
 
             return RedirectToAction(nameof(ErrorsLog));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteAuditLogs(AuditLogsDto logs)
+        public async Task<IActionResult> DeleteAuditLogs(AuditLogsDto log)
         {
             if (!ModelState.IsValid)
             {
-                return View(nameof(AuditLog), logs);
+                return View(nameof(AuditLog), log);
             }
 
-            await _auditLogService.DeleteLogsOlderThanAsync(logs.DeleteOlderThan.Value);
+            await _auditLogService.DeleteLogsOlderThanAsync(log.DeleteOlderThan.Value);
 
             return RedirectToAction(nameof(AuditLog));
         }

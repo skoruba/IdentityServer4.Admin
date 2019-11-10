@@ -18,7 +18,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Common
 
             return fixture.WithWebHostBuilder(
                 builder => builder
-                    .UseEnvironment(EnvironmentName.Staging)
+                    .UseEnvironment(Microsoft.Extensions.Hosting.Environments.Staging)
                     .ConfigureTestServices(services => { })
             ).CreateClient(options);
         }

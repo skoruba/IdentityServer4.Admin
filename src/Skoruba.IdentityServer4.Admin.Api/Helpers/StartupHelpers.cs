@@ -82,8 +82,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
         {
             services.TryAddTransient(typeof(IGenericControllerLocalizer<>), typeof(GenericControllerLocalizer<>));
 
-            services.AddMvc(o => { o.Conventions.Add(new GenericControllerRouteConvention()); })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+            services.AddControllersWithViews(o => { o.Conventions.Add(new GenericControllerRouteConvention()); })
                 .AddDataAnnotationsLocalization()
                 .ConfigureApplicationPartManager(m =>
                 {

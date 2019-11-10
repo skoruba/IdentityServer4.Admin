@@ -9,12 +9,13 @@ namespace Skoruba.IdentityServer4.STS.Identity
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args)
-	            .UseSerilog()
-				.Build().Run();
+                .UseSerilog()
+                .Build().Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)               
+            WebHost.CreateDefaultBuilder(args)
+                .UseIISIntegration()
                 .UseStartup<Startup>();
     }
 }
