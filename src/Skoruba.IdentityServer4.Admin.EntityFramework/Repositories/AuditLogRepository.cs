@@ -26,13 +26,13 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             var pagedList = new PagedList<TAuditLog>();
 
             var auditLogs = await DbContext.AuditLog
-                .PageBy(x => x.Id, page, pageSize)
                 .WhereIf(!string.IsNullOrEmpty(subjectIdentifier), log => log.SubjectIdentifier.Contains(subjectIdentifier))
                 .WhereIf(!string.IsNullOrEmpty(subjectName), log => log.SubjectName.Contains(subjectName))
                 .WhereIf(!string.IsNullOrEmpty(@event), log => log.Event.Contains(@event))
                 .WhereIf(!string.IsNullOrEmpty(source), log => log.Source.Contains(source))
                 .WhereIf(!string.IsNullOrEmpty(category), log => log.Category.Contains(category))
                 .WhereIf(created.HasValue, log => log.Created.Date == created.Value.Date)
+                .PageBy(x => x.Id, page, pageSize)
                 .ToListAsync();
 
             pagedList.Data.AddRange(auditLogs);
