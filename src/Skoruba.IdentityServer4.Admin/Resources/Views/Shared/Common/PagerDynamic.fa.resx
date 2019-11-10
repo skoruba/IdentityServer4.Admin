@@ -117,47 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ButtonClone" xml:space="preserve">
-    <value>Dupliquer Client</value>
+  <data name="FirstButtonText" xml:space="preserve">
+    <value>اولین</value>
   </data>
-  <data name="InfoDescription" xml:space="preserve">
-    <value>Les secrets client ne seront pas dupliqués.</value>
-  </data>
-  <data name="InfoTitle" xml:space="preserve">
-    <value>Info:</value>
-  </data>
-  <data name="LabelCloneClientClaims" xml:space="preserve">
-    <value>Claims Client</value>
-  </data>
-  <data name="LabelCloneClientCorsOrigins" xml:space="preserve">
-    <value>Origines Client Cors </value>
-  </data>
-  <data name="LabelCloneClientGrantTypes" xml:space="preserve">
-    <value>Types Grant Client</value>
-  </data>
-  <data name="LabelCloneClientIdPRestrictions" xml:space="preserve">
-    <value>Restrictions Client IdP </value>
-  </data>
-  <data name="LabelCloneClientPostLogoutRedirectUris" xml:space="preserve">
-    <value>Uris Client de Redirection (Post Déconnexion)</value>
-    <comment>Client Post Logout Redirect Uris</comment>
-  </data>
-  <data name="LabelCloneClientProperties" xml:space="preserve">
-    <value>Propriétés Client</value>
-  </data>
-  <data name="LabelCloneClientRedirectUris" xml:space="preserve">
-    <value>Uris Client de Redirection</value>
-  </data>
-  <data name="LabelCloneClientScopes" xml:space="preserve">
-    <value>Scopes Client</value>
-  </data>
-  <data name="NavigationClients" xml:space="preserve">
-    <value>Clients</value>
-  </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>Dupliquer Client</value>
-  </data>
-  <data name="PanelTitle" xml:space="preserve">
-    <value>Client</value>
+  <data name="LastButtonText" xml:space="preserve">
+    <value>آخرین</value>
   </data>
 </root>

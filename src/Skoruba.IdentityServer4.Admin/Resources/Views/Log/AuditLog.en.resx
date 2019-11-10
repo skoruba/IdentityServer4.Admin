@@ -117,46 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ButtonClone" xml:space="preserve">
-    <value>Clonar cliente</value>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
   </data>
-  <data name="InfoDescription" xml:space="preserve">
-    <value>Los secretos de cliente no seran clonados.</value>
+  <data name="Are you sure?" xml:space="preserve">
+    <value>Are you sure?</value>
   </data>
-  <data name="InfoTitle" xml:space="preserve">
-    <value>Info:</value>
+  <data name="Audit Log" xml:space="preserve">
+    <value>Audit Log</value>
   </data>
-  <data name="LabelCloneClientClaims" xml:space="preserve">
-    <value>Reclamaciones del cliente</value>
+  <data name="Category" xml:space="preserve">
+    <value>Category</value>
   </data>
-  <data name="LabelCloneClientCorsOrigins" xml:space="preserve">
-    <value>Origenes CORS del cliente</value>
+  <data name="Created" xml:space="preserve">
+    <value>Created</value>
   </data>
-  <data name="LabelCloneClientGrantTypes" xml:space="preserve">
-    <value>Tipos de concesión del cliente</value>
+  <data name="Delete logs older than" xml:space="preserve">
+    <value>Delete logs older than</value>
   </data>
-  <data name="LabelCloneClientIdPRestrictions" xml:space="preserve">
-    <value>Restricciones de proveedores de identidad del cliente</value>
+  <data name="Detail" xml:space="preserve">
+    <value>Detail</value>
   </data>
-  <data name="LabelCloneClientPostLogoutRedirectUris" xml:space="preserve">
-    <value>URIs de redirección post cierre de sesión del cliente</value>
+  <data name="Event" xml:space="preserve">
+    <value>Event</value>
   </data>
-  <data name="LabelCloneClientProperties" xml:space="preserve">
-    <value>Propiedades del cliente</value>
+  <data name="No - close" xml:space="preserve">
+    <value>No - close</value>
   </data>
-  <data name="LabelCloneClientRedirectUris" xml:space="preserve">
-    <value>URIs de redirección del cliente</value>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
   </data>
-  <data name="LabelCloneClientScopes" xml:space="preserve">
-    <value>Alcances del cliente</value>
+  <data name="Show detail" xml:space="preserve">
+    <value>Show detail</value>
   </data>
-  <data name="NavigationClients" xml:space="preserve">
-    <value>Clientes</value>
+  <data name="Source" xml:space="preserve">
+    <value>Source</value>
   </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>Clonar cliente</value>
+  <data name="Subject" xml:space="preserve">
+    <value>Subject</value>
   </data>
-  <data name="PanelTitle" xml:space="preserve">
-    <value>Cliente</value>
+  <data name="Subject Identifier" xml:space="preserve">
+    <value>Subject Identifier</value>
+  </data>
+  <data name="Subject Name" xml:space="preserve">
+    <value>Subject Name</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="Yes - delete" xml:space="preserve">
+    <value>Yes - delete</value>
   </data>
 </root>

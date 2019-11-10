@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
         <Version>1.0.0-beta7</Version>
         <Authors>Jan Škoruba</Authors>
         <PackageTags>IdentityServer4 Admin OpenIDConnect OAuth2 Identity</PackageTags>
@@ -10,6 +10,10 @@
         <PackageProjectUrl>https://github.com/skoruba/IdentityServer4.Admin</PackageProjectUrl>
         <PackageIconUrl>https://raw.githubusercontent.com/skoruba/IdentityServer4.Admin/master/docs/Images/Skoruba.IdentityServer4.Admin-Logo-Nuget.png</PackageIconUrl>
     </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Skoruba.AuditLogging.EntityFramework" Version="1.0.0-beta7" />
+    </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.Identity\Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj" />

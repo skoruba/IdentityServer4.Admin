@@ -56,8 +56,16 @@
         </div>
 
         <!--Menu item -->
-        <a class="menu-item btn btn-primary mr-md-3" asp-area="" asp-controller="Log" asp-action="ErrorsLog">@Localizer["TitleLogs"]</a>
-
+        <div class="menu-item my-2 my-md-0 mr-md-3 dropdown">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                @Localizer["TitleLogs"]
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" asp-area="" asp-controller="Log" asp-action="AuditLog">@Localizer["Audit Logs"]</a>
+                <a class="dropdown-item" asp-area="" asp-controller="Log" asp-action="ErrorsLog">@Localizer["Error Logs"]</a>
+            </div>
+        </div>
+        
         <!--Menu item -->
         @if (User.Identity.IsAuthenticated)
         {

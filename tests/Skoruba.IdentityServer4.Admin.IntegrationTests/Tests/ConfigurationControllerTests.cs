@@ -41,7 +41,7 @@ namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Tests
         {
             //Remove
             Client.DefaultRequestHeaders.Clear();
-
+            
             foreach (var route in RoutesConstants.GetConfigureRoutes())
             {
                 // Act

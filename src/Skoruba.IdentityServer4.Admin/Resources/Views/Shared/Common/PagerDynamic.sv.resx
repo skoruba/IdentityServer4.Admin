@@ -117,46 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ButtonClone" xml:space="preserve">
-    <value>Duplicera klient</value>
+  <data name="FirstButtonText" xml:space="preserve">
+    <value>Först</value>
   </data>
-  <data name="InfoDescription" xml:space="preserve">
-    <value>Klientenhemligheter kommer inte att dupliceras.</value>
-  </data>
-  <data name="InfoTitle" xml:space="preserve">
-    <value>Information:</value>
-  </data>
-  <data name="LabelCloneClientClaims" xml:space="preserve">
-    <value>Klientanspråk</value>
-  </data>
-  <data name="LabelCloneClientCorsOrigins" xml:space="preserve">
-    <value>Klient Cors ursprung</value>
-  </data>
-  <data name="LabelCloneClientGrantTypes" xml:space="preserve">
-    <value>Klientens medgivandetyper</value>
-  </data>
-  <data name="LabelCloneClientIdPRestrictions" xml:space="preserve">
-    <value>Klient IdP begränsningar</value>
-  </data>
-  <data name="LabelCloneClientPostLogoutRedirectUris" xml:space="preserve">
-    <value>Klient Post Logout Redirect Uri:er</value>
-  </data>
-  <data name="LabelCloneClientProperties" xml:space="preserve">
-    <value>Klientegenskaper</value>
-  </data>
-  <data name="LabelCloneClientRedirectUris" xml:space="preserve">
-    <value>Klient Redirect Uri:er</value>
-  </data>
-  <data name="LabelCloneClientScopes" xml:space="preserve">
-    <value>Klientbegränsningar</value>
-  </data>
-  <data name="NavigationClients" xml:space="preserve">
-    <value>Klienter</value>
-  </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>Duplicera klient</value>
-  </data>
-  <data name="PanelTitle" xml:space="preserve">
-    <value>Klient</value>
+  <data name="LastButtonText" xml:space="preserve">
+    <value>Sist</value>
   </data>
 </root>

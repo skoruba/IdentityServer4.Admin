@@ -12,9 +12,9 @@
 
 This is currently in **beta version**
 
-The application is written in the **Asp.Net Core MVC - using .NET Core 2.2**
+The application is written in the **Asp.Net Core MVC - using .NET Core 3.0**
 
-**NOTE:** Works only with **IdentityServer4 version 2.3.0 and higher** 🚀
+**NOTE:** Works only with **IdentityServer4 version 3.0.0 and higher** 🚀
 
 ## Requirements
 
@@ -147,6 +147,13 @@ Add-Migration IdentityServerPersistedGrantsDbInit -context IdentityServerPersist
 Update-Database -context IdentityServerPersistedGrantDbContext
 ```
 
+#### Migrations for AuditLogging DbContext:
+
+```powershell
+Add-Migration AuditLoggingDbInit -context AuditLoggingDbContext -output Data/Migrations/AuditLogging
+Update-Database -context AuditLoggingDbContext
+```
+
 ### Or via `dotnet CLI`:
 
 #### Migrations for Asp.Net Core Identity DbContext:
@@ -177,13 +184,20 @@ dotnet ef migrations add IdentityServerPersistedGrantsDbInit -c IdentityServerPe
 dotnet ef database update -c IdentityServerPersistedGrantDbContext
 ```
 
+#### Migrations for AuditLogging DbContext:
+
+```powershell
+dotnet ef migrations add AuditLoggingDbInit -c AuditLoggingDbContext -o Data/Migrations/AuditLogging
+dotnet ef database update -c AuditLoggingDbContext
+```
+
 Migrations are not a part of the repository - they are ignored in `.gitignore`.
 
 ### We suggest to use seed data:
 
 - In `Program.cs` -> `Main`, uncomment `DbMigrationHelpers.EnsureSeedData(host)` or use dotnet CLI `dotnet run /seed`
-- The `Clients` and `Resources` files in `Configuration/IdentityServer` are the initial data, based on a sample from IdentityServer4
-- The `Users` file in `Configuration/Identity` contains the default admin username and password for the first login
+- The `Clients` and `Resources` files in `appsettings.json` (section called: IdentityServerData) - are the initial data, based on a sample from IdentityServer4
+- The `Users` file in `appsettings.json` (section called: IdentityData) contains the default admin username and password for the first login
 
 ### Using other database engines - PostgreSQL, SQLite, MySQL etc.
 
@@ -191,9 +205,8 @@ Migrations are not a part of the repository - they are ignored in `.gitignore`.
 
 ## Authentication and Authorization
 
-- Change the specific URLs and names for the IdentityServer and Authentication settings in `Constants/AuthenticationConsts` or `appsettings.json`
-- `Constants/AuthorizationConsts.cs` contains configuration of constants connected with authorization - definition of the default name of admin policy
-- In the controllers is used the policy which name is stored in - `AuthorizationConsts.AdministrationPolicy`. In the policy - `AuthorizationConsts.AdministrationPolicy` is defined required role stored in - `AuthorizationConsts.AdministrationRole`.
+- Change the specific URLs and names for the IdentityServer and Authentication settings in `appsettings.json`
+- In the controllers is used the policy which name is stored in - `AuthorizationConsts.AdministrationPolicy`. In the policy - `AuthorizationConsts.AdministrationPolicy` is defined required role stored in - `appsettings.json` - `AdministrationRole`.
 - With the default configuration, it is necessary to configure and run instance of IdentityServer4. It is possible to use initial migration for creating the client as it mentioned above
 
 ### Login Configuration
@@ -447,9 +460,7 @@ It is possible to define the configuration according the client type - by defaul
   - [x] IdentityServer4
   - [x] Asp.Net Core Identity
   - [x] Add swagger support
-
-### 1.1.0
-- [ ] Add audit logs to track changes ([#61](https://github.com/skoruba/IdentityServer4.Admin/issues/61))
+[x] Add audit logs to track changes ([#61](https://github.com/skoruba/IdentityServer4.Admin/issues/61))
   
 ### 2.0.0:
 

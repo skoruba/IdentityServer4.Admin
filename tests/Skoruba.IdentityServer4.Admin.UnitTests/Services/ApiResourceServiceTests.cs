@@ -5,6 +5,7 @@ using FluentAssertions;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using Skoruba.AuditLogging.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
@@ -49,39 +50,49 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 			return apiResourceRepository;
 		}
 
-		private IClientService GetClientService(IClientRepository repository, IClientServiceResources resources)
+		private IClientService GetClientService(IClientRepository repository, IClientServiceResources resources, IAuditEventLogger auditEventLogger)
 		{
-			IClientService clientService = new ClientService(repository, resources);
+			IClientService clientService = new ClientService(repository, resources, auditEventLogger);
 
 			return clientService;
 		}
 
-		private IApiResourceService GetApiResourceService(IApiResourceRepository repository, IApiResourceServiceResources resources, IClientService clientService)
+		private IApiResourceService GetApiResourceService(IApiResourceRepository repository, IApiResourceServiceResources resources, IClientService clientService, IAuditEventLogger auditEventLogger)
 		{
-			IApiResourceService apiResourceService = new ApiResourceService(repository, resources, clientService);
+			IApiResourceService apiResourceService = new ApiResourceService(repository, resources, clientService, auditEventLogger);
 
 			return apiResourceService;
 		}
 
-		[Fact]
+        private IApiResourceService GetApiResourceService(IdentityServerConfigurationDbContext context)
+        {
+            var apiResourceRepository = GetApiResourceRepository(context);
+            var clientRepository = GetClientRepository(context);
+
+            var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
+            var localizerApiResource = localizerApiResourceMock.Object;
+
+            var localizerClientResourceMock = new Mock<IClientServiceResources>();
+            var localizerClientResource = localizerClientResourceMock.Object;
+
+            var auditLoggerMock = new Mock<IAuditEventLogger>();
+            var auditLogger = auditLoggerMock.Object;
+
+            var clientService = GetClientService(clientRepository, localizerClientResource, auditLogger);
+            var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService, auditLogger);
+
+            return apiResourceService;
+        }
+
+        [Fact]
 		public async Task AddApiResourceAsync()
 		{
 			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
-			{
-				var apiResourceRepository = GetApiResourceRepository(context);
-				var clientRepository = GetClientRepository(context);
+            {
+                var apiResourceService = GetApiResourceService(context);
 
-				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-				var localizerApiResource = localizerApiResourceMock.Object;
-
-				var localizerClientResourceMock = new Mock<IClientServiceResources>();
-				var localizerClientResource = localizerClientResourceMock.Object;
-
-				var clientService = GetClientService(clientRepository, localizerClientResource);
-				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
-
-				//Generate random new api resource
-				var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+                //Generate random new api resource
+                var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
 				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
@@ -100,20 +111,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		{
 			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
-				var apiResourceRepository = GetApiResourceRepository(context);
-				var clientRepository = GetClientRepository(context);
+                var apiResourceService = GetApiResourceService(context);
 
-				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-				var localizerApiResource = localizerApiResourceMock.Object;
-
-				var localizerClientResourceMock = new Mock<IClientServiceResources>();
-				var localizerClientResource = localizerClientResourceMock.Object;
-
-				var clientService = GetClientService(clientRepository, localizerClientResource);
-				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
-
-				//Generate random new api resource
-				var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+                //Generate random new api resource
+                var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
 				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
@@ -132,20 +133,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		{
 			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
-				var apiResourceRepository = GetApiResourceRepository(context);
-				var clientRepository = GetClientRepository(context);
+                var apiResourceService = GetApiResourceService(context);
 
-				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-				var localizerApiResource = localizerApiResourceMock.Object;
-
-				var localizerClientResourceMock = new Mock<IClientServiceResources>();
-				var localizerClientResource = localizerClientResourceMock.Object;
-
-				var clientService = GetClientService(clientRepository, localizerClientResource);
-				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
-
-				//Generate random new api resource
-				var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+                //Generate random new api resource
+                var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
 				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
@@ -174,20 +165,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		{
 			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
-				var apiResourceRepository = GetApiResourceRepository(context);
-				var clientRepository = GetClientRepository(context);
+                var apiResourceService = GetApiResourceService(context);
 
-				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-				var localizerApiResource = localizerApiResourceMock.Object;
-
-				var localizerClientResourceMock = new Mock<IClientServiceResources>();
-				var localizerClientResource = localizerClientResourceMock.Object;
-
-				var clientService = GetClientService(clientRepository, localizerClientResource);
-				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
-
-				//Generate random new api resource
-				var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+                //Generate random new api resource
+                var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
 				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
@@ -220,20 +201,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		{
 			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
-				var apiResourceRepository = GetApiResourceRepository(context);
-				var clientRepository = GetClientRepository(context);
+                var apiResourceService = GetApiResourceService(context);
 
-				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-				var localizerApiResource = localizerApiResourceMock.Object;
-
-				var localizerClientResourceMock = new Mock<IClientServiceResources>();
-				var localizerClientResource = localizerClientResourceMock.Object;
-
-				var clientService = GetClientService(clientRepository, localizerClientResource);
-				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
-
-				//Generate random new api resource
-				var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+                //Generate random new api resource
+                var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
 				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
@@ -271,20 +242,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		{
 			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
-				var apiResourceRepository = GetApiResourceRepository(context);
-				var clientRepository = GetClientRepository(context);
+                var apiResourceService = GetApiResourceService(context);
 
-				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-				var localizerApiResource = localizerApiResourceMock.Object;
-
-				var localizerClientResourceMock = new Mock<IClientServiceResources>();
-				var localizerClientResource = localizerClientResourceMock.Object;
-
-				var clientService = GetClientService(clientRepository, localizerClientResource);
-				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
-
-				//Generate random new api resource
-				var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+                //Generate random new api resource
+                var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
 				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
@@ -322,20 +283,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		{
 			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
-				var apiResourceRepository = GetApiResourceRepository(context);
-				var clientRepository = GetClientRepository(context);
+                var apiResourceService = GetApiResourceService(context);
 
-				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-				var localizerApiResource = localizerApiResourceMock.Object;
-
-				var localizerClientResourceMock = new Mock<IClientServiceResources>();
-				var localizerClientResource = localizerClientResourceMock.Object;
-
-				var clientService = GetClientService(clientRepository, localizerClientResource);
-				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
-
-				//Generate random new api resource
-				var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+                //Generate random new api resource
+                var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
 				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
@@ -386,20 +337,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		{
 			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
-				var apiResourceRepository = GetApiResourceRepository(context);
-				var clientRepository = GetClientRepository(context);
+                var apiResourceService = GetApiResourceService(context);
 
-				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-				var localizerApiResource = localizerApiResourceMock.Object;
-
-				var localizerClientResourceMock = new Mock<IClientServiceResources>();
-				var localizerClientResource = localizerClientResourceMock.Object;
-
-				var clientService = GetClientService(clientRepository, localizerClientResource);
-				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
-
-				//Generate random new api resource
-				var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+                //Generate random new api resource
+                var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
 				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
@@ -446,20 +387,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		{
 			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
-				var apiResourceRepository = GetApiResourceRepository(context);
-				var clientRepository = GetClientRepository(context);
+                var apiResourceService = GetApiResourceService(context);
 
-				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-				var localizerApiResource = localizerApiResourceMock.Object;
-
-				var localizerClientResourceMock = new Mock<IClientServiceResources>();
-				var localizerClientResource = localizerClientResourceMock.Object;
-
-				var clientService = GetClientService(clientRepository, localizerClientResource);
-				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
-
-				//Generate random new api resource
-				var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+                //Generate random new api resource
+                var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
 				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
@@ -497,20 +428,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		{
 			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
-				var apiResourceRepository = GetApiResourceRepository(context);
-				var clientRepository = GetClientRepository(context);
+                var apiResourceService = GetApiResourceService(context);
 
-				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-				var localizerApiResource = localizerApiResourceMock.Object;
-
-				var localizerClientResourceMock = new Mock<IClientServiceResources>();
-				var localizerClientResource = localizerClientResourceMock.Object;
-
-				var clientService = GetClientService(clientRepository, localizerClientResource);
-				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
-
-				//Generate random new api resource
-				var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
+                //Generate random new api resource
+                var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
 				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
@@ -557,20 +478,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		{
 			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
-				var apiResourceRepository = GetApiResourceRepository(context);
-				var clientRepository = GetClientRepository(context);
+                var apiResourceService = GetApiResourceService(context);
 
-				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-				var localizerApiResource = localizerApiResourceMock.Object;
-
-				var localizerClientResourceMock = new Mock<IClientServiceResources>();
-				var localizerClientResource = localizerClientResourceMock.Object;
-
-				var clientService = GetClientService(clientRepository, localizerClientResource);
-				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
-
-				//Generate random new api resource
-				var apiResource = ApiResourceDtoMock.GenerateRandomApiResource(0);
+                //Generate random new api resource
+                var apiResource = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
 				await apiResourceService.AddApiResourceAsync(apiResource);
 
@@ -610,20 +521,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		{
 			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
-				var apiResourceRepository = GetApiResourceRepository(context);
-				var clientRepository = GetClientRepository(context);
+                var apiResourceService = GetApiResourceService(context);
 
-				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-				var localizerApiResource = localizerApiResourceMock.Object;
-
-				var localizerClientResourceMock = new Mock<IClientServiceResources>();
-				var localizerClientResource = localizerClientResourceMock.Object;
-
-				var clientService = GetClientService(clientRepository, localizerClientResource);
-				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
-
-				//Generate random new api resource
-				var apiResource = ApiResourceDtoMock.GenerateRandomApiResource(0);
+                //Generate random new api resource
+                var apiResource = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
 				await apiResourceService.AddApiResourceAsync(apiResource);
 
@@ -663,20 +564,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		{
 			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
-				var apiResourceRepository = GetApiResourceRepository(context);
-				var clientRepository = GetClientRepository(context);
+                var apiResourceService = GetApiResourceService(context);
 
-				var localizerApiResourceMock = new Mock<IApiResourceServiceResources>();
-				var localizerApiResource = localizerApiResourceMock.Object;
-
-				var localizerClientResourceMock = new Mock<IClientServiceResources>();
-				var localizerClientResource = localizerClientResourceMock.Object;
-
-				var clientService = GetClientService(clientRepository, localizerClientResource);
-				var apiResourceService = GetApiResourceService(apiResourceRepository, localizerApiResource, clientService);
-
-				//Generate random new api resource
-				var apiResource = ApiResourceDtoMock.GenerateRandomApiResource(0);
+                //Generate random new api resource
+                var apiResource = ApiResourceDtoMock.GenerateRandomApiResource(0);
 
 				await apiResourceService.AddApiResourceAsync(apiResource);
 
