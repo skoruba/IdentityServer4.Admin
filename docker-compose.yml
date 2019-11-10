@@ -15,6 +15,7 @@ services:
       - "ConnectionStrings__PersistedGrantDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
       - "ConnectionStrings__IdentityDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
       - "ConnectionStrings__AdminLogDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+      - "ConnectionStrings__AdminAuditLogDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
       - "AdminConfiguration__IdentityAdminBaseUrl=http://127.0.0.1.xip.io:9000"
       - "AdminConfiguration__IdentityAdminRedirectUri=http://127.0.0.1.xip.io:9000/signin-oidc"
       - "AdminConfiguration__IdentityServerBaseUrl=http://127.0.0.1.xip.io"
