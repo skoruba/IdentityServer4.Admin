@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -418,10 +419,19 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UserDelete(TUserDto user)
         {
-            await _identityService.DeleteUserAsync(user.Id.ToString(), user);
-            SuccessNotification(_localizer["SuccessDeleteUser"], _localizer["SuccessTitle"]);
+            var currentUserId = User.GetSubjectId();
+            if (user.Id.ToString() == currentUserId)
+            {
+                CreateNotification(Helpers.NotificationHelpers.AlertType.Warning, _localizer["ErrorDeleteUser_CannotSelfDelete"]);
+                return RedirectToAction(nameof(UserDelete), user.Id);
+            }
+            else
+            {
+                await _identityService.DeleteUserAsync(user.Id.ToString(), user);
+                SuccessNotification(_localizer["SuccessDeleteUser"], _localizer["SuccessTitle"]);
 
-            return RedirectToAction(nameof(Users));
+                return RedirectToAction(nameof(Users));
+            }
         }
 
         [HttpGet]
