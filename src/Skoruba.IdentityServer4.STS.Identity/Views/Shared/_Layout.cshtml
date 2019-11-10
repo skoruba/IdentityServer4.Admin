@@ -2,18 +2,24 @@
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity
+@using Skoruba.IdentityServer4.STS.Identity.Configuration
 @inject IViewLocalizer Localizer
 @{
     string name = null;
-    if (!true.Equals(ViewData["signed-out"]))
-    {
-        name = Context.User?.GetDisplayName();
-    }
+ if (!true.Equals(ViewData["signed-out"]))
+ {
+     name = Context.User?.GetDisplayName();
+ }
 }
+@using Microsoft.AspNetCore.Authorization
+@using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants
+@inject IAuthorizationService AuthorizationService
 
 @inject SignInManager<UserIdentity> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+    var hasWindowsLogins = hasExternalLogins && (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any(
+        scheme => scheme.Name == AccountOptions.WindowsAuthenticationSchemeName);
 }
 <!DOCTYPE html>
 <html>
@@ -45,6 +51,11 @@
         <!--Menu item -->
         @if (User.Identity.IsAuthenticated)
         {
+            <!--Menu item -->
+            @if (hasWindowsLogins && (await AuthorizationService.AuthorizeAsync(User, AuthorizationConsts.AdministrationPolicy)).Succeeded)
+            {
+                <a class="menu-item my-2 btn btn-outline-primary" asp-action="ImportAllWindowsUsers" asp-controller="Account">@Localizer["ImportWindowsUsers"]</a>
+            }
             <!--Menu item -->
             <vc:identity-server-admin-link></vc:identity-server-admin-link>
 

@@ -26,6 +26,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
+using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.ADUtilities;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
@@ -819,7 +820,46 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             return await Register(registerModel, returnUrl);
         }
-        
+
+        [HttpGet]
+        public IActionResult ImportAllWindowsUsers()
+        {
+            return View(new ImportAllWindowsUsersViewModel());
+        }
+
+        [HttpPost]
+        [Authorize(AuthorizationConsts.AdministrationPolicy)]
+        public async Task<IActionResult> ImportAllWindowsUsers(ImportAllWindowsUsersViewModel model)
+        {
+            int nErrors = 0, nImported = 0, nUpdated = 0;
+            foreach (var username in _ADUtilities.ReadAllUsernamesFromAD())
+            {
+                try
+                {
+                    var loginInfo = new ExternalLoginInfo(new ClaimsPrincipal(new ClaimsIdentity()), AccountOptions.WindowsAuthenticationSchemeName, username, null);
+                    var existingUser = await _userManager.FindByLoginAsync(AccountOptions.WindowsAuthenticationSchemeName, username);
+                    if (existingUser == null)
+                    {
+                        await ProvideExternalUserAsync(loginInfo, username, null);
+                        nImported++;
+                    }
+                    else if (_windowsAuthConfiguration.SyncUserProfileWithWindows)
+                    {
+                        await SyncUserProfileWithAD(loginInfo);
+                        nUpdated++;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    nErrors++;
+                    _logger.LogError(ex, "Error importing user {0}", username);
+                }
+            }
+
+            model.StatusMessage = _localizer["WindowsUsersImported", nImported, nUpdated, nErrors];
+
+            return View(model);
+        }
 
         /*****************************************/
         /* helper APIs for the AccountController */
@@ -999,11 +1039,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             // user's display name
             var name = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Name)?.Value ??
                 claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
-            if (name != null)
-            {
-                filtered.Add(new Claim(JwtClaimTypes.Name, name));
-            }
-            else
+            if(name == null)
             {
                 var first = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.GivenName)?.Value ??
                     claims.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value;
@@ -1011,15 +1047,15 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                     claims.FirstOrDefault(x => x.Type == ClaimTypes.Surname)?.Value;
                 if (first != null && last != null)
                 {
-                    filtered.Add(new Claim(JwtClaimTypes.Name, first + " " + last));
+                    name = first + " " + last;
                 }
                 else if (first != null)
                 {
-                    filtered.Add(new Claim(JwtClaimTypes.Name, first));
+                    name = first;
                 }
                 else if (last != null)
                 {
-                    filtered.Add(new Claim(JwtClaimTypes.Name, last));
+                    name = last;
                 }
             }
 
@@ -1027,6 +1063,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             if (info.LoginProvider == AccountOptions.WindowsAuthenticationSchemeName)
             {
                 var adInfo = _ADUtilities.GetUserInfoFromAD(info.ProviderKey);
+                if (string.IsNullOrEmpty(name))
+                    name = adInfo.DisplayName;
                 if(string.IsNullOrEmpty(email))
                     email = adInfo.Email;
                 thumbnail = adInfo.Photo;
@@ -1050,6 +1088,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 streetAddress = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Address)?.Value;
             }
 
+            if (name != null)
+                filtered.Add(new Claim(JwtClaimTypes.Name, name));
             if (!string.IsNullOrEmpty(email))
                 filtered.Add(new Claim(JwtClaimTypes.Email, email));
             if (!string.IsNullOrEmpty(thumbnail))
@@ -1093,6 +1133,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             }
 
             return user;
-        }
+        }        
     }
 }
