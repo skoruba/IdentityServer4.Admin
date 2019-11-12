@@ -114,6 +114,7 @@ The following Gulp commands are available:
   - `AdminLogDbContext`: for logging
   - `IdentityServerConfigurationDbContext`: for IdentityServer configuration store
   - `IdentityServerPersistedGrantDbContext`: for IdentityServer operational store
+  - `AuditLoggingDbContext`: for Audit Logging
 
 - Run entity framework migrations:
 
@@ -310,6 +311,9 @@ In STS project - in `appsettings.json`:
   - Russian
   - Persian
   - Swedish
+  - Danish
+  - Spanish
+  - French
   
 #### Feel free to send a PR with your translation. :blush:
 
@@ -449,6 +453,9 @@ It is possible to define the configuration according the client type - by defaul
   - [x] Russian
   - [x] Persian
   - [x] Swedish
+  - [x] Danish
+  - [x] Spanish
+  - [x] French  
 - [x] Manage profile
 - [x] Password reset
 - [x] Link account to an external provider (example with Github)
