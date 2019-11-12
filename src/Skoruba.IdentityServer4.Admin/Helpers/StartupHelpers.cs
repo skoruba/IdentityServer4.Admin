@@ -421,18 +421,17 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 // otherwise use all the available cultures
                 var supportedCultureCodes = (cultureConfiguration?.Cultures?.Count > 0 ?
                     cultureConfiguration.Cultures.Intersect(CultureConfiguration.AvailableCultures) :
-                    CultureConfiguration.AvailableCultures);
-                if (supportedCultureCodes.Count() == 0)
-                    supportedCultureCodes = CultureConfiguration.AvailableCultures;
-                var supportedCultures = supportedCultureCodes
-                    .Select(c => new CultureInfo(c)).ToList();
+                    CultureConfiguration.AvailableCultures).ToArray();
+
+                if (!supportedCultureCodes.Any()) supportedCultureCodes = CultureConfiguration.AvailableCultures;
+                var supportedCultures = supportedCultureCodes.Select(c => new CultureInfo(c)).ToList();
 
                 // If the default culture is specified use it, otherwise use CultureConfiguration.DefaultRequestCulture ("en")
-                string defaultCultureCode = string.IsNullOrEmpty(cultureConfiguration?.DefaultCulture) ?
+                var defaultCultureCode = string.IsNullOrEmpty(cultureConfiguration?.DefaultCulture) ?
                     CultureConfiguration.DefaultRequestCulture : cultureConfiguration?.DefaultCulture;
+
                 // If the default culture is not among the supported cultures, use the first supported culture as default
-                if (!supportedCultureCodes.Contains(defaultCultureCode))
-                    defaultCultureCode = supportedCultureCodes.FirstOrDefault();
+                if (!supportedCultureCodes.Contains(defaultCultureCode)) defaultCultureCode = supportedCultureCodes.FirstOrDefault();
 
                 opts.DefaultRequestCulture = new RequestCulture(defaultCultureCode);
                 opts.SupportedCultures = supportedCultures;
