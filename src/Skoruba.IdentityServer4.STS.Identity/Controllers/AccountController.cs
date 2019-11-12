@@ -359,6 +359,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             {
                 return RedirectToLocal(returnUrl);
             }
+            if (result.RequiresTwoFactor)
+            {
+                return RedirectToAction(nameof(LoginWith2fa), new { ReturnUrl = returnUrl });
+            }
+            if (result.IsLockedOut)
+            {
+                return View("Lockout");
+            }
 
             // If the user does not have an account, then ask the user to create an account.
             ViewData["ReturnUrl"] = returnUrl;
