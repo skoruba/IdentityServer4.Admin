@@ -460,11 +460,11 @@ It is possible to define the configuration according the client type - by defaul
   - [x] IdentityServer4
   - [x] Asp.Net Core Identity
   - [x] Add swagger support
-[x] Add audit logs to track changes ([#61](https://github.com/skoruba/IdentityServer4.Admin/issues/61))
-  
+- [x] Add audit logs to track changes ([#61](https://github.com/skoruba/IdentityServer4.Admin/issues/61))
+- [x] Docker support ([#121](https://github.com/skoruba/IdentityServer4.Admin/issues/121))
+
 ### 2.0.0:
 
-- [ ] Docker support ([#121](https://github.com/skoruba/IdentityServer4.Admin/issues/121))
 - [ ] Create a project template using dotnet CLI - `dotnet new template`
   - [ ] Second template: The administration of the IdentityServer4 (without Asp.Net Core Identity) ([#79](https://github.com/skoruba/IdentityServer4.Admin/issues/79))
 
