@@ -1,9 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-    <PropertyGroup>
-        <TargetFramework>netcoreapp3.0</TargetFramework>
-        <UserSecretsId>1cc472a2-4e4b-48ce-846b-5219f71fc643</UserSecretsId>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <UserSecretsId>1cc472a2-4e4b-48ce-846b-5219f71fc643</UserSecretsId>
+    <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+  </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
@@ -11,6 +15,7 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0" />
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
         <PackageReference Include="AutoMapper" Version="9.0.0" />
         <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4" />
