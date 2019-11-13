@@ -236,12 +236,12 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
         {
             var identityResult = await IdentityRepository.CreateUserRoleAsync(role.UserId.ToString(), role.RoleId.ToString());
 
+            await AuditEventLogger.LogEventAsync(new UserRoleSavedEvent<TUserRolesDto>(role));
+
             if (!identityResult.Errors.Any()) return identityResult;
 
             var userRolesDto = await BuildUserRolesViewModel(role.UserId, 1);
-
-            await AuditEventLogger.LogEventAsync(new UserRoleSavedEvent<TUserRolesDto>(role));
-
+            
             return HandleIdentityError(identityResult, IdentityServiceResources.UserRoleCreateFailed().Description, IdentityServiceResources.IdentityErrorKey().Description, userRolesDto);
         }
 

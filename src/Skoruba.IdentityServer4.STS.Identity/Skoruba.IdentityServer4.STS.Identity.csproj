@@ -3,6 +3,9 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
         <UserSecretsId>9c91d295-54c5-4d09-9bd6-fa56fb74011b</UserSecretsId>
+        <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <DockerfileContext>..\..</DockerfileContext>
     </PropertyGroup>
 
     <ItemGroup>
@@ -11,6 +14,7 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0" />
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0" />
         <PackageReference Include="AspNet.Security.OAuth.GitHub" Version="3.0.0" />
         <PackageReference Include="IdentityServer4.AspNetIdentity" Version="3.0.2" />
