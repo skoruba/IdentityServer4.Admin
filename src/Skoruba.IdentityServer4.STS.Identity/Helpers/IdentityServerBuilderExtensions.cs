@@ -36,10 +36,28 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     throw new Exception(SigningCertificateThumbprintNotFound);
                 }
 
-                var certStore = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+                StoreLocation storeLocation = StoreLocation.LocalMachine;
+                bool validOnly = certificateConfiguration.CertificateValidOnly;
+
+                // Parse the Certificate StoreLocation
+                string certStoreLocationLower = certificateConfiguration.CertificateStoreLocation.ToLower();
+                if (certStoreLocationLower == StoreLocation.CurrentUser.ToString().ToLower() ||
+                    certificateConfiguration.CertificateStoreLocation == ((int)StoreLocation.CurrentUser).ToString())
+                {
+                    storeLocation = StoreLocation.CurrentUser;
+                }
+                else if (certStoreLocationLower == StoreLocation.LocalMachine.ToString().ToLower() ||
+                         certStoreLocationLower == ((int)StoreLocation.LocalMachine).ToString())
+                {
+                    storeLocation = StoreLocation.LocalMachine;
+                }
+                else { storeLocation = StoreLocation.LocalMachine; validOnly = true; }
+
+                // Open Certificate
+                var certStore = new X509Store(StoreName.My, storeLocation);
                 certStore.Open(OpenFlags.ReadOnly);
 
-                var certCollection = certStore.Certificates.Find(X509FindType.FindByThumbprint, certificateConfiguration.SigningCertificateThumbprint, true);
+                var certCollection = certStore.Certificates.Find(X509FindType.FindByThumbprint, certificateConfiguration.SigningCertificateThumbprint, validOnly);
                 if (certCollection.Count == 0)
                 {
                     throw new Exception(CertificateNotFound);
