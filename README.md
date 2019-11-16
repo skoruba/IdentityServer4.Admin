@@ -114,6 +114,7 @@ The following Gulp commands are available:
   - `AdminLogDbContext`: for logging
   - `IdentityServerConfigurationDbContext`: for IdentityServer configuration store
   - `IdentityServerPersistedGrantDbContext`: for IdentityServer operational store
+  - `AuditLoggingDbContext`: for Audit Logging
 
 - Run entity framework migrations:
 
@@ -150,8 +151,8 @@ Update-Database -context IdentityServerPersistedGrantDbContext
 #### Migrations for AuditLogging DbContext:
 
 ```powershell
-Add-Migration AuditLoggingDbInit -context AuditLoggingDbContext -output Data/Migrations/AuditLogging
-Update-Database -context AuditLoggingDbContext
+Add-Migration AdminAuditLogDbInit -context AdminAuditLogDbContext -output Data/Migrations/AuditLogging
+Update-Database -context AdminAuditLogDbContext
 ```
 
 ### Or via `dotnet CLI`:
@@ -187,8 +188,8 @@ dotnet ef database update -c IdentityServerPersistedGrantDbContext
 #### Migrations for AuditLogging DbContext:
 
 ```powershell
-dotnet ef migrations add AuditLoggingDbInit -c AuditLoggingDbContext -o Data/Migrations/AuditLogging
-dotnet ef database update -c AuditLoggingDbContext
+dotnet ef migrations add AdminAuditLogDbInit -c AdminAuditLogDbContext -o Data/Migrations/AuditLogging
+dotnet ef database update -c AdminAuditLogDbContext
 ```
 
 Migrations are not a part of the repository - they are ignored in `.gitignore`.
@@ -310,6 +311,9 @@ In STS project - in `appsettings.json`:
   - Russian
   - Persian
   - Swedish
+  - Danish
+  - Spanish
+  - French
   
 #### Feel free to send a PR with your translation. :blush:
 
@@ -449,6 +453,9 @@ It is possible to define the configuration according the client type - by defaul
   - [x] Russian
   - [x] Persian
   - [x] Swedish
+  - [x] Danish
+  - [x] Spanish
+  - [x] French  
 - [x] Manage profile
 - [x] Password reset
 - [x] Link account to an external provider (example with Github)
@@ -460,11 +467,11 @@ It is possible to define the configuration according the client type - by defaul
   - [x] IdentityServer4
   - [x] Asp.Net Core Identity
   - [x] Add swagger support
-[x] Add audit logs to track changes ([#61](https://github.com/skoruba/IdentityServer4.Admin/issues/61))
-  
+- [x] Add audit logs to track changes ([#61](https://github.com/skoruba/IdentityServer4.Admin/issues/61))
+- [x] Docker support ([#121](https://github.com/skoruba/IdentityServer4.Admin/issues/121))
+
 ### 2.0.0:
 
-- [ ] Docker support ([#121](https://github.com/skoruba/IdentityServer4.Admin/issues/121))
 - [ ] Create a project template using dotnet CLI - `dotnet new template`
   - [ ] Second template: The administration of the IdentityServer4 (without Asp.Net Core Identity) ([#79](https://github.com/skoruba/IdentityServer4.Admin/issues/79))
 
@@ -507,7 +514,9 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 | [<img src="https://avatars3.githubusercontent.com/u/35664089?s=460&v=3" width="100px;"/><br /><sub> Jan Škoruba</sub>](https://github.com/skoruba) <br /> 💻 💬 📖 💡 🤔 | [<img src="https://avatars0.githubusercontent.com/u/6831144?s=460&v=3" width="100px;"/><br /><sub> Tomáš Hübelbauer</sub>](https://github.com/TomasHubelbauer) <br /> 💻 👀 📖  🤔 | [<img src="https://avatars0.githubusercontent.com/u/1004852?s=460&v=3" width="100px;"/><br /><sub>Michał Drzał </sub>](https://github.com/xmichaelx) <br />💻 👀 📖 💡 🤔 | [<img src="https://avatars0.githubusercontent.com/u/2261603?s=460&v=3" width="100px;"/><br /><sub>cerginio </sub>](https://github.com/cerginio) <br /> 💻 🐛 💡 🤔 | [<img src="https://avatars3.githubusercontent.com/u/13407080?s=460&v=3" width="100px;"/><br /><sub>Sven Dummis </sub>](https://github.com/svendu) <br /> 📖| [<img src="https://avatars1.githubusercontent.com/u/1687087?s=460&v=3" width="100px;"/><br /><sub>Seaear</sub>](https://github.com/Seaear) <br />💻 🌍|
 | :---: | :---: | :---: | :---: | :---: | :---: |
 |[<img src="https://avatars1.githubusercontent.com/u/1150473?s=460&v=3" width="118px;"/><br /><sub>Rune Antonsen </sub>](https://github.com/ruant) <br />🐛|[<img src="https://avatars1.githubusercontent.com/u/5537607?s=460&v=3" width="118px;"/><br /><sub>Sindre Njøsen </sub>](https://github.com/Sindrenj) <br />💻|[<img src="https://avatars1.githubusercontent.com/u/40323674?s=460&v=3" width="118px;"/><br /><sub>Alevtina Brown </sub>](https://github.com/alev7ina) <br />🌍|[<img src="https://avatars3.githubusercontent.com/u/29726153?s=460&v=3" width="118px;"/><br /><sub>Brice </sub>](https://github.com/Brice-xCIT) <br />💻|[<img src="https://avatars0.githubusercontent.com/u/17114154?s=460&v=3" width="118px;"/><br /><sub>TheEvilPenguin </sub>](https://github.com/TheEvilPenguin) <br />💻|[<img src="https://avatars3.githubusercontent.com/u/15545395?s=460&v=3" width="118px;"/><br /><sub>Saeed Rahmani </sub>](https://github.com/saeedrahmo) <br />🌍|
-|[<img src="https://avatars0.githubusercontent.com/u/15867612?s=460&v=3" width="118px;"/><br /><sub>Andy Yu </sub>](https://github.com/Zyxious) <br />🌍|
+|[<img src="https://avatars0.githubusercontent.com/u/15867612?s=460&v=3" width="118px;"/><br /><sub>Andy Yu </sub>](https://github.com/Zyxious) <br />🌍|[<img src="https://avatars2.githubusercontent.com/u/51412447?s=400&v=3" width="118px;"/><br /><sub>ChrisSzabo </sub>](https://github.com/ChrisSzabo) <br />💻|[<img src="https://avatars1.githubusercontent.com/u/6860441?s=400&v=3" width="118px;"/><br /><sub>aiscrim </sub>](https://github.com/aiscrim) <br />💻 💡 🤔|[<img src="https://avatars2.githubusercontent.com/u/12528083?s=400&v=3" width="118px;"/><br /><sub>HrDahl </sub>](https://github.com/HrDahl) <br />🌍|[<img src="https://avatars0.githubusercontent.com/u/3269687?s=400&v=4" width="118px;"/><br /><sub>Andrew Godfroy </sub>](https://github.com/killerrin) <br />📖|[<img src="https://avatars0.githubusercontent.com/u/391353?s=400&v=3" width="118px;"/><br /><sub>bravecobra </sub>](https://github.com/bravecobra) <br />💻|
+|[<img src="https://avatars0.githubusercontent.com/u/449663?s=400&v=3" width="118px;"/><br /><sub>Sabit Igde </sub>](https://github.com/sabitertan) <br />💻|[<img src="https://avatars2.githubusercontent.com/u/7965212?s=400&v=3" width="118px;"/><br /><sub>Rico Herlt </sub>](https://github.com/rherlt) <br />💻|[<img src="https://avatars0.githubusercontent.com/u/1926879?s=400&v=3" width="118px;"/><br /><sub>b0 </sub>](https://github.com/b0) <br />💻|[<img src="https://avatars2.githubusercontent.com/u/1941149?s=400&v=3" width="118px;"/><br /><sub>DrQwertySilence </sub>](https://github.com/DrQwertySilence) <br />🌍|[<img src="https://avatars2.githubusercontent.com/u/3332745?s=400&v=3" width="118px;"/><br /><sub>Carl Quirion </sub>](https://github.com/nlz242) <br />💻|[<img src="https://avatars2.githubusercontent.com/u/43409914?s=400&v=3" width="118px;"/><br /><sub>Aegide </sub>](https://github.com/Aegide) <br />🌍|
+|[<img src="https://avatars0.githubusercontent.com/u/12243486?s=400&v=3" width="118px;"/><br /><sub>LobsterBandit </sub>](https://github.com/LobsterBandit) <br />💻|[<img src="https://avatars2.githubusercontent.com/u/3465794?s=400&v=3" width="118px;"/><br /><sub>Mehmet Perk </sub>](https://github.com/mperk) <br />💻|
 <!-- prettier-ignore-end -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification.
