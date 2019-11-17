@@ -145,7 +145,7 @@
     <value>Alkuperäinen sovellus - mobiili / työpöytä</value>
   </data>
   <data name="TitlePasswordAndClient" xml:space="preserve">
-    <value>Resurssien omistajan salasana ja asiakkaan käyttöoikeustiedot kulkevat</value>
+    <value>Resurssien omistajan salasana ja Sovelluksen käyttöoikeustiedot kulkevat</value>
   </data>
   <data name="TitleSpa" xml:space="preserve">
     <value>Yhden sivun sovellus - Javascript</value>

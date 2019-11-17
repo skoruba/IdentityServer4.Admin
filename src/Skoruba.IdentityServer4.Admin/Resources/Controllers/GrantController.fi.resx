@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SuccessPersistedGrantDelete" xml:space="preserve">
-    <value>Jatkuva apuraha on poistettu onnistuneesti!</value>
+    <value>Jatkuva käyttöoikeus on poistettu onnistuneesti!</value>
   </data>
   <data name="SuccessPersistedGrantsDelete" xml:space="preserve">
-    <value>Jatkuvat apurahat poistetaan onnistuneesti!</value>
+    <value>Jatkuvat käyttöoikeudet poistetaan onnistuneesti!</value>
   </data>
   <data name="SuccessTitle" xml:space="preserve">
-    <value>Menestys</value>
+    <value>Onnistui</value>
   </data>
 </root>

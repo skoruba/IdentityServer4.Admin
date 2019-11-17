@@ -154,7 +154,7 @@
     <value>Roolin poisto onnistui!</value>
   </data>
   <data name="SuccessTitle" xml:space="preserve">
-    <value>Menestys</value>
+    <value>Onnistui</value>
   </data>
   <data name="SuccessUserChangePassword" xml:space="preserve">
     <value>Uuden salasanan vaihto onnistui!</value>

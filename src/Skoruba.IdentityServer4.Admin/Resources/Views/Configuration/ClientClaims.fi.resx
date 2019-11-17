@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonAddNewClaim" xml:space="preserve">
-    <value>Lisää asiakasvaatimus</value>
+    <value>Lisää Sovellusvaatimus</value>
   </data>
   <data name="NavigationClientClaims" xml:space="preserve">
     <value>Asiakasvaatimukset</value>
@@ -130,7 +130,7 @@
     <value>Asiakasvaatimukset</value>
   </data>
   <data name="PanelNewTitle" xml:space="preserve">
-    <value>Asiakkaan vaatimus</value>
+    <value>Sovelluksen vaatimus</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
     <value>Asiakasvaatimukset</value>

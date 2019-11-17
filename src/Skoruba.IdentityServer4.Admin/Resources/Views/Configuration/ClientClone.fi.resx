@@ -139,10 +139,10 @@
     <value>Client IdP -rajoitukset</value>
   </data>
   <data name="LabelCloneClientPostLogoutRedirectUris" xml:space="preserve">
-    <value>Asiakkaan lähettämisen uloskirjautumisen uudelleenohjaus Uris</value>
+    <value>Sovelluksen lähettämisen uloskirjautumisen uudelleenohjaus Uris</value>
   </data>
   <data name="LabelCloneClientProperties" xml:space="preserve">
-    <value>Asiakkaan ominaisuudet</value>
+    <value>Sovelluksen ominaisuudet</value>
   </data>
   <data name="LabelCloneClientRedirectUris" xml:space="preserve">
     <value>Asiakasohjaaja Uris</value>
@@ -157,6 +157,6 @@
     <value>Kloonausasiakas</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
-    <value>Asiakas</value>
+    <value>Sovellus</value>
   </data>
 </root>

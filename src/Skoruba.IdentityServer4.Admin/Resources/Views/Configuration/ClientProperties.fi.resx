@@ -118,22 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonAddProperty" xml:space="preserve">
-    <value>Lisää asiakasominaisuus</value>
+    <value>Lisää sominaisuus</value>
   </data>
   <data name="NavigationClientProperties" xml:space="preserve">
-    <value>Asiakkaan ominaisuudet</value>
+    <value>Sovelluksen ominaisuudet</value>
   </data>
   <data name="NavigationClients" xml:space="preserve">
     <value>asiakkaat</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Asiakkaan ominaisuudet</value>
+    <value>Sovelluksen ominaisuudet</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
-    <value>Asiakkaan ominaisuudet</value>
+    <value>Sovelluksen ominaisuudet</value>
   </data>
   <data name="PanelTitleNew" xml:space="preserve">
-    <value>Asiakkaan omaisuus</value>
+    <value>Sovelluksen omaisuus</value>
   </data>
   <data name="TableButtonRemove" xml:space="preserve">
     <value>Poistaa</value>

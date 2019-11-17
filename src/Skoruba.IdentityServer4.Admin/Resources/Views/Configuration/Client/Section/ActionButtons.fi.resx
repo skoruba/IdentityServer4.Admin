@@ -121,9 +121,9 @@
     <value>Kloonausasiakas</value>
   </data>
   <data name="ButtonDelete" xml:space="preserve">
-    <value>Poista asiakas</value>
+    <value>Poista Sovellus</value>
   </data>
   <data name="ButtonSave" xml:space="preserve">
-    <value>Tallenna asiakas</value>
+    <value>Tallenna Sovellus</value>
   </data>
 </root>

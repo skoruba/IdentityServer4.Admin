@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonDeleteGrant" xml:space="preserve">
-    <value>Poista pysyvä apuraha</value>
+    <value>Poista pysyvä käyttöoikeus</value>
   </data>
   <data name="NavigationPersistedGrants" xml:space="preserve">
     <value>Pysyvät oikeudet</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Poista pysyvä apuraha</value>
+    <value>Poista pysyvä käyttöoikeus</value>
   </data>
   <data name="TableClient" xml:space="preserve">
-    <value>Asiakas</value>
+    <value>Sovellus</value>
   </data>
   <data name="TableData" xml:space="preserve">
     <value>data</value>

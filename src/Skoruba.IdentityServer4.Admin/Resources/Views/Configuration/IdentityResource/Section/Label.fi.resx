@@ -142,7 +142,7 @@
     <value>käytössä</value>
   </data>
   <data name="Name_Info" xml:space="preserve">
-    <value>Henkilöllisyysresurssin yksilöllinen nimi. Tämä on arvo, jota asiakas käyttää laajuusparametrissa valtuutuspyynnössä.</value>
+    <value>Henkilöllisyysresurssin yksilöllinen nimi. Tämä on arvo, jota Sovellus käyttää laajuusparametrissa valtuutuspyynnössä.</value>
   </data>
   <data name="Name_Label" xml:space="preserve">
     <value>Nimi</value>

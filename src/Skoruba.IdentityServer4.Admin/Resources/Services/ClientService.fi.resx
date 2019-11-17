@@ -124,7 +124,7 @@
     <value>Asiakasta, jonka tunnus on {0}, ei ole</value>
   </data>
   <data name="ClientExistsKey" xml:space="preserve">
-    <value>Asiakas on jo olemassa</value>
+    <value>Sovellus on jo olemassa</value>
   </data>
   <data name="ClientExistsValue" xml:space="preserve">
     <value>Asiakastunnus ({0}) on jo olemassa</value>

@@ -121,7 +121,7 @@
     <value>Poista kaikki</value>
   </data>
   <data name="DeleteDialogMessage" xml:space="preserve">
-    <value>Oletko varma? Kaikki tähän aiheeseen liittyvät pysyvät apurahat poistetaan.</value>
+    <value>Oletko varma? Kaikki tähän aiheeseen liittyvät pysyvät käyttöoikeudet poistetaan.</value>
   </data>
   <data name="DeleteDialogNo" xml:space="preserve">
     <value>Ei - sulje</value>
@@ -139,7 +139,7 @@
     <value>Jatkoi apurahaa</value>
   </data>
   <data name="TableClient" xml:space="preserve">
-    <value>Asiakas</value>
+    <value>Sovellus</value>
   </data>
   <data name="TableData" xml:space="preserve">
     <value>data</value>

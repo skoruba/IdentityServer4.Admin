@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonAddNewClient" xml:space="preserve">
-    <value>Lisää asiakas</value>
+    <value>Lisää Sovellus</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
     <value>asiakkaat</value>
@@ -130,6 +130,6 @@
     <value>Asiakastunnus</value>
   </data>
   <data name="TableClientName" xml:space="preserve">
-    <value>Asiakkaan Nimi</value>
+    <value>Sovelluksen Nimi</value>
   </data>
 </root>

@@ -136,13 +136,13 @@
     <value>Käyttöoikeustyyppi</value>
   </data>
   <data name="AllowAccessTokensViaBrowser_Info" xml:space="preserve">
-    <value>Määrittää, sallitaanko tämän asiakkaan vastaanottaa käyttöoikeuksia selaimen kautta. Tämä on hyödyllistä kovettaa vuoita, jotka sallivat useita vastaustyyppejä (esim. Estämällä hybridivirtausasiakas, jonka oletetaan käyttävän koodia id_token lisätäkseen tokenin vastaustyypin ja vuotaen siten tokenin selaimeen.</value>
+    <value>Määrittää, sallitaanko tämän Sovelluksen vastaanottaa käyttöoikeuksia selaimen kautta. Tämä on hyödyllistä kovettaa vuoita, jotka sallivat useita vastaustyyppejä (esim. Estämällä hybridivirtausasiakas, jonka oletetaan käyttävän koodia id_token lisätäkseen tokenin vastaustyypin ja vuotaen siten tokenin selaimeen.</value>
   </data>
   <data name="AllowAccessTokensViaBrowser_Label" xml:space="preserve">
     <value>Salli Access Token selaimen kautta</value>
   </data>
   <data name="AllowOfflineAccess_Info" xml:space="preserve">
-    <value>Määrittää, voiko tämä asiakas pyytää päivitystunnuksia (pyytää offline_access-laajuutta)</value>
+    <value>Määrittää, voiko tämä Sovellus pyytää päivitystunnuksia (pyytää offline_access-laajuutta)</value>
   </data>
   <data name="AllowOfflineAccess_Label" xml:space="preserve">
     <value>Salli offline-käyttö</value>
@@ -166,7 +166,7 @@
     <value>Sisällytä käyttäjän vaatimukset aina IdTokeniin</value>
   </data>
   <data name="AlwaysSendClientClaims_Info" xml:space="preserve">
-    <value>Jos asetettu, asiakasvaatimukset lähetetään jokaisesta vuoista. Jos ei, vain asiakkaan käyttöoikeustiedot -virta (oletus on väärä)</value>
+    <value>Jos asetettu, asiakasvaatimukset lähetetään jokaisesta vuoista. Jos ei, vain Sovelluksen käyttöoikeustiedot -virta (oletus on väärä)</value>
   </data>
   <data name="AlwaysSendClientClaims_Label" xml:space="preserve">
     <value>Lähetä asiakasvaatimukset aina</value>
@@ -178,31 +178,31 @@
     <value>Valtuutuskoodin käyttöikä</value>
   </data>
   <data name="ClientId_Info" xml:space="preserve">
-    <value>Asiakkaan yksilöivä tunnus</value>
+    <value>Sovelluksen yksilöivä tunnus</value>
   </data>
   <data name="ClientId_Label" xml:space="preserve">
     <value>Asiakastunnus</value>
   </data>
   <data name="ClientName_Info" xml:space="preserve">
-    <value>Asiakkaan näyttönimi (käytetään kirjautumiseen ja suostumusnäyttöön)</value>
+    <value>Sovelluksen näyttönimi (käytetään kirjautumiseen ja suostumusnäyttöön)</value>
   </data>
   <data name="ClientName_Label" xml:space="preserve">
-    <value>Asiakkaan Nimi</value>
+    <value>Sovelluksen Nimi</value>
   </data>
   <data name="ClientUri_Info" xml:space="preserve">
     <value>URI lisätietoja asiakkaasta (käytetään suostumusnäytössä)</value>
   </data>
   <data name="ClientUri_Label" xml:space="preserve">
-    <value>Asiakas Uri</value>
+    <value>Sovellus Uri</value>
   </data>
   <data name="Enabled_Info" xml:space="preserve">
-    <value>Määrittää, onko asiakas käytössä. Oletusarvo totta.</value>
+    <value>Määrittää, onko Sovellus käytössä. Oletusarvo totta.</value>
   </data>
   <data name="Enabled_Label" xml:space="preserve">
     <value>käytössä</value>
   </data>
   <data name="EnableLocalLogin_Info" xml:space="preserve">
-    <value>Määrittää, pystyykö tämä asiakas käyttämään paikallisia tilejä vai vain ulkoisia IdP: tä. Oletusarvo totta.</value>
+    <value>Määrittää, pystyykö tämä Sovellus käyttämään paikallisia tilejä vai vain ulkoisia IdP: tä. Oletusarvo totta.</value>
   </data>
   <data name="EnableLocalLogin_Label" xml:space="preserve">
     <value>Ota paikallinen sisäänkirjautuminen käyttöön</value>
@@ -220,7 +220,7 @@
     <value>Sisällytä Jwt-tunnus</value>
   </data>
   <data name="LogoUri_Info" xml:space="preserve">
-    <value>URI asiakkaan logoon (käytetään suostumusnäytössä)</value>
+    <value>URI Sovelluksen logoon (käytetään suostumusnäytössä)</value>
   </data>
   <data name="LogoUri_Label" xml:space="preserve">
     <value>Logo Uri</value>
@@ -250,7 +250,7 @@ Yhden kerran päivitysmerkin kahva päivitetään, kun päivitetään merkkejä<
     <value>Päivitä Token-käyttö</value>
   </data>
   <data name="RequireClientSecret_Info" xml:space="preserve">
-    <value>Määrittää, tarvitseeko tämä asiakas salaisuuden tokenien pyytämiseen tokenin päätepisteestä (oletusarvo on tosi)</value>
+    <value>Määrittää, tarvitseeko tämä Sovellus salaisuuden tokenien pyytämiseen tokenin päätepisteestä (oletusarvo on tosi)</value>
   </data>
   <data name="RequireClientSecret_Label" xml:space="preserve">
     <value>Vaadi asiakassalaisuus</value>
@@ -286,7 +286,7 @@ Yhden kerran päivitysmerkin kahva päivitetään, kun päivitetään merkkejä<
     <value>Sallittujen korsien alkuperä</value>
   </data>
   <data name="AllowedGrantTypes_Info" xml:space="preserve">
-    <value>Määrittää avustyypit, joita asiakkaan sallitaan käyttää. Käytä GrantTypes-luokkaa yleisiin yhdistelmiin. Oletusapurahojen luettelo: implisiittinen apuraha - (implisiittinen), asiakastodistusten myöntäminen - (asiakas_koodit), käyttöoikeuskoodin myöntäminen - (valtuuskoodi), yhdistelmäapu - (hybridi), resurssin omistajan salasanan käyttöoikeudet - (salasana)</value>
+    <value>Määrittää avustyypit, joita Sovelluksen sallitaan käyttää. Käytä GrantTypes-luokkaa yleisiin yhdistelmiin. Oletusapurahojen luettelo: implisiittinen käyttöoikeus - (implisiittinen), asiakastodistusten myöntäminen - (asiakas_koodit), käyttöoikeuskoodin myöntäminen - (valtuuskoodi), yhdistelmäapu - (hybridi), resurssin omistajan salasanan käyttöoikeudet - (salasana)</value>
   </data>
   <data name="AllowedGrantTypes_Label" xml:space="preserve">
     <value>Sallitut avustuslajit</value>
@@ -310,7 +310,7 @@ Yhden kerran päivitysmerkin kahva päivitetään, kun päivitetään merkkejä<
     <value>Asiakassalaisuudet</value>
   </data>
   <data name="IdentityProviderRestrictions_Info" xml:space="preserve">
-    <value>Määrittää, mitä ulkoisia IdP: itä voidaan käyttää tämän asiakkaan kanssa (jos luettelo on tyhjä, kaikki IdP: t ovat sallittuja). Oletusasetus on tyhjä.</value>
+    <value>Määrittää, mitä ulkoisia IdP: itä voidaan käyttää tämän Sovelluksen kanssa (jos luettelo on tyhjä, kaikki IdP: t ovat sallittuja). Oletusasetus on tyhjä.</value>
   </data>
   <data name="IdentityProviderRestrictions_Label" xml:space="preserve">
     <value>Henkilöllisyyden tarjoajan rajoitukset</value>
@@ -382,7 +382,7 @@ Yhden kerran päivitysmerkin kahva päivitetään, kun päivitetään merkkejä<
     <value>Asiakasvaatimusten etuliite</value>
   </data>
   <data name="Description_Info" xml:space="preserve">
-    <value>Asiakkaan kuvaus</value>
+    <value>Sovelluksen kuvaus</value>
   </data>
   <data name="Description_Label" xml:space="preserve">
     <value>Kuvaus</value>
@@ -400,7 +400,7 @@ Yhden kerran päivitysmerkin kahva päivitetään, kun päivitetään merkkejä<
     <value>Front Channel Logout Uri</value>
   </data>
   <data name="PairWiseSubjectSalt_Info" xml:space="preserve">
-    <value>Suola-arvo, jota käytetään parinpohjaisessa subjektien luonnissa tämän asiakkaan käyttäjille.</value>
+    <value>Suola-arvo, jota käytetään parinpohjaisessa subjektien luonnissa tämän Sovelluksen käyttäjille.</value>
   </data>
   <data name="PairWiseSubjectSalt_Label" xml:space="preserve">
     <value>Yhdistä viisas aiheinen suola</value>
@@ -442,7 +442,7 @@ Yhden kerran päivitysmerkin kahva päivitetään, kun päivitetään merkkejä<
     <value>Laitekoodin käyttöikä</value>
   </data>
   <data name="UserCodeType_Info" xml:space="preserve">
-    <value>Määrittää asiakaskoodin tyypin, jota asiakas käyttää. Muutoin palaa takaisin oletusasetukseen.</value>
+    <value>Määrittää asiakaskoodin tyypin, jota Sovellus käyttää. Muutoin palaa takaisin oletusasetukseen.</value>
   </data>
   <data name="UserCodeType_Label" xml:space="preserve">
     <value>Käyttäjätunnuksen tyyppi</value>
