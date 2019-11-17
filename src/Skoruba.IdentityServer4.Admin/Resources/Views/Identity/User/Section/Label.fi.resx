@@ -136,10 +136,10 @@
     <value>Vaatimuksen tyyppi</value>
   </data>
   <data name="UserAccessFailedCount_Info" xml:space="preserve">
-    <value>Käyttäjän käyttö epäonnistui</value>
+    <value>Käyttäjän kirjautuminen epäonnistui</value>
   </data>
   <data name="UserAccessFailedCount_Label" xml:space="preserve">
-    <value>Käyttäjän käyttö epäonnistui</value>
+    <value>Käyttäjän kirjautuminen epäonnistui</value>
   </data>
   <data name="UserChangePasswordConfirmPassword_Info" xml:space="preserve">
     <value>Vahvista salasana</value>
@@ -214,10 +214,10 @@
     <value>Palveluntarjoaja-avain</value>
   </data>
   <data name="UserTwoFactorEnabled_Info" xml:space="preserve">
-    <value>Käyttäjän kaksi tekijää käytössä</value>
+    <value>Käyttäjän kaksivaiheinen kirjautuminen käytössä</value>
   </data>
   <data name="UserTwoFactorEnabled_Label" xml:space="preserve">
-    <value>Käyttäjän kaksi tekijää käytössä</value>
+    <value>Käyttäjän kaksivaiheinen kirjautuminen käytössä</value>
   </data>
   <data name="UserUserName_Info" xml:space="preserve">
     <value>Käyttäjätunnus</value>

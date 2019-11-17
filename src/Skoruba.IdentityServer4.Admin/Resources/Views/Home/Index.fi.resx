@@ -133,10 +133,10 @@
     <value>Pysyvät oikeudet</value>
   </data>
   <data name="ButtonRoles" xml:space="preserve">
-    <value>roolit</value>
+    <value>Roolit</value>
   </data>
   <data name="ButtonUsers" xml:space="preserve">
-    <value>käyttäjät</value>
+    <value>Käyttäjät</value>
   </data>
   <data name="PageSubTitle" xml:space="preserve">
     <value>IdentityServer4: n ja Asp.Net Core Identity: n hallinto</value>

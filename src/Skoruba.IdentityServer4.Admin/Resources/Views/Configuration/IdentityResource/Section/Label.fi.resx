@@ -133,7 +133,7 @@
     <value>Määrittää, korostaako oikeuksien myöntämisnäyttö tätä laajuutta (jos oikeuksien myöntämisnäyttö haluaa ottaa käyttöön tällaisen ominaisuuden). Käytä tätä asetusta herkille tai tärkeille alueille. Oletusarvo on väärä.</value>
   </data>
   <data name="Emphasize_Label" xml:space="preserve">
-    <value>painottaa</value>
+    <value>Painotus</value>
   </data>
   <data name="Enabled_Info" xml:space="preserve">
     <value>Osoittaa, onko tämä resurssi käytössä ja voidaanko sitä pyytää. Oletusarvo totta.</value>
@@ -148,7 +148,7 @@
     <value>Nimi</value>
   </data>
   <data name="Properties_Info" xml:space="preserve">
-    <value>Sanakirja, jolla voidaan pitää tarvittavat mukautetut identiteettiresurssikohtaiset arvot.</value>
+    <value>Ominaisuudet, jolla voidaan pitää tarvittavat mukautetut identiteettiresurssikohtaiset arvot.</value>
   </data>
   <data name="Properties_Label" xml:space="preserve">
     <value>Ominaisuudet</value>
@@ -172,10 +172,10 @@
     <value>Vaaditaan</value>
   </data>
   <data name="ShowInDiscoveryDocument_Info" xml:space="preserve">
-    <value>Määrittää, näkyykö tämä laajuus Konfiguraation dokumenttssa. Oletusarvo totta.</value>
+    <value>Määrittää, näkyykö tämä ominaisuus discovery-dokumentissa. Oletusarvo totta.</value>
   </data>
   <data name="ShowInDiscoveryDocument_Label" xml:space="preserve">
-    <value>Näytä Konfiguraation dokumenttssa</value>
+    <value>Näytä discovery-dokumentissa</value>
   </data>
   <data name="UserClaims_Info" xml:space="preserve">
     <value>Luettelo liittyvistä käyttäjän ominaisuuksista, jotka tulisi sisällyttää identiteettitunnisteeseen.</value>

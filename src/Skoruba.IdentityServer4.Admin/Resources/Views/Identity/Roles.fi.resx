@@ -121,13 +121,13 @@
     <value>Lisää rooli</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>roolit</value>
+    <value>Roolit</value>
   </data>
   <data name="TableButtonEdit" xml:space="preserve">
     <value>Muokkaa</value>
   </data>
   <data name="TableButtonUsers" xml:space="preserve">
-    <value>käyttäjät</value>
+    <value>Käyttäjät</value>
   </data>
   <data name="TableName" xml:space="preserve">
     <value>Nimi</value>
