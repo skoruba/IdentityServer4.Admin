@@ -142,7 +142,7 @@
     <value>Sovelluksen {0} asiakassalaisuus on tallennettu onnistuneesti!</value>
   </data>
   <data name="SuccessAddIdentityResource" xml:space="preserve">
-    <value>Henkilöllisyysresurssi {0} on tallennettu onnistuneesti!</value>
+    <value>Identiteettiresurssi {0} on tallennettu onnistuneesti!</value>
   </data>
   <data name="SuccessAddIdentityResourceProperty" xml:space="preserve">
     <value>Api-resurssin {1} henkilöllisyysresurssin ominaisuus {0} on tallennettu onnistuneesti!</value>
@@ -175,7 +175,7 @@
     <value>Asiakassalaisuus on poistettu onnistuneesti!</value>
   </data>
   <data name="SuccessDeleteIdentityResource" xml:space="preserve">
-    <value>Henkilöllisyysresurssi on poistettu onnistuneesti!</value>
+    <value>Identiteettiresurssi on poistettu onnistuneesti!</value>
   </data>
   <data name="SuccessDeleteIdentityResourceProperty" xml:space="preserve">
     <value>Henkilöllisyysresurssin ominaisuus on poistettu onnistuneesti!</value>

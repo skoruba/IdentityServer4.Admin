@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonAddProperty" xml:space="preserve">
-    <value>Lisää Api Resource Property</value>
+    <value>Lisää Api-resurssin ominaisuus</value>
   </data>
   <data name="NavigationApiResourceProperties" xml:space="preserve">
     <value>Api-resurssin ominaisuudet</value>
@@ -136,10 +136,10 @@
     <value>Api-resurssiomaisuus</value>
   </data>
   <data name="TableButtonRemove" xml:space="preserve">
-    <value>Poistaa</value>
+    <value>Poista</value>
   </data>
   <data name="TableKey" xml:space="preserve">
-    <value>avain</value>
+    <value>Avain</value>
   </data>
   <data name="TableValue" xml:space="preserve">
     <value>Arvo</value>

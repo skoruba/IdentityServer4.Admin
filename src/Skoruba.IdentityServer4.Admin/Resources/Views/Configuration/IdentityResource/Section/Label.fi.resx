@@ -118,19 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Description_Info" xml:space="preserve">
-    <value>Tätä arvoa käytetään esimerkiksi suostumusnäytöllä.</value>
+    <value>Tätä arvoa käytetään esimerkiksi oikeuksien myöntämisnäytöllä.</value>
   </data>
   <data name="Description_Label" xml:space="preserve">
     <value>Kuvaus</value>
   </data>
   <data name="DisplayName_Info" xml:space="preserve">
-    <value>Tätä arvoa käytetään esimerkiksi suostumusnäytöllä.</value>
+    <value>Tätä arvoa käytetään esimerkiksi oikeuksien myöntämisnäytöllä.</value>
   </data>
   <data name="DisplayName_Label" xml:space="preserve">
     <value>Näyttönimi</value>
   </data>
   <data name="Emphasize_Info" xml:space="preserve">
-    <value>Määrittää, korostaako suostumusnäyttö tätä laajuutta (jos suostumusnäyttö haluaa ottaa käyttöön tällaisen ominaisuuden). Käytä tätä asetusta herkille tai tärkeille alueille. Oletusarvo on väärä.</value>
+    <value>Määrittää, korostaako oikeuksien myöntämisnäyttö tätä laajuutta (jos oikeuksien myöntämisnäyttö haluaa ottaa käyttöön tällaisen ominaisuuden). Käytä tätä asetusta herkille tai tärkeille alueille. Oletusarvo on väärä.</value>
   </data>
   <data name="Emphasize_Label" xml:space="preserve">
     <value>painottaa</value>
@@ -139,7 +139,7 @@
     <value>Osoittaa, onko tämä resurssi käytössä ja voidaanko sitä pyytää. Oletusarvo totta.</value>
   </data>
   <data name="Enabled_Label" xml:space="preserve">
-    <value>käytössä</value>
+    <value>Käytössä</value>
   </data>
   <data name="Name_Info" xml:space="preserve">
     <value>Henkilöllisyysresurssin yksilöllinen nimi. Tämä on arvo, jota Sovellus käyttää laajuusparametrissa valtuutuspyynnössä.</value>
@@ -151,13 +151,13 @@
     <value>Sanakirja, jolla voidaan pitää tarvittavat mukautetut identiteettiresurssikohtaiset arvot.</value>
   </data>
   <data name="Properties_Label" xml:space="preserve">
-    <value>ominaisuudet</value>
+    <value>Ominaisuudet</value>
   </data>
   <data name="PropertyKey_Info" xml:space="preserve">
-    <value>avain</value>
+    <value>Avain</value>
   </data>
   <data name="PropertyKey_Label" xml:space="preserve">
-    <value>avain</value>
+    <value>Avain</value>
   </data>
   <data name="PropertyValue_Info" xml:space="preserve">
     <value>Arvo</value>
@@ -166,7 +166,7 @@
     <value>Arvo</value>
   </data>
   <data name="Required_Info" xml:space="preserve">
-    <value>Määrittää, voiko käyttäjä poistaa valinnan laajuudesta suostumusnäytössä (jos suostumusnäyttö haluaa ottaa käyttöön tällaisen ominaisuuden). Oletusarvo on väärä.</value>
+    <value>Määrittää, voiko käyttäjä poistaa valinnan laajuudesta suostumusnäytössä (jos oikeuksien myöntämisnäyttö haluaa ottaa käyttöön tällaisen ominaisuuden). Oletusarvo on väärä.</value>
   </data>
   <data name="Required_Label" xml:space="preserve">
     <value>Vaaditaan</value>
@@ -178,9 +178,9 @@
     <value>Näytä Konfiguraation dokumenttssa</value>
   </data>
   <data name="UserClaims_Info" xml:space="preserve">
-    <value>Luettelo liittyvistä käyttäjän vaatimustyypeistä, jotka tulisi sisällyttää identiteettitunnisteeseen.</value>
+    <value>Luettelo liittyvistä käyttäjän ominaisuuksista, jotka tulisi sisällyttää identiteettitunnisteeseen.</value>
   </data>
   <data name="UserClaims_Label" xml:space="preserve">
-    <value>Käyttäjän vaatimukset</value>
+    <value>Käyttäjän ominaisuudet</value>
   </data>
 </root>

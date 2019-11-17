@@ -121,10 +121,10 @@
     <value>Virhe</value>
   </data>
   <data name="RoleClaimDoesNotExist" xml:space="preserve">
-    <value>Roolivastausta tunnuksella {0} ei ole</value>
+    <value>Rooliominaisuutta tunnuksella {0} ei ole</value>
   </data>
   <data name="RoleClaimsCreateFailed" xml:space="preserve">
-    <value>Rooliväittämien luominen epäonnistui</value>
+    <value>Rooliominaisuuksien luominen epäonnistui</value>
   </data>
   <data name="RoleClaimsDeleteFailed" xml:space="preserve">
     <value>Rooliväitteiden poistaminen epäonnistui</value>
@@ -142,16 +142,16 @@
     <value>Roolin päivitys epäonnistui</value>
   </data>
   <data name="UserChangePasswordFailed" xml:space="preserve">
-    <value>Käyttäjän vaihto-salasana epäonnistui</value>
+    <value>Käyttäjän salasanan päivitys epäonnistui</value>
   </data>
   <data name="UserClaimDoesNotExist" xml:space="preserve">
-    <value>Käyttäjävaatimusta tunnuksella {0} ei ole</value>
+    <value>Käyttäjäominaisuutta tunnuksella {0} ei ole</value>
   </data>
   <data name="UserClaimsCreateFailed" xml:space="preserve">
-    <value>Käyttäjävaatimusten luominen epäonnistui</value>
+    <value>Käyttäjäominaisuuksien luominen epäonnistui</value>
   </data>
   <data name="UserClaimsDeleteFailed" xml:space="preserve">
-    <value>Käyttäjävaatimusten poistaminen epäonnistui</value>
+    <value>Käyttäjäominaisuuksien poistaminen epäonnistui</value>
   </data>
   <data name="UserCreateFailed" xml:space="preserve">
     <value>Käyttäjän luominen epäonnistui</value>
@@ -166,7 +166,7 @@
     <value>Käyttäjätarjoajan poistaminen epäonnistui</value>
   </data>
   <data name="UserProviderDoesNotExist" xml:space="preserve">
-    <value>Käyttäjätoimittajaa, jonka tunnus on {0}, ei ole</value>
+    <value>Käyttäjätarjoajaa, jonka tunnus on {0}, ei ole</value>
   </data>
   <data name="UserRoleCreateFailed" xml:space="preserve">
     <value>Käyttäjäroolin luominen epäonnistui</value>

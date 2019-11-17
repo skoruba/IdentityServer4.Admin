@@ -118,25 +118,25 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonDelete" xml:space="preserve">
-    <value>Poista henkilöllisyysresurssi</value>
+    <value>Poista Identiteettiresurssi</value>
   </data>
   <data name="ButtonManageProperties" xml:space="preserve">
     <value>Hallitse henkilöllisyysresurssien ominaisuuksia</value>
   </data>
   <data name="ButtonSave" xml:space="preserve">
-    <value>Tallenna henkilöllisyysresurssi</value>
+    <value>Tallenna Identiteettiresurssi</value>
   </data>
   <data name="NavigationIdentityResources" xml:space="preserve">
     <value>Henkilöllisyysresurssit</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Henkilöllisyysresurssi</value>
+    <value>Identiteettiresurssi</value>
   </data>
   <data name="PanelTitle" xml:space="preserve">
-    <value>Henkilöllisyysresurssi</value>
+    <value>Identiteettiresurssi</value>
   </data>
   <data name="PickerItemAlreadySelectedTitle" xml:space="preserve">
-    <value>kohde on jo valittu</value>
+    <value>Kohde on jo valittu</value>
   </data>
   <data name="PickerNoItemSelectedTitle" xml:space="preserve">
     <value>Kohteita ei ole valittu</value>
@@ -151,7 +151,7 @@
     <value>Valitut kohteet:</value>
   </data>
   <data name="PickerShowAllItemsTitle" xml:space="preserve">
-    <value>lisää</value>
+    <value>Lisää</value>
   </data>
   <data name="PickerSuggestedItemsTitle" xml:space="preserve">
     <value>Ehdotetut tuotteet:</value>

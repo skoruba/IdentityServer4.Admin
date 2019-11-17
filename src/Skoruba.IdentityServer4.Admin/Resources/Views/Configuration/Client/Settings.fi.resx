@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="NavAuthentication" xml:space="preserve">
-    <value>Authentication / ulos</value>
+    <value>Kirjautuminen / ulos</value>
   </data>
   <data name="NavBasics" xml:space="preserve">
-    <value>Perusasiat</value>
+    <value>Perustiedot</value>
   </data>
   <data name="NavConsent" xml:space="preserve">
-    <value>Suostumusnäyttö</value>
+    <value>Oikeuksien myöntämisnäyttö</value>
   </data>
   <data name="NavDeviceFlow" xml:space="preserve">
-    <value>Laitevirta</value>
+    <value>Deviceflow</value>
   </data>
   <data name="NavName" xml:space="preserve">
     <value>Nimi</value>

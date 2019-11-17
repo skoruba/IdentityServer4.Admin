@@ -127,7 +127,7 @@
     <value>Api-resurssit</value>
   </data>
   <data name="LinkClients" xml:space="preserve">
-    <value>asiakkaat</value>
+    <value>Sovellukset</value>
   </data>
   <data name="LinkIdentityResources" xml:space="preserve">
     <value>Henkilöllisyysresurssit</value>
@@ -151,7 +151,7 @@
     <value>Skoruba IdentityServer4 Järjestelmänvalvoja</value>
   </data>
   <data name="TitleConfiguration" xml:space="preserve">
-    <value>Asiakkaat / Resurssit</value>
+    <value>Sovellukset / Resurssit</value>
   </data>
   <data name="TitleLogs" xml:space="preserve">
     <value>lokit</value>

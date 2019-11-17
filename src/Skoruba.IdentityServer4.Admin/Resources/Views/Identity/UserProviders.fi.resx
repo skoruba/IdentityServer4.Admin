@@ -124,7 +124,7 @@
     <value>Käyttäjätarjoajat</value>
   </data>
   <data name="TableButtonRemove" xml:space="preserve">
-    <value>Poistaa</value>
+    <value>Poista</value>
   </data>
   <data name="TableLoginProvider" xml:space="preserve">
     <value>Sisäänkirjautumisen tarjoaja</value>

@@ -121,7 +121,7 @@
     <value>Api-resurssit</value>
   </data>
   <data name="ButtonClients" xml:space="preserve">
-    <value>asiakkaat</value>
+    <value>Sovellukset</value>
   </data>
   <data name="ButtonIdentityClients" xml:space="preserve">
     <value>Henkilöllisyysresurssit</value>

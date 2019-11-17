@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonClone" xml:space="preserve">
-    <value>Kloonausasiakas</value>
+    <value>Kopioi sovellus</value>
   </data>
   <data name="ButtonDelete" xml:space="preserve">
     <value>Poista Sovellus</value>

@@ -121,10 +121,10 @@
     <value>väittää</value>
   </data>
   <data name="Clients" xml:space="preserve">
-    <value>asiakkaat</value>
+    <value>Sovellukset</value>
   </data>
   <data name="Properties" xml:space="preserve">
-    <value>ominaisuudet</value>
+    <value>Ominaisuudet</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Todennus eväste</value>

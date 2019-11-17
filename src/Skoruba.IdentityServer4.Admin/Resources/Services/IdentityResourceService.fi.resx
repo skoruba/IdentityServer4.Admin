@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="IdentityResourceExistsKey" xml:space="preserve">
-    <value>Henkilöllisyysresurssi {0} on jo olemassa</value>
+    <value>Identiteettiresurssi {0} on jo olemassa</value>
   </data>
   <data name="IdentityResourceExistsValue" xml:space="preserve">
-    <value>Henkilöllisyysresurssi {0} on jo olemassa</value>
+    <value>Identiteettiresurssi {0} on jo olemassa</value>
   </data>
   <data name="IdentityResourcePropertyDoesNotExist" xml:space="preserve">
     <value>Henkilöllisyysresurssiominaisuutta, jonka tunnus on {0}, ei ole</value>
   </data>
   <data name="IdentityResourcePropertyExistsKey" xml:space="preserve">
-    <value>Identity Resource Property on jo olemassa</value>
+    <value>Henkilöllisyysresurssiominaisuus on jo olemassa</value>
   </data>
   <data name="IdentityResourcePropertyExistsValue" xml:space="preserve">
     <value>Identiteettiresurssiominaisuus avaimella ({0}) on jo olemassa</value>

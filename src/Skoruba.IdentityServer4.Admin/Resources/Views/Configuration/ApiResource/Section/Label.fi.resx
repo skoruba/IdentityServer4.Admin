@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Description_Info" xml:space="preserve">
-    <value>Tätä arvoa voidaan käyttää esimerkiksi suostumusnäytöllä.</value>
+    <value>Tätä arvoa voidaan käyttää esimerkiksi oikeuksien myöntämisnäytöllä.</value>
   </data>
   <data name="Description_Label" xml:space="preserve">
     <value>Kuvaus</value>
   </data>
   <data name="DisplayName_Info" xml:space="preserve">
-    <value>Tätä arvoa voidaan käyttää esimerkiksi suostumusnäytöllä.</value>
+    <value>Tätä arvoa voidaan käyttää esimerkiksi oikeuksien myöntämisnäytöllä.</value>
   </data>
   <data name="DisplayName_Label" xml:space="preserve">
     <value>Näyttönimi</value>
@@ -133,13 +133,13 @@
     <value>Osoittaa, onko tämä resurssi käytössä ja voidaanko sitä pyytää. Oletusarvo totta.</value>
   </data>
   <data name="Enabled_Label" xml:space="preserve">
-    <value>käytössä</value>
+    <value>Käytössä</value>
   </data>
   <data name="Expiration_Info" xml:space="preserve">
-    <value>päättyminen</value>
+    <value>Päättyminen</value>
   </data>
   <data name="Expiration_Label" xml:space="preserve">
-    <value>päättyminen</value>
+    <value>Päättyminen</value>
   </data>
   <data name="Name_Info" xml:space="preserve">
     <value>Sovellusliittymän yksilöivä nimi. Tätä arvoa käytetään autentikointiin itsehavainnolla, ja se lisätään lähtevän käyttöoikeustunnuksen yleisölle.</value>
@@ -151,13 +151,13 @@
     <value>Sanakirja pitää tarvittavat mukautetut api-resurssikohtaiset arvot.</value>
   </data>
   <data name="Properties_Label" xml:space="preserve">
-    <value>ominaisuudet</value>
+    <value>Ominaisuudet</value>
   </data>
   <data name="PropertyKey_Info" xml:space="preserve">
-    <value>avain</value>
+    <value>Avain</value>
   </data>
   <data name="PropertyKey_Label" xml:space="preserve">
-    <value>avain</value>
+    <value>Avain</value>
   </data>
   <data name="PropertyValue_Info" xml:space="preserve">
     <value>Arvo</value>
@@ -169,7 +169,7 @@
     <value>Sovellusliittymällä on oltava ainakin yksi laajuus. Jokaisella laajuudella voi olla erilaisia asetuksia.</value>
   </data>
   <data name="Scopes_Label" xml:space="preserve">
-    <value>laajuudet</value>
+    <value>Laajuudet</value>
   </data>
   <data name="SecretDescription_Info" xml:space="preserve">
     <value>Kuvaus</value>
@@ -181,12 +181,12 @@
     <value>API-salaisuutta käytetään itsetutkimuksen päätepisteeseen. Sovellusliittymä voi todentaa itsetutkimuksella käyttämällä API-nimeä ja salaisuutta.</value>
   </data>
   <data name="Secrets_Label" xml:space="preserve">
-    <value>Secrets</value>
+    <value>Suojatut avaimet</value>
   </data>
   <data name="UserClaims_Info" xml:space="preserve">
-    <value>Luettelo liittyvistä käyttäjän vaatimustyypeistä, jotka tulisi sisällyttää käyttöoikeustunnukseen.</value>
+    <value>Luettelo liittyvistä käyttäjän ominaisuuksista, jotka tulisi sisällyttää käyttöoikeustunnukseen.</value>
   </data>
   <data name="UserClaims_Label" xml:space="preserve">
-    <value>Käyttäjän vaatimukset</value>
+    <value>Käyttäjän ominaisuudet</value>
   </data>
 </root>

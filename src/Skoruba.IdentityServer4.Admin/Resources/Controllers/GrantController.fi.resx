@@ -121,7 +121,7 @@
     <value>Jatkuva käyttöoikeus on poistettu onnistuneesti!</value>
   </data>
   <data name="SuccessPersistedGrantsDelete" xml:space="preserve">
-    <value>Jatkuvat käyttöoikeudet poistetaan onnistuneesti!</value>
+    <value>Jatkuvat käyttöoikeudet poistettiin onnistuneesti!</value>
   </data>
   <data name="SuccessTitle" xml:space="preserve">
     <value>Onnistui</value>

@@ -163,7 +163,7 @@
     <value />
   </data>
   <data name="AlwaysIncludeUserClaimsInIdToken_Label" xml:space="preserve">
-    <value>Sisällytä käyttäjän vaatimukset aina IdTokeniin</value>
+    <value>Sisällytä Käyttäjän ominaisuudet aina IdTokeniin</value>
   </data>
   <data name="AlwaysSendClientClaims_Info" xml:space="preserve">
     <value>Jos asetettu, asiakasvaatimukset lähetetään jokaisesta vuoista. Jos ei, vain Sovelluksen käyttöoikeustiedot -virta (oletus on väärä)</value>
@@ -199,7 +199,7 @@
     <value>Määrittää, onko Sovellus käytössä. Oletusarvo totta.</value>
   </data>
   <data name="Enabled_Label" xml:space="preserve">
-    <value>käytössä</value>
+    <value>Käytössä</value>
   </data>
   <data name="EnableLocalLogin_Info" xml:space="preserve">
     <value>Määrittää, pystyykö tämä Sovellus käyttämään paikallisia tilejä vai vain ulkoisia IdP: tä. Oletusarvo totta.</value>
@@ -256,7 +256,7 @@ Yhden kerran päivitysmerkin kahva päivitetään, kun päivitetään merkkejä<
     <value>Vaadi asiakassalaisuus</value>
   </data>
   <data name="RequireConsent_Info" xml:space="preserve">
-    <value>Määrittää, tarvitaanko suostumusnäyttö. Oletusarvo totta.</value>
+    <value>Määrittää, tarvitaanko oikeuksien myöntämisnäyttö. Oletusarvo totta.</value>
   </data>
   <data name="RequireConsent_Label" xml:space="preserve">
     <value>Vaatii suostumus</value>
@@ -409,13 +409,13 @@ Yhden kerran päivitysmerkin kahva päivitetään, kun päivitetään merkkejä<
     <value>Sanakirja pitää tarvittavat mukautetut asiakaskohtaiset arvot.</value>
   </data>
   <data name="Properties_Label" xml:space="preserve">
-    <value>ominaisuudet</value>
+    <value>Ominaisuudet</value>
   </data>
   <data name="PropertyKey_Info" xml:space="preserve">
-    <value>avain</value>
+    <value>Avain</value>
   </data>
   <data name="PropertyKey_Label" xml:space="preserve">
-    <value>avain</value>
+    <value>Avain</value>
   </data>
   <data name="PropertyValue_Info" xml:space="preserve">
     <value>Arvo</value>
@@ -448,10 +448,10 @@ Yhden kerran päivitysmerkin kahva päivitetään, kun päivitetään merkkejä<
     <value>Käyttäjätunnuksen tyyppi</value>
   </data>
   <data name="Expiration_Info" xml:space="preserve">
-    <value>päättyminen</value>
+    <value>Päättyminen</value>
   </data>
   <data name="Expiration_Label" xml:space="preserve">
-    <value>päättyminen</value>
+    <value>Päättyminen</value>
   </data>
   <data name="SecretDescription_Info" xml:space="preserve">
     <value>Kuvaus</value>

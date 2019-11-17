@@ -136,10 +136,10 @@
     <value>Henkilöllisyysresurssien omaisuus</value>
   </data>
   <data name="TableButtonRemove" xml:space="preserve">
-    <value>Poistaa</value>
+    <value>Poista</value>
   </data>
   <data name="TableKey" xml:space="preserve">
-    <value>avain</value>
+    <value>Avain</value>
   </data>
   <data name="TableValue" xml:space="preserve">
     <value>Arvo</value>

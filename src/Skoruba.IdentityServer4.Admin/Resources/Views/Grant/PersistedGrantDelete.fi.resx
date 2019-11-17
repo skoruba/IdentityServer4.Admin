@@ -133,7 +133,7 @@
     <value>data</value>
   </data>
   <data name="TableExpiration" xml:space="preserve">
-    <value>päättyminen</value>
+    <value>Päättyminen</value>
   </data>
   <data name="TableSubjectId" xml:space="preserve">
     <value>Aiheen tunnus</value>

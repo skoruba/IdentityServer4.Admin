@@ -121,7 +121,7 @@
     <value>Nimi</value>
   </data>
   <data name="TitleCode" xml:space="preserve">
-    <value>Valtuutuskoodivirta PKCE: llä</value>
+    <value>Valtuutuskoodi PKCE:llä</value>
   </data>
   <data name="TitleDevice" xml:space="preserve">
     <value>TV- ja rajoitetun tulon laitesovellus</value>
@@ -133,22 +133,22 @@
     <value>Tyhjä - oletus</value>
   </data>
   <data name="TitleHybrid" xml:space="preserve">
-    <value>Hybridi virtaus</value>
+    <value>Hybridi</value>
   </data>
   <data name="TitleImplicit" xml:space="preserve">
-    <value>Implisiittinen virtaus</value>
+    <value>Implisiittinen</value>
   </data>
   <data name="TitleMachine" xml:space="preserve">
-    <value>Kone / Robot</value>
+    <value>Kone / Robotti</value>
   </data>
   <data name="TitleNative" xml:space="preserve">
     <value>Alkuperäinen sovellus - mobiili / työpöytä</value>
   </data>
   <data name="TitlePasswordAndClient" xml:space="preserve">
-    <value>Resurssien omistajan salasana ja Sovelluksen käyttöoikeustiedot kulkevat</value>
+    <value>Resurssien omistajan salasana ja Sovelluksen käyttöoikeustiedot</value>
   </data>
   <data name="TitleSpa" xml:space="preserve">
-    <value>Yhden sivun sovellus - Javascript</value>
+    <value>Spa-sovellus - Javascript</value>
   </data>
   <data name="TitleWebHybrid" xml:space="preserve">
     <value>Verkkosovellus - palvelinpuoli</value>

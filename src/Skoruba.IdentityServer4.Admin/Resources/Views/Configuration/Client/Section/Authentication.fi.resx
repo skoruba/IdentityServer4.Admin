@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PanelTitle" xml:space="preserve">
-    <value>Authentication / ulos</value>
+    <value>Kirjautuminen / ulos</value>
   </data>
   <data name="PickerItemAlreadySelectedTitle" xml:space="preserve">
-    <value>kohde on jo valittu</value>
+    <value>Kohde on jo valittu</value>
   </data>
   <data name="PickerNoItemSelectedTitle" xml:space="preserve">
     <value>Kohteita ei ole valittu</value>
@@ -136,7 +136,7 @@
     <value>Valitut kohteet:</value>
   </data>
   <data name="PickerShowAllItemsTitle" xml:space="preserve">
-    <value>lisää</value>
+    <value>Lisää</value>
   </data>
   <data name="PickerSuggestedItemsTitle" xml:space="preserve">
     <value>Ehdotetut tuotteet:</value>

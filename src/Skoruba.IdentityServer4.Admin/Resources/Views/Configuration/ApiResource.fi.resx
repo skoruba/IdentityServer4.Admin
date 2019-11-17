@@ -124,7 +124,7 @@
     <value>Hallitse Api-resurssiominaisuuksia</value>
   </data>
   <data name="ButtonManageScopes" xml:space="preserve">
-    <value>Hallitse Api-laajuuksia</value>
+    <value>Hallitse Api-ominaisuuksi</value>
   </data>
   <data name="ButtonManageSecrets" xml:space="preserve">
     <value>Hallitse Api-salaisuuksia</value>
@@ -142,7 +142,7 @@
     <value>Api-resurssi</value>
   </data>
   <data name="PickerItemAlreadySelectedTitle" xml:space="preserve">
-    <value>kohde on jo valittu</value>
+    <value>Kohde on jo valittu</value>
   </data>
   <data name="PickerNoItemSelectedTitle" xml:space="preserve">
     <value>Kohteita ei ole valittu</value>
@@ -157,7 +157,7 @@
     <value>Valitut kohteet:</value>
   </data>
   <data name="PickerShowAllItemsTitle" xml:space="preserve">
-    <value>lisää</value>
+    <value>Lisää</value>
   </data>
   <data name="PickerSuggestedItemsTitle" xml:space="preserve">
     <value>Ehdotetut tuotteet:</value>

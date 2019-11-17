@@ -124,7 +124,7 @@
     <value>Sovelluksen ominaisuudet</value>
   </data>
   <data name="NavigationClients" xml:space="preserve">
-    <value>asiakkaat</value>
+    <value>Sovellukset</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Sovelluksen ominaisuudet</value>
@@ -136,10 +136,10 @@
     <value>Sovelluksen omaisuus</value>
   </data>
   <data name="TableButtonRemove" xml:space="preserve">
-    <value>Poistaa</value>
+    <value>Poista</value>
   </data>
   <data name="TableKey" xml:space="preserve">
-    <value>avain</value>
+    <value>Avain</value>
   </data>
   <data name="TableValue" xml:space="preserve">
     <value>Arvo</value>
