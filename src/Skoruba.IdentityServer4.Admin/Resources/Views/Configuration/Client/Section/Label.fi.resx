@@ -154,7 +154,7 @@
     <value>Salli pelkkää tekstiä</value>
   </data>
   <data name="AllowRememberConsent_Info" xml:space="preserve">
-    <value>Määrittää, voiko käyttäjä tallentaa suostumuspäätökset. Oletusarvo totta.</value>
+    <value>Määrittää, voiko käyttäjä Tallenna suostumuspäätökset. Oletusarvo totta.</value>
   </data>
   <data name="AllowRememberConsent_Label" xml:space="preserve">
     <value>Salli Muista suostumus</value>

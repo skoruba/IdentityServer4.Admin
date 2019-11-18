@@ -142,7 +142,7 @@
     <value>alue</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Tallentaa</value>
+    <value>Tallenna</value>
   </data>
   <data name="SendVerificationEmail" xml:space="preserve">
     <value>Lähetä vahvistusviesti</value>
