@@ -441,5 +441,27 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     policy => policy.RequireRole(rootConfiguration.AdminConfiguration.AdministrationRole));
             });
         }
+
+        public static void AddIdSHealthChecks<TConfigurationDbContext, TPersistedGrantDbContext, TIdentityDbContext>(this IServiceCollection services, IConfiguration configuration)
+            where TConfigurationDbContext : DbContext, IConfigurationDbContext
+            where TPersistedGrantDbContext : DbContext, IPersistedGrantDbContext
+            where TIdentityDbContext : DbContext
+        {
+            var configurationDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
+            var persistedGrantsDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);            
+            var identityDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
+
+            services.AddHealthChecks()
+                .AddSqlServer(configurationDbConnectionString, name: "ConfigurationDb",
+                    healthQuery: "SELECT TOP 1 * FROM dbo.Clients")
+                .AddDbContextCheck<TConfigurationDbContext>("ConfigurationDbContext")
+                .AddSqlServer(persistedGrantsDbConnectionString, name: "PersistentGrantsDb", 
+                    healthQuery: "SELECT TOP 1 * FROM dbo.PersistedGrants")
+                .AddDbContextCheck<TPersistedGrantDbContext>("PersistedGrantsDbContext")
+                .AddSqlServer(identityDbConnectionString, name: "IdentityDb",
+                    healthQuery: "SELECT TOP 1 * FROM dbo.Users")
+                .AddDbContextCheck<TIdentityDbContext>("IdentityDbContext");
+            services.AddHealthChecksUI();
+        }
     }
 }

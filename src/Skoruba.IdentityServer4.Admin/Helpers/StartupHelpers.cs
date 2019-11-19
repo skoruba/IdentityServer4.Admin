@@ -45,6 +45,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.Helpers.Localization;
 using System.Linq;
 using Microsoft.Extensions.Hosting;
+using IdentityServer4.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -563,6 +564,42 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             n.ProtocolMessage.RedirectUri = adminConfiguration.IdentityAdminRedirectUri;
 
             return Task.FromResult(0);
+        }
+
+        public static void AddIdSHealthChecks<TConfigurationDbContext, TPersistedGrantDbContext, TIdentityDbContext, TLogDbContext, TAuditLoggingDbContext>(this IServiceCollection services, IConfiguration configuration, IAdminConfiguration adminConfiguration)
+            where TConfigurationDbContext : DbContext, IConfigurationDbContext
+            where TPersistedGrantDbContext : DbContext, IPersistedGrantDbContext
+            where TIdentityDbContext : DbContext
+            where TLogDbContext : DbContext, IAdminLogDbContext
+            where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
+        {
+            var configurationDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
+            var persistedGrantsDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);
+            var identityDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
+            var logDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.AdminLogDbConnectionStringKey);
+            var auditLogDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.AdminAuditLogDbConnectionStringKey);
+
+            var identityServerUri = adminConfiguration.IdentityServerBaseUrl;
+            services.AddHealthChecks()
+                .AddSqlServer(configurationDbConnectionString, name: "ConfigurationDb",
+                    healthQuery: "SELECT TOP 1 * FROM dbo.Clients")
+                .AddDbContextCheck<TConfigurationDbContext>("ConfigurationDbContext")
+                .AddSqlServer(persistedGrantsDbConnectionString, name: "PersistentGrantsDb",
+                    healthQuery: "SELECT TOP 1 * FROM dbo.PersistedGrants")
+                .AddDbContextCheck<TPersistedGrantDbContext>("PersistedGrantsDbContext")
+                .AddSqlServer(identityDbConnectionString, name: "IdentityDb",
+                    healthQuery: "SELECT TOP 1 * FROM dbo.Users")
+                .AddDbContextCheck<TIdentityDbContext>("IdentityDbContext")
+                .AddSqlServer(logDbConnectionString, name: "LogDb",
+                    healthQuery: "SELECT TOP 1 * FROM dbo.Log")
+                .AddDbContextCheck<TLogDbContext>("LogDbContext")
+                .AddSqlServer(auditLogDbConnectionString, name: "AuditLogDb",
+                    healthQuery: "SELECT TOP 1 * FROM dbo.AuditLog")
+                .AddDbContextCheck<TAuditLoggingDbContext>("AuditLogDbContext")
+                
+                .AddIdentityServer(new Uri(identityServerUri), "Identity Server");
+
+            services.AddHealthChecksUI();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -56,6 +58,8 @@ namespace Skoruba.IdentityServer4.STS.Identity
             // Add authorization policies for MVC
             var rootConfiguration = services.BuildServiceProvider().GetService<IRootConfiguration>();
             services.AddAuthorizationPolicies(rootConfiguration);
+
+            services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext>(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
@@ -76,7 +80,18 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
             app.UseRouting();
             app.UseAuthorization();
-            app.UseEndpoints(endpoint => { endpoint.MapDefaultControllerRoute(); });
+            app.UseEndpoints(endpoint => 
+            { 
+                endpoint.MapDefaultControllerRoute();
+                endpoint.MapHealthChecks("/health", new HealthCheckOptions
+                {
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
+                endpoint.MapHealthChecksUI(setup => 
+                { 
+                    setup.UIPath = "/health-ui";
+                });
+            });            
         }
     }
 }

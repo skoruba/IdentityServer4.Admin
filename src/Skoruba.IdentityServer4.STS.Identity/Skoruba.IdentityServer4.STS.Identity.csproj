@@ -9,11 +9,15 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="3.0.0" />
+        <PackageReference Include="AspNetCore.HealthChecks.UI" Version="3.0.3" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="3.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="3.0.0" />
         <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0" />
         <PackageReference Include="AspNet.Security.OAuth.GitHub" Version="3.0.0" />
