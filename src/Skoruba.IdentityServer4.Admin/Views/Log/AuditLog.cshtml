@@ -1,0 +1,141 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Log.AuditLogsDto
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = Localizer["Audit Log"];
+}
+
+    <div class="audit-log-container">
+        <h2>@ViewData["Title"]</h2>
+
+        <form class="audit-log-form" asp-controller="Log" asp-action="DeleteAuditLogs">
+            <div class="d-flex flex-row mt-3 justify-content-end mb-3">
+                <div class="p-2">
+                    <a href="#" class="btn btn-danger audit-log-delete-button">
+                        @Localizer["Delete logs older than"]
+                    </a>
+                </div>
+                <div class="p-1">
+                    <!--Date Picker-->
+                    <div class="datepicker input-group date">
+                        <input asp-for="DeleteOlderThan" autocomplete="off" type="text" class="form-control">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="deleteLogsModal" tabindex="-1" role="dialog" aria-labelledby="deleteLogsModal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="deletePersistedGrantsModalLabel">@Localizer["Warning"]</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            @Localizer["Are you sure?"]
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger">@Localizer["Yes - delete"]</button>
+                            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">@Localizer["No - close"]</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="row">
+            <div class="col-12">
+                <form asp-controller="Log" asp-action="AuditLog" method="get">
+                    <div class="form-row">
+                        <div class="col-2 mb-3">
+                            <input name="subjectIdentifier" value="@ViewBag.SubjectIdentifier" type="text" placeholder="@Localizer["Subject Identifier"]" class="form-control" />
+                        </div>
+                        <div class="col-2 mb-3">
+                            <input name="subjectName" value="@ViewBag.SubjectName" type="text" placeholder="@Localizer["Subject Name"]" class="form-control" />
+                        </div>
+
+                        <div class="col-3 mb-3">
+                            <input name="event" value="@ViewBag.Event" type="text" placeholder="@Localizer["Event"]" class="form-control" />
+                        </div>
+
+                        <div class="col-3 mb-3">
+                            <input name="source" value="@ViewBag.Source" type="text" placeholder="@Localizer["Source"]" class="form-control" />
+                        </div>
+
+                        <div class="col-2 mb-3">
+                            <input name="category" value="@ViewBag.Category" type="text" placeholder="@Localizer["Category"]" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-12 mb-3">
+                            <input type="submit" class="btn btn-primary" value="@Localizer["Search"]" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>@Localizer["Event"]</th>
+                                <th>@Localizer["Source"]</th>
+                                <th>@Localizer["Subject"]</th>
+                                <th>@Localizer["Action"]</th>
+                                <th>@Localizer["Created"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var auditLog in Model.Logs)
+                            {
+                                <tr>
+                                    <td><a href="#" data-error-id="@auditLog.Id" class="btn btn-primary btn-error-detail">@Localizer["Detail"]</a></td>
+                                    <td>@auditLog.Event</td>
+                                    <td>@auditLog.Source</td>
+                                    <td><button class="audit-subject-button btn btn-outline-primary" data-subject-name="@auditLog.SubjectName" data-subject-identifier="@auditLog.SubjectIdentifier" data-subject-type="@auditLog.SubjectType" data-subject-additional-data="@auditLog.SubjectAdditionalData">@auditLog.SubjectName - @Localizer["Show detail"] <i class="fa fa-eye"></i></button></td>
+                                    <td><button class="audit-action-button btn btn-outline-primary" data-action-title="@Localizer["Action"]" data-action="@auditLog.Action">@Localizer["Show detail"] <i class="fa fa-eye"></i></button></td>
+                                    <td>
+                                        @auditLog.Created
+                                    </td>
+                                </tr>
+                                <tr class="row-error-detail d-none" data-error-id="@auditLog.Id">
+                                    <td colspan="6" data-error-json="@auditLog.Data"></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                @await Html.PartialAsync("Common/PagerDynamic", new Pager { Action = Url.Action("AuditLog", "Log"), PageSize = Model.PageSize, TotalCount = Model.TotalCount, EnableSearch = true, Search = ViewBag.Search })
+            </div>
+        </div>
+
+        <div class="audit-modal modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="audit-modal-value"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

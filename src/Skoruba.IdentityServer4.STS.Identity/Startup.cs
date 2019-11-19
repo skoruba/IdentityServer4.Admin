@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
@@ -13,10 +14,10 @@ namespace Skoruba.IdentityServer4.STS.Identity
     public class Startup
     {
         public IConfiguration Configuration { get; }
-        public IHostingEnvironment Environment { get; }
+        public IWebHostEnvironment Environment { get; }
         public ILogger Logger { get; set; }
 
-        public Startup(IHostingEnvironment environment, ILoggerFactory loggerFactory)
+        public Startup(IWebHostEnvironment environment, ILoggerFactory loggerFactory)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(environment.ContentRootPath)
@@ -50,14 +51,14 @@ namespace Skoruba.IdentityServer4.STS.Identity
             // Add all dependencies for Asp.Net Core Identity in MVC - these dependencies are injected into generic Controllers
             // Including settings for MVC and Localization
             // If you want to change primary keys or use another db model for Asp.Net Core Identity:
-            services.AddMvcWithLocalization<UserIdentity, string>();
+            services.AddMvcWithLocalization<UserIdentity, string>(Configuration);
 
             // Add authorization policies for MVC
             var rootConfiguration = services.BuildServiceProvider().GetService<IRootConfiguration>();
             services.AddAuthorizationPolicies(rootConfiguration);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             app.AddLogging(loggerFactory, Configuration);
 
@@ -72,7 +73,10 @@ namespace Skoruba.IdentityServer4.STS.Identity
             app.UseStaticFiles();
             app.UseIdentityServer();
             app.UseMvcLocalizationServices();
-            app.UseMvcWithDefaultRoute();
+
+            app.UseRouting();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoint => { endpoint.MapDefaultControllerRoute(); });
         }
     }
 }
