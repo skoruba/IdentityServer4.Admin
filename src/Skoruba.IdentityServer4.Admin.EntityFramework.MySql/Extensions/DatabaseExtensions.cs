@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using IdentityServer4.EntityFramework.Storage;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,7 +6,7 @@ using Skoruba.AuditLogging.EntityFramework.DbContexts;
 using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
-namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions
+namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions
 {
     public static class DatabaseExtensions
     {
@@ -26,7 +25,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions
         /// <param name="persistedGrantConnectionString"></param>
         /// <param name="errorLoggingConnectionString"></param>
         /// <param name="auditLoggingConnectionString"></param>
-        public static void RegisterNpgSqlDbContexts<TIdentityDbContext, TConfigurationDbContext,
+        public static void RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext,
             TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext>(this IServiceCollection services,
             string identityConnectionString, string configurationConnectionString,
             string persistedGrantConnectionString, string errorLoggingConnectionString,
@@ -41,23 +40,23 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions
 
             // Config DB for identity
             services.AddDbContext<TIdentityDbContext>(options =>
-                options.UseNpgsql(identityConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
+                options.UseMySql(identityConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
 
             // Config DB from existing connection
             services.AddConfigurationDbContext<TConfigurationDbContext>(options =>
                 options.ConfigureDbContext = b =>
-                    b.UseNpgsql(configurationConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
+                    b.UseMySql(configurationConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
 
             // Operational DB from existing connection
             services.AddOperationalDbContext<TPersistedGrantDbContext>(options => options.ConfigureDbContext = b =>
-                b.UseNpgsql(persistedGrantConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
+                b.UseMySql(persistedGrantConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
 
             // Log DB from existing connection
-            services.AddDbContext<TLogDbContext>(options => options.UseNpgsql(errorLoggingConnectionString,
+            services.AddDbContext<TLogDbContext>(options => options.UseMySql(errorLoggingConnectionString,
                 optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
 
             // Audit logging connection
-            services.AddDbContext<TAuditLoggingDbContext>(options => options.UseNpgsql(auditLoggingConnectionString,
+            services.AddDbContext<TAuditLoggingDbContext>(options => options.UseMySql(auditLoggingConnectionString,
                 optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
         }
 
@@ -72,7 +71,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions
         /// <param name="identityConnectionString"></param>
         /// <param name="configurationConnectionString"></param>
         /// <param name="persistedGrantConnectionString"></param>
-        public static void RegisterNpgSqlDbContexts<TIdentityDbContext, TConfigurationDbContext,
+        public static void RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext,
             TPersistedGrantDbContext>(this IServiceCollection services,
             string identityConnectionString, string configurationConnectionString,
             string persistedGrantConnectionString)
@@ -83,13 +82,13 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions
             var migrationsAssembly = typeof(DatabaseExtensions).GetTypeInfo().Assembly.GetName().Name;
 
             // Config DB for identity
-            services.AddDbContext<TIdentityDbContext>(options => options.UseNpgsql(identityConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
+            services.AddDbContext<TIdentityDbContext>(options => options.UseMySql(identityConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
 
             // Config DB from existing connection
-            services.AddConfigurationDbContext<TConfigurationDbContext>(options => options.ConfigureDbContext = b => b.UseNpgsql(configurationConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
+            services.AddConfigurationDbContext<TConfigurationDbContext>(options => options.ConfigureDbContext = b => b.UseMySql(configurationConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
 
             // Operational DB from existing connection
-            services.AddOperationalDbContext<TPersistedGrantDbContext>(options => options.ConfigureDbContext = b => b.UseNpgsql(persistedGrantConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
+            services.AddOperationalDbContext<TPersistedGrantDbContext>(options => options.ConfigureDbContext = b => b.UseMySql(persistedGrantConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
         }
     }
 }

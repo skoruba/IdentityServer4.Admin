@@ -37,13 +37,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Adm
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F817047F-018D-4F93-BDA5-58602073B634}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer", "src\Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer\Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.csproj", "{8230366D-81F9-4FA5-8F5D-8546B527F54F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer", "src\Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer\Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.csproj", "{8230366D-81F9-4FA5-8F5D-8546B527F54F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL", "src\Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL\Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.csproj", "{3ECDC91E-0D3E-4E4D-A34E-D33BB714578D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL", "src\Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL\Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.csproj", "{3ECDC91E-0D3E-4E4D-A34E-D33BB714578D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database", "database", "{2A514C8F-6A53-41CA-AB41-B644E7BC92A7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "business", "business", "{EE588CE5-51D0-4E98-A2B3-40EC8E655931}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skoruba.IdentityServer4.Admin.EntityFramework.MySql", "src\Skoruba.IdentityServer4.Admin.EntityFramework.MySql\Skoruba.IdentityServer4.Admin.EntityFramework.MySql.csproj", "{0A8A0DB7-0509-4DFB-9201-74398511B481}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -115,6 +117,10 @@ Global
 		{3ECDC91E-0D3E-4E4D-A34E-D33BB714578D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3ECDC91E-0D3E-4E4D-A34E-D33BB714578D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3ECDC91E-0D3E-4E4D-A34E-D33BB714578D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A8A0DB7-0509-4DFB-9201-74398511B481}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A8A0DB7-0509-4DFB-9201-74398511B481}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A8A0DB7-0509-4DFB-9201-74398511B481}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A8A0DB7-0509-4DFB-9201-74398511B481}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -135,6 +141,7 @@ Global
 		{2DD3CB7D-462E-4039-B684-81B1E88C7C6A} = {2A514C8F-6A53-41CA-AB41-B644E7BC92A7}
 		{8230366D-81F9-4FA5-8F5D-8546B527F54F} = {2A514C8F-6A53-41CA-AB41-B644E7BC92A7}
 		{3ECDC91E-0D3E-4E4D-A34E-D33BB714578D} = {2A514C8F-6A53-41CA-AB41-B644E7BC92A7}
+		{0A8A0DB7-0509-4DFB-9201-74398511B481} = {2A514C8F-6A53-41CA-AB41-B644E7BC92A7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B3166EDE-037B-4C68-BEBA-5DE9C5E3DB82}
