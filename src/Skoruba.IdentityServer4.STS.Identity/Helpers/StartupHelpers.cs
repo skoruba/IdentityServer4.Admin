@@ -187,7 +187,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     services.RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(databaseProvider.ProviderType));
+                    throw new ArgumentOutOfRangeException(nameof(databaseProvider.ProviderType), $@"The value needs to be one of {string.Join(", ", Enum.GetNames(typeof(DatabaseProviderType)))}.");
             }
         }
 
