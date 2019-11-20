@@ -2,6 +2,6 @@
 {
     public class DatabaseProviderConfiguration
     {
-        public string ProviderType { get; set; }
+        public DatabaseProviderType ProviderType { get; set; }
     }
 }

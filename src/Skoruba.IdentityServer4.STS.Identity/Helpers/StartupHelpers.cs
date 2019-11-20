@@ -170,13 +170,12 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
         {
             var databaseProvider = configuration.GetSection(nameof(DatabaseProviderConfiguration)).Get<DatabaseProviderConfiguration>();
-            Enum.TryParse(databaseProvider.ProviderType, out DatabaseProviderType databaseProviderType);
-
+            
             var identityConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
             var configurationConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
             var persistedGrantsConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);
 
-            switch (databaseProviderType)
+            switch (databaseProvider.ProviderType)
             {
                 case DatabaseProviderType.SqlServer:
                     services.RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString);
@@ -188,7 +187,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     services.RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(databaseProviderType));
+                    throw new ArgumentOutOfRangeException(nameof(databaseProvider.ProviderType));
             }
         }
 
