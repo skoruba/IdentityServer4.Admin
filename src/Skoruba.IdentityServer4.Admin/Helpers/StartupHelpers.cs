@@ -43,6 +43,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.Helpers.Localization;
+using System.Linq;
 using Microsoft.Extensions.Hosting;
 using Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
@@ -362,7 +363,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <param name="services"></param>
         public static void AddMvcWithLocalization<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>(this IServiceCollection services)
+            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>(this IServiceCollection services, IConfiguration configuration)
             where TUserDto : UserDto<TUserDtoKey>, new()
             where TRoleDto : RoleDto<TRoleDtoKey>, new()
             where TUser : IdentityUser<TKey>
@@ -405,22 +406,27 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>());
                 });
 
+            var cultureConfiguration = configuration.GetSection(nameof(CultureConfiguration)).Get<CultureConfiguration>();
             services.Configure<RequestLocalizationOptions>(
             opts =>
             {
-                var supportedCultures = new[]
-                {
-                        new CultureInfo("en"),
-                        new CultureInfo("da"),
-                        new CultureInfo("fa"),
-                        new CultureInfo("fr"),
-                        new CultureInfo("ru"),
-                        new CultureInfo("sv"),
-                        new CultureInfo("zh"),
-                        new CultureInfo("es")
-                };
+                // If cultures are specified in the configuration, use them (making sure they are among the available cultures),
+                // otherwise use all the available cultures
+                var supportedCultureCodes = (cultureConfiguration?.Cultures?.Count > 0 ?
+                    cultureConfiguration.Cultures.Intersect(CultureConfiguration.AvailableCultures) :
+                    CultureConfiguration.AvailableCultures).ToArray();
 
-                opts.DefaultRequestCulture = new RequestCulture("en");
+                if (!supportedCultureCodes.Any()) supportedCultureCodes = CultureConfiguration.AvailableCultures;
+                var supportedCultures = supportedCultureCodes.Select(c => new CultureInfo(c)).ToList();
+
+                // If the default culture is specified use it, otherwise use CultureConfiguration.DefaultRequestCulture ("en")
+                var defaultCultureCode = string.IsNullOrEmpty(cultureConfiguration?.DefaultCulture) ?
+                    CultureConfiguration.DefaultRequestCulture : cultureConfiguration?.DefaultCulture;
+
+                // If the default culture is not among the supported cultures, use the first supported culture as default
+                if (!supportedCultureCodes.Contains(defaultCultureCode)) defaultCultureCode = supportedCultureCodes.FirstOrDefault();
+
+                opts.DefaultRequestCulture = new RequestCulture(defaultCultureCode);
                 opts.SupportedCultures = supportedCultures;
                 opts.SupportedUICultures = supportedCultures;
             });
