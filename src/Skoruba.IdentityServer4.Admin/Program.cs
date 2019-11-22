@@ -41,9 +41,7 @@ namespace Skoruba.IdentityServer4.Admin
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseContentRoot(Directory.GetCurrentDirectory());
                     webBuilder.ConfigureKestrel(options => options.AddServerHeader = false);
-                    webBuilder.UseIISIntegration();
                     webBuilder.UseStartup<Startup>();
                     webBuilder.UseSerilog();
                 });
