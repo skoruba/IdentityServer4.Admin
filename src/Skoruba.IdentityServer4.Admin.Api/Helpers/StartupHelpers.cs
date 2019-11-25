@@ -239,8 +239,6 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                 .AddDbContextCheck<TAuditLoggingDbContext>("AuditLogDbContext")
 
                 .AddIdentityServer(new Uri(identityServerUri), "Identity Server");
-
-            services.AddHealthChecksUI();
         }
     }
 }

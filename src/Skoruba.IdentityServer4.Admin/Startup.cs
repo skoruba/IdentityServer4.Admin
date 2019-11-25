@@ -120,11 +120,7 @@ namespace Skoruba.IdentityServer4.Admin
                 endpoint.MapHealthChecks("/health", new HealthCheckOptions
                 {
                     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-                });
-                endpoint.MapHealthChecksUI(setup =>
-                {
-                    setup.UIPath = "/health-ui";
-                });
+                });                
             });
         }
     }

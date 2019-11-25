@@ -62,7 +62,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
             services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext>(Configuration);
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, Microsoft.Extensions.Hosting.IHostApplicationLifetime applicationLifetime)
         {
             app.AddLogging(loggerFactory, Configuration);
 
@@ -87,11 +87,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
                 {
                     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
                 });
-                endpoint.MapHealthChecksUI(setup => 
-                { 
-                    setup.UIPath = "/health-ui";
-                });
-            });            
+            });
         }
     }
 }

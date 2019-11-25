@@ -598,8 +598,6 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 .AddDbContextCheck<TAuditLoggingDbContext>("AuditLogDbContext")
                 
                 .AddIdentityServer(new Uri(identityServerUri), "Identity Server");
-
-            services.AddHealthChecksUI();
         }
     }
 }

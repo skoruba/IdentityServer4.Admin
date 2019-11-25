@@ -133,10 +133,6 @@ namespace Skoruba.IdentityServer4.Admin.Api
                 {
                     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
                 });
-                endpoints.MapHealthChecksUI(setup =>
-                {
-                    setup.UIPath = "/health-ui";
-                });
             });
         }
     }

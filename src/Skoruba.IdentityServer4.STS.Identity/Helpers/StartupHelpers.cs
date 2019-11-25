@@ -461,7 +461,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 .AddSqlServer(identityDbConnectionString, name: "IdentityDb",
                     healthQuery: "SELECT TOP 1 * FROM dbo.Users")
                 .AddDbContextCheck<TIdentityDbContext>("IdentityDbContext");
-            services.AddHealthChecksUI();
+            //services.AddHealthChecksUI();
         }
     }
 }
