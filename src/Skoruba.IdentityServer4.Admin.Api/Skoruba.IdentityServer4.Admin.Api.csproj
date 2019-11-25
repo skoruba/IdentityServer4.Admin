@@ -10,6 +10,8 @@
   </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AspNetCore.HealthChecks.MySql" Version="3.0.0" />
+        <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="3.0.0" />
         <PackageReference Include="AspNetCore.HealthChecks.OpenIdConnectServer" Version="3.0.0" />
         <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="3.0.0" />
         <PackageReference Include="AspNetCore.HealthChecks.UI" Version="3.0.3" />

@@ -411,24 +411,49 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         }
 
         public static void AddIdSHealthChecks<TConfigurationDbContext, TPersistedGrantDbContext, TIdentityDbContext>(this IServiceCollection services, IConfiguration configuration)
-            where TConfigurationDbContext : DbContext, IConfigurationDbContext
-            where TPersistedGrantDbContext : DbContext, IPersistedGrantDbContext
+            where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
+            where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TIdentityDbContext : DbContext
         {
             var configurationDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
             var persistedGrantsDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);            
             var identityDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
 
-            services.AddHealthChecks()
-                .AddSqlServer(configurationDbConnectionString, name: "ConfigurationDb",
-                    healthQuery: "SELECT TOP 1 * FROM dbo.Clients")
+            var healthChecksBuilder = services.AddHealthChecks()
                 .AddDbContextCheck<TConfigurationDbContext>("ConfigurationDbContext")
-                .AddSqlServer(persistedGrantsDbConnectionString, name: "PersistentGrantsDb", 
-                    healthQuery: "SELECT TOP 1 * FROM dbo.PersistedGrants")
                 .AddDbContextCheck<TPersistedGrantDbContext>("PersistedGrantsDbContext")
-                .AddSqlServer(identityDbConnectionString, name: "IdentityDb",
-                    healthQuery: "SELECT TOP 1 * FROM dbo.Users")
                 .AddDbContextCheck<TIdentityDbContext>("IdentityDbContext");
+
+            var databaseProvider = configuration.GetSection(nameof(DatabaseProviderConfiguration)).Get<DatabaseProviderConfiguration>();
+            switch (databaseProvider.ProviderType)
+            {
+                case DatabaseProviderType.SqlServer:
+                    healthChecksBuilder
+                        .AddSqlServer(configurationDbConnectionString, name: "ConfigurationDb",
+                            healthQuery: "SELECT TOP 1 * FROM dbo.Clients")
+                        .AddSqlServer(persistedGrantsDbConnectionString, name: "PersistentGrantsDb",
+                            healthQuery: "SELECT TOP 1 * FROM dbo.PersistedGrants")
+                        .AddSqlServer(identityDbConnectionString, name: "IdentityDb",
+                            healthQuery: "SELECT TOP 1 * FROM dbo.Users");
+
+                    break;
+                case DatabaseProviderType.PostgreSQL:
+                    healthChecksBuilder
+                        .AddNpgSql(configurationDbConnectionString, name: "ConfigurationDb",
+                            healthQuery: "SELECT TOP 1 * FROM dbo.Clients")
+                        .AddNpgSql(persistedGrantsDbConnectionString, name: "PersistentGrantsDb",
+                            healthQuery: "SELECT TOP 1 * FROM dbo.PersistedGrants")
+                        .AddNpgSql(identityDbConnectionString, name: "IdentityDb",
+                            healthQuery: "SELECT TOP 1 * FROM dbo.Users");
+                    break;
+                case DatabaseProviderType.MySql:
+                    healthChecksBuilder
+                        .AddMySql(configurationDbConnectionString, name: "ConfigurationDb")
+                        .AddMySql(persistedGrantsDbConnectionString, name: "PersistentGrantsDb")
+                        .AddMySql(identityDbConnectionString, name: "IdentityDb");
+                    break;
+            }
+
             //services.AddHealthChecksUI();
         }
     }
