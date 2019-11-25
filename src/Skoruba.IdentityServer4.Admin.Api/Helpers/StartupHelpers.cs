@@ -5,19 +5,16 @@ using IdentityServer4.AccessTokenValidation;
 using IdentityServer4.EntityFramework.Storage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using Skoruba.AuditLogging.EntityFramework.DbContexts;
 using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.AuditLogging.EntityFramework.Extensions;
 using Skoruba.AuditLogging.EntityFramework.Repositories;
 using Skoruba.AuditLogging.EntityFramework.Services;
-using Skoruba.AuditLogging.Events.Http;
 using Skoruba.IdentityServer4.Admin.Api.AuditLogging;
 using Skoruba.IdentityServer4.Admin.Api.Configuration;
 using Skoruba.IdentityServer4.Admin.Api.Configuration.ApplicationParts;
@@ -25,6 +22,10 @@ using Skoruba.IdentityServer4.Admin.Api.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.Api.Helpers.Localization;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions;
+using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
+using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
 
 namespace Skoruba.IdentityServer4.Admin.Api.Helpers
 {
@@ -114,6 +115,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
         /// <typeparam name="TPersistedGrantDbContext"></typeparam>
         /// <typeparam name="TLogDbContext"></typeparam>
         /// <typeparam name="TIdentityDbContext"></typeparam>
+        /// <typeparam name="TAuditLoggingDbContext"></typeparam>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
         public static void AddDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext,
@@ -124,43 +126,28 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
             where TLogDbContext : DbContext, IAdminLogDbContext
             where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
         {
-            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+            var databaseProvider = configuration.GetSection(nameof(DatabaseProviderConfiguration)).Get<DatabaseProviderConfiguration>();
+            
+            var identityConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
+            var configurationConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
+            var persistedGrantsConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);
+            var errorLoggingConnectionString = configuration.GetConnectionString(ConfigurationConsts.AdminLogDbConnectionStringKey);
+            var auditLoggingConnectionString = configuration.GetConnectionString(ConfigurationConsts.AdminAuditLogDbConnectionStringKey);
 
-            // Config DB for identity
-            services.AddDbContext<TIdentityDbContext>(options =>
-                options.UseSqlServer(
-                    configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey),
-                    sql => sql.MigrationsAssembly(migrationsAssembly)));
-
-            // Config DB from existing connection
-            services.AddConfigurationDbContext<TConfigurationDbContext>(options =>
+            switch (databaseProvider.ProviderType)
             {
-                options.ConfigureDbContext = b =>
-                    b.UseSqlServer(
-                        configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey),
-                        sql => sql.MigrationsAssembly(migrationsAssembly));
-            });
-
-            // Operational DB from existing connection
-            services.AddOperationalDbContext<TPersistedGrantDbContext>(options =>
-            {
-                options.ConfigureDbContext = b =>
-                    b.UseSqlServer(
-                        configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey),
-                        sql => sql.MigrationsAssembly(migrationsAssembly));
-            });
-
-            // Log DB from existing connection
-            services.AddDbContext<TLogDbContext>(options =>
-                options.UseSqlServer(
-                    configuration.GetConnectionString(ConfigurationConsts.AdminLogDbConnectionStringKey),
-                    optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
-
-            // Audit logging connection
-            services.AddDbContext<TAuditLoggingDbContext>(options =>
-                options.UseSqlServer(
-                    configuration.GetConnectionString(ConfigurationConsts.AdminAuditLogDbConnectionStringKey),
-                    optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
+                case DatabaseProviderType.SqlServer:
+                    services.RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString, errorLoggingConnectionString, auditLoggingConnectionString);
+                    break;
+                case DatabaseProviderType.PostgreSQL:
+                    services.RegisterNpgSqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString, errorLoggingConnectionString, auditLoggingConnectionString);
+                    break;
+                case DatabaseProviderType.MySql:
+                    services.RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString, errorLoggingConnectionString, auditLoggingConnectionString);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(databaseProvider.ProviderType), $@"The value needs to be one of {string.Join(", ", Enum.GetNames(typeof(DatabaseProviderType)))}.");
+            }
         }
 
         /// <summary>
