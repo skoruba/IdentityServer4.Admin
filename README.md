@@ -151,8 +151,8 @@ Update-Database -context IdentityServerPersistedGrantDbContext
 #### Migrations for AuditLogging DbContext:
 
 ```powershell
-Add-Migration AuditLoggingDbInit -context AuditLoggingDbContext -output Data/Migrations/AuditLogging
-Update-Database -context AuditLoggingDbContext
+Add-Migration AdminAuditLogDbInit -context AdminAuditLogDbContext -output Data/Migrations/AuditLogging
+Update-Database -context AdminAuditLogDbContext
 ```
 
 ### Or via `dotnet CLI`:
@@ -188,8 +188,8 @@ dotnet ef database update -c IdentityServerPersistedGrantDbContext
 #### Migrations for AuditLogging DbContext:
 
 ```powershell
-dotnet ef migrations add AuditLoggingDbInit -c AuditLoggingDbContext -o Data/Migrations/AuditLogging
-dotnet ef database update -c AuditLoggingDbContext
+dotnet ef migrations add AdminAuditLogDbInit -c AdminAuditLogDbContext -o Data/Migrations/AuditLogging
+dotnet ef database update -c AdminAuditLogDbContext
 ```
 
 Migrations are not a part of the repository - they are ignored in `.gitignore`.
