@@ -303,24 +303,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         }
 
         /// <summary>
-        /// Configuration root configuration
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        public static IServiceCollection ConfigureRootConfiguration(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddOptions();
-
-            services.Configure<AdminConfiguration>(configuration.GetSection(ConfigurationConsts.AdminConfigurationKey));
-            services.Configure<RegisterConfiguration>(configuration.GetSection(ConfigurationConsts.RegisterConfigurationKey));
-
-            services.TryAddSingleton<IRootConfiguration, RootConfiguration>();
-
-            return services;
-        }
-
-        /// <summary>
         /// Add configuration for IdentityServer4
         /// </summary>
         /// <typeparam name="TUserIdentity"></typeparam>

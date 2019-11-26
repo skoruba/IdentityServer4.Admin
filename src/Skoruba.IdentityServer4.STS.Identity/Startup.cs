@@ -6,6 +6,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
+using Skoruba.IdentityServer4.STS.Identity.Configuration;
+using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 
@@ -37,7 +39,8 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureRootConfiguration(Configuration);
+            var rootConfiguration = CreateRootConfiguration();
+            services.AddSingleton<IRootConfiguration>(rootConfiguration);
 
             // Register DbContexts for IdentityServer and Identity
             services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext>(Environment, Configuration);
@@ -54,7 +57,6 @@ namespace Skoruba.IdentityServer4.STS.Identity
             services.AddMvcWithLocalization<UserIdentity, string>(Configuration);
 
             // Add authorization policies for MVC
-            var rootConfiguration = services.BuildServiceProvider().GetService<IRootConfiguration>();
             services.AddAuthorizationPolicies(rootConfiguration);
         }
 
@@ -77,6 +79,14 @@ namespace Skoruba.IdentityServer4.STS.Identity
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoint => { endpoint.MapDefaultControllerRoute(); });
+        }
+
+        private IRootConfiguration CreateRootConfiguration()
+        {
+            var rootConfiguration = new RootConfiguration();
+            Configuration.GetSection(ConfigurationConsts.AdminConfigurationKey).Bind(rootConfiguration.AdminConfiguration);
+            Configuration.GetSection(ConfigurationConsts.RegisterConfigurationKey).Bind(rootConfiguration.RegisterConfiguration);
+            return rootConfiguration;
         }
     }
 }
