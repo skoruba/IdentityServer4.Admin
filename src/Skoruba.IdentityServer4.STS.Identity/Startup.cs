@@ -17,24 +17,11 @@ namespace Skoruba.IdentityServer4.STS.Identity
     {
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment Environment { get; }
-        public ILogger Logger { get; set; }
 
-        public Startup(IWebHostEnvironment environment, ILoggerFactory loggerFactory)
+        public Startup(IWebHostEnvironment environment, IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(environment.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables();
-
-            if (environment.IsDevelopment())
-            {
-                builder.AddUserSecrets<Startup>();
-            }
-
-            Configuration = builder.Build();
+            Configuration = configuration;
             Environment = environment;
-            Logger = loggerFactory.CreateLogger<Startup>();
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -49,7 +36,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
             services.AddEmailSenders(Configuration);
 
             // Add services for authentication, including Identity model, IdentityServer4 and external providers
-            services.AddAuthenticationServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Configuration, Logger);
+            services.AddAuthenticationServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Configuration);
 
             // Add all dependencies for Asp.Net Core Identity in MVC - these dependencies are injected into generic Controllers
             // Including settings for MVC and Localization
@@ -60,10 +47,8 @@ namespace Skoruba.IdentityServer4.STS.Identity
             services.AddAuthorizationPolicies(rootConfiguration);
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.AddLogging(loggerFactory, Configuration);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
