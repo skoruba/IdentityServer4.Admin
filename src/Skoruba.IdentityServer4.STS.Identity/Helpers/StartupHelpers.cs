@@ -313,7 +313,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             services.AddOptions();
 
             services.Configure<AdminConfiguration>(configuration.GetSection(ConfigurationConsts.AdminConfigurationKey));
-            services.Configure<RegisterConfiguration>(configuration.GetSection(ConfigurationConsts.RegisterConfiguration));
+            services.Configure<RegisterConfiguration>(configuration.GetSection(ConfigurationConsts.RegisterConfigurationKey));
 
             services.TryAddSingleton<IRootConfiguration, RootConfiguration>();
 
