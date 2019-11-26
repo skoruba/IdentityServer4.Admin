@@ -1,5 +1,4 @@
 ﻿using Skoruba.IdentityServer4.Admin.Helpers.Identity;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -66,13 +65,6 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Helpers
                 nameof(IdentityErrorMessages.PasswordRequiresLower),
                 nameof(IdentityErrorMessages.PasswordRequiresLower),
                 "PasswordRequiresLowerTranslated"
-            };
-
-            yield return new object[]
-            {
-                nameof(IdentityErrorMessages.PasswordRequiresNonAlphanumeric),
-                nameof(IdentityErrorMessages.PasswordRequiresNonAlphanumeric),
-                "PasswordRequiresNonAlphanumericTranslated"
             };
 
             yield return new object[]
