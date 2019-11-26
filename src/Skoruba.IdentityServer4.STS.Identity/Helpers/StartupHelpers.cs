@@ -329,7 +329,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 .AddOperationalStore<TPersistedGrantDbContext>()
                 .AddAspNetIdentity<TUserIdentity>();
 
-            builder.AddCustomSigningCredential(configuration, logger);
+            builder.AddCustomSigningCredential(configuration);
             builder.AddCustomValidationKey(configuration, logger);
         }
 

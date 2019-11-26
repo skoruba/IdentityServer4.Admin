@@ -23,9 +23,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// </summary>
         /// <param name="builder"></param>
         /// <param name="configuration"></param>
-        /// <param name="logger"></param>
         /// <returns></returns>
-        public static IIdentityServerBuilder AddCustomSigningCredential(this IIdentityServerBuilder builder, IConfiguration configuration, ILogger logger)
+        public static IIdentityServerBuilder AddCustomSigningCredential(this IIdentityServerBuilder builder, IConfiguration configuration)
         {
             var certificateConfiguration = configuration.GetSection(nameof(CertificateConfiguration)).Get<CertificateConfiguration>();
 
@@ -81,9 +80,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     {
                         builder.AddSigningCredential(new X509Certificate2(certificateConfiguration.SigningCertificatePfxFilePath, certificateConfiguration.SigningCertificatePfxFilePassword));
                     }
-                    catch (CryptographicException e)
+                    catch (Exception e)
                     {
-                        logger.LogError($"There was an error adding the key file - during the creation of the signing key {e.Message}");
+                        throw new Exception("There was an error adding the key file - during the creation of the signing key", e);
                     }
                 }
                 else
@@ -94,6 +93,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             else if (certificateConfiguration.UseTemporarySigningKeyForDevelopment)
             {
                 builder.AddDeveloperSigningCredential();
+            }
+            else
+            {
+                throw new Exception("Signing credential is not specified");
             }
 
             return builder;
