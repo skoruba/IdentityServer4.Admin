@@ -108,9 +108,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// </summary>
         /// <param name="builder"></param>
         /// <param name="configuration"></param>
-        /// <param name="logger"></param>
         /// <returns></returns>
-        public static IIdentityServerBuilder AddCustomValidationKey(this IIdentityServerBuilder builder, IConfiguration configuration, ILogger logger)
+        public static IIdentityServerBuilder AddCustomValidationKey(this IIdentityServerBuilder builder, IConfiguration configuration)
         {
             var certificateConfiguration = configuration.GetSection(nameof(CertificateConfiguration)).Get<CertificateConfiguration>();
 
@@ -149,9 +148,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                         builder.AddValidationKey(new X509Certificate2(certificateConfiguration.ValidationCertificatePfxFilePath, certificateConfiguration.ValidationCertificatePfxFilePassword));
 
                     }
-                    catch (CryptographicException e)
+                    catch (Exception e)
                     {
-                        logger.LogError($"There was an error adding the key file - during the creation of the validation key {e.Message}");
+                        throw new Exception("There was an error adding the key file - during the creation of the validation key", e);
                     }
                 }
                 else

@@ -330,7 +330,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 .AddAspNetIdentity<TUserIdentity>();
 
             builder.AddCustomSigningCredential(configuration);
-            builder.AddCustomValidationKey(configuration, logger);
+            builder.AddCustomValidationKey(configuration);
         }
 
         /// <summary>
