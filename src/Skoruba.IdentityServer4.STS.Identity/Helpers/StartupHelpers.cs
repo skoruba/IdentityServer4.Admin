@@ -20,7 +20,7 @@ using Serilog;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.ApplicationParts;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
-using Skoruba.IdentityServer4.STS.Identity.Configuration.Intefaces;
+using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 using Skoruba.IdentityServer4.STS.Identity.Services;
 using ILogger = Microsoft.Extensions.Logging.ILogger;

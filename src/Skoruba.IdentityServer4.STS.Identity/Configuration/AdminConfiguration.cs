@@ -1,4 +1,4 @@
-﻿using Skoruba.IdentityServer4.STS.Identity.Configuration.Intefaces;
+﻿using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Configuration
 {
