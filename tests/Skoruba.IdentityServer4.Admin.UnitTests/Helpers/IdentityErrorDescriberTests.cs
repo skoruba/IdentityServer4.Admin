@@ -2,9 +2,6 @@
 using Microsoft.Extensions.Localization;
 using Moq;
 using Skoruba.IdentityServer4.Admin.Helpers.Identity;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Helpers

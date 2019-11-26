@@ -22,7 +22,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Helpers
                 nameof(IdentityErrorMessages.DefaultError),
                 nameof(IdentityErrorMessages.DefaultError),
                 "DefaultErrorTranslated"
-                };
+            };
 
             yield return new object[]
             {
@@ -163,6 +163,14 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Helpers
                 nameof(IdentityErrorMessages.PasswordRequiresUniqueChars),
                 "PasswordRequiresUniqueCharsTranslated",
                 5
+            };
+
+            yield return new object[]
+            {
+                nameof(IdentityErrorMessages.DuplicateEmail),
+                nameof(IdentityErrorMessages.DuplicateEmail),
+                "DuplicateEmailTranslated",
+                "testduplicateemail@email.com"
             };
 
             #endregion
