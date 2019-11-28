@@ -48,5 +48,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.ViewModels.Manage
         [MaxLength(255)]
         [Display(Name = "Country")]
         public string Country { get; set; }
+
+        [Display(Name = "Photo URL")]
+        public string PhotoUrl { get; set; }
     }
 }

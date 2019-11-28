@@ -5,8 +5,10 @@
 // Modified by Jan Škoruba
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Principal;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using IdentityModel;
@@ -18,11 +20,15 @@ using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
+using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
+using Skoruba.IdentityServer4.STS.Identity.Helpers.ADUtilities;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 using Skoruba.IdentityServer4.STS.Identity.ViewModels.Account;
 
@@ -45,6 +51,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         private readonly IGenericControllerLocalizer<AccountController<TUser, TKey>> _localizer;
         private readonly LoginConfiguration _loginConfiguration;
         private readonly RegisterConfiguration _registerConfiguration;
+        private readonly WindowsAuthConfiguration _windowsAuthConfiguration;
+        private readonly IADUtilities _ADUtilities;
+        private readonly ILogger<AccountController<TUser, TKey>> _logger;
 
         public AccountController(
             UserResolver<TUser> userResolver,
@@ -57,7 +66,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             IEmailSender emailSender,
             IGenericControllerLocalizer<AccountController<TUser, TKey>> localizer,
             LoginConfiguration loginConfiguration,
-            RegisterConfiguration registerConfiguration)
+            RegisterConfiguration registerConfiguration,
+            WindowsAuthConfiguration windowsAuthConfiguration,
+            IADUtilities adUtilities,
+            ILogger<AccountController<TUser, TKey>> logger)
         {
             _userResolver = userResolver;
             _userManager = userManager;
@@ -70,22 +82,32 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             _localizer = localizer;
             _loginConfiguration = loginConfiguration;
             _registerConfiguration = registerConfiguration;
+            _windowsAuthConfiguration = windowsAuthConfiguration;
+            _ADUtilities = adUtilities;
+            _logger = logger;
         }
 
         /// <summary>
         /// Entry point into the login workflow
         /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <param name="forceLoginScreen">When true, ignores the AutomaticWindowsLogin setting</param>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(string returnUrl)
+        public async Task<IActionResult> Login(string returnUrl, bool forceLoginScreen = false)
         {
+            if (_windowsAuthConfiguration.AutomaticWindowsLogin && !forceLoginScreen && Request.IsFromLocalSubnet())
+            {
+                return RedirectToAction("ExternalLogin", new { provider = AccountOptions.WindowsAuthenticationSchemeName, returnUrl });
+            }
             // build a model so we know what to show on the login page
             var vm = await BuildLoginViewModelAsync(returnUrl);
 
-            if (vm.EnableLocalLogin == false && vm.ExternalProviders.Count() == 1)
+            if (vm.IsExternalLoginOnly)
             {
-                // only one option for logging in
-                return ExternalLogin(vm.ExternalProviders.First().AuthenticationScheme, returnUrl);
+                // we only have one option for logging in and it's an external provider
+                return RedirectToAction("ExternalLogin", new { provider = vm.ExternalLoginScheme, returnUrl });
             }
 
             return View(vm);
@@ -184,6 +206,72 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             return View(vm);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult WindowsLogin(string returnUrl)
+        {
+            LoginInputModel vm = new LoginInputModel { ReturnUrl = returnUrl };
+            return View(vm);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> WindowsLogin(LoginInputModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                // Username can be in the format domain\username or just the Windows username.
+                // In the latter case, the host domain will be used.
+                var usernameParts = vm.Username.Split('\\', StringSplitOptions.RemoveEmptyEntries);
+                if (usernameParts.Length > 2)
+                    ModelState.AddModelError("Username", _localizer["InvalidUsernameFormat"]);
+                else
+                {
+                    var wi = _ADUtilities.LogonWindowsUser(usernameParts.Length > 1 ? usernameParts[1] : usernameParts[0], 
+                        vm.Password, 
+                        usernameParts.Length > 1 ? usernameParts[0] : null);
+                    if (wi != null)
+                        return await IssueExternalCookie(vm.ReturnUrl, wi);
+
+                    ModelState.AddModelError(string.Empty, _localizer["WindowsAuthenticationFailed"]);
+                }
+            }
+            
+            return View(vm);
+        }
+
+        private async Task<IActionResult> IssueExternalCookie(string returnUrl, IIdentity wi)
+        {
+            var adProperties = _ADUtilities.GetUserInfoFromAD(wi.Name);
+
+            var id = new ClaimsIdentity(AccountOptions.WindowsAuthenticationSchemeName);
+            var name = wi.Name;
+            name = name.Substring(name.IndexOf('\\') + 1);
+
+            id.AddClaim(new Claim(JwtClaimTypes.Subject, name));
+            id.AddClaim(new Claim(ClaimTypes.NameIdentifier, name));
+            id.AddClaim(new Claim(JwtClaimTypes.Name, adProperties.DisplayName));
+            id.AddClaim(new Claim(JwtClaimTypes.Email, adProperties.Email));
+
+            // we will issue the external cookie and then redirect the
+            // user back to the external callback, in essence, treating windows
+            // auth the same as any other external authentication mechanism
+            var props = new AuthenticationProperties()
+            {
+                RedirectUri = Url.Action("ExternalLoginCallback"),
+                Items =
+                    {
+                        { "returnUrl", returnUrl },
+                        { "LoginProvider", AccountOptions.WindowsAuthenticationSchemeName },
+                    }
+            };
+            await HttpContext.SignInAsync(
+                IdentityConstants.ExternalScheme,
+                new ClaimsPrincipal(id),
+                props);
+
+            return Redirect(props.RedirectUri);
+        }
 
         /// <summary>
         /// Show logout page
@@ -345,18 +433,50 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             {
                 ModelState.AddModelError(string.Empty, _localizer["ErrorExternalProvider", remoteError]);
 
-                return View(nameof(Login));
+                var vm = await BuildLoginViewModelAsync(returnUrl);
+                return View(nameof(Login), vm);
             }
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
-                return RedirectToAction(nameof(Login));
+                return RedirectToAction(nameof(Login), new { returnUrl });
+            }
+
+            var externalResult = await HttpContext.AuthenticateAsync(IdentityConstants.ExternalScheme);
+            if (externalResult.Succeeded)
+            {
+                if (externalResult.Properties.Items.ContainsKey("returnUrl"))
+                    returnUrl = externalResult.Properties.Items["returnUrl"];
+
+                // We no longer need the external cookie
+                await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
             }
 
             // Sign in the user with this external login provider if the user already has a login.
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
             if (result.Succeeded)
             {
+                if (info.LoginProvider == AccountOptions.WindowsAuthenticationSchemeName &&
+                    _windowsAuthConfiguration.SyncUserProfileWithWindows)
+                {
+                    await SyncUserProfileWithAD(info);
+                }
+                return RedirectToLocal(returnUrl);
+            }
+
+            // If we already collected username and email of the user, auto-provision the user
+            var username = info.Principal.FindFirstValue(ClaimTypes.NameIdentifier) ?? info.Principal.FindFirstValue(JwtClaimTypes.Subject);
+            var email = info.Principal.FindFirstValue(ClaimTypes.Email) ?? info.Principal.FindFirstValue(JwtClaimTypes.Email);
+            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(email))
+            {
+                var user = await ProvideExternalUserAsync(info, username, email);
+                if (user == null)
+                {
+                    var vm = await BuildLoginViewModelAsync(returnUrl);
+                    return View(nameof(Login), vm);
+                }
+
+                await _signInManager.SignInAsync(user, isPersistent: false);
                 return RedirectToLocal(returnUrl);
             }
             if (result.RequiresTwoFactor)
@@ -368,24 +488,136 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 return View("Lockout");
             }
 
-            // If the user does not have an account, then ask the user to create an account.
+            // Otherwise ask the user to fill the missing data to create an account
             ViewData["ReturnUrl"] = returnUrl;
             ViewData["LoginProvider"] = info.LoginProvider;
-            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
 
-            return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
+            return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email, UserName = username });
         }
+
+        private async Task SyncUserProfileWithAD(ExternalLoginInfo info)
+        {
+            var adInfo = _ADUtilities.GetUserInfoFromAD(info.ProviderKey);
+            var user = await _userResolver.GetUserAsync(info.ProviderKey);
+
+            user.Email = adInfo.Email;
+            user.NormalizedEmail = adInfo.Email?.ToUpper();
+            user.EmailConfirmed = !string.IsNullOrEmpty(adInfo.Email);
+            user.PhoneNumber = adInfo.PhoneNumber;
+
+            var currentClaims = await _userManager.GetClaimsAsync(user);
+            await UpdateUserClaim(user, currentClaims, JwtClaimTypes.Email, adInfo.Email);
+            await UpdateUserClaim(user, currentClaims, JwtClaimTypes.Picture, adInfo.Photo);
+            await UpdateUserClaim(user, currentClaims, JwtClaimTypes.WebSite, adInfo.WebSite);
+            await UpdateUserClaim(user, currentClaims, JwtClaimTypes.Address,
+                (!string.IsNullOrEmpty(adInfo.Country) || !string.IsNullOrEmpty(adInfo.StreetAddress)) ?
+                Newtonsoft.Json.JsonConvert.SerializeObject(new { country = adInfo.Country, street_address = adInfo.StreetAddress }) :
+                null);
+
+            if (_windowsAuthConfiguration.IncludeWindowsGroups)
+            {
+                // Remove the groups that the user doesn't belong to anymore.
+                // If a policy has been configured for choosing which AD groups should become user claims 
+                // (via WindowsGroupsPrefix and WindowsGroupsOURoot settings), only those complying with that policy will be removed
+                foreach (var currentGroup in _ADUtilities.FilterADGroups(currentClaims.Where(c => c.Type == JwtClaimTypes.Role).Select(c => c.Value)))
+                {
+                    if (!adInfo.Groups.Contains(currentGroup))
+                    {
+                        var removeClaimRes = await _userManager.RemoveClaimAsync(user, currentClaims.First(c => c.Type == JwtClaimTypes.Role && c.Value == currentGroup));
+                        if (!removeClaimRes.Succeeded)
+                        {
+                            _logger.LogError(_localizer["ErrorRemovingRoleClaim", currentGroup, user.UserName]);
+                            foreach (var error in removeClaimRes.Errors)
+                            {
+                                _logger.LogError(error.Description);
+                            }
+                        }
+                    }
+                }
+
+                // Add new groups
+                foreach (var newGroup in adInfo.Groups)
+                {
+                    if (currentClaims.FirstOrDefault(c => c.Type == JwtClaimTypes.Role && c.Value == newGroup) == null)
+                    {
+                        var addClaimRes = await _userManager.AddClaimAsync(user, new Claim(JwtClaimTypes.Role, newGroup));
+                        if (!addClaimRes.Succeeded)
+                        {
+                            _logger.LogError(_localizer["ErrorAddingRoleClaim", newGroup, user.UserName]);
+                            foreach (var error in addClaimRes.Errors)
+                            {
+                                _logger.LogError(error.Description);
+                            }
+                        }
+                    }
+                }
+            }
+
+            var updateUserRes = await _userManager.UpdateAsync(user);
+            if (!updateUserRes.Succeeded)
+            {
+                _logger.LogError(_localizer["ErrorSyncingUserProfile", user.UserName]);
+                foreach (var error in updateUserRes.Errors)
+                {
+                    _logger.LogError(error.Description);
+                }
+            }
+        }
+
+        private async Task<IdentityResult> UpdateUserClaim(TUser user, IList<Claim> currentClaims, string claimType, string claimNewValue)
+        {
+            IdentityResult res = IdentityResult.Success;
+            var currentClaim = currentClaims.FirstOrDefault(c => c.Type == claimType);
+            if (currentClaim != null)
+            {
+                if (string.IsNullOrEmpty(claimNewValue))
+                    res = await _userManager.RemoveClaimAsync(user, currentClaim);
+                else if (currentClaim.Value != claimNewValue)
+                    res = await _userManager.ReplaceClaimAsync(user, currentClaim, new Claim(claimType, claimNewValue));
+            }
+            else if (!string.IsNullOrEmpty(claimNewValue))
+                res = await _userManager.AddClaimAsync(user, new Claim(claimType, claimNewValue));
+
+            if (!res.Succeeded)
+            {
+                _logger.LogError(_localizer["ErrorUpdatingClaim", claimType, user.UserName, claimNewValue]);
+                foreach (var error in res.Errors)
+                {
+                    _logger.LogError(error.Description);
+                }
+            }
+            return res;
+        }        
 
         [HttpPost]
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult ExternalLogin(string provider, string returnUrl = null)
+        public async Task<IActionResult> ExternalLogin(string provider, string returnUrl = null)
         {
-            // Request a redirect to the external login provider.
-            var redirectUrl = Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl });
-            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            if (string.IsNullOrEmpty(returnUrl))
+                returnUrl = "~/";
 
-            return Challenge(properties, provider);
+            // validate returnUrl - either it is a valid OIDC URL or back to a local page
+            if (Url.IsLocalUrl(returnUrl) == false && _interaction.IsValidReturnUrl(returnUrl) == false)
+            {
+                // user might have clicked on a malicious link - should be logged
+                throw new Exception("invalid return URL");
+            }
+
+            if (AccountOptions.WindowsAuthenticationSchemeName == provider)
+            {
+                // windows authentication needs special handling
+                return await ProcessWindowsLoginAsync(returnUrl);
+            }
+            else
+            {
+                // start challenge and roundtrip the return URL and scheme 
+                // Request a redirect to the external login provider.
+                var redirectUrl = Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl });
+                var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+
+                return Challenge(properties, provider);
+            }
         }
 
         [HttpPost]
@@ -404,25 +636,12 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new TUser
+                var user = await ProvideExternalUserAsync(info, model.UserName, model.Email);
+                if (user != null)
                 {
-                    UserName = model.UserName,
-                    Email = model.Email
-                };
-
-                var result = await _userManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    result = await _userManager.AddLoginAsync(user, info);
-                    if (result.Succeeded)
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-
-                        return RedirectToLocal(returnUrl);
-                    }
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToLocal(returnUrl);
                 }
-
-                AddErrors(result);
             }
 
             ViewData["LoginProvider"] = info.LoginProvider;
@@ -609,7 +828,46 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             return await Register(registerModel, returnUrl);
         }
-        
+
+        [HttpGet]
+        public IActionResult ImportAllWindowsUsers()
+        {
+            return View(new ImportAllWindowsUsersViewModel());
+        }
+
+        [HttpPost]
+        [Authorize(AuthorizationConsts.AdministrationPolicy)]
+        public async Task<IActionResult> ImportAllWindowsUsers(ImportAllWindowsUsersViewModel model)
+        {
+            int nErrors = 0, nImported = 0, nUpdated = 0;
+            foreach (var username in _ADUtilities.ReadAllUsernamesFromAD())
+            {
+                try
+                {
+                    var loginInfo = new ExternalLoginInfo(new ClaimsPrincipal(new ClaimsIdentity()), AccountOptions.WindowsAuthenticationSchemeName, username, null);
+                    var existingUser = await _userManager.FindByLoginAsync(AccountOptions.WindowsAuthenticationSchemeName, username);
+                    if (existingUser == null)
+                    {
+                        await ProvideExternalUserAsync(loginInfo, username, null);
+                        nImported++;
+                    }
+                    else if (_windowsAuthConfiguration.SyncUserProfileWithWindows)
+                    {
+                        await SyncUserProfileWithAD(loginInfo);
+                        nUpdated++;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    nErrors++;
+                    _logger.LogError(ex, "Error importing user {0}", username);
+                }
+            }
+
+            model.StatusMessage = _localizer["WindowsUsersImported", nImported, nUpdated, nErrors];
+
+            return View(model);
+        }
 
         /*****************************************/
         /* helper APIs for the AccountController */
@@ -656,7 +914,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 )
                 .Select(x => new ExternalProvider
                 {
-                    DisplayName = x.DisplayName,
+                    DisplayName = x.DisplayName ?? x.Name, // https://github.com/IdentityServer/IdentityServer4/issues/1607
                     AuthenticationScheme = x.Name
                 }).ToList();
 
@@ -755,5 +1013,134 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             return vm;
         }
+
+        private async Task<IActionResult> ProcessWindowsLoginAsync(string returnUrl)
+        {
+            // see if windows auth has already been requested and succeeded
+            var result = await HttpContext.AuthenticateAsync(AccountOptions.WindowsAuthenticationSchemeName);
+            if (result?.Principal is WindowsPrincipal wp)
+            {
+                return await IssueExternalCookie(returnUrl, wp.Identity);
+            }
+            else if (Request.IsFromLocalSubnet())
+            {
+                // trigger windows auth
+                // since windows auth don't support the redirect uri,
+                // this URL is re-triggered when we call challenge
+                return Challenge(AccountOptions.WindowsAuthenticationSchemeName);
+            }
+            else
+            {
+                // if the request comes from another network, the Windows scheme cannot be challenged,
+                // so we redirect the user to a Windows login form
+                return RedirectToAction("WindowsLogin", new { returnUrl = returnUrl });
+            }
+        }
+
+        private async Task<TUser> ProvideExternalUserAsync(ExternalLoginInfo info, string username, string email)
+        {
+            var claims = info.Principal.Claims;
+
+            // create a list of claims that we want to transfer into our store
+            var filtered = new List<Claim>();
+
+            // user's display name
+            var name = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Name)?.Value ??
+                claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+            if(name == null)
+            {
+                var first = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.GivenName)?.Value ??
+                    claims.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value;
+                var last = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.FamilyName)?.Value ??
+                    claims.FirstOrDefault(x => x.Type == ClaimTypes.Surname)?.Value;
+                if (first != null && last != null)
+                {
+                    name = first + " " + last;
+                }
+                else if (first != null)
+                {
+                    name = first;
+                }
+                else if (last != null)
+                {
+                    name = last;
+                }
+            }
+
+            string thumbnail, phoneNumber, website, country, streetAddress;
+            if (info.LoginProvider == AccountOptions.WindowsAuthenticationSchemeName)
+            {
+                var adInfo = _ADUtilities.GetUserInfoFromAD(info.ProviderKey);
+                if (string.IsNullOrEmpty(name))
+                    name = adInfo.DisplayName;
+                if(string.IsNullOrEmpty(email))
+                    email = adInfo.Email;
+                thumbnail = adInfo.Photo;
+                phoneNumber = adInfo.PhoneNumber;
+                website = adInfo.WebSite;
+                country = adInfo.Country;
+                streetAddress = adInfo.StreetAddress;
+
+                var roles = adInfo.Groups.Select(x => new Claim(JwtClaimTypes.Role, x));
+                filtered.AddRange(roles);
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(email))
+                    email = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Email)?.Value ??
+                        claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+                thumbnail = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Picture)?.Value;
+                phoneNumber = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.PhoneNumber)?.Value;
+                website = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.WebSite)?.Value;
+                country = null;
+                streetAddress = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Address)?.Value;
+            }
+
+            if (name != null)
+                filtered.Add(new Claim(JwtClaimTypes.Name, name));
+            if (!string.IsNullOrEmpty(email))
+                filtered.Add(new Claim(JwtClaimTypes.Email, email));
+            if (!string.IsNullOrEmpty(thumbnail))
+                filtered.Add(new Claim(JwtClaimTypes.Picture, thumbnail));
+            if (!string.IsNullOrEmpty(website))
+                filtered.Add(new Claim(JwtClaimTypes.WebSite, website));
+            if (!string.IsNullOrEmpty(country) || !string.IsNullOrEmpty(streetAddress))
+                filtered.Add(new Claim(JwtClaimTypes.Address,
+                    Newtonsoft.Json.JsonConvert.SerializeObject(new { country = country, street_address = streetAddress })));
+
+            var user = new TUser
+            {
+                UserName = username ?? info.ProviderKey,
+                Email = email,
+                NormalizedEmail = email?.ToUpper(),
+                EmailConfirmed = info.LoginProvider == AccountOptions.WindowsAuthenticationSchemeName && !string.IsNullOrEmpty(email),
+                PhoneNumber = phoneNumber,
+            };
+            var identityResult = await _userManager.CreateAsync(user);
+            if (!identityResult.Succeeded)
+            {
+                AddErrors(identityResult);
+                return null;
+            }
+
+            if (filtered.Any())
+            {
+                identityResult = await _userManager.AddClaimsAsync(user, filtered);
+                if (!identityResult.Succeeded)
+                {
+                    AddErrors(identityResult);
+                    return null;
+                }
+            }
+
+            identityResult = await _userManager.AddLoginAsync(user, info);
+            if (!identityResult.Succeeded)
+            {
+                AddErrors(identityResult);
+                return null;
+            }
+
+            return user;
+        }        
     }
 }

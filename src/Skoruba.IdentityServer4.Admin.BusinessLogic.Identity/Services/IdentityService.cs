@@ -80,6 +80,12 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             var pagedList = await IdentityRepository.GetUsersAsync(search, page, pageSize);
             var usersDto = Mapper.Map<TUsersDto>(pagedList);
 
+            foreach (var userDto in usersDto.Users)
+            {
+                userDto.PhotoUrl = (await IdentityRepository.GetUserClaimByType(userDto.Id.ToString(), IdentityModel.JwtClaimTypes.Picture))
+                    .FirstOrDefault()?.ClaimValue;
+            }
+
             await AuditEventLogger.LogEventAsync(new UsersRequestedEvent<TUsersDto>(usersDto));
 
             return usersDto;
@@ -174,6 +180,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             if (identity == null) throw new UserFriendlyErrorPageException(string.Format(IdentityServiceResources.UserDoesNotExist().Description, userId), IdentityServiceResources.UserDoesNotExist().Description);
 
             var userDto = Mapper.Map<TUserDto>(identity);
+
+            userDto.PhotoUrl = (await IdentityRepository.GetUserClaimByType(userId, IdentityModel.JwtClaimTypes.Picture)).FirstOrDefault()?.ClaimValue;
 
             await AuditEventLogger.LogEventAsync(new UserRequestedEvent<TUserDto>(userDto));
 

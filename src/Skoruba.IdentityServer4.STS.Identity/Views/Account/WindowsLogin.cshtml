@@ -1,0 +1,62 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model Skoruba.IdentityServer4.STS.Identity.ViewModels.Account.LoginInputModel
+
+
+<div class="login-page">
+    <div class="page-header">
+        <h1>@Localizer["Title"]</h1>
+    </div>
+    <h5>@Localizer["SubTitle"]</h5>
+
+    @await Html.PartialAsync("_ValidationSummary")
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card mt-3">
+                
+                <div class="card-body">
+                    <form asp-route="WindowsLogin">
+                        <input type="hidden" asp-for="ReturnUrl" />
+
+                        <fieldset>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="input-username">
+                                                <i class="fa fa-user"></i>
+                                            </span>
+                                        </div>
+                                        <input class="form-control" placeholder="@Localizer["Username"]" asp-for="Username" aria-label="Username" aria-describedby="input-username" autofocus>
+                                        <span asp-validation-for="Username" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="input-password">
+                                                <span class="oi oi-lock-locked" title="Lock" aria-hidden="true"></span>
+                                            </span>
+                                        </div>
+                                        <input type="password" class="form-control" placeholder="@Localizer["Password"]" aria-label="Password" aria-describedby="input-password" asp-for="Password" autocomplete="off">
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <button class="btn btn-primary" name="button" value="login">@Localizer["Login"]</button>
+                                    <a asp-action="Login" asp-controller="Account" class="btn btn-secondary" value="forgot">@Localizer["Cancel"]</a>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

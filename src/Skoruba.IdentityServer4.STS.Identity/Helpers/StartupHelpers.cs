@@ -21,6 +21,7 @@ using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.ApplicationParts;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Intefaces;
+using Skoruba.IdentityServer4.STS.Identity.Helpers.ADUtilities;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 using Skoruba.IdentityServer4.STS.Identity.Services;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
@@ -48,10 +49,18 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 
             services.TryAddTransient(typeof(IGenericControllerLocalizer<>), typeof(GenericControllerLocalizer<>));
 
+
+            services.AddMvc(o =>
+            {
+                o.Conventions.Add(new GenericControllerRouteConvention());
+            })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+
             services.AddControllersWithViews(o =>
                 {
                     o.Conventions.Add(new GenericControllerRouteConvention());
                 })
+
                 .AddViewLocalization(
                     LanguageViewLocationExpanderFormat.Suffix,
                     opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; })
@@ -241,10 +250,13 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         {
             var loginConfiguration = GetLoginConfiguration(configuration);
             var registrationConfiguration = GetRegistrationConfiguration(configuration);
+            var windowsAuthConfiguration = GetWindowsAuthConfiguration(configuration);
 
             services
                 .AddSingleton(registrationConfiguration)
                 .AddSingleton(loginConfiguration)
+                .AddSingleton(windowsAuthConfiguration)
+                .AddSingleton<IADUtilities, ADUtilities.ADUtilities>()
                 .AddScoped<UserResolver<TUserIdentity>>()
                 .AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
                 {
@@ -282,6 +294,24 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             }
 
             return loginConfiguration;
+        }
+
+        /// <summary>
+        /// Get configuration for login
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        private static WindowsAuthConfiguration GetWindowsAuthConfiguration(IConfiguration configuration)
+        {
+            var windowsAuthConfiguration = configuration.GetSection(nameof(WindowsAuthConfiguration)).Get<WindowsAuthConfiguration>();
+
+            // Cannot load configuration - use default configuration values
+            if (windowsAuthConfiguration == null)
+            {
+                return new WindowsAuthConfiguration();
+            }
+
+            return windowsAuthConfiguration;
         }
 
         /// <summary>
@@ -337,6 +367,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TUserIdentity : class
         {
             var builder = services.AddIdentityServer(options =>
+            {
+                options.Events.RaiseErrorEvents = true;
+                options.Events.RaiseInformationEvents = true;
+                options.Events.RaiseFailureEvents = true;
+                options.Events.RaiseSuccessEvents = true;
+            })
+                .AddAspNetIdentity<TUserIdentity>()
+                .AddIdentityServerStoresWithDbContexts<TConfigurationDbContext, TPersistedGrantDbContext>(configuration, hostingEnvironment);
                 {
                     options.Events.RaiseErrorEvents = true;
                     options.Events.RaiseInformationEvents = true;

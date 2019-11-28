@@ -15,7 +15,7 @@ using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 using Skoruba.IdentityServer4.STS.Identity.ViewModels.Manage;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Controllers
-{    
+{
     [Authorize]
     public class ManageController<TUser, TKey> : Controller
         where TUser : IdentityUser<TKey>, new()
@@ -58,7 +58,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             return View(model);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(IndexViewModel model)
@@ -93,14 +93,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                     throw new ApplicationException(_localizer["ErrorSettingPhone", user.Id]);
                 }
             }
-            
+
             await UpdateUserClaimsAsync(model, user);
 
             StatusMessage = _localizer["ProfileUpdated"];
 
             return RedirectToAction(nameof(Index));
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendVerificationEmail(IndexViewModel model)
@@ -640,7 +640,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 Region = profile.Region,
                 PostalCode = profile.PostalCode,
                 Locality = profile.Locality,
-                StreetAddress = profile.StreetAddress
+                StreetAddress = profile.StreetAddress,
+                PhotoUrl = profile.Picture
             };
             return model;
         }

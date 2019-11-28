@@ -10,5 +10,6 @@
         public string Region { get; internal set; }
         public string PostalCode { get; internal set; }
         public string Country { get; internal set; }
+        public string Picture { get; internal set; }
     }
 }
