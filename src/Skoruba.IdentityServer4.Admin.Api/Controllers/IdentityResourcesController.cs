@@ -6,6 +6,7 @@ using Skoruba.IdentityServer4.Admin.Api.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.Api.Dtos.IdentityResources;
 using Skoruba.IdentityServer4.Admin.Api.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Api.Mappers;
+using Skoruba.IdentityServer4.Admin.Api.Resources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 
@@ -19,10 +20,12 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
     public class IdentityResourcesController : ControllerBase
     {
         private readonly IIdentityResourceService _identityResourceService;
+        private readonly IApiErrorResources _errorResources;
 
-        public IdentityResourcesController(IIdentityResourceService identityResourceService)
+        public IdentityResourcesController(IIdentityResourceService identityResourceService, IApiErrorResources errorResources)
         {
             _identityResourceService = identityResourceService;
+            _errorResources = errorResources;
         }
 
         [HttpGet]
@@ -47,6 +50,12 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         public async Task<IActionResult> Post([FromBody]IdentityResourceApiDto identityResourceApi)
         {
             var identityResourceDto = identityResourceApi.ToIdentityResourceApiModel<IdentityResourceDto>();
+
+            if (!identityResourceDto.Id.Equals(default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
+
             await _identityResourceService.AddIdentityResourceAsync(identityResourceDto);
 
             return Ok();
@@ -97,6 +106,11 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         {
             var identityResourcePropertiesDto = identityResourcePropertyApi.ToIdentityResourceApiModel<IdentityResourcePropertiesDto>();
             identityResourcePropertiesDto.IdentityResourceId = id;
+
+            if (!identityResourcePropertiesDto.IdentityResourcePropertyId.Equals(default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
 
             await _identityResourceService.AddIdentityResourcePropertyAsync(identityResourcePropertiesDto);
 

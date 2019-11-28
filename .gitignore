@@ -280,3 +280,4 @@ __pycache__/
 !/src/Skoruba.IdentityServer4.Admin/Views/Log/
 /src/Skoruba.IdentityServer4.STS.Identity/compilerconfig.json.defaults
 /src/Skoruba.IdentityServer4.STS.Identity/compilerconfig.json
+/src/Skoruba.IdentityServer4.Admin.BusinessLogic/Events/Log/

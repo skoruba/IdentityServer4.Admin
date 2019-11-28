@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using IdentityServer4.AccessTokenValidation;
+using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +11,7 @@ using Skoruba.IdentityServer4.Admin.Api.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.Api.Dtos.Users;
 using Skoruba.IdentityServer4.Admin.Api.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Api.Helpers.Localization;
+using Skoruba.IdentityServer4.Admin.Api.Resources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfaces;
 
@@ -51,24 +54,26 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
             TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> _localizer;
 
         private readonly IMapper _mapper;
+        private readonly IApiErrorResources _errorResources;
 
         public UsersController(IIdentityService<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
                 TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto> identityService,
             IGenericControllerLocalizer<UsersController<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> localizer, IMapper mapper)
+                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> localizer, IMapper mapper, IApiErrorResources errorResources)
         {
             _identityService = identityService;
             _localizer = localizer;
             _mapper = mapper;
+            _errorResources = errorResources;
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<TUserDto>> Get(TUserDtoKey id)
         {
             var user = await _identityService.GetUserAsync(id.ToString());
-           
+
             return Ok(user);
         }
 
@@ -83,6 +88,11 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]TUserDto user)
         {
+            if (!EqualityComparer<TUserDtoKey>.Default.Equals(user.Id, default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
+
             await _identityService.CreateUserAsync(user);
 
             return Ok();
@@ -100,6 +110,10 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(TUserDtoKey id)
         {
+            var currentUserId = User.GetSubjectId();
+            if (id.ToString() == currentUserId)
+                return StatusCode((int)System.Net.HttpStatusCode.Forbidden);
+
             var user = new TUserDto { Id = id };
 
             await _identityService.GetUserAsync(user.Id.ToString());
@@ -109,11 +123,11 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpGet("{id}/Roles")]
-        public async Task<ActionResult<UserRolesApiDto<TRoleDto>>> GetUserRoles(string id, int page = 1, int pageSize = 10)
+        public async Task<ActionResult<UserRolesApiDto<TRoleDto>>> GetUserRoles(TRoleDtoKey id, int page = 1, int pageSize = 10)
         {
-            var userRoles = await _identityService.GetUserRolesAsync(id, page, pageSize);
+            var userRoles = await _identityService.GetUserRolesAsync(id.ToString(), page, pageSize);
             var userRolesApiDto = _mapper.Map<UserRolesApiDto<TRoleDto>>(userRoles);
-            
+
             return Ok(userRolesApiDto);
         }
 
@@ -121,6 +135,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         public async Task<IActionResult> PostUserRoles([FromBody]UserRoleApiDto<TUserDtoKey, TRoleDtoKey> role)
         {
             var userRolesDto = _mapper.Map<TUserRolesDto>(role);
+
             await _identityService.CreateUserRoleAsync(userRolesDto);
 
             return Ok();
@@ -154,6 +169,11 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         {
             var userClaimDto = _mapper.Map<TUserClaimsDto>(claim);
 
+            if (!userClaimDto.ClaimId.Equals(default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
+
             await _identityService.CreateUserClaimsAsync(userClaimDto);
 
             return Ok();
@@ -179,7 +199,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         {
             var userProvidersDto = await _identityService.GetUserProvidersAsync(id.ToString());
             var userProvidersApiDto = _mapper.Map<UserProvidersApiDto<TUserDtoKey>>(userProvidersDto);
-            
+
             return Ok(userProvidersApiDto);
         }
 

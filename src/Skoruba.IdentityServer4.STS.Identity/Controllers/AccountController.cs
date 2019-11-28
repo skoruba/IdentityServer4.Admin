@@ -479,6 +479,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return RedirectToLocal(returnUrl);
             }
+            if (result.RequiresTwoFactor)
+            {
+                return RedirectToAction(nameof(LoginWith2fa), new { ReturnUrl = returnUrl });
+            }
+            if (result.IsLockedOut)
+            {
+                return View("Lockout");
+            }
 
             // Otherwise ask the user to fill the missing data to create an account
             ViewData["ReturnUrl"] = returnUrl;

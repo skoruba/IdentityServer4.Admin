@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>netcoreapp2.2</TargetFramework>
+		<TargetFramework>netcoreapp3.0</TargetFramework>
 		<DebugType>Full</DebugType>
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="coverlet.msbuild" Version="2.5.0">
+		<PackageReference Include="coverlet.msbuild" Version="2.7.0">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
@@ -17,11 +17,10 @@
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
 		<DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
-		<PackageReference Include="Bogus" Version="25.0.2" />
+		<PackageReference Include="Bogus" Version="28.4.1" />
 		<PackageReference Include="FluentAssertions" Version="4.19.4" />
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
-		<PackageReference Include="Moq" Version="4.10.1" />
-		<PackageReference Include="Microsoft.AspNetCore.App" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
+		<PackageReference Include="Moq" Version="4.13.1" />
 	</ItemGroup>
 
 	<ItemGroup>
