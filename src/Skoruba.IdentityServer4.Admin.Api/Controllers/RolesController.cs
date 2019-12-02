@@ -19,7 +19,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
-    [Produces("application/json")]
+    [Produces("application/json", "application/problem+json")]
     [Authorize(AuthenticationSchemes = IdentityServerAuthenticationDefaults.AuthenticationScheme, Policy = AuthorizationConsts.AdministrationPolicy)]
     public class RolesController<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
@@ -85,16 +85,19 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]TRoleDto role)
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        public async Task<ActionResult<TRoleDto>> Post([FromBody]TRoleDto role)
         {
             if (!EqualityComparer<TRoleDtoKey>.Default.Equals(role.Id, default))
             {
                 return BadRequest(_errorResources.CannotSetId());
             }
+ 
+            var (identityResult, roleId) = await _identityService.CreateRoleAsync(role);
+            var createdRole = await _identityService.GetRoleAsync(roleId.ToString());
 
-            await _identityService.CreateRoleAsync(role);
-
-            return Ok();
+            return CreatedAtAction(nameof(Get), new { id = createdRole.Id }, createdRole);
         }
 
         [HttpPut]
