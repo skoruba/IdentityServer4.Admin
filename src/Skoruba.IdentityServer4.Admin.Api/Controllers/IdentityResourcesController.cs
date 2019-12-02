@@ -15,7 +15,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
-    [Produces("application/json")]
+    [Produces("application/json", "application/problem+json")]
     [Authorize(AuthenticationSchemes = IdentityServerAuthenticationDefaults.AuthenticationScheme, Policy = AuthorizationConsts.AdministrationPolicy)]
     public class IdentityResourcesController : ControllerBase
     {
@@ -47,6 +47,8 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> Post([FromBody]IdentityResourceApiDto identityResourceApi)
         {
             var identityResourceDto = identityResourceApi.ToIdentityResourceApiModel<IdentityResourceDto>();
@@ -56,9 +58,10 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
                 return BadRequest(_errorResources.CannotSetId());
             }
 
-            await _identityResourceService.AddIdentityResourceAsync(identityResourceDto);
+            var id = await _identityResourceService.AddIdentityResourceAsync(identityResourceDto);
+            identityResourceApi.Id = id;
 
-            return Ok();
+            return CreatedAtAction(nameof(Get), new { id }, identityResourceApi);
         }
 
         [HttpPut]
@@ -102,6 +105,8 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpPost("{id}/Properties")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> PostProperty(int id, [FromBody]IdentityResourcePropertyApiDto identityResourcePropertyApi)
         {
             var identityResourcePropertiesDto = identityResourcePropertyApi.ToIdentityResourceApiModel<IdentityResourcePropertiesDto>();
@@ -112,9 +117,10 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
                 return BadRequest(_errorResources.CannotSetId());
             }
 
-            await _identityResourceService.AddIdentityResourcePropertyAsync(identityResourcePropertiesDto);
+            var propertyId = await _identityResourceService.AddIdentityResourcePropertyAsync(identityResourcePropertiesDto);
+            identityResourcePropertyApi.Id = propertyId;
 
-            return Ok();
+            return CreatedAtAction(nameof(GetProperty), new { propertyId }, identityResourcePropertyApi);
         }
 
         [HttpDelete("Properties/{propertyId}")]
