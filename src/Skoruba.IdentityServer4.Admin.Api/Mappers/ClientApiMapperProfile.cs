@@ -11,7 +11,6 @@ namespace Skoruba.IdentityServer4.Admin.Api.Mappers
             // Client
             CreateMap<ClientDto, ClientApiDto>(MemberList.Destination)
                 .ForMember(dest => dest.ProtocolType, opt => opt.Condition(srs => srs != null))
-                .ForMember(x => x.ClientSecrets, opt => opt.Ignore())
                 .ReverseMap();
 
             CreateMap<ClientsDto, ClientsApiDto>(MemberList.Destination)
