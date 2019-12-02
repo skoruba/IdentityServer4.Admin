@@ -1,8 +1,6 @@
-﻿using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
-
-namespace Skoruba.IdentityServer4.Admin.Configuration
+﻿namespace Skoruba.IdentityServer4.Admin.Configuration
 {
-    public class AdminConfiguration : IAdminConfiguration
+    public class AdminConfiguration
     {
         public string IdentityAdminRedirectUri { get; set; }
         public string[] Scopes { get; set; }
