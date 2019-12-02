@@ -428,7 +428,18 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             return roleClaimDtos;
         }
 
-        public virtual async Task<TRoleClaimsDto> GetRoleClaimAsync(string roleId, int claimId)
+		public virtual async Task<TRoleClaimsDto> GetUserRoleClaimsAsync(string userId, string claimSearchText, int page = 1, int pageSize = 10)
+		{
+			var userExists = await IdentityRepository.ExistsUserAsync(userId);
+			if (!userExists) throw new UserFriendlyErrorPageException(string.Format(IdentityServiceResources.UserDoesNotExist().Description, userId), IdentityServiceResources.UserDoesNotExist().Description);
+
+			var identityRoleClaims = await IdentityRepository.GetUserRoleClaimsAsync(userId, claimSearchText, page, pageSize);
+			var roleClaimDtos = Mapper.Map<TRoleClaimsDto>(identityRoleClaims);
+
+			return roleClaimDtos;
+		}
+
+		public virtual async Task<TRoleClaimsDto> GetRoleClaimAsync(string roleId, int claimId)
         {
             var roleExists = await IdentityRepository.ExistsRoleAsync(roleId);
             if (!roleExists) throw new UserFriendlyErrorPageException(string.Format(IdentityServiceResources.RoleDoesNotExist().Description, roleId), IdentityServiceResources.RoleDoesNotExist().Description);

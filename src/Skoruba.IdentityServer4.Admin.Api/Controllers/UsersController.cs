@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Skoruba.IdentityServer4.Admin.Api.Configuration.Constants;
+using Skoruba.IdentityServer4.Admin.Api.Dtos.Roles;
 using Skoruba.IdentityServer4.Admin.Api.Dtos.Users;
 using Skoruba.IdentityServer4.Admin.Api.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Api.Helpers.Localization;
@@ -223,5 +224,14 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
 
             return Ok();
         }
-    }
+
+		[HttpGet("{id}/RoleClaims")]
+		public async Task<ActionResult<RoleClaimsApiDto<TRoleDtoKey>>> GetRoleClaims(TUserDtoKey id, string claimSearchText, int page = 1, int pageSize = 10)
+		{
+			var roleClaimsDto = await _identityService.GetUserRoleClaimsAsync(id.ToString(), claimSearchText, page, pageSize);
+			var roleClaimsApiDto = _mapper.Map<RoleClaimsApiDto<TRoleDtoKey>>(roleClaimsDto);
+
+			return Ok(roleClaimsApiDto);
+		}
+	}
 }
