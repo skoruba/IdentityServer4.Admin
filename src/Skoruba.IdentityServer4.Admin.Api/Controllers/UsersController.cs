@@ -226,7 +226,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
 		[HttpGet("{id}/RoleClaims")]
-		public async Task<ActionResult<RoleClaimsApiDto<TRoleDtoKey>>> PostChangePassword(TUserDtoKey id, string claimSearchText, int page = 1, int pageSize = 10)
+		public async Task<ActionResult<RoleClaimsApiDto<TRoleDtoKey>>> GetRoleClaims(TUserDtoKey id, string claimSearchText, int page = 1, int pageSize = 10)
 		{
 			var roleClaimsDto = await _identityService.GetUserRoleClaimsAsync(id.ToString(), claimSearchText, page, pageSize);
 			var roleClaimsApiDto = _mapper.Map<RoleClaimsApiDto<TRoleDtoKey>>(roleClaimsDto);
