@@ -2,8 +2,8 @@
 {
     public interface IRootConfiguration
     {
-        IAdminConfiguration AdminConfiguration { get; }
-        IIdentityDataConfiguration IdentityDataConfiguration { get; }
-        IIdentityServerDataConfiguration IdentityServerDataConfiguration { get; }
+        AdminConfiguration AdminConfiguration { get; }
+        IdentityDataConfiguration IdentityDataConfiguration { get; }
+        IdentityServerDataConfiguration IdentityServerDataConfiguration { get; }
     }
 }

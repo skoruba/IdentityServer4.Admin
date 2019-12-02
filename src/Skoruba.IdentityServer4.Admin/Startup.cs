@@ -11,40 +11,28 @@ using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.Helpers;
+using Skoruba.IdentityServer4.Admin.Configuration;
+using Skoruba.IdentityServer4.Admin.Configuration.Constants;
 
 namespace Skoruba.IdentityServer4.Admin
 {
     public class Startup
     {
-        public Startup(IWebHostEnvironment env)
+        public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-
-            var builder = new ConfigurationBuilder()
-                    .SetBasePath(env.ContentRootPath)
-                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                    .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
-                    .AddEnvironmentVariables();
-
-            if (env.IsDevelopment())
-            {
-                builder.AddUserSecrets<Startup>();
-            }
-
-            Configuration = builder.Build();
-
             HostingEnvironment = env;
+            Configuration = configuration;
         }
 
-        public IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; }
 
         public IWebHostEnvironment HostingEnvironment { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // Get Configuration
-            services.ConfigureRootConfiguration(Configuration);
-            var rootConfiguration = services.BuildServiceProvider().GetService<IRootConfiguration>();
+            var rootConfiguration = CreateRootConfiguration();
+            services.AddSingleton<IRootConfiguration>(rootConfiguration);
 
             // Add DbContexts for Asp.Net Core Identity, Logging and IdentityServer - Configuration store and Operational store
             services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext>(HostingEnvironment, Configuration);
@@ -86,8 +74,6 @@ namespace Skoruba.IdentityServer4.Admin
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.AddLogging(loggerFactory, Configuration);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -111,6 +97,15 @@ namespace Skoruba.IdentityServer4.Admin
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoint => { endpoint.MapDefaultControllerRoute(); });
+        }
+
+        private IRootConfiguration CreateRootConfiguration()
+        {
+            var rootConfiguration = new RootConfiguration();
+            Configuration.GetSection(ConfigurationConsts.AdminConfigurationKey).Bind(rootConfiguration.AdminConfiguration);
+            Configuration.GetSection(ConfigurationConsts.IdentityDataConfigurationKey).Bind(rootConfiguration.IdentityDataConfiguration);
+            Configuration.GetSection(ConfigurationConsts.IdentityServerDataConfigurationKey).Bind(rootConfiguration.IdentityServerDataConfiguration);
+            return rootConfiguration;
         }
     }
 }
