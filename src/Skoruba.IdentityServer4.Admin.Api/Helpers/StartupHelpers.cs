@@ -96,18 +96,6 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
         }
 
         /// <summary>
-        /// Add configuration for logging
-        /// </summary>
-        /// <param name="app"></param>
-        /// <param name="configuration"></param>
-        public static void AddLogging(this IApplicationBuilder app, IConfiguration configuration)
-        {
-            Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(configuration)
-                .CreateLogger();
-        }
-
-        /// <summary>
         /// Register DbContexts for IdentityServer ConfigurationStore and PersistedGrants, Identity and Logging
         /// Configure the connection strings in AppSettings.json
         /// </summary>

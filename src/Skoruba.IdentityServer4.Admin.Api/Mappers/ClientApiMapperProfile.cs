@@ -25,7 +25,9 @@ namespace Skoruba.IdentityServer4.Admin.Api.Mappers
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ClientSecretId))
                 .ReverseMap();
 
-            CreateMap<ClientSecretDto, ClientSecretApiDto>(MemberList.Destination);
+            CreateMap<ClientSecretDto, ClientSecretApiDto>(MemberList.Destination)
+                .ReverseMap();
+
             CreateMap<ClientSecretsDto, ClientSecretsApiDto>(MemberList.Destination);
 
             // Client Properties
@@ -33,7 +35,9 @@ namespace Skoruba.IdentityServer4.Admin.Api.Mappers
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ClientPropertyId))
                 .ReverseMap();
 
-            CreateMap<ClientPropertyDto, ClientPropertyApiDto>(MemberList.Destination);
+            CreateMap<ClientPropertyDto, ClientPropertyApiDto>(MemberList.Destination)
+                .ReverseMap();
+
             CreateMap<ClientPropertiesDto, ClientPropertiesApiDto>(MemberList.Destination);
 
             // Client Claims
@@ -41,7 +45,8 @@ namespace Skoruba.IdentityServer4.Admin.Api.Mappers
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ClientClaimId))
                 .ReverseMap();
 
-            CreateMap<ClientClaimDto, ClientClaimApiDto>(MemberList.Destination);
+            CreateMap<ClientClaimDto, ClientClaimApiDto>(MemberList.Destination)
+                .ReverseMap();
             CreateMap<ClientClaimsDto, ClientClaimsApiDto>(MemberList.Destination);
         }
     }

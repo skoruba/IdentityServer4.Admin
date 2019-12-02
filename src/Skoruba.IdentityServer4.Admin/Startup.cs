@@ -32,7 +32,7 @@ namespace Skoruba.IdentityServer4.Admin
         public void ConfigureServices(IServiceCollection services)
         {
             var rootConfiguration = CreateRootConfiguration();
-            services.AddSingleton<IRootConfiguration>(rootConfiguration);
+            services.AddSingleton(rootConfiguration);
 
             // Add DbContexts for Asp.Net Core Identity, Logging and IdentityServer - Configuration store and Operational store
             services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext>(HostingEnvironment, Configuration);
