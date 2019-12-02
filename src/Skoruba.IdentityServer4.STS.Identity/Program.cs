@@ -23,7 +23,6 @@ namespace Skoruba.IdentityServer4.STS.Identity
                 {
                     webBuilder.ConfigureKestrel(options => options.AddServerHeader = false);
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseSerilog();
                 });
     }
 }
