@@ -24,7 +24,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating a concurrency failure.</returns>
         public override IdentityError ConcurrencyFailure()
         {
-            return CreateNamedError(nameof(ConcurrencyFailure));
+            if (TryCreateLocalizedError(nameof(ConcurrencyFailure), out var error))
+            {
+                return error;
+            }
+
+            return base.ConcurrencyFailure();
         }
 
         /// <summary>
@@ -33,7 +38,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>The default <see cref="IdentityError" />.</returns>
         public override IdentityError DefaultError()
         {
-            return CreateNamedError(nameof(DefaultError));
+            if (TryCreateLocalizedError(nameof(DefaultError), out var error))
+            {
+                return error;
+            }
+
+            return base.DefaultError();
         }
 
         /// <summary>
@@ -43,7 +53,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating the specified <paramref name="email" /> is already associated with an account.</returns>
         public override IdentityError DuplicateEmail(string email)
         {
-            return CreateNamedError(nameof(DuplicateEmail));
+            if (TryCreateLocalizedError(nameof(DuplicateEmail), out var error))
+            {
+                return error;
+            }
+
+            return base.DuplicateEmail(email);
         }
 
         /// <summary>
@@ -53,7 +68,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating the specific role <paramref name="role" /> name already exists.</returns>
         public override IdentityError DuplicateRoleName(string role)
         {
-            return CreateNamedError(nameof(DuplicateRoleName));
+            if (TryCreateLocalizedError(nameof(DuplicateRoleName), out var error))
+            {
+                return error;
+            }
+
+            return base.DuplicateRoleName(role);
         }
 
         /// <summary>
@@ -63,7 +83,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating the specified <paramref name="userName" /> already exists.</returns>
         public override IdentityError DuplicateUserName(string userName)
         {
-            return CreateNamedError(nameof(DuplicateUserName));
+            if (TryCreateLocalizedError(nameof(DuplicateUserName), out var error))
+            {
+                return error;
+            }
+
+            return base.DuplicateUserName(userName);
         }
 
         /// <summary>
@@ -73,7 +98,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating the specified <paramref name="email" /> is invalid.</returns>
         public override IdentityError InvalidEmail(string email)
         {
-            return CreateNamedError(nameof(InvalidEmail));
+            if (TryCreateLocalizedError(nameof(InvalidEmail), out var error))
+            {
+                return error;
+            }
+
+            return base.InvalidEmail(email);
         }
 
         /// <summary>
@@ -83,7 +113,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating the specific role <paramref name="role" /> name is invalid.</returns>
         public override IdentityError InvalidRoleName(string role)
         {
-            return CreateNamedError(nameof(InvalidRoleName));
+            if (TryCreateLocalizedError(nameof(InvalidRoleName), out var error))
+            {
+                return error;
+            }
+
+            return base.InvalidRoleName(role);
         }
 
         /// <summary>
@@ -92,7 +127,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating an invalid token.</returns>
         public override IdentityError InvalidToken()
         {
-            return CreateNamedError(nameof(InvalidToken));
+            if (TryCreateLocalizedError(nameof(InvalidToken), out var error))
+            {
+                return error;
+            }
+
+            return base.InvalidToken();
         }
 
         /// <summary>
@@ -102,7 +142,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating the specified user <paramref name="userName" /> is invalid.</returns>
         public override IdentityError InvalidUserName(string userName)
         {
-            return CreateNamedError(nameof(InvalidUserName));
+            if (TryCreateLocalizedError(nameof(InvalidUserName), out var error))
+            {
+                return error;
+            }
+
+            return base.InvalidUserName(userName);
         }
 
         /// <summary>
@@ -111,7 +156,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating an external login is already associated with an account.</returns>
         public override IdentityError LoginAlreadyAssociated()
         {
-            return CreateNamedError(nameof(LoginAlreadyAssociated));
+            if (TryCreateLocalizedError(nameof(LoginAlreadyAssociated), out var error))
+            {
+                return error;
+            }
+
+            return base.LoginAlreadyAssociated();
         }
 
         /// <summary>
@@ -120,7 +170,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating a password mismatch.</returns>
         public override IdentityError PasswordMismatch()
         {
-            return CreateNamedError(nameof(PasswordMismatch));
+            if (TryCreateLocalizedError(nameof(PasswordMismatch), out var error))
+            {
+                return error;
+            }
+
+            return base.PasswordMismatch();
         }
 
         /// <summary>
@@ -129,7 +184,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating a password entered does not contain a numeric character.</returns>
         public override IdentityError PasswordRequiresDigit()
         {
-            return CreateNamedError(nameof(PasswordRequiresDigit));
+            if (TryCreateLocalizedError(nameof(PasswordRequiresDigit), out var error))
+            {
+                return error;
+            }
+
+            return base.PasswordRequiresDigit();
         }
 
         /// <summary>
@@ -138,7 +198,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating a password entered does not contain a lower case letter.</returns>
         public override IdentityError PasswordRequiresLower()
         {
-            return CreateNamedError(nameof(PasswordRequiresLower));
+            if (TryCreateLocalizedError(nameof(PasswordRequiresLower), out var error))
+            {
+                return error;
+            }
+
+            return base.PasswordRequiresLower();
         }
 
         /// <summary>
@@ -147,7 +212,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating a password entered does not contain a non-alphanumeric character.</returns>
         public override IdentityError PasswordRequiresNonAlphanumeric()
         {
-            return CreateNamedError(nameof(PasswordRequiresNonAlphanumeric));
+            if (TryCreateLocalizedError(nameof(PasswordRequiresNonAlphanumeric), out var error))
+            {
+                return error;
+            }
+
+            return base.PasswordRequiresNonAlphanumeric();
         }
 
         /// <summary>
@@ -157,7 +227,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating a password does not meet the minimum number <paramref name="uniqueChars" /> of unique chars.</returns>
         public override IdentityError PasswordRequiresUniqueChars(int uniqueChars)
         {
-            return CreateNamedError(nameof(PasswordRequiresUniqueChars));
+            if (TryCreateLocalizedError(nameof(PasswordRequiresUniqueChars), out var error))
+            {
+                return error;
+            }
+
+            return base.PasswordRequiresUniqueChars(uniqueChars);
         }
 
         /// <summary>
@@ -166,7 +241,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating a password entered does not contain an upper case letter.</returns>
         public override IdentityError PasswordRequiresUpper()
         {
-            return CreateNamedError(nameof(PasswordRequiresUpper));
+            if (TryCreateLocalizedError(nameof(PasswordRequiresUpper), out var error))
+            {
+                return error;
+            }
+
+            return base.PasswordRequiresUpper();
         }
 
         /// <summary>
@@ -176,7 +256,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating a password of the specified <paramref name="length" /> does not meet the minimum length requirements.</returns>
         public override IdentityError PasswordTooShort(int length)
         {
-            return CreateNamedError(nameof(PasswordTooShort));
+            if (TryCreateLocalizedError(nameof(PasswordTooShort), out var error))
+            {
+                return error;
+            }
+
+            return base.PasswordTooShort(length);
         }
 
         /// <summary>
@@ -185,7 +270,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating a recovery code was not redeemed.</returns>
         public override IdentityError RecoveryCodeRedemptionFailed()
         {
-            return CreateNamedError(nameof(RecoveryCodeRedemptionFailed));
+            if (TryCreateLocalizedError(nameof(RecoveryCodeRedemptionFailed), out var error))
+            {
+                return error;
+            }
+
+            return base.RecoveryCodeRedemptionFailed();
         }
 
         /// <summary>
@@ -194,7 +284,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating a user already has a password.</returns>
         public override IdentityError UserAlreadyHasPassword()
         {
-            return CreateNamedError(nameof(UserAlreadyHasPassword));
+            if (TryCreateLocalizedError(nameof(UserAlreadyHasPassword), out var error))
+            {
+                return error;
+            }
+
+            return base.UserAlreadyHasPassword();
         }
 
         /// <summary>
@@ -204,7 +299,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating a user is already in the specified <paramref name="role" />.</returns>
         public override IdentityError UserAlreadyInRole(string role)
         {
-            return CreateNamedError(nameof(UserAlreadyInRole));
+            if (TryCreateLocalizedError(nameof(UserAlreadyInRole), out var error))
+            {
+                return error;
+            }
+
+            return base.UserAlreadyInRole(role);
         }
 
         /// <summary>
@@ -213,7 +313,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating user lockout is not enabled.</returns>
         public override IdentityError UserLockoutNotEnabled()
         {
-            return CreateNamedError(nameof(UserLockoutNotEnabled));
+            if (TryCreateLocalizedError(nameof(UserLockoutNotEnabled), out var error))
+            {
+                return error;
+            }
+
+            return base.UserLockoutNotEnabled();
         }
 
         /// <summary>
@@ -223,7 +328,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating a user is not in the specified <paramref name="role" />.</returns>
         public override IdentityError UserNotInRole(string role)
         {
-            return CreateNamedError(nameof(UserNotInRole));
+            if (TryCreateLocalizedError(nameof(UserNotInRole), out var error))
+            {
+                return error;
+            }
+
+            return base.UserNotInRole(role);
         }
 
         /// <summary>
@@ -232,13 +342,21 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// </summary>
         /// <param name="name"></param>
         /// <returns>An <see cref="IdentityError"/> that is used in another method return with specific indication for what this error was created</returns>
-        private IdentityError CreateNamedError(string name)
+        private bool TryCreateLocalizedError(in string name, out IdentityError error)
         {
-            return new IdentityError
+            LocalizedString description = _stringLocalizer.GetString(name);
+            if (description.ResourceNotFound)
+            {
+                error = new IdentityError();
+                return false;
+            }
+
+            error = new IdentityError
             {
                 Code = name,
-                Description = _stringLocalizer.GetString(name)
+                Description = description
             };
+            return true;
         }
     }
 }
