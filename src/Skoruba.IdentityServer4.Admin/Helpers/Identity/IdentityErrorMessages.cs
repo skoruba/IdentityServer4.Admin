@@ -337,11 +337,11 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         }
 
         /// <summary>
-        /// Generates <see cref="IdentityError"/> with <see cref="IdentityError.Code"/> named as <paramref name="name"/>
+        /// Tries to generate <see cref="IdentityError"/> with <see cref="IdentityError.Code"/> named as <paramref name="name"/>
         /// And error description which uses <paramref name="name"/> as lookup key for <see cref="IStringLocalizer{T}"/>
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns>An <see cref="IdentityError"/> that is used in another method return with specific indication for what this error was created</returns>
+        /// <param name="name">Key used as lookup key for <see cref="IStringLocalizer{T}"/></param>
+        /// <returns><see cref="bool"/> representing that localized error was created successfully</returns>
         private bool TryCreateLocalizedError(in string name, out IdentityError error)
         {
             LocalizedString description = _stringLocalizer.GetString(name);
