@@ -135,6 +135,13 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Helpers
 
             yield return new object[]
             {
+                nameof(IdentityErrorMessages.PasswordRequiresUpper),
+                nameof(IdentityErrorMessages.PasswordRequiresUpper),
+                "PasswordRequiresUpperTranslated",
+            };
+
+            yield return new object[]
+            {
                 nameof(IdentityErrorMessages.UserAlreadyInRole),
                 nameof(IdentityErrorMessages.UserAlreadyInRole),
                 "UserAlreadyInRoleTranslated",
