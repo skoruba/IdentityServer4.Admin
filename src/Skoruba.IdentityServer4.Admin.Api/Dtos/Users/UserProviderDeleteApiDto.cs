@@ -1,8 +1,8 @@
 ﻿namespace Skoruba.IdentityServer4.Admin.Api.Dtos.Users
 {
-    public class UserProviderDeleteApiDto<TUserDtoKey>
+    public class UserProviderDeleteApiDto<TKey>
     {
-        public TUserDtoKey UserId { get; set; }
+        public TKey UserId { get; set; }
 
         public string ProviderKey { get; set; }
 

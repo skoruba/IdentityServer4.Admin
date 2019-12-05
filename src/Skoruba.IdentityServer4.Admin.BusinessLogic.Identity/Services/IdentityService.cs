@@ -17,15 +17,15 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.Interf
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
 {
-    public class IdentityService<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUser, TRole, TKey, TUserClaim, TUserRole,
+    public class IdentityService<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole,
         TUserLogin, TRoleClaim, TUserToken,
         TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto> : IIdentityService<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUser, TRole, TKey, TUserClaim, TUserRole,
+        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto> : IIdentityService<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole,
         TUserLogin, TRoleClaim, TUserToken,
         TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
         TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>
-        where TUserDto : UserDto<TUserDtoKey>
-        where TRoleDto : RoleDto<TRoleDtoKey>
+        where TUserDto : UserDto<TKey>
+        where TRoleDto : RoleDto<TKey>
         where TUser : IdentityUser<TKey>
         where TRole : IdentityRole<TKey>
         where TKey : IEquatable<TKey>
@@ -34,14 +34,14 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
         where TUserLogin : IdentityUserLogin<TKey>
         where TRoleClaim : IdentityRoleClaim<TKey>
         where TUserToken : IdentityUserToken<TKey>
-        where TUsersDto : UsersDto<TUserDto, TUserDtoKey>
-        where TRolesDto : RolesDto<TRoleDto, TRoleDtoKey>
-        where TUserRolesDto : UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey>
-        where TUserClaimsDto : UserClaimsDto<TUserDtoKey>
-        where TUserProviderDto : UserProviderDto<TUserDtoKey>
-        where TUserProvidersDto : UserProvidersDto<TUserDtoKey>
-        where TUserChangePasswordDto : UserChangePasswordDto<TUserDtoKey>
-        where TRoleClaimsDto : RoleClaimsDto<TRoleDtoKey>
+        where TUsersDto : UsersDto<TUserDto, TKey>
+        where TRolesDto : RolesDto<TRoleDto, TKey>
+        where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
+        where TUserClaimsDto : UserClaimsDto<TKey>
+        where TUserProviderDto : UserProviderDto<TKey>
+        where TUserProvidersDto : UserProvidersDto<TKey>
+        where TUserChangePasswordDto : UserChangePasswordDto<TKey>
+        where TRoleClaimsDto : RoleClaimsDto<TKey>
     {
         protected readonly IIdentityRepository<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> IdentityRepository;
         protected readonly IIdentityServiceResources IdentityServiceResources;
@@ -245,7 +245,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             return HandleIdentityError(identityResult, IdentityServiceResources.UserRoleCreateFailed().Description, IdentityServiceResources.IdentityErrorKey().Description, userRolesDto);
         }
 
-        public virtual async Task<TUserRolesDto> BuildUserRolesViewModel(TUserDtoKey id, int? page)
+        public virtual async Task<TUserRolesDto> BuildUserRolesViewModel(TKey id, int? page)
         {
             var roles = await GetRolesAsync();
             var userRoles = await GetUserRolesAsync(id.ToString(), page ?? 1);
@@ -330,15 +330,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             return deleted;
         }
 
-        public virtual TUserDtoKey ConvertUserDtoKeyFromString(string id)
-        {
-            if (id == null)
-            {
-                return default(TUserDtoKey);
-            }
-            return (TUserDtoKey)TypeDescriptor.GetConverter(typeof(TUserDtoKey)).ConvertFromInvariantString(id);
-        }
-
         public virtual TKey ConvertToKeyFromString(string id)
         {
             if (id == null)
@@ -355,7 +346,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
 
             var userLoginInfos = await IdentityRepository.GetUserProvidersAsync(userId);
             var providersDto = Mapper.Map<TUserProvidersDto>(userLoginInfos);
-            providersDto.UserId = ConvertUserDtoKeyFromString(userId);
+            providersDto.UserId = ConvertToKeyFromString(userId);
 
             var user = await IdentityRepository.GetUserAsync(userId);
             providersDto.UserName = user.UserName;

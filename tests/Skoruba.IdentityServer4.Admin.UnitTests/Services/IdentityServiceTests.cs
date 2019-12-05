@@ -53,31 +53,31 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 UserIdentityUserToken>(dbContext, userManager, roleManager, mapper);
         }
 
-        private IIdentityService<UserDto<string>, string, RoleDto<string>, string, UserIdentity,
+        private IIdentityService<UserDto<string>, RoleDto<string>, UserIdentity,
             UserIdentityRole, string,
             UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim,
             UserIdentityUserToken,
-            UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
+            UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string>,
             UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
             RoleClaimsDto<string>> GetIdentityService(IIdentityRepository<UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> identityRepository,
             IIdentityServiceResources identityServiceResources,
             IMapper mapper, IAuditEventLogger auditEventLogger)
         {
-            return new IdentityService<UserDto<string>, string, RoleDto<string>, string, UserIdentity,
+            return new IdentityService<UserDto<string>, RoleDto<string>, UserIdentity,
                 UserIdentityRole, string,
                 UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim,
                 UserIdentityUserToken,
-                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
+                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string>,
                 UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
                 RoleClaimsDto<string>>(identityRepository, identityServiceResources, mapper, auditEventLogger);
         }
 
         private IMapper GetMapper()
         {
-            return new MapperConfiguration(cfg => cfg.AddProfile<IdentityMapperProfile<UserDto<string>, string, RoleDto<string>, string, UserIdentity, UserIdentityRole, string,
+            return new MapperConfiguration(cfg => cfg.AddProfile<IdentityMapperProfile<UserDto<string>, RoleDto<string>, UserIdentity, UserIdentityRole, string,
                         UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim,
                         UserIdentityUserToken,
-                        UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
+                        UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string>,
                         UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>,
                         RoleClaimsDto<string>, UserClaimDto<string>, RoleClaimDto<string>>
                 >())
@@ -98,12 +98,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             return testRoleManager;
         }
 
-        private IIdentityService<UserDto<string>, string, RoleDto<string>, string, UserIdentity,
+        private IIdentityService<UserDto<string>, RoleDto<string>, UserIdentity,
             UserIdentityRole, string,
             UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim,
             UserIdentityUserToken,
             UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>,
-            UserRolesDto<RoleDto<string>, string, string>,
+            UserRolesDto<RoleDto<string>, string>,
             UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
             RoleClaimsDto<string>> GetIdentityService(AdminIdentityDbContext context)
         {
