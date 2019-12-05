@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Skoruba.IdentityServer4.Admin.Api.Configuration.Constants;
+using Skoruba.IdentityServer4.Admin.Api.Dtos.Roles;
 using Skoruba.IdentityServer4.Admin.Api.Dtos.Users;
 using Skoruba.IdentityServer4.Admin.Api.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Api.Helpers.Localization;
@@ -20,7 +21,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
-    [Produces("application/json")]
+    [Produces("application/json", "application/problem+json")]
     [Authorize(AuthenticationSchemes = IdentityServerAuthenticationDefaults.AuthenticationScheme, Policy = AuthorizationConsts.AdministrationPolicy)]
     public class UsersController<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
@@ -86,16 +87,19 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]TUserDto user)
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        public async Task<ActionResult<TUserDto>> Post([FromBody]TUserDto user)
         {
             if (!EqualityComparer<TUserDtoKey>.Default.Equals(user.Id, default))
             {
                 return BadRequest(_errorResources.CannotSetId());
             }
 
-            await _identityService.CreateUserAsync(user);
+            var (identityResult, userId) = await _identityService.CreateUserAsync(user);
+            var createdUser = await _identityService.GetUserAsync(userId.ToString());
 
-            return Ok();
+            return CreatedAtAction(nameof(Get), new { id = createdUser.Id }, createdUser);
         }
 
         [HttpPut]
@@ -223,5 +227,14 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
 
             return Ok();
         }
-    }
+
+		[HttpGet("{id}/RoleClaims")]
+		public async Task<ActionResult<RoleClaimsApiDto<TRoleDtoKey>>> GetRoleClaims(TUserDtoKey id, string claimSearchText, int page = 1, int pageSize = 10)
+		{
+			var roleClaimsDto = await _identityService.GetUserRoleClaimsAsync(id.ToString(), claimSearchText, page, pageSize);
+			var roleClaimsApiDto = _mapper.Map<RoleClaimsApiDto<TRoleDtoKey>>(roleClaimsDto);
+
+			return Ok(roleClaimsApiDto);
+		}
+	}
 }
