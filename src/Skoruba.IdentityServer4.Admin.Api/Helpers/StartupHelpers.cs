@@ -78,7 +78,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
         /// Register services for MVC
         /// </summary>
         /// <param name="services"></param>
-        public static void AddMvcServices<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey,
+        public static void AddMvcServices<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey,
             TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
             TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>(
@@ -111,8 +111,8 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                 .ConfigureApplicationPartManager(m =>
                 {
                     m.FeatureProviders.Add(
-                        new GenericTypeControllerFeatureProvider<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey,
-                            TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
+                        new GenericTypeControllerFeatureProvider<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey,
+                            TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
                             TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>());
                 });
