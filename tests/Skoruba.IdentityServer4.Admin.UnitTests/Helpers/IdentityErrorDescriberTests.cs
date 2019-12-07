@@ -30,8 +30,15 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Helpers
             // Assert
             Assert.IsType<IdentityError>(error);
 
-            Assert.Equal(translated, error.Description);
             Assert.Equal(key, error.Code);
+
+            // ASP.NET Core Identity uses arguments passed to methods to format error strings
+            // So it's safe to assume that Description string contains argument as string representation
+            // WARNING: Possible flaky test if ASP.NET Core Identity team makes some breaking changes
+            foreach (var argument in args)
+            {
+                Assert.Contains(argument.ToString(), error.Description);
+            }
         }
 
         [Theory]
