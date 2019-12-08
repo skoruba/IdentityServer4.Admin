@@ -53,7 +53,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating the specified <paramref name="email" /> is already associated with an account.</returns>
         public override IdentityError DuplicateEmail(string email)
         {
-            if (TryCreateLocalizedError(nameof(DuplicateEmail), out var error))
+            if (TryCreateLocalizedError(nameof(DuplicateEmail), out var error, email))
             {
                 return error;
             }
@@ -68,7 +68,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating the specific role <paramref name="role" /> name already exists.</returns>
         public override IdentityError DuplicateRoleName(string role)
         {
-            if (TryCreateLocalizedError(nameof(DuplicateRoleName), out var error))
+            if (TryCreateLocalizedError(nameof(DuplicateRoleName), out var error, role))
             {
                 return error;
             }
@@ -83,7 +83,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating the specified <paramref name="userName" /> already exists.</returns>
         public override IdentityError DuplicateUserName(string userName)
         {
-            if (TryCreateLocalizedError(nameof(DuplicateUserName), out var error))
+            if (TryCreateLocalizedError(nameof(DuplicateUserName), out var error, userName))
             {
                 return error;
             }
@@ -98,7 +98,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating the specified <paramref name="email" /> is invalid.</returns>
         public override IdentityError InvalidEmail(string email)
         {
-            if (TryCreateLocalizedError(nameof(InvalidEmail), out var error))
+            if (TryCreateLocalizedError(nameof(InvalidEmail), out var error, email))
             {
                 return error;
             }
@@ -113,7 +113,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating the specific role <paramref name="role" /> name is invalid.</returns>
         public override IdentityError InvalidRoleName(string role)
         {
-            if (TryCreateLocalizedError(nameof(InvalidRoleName), out var error))
+            if (TryCreateLocalizedError(nameof(InvalidRoleName), out var error, role))
             {
                 return error;
             }
@@ -142,7 +142,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating the specified user <paramref name="userName" /> is invalid.</returns>
         public override IdentityError InvalidUserName(string userName)
         {
-            if (TryCreateLocalizedError(nameof(InvalidUserName), out var error))
+            if (TryCreateLocalizedError(nameof(InvalidUserName), out var error, userName))
             {
                 return error;
             }
@@ -227,7 +227,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating a password does not meet the minimum number <paramref name="uniqueChars" /> of unique chars.</returns>
         public override IdentityError PasswordRequiresUniqueChars(int uniqueChars)
         {
-            if (TryCreateLocalizedError(nameof(PasswordRequiresUniqueChars), out var error))
+            if (TryCreateLocalizedError(nameof(PasswordRequiresUniqueChars), out var error, uniqueChars))
             {
                 return error;
             }
@@ -256,7 +256,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating a password of the specified <paramref name="length" /> does not meet the minimum length requirements.</returns>
         public override IdentityError PasswordTooShort(int length)
         {
-            if (TryCreateLocalizedError(nameof(PasswordTooShort), out var error))
+            if (TryCreateLocalizedError(nameof(PasswordTooShort), out var error, length))
             {
                 return error;
             }
@@ -299,7 +299,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating a user is already in the specified <paramref name="role" />.</returns>
         public override IdentityError UserAlreadyInRole(string role)
         {
-            if (TryCreateLocalizedError(nameof(UserAlreadyInRole), out var error))
+            if (TryCreateLocalizedError(nameof(UserAlreadyInRole), out var error, role))
             {
                 return error;
             }
@@ -328,7 +328,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// <returns>An <see cref="IdentityError" /> indicating a user is not in the specified <paramref name="role" />.</returns>
         public override IdentityError UserNotInRole(string role)
         {
-            if (TryCreateLocalizedError(nameof(UserNotInRole), out var error))
+            if (TryCreateLocalizedError(nameof(UserNotInRole), out var error, role))
             {
                 return error;
             }
@@ -342,9 +342,9 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.Identity
         /// </summary>
         /// <param name="name">Key used as lookup key for <see cref="IStringLocalizer{T}"/></param>
         /// <returns><see cref="bool"/> representing that localized error was created successfully</returns>
-        private bool TryCreateLocalizedError(in string name, out IdentityError error)
+        private bool TryCreateLocalizedError(in string name, out IdentityError error, params object[] formatArgs)
         {
-            LocalizedString description = _stringLocalizer.GetString(name);
+            LocalizedString description = _stringLocalizer.GetString(name, formatArgs);
             if (description.ResourceNotFound)
             {
                 error = new IdentityError();
