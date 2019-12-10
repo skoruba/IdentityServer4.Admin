@@ -1,0 +1,100 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    system: identityadmin-demo
+    app: identity-admin
+    version: "1.0"
+  name: identity-admin
+  namespace: identityadmin-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      system: identityadmin-demo
+      app: identity-admin
+  template:
+    metadata:
+      labels:
+        system: identityadmin-demo
+        app: identity-admin
+        version: "1.0"
+    spec:
+      containers:
+
+      - env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: ConnectionStrings__ConfigurationDbConnection
+          value: Server=sqlserver;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true
+        - name: ConnectionStrings__PersistedGrantDbConnection
+          value: Server=sqlserver;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true
+        - name: ConnectionStrings__IdentityDbConnection
+          value: Server=sqlserver;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true
+        - name: ConnectionStrings__AdminLogDbConnection
+          value: Server=sqlserver;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true
+        - name: ConnectionStrings__AdminAuditLogDbConnection
+          value: Server=sqlserver;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true
+        - name: AdminConfiguration__IdentityAdminBaseUrl
+          value: http://identityadmin.k8s.local:9000
+        - name: AdminConfiguration__IdentityAdminRedirectUri
+          value: http://identityadmin.k8s.local:9000/signin-oidc
+        - name: AdminConfiguration__IdentityServerBaseUrl
+          value: http://identityadmin.k8s.local
+        - name: AdminConfiguration__RequireHttpsMetadata
+          value: "false"
+        - name: IdentityServerData__Clients__0__ClientUri
+          value: http://identityadmin.k8s.local:9000
+        - name: IdentityServerData__Clients__0__RedirectUris__0
+          value: http://identityadmin.k8s.local:9000/signin-oidc
+        - name: IdentityServerData__Clients__0__FrontChannelLogoutUri
+          value: http://identityadmin.k8s.local:9000/signin-oidc
+        - name: IdentityServerData__Clients__0__PostLogoutRedirectUris__0
+          value: http://identityadmin.k8s.local:9000/signout-callback-oidc
+        - name: IdentityServerData__Clients__0__AllowedCorsOrigins__0
+          value: http://identityadmin.k8s.local:9000
+        - name: IdentityServerData__Clients__1__RedirectUris__0
+          value: http://identityadmin.k8s.local:5000/swagger/oauth2-redirect.html
+        - name: Serilog__WriteTo__1__Args__connectionString
+          value: Server=sqlserver;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true
+        - name: Serilog__MinimumLevel__Default
+          value: Information
+        image: skorubaidentityserver4admin:latest
+        command: ["dotnet"]
+        args: ["Skoruba.IdentityServer4.Admin.dll", "/seed"]
+        imagePullPolicy: IfNotPresent
+        name: identity-admin
+        ports:
+        - name: http
+          containerPort: 80
+        resources:
+          requests:
+            memory: "200Mi"
+            cpu: "250m"
+          limits:
+            memory: "250Mi"
+            cpu: "500m"
+      dnsPolicy: ClusterFirstWithHostNet
+      imagePullSecrets:
+      - name: regcred
+      restartPolicy: Always
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    system: identityadmin-demo
+    app: identity-admin
+    version: v1
+  name: identity-admin
+  namespace: identityadmin-demo
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 9000
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: identity-admin

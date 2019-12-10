@@ -1,0 +1,80 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    system: identityadmin-demo
+    app: identity-api
+    version: "1.0"
+  name: identity-api
+  namespace: identityadmin-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      system: identityadmin-demo
+      app: identity-api
+  template:
+    metadata:
+      labels:
+        system: identityadmin-demo
+        app: identity-api
+        version: "1.0"
+    spec:
+      containers:
+      - env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: Serilog__MinimumLevel__Default
+          value: Information
+        - name: AdminApiConfiguration__RequireHttpsMetadata
+          value: "false"
+        - name: AdminApiConfiguration__IdentityServerBaseUrl
+          value: http://identityadmin.k8s.local
+        - name: AdminApiConfiguration__ApiBaseUrl
+          value: http://identityadmin.k8s.local:5000
+        - name: ConnectionStrings__ConfigurationDbConnection
+          value: Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true
+        - name: ConnectionStrings__PersistedGrantDbConnection
+          value: Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true
+        - name: ConnectionStrings__IdentityDbConnection
+          value: Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true
+        - name: ConnectionStrings__AdminLogDbConnection
+          value: Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true
+        - name: ConnectionStrings__AdminAuditLogDbConnection
+          value: Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true
+        image: skorubaidentityserver4adminapi:latest
+        imagePullPolicy: IfNotPresent
+        name: identity-api
+        ports:
+        - name: http
+          containerPort: 80
+        resources:
+          requests:
+            memory: "200Mi"
+            cpu: "250m"
+          limits:
+            memory: "250Mi"
+            cpu: "500m"
+      imagePullSecrets:
+      - name: regcred
+      restartPolicy: Always
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    system: identityadmin-demo
+    app: identity-api
+    version: v1
+  name: identity-api
+  namespace: identityadmin-demo
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 5000
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: identity-api
