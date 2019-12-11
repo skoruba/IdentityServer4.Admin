@@ -85,7 +85,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfac
 
         Task<TRoleClaimsDto> GetRoleClaimsAsync(string roleId, int page = 1, int pageSize = 10);
 
-        Task<TRoleClaimsDto> GetRoleClaimAsync(string roleId, int claimId);
+		Task<TRoleClaimsDto> GetUserRoleClaimsAsync(string userId, string claimSearchText, int page = 1, int pageSize = 10);
+
+		Task<TRoleClaimsDto> GetRoleClaimAsync(string roleId, int claimId);
 
         Task<int> DeleteRoleClaimsAsync(TRoleClaimsDto role);
 

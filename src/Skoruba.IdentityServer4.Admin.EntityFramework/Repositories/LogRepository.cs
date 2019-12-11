@@ -23,7 +23,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
 
         public virtual async Task DeleteLogsOlderThanAsync(DateTime deleteOlderThan)
         {
-            var logsToDelete = await DbContext.Logs.Where(x => x.TimeStamp.DateTime.Date < deleteOlderThan.Date).ToListAsync();
+            var logsToDelete = await DbContext.Logs.Where(x => x.TimeStamp < deleteOlderThan.Date).ToListAsync();
 
             if(logsToDelete.Count == 0) return;
 
