@@ -40,7 +40,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// Register services for MVC and localization including available languages
         /// </summary>
         /// <param name="services"></param>
-        public static void AddMvcWithLocalization<TUser, TKey>(this IServiceCollection services, IConfiguration configuration)
+        public static IMvcBuilder AddMvcWithLocalization<TUser, TKey>(this IServiceCollection services, IConfiguration configuration)
             where TUser : IdentityUser<TKey>
             where TKey : IEquatable<TKey>
         {
@@ -48,7 +48,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 
             services.TryAddTransient(typeof(IGenericControllerLocalizer<>), typeof(GenericControllerLocalizer<>));
 
-            services.AddControllersWithViews(o =>
+            var mvcBuilder = services.AddControllersWithViews(o =>
                 {
                     o.Conventions.Add(new GenericControllerRouteConvention());
                 })
@@ -85,6 +85,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     opts.SupportedCultures = supportedCultures;
                     opts.SupportedUICultures = supportedCultures;
                 });
+
+            return mvcBuilder;
         }
 
         /// <summary>

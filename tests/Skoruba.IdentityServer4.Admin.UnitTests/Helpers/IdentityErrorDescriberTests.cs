@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Localization;
 using Moq;
 using Skoruba.IdentityServer4.Admin.Helpers.Identity;
+using System.ComponentModel.Design;
 using System.Linq;
 using Xunit;
 
@@ -17,9 +18,15 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Helpers
             // Arrange
             var localizer = new Mock<IStringLocalizer<IdentityErrorMessages>>();
 
+            string formatString = translated;
+            if (args.Any())
+            {
+                formatString = $"{formatString} {{0}}";
+            }
+
             // GetString extension method uses indexer underneath
-            localizer.Setup(x => x[key])
-                .Returns(new LocalizedString(key, translated));
+            localizer.Setup(x => x[key, args])
+                .Returns(new LocalizedString(key, string.Format(formatString, args)));
 
             var describer = new IdentityErrorMessages(localizer.Object);
 
@@ -30,8 +37,15 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Helpers
             // Assert
             Assert.IsType<IdentityError>(error);
 
-            Assert.Equal(translated, error.Description);
             Assert.Equal(key, error.Code);
+
+            // ASP.NET Core Identity uses arguments passed to methods to format error strings
+            // So it's safe to assume that Description string contains argument as string representation
+            // WARNING: Possible flaky test if ASP.NET Core Identity team makes some breaking changes
+            foreach (var argument in args)
+            {
+                Assert.Contains(argument.ToString(), error.Description);
+            }
         }
 
         [Theory]
@@ -43,7 +57,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Helpers
             var localizer = new Mock<IStringLocalizer<IdentityErrorMessages>>();
 
             // GetString extension method uses indexer underneath
-            localizer.Setup(x => x[key])
+            localizer.Setup(x => x[key, args])
                 .Returns(new LocalizedString(key, string.Empty, resourceNotFound: true));
 
             var describer = new IdentityErrorMessages(localizer.Object);
