@@ -9,18 +9,18 @@ using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.Api.IntegrationTests.Tests
 {
-    public class ClientsControllerTests : BaseClassFixture
+    public class IdentityResourcesControllerTests : BaseClassFixture
     {
-        public ClientsControllerTests(WebApplicationFactory<StartupTest> factory) : base(factory)
+        public IdentityResourcesControllerTests(WebApplicationFactory<StartupTest> factory) : base(factory)
         {
         }
 
         [Fact]
-        public async Task GetClientsAsAdmin()
+        public async Task GetIdentityResourcesAsAdmin()
         {
             SetupAdminClaimsViaHeaders();
 
-            var response = await Client.GetAsync("api/clients");
+            var response = await Client.GetAsync("api/identityresources");
 
             // Assert
             response.EnsureSuccessStatusCode();
@@ -28,11 +28,11 @@ namespace Skoruba.IdentityServer4.Admin.Api.IntegrationTests.Tests
         }
 
         [Fact]
-        public async Task GetClientsWithoutPermissions()
+        public async Task GetIdentityResourcesWithoutPermissions()
         {
             Client.DefaultRequestHeaders.Clear();
 
-            var response = await Client.GetAsync("api/clients");
+            var response = await Client.GetAsync("api/identityresources");
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.Redirect);
