@@ -15,7 +15,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
     [ApiController]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
     [Produces("application/json")]
-    [Authorize(AuthenticationSchemes = IdentityServerAuthenticationDefaults.AuthenticationScheme, Policy = AuthorizationConsts.AdministrationPolicy)]
+    [Authorize(Policy = AuthorizationConsts.AdministrationPolicy)]
     public class PersistedGrantsController : ControllerBase
     {
         private readonly IPersistedGrantAspNetIdentityService _persistedGrantsService;

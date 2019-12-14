@@ -2,9 +2,11 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using IdentityModel;
+using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Http;
 
-namespace Skoruba.IdentityServer4.Admin.Middlewares
+namespace Skoruba.IdentityServer4.Admin.Api.Middlewares
 {
     public class AuthenticatedTestRequestMiddleware
     {
@@ -21,9 +23,8 @@ namespace Skoruba.IdentityServer4.Admin.Middlewares
             {
                 var token = context.Request.Headers[TestAuthorizationHeader].Single();
                 var jwt = new JwtSecurityToken(token);
-                var claimsIdentity = new ClaimsIdentity(jwt.Claims, "Cookies");
-                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-                context.User = claimsPrincipal;
+                var claimsIdentity = new ClaimsIdentity(jwt.Claims, IdentityServerAuthenticationDefaults.AuthenticationScheme, JwtClaimTypes.Name, JwtClaimTypes.Role);
+                context.User = new ClaimsPrincipal(claimsIdentity);
             }
 
             await _next(context);

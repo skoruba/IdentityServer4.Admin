@@ -37,12 +37,17 @@ namespace Skoruba.IdentityServer4.Admin.Api
             var adminApiConfiguration = Configuration.GetSection(nameof(AdminApiConfiguration)).Get<AdminApiConfiguration>();
             services.AddSingleton(adminApiConfiguration);
 
-            services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext>(Configuration);
+            // Add DbContexts
+            RegisterDbContexts(services);
+
             services.AddScoped<ControllerExceptionFilterAttribute>();
             services.AddScoped<IApiErrorResources, ApiErrorResources>();
 
-            services.AddApiAuthentication<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(adminApiConfiguration);
-            services.AddAuthorizationPolicies();
+            // Add authentication services
+            RegisterAuthentication(services);
+
+            // Add authorization services
+            RegisterAuthorization(services);
 
             var profileTypes = new HashSet<Type>
             {
@@ -96,7 +101,8 @@ namespace Skoruba.IdentityServer4.Admin.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseAuthentication();
+            UseAuthentication(app);
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -109,6 +115,27 @@ namespace Skoruba.IdentityServer4.Admin.Api
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapDefaultControllerRoute(); });
+        }
+
+        public virtual void RegisterDbContexts(IServiceCollection services)
+        {
+            services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext>(Configuration);
+        }
+
+        public virtual void RegisterAuthentication(IServiceCollection services)
+        {
+            var adminApiConfiguration = Configuration.GetSection(nameof(AdminApiConfiguration)).Get<AdminApiConfiguration>();
+            services.AddApiAuthentication<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(adminApiConfiguration);
+        }
+
+        public virtual void RegisterAuthorization(IServiceCollection services)
+        {
+            services.AddAuthorizationPolicies();
+        }
+
+        public virtual void UseAuthentication(IApplicationBuilder app)
+        {
+            app.UseAuthentication();
         }
     }
 }
