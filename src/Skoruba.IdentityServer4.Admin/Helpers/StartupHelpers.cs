@@ -83,47 +83,6 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         }
 
         /// <summary>
-        /// Register shared DbContext for IdentityServer ConfigurationStore and PersistedGrants, Identity and Logging
-        /// Configure the connection string in AppSettings.json - use AdminConnection key
-        /// </summary>
-        /// <typeparam name="TContext"></typeparam>
-        /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        public static void RegisterDbContexts<TContext>(this IServiceCollection services, IConfigurationRoot configuration)
-            where TContext : DbContext
-        {
-            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-
-            var operationalStoreOptions = new OperationalStoreOptions();
-            services.AddSingleton(operationalStoreOptions);
-
-            var storeOptions = new ConfigurationStoreOptions();
-            services.AddSingleton(storeOptions);
-
-            services.AddDbContext<TContext>(options => options.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey), optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
-        }
-
-        /// <summary>
-        /// Register shared in Memory DbContext for IdentityServer ConfigurationStore and PersistedGrants, Identity and Logging
-        /// For testing purpose only
-        /// </summary>
-        /// <typeparam name="TContext"></typeparam>
-        /// <param name="services"></param>
-        public static void RegisterDbContextsStaging<TContext>(this IServiceCollection services)
-            where TContext : DbContext
-        {
-            var databaseName = Guid.NewGuid().ToString();
-
-            var operationalStoreOptions = new OperationalStoreOptions();
-            services.AddSingleton(operationalStoreOptions);
-
-            var storeOptions = new ConfigurationStoreOptions();
-            services.AddSingleton(storeOptions);
-
-            services.AddDbContext<TContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(databaseName));
-        }
-
-        /// <summary>
         /// Register DbContexts for IdentityServer ConfigurationStore and PersistedGrants, Identity and Logging
         /// Configure the connection strings in AppSettings.json
         /// </summary>
@@ -270,26 +229,6 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         {
             var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(options.Value);
-        }
-
-        /// <summary>
-        /// Register shared DbContext
-        /// </summary>
-        /// <typeparam name="TContext"></typeparam>
-        /// <param name="services"></param>
-        /// <param name="hostingEnvironment"></param>
-        /// <param name="configuration"></param>
-        public static void AddDbContexts<TContext>(this IServiceCollection services, IWebHostEnvironment hostingEnvironment, IConfigurationRoot configuration)
-        where TContext : DbContext
-        {
-            if (hostingEnvironment.IsStaging())
-            {
-                services.RegisterDbContextsStaging<TContext>();
-            }
-            else
-            {
-                services.RegisterDbContexts<TContext>(configuration);
-            }
         }
 
         /// <summary>
