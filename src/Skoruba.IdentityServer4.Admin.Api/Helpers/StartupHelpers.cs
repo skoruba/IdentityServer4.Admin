@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Reflection;
 using IdentityModel;
 using IdentityServer4.AccessTokenValidation;
-using IdentityServer4.EntityFramework.Storage;
+using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Serilog;
 using Skoruba.AuditLogging.EntityFramework.DbContexts;
 using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.AuditLogging.EntityFramework.Extensions;
@@ -163,6 +161,42 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
             services.AddIdentity<TUser, TRole>(options => { options.User.RequireUniqueEmail = true; })
                 .AddEntityFrameworkStores<TIdentityDbContext>()
                 .AddDefaultTokenProviders();
+        }
+
+        /// <summary>
+        /// Register in memory DbContexts for IdentityServer ConfigurationStore and PersistedGrants, Identity and Logging
+        /// For testing purpose only
+        /// </summary>
+        /// <typeparam name="TConfigurationDbContext"></typeparam>
+        /// <typeparam name="TPersistedGrantDbContext"></typeparam>
+        /// <typeparam name="TLogDbContext"></typeparam>
+        /// <typeparam name="TIdentityDbContext"></typeparam>
+        /// <typeparam name="TAuditLoggingDbContext"></typeparam>
+        /// <param name="services"></param>
+        public static void RegisterDbContextsStaging<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext>(this IServiceCollection services)
+            where TIdentityDbContext : DbContext
+            where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
+            where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
+            where TLogDbContext : DbContext, IAdminLogDbContext
+            where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
+        {
+            var persistedGrantsDatabaseName = Guid.NewGuid().ToString();
+            var configurationDatabaseName = Guid.NewGuid().ToString();
+            var logDatabaseName = Guid.NewGuid().ToString();
+            var identityDatabaseName = Guid.NewGuid().ToString();
+            var auditLoggingDatabaseName = Guid.NewGuid().ToString();
+
+            var operationalStoreOptions = new OperationalStoreOptions();
+            services.AddSingleton(operationalStoreOptions);
+
+            var storeOptions = new ConfigurationStoreOptions();
+            services.AddSingleton(storeOptions);
+
+            services.AddDbContext<TIdentityDbContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(identityDatabaseName));
+            services.AddDbContext<TPersistedGrantDbContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(persistedGrantsDatabaseName));
+            services.AddDbContext<TConfigurationDbContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(configurationDatabaseName));
+            services.AddDbContext<TLogDbContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(logDatabaseName));
+            services.AddDbContext<TAuditLoggingDbContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(auditLoggingDatabaseName));
         }
 
         public static void AddAuthorizationPolicies(this IServiceCollection services)

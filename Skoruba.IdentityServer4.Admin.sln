@@ -45,7 +45,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database", "database", "{2A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "business", "business", "{EE588CE5-51D0-4E98-A2B3-40EC8E655931}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skoruba.IdentityServer4.Admin.EntityFramework.MySql", "src\Skoruba.IdentityServer4.Admin.EntityFramework.MySql\Skoruba.IdentityServer4.Admin.EntityFramework.MySql.csproj", "{0A8A0DB7-0509-4DFB-9201-74398511B481}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.EntityFramework.MySql", "src\Skoruba.IdentityServer4.Admin.EntityFramework.MySql\Skoruba.IdentityServer4.Admin.EntityFramework.MySql.csproj", "{0A8A0DB7-0509-4DFB-9201-74398511B481}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skoruba.IdentityServer4.Admin.Api.IntegrationTests", "src\Skoruba.IdentityServer4.Admin.Api.IntegrationTests\Skoruba.IdentityServer4.Admin.Api.IntegrationTests.csproj", "{4D123ACB-ACBD-4E40-AE6B-1B0F79D703B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,6 +123,10 @@ Global
 		{0A8A0DB7-0509-4DFB-9201-74398511B481}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A8A0DB7-0509-4DFB-9201-74398511B481}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A8A0DB7-0509-4DFB-9201-74398511B481}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D123ACB-ACBD-4E40-AE6B-1B0F79D703B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D123ACB-ACBD-4E40-AE6B-1B0F79D703B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D123ACB-ACBD-4E40-AE6B-1B0F79D703B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D123ACB-ACBD-4E40-AE6B-1B0F79D703B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -142,6 +148,7 @@ Global
 		{8230366D-81F9-4FA5-8F5D-8546B527F54F} = {2A514C8F-6A53-41CA-AB41-B644E7BC92A7}
 		{3ECDC91E-0D3E-4E4D-A34E-D33BB714578D} = {2A514C8F-6A53-41CA-AB41-B644E7BC92A7}
 		{0A8A0DB7-0509-4DFB-9201-74398511B481} = {2A514C8F-6A53-41CA-AB41-B644E7BC92A7}
+		{4D123ACB-ACBD-4E40-AE6B-1B0F79D703B0} = {0BC0CC4E-A0F1-45E8-B41A-AE0FA76BF3E5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B3166EDE-037B-4C68-BEBA-5DE9C5E3DB82}
