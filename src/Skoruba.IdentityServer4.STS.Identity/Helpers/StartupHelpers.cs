@@ -263,8 +263,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             var authenticationBuilder = services.AddAuthentication();
 
             AddExternalProviders(authenticationBuilder, configuration);
-
-            AddIdentityServer<TConfigurationDbContext, TPersistedGrantDbContext, TUserIdentity>(services, configuration);
         }
 
         /// <summary>
@@ -311,8 +309,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <typeparam name="TPersistedGrantDbContext"></typeparam>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        private static void AddIdentityServer<TConfigurationDbContext, TPersistedGrantDbContext, TUserIdentity>(
-            IServiceCollection services,
+        public static IIdentityServerBuilder AddIdentityServer<TConfigurationDbContext, TPersistedGrantDbContext, TUserIdentity>(
+            this IServiceCollection services,
             IConfiguration configuration)
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
@@ -331,6 +329,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 
             builder.AddCustomSigningCredential(configuration);
             builder.AddCustomValidationKey(configuration);
+
+            return builder;
         }
 
         /// <summary>
