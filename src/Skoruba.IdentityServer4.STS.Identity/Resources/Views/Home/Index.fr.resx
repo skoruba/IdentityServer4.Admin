@@ -130,16 +130,6 @@
     <value>Consentements</value>
     <comment>Octrois persistants. Explicit mistake for clarity</comment>
   </data>
-  <data name="LinkSamples" xml:space="preserve">
-    <value>échantillons disponibles</value>
-    <comment>(les/des) échantillons disponibles</comment>
-  </data>
-  <data name="LinkSource" xml:space="preserve">
-    <value>le dépôt de code source</value>
-  </data>
-  <data name="LinkTitle" xml:space="preserve">
-    <value>Voici des liens vers</value>
-  </data>
   <data name="Login" xml:space="preserve">
     <value>Connexion</value>
   </data>
@@ -150,9 +140,6 @@
     <value>Mon profil</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
-    <value>Bienvenue sur Skoruba IdentityServer4</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>Skoruba IdentityServer4</value>
+    <value>Bienvenue sur {0}</value>
   </data>
 </root>

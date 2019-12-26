@@ -129,15 +129,6 @@
   <data name="Grants" xml:space="preserve">
     <value>Постоянные права</value>
   </data>
-  <data name="LinkSamples" xml:space="preserve">
-    <value>готовые к использованию образцы</value>
-  </data>
-  <data name="LinkSource" xml:space="preserve">
-    <value>репозиторий исходного кода</value>
-  </data>
-  <data name="LinkTitle" xml:space="preserve">
-    <value>Здесь ссылки на </value>
-  </data>
   <data name="Login" xml:space="preserve">
     <value>Вход</value>
   </data>
@@ -148,9 +139,6 @@
     <value>Мой профиль</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
-    <value>Добро пожаловать в Skoruba IdentityServer4</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>Skoruba IdentityServer4</value>
+    <value>Добро пожаловать в {0}</value>
   </data>
 </root>
