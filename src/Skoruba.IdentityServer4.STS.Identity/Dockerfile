@@ -20,4 +20,5 @@ RUN dotnet publish "Skoruba.IdentityServer4.STS.Identity.csproj" -c Release -o /
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+ENV ASPNETCORE_FORWARDEDHEADERS_ENABLED=true
 ENTRYPOINT ["dotnet", "Skoruba.IdentityServer4.STS.Identity.dll"]
