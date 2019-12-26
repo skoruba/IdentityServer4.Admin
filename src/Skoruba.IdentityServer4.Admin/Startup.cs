@@ -35,10 +35,10 @@ namespace Skoruba.IdentityServer4.Admin
             services.AddSingleton(rootConfiguration);
 
             // Add DbContexts for Asp.Net Core Identity, Logging and IdentityServer - Configuration store and Operational store
-            services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext>(HostingEnvironment, Configuration);
+            RegisterDbContexts(services);
 
             // Add Asp.Net Core Identity Configuration and OpenIdConnect auth as well
-            services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(HostingEnvironment, rootConfiguration.AdminConfiguration);
+            RegisterAuthentication(services);
             
             // Add exception filters in MVC
             services.AddMvcExceptionFilters();
@@ -66,7 +66,7 @@ namespace Skoruba.IdentityServer4.Admin
                 RoleClaimsDto<string>>(Configuration);
 
             // Add authorization policies for MVC
-            services.AddAuthorizationPolicies(rootConfiguration);
+            RegisterAuthorization(services);
 
             // Add audit logging
             services.AddAuditEventLogging<AdminAuditLogDbContext, AuditLog>(Configuration);
@@ -88,8 +88,7 @@ namespace Skoruba.IdentityServer4.Admin
 
             app.UseStaticFiles();
 
-            // Use authentication and for integration tests use custom middleware which is used only in Staging environment
-            app.ConfigureAuthenticationServices(env);
+            UseAuthentication(app);
 
             // Use Localization
             app.ConfigureLocalization();
@@ -99,7 +98,29 @@ namespace Skoruba.IdentityServer4.Admin
             app.UseEndpoints(endpoint => { endpoint.MapDefaultControllerRoute(); });
         }
 
-        private IRootConfiguration CreateRootConfiguration()
+        public virtual void RegisterDbContexts(IServiceCollection services)
+        {
+            services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext>(Configuration);
+        }
+
+        public virtual void RegisterAuthentication(IServiceCollection services)
+        {
+            var rootConfiguration = CreateRootConfiguration();
+            services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(rootConfiguration.AdminConfiguration);
+        }
+
+        public virtual void RegisterAuthorization(IServiceCollection services)
+        {
+            var rootConfiguration = CreateRootConfiguration();
+            services.AddAuthorizationPolicies(rootConfiguration);
+        }
+
+        public virtual void UseAuthentication(IApplicationBuilder app)
+        {
+            app.UseAuthentication();
+        }
+
+        protected IRootConfiguration CreateRootConfiguration()
         {
             var rootConfiguration = new RootConfiguration();
             Configuration.GetSection(ConfigurationConsts.AdminConfigurationKey).Bind(rootConfiguration.AdminConfiguration);

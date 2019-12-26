@@ -1,30 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Reflection;
 using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Options;
-using IdentityServer4.EntityFramework.Storage;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Serilog;
 using Skoruba.AuditLogging.EntityFramework.DbContexts;
 using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.AuditLogging.EntityFramework.Extensions;
@@ -34,7 +28,6 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.ExceptionHandling;
-using Skoruba.IdentityServer4.Admin.Middlewares;
 using Skoruba.IdentityServer4.Admin.Configuration;
 using Skoruba.IdentityServer4.Admin.Configuration.ApplicationParts;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
@@ -44,7 +37,6 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.Helpers.Localization;
 using System.Linq;
-using Microsoft.Extensions.Hosting;
 using Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
@@ -101,7 +93,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
         {
             var databaseProvider = configuration.GetSection(nameof(DatabaseProviderConfiguration)).Get<DatabaseProviderConfiguration>();
-            
+
             var identityConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
             var configurationConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
             var persistedGrantsConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);
@@ -207,21 +199,6 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         }
 
         /// <summary>
-        /// Use default authentication middleware and middleware for integration testing
-        /// </summary>
-        /// <param name="app"></param>
-        /// <param name="env"></param>
-        public static void ConfigureAuthenticationServices(this IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.UseAuthentication();
-
-            if (env.IsStaging())
-            {
-                app.UseMiddleware<AuthenticatedTestRequestMiddleware>();
-            }
-        }
-
-        /// <summary>
         /// Add middleware for localization
         /// </summary>
         /// <param name="app"></param>
@@ -229,34 +206,6 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         {
             var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(options.Value);
-        }
-
-        /// <summary>
-        /// Register DbContexts
-        /// </summary>
-        /// <typeparam name="TConfigurationDbContext"></typeparam>
-        /// <typeparam name="TPersistedGrantDbContext"></typeparam>
-        /// <typeparam name="TLogDbContext"></typeparam>
-        /// <typeparam name="TIdentityDbContext"></typeparam>
-        /// <typeparam name="TAuditLoggingDbContext"></typeparam>
-        /// <param name="services"></param>
-        /// <param name="hostingEnvironment"></param>
-        /// <param name="configuration"></param>
-        public static void AddDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext>(this IServiceCollection services, IWebHostEnvironment hostingEnvironment, IConfiguration configuration)
-            where TIdentityDbContext : DbContext
-            where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
-            where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
-            where TLogDbContext : DbContext, IAdminLogDbContext
-            where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
-        {
-            if (hostingEnvironment.IsStaging())
-            {
-                services.RegisterDbContextsStaging<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext>();
-            }
-            else
-            {
-                services.RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext>(configuration);
-            }
         }
 
         /// <summary>
@@ -357,18 +306,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             });
         }
 
-        /// <summary>
-        /// Register services for authentication, including Identity.
-        /// For production mode is used OpenId Connect middleware which is connected to IdentityServer4 instance.
-        /// For testing purpose is used cookie middleware with fake login url.
-        /// </summary>
-        /// <typeparam name="TContext"></typeparam>
-        /// <typeparam name="TUserIdentity"></typeparam>
-        /// <typeparam name="TUserIdentityRole"></typeparam>
-        /// <param name="services"></param>
-        /// <param name="hostingEnvironment"></param>
-        /// <param name="adminConfiguration"></param>
-        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IWebHostEnvironment hostingEnvironment, AdminConfiguration adminConfiguration)
+        public static void AddAuthenticationServicesStaging<TContext, TUserIdentity, TUserIdentityRole>(
+            this IServiceCollection services)
             where TContext : DbContext where TUserIdentity : class where TUserIdentityRole : class
         {
             services.AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
@@ -378,10 +317,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 .AddEntityFrameworkStores<TContext>()
                 .AddDefaultTokenProviders();
 
-            //For integration tests use only cookie middleware
-            if (hostingEnvironment.IsStaging())
-            {
-                services.AddAuthentication(options =>
+            services.AddAuthentication(options =>
                 {
                     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -391,12 +327,30 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                     options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                     options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 })
-                    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-                        options => { options.Cookie.Name = adminConfiguration.IdentityAdminCookieName; });
-            }
-            else
-            {
-                services.AddAuthentication(options =>
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+
+        /// <summary>
+        /// Register services for authentication, including Identity.
+        /// For production mode is used OpenId Connect middleware which is connected to IdentityServer4 instance.
+        /// For testing purpose is used cookie middleware with fake login url.
+        /// </summary>
+        /// <typeparam name="TContext"></typeparam>
+        /// <typeparam name="TUserIdentity"></typeparam>
+        /// <typeparam name="TUserIdentityRole"></typeparam>
+        /// <param name="services"></param>
+        /// <param name="adminConfiguration"></param>
+        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, AdminConfiguration adminConfiguration)
+            where TContext : DbContext where TUserIdentity : class where TUserIdentityRole : class
+        {
+            services.AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
+                {
+                    options.User.RequireUniqueEmail = true;
+                })
+                .AddEntityFrameworkStores<TContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthentication(options =>
                 {
                     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = AuthenticationConsts.OidcAuthenticationScheme;
@@ -446,7 +400,6 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                             OnRedirectToIdentityProvider = context => OnRedirectToIdentityProvider(context, adminConfiguration)
                         };
                     });
-            }
         }
 
         private static Task OnMessageReceived(MessageReceivedContext context, AdminConfiguration adminConfiguration)
