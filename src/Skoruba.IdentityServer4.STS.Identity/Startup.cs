@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
@@ -27,27 +26,24 @@ namespace Skoruba.IdentityServer4.STS.Identity
         public void ConfigureServices(IServiceCollection services)
         {
             var rootConfiguration = CreateRootConfiguration();
-            services.AddSingleton<IRootConfiguration>(rootConfiguration);
+            services.AddSingleton(rootConfiguration);
 
             // Register DbContexts for IdentityServer and Identity
-            services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext>(Environment, Configuration);
+            RegisterDbContexts(services);
 
             // Add email senders which is currently setup for SendGrid and SMTP
             services.AddEmailSenders(Configuration);
 
             // Add services for authentication, including Identity model and external providers
-            services.AddAuthenticationServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Configuration);
-
-            // Add services for IdentityServer4
-            services.AddIdentityServer<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, UserIdentity>(Configuration);
-
+            RegisterAuthentication(services);
+            
             // Add all dependencies for Asp.Net Core Identity in MVC - these dependencies are injected into generic Controllers
             // Including settings for MVC and Localization
             // If you want to change primary keys or use another db model for Asp.Net Core Identity:
             services.AddMvcWithLocalization<UserIdentity, string>(Configuration);
 
             // Add authorization policies for MVC
-            services.AddAuthorizationPolicies(rootConfiguration);
+            RegisterAuthorization(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -61,7 +57,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
             app.UseSecurityHeaders();
 
             app.UseStaticFiles();
-            app.UseIdentityServer();
+            UseAuthentication(app);
             app.UseMvcLocalizationServices();
 
             app.UseRouting();
@@ -69,7 +65,29 @@ namespace Skoruba.IdentityServer4.STS.Identity
             app.UseEndpoints(endpoint => { endpoint.MapDefaultControllerRoute(); });
         }
 
-        private IRootConfiguration CreateRootConfiguration()
+        public virtual void RegisterDbContexts(IServiceCollection services)
+        {
+            services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext>(Configuration);
+        }
+
+        public virtual void RegisterAuthentication(IServiceCollection services)
+        {
+            services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Configuration);
+            services.AddIdentityServer<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, UserIdentity>(Configuration);
+        }
+
+        public virtual void RegisterAuthorization(IServiceCollection services)
+        {
+            var rootConfiguration = CreateRootConfiguration();
+            services.AddAuthorizationPolicies(rootConfiguration);
+        }
+
+        public virtual void UseAuthentication(IApplicationBuilder app)
+        {
+            app.UseIdentityServer();
+        }
+
+        protected IRootConfiguration CreateRootConfiguration()
         {
             var rootConfiguration = new RootConfiguration();
             Configuration.GetSection(ConfigurationConsts.AdminConfigurationKey).Bind(rootConfiguration.AdminConfiguration);
