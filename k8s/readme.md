@@ -10,7 +10,7 @@ Missing features are:
 * Volume claims (to persist the data of sql server between reboots)
 * Configure the different services with config maps instead env variables
 * Store the database credentials in a k8s Secret.
-We need to package the docker images and store them in a packages registry. Github offers this already, but we're not using that yet, so you will need to build the docker images manually. You can use docker-compose build to do so.
+* We need to package the docker images and store them in a packages registry. Github offers this already, but we're not using that yet, so you will need to build the docker images manually. You can use docker-compose build to do so.
 
 ## Prerequisites
 
