@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.Api\Skoruba.IdentityServer4.Admin.Api.csproj" />
+      <ProjectReference Include="..\..\src\Skoruba.IdentityServer4.Admin.Api\Skoruba.IdentityServer4.Admin.Api.csproj" />
     </ItemGroup>
 
 </Project>
