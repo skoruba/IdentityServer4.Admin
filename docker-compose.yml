@@ -26,7 +26,6 @@ services:
       - "IdentityServerData__Clients__0__PostLogoutRedirectUris__0=http://127.0.0.1.xip.io:9000/signout-callback-oidc"
       - "IdentityServerData__Clients__0__AllowedCorsOrigins__0=http://127.0.0.1.xip.io:9000"
       - "IdentityServerData__Clients__1__RedirectUris__0=http://127.0.0.1.xip.io:5000/swagger/oauth2-redirect.html"
-      - "Serilog__WriteTo__1__Args__connectionString=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
     command: dotnet Skoruba.IdentityServer4.Admin.dll /seed
     depends_on:
       - db
@@ -41,6 +40,7 @@ services:
       - 5000:80
     environment:
       - "AdminApiConfiguration__RequireHttpsMetadata=false"
+      - "AdminApiConfiguration__ApiBaseUrl=http://127.0.0.1.xip.io:5000"
       - "AdminApiConfiguration__IdentityServerBaseUrl=http://127.0.0.1.xip.io"
       - "ConnectionStrings__ConfigurationDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
       - "ConnectionStrings__PersistedGrantDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
