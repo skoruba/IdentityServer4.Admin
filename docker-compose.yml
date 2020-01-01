@@ -31,6 +31,8 @@ services:
     depends_on:
       - db
       - skoruba.identityserver4.sts.identity
+    volumes:
+      - "./serilog/serilog.json:/app/serilog.json"
 
   skoruba.identityserver4.admin.api:
     image: ${DOCKER_REGISTRY-}skorubaidentityserver4adminapi
