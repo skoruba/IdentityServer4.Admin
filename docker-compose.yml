@@ -41,6 +41,7 @@ services:
       - 5000:80
     environment:
       - "AdminApiConfiguration__RequireHttpsMetadata=false"
+      - "AdminApiConfiguration__ApiBaseUrl=http://127.0.0.1.xip.io:5000"
       - "AdminApiConfiguration__IdentityServerBaseUrl=http://127.0.0.1.xip.io"
       - "ConnectionStrings__ConfigurationDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
       - "ConnectionStrings__PersistedGrantDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
