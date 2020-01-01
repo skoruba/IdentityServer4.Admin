@@ -12,7 +12,7 @@
 
 The application is written in the **Asp.Net Core MVC - using .NET Core 3.1**
 
-**NOTE:** Works only with **IdentityServer4 version 3.1.0 and higher** 🚀
+**NOTE:** Works only with **IdentityServer4 version 3.0.0 and higher** 🚀
 
 ## Requirements
 
@@ -87,15 +87,19 @@ Project template options:
 git clone https://github.com/skoruba/IdentityServer4.Admin
 ```
 
-## Docker support
+## Running via Docker
 
-- It is possible to run AdminUI through docker:
+- It is possible to run Admin UI through docker:
+
+- With following commands:
 ```
 docker-compose build
 docker-compose up
 ```
+Or
+- Directly in Visual Studio with project called `docker-compose` as well, which contains support for debugging.
 
-- Docker images with whole AdminUI will be available also in docker hub:
+- Docker images with the Admin UI will be available also in docker hub:
 https://hub.docker.com/u/skoruba
 
 
@@ -264,6 +268,11 @@ In STS project - in `appsettings.json`:
     }
 ```
 
+## Health checks
+
+- AdminUI, AdminUI Api and STS contain endpoint `health`, which check databases and IdentityServer.
+
+
 ## Localizations - labels, messages
 
 - The project has following translations:
@@ -288,13 +297,11 @@ In STS project - in `appsettings.json`:
 ## Tests
 
 - The solution contains unit and integration tests.
-- **Stage environment is used for integration tests**:
 
+Integration tests use StartupTest class which is pre-configured with:
   - `DbContext` contains setup for InMemory database
-  - `Authentication` is setup for `CookieAuthentication` - with fake login url only for testing purpose
+  - `Authentication` is setup for `CookieAuthentication` - with fake login url for testing purpose only
   - `AuthenticatedTestRequestMiddleware` - middleware for testing of authentication.
-
-- If you want to use `Stage environment` for deploying - it is necessary to change these settings in `StartupHelpers.cs`.
 
 ## Overview
 
@@ -325,6 +332,13 @@ In STS project - in `appsettings.json`:
   - `Skoruba.IdentityServer4.Admin.EntityFramework.Extensions` - project that contains extensions related to EntityFramework
 
   - `Skoruba.IdentityServer4.Admin.EntityFramework.Shared` - project that contains DbContexts for the IdentityServer4, Logging and Asp.Net Core Identity, inluding shared Identity entities
+
+  - `Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer` - project that contains migrations for SqlServer
+
+  - `Skoruba.IdentityServer4.Admin.EntityFramework.MySql` - project that contains migrations for MySql
+
+  - `Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL` - project that contains migrations for PostgreSQL
+
 
 - Tests:
 
@@ -434,6 +448,8 @@ It is possible to define the configuration according the client type - by defaul
   - [x] Add swagger support
 - [x] Add audit logs to track changes ([#61](https://github.com/skoruba/IdentityServer4.Admin/issues/61))
 - [x] Docker support ([#121](https://github.com/skoruba/IdentityServer4.Admin/issues/121))
+- [x] Health Checks (Databases and IdentityServer)
+- [x] Support for multiple database providers (SqlServer, Mysql, PostgreSQL)
 
 ### 2.0.0:
 
