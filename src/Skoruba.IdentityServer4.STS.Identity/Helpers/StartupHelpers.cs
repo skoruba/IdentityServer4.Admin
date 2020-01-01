@@ -26,6 +26,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
@@ -342,6 +343,62 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 options.AddPolicy(AuthorizationConsts.AdministrationPolicy,
                     policy => policy.RequireRole(rootConfiguration.AdminConfiguration.AdministrationRole));
             });
+        }
+
+        public static void AddIdSHealthChecks<TConfigurationDbContext, TPersistedGrantDbContext, TIdentityDbContext>(this IServiceCollection services, IConfiguration configuration)
+            where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
+            where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
+            where TIdentityDbContext : DbContext
+        {
+            var configurationDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
+            var persistedGrantsDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);            
+            var identityDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
+            
+            var healthChecksBuilder = services.AddHealthChecks()
+                .AddDbContextCheck<TConfigurationDbContext>("ConfigurationDbContext")
+                .AddDbContextCheck<TPersistedGrantDbContext>("PersistedGrantsDbContext")
+                .AddDbContextCheck<TIdentityDbContext>("IdentityDbContext");
+
+            var serviceProvider = services.BuildServiceProvider();
+            var scopeFactory = serviceProvider.GetRequiredService<IServiceScopeFactory>();
+            using (var scope = scopeFactory.CreateScope())
+            {
+                var configurationTableName = DbContextHelpers.GetEntityTable<TConfigurationDbContext>(scope.ServiceProvider);
+                var persistedGrantTableName = DbContextHelpers.GetEntityTable<TPersistedGrantDbContext>(scope.ServiceProvider);
+                var identityTableName = DbContextHelpers.GetEntityTable<TIdentityDbContext>(scope.ServiceProvider);
+
+                var databaseProvider = configuration.GetSection(nameof(DatabaseProviderConfiguration)).Get<DatabaseProviderConfiguration>();
+                switch (databaseProvider.ProviderType)
+                {
+                    case DatabaseProviderType.SqlServer:
+                        healthChecksBuilder
+                            .AddSqlServer(configurationDbConnectionString, name: "ConfigurationDb",
+                                healthQuery: $"SELECT TOP 1 * FROM dbo.[{configurationTableName}]")
+                            .AddSqlServer(persistedGrantsDbConnectionString, name: "PersistentGrantsDb",
+                                healthQuery: $"SELECT TOP 1 * FROM dbo.[{persistedGrantTableName}]")
+                            .AddSqlServer(identityDbConnectionString, name: "IdentityDb",
+                                healthQuery: $"SELECT TOP 1 * FROM dbo.[{identityTableName}]");
+
+                        break;
+                    case DatabaseProviderType.PostgreSQL:
+                        healthChecksBuilder
+                            .AddNpgSql(configurationDbConnectionString, name: "ConfigurationDb",
+                                healthQuery: $"SELECT * FROM {configurationTableName} LIMIT 1")
+                            .AddNpgSql(persistedGrantsDbConnectionString, name: "PersistentGrantsDb",
+                                healthQuery: $"SELECT * FROM {persistedGrantTableName} LIMIT 1")
+                            .AddNpgSql(identityDbConnectionString, name: "IdentityDb",
+                                healthQuery: $"SELECT * FROM {identityTableName} LIMIT 1");
+                        break;
+                    case DatabaseProviderType.MySql:
+                        healthChecksBuilder
+                            .AddMySql(configurationDbConnectionString, name: "ConfigurationDb")
+                            .AddMySql(persistedGrantsDbConnectionString, name: "PersistentGrantsDb")
+                            .AddMySql(identityDbConnectionString, name: "IdentityDb");
+                        break;
+                    default:
+                        throw new NotImplementedException($"Health checks not defined for database provider {databaseProvider.ProviderType}");
+                }
+            }
         }
     }
 }
