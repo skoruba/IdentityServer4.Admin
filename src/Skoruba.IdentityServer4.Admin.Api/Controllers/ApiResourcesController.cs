@@ -15,8 +15,8 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
-    [Produces("application/json")]
-    [Authorize(AuthenticationSchemes = IdentityServerAuthenticationDefaults.AuthenticationScheme, Policy = AuthorizationConsts.AdministrationPolicy)]
+    [Produces("application/json", "application/problem+json")]
+    [Authorize(Policy = AuthorizationConsts.AdministrationPolicy)]
     public class ApiResourcesController : ControllerBase
     {
         private readonly IApiResourceService _apiResourceService;
@@ -47,6 +47,8 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> Post([FromBody]ApiResourceApiDto apiResourceApi)
         {
             var apiResourceDto = apiResourceApi.ToApiResourceApiModel<ApiResourceDto>();
@@ -56,9 +58,10 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
                 return BadRequest(_errorResources.CannotSetId());
             }
 
-            await _apiResourceService.AddApiResourceAsync(apiResourceDto);
+            var apiResourceId = await _apiResourceService.AddApiResourceAsync(apiResourceDto);
+            apiResourceApi.Id = apiResourceId;
 
-            return Ok();
+            return CreatedAtAction(nameof(Get), new { id = apiResourceId }, apiResourceApi);
         }
 
         [HttpPut]
@@ -102,6 +105,8 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpPost("{id}/Scopes")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> PostScope(int id, [FromBody]ApiScopeApiDto apiScopeApi)
         {
             var apiScope = apiScopeApi.ToApiResourceApiModel<ApiScopesDto>();
@@ -113,9 +118,10 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
             }
 
             await _apiResourceService.GetApiResourceAsync(apiScope.ApiResourceId);
-            await _apiResourceService.AddApiScopeAsync(apiScope);
-            
-            return Ok();
+            var scopeId = await _apiResourceService.AddApiScopeAsync(apiScope);
+            apiScope.ApiScopeId = scopeId;
+
+            return CreatedAtAction(nameof(GetScope), new { id, scopeId }, apiScope);
         }
 
         [HttpPut("{id}/Scopes")]
@@ -164,6 +170,8 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpPost("{id}/Secrets")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> PostSecret(int id, [FromBody]ApiSecretApiDto clientSecretApi)
         {
             var secretsDto = clientSecretApi.ToApiResourceApiModel<ApiSecretsDto>();
@@ -174,9 +182,10 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
                 return BadRequest(_errorResources.CannotSetId());
             }
 
-            await _apiResourceService.AddApiSecretAsync(secretsDto);
+            var secretId = await _apiResourceService.AddApiSecretAsync(secretsDto);
+            clientSecretApi.Id = secretId;
 
-            return Ok();
+            return CreatedAtAction(nameof(GetSecret), new { secretId }, clientSecretApi);
         }
 
         [HttpDelete("Secrets/{secretId}")]
@@ -209,6 +218,8 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpPost("{id}/Properties")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> PostProperty(int id, [FromBody]ApiResourcePropertyApiDto apiPropertyApi)
         {
             var apiResourcePropertiesDto = apiPropertyApi.ToApiResourceApiModel<ApiResourcePropertiesDto>();
@@ -219,9 +230,10 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
                 return BadRequest(_errorResources.CannotSetId());
             }
 
-            await _apiResourceService.AddApiResourcePropertyAsync(apiResourcePropertiesDto);
+            var propertyId = await _apiResourceService.AddApiResourcePropertyAsync(apiResourcePropertiesDto);
+            apiPropertyApi.Id = propertyId;
 
-            return Ok();
+            return CreatedAtAction(nameof(GetProperty), new { propertyId }, apiPropertyApi);
         }
 
         [HttpDelete("Properties/{propertyId}")]

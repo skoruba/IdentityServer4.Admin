@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Skoruba.IdentityServer4.STS.Identity.Configuration.Test;
 using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Common;
 using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Mocks;
 using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests.Base;
@@ -11,7 +12,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
 {
     public class ManageControllerTests : BaseClassFixture
     {
-        public ManageControllerTests(WebApplicationFactory<Startup> factory) : base(factory)
+        public ManageControllerTests(WebApplicationFactory<StartupTest> factory) : base(factory)
         {
         }
 
@@ -19,19 +20,19 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
         public async Task AuthorizeUserCanAccessManageViews()
         {
             // Clear headers
-            _client.DefaultRequestHeaders.Clear();
+            Client.DefaultRequestHeaders.Clear();
 
             // Register new user
             var registerFormData = UserMocks.GenerateRegisterData();
-            var registerResponse = await UserMocks.RegisterNewUserAsync(_client,registerFormData);
+            var registerResponse = await UserMocks.RegisterNewUserAsync(Client,registerFormData);
 
             // Get cookie with user identity for next request
-            _client.PutCookiesOnRequest(registerResponse);
+            Client.PutCookiesOnRequest(registerResponse);
             
             foreach (var route in RoutesConstants.GetManageRoutes())
             {
                 // Act
-                var response = await _client.GetAsync($"/Manage/{route}");
+                var response = await Client.GetAsync($"/Manage/{route}");
 
                 // Assert
                 response.EnsureSuccessStatusCode();
@@ -43,12 +44,12 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
         public async Task UnAuthorizeUserCannotAccessManageViews()
         {
             // Clear headers
-            _client.DefaultRequestHeaders.Clear();
+            Client.DefaultRequestHeaders.Clear();
 
             foreach (var route in RoutesConstants.GetManageRoutes())
             {
                 // Act
-                var response = await _client.GetAsync($"/Manage/{route}");
+                var response = await Client.GetAsync($"/Manage/{route}");
 
                 // Assert      
                 response.StatusCode.Should().Be(HttpStatusCode.Redirect);
@@ -62,18 +63,18 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
         public async Task UserIsAbleToUpdateProfile()
         {
             // Clear headers
-            _client.DefaultRequestHeaders.Clear();
+            Client.DefaultRequestHeaders.Clear();
 
             // Register new user
             var registerFormData = UserMocks.GenerateRegisterData();
-            var registerResponse = await UserMocks.RegisterNewUserAsync(_client, registerFormData);
+            var registerResponse = await UserMocks.RegisterNewUserAsync(Client, registerFormData);
 
             // Get cookie with user identity for next request
-            _client.PutCookiesOnRequest(registerResponse);
+            Client.PutCookiesOnRequest(registerResponse);
 
             // Prepare request to update profile
             const string manageAction = "/Manage/Index";
-            var manageResponse = await _client.GetAsync(manageAction);
+            var manageResponse = await Client.GetAsync(manageAction);
             var antiForgeryToken = await manageResponse.ExtractAntiForgeryToken();
 
             var manageProfileData = UserMocks.GenerateManageProfileData(registerFormData["Email"], antiForgeryToken);
@@ -81,7 +82,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
             // Update profile
             var requestWithAntiForgeryCookie = RequestHelper.CreatePostRequestWithCookies(manageAction, manageProfileData, manageResponse);
             var requestWithIdentityCookie = CookiesHelper.CopyCookiesFromResponse(requestWithAntiForgeryCookie, registerResponse);
-            var responseMessage = await _client.SendAsync(requestWithIdentityCookie);
+            var responseMessage = await Client.SendAsync(requestWithIdentityCookie);
 
             // Assert      
             responseMessage.StatusCode.Should().Be(HttpStatusCode.Redirect);

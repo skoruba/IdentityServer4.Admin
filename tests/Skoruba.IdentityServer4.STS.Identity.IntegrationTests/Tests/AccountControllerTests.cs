@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using HtmlAgilityPack;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Skoruba.IdentityServer4.STS.Identity.Configuration.Test;
 using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Common;
 using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Mocks;
 using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests.Base;
@@ -15,7 +16,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
 {
     public class AccountControllerTests : BaseClassFixture
     {
-        public AccountControllerTests(WebApplicationFactory<Startup> factory) : base(factory)
+        public AccountControllerTests(WebApplicationFactory<StartupTest> factory) : base(factory)
         {
         }
 
@@ -23,11 +24,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
         public async Task UserIsAbleToRegister()
         {
             // Clear headers
-            _client.DefaultRequestHeaders.Clear();
+            Client.DefaultRequestHeaders.Clear();
 
             // Register new user
             var registerFormData = UserMocks.GenerateRegisterData();
-            var registerResponse = await UserMocks.RegisterNewUserAsync(_client, registerFormData);
+            var registerResponse = await UserMocks.RegisterNewUserAsync(Client, registerFormData);
 
             // Assert      
             registerResponse.StatusCode.Should().Be(HttpStatusCode.Redirect);
@@ -40,12 +41,12 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
         public async Task UserIsNotAbleToRegisterWithSameUserName()
         {
             // Clear headers
-            _client.DefaultRequestHeaders.Clear();
+            Client.DefaultRequestHeaders.Clear();
 
             // Register new user
             var registerFormData = UserMocks.GenerateRegisterData();
 
-            var registerResponseFirst = await UserMocks.RegisterNewUserAsync(_client, registerFormData);
+            var registerResponseFirst = await UserMocks.RegisterNewUserAsync(Client, registerFormData);
 
             // Assert      
             registerResponseFirst.StatusCode.Should().Be(HttpStatusCode.Redirect);
@@ -53,7 +54,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
             //The redirect to login
             registerResponseFirst.Headers.Location.ToString().Should().Be("/");
 
-            var registerResponseSecond = await UserMocks.RegisterNewUserAsync(_client, registerFormData);
+            var registerResponseSecond = await UserMocks.RegisterNewUserAsync(Client, registerFormData);
 
             // Assert response
             registerResponseSecond.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -88,18 +89,18 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
         public async Task UserIsAbleToLogin()
         {
             // Clear headers
-            _client.DefaultRequestHeaders.Clear();
+            Client.DefaultRequestHeaders.Clear();
 
             // Register new user
             var registerFormData = UserMocks.GenerateRegisterData();
-            await UserMocks.RegisterNewUserAsync(_client, registerFormData);
+            await UserMocks.RegisterNewUserAsync(Client, registerFormData);
 
             // Clear headers
-            _client.DefaultRequestHeaders.Clear();
+            Client.DefaultRequestHeaders.Clear();
 
             // Prepare request to login
             const string accountLoginAction = "/Account/Login";
-            var loginResponse = await _client.GetAsync(accountLoginAction);
+            var loginResponse = await Client.GetAsync(accountLoginAction);
             var antiForgeryToken = await loginResponse.ExtractAntiForgeryToken();
 
             var loginDataForm = UserMocks.GenerateLoginData(registerFormData["UserName"], registerFormData["Password"],
@@ -107,7 +108,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
 
             // Login
             var requestMessage = RequestHelper.CreatePostRequestWithCookies(accountLoginAction, loginDataForm, loginResponse);
-            var responseMessage = await _client.SendAsync(requestMessage);
+            var responseMessage = await Client.SendAsync(requestMessage);
 
             // Assert status code    
             responseMessage.StatusCode.Should().Be(HttpStatusCode.Redirect);
@@ -127,18 +128,18 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
         public async Task UserIsNotAbleToLoginWithIncorrectPassword()
         {
             // Clear headers
-            _client.DefaultRequestHeaders.Clear();
+            Client.DefaultRequestHeaders.Clear();
 
             // Register new user
             var registerFormData = UserMocks.GenerateRegisterData();
-            await UserMocks.RegisterNewUserAsync(_client, registerFormData);
+            await UserMocks.RegisterNewUserAsync(Client, registerFormData);
 
             // Clear headers
-            _client.DefaultRequestHeaders.Clear();
+            Client.DefaultRequestHeaders.Clear();
 
             // Prepare request to login
             const string accountLoginAction = "/Account/Login";
-            var loginResponse = await _client.GetAsync(accountLoginAction);
+            var loginResponse = await Client.GetAsync(accountLoginAction);
             var antiForgeryToken = await loginResponse.ExtractAntiForgeryToken();
 
             // User Guid like fake password
@@ -146,7 +147,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
 
             // Login
             var requestMessage = RequestHelper.CreatePostRequestWithCookies(accountLoginAction, loginDataForm, loginResponse);
-            var responseMessage = await _client.SendAsync(requestMessage);
+            var responseMessage = await Client.SendAsync(requestMessage);
 
             // Get html content
             var contentWithErrorMessage = await responseMessage.Content.ReadAsStringAsync();

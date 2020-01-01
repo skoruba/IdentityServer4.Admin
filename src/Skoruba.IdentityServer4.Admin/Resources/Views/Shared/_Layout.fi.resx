@@ -118,10 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="FooterCopyright" xml:space="preserve">
-    <value>&amp;kopio; 2018</value>
-  </data>
-  <data name="FooterTitle" xml:space="preserve">
-    <value>Skoruba IdentityServer4 Järjestelmänvalvoja</value>
+    <value>&amp;kopio;</value>
   </data>
   <data name="LinkApiResources" xml:space="preserve">
     <value>Api-resurssit</value>
@@ -146,9 +143,6 @@
   </data>
   <data name="MenuButton" xml:space="preserve">
     <value>valikko</value>
-  </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>Skoruba IdentityServer4 Järjestelmänvalvoja</value>
   </data>
   <data name="TitleConfiguration" xml:space="preserve">
     <value>Sovellukset / Resurssit</value>

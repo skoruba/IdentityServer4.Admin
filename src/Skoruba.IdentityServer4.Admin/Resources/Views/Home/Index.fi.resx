@@ -141,7 +141,4 @@
   <data name="PageSubTitle" xml:space="preserve">
     <value>IdentityServer4:n ja Asp.Net Core Identityn hallinta</value>
   </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>Skoruba IdentityServer4 Järjestelmänvalvoja</value>
-  </data>
 </root>
