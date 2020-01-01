@@ -29,7 +29,7 @@ dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0
 - Create new project:
 
 ```sh
-dotnet.exe new skoruba.is4admin --name MyProject --title MyProject --adminemail admin@example.com --adminpassword Pa$$word123 --adminrole MyRole --adminclientid MyClientId --adminclientsecret MyClientSecret --dockersupport true
+dotnet new skoruba.is4admin --name MyProject --title MyProject --adminemail admin@example.com --adminpassword Pa$$word123 --adminrole MyRole --adminclientid MyClientId --adminclientsecret MyClientSecret --dockersupport true
 ```
 
 Project template options:
@@ -87,6 +87,18 @@ Project template options:
 git clone https://github.com/skoruba/IdentityServer4.Admin
 ```
 
+## Docker support
+
+- It is possible to run AdminUI through docker:
+```
+docker-compose build
+docker-compose up
+```
+
+- Docker images with whole AdminUI will be available also in docker hub:
+https://hub.docker.com/u/skoruba
+
+
 ## Installation of the Client Libraries
 
 ```sh
@@ -117,93 +129,41 @@ The following Gulp commands are available:
   - `IdentityServerPersistedGrantDbContext`: for IdentityServer operational store
   - `AuditLoggingDbContext`: for Audit Logging
 
-- Run entity framework migrations:
+### Run entity framework migrations:
+  - It is possible to use powershell script in folder `build/add-migrations.ps1`.
+  - This script take two arguments:
+    - --migration (migration name)
+    - --migrationProviderName (provider type - available choices: All, SqlServer, MySql, PostgreSQL)
 
-### Visual Studio command line (Nuget package manager):
+- For example: 
+`.\add-migration.ps1 --migration DbInit --migrationProviderName SqlServer`
 
-#### Migrations for Asp.Net Core Identity DbContext:
 
-```powershell
-Add-Migration AspNetIdentityDbInit -context AdminIdentityDbContext -output Data/Migrations/Identity
-Update-Database -context AdminIdentityDbContext
+### Available database providers:
+- SqlServer
+- MySql
+- PostgreSQL
+
+> It is possible to switch the database provider via `appsettings.json`:
 ```
-
-#### Migrations for Logging DbContext:
-
-```powershell
-Add-Migration LoggingDbInit -context AdminLogDbContext -output Data/Migrations/Logging
-Update-Database -context AdminLogDbContext
+"DatabaseProviderConfiguration": {
+        "ProviderType": "SqlServer" 
+    }
 ```
+        
+### Connection strings samples for available db providers:
+**PostgreSQL**: 
+> Server=localhost;Port=5432;Database=IdentityServer4Admin;User Id=sa;Password=#;
 
-#### Migrations for IdentityServer configuration DbContext:
+**MySql:** 
+> server=localhost;database=IdentityServer4Admin;user=root;password=#
 
-```powershell
-Add-Migration IdentityServerConfigurationDbInit -context IdentityServerConfigurationDbContext -output Data/Migrations/IdentityServerConfiguration
-Update-Database -context IdentityServerConfigurationDbContext
-```
-
-#### Migrations for IdentityServer persisted grants DbContext:
-
-```powershell
-Add-Migration IdentityServerPersistedGrantsDbInit -context IdentityServerPersistedGrantDbContext -output Data/Migrations/IdentityServerGrants
-Update-Database -context IdentityServerPersistedGrantDbContext
-```
-
-#### Migrations for AuditLogging DbContext:
-
-```powershell
-Add-Migration AdminAuditLogDbInit -context AdminAuditLogDbContext -output Data/Migrations/AuditLogging
-Update-Database -context AdminAuditLogDbContext
-```
-
-### Or via `dotnet CLI`:
-
-#### Migrations for Asp.Net Core Identity DbContext:
-
-```powershell
-dotnet ef migrations add AspNetIdentityDbInit -c AdminIdentityDbContext -o Data/Migrations/Identity
-dotnet ef database update -c AdminIdentityDbContext
-```
-
-#### Migrations for Logging DbContext:
-
-```powershell
-dotnet ef migrations add LoggingDbInit -c AdminLogDbContext -o Data/Migrations/Logging
-dotnet ef database update -c AdminLogDbContext
-```
-
-#### Migrations for IdentityServer configuration DbContext:
-
-```powershell
-dotnet ef migrations add IdentityServerConfigurationDbInit -c IdentityServerConfigurationDbContext -o Data/Migrations/IdentityServerConfiguration
-dotnet ef database update -c IdentityServerConfigurationDbContext
-```
-
-#### Migrations for IdentityServer persisted grants DbContext:
-
-```powershell
-dotnet ef migrations add IdentityServerPersistedGrantsDbInit -c IdentityServerPersistedGrantDbContext -o Data/Migrations/IdentityServerGrants
-dotnet ef database update -c IdentityServerPersistedGrantDbContext
-```
-
-#### Migrations for AuditLogging DbContext:
-
-```powershell
-dotnet ef migrations add AdminAuditLogDbInit -c AdminAuditLogDbContext -o Data/Migrations/AuditLogging
-dotnet ef database update -c AdminAuditLogDbContext
-```
-
-Migrations are not a part of the repository - they are ignored in `.gitignore`.
 
 ### We suggest to use seed data:
 
 - In `Program.cs` -> `Main`, uncomment `DbMigrationHelpers.EnsureSeedData(host)` or use dotnet CLI `dotnet run /seed`
 - The `Clients` and `Resources` files in `appsettings.json` (section called: IdentityServerData) - are the initial data, based on a sample from IdentityServer4
 - The `Users` file in `appsettings.json` (section called: IdentityData) contains the default admin username and password for the first login
-
-### Using other database engines - PostgreSQL, SQLite, MySQL etc.
-
-- [Follow these steps for setup other database engines](docs/EFMigration.md)
 
 ## Authentication and Authorization
 
@@ -315,6 +275,7 @@ In STS project - in `appsettings.json`:
   - Danish
   - Spanish
   - French
+  - Finish
   
 #### Feel free to send a PR with your translation. :blush:
 
@@ -368,6 +329,8 @@ In STS project - in `appsettings.json`:
 - Tests:
 
   - `Skoruba.IdentityServer4.Admin.IntegrationTests` - xUnit project that contains the integration tests for AdminUI
+  
+  - `Skoruba.IdentityServer4.Admin.Api.IntegrationTests` - xUnit project that contains the integration tests for AdminUI Api
 
   - `Skoruba.IdentityServer4.Admin.UnitTests` - xUnit project that contains the unit tests for AdminUI
 
@@ -456,7 +419,8 @@ It is possible to define the configuration according the client type - by defaul
   - [x] Swedish
   - [x] Danish
   - [x] Spanish
-  - [x] French  
+  - [x] French
+  - [x] Finish
 - [x] Manage profile
 - [x] Password reset
 - [x] Link account to an external provider (example with Github)
