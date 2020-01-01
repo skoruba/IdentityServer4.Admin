@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>netcoreapp3.0</TargetFramework>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<DebugType>Full</DebugType>
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
@@ -17,9 +17,9 @@
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
 		<DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
-		<PackageReference Include="Bogus" Version="28.4.1" />
+		<PackageReference Include="Bogus" Version="28.4.4" />
 		<PackageReference Include="FluentAssertions" Version="4.19.4" />
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
 		<PackageReference Include="Moq" Version="4.13.1" />
 	</ItemGroup>
 

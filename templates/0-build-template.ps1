@@ -7,6 +7,7 @@ $gitProject = "https://github.com/skoruba/IdentityServer4.Admin"
 $gitBranchName = "dev"
 $gitProjectFolder = "Skoruba.IdentityServer4.Admin"
 $templateSrc = "template-build/content/src"
+$templateRoot = "template-build/content"
 $templateTests = "template-build/content/tests"
 $templateAdminProject = "template-build/content/src/Skoruba.IdentityServer4.Admin"
 $packagesVersions = "1.0.0-beta8"
@@ -34,6 +35,13 @@ if (!(Test-Path -Path $templateTests)) { mkdir $templateTests }
 # Copy the latest src and tests to content
 Copy-Item ./$gitProjectFolder/src/* $templateSrc -recurse -force
 Copy-Item ./$gitProjectFolder/tests/* $templateTests -recurse -force
+
+# Copy Docker files
+Copy-Item ./$gitProjectFolder/docker-compose.dcproj $templateRoot -recurse -force
+Copy-Item ./$gitProjectFolder/docker-compose.override.yml $templateRoot -recurse -force
+Copy-Item ./$gitProjectFolder/docker-compose.vs.debug.yml $templateRoot -recurse -force
+Copy-Item ./$gitProjectFolder/docker-compose.vs.release.yml $templateRoot -recurse -force
+Copy-Item ./$gitProjectFolder/docker-compose.yml $templateRoot -recurse -force
 
 # Clean up created folders
 Remove-Item ./$gitProjectFolder -recurse -force
@@ -112,3 +120,55 @@ Remove-Item ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework -Force 
 Remove-Item ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.Identity -Force -recurse
 Remove-Item ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.Extensions -Force -recurse
 Remove-Item ./$templateTests -Force -recurse
+
+######################################
+# Step 2
+$templateNuspecPath = "template-build/Skoruba.IdentityServer4.Admin.Templates.nuspec"
+nuget pack $templateNuspecPath
+
+######################################
+# Step 3
+$templateLocalName = "Skoruba.IdentityServer4.Admin.Templates.1.0.0-beta8.nupkg"
+dotnet.exe new -i $templateLocalName
+
+######################################
+# Step 4
+# Create template for fixing project name
+dotnet new skoruba.is4admin --name SkorubaIdentityServer4Admin --title "Skoruba IdentityServer4 Admin" --adminrole SkorubaIdentityAdminAdministrator --adminclientid skoruba_identity_admin --adminclientsecret skoruba_admin_client_secret
+
+######################################
+# Step 5
+# Replace files
+
+CleanBinObjFolders
+
+$templateFiles = Get-ChildItem .\SkorubaIdentityServer4Admin\src -include *.cs, *.csproj, *.cshtml -Recurse
+foreach ($file in $templateFiles) {
+    Write-Host $file.PSPath
+
+    (Get-Content $file.PSPath -raw) |
+    Foreach-Object { $_ -replace "SkorubaIdentityServer4Admin.Admin.BusinessLogic", "Skoruba.IdentityServer4.Admin.BusinessLogic" } |
+    Set-Content $file.PSPath
+
+    (Get-Content $file.PSPath -raw) |
+    Foreach-Object { $_ -replace "SkorubaIdentityServer4Admin.Admin.EntityFramework", "Skoruba.IdentityServer4.Admin.EntityFramework" } |
+    Set-Content $file.PSPath
+
+    (Get-Content $file.PSPath -raw) |
+    Foreach-Object { $_ -replace "Skoruba.IdentityServer4.Admin.EntityFramework.Shared", "SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared" } |
+    Set-Content $file.PSPath
+
+    (Get-Content $file.PSPath -raw) |
+    Foreach-Object { $_ -replace "Skoruba.IdentityServer4.Admin.EntityFramework.MySql", "SkorubaIdentityServer4Admin.Admin.EntityFramework.MySql" } |
+    Set-Content $file.PSPath
+
+    (Get-Content $file.PSPath -raw) |
+    Foreach-Object { $_ -replace "Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL", "SkorubaIdentityServer4Admin.Admin.EntityFramework.PostgreSQL" } |
+    Set-Content $file.PSPath
+
+    (Get-Content $file.PSPath -raw) |
+    Foreach-Object { $_ -replace "Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer", "SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer" } |
+    Set-Content $file.PSPath
+}
+
+CleanBinObjFolders
