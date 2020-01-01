@@ -50,6 +50,8 @@ namespace Skoruba.IdentityServer4.Admin
                      configApp.AddJsonFile($"serilog.json", optional: true);
                      configApp.AddJsonFile($"identitydata.json", optional: true);
                      configApp.AddJsonFile($"identityserverdata.json", optional: true);
+                     configApp.AddEnvironmentVariables();
+                     configApp.AddCommandLine(args);
                  })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
