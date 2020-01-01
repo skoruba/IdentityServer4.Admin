@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -92,6 +94,8 @@ namespace Skoruba.IdentityServer4.Admin.Api
             });
 
             services.AddAuditEventLogging<AdminAuditLogDbContext, AuditLog>(Configuration);
+
+            services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, AdminLogDbContext, AdminAuditLogDbContext>(Configuration, adminApiConfiguration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AdminApiConfiguration adminApiConfiguration)
@@ -114,7 +118,14 @@ namespace Skoruba.IdentityServer4.Admin.Api
 
             app.UseRouting();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints => { endpoints.MapDefaultControllerRoute(); });
+            app.UseEndpoints(endpoints => 
+            { 
+                endpoints.MapDefaultControllerRoute();
+                endpoints.MapHealthChecks("/health", new HealthCheckOptions
+                {
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
+            });
         }
 
         public virtual void RegisterDbContexts(IServiceCollection services)
