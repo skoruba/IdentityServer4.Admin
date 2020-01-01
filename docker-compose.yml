@@ -32,7 +32,9 @@ services:
       - db
       - skoruba.identityserver4.sts.identity
     volumes:
-      - "./serilog/serilog.json:/app/serilog.json"
+      - "./shared/serilog.json:/app/serilog.json"
+      - "./shared/identitydata.json:/app/identitydata.json"
+      - "./shared/identityserverdata.json:/app/identityserverdata.json"
 
   skoruba.identityserver4.admin.api:
     image: ${DOCKER_REGISTRY-}skorubaidentityserver4adminapi
@@ -52,7 +54,7 @@ services:
       - "ConnectionStrings__AdminAuditLogDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
     container_name: skoruba-identityserver4-admin-api
     volumes:
-      - "./serilog/serilog.json:/app/serilog.json"
+      - "./shared/serilog.json:/app/serilog.json"
 
   skoruba.identityserver4.sts.identity:
     image: ${DOCKER_REGISTRY-}skorubaidentityserver4stsidentity
@@ -71,7 +73,7 @@ services:
     depends_on:
       - db
     volumes:
-      - "./serilog/serilog.json:/app/serilog.json"
+      - "./shared/serilog.json:/app/serilog.json"
     networks:
       default:
         aliases:
