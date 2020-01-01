@@ -24,6 +24,20 @@
       "isRequired": true,
       "description": "The title and footer of the Admin UI"
     },
+    "adminpassword": {
+      "type": "parameter",
+      "defaultValue": "Pa$$word123",
+      "replaces": "Pa$$word123",
+      "isRequired": true,
+      "description": "The admin password, that is used to first login (default is Pa$$word123)."
+    },
+    "adminemail": {
+      "type": "parameter",
+      "defaultValue": "admin@skoruba.com",
+      "replaces": "admin@skoruba.com",
+      "isRequired": true,
+      "description": "The admin email."
+    },
     "adminrole": {
       "type": "parameter",
       "defaultValue": "SkorubaIdentityAdminAdministrator",
