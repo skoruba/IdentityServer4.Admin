@@ -168,14 +168,60 @@ The following Gulp commands are available:
 ### We suggest to use seed data:
 
 - In `Program.cs` -> `Main`, uncomment `DbMigrationHelpers.EnsureSeedData(host)` or use dotnet CLI `dotnet run /seed`
-- The `Clients` and `Resources` files in `appsettings.json` (section called: IdentityServerData) - are the initial data, based on a sample from IdentityServer4
-- The `Users` file in `appsettings.json` (section called: IdentityData) contains the default admin username and password for the first login
+- The `Clients` and `Resources` files in `identityserverdata.json` (section called: IdentityServerData) - are the initial data, based on a sample from IdentityServer4
+- The `Users` file in `identitydata.json` (section called: IdentityData) contains the default admin username and password for the first login
 
 ## Authentication and Authorization
 
 - Change the specific URLs and names for the IdentityServer and Authentication settings in `appsettings.json`
 - In the controllers is used the policy which name is stored in - `AuthorizationConsts.AdministrationPolicy`. In the policy - `AuthorizationConsts.AdministrationPolicy` is defined required role stored in - `appsettings.json` - `AdministrationRole`.
 - With the default configuration, it is necessary to configure and run instance of IdentityServer4. It is possible to use initial migration for creating the client as it mentioned above
+
+## Audit Logging
+
+- This solution uses audit logging via - https://github.com/skoruba/AuditLogging (check this link for more detal about this implementation :blur:)
+- In the Admin UI project is following setup:
+
+```
+services.AddAuditLogging(options => { options.Source = auditLoggingConfiguration.Source; })
+                .AddDefaultHttpEventData(subjectOptions =>
+                    {
+                        subjectOptions.SubjectIdentifierClaim = auditLoggingConfiguration.SubjectIdentifierClaim;
+                        subjectOptions.SubjectNameClaim = auditLoggingConfiguration.SubjectNameClaim;
+                    },
+                    actionOptions =>
+                    {
+                        actionOptions.IncludeFormVariables = auditLoggingConfiguration.IncludeFormVariables;
+                    })
+                .AddAuditSinks<DatabaseAuditEventLoggerSink<TAuditLog>>();
+
+            // repository for library
+            services.AddTransient<IAuditLoggingRepository<TAuditLog>, AuditLoggingRepository<TAuditLoggingDbContext, TAuditLog>>();
+
+            // repository and service for admin
+            services.AddTransient<IAuditLogRepository<TAuditLog>, AuditLogRepository<TAuditLoggingDbContext, TAuditLog>>();
+            services.AddTransient<IAuditLogService, AuditLogService<TAuditLog>>();
+```
+
+### Audit Logging Configuration
+
+In `appsettings.json` is following configuration:
+
+```
+"AuditLoggingConfiguration": {
+    "Source": "IdentityServer.Admin.Web",
+    "SubjectIdentifierClaim": "sub",
+    "SubjectNameClaim": "name",
+    "IncludeFormVariables": false
+  }
+```
+
+The `Skoruba.IdentityServer4.Admin.BusinessLogic` layer contains folder called `Events` for audit logging. In each method in Services is called function `LogEventAsync` like this:
+
+```
+await AuditEventLogger.LogEventAsync(new ClientDeletedEvent(client));
+```
+Final audit log is available in the table `dbo.AuditLog`.
 
 ### Login Configuration
 
