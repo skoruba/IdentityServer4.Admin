@@ -54,6 +54,7 @@ namespace Skoruba.IdentityServer4.Admin
         public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .AddJsonFile("serilog.json", optional: true, reloadOnChange: true)
             .AddEnvironmentVariables()
             .Build();
 
@@ -61,9 +62,15 @@ namespace Skoruba.IdentityServer4.Admin
             Host.CreateDefaultBuilder(args)
                  .ConfigureAppConfiguration((hostContext, configApp) =>
                  {
-                     configApp.AddJsonFile($"serilog.json", optional: true);
-                     configApp.AddJsonFile($"identitydata.json", optional: true);
-                     configApp.AddJsonFile($"identityserverdata.json", optional: true);
+                     configApp.AddJsonFile("serilog.json", optional: true, reloadOnChange: true);
+                     configApp.AddJsonFile("identitydata.json", optional: true, reloadOnChange: true);
+                     configApp.AddJsonFile("identityserverdata.json", optional: true, reloadOnChange: true);
+
+                     if (hostContext.HostingEnvironment.IsDevelopment())
+                     {
+                         configApp.AddUserSecrets<Startup>();
+                     }
+
                      configApp.AddEnvironmentVariables();
                      configApp.AddCommandLine(args);
                  })
@@ -76,7 +83,7 @@ namespace Skoruba.IdentityServer4.Admin
                 {
                     loggerConfig
                         .ReadFrom.Configuration(hostContext.Configuration)
-                        .Enrich.WithProperty("ComponentName", hostContext.HostingEnvironment.ApplicationName);
+                        .Enrich.WithProperty("ApplicationName", hostContext.HostingEnvironment.ApplicationName);
                 });
     }
 }
