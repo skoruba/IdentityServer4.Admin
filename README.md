@@ -179,7 +179,7 @@ The following Gulp commands are available:
 
 ## Audit Logging
 
-- This solution uses audit logging via - https://github.com/skoruba/AuditLogging (check this link for more detal about this implementation :blur:)
+- This solution uses audit logging via - https://github.com/skoruba/AuditLogging (check this link for more detal about this implementation :blush:)
 - In the Admin UI project is following setup:
 
 ```
