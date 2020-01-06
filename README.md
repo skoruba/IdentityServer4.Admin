@@ -101,8 +101,8 @@ docker-compose up -d
 Or
 - Set as StartUp project the project called `docker-compose` in Visual Studio.
 
-- Docker images with the Admin UI will be available also in docker hub:
-https://hub.docker.com/u/skoruba
+### Docker images
+- Docker images will be available also in docker hub: https://hub.docker.com/u/skoruba
 
 
 ## Installation of the Client Libraries
