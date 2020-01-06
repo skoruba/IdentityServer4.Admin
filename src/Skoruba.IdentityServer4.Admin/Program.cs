@@ -18,6 +18,10 @@ namespace Skoruba.IdentityServer4.Admin
 
         public static async Task Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(Configuration)
+                .CreateLogger();
+
             try
             {
                 var seed = args.Any(x => x == SeedArgs);
@@ -39,9 +43,19 @@ namespace Skoruba.IdentityServer4.Admin
             }
             catch (Exception ex)
             {
-                throw ex;
+                Log.Fatal(ex, "Host terminated unexpectedly");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
             }
         }
+
+        public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .AddEnvironmentVariables()
+            .Build();
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
