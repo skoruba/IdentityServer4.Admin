@@ -42,6 +42,7 @@ Copy-Item ./$gitProjectFolder/docker-compose.override.yml $templateRoot -recurse
 Copy-Item ./$gitProjectFolder/docker-compose.vs.debug.yml $templateRoot -recurse -force
 Copy-Item ./$gitProjectFolder/docker-compose.vs.release.yml $templateRoot -recurse -force
 Copy-Item ./$gitProjectFolder/docker-compose.yml $templateRoot -recurse -force
+Copy-Item ./$gitProjectFolder/shared $templateRoot -recurse -force
 
 # Clean up created folders
 Remove-Item ./$gitProjectFolder -recurse -force
