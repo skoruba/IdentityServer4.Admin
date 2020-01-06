@@ -89,15 +89,17 @@ git clone https://github.com/skoruba/IdentityServer4.Admin
 
 ## Running via Docker
 
-- It is possible to run Admin UI through docker:
+- It is possible to run Admin UI through the docker.
 
-- With following commands:
+- Project contain the `docker-compose.vs.debug.yml` and `docker-compose.override.yml` to enable debugging with a seeded environment. 
+- The following possibility to get a running seeded and debug-able (in VS) environment:
+
 ```
 docker-compose build
-docker-compose up
+docker-compose up -d
 ```
 Or
-- Directly in Visual Studio with project called `docker-compose` as well, which contains support for debugging.
+- Set as StartUp project the project called `docker-compose` in Visual Studio.
 
 - Docker images with the Admin UI will be available also in docker hub:
 https://hub.docker.com/u/skoruba
