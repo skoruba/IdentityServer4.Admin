@@ -142,7 +142,7 @@ The following Gulp commands are available:
     - --migrationProviderName (provider type - available choices: All, SqlServer, MySql, PostgreSQL)
 
 - For example: 
-`.\add-migration.ps1 --migration DbInit --migrationProviderName SqlServer`
+`.\add-migration.ps1 -migration DbInit -migrationProviderName SqlServer`
 
 
 ### Available database providers:
