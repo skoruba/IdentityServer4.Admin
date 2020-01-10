@@ -70,11 +70,7 @@ dotnet add src/Skoruba.IdentityServer4.STS.Identity package Npgsql.EntityFramewo
 
 In `src/Skoruba.IdentityServer4.Admin` and `src/Skoruba.IdentityServer4.STS.Identity` in `Helpers/StartupHelpers.cs` replace all occurences of `UseSqlServer` with `UseNpgsql`. This will inform EntityFramework that PostgreSQL will be used instead of SQL Server.
 
-# Final setup
-
-## Generate initial migrations 
-
-[Follow these steps for generating of DB migrations](/README.md#ef-core--data-access)
+# Final setup 
 
 ## Run STS and Admin
 
