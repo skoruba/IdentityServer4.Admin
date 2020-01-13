@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Account
 {
@@ -13,3 +13,9 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Account
         public string Email { get; set; }
     }
 }
+
+
+
+
+
+

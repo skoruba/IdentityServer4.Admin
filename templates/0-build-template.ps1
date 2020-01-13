@@ -10,7 +10,7 @@ $templateSrc = "template-build/content/src"
 $templateRoot = "template-build/content"
 $templateTests = "template-build/content/tests"
 $templateAdminProject = "template-build/content/src/Skoruba.IdentityServer4.Admin"
-$packagesVersions = "1.0.0-beta8"
+$packagesVersions = "1.0.0-rc1"
 
 function CleanBinObjFolders { 
 
@@ -129,7 +129,7 @@ nuget pack $templateNuspecPath
 
 ######################################
 # Step 3
-$templateLocalName = "Skoruba.IdentityServer4.Admin.Templates.1.0.0-beta8.nupkg"
+$templateLocalName = "Skoruba.IdentityServer4.Admin.Templates.1.0.0-rc1.nupkg"
 dotnet.exe new -i $templateLocalName
 
 ######################################

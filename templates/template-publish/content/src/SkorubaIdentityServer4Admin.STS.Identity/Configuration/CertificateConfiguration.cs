@@ -1,8 +1,11 @@
-﻿namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration
+namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration
 {
     public class CertificateConfiguration
     {
         public bool UseTemporarySigningKeyForDevelopment { get; set; }
+
+        public string CertificateStoreLocation { get; set; }
+        public bool CertificateValidOnly { get; set; }
 
         public bool UseSigningCertificateThumbprint { get; set; }
 
@@ -25,3 +28,9 @@
         public string ValidationCertificatePfxFilePassword { get; set; }
     }
 }
+
+
+
+
+
+

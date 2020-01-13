@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,8 +27,13 @@ namespace SkorubaIdentityServer4Admin.Admin.Controllers
 
         public IActionResult Logout()
         {
-            return new SignOutResult(new List<string> { AuthenticationConsts.SignInScheme, AuthenticationConsts.OidcAuthenticationScheme },
-                new AuthenticationProperties { RedirectUri = "/" });
+            return new SignOutResult(new List<string> { AuthenticationConsts.SignInScheme, AuthenticationConsts.OidcAuthenticationScheme });
         }
     }
 }
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
 namespace SkorubaIdentityServer4Admin.Admin.Api.Configuration.ApplicationParts
 {
@@ -19,3 +19,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Configuration.ApplicationParts
         }
     }
 }
+
+
+
+
+

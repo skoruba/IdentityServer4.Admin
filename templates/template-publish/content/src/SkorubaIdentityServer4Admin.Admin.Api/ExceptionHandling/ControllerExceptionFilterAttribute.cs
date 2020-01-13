@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -72,3 +72,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.ExceptionHandling
         }
     }
 }
+
+
+
+
+
