@@ -50,6 +50,30 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
             return services;
         }
 
+        public static IServiceCollection AddAdminApiCors(this IServiceCollection services, AdminApiConfiguration adminApiConfiguration)
+        {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        if (adminApiConfiguration.CorsAllowAnyOrigin)
+                        {
+                            builder.AllowAnyOrigin();
+                        }
+                        else
+                        {
+                            builder.WithOrigins(adminApiConfiguration.CorsAllowOrigins);
+                        }
+
+                        builder.AllowAnyHeader();
+                        builder.AllowAnyMethod();
+                    });
+            });
+
+            return services;
+        }
+
         /// <summary>
         /// Register services for MVC
         /// </summary>
