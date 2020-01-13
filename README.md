@@ -29,7 +29,7 @@ dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-rc1
 - Create new project:
 
 ```sh
-dotnet new skoruba.is4admin --name MyProject --title MyProject --adminemail admin@example.com --adminpassword Pa$$word123 --adminrole MyRole --adminclientid MyClientId --adminclientsecret MyClientSecret --dockersupport true
+dotnet new skoruba.is4admin --name MyProject --title MyProject --adminemail 'admin@skoruba.com' --adminpassword 'Pa$$word123' --adminrole MyRole --adminclientid MyClientId --adminclientsecret MyClientSecret --dockersupport true
 ```
 
 Project template options:
