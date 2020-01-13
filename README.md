@@ -98,17 +98,17 @@ git clone https://github.com/skoruba/IdentityServer4.Admin
 docker-compose build
 docker-compose up -d
 ```
-Or
-- Set as StartUp project the project called `docker-compose` in Visual Studio.
+
+> It is also possible to set as startup project the project called `docker-compose` in Visual Studio.
 
 ### Docker images
 - Docker images will be available also in [docker hub](https://hub.docker.com/u/skoruba)
   - AdminUI:
-   - `skoruba/identityserver4-admin:rc1`
+    - `skoruba/identityserver4-admin:rc1`
   - Admin Api:
-   - `skoruba/identityserver4-admin-api:rc1`
+    - `skoruba/identityserver4-admin-api:rc1`
   - STS:
-   - `skoruba/identityserver4-sts-identity:rc1`
+    - `skoruba/identityserver4-sts-identity:rc1`
 
 ## Installation of the Client Libraries
 
