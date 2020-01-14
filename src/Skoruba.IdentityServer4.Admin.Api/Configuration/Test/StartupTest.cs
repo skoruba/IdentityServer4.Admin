@@ -29,7 +29,12 @@ namespace Skoruba.IdentityServer4.Admin.Api.Configuration.Test
                 .AddEntityFrameworkStores<AdminIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+            }
+            )
                 .AddCookie(IdentityServerAuthenticationDefaults.AuthenticationScheme);
         }
 
