@@ -149,6 +149,7 @@ The following Gulp commands are available:
 - For example: 
 `.\add-migration.ps1 -migration DbInit -migrationProviderName SqlServer`
 
+> NOTE: Currently the migrations are a part of the repository.
 
 ### Available database providers:
 - SqlServer
