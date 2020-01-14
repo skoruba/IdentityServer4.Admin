@@ -175,10 +175,17 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
             where TRole : class
             where TUser : class
         {
+            services.AddIdentity<TUser, TRole>(options => { options.User.RequireUniqueEmail = true; })
+                .AddEntityFrameworkStores<TIdentityDbContext>()
+                .AddDefaultTokenProviders();
+
             services.AddAuthentication(options =>
             {
+                options.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultForbidScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
             })
                 .AddIdentityServerAuthentication(options =>
                 {
@@ -186,10 +193,6 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                     options.ApiName = adminApiConfiguration.OidcApiName;
                     options.RequireHttpsMetadata = adminApiConfiguration.RequireHttpsMetadata;
                 });
-
-            services.AddIdentity<TUser, TRole>(options => { options.User.RequireUniqueEmail = true; })
-                .AddEntityFrameworkStores<TIdentityDbContext>()
-                .AddDefaultTokenProviders();
         }
 
         /// <summary>

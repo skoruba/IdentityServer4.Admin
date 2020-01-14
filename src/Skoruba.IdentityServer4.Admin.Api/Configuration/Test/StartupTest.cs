@@ -31,11 +31,12 @@ namespace Skoruba.IdentityServer4.Admin.Api.Configuration.Test
 
             services.AddAuthentication(options =>
             {
+                options.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
-            }
-            )
-                .AddCookie(IdentityServerAuthenticationDefaults.AuthenticationScheme);
+                options.DefaultSignInScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultForbidScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+            }).AddCookie(IdentityServerAuthenticationDefaults.AuthenticationScheme);
         }
 
         public override void RegisterAuthorization(IServiceCollection services)
