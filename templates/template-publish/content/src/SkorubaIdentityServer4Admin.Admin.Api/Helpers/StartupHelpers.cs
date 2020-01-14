@@ -175,7 +175,11 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Helpers
             where TRole : class
             where TUser : class
         {
-            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+            services.AddAuthentication(options =>
+            {
+            options.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+            )
                 .AddIdentityServerAuthentication(options =>
                 {
                     options.Authority = adminApiConfiguration.IdentityServerBaseUrl;
