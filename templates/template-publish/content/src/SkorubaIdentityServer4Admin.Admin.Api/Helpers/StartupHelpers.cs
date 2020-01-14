@@ -138,7 +138,7 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Helpers
             where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
         {
             var databaseProvider = configuration.GetSection(nameof(DatabaseProviderConfiguration)).Get<DatabaseProviderConfiguration>();
-            
+
             var identityConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
             var configurationConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
             var persistedGrantsConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);
@@ -177,8 +177,9 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Helpers
         {
             services.AddAuthentication(options =>
             {
-            options.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+            }
             )
                 .AddIdentityServerAuthentication(options =>
                 {

@@ -31,8 +31,9 @@ namespace Skoruba.IdentityServer4.Admin.Api.Configuration.Test
 
             services.AddAuthentication(options =>
             {
-            options.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+            }
             )
                 .AddCookie(IdentityServerAuthenticationDefaults.AuthenticationScheme);
         }
