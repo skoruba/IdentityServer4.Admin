@@ -49,10 +49,6 @@
         <ProjectReference Include="..\SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer\SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Events\" />
-    </ItemGroup>
-
 </Project>
 
 
