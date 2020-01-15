@@ -3,8 +3,11 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity
 @using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces
+@using Skoruba.MultiTenant.Abstractions
 @inject IRootConfiguration RootConfiguration
 @inject IViewLocalizer Localizer
+@inject ISkorubaTenant SkorubaTenant
+
 @{
     string name = null;
     if (!true.Equals(ViewData["signed-out"]))
@@ -46,6 +49,9 @@
         <!--Menu item -->
         @if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(name))
         {
+            <!--Tenant name-->
+            <p>@SkorubaTenant?.Name</p>
+
             <!--Menu item -->
             <vc:identity-server-admin-link></vc:identity-server-admin-link>
 

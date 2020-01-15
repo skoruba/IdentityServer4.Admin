@@ -1,0 +1,23 @@
+﻿{
+  "MultiTenantData": {
+    "Tenants": [
+      {
+        // GUID
+        "Id": "00000000-0000-0000-0000-000000000000",
+        // Display name
+        "Name": "Tenant Admin",
+        // URL friendly name for url resolution strategy
+        "Identifier": "0000",
+        // For Skoruba Admin this should equal the IdentityDbConnection
+        "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=IdentityServer4Admin;Trusted_Connection=True;MultipleActiveResultSets=true",
+        // Dictionary of misc items
+        "Items": {
+          // Is tenant allowed to login
+          "IsActive": true,
+          // Is 2FA required for users
+          "RequiresTwoFactorAuthentication": true
+        }
+      }
+    ]
+  }
+}

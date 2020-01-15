@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Constants;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
+using Skoruba.MultiTenant.Configuration;
+using Skoruba.MultiTenant.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts
 {
@@ -9,7 +11,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts
     {
         public AdminIdentityDbContext(DbContextOptions<AdminIdentityDbContext> options) : base(options)
         {
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -17,8 +19,22 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts
             base.OnModelCreating(builder);
 
             ConfigureIdentityContext(builder);
-        }
 
+            ConfigureIdentityForMultiTenant(builder);
+        }
+        protected void ConfigureIdentityForMultiTenant(ModelBuilder builder)
+        {
+            if (MultiTenantConstants.MultiTenantEnabled)
+            {
+                var userBuilder = builder.Entity<UserIdentity>();
+                userBuilder.RemoveIndex("NormalizedUserName");
+                userBuilder.HasIndex("NormalizedUserName", "TenantId").HasName("UserNameIndex").IsUnique();
+
+                var roleBuilder = builder.Entity<UserIdentityRole>();
+                roleBuilder.RemoveIndex("NormalizedName");
+                roleBuilder.HasIndex("NormalizedName", "TenantId").HasName("RoleNameIndex").IsUnique();
+            }
+        }
         private void ConfigureIdentityContext(ModelBuilder builder)
         {
             builder.Entity<UserIdentityRole>().ToTable(TableConsts.IdentityRoles);

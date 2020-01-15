@@ -47,7 +47,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "business", "business", "{EE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.EntityFramework.MySql", "src\Skoruba.IdentityServer4.Admin.EntityFramework.MySql\Skoruba.IdentityServer4.Admin.EntityFramework.MySql.csproj", "{0A8A0DB7-0509-4DFB-9201-74398511B481}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skoruba.IdentityServer4.Admin.Api.IntegrationTests", "tests\Skoruba.IdentityServer4.Admin.Api.IntegrationTests\Skoruba.IdentityServer4.Admin.Api.IntegrationTests.csproj", "{4D123ACB-ACBD-4E40-AE6B-1B0F79D703B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.Api.IntegrationTests", "tests\Skoruba.IdentityServer4.Admin.Api.IntegrationTests\Skoruba.IdentityServer4.Admin.Api.IntegrationTests.csproj", "{4D123ACB-ACBD-4E40-AE6B-1B0F79D703B0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.MultiTenant.IdentityServer", "src\Skoruba.MultiTenant.IdentityServer\Skoruba.MultiTenant.IdentityServer.csproj", "{064365A6-5E42-41B8-96F6-4F1E935E7F64}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.DbMigrator", "src\Skoruba.DbMigrator\Skoruba.DbMigrator.csproj", "{FFB796F4-245A-4DB7-B11F-45B6BE5E9F6D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.MultiTenant.Identity", "src\Skoruba.MultiTenant.Identity\Skoruba.MultiTenant.Identity.csproj", "{61B0141D-D37F-4D14-915B-7D497BF11100}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.MultiTenant.EFCacheStore", "src\Skoruba.MultiTenant.EFCacheStore\Skoruba.MultiTenant.EFCacheStore.csproj", "{3985CE82-957C-4655-AD9F-9B1F4E973BEF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "multitenant", "multitenant", "{B91A26D9-A6B8-49B6-A452-43FC20AB5960}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.DbMigrator.Abstractions", "src\Skoruba.DbMigrator.Abstractions\Skoruba.DbMigrator.Abstractions.csproj", "{9DB8EC68-139F-4487-AD5B-AEDBBD99C5B7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.MultiTenant", "src\Skoruba.MultiTenant\Skoruba.MultiTenant.csproj", "{30174CB3-F4DF-4325-BFE5-F5198825E812}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.MultiTenant.Finbuckle", "src\Skoruba.MultiTenant.Finbuckle\Skoruba.MultiTenant.Finbuckle.csproj", "{7717F456-5520-4F2D-849F-6C13A54E3731}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -127,6 +143,34 @@ Global
 		{4D123ACB-ACBD-4E40-AE6B-1B0F79D703B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D123ACB-ACBD-4E40-AE6B-1B0F79D703B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D123ACB-ACBD-4E40-AE6B-1B0F79D703B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{064365A6-5E42-41B8-96F6-4F1E935E7F64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{064365A6-5E42-41B8-96F6-4F1E935E7F64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{064365A6-5E42-41B8-96F6-4F1E935E7F64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{064365A6-5E42-41B8-96F6-4F1E935E7F64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFB796F4-245A-4DB7-B11F-45B6BE5E9F6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFB796F4-245A-4DB7-B11F-45B6BE5E9F6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFB796F4-245A-4DB7-B11F-45B6BE5E9F6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFB796F4-245A-4DB7-B11F-45B6BE5E9F6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61B0141D-D37F-4D14-915B-7D497BF11100}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61B0141D-D37F-4D14-915B-7D497BF11100}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61B0141D-D37F-4D14-915B-7D497BF11100}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61B0141D-D37F-4D14-915B-7D497BF11100}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3985CE82-957C-4655-AD9F-9B1F4E973BEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3985CE82-957C-4655-AD9F-9B1F4E973BEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3985CE82-957C-4655-AD9F-9B1F4E973BEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3985CE82-957C-4655-AD9F-9B1F4E973BEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DB8EC68-139F-4487-AD5B-AEDBBD99C5B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DB8EC68-139F-4487-AD5B-AEDBBD99C5B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DB8EC68-139F-4487-AD5B-AEDBBD99C5B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DB8EC68-139F-4487-AD5B-AEDBBD99C5B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30174CB3-F4DF-4325-BFE5-F5198825E812}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30174CB3-F4DF-4325-BFE5-F5198825E812}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30174CB3-F4DF-4325-BFE5-F5198825E812}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30174CB3-F4DF-4325-BFE5-F5198825E812}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7717F456-5520-4F2D-849F-6C13A54E3731}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7717F456-5520-4F2D-849F-6C13A54E3731}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7717F456-5520-4F2D-849F-6C13A54E3731}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7717F456-5520-4F2D-849F-6C13A54E3731}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -149,6 +193,13 @@ Global
 		{3ECDC91E-0D3E-4E4D-A34E-D33BB714578D} = {2A514C8F-6A53-41CA-AB41-B644E7BC92A7}
 		{0A8A0DB7-0509-4DFB-9201-74398511B481} = {2A514C8F-6A53-41CA-AB41-B644E7BC92A7}
 		{4D123ACB-ACBD-4E40-AE6B-1B0F79D703B0} = {0BC0CC4E-A0F1-45E8-B41A-AE0FA76BF3E5}
+		{064365A6-5E42-41B8-96F6-4F1E935E7F64} = {B91A26D9-A6B8-49B6-A452-43FC20AB5960}
+		{FFB796F4-245A-4DB7-B11F-45B6BE5E9F6D} = {2A514C8F-6A53-41CA-AB41-B644E7BC92A7}
+		{61B0141D-D37F-4D14-915B-7D497BF11100} = {B91A26D9-A6B8-49B6-A452-43FC20AB5960}
+		{3985CE82-957C-4655-AD9F-9B1F4E973BEF} = {B91A26D9-A6B8-49B6-A452-43FC20AB5960}
+		{9DB8EC68-139F-4487-AD5B-AEDBBD99C5B7} = {2A514C8F-6A53-41CA-AB41-B644E7BC92A7}
+		{30174CB3-F4DF-4325-BFE5-F5198825E812} = {B91A26D9-A6B8-49B6-A452-43FC20AB5960}
+		{7717F456-5520-4F2D-849F-6C13A54E3731} = {B91A26D9-A6B8-49B6-A452-43FC20AB5960}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B3166EDE-037B-4C68-BEBA-5DE9C5E3DB82}

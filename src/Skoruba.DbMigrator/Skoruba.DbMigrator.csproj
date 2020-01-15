@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>ff374f98-11b0-418a-b590-3cead718bc87</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="identitydata.json" />
+    <None Remove="identityserverdata.json" />
+    <None Remove="tenantdata.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="identitydata.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="identityserverdata.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="tenantdata.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FlexLabs.EntityFrameworkCore.Upsert" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.0.0" />
+    <PackageReference Include="Scrutor" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Skoruba.DbMigrator.Abstractions\Skoruba.DbMigrator.Abstractions.csproj" />
+    <ProjectReference Include="..\Skoruba.IdentityServer4.Admin\Skoruba.IdentityServer4.Admin.csproj" />
+    <ProjectReference Include="..\Skoruba.MultiTenant.EFCacheStore\Skoruba.MultiTenant.EFCacheStore.csproj" />
+  </ItemGroup>
+
+</Project>

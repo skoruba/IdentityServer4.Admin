@@ -9,6 +9,7 @@ using Serilog;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.Helpers;
+using Skoruba.MultiTenant.Configuration;
 
 namespace Skoruba.IdentityServer4.Admin
 {
@@ -33,12 +34,11 @@ namespace Skoruba.IdentityServer4.Admin
                 // await DbMigrationHelpers.EnsureSeedData<IdentityServerConfigurationDbContext, AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, UserIdentity, UserIdentityRole>(host);
                 if (seed)
                 {
-                    await DbMigrationHelpers
-                        .EnsureSeedData<IdentityServerConfigurationDbContext, AdminIdentityDbContext,
-                            IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext,
-                            UserIdentity, UserIdentityRole>(host);
+                    //await DbMigrationHelpers
+                    //    .EnsureSeedData<IdentityServerConfigurationDbContext, AdminIdentityDbContext,
+                    //        IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext,
+                    //        UserIdentity, UserIdentityRole>(host);
                 }
-
                 host.Run();
             }
             catch (Exception ex)

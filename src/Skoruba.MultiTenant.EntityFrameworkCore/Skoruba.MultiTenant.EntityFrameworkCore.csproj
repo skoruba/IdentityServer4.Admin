@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Title>Skoruba.Multitenancy.EntityFrameworkCore</Title>
+    <Description>Entity Framework Core support for Skoruba.Multitenancy.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Stores\EFCoreStore\EFCoreStore.cs" />
+  </ItemGroup>
+ 
+  <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.1" />
+  </ItemGroup>
+ 
+  <ItemGroup>
+    <ProjectReference Include="..\Skoruba.MultiTenant\Skoruba.MultiTenant.csproj" />
+  </ItemGroup>
+
+</Project>

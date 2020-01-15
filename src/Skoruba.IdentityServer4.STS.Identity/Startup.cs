@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,6 +13,9 @@ using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using System;
+using Skoruba.MultiTenant;
+using Skoruba.MultiTenant.Finbuckle.Strategies;
+using Skoruba.MultiTenant.IdentityServer;
 
 namespace Skoruba.IdentityServer4.STS.Identity
 {
@@ -51,6 +55,18 @@ namespace Skoruba.IdentityServer4.STS.Identity
             // Add authorization policies for MVC
             RegisterAuthorization(services);
 
+            // If single tenant app then change to false and remove app configuration
+            services.AddMultiTenant(false)
+                // required if using app.AddMultiTenantFromForm()
+                .RegisterConfiguration(Configuration.GetSection("MultiTenantConfiguration"))
+                // custom store
+                .WithEFCacheStore(options => options.UseSqlServer(Configuration.GetConnectionString("TenantsDbConnection")))
+                // custom strategy to get tenant from form data at login
+                .WithStrategy<FormStrategy>(ServiceLifetime.Singleton)
+                // dont require tenant resolution for identity endpoints
+                .RegisterTenantIsRequiredValidation<TenantNotRequiredForIdentityServerEndpoints>()
+            ;
+
             services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext>(Configuration);
         }
 
@@ -69,11 +85,21 @@ namespace Skoruba.IdentityServer4.STS.Identity
             app.UseSecurityHeaders();
 
             app.UseStaticFiles();
+           
+            app.UseRouting();
+
+            // configure default multitenant middleware before authentication
+            app.UseMultiTenant();
+
             UseAuthentication(app);
+
+            // configure custom multitenant middleware for claims after authentication
+            app.UseMultiTenantFromClaims();
+
             app.UseMvcLocalizationServices();
 
-            app.UseRouting();
             app.UseAuthorization();
+         
             app.UseEndpoints(endpoint => 
             { 
                 endpoint.MapDefaultControllerRoute();

@@ -16,6 +16,10 @@ using Skoruba.IdentityServer4.Admin.Helpers;
 using Skoruba.IdentityServer4.Admin.Configuration;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
 using System;
+using Microsoft.EntityFrameworkCore;
+using Skoruba.MultiTenant;
+using Skoruba.MultiTenant.IdentityServer;
+using Skoruba.MultiTenant.Finbuckle.Strategies;
 
 namespace Skoruba.IdentityServer4.Admin
 {
@@ -60,7 +64,7 @@ namespace Skoruba.IdentityServer4.Admin
                                 UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
                                 UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
                                 RoleClaimsDto<string>, UserClaimDto<string>, RoleClaimDto<string>>();
-            
+
             // Add all dependencies for Asp.Net Core Identity in MVC - these dependencies are injected into generic Controllers
             // Including settings for MVC and Localization
             // If you want to change primary keys or use another db model for Asp.Net Core Identity:
@@ -76,6 +80,14 @@ namespace Skoruba.IdentityServer4.Admin
 
             // Add audit logging
             services.AddAuditEventLogging<AdminAuditLogDbContext, AuditLog>(Configuration);
+
+            // Add multitenancy
+            services.AddMultiTenant(true)
+                // custom store
+                .WithEFCacheStore(options => options.UseSqlServer(Configuration.GetConnectionString("TenantsDbConnection")))
+                // custom strategy to get tenant id from user claims
+                .WithStrategy<ClaimsStrategy>(ServiceLifetime.Singleton)
+                ;
 
             services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, AdminLogDbContext, AdminAuditLogDbContext>(Configuration, rootConfiguration.AdminConfiguration);
         }
@@ -99,18 +111,22 @@ namespace Skoruba.IdentityServer4.Admin
 
             UseAuthentication(app);
 
+            // configure multitenant middleware after authentication when the strategy is to use claims
+            // note: other strategies may require the configuration to come before authentication.
+            app.UseMultiTenant();
+
             // Use Localization
             app.ConfigureLocalization();
 
             app.UseRouting();
             app.UseAuthorization();
-            app.UseEndpoints(endpoint => 
-            { 
+            app.UseEndpoints(endpoint =>
+            {
                 endpoint.MapDefaultControllerRoute();
                 endpoint.MapHealthChecks("/health", new HealthCheckOptions
                 {
                     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-                });                
+                });
             });
         }
 

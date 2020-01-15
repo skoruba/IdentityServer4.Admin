@@ -16,5 +16,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.ViewModels.Account
         public string Password { get; set; }
         public bool RememberLogin { get; set; }
         public string ReturnUrl { get; set; }
+        public string TenantCode { get; set; }
     }
 }
