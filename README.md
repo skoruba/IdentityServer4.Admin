@@ -141,6 +141,9 @@ The following Gulp commands are available:
   - `AuditLoggingDbContext`: for Audit Logging
 
 ### Run entity framework migrations:
+
+> NOTE: Initial migrations are a part of the repository.
+
   - It is possible to use powershell script in folder `build/add-migrations.ps1`.
   - This script take two arguments:
     - --migration (migration name)
@@ -148,8 +151,6 @@ The following Gulp commands are available:
 
 - For example: 
 `.\add-migration.ps1 -migration DbInit -migrationProviderName SqlServer`
-
-> NOTE: Currently the migrations are a part of the repository.
 
 ### Available database providers:
 - SqlServer
