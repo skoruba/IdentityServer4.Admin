@@ -360,6 +360,53 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             return await UserManager.DeleteAsync(userIdentity);
         }
 
+        public virtual async Task<int> DeleteClaimForRolesAsync(List<string> roleIds, string roleClaimType)
+        {
+            var rolesQ = from r in DbContext.Set<TRole>()
+                join rc in DbContext.Set<TRoleClaim>() on r.Id equals rc.RoleId
+                where rc.ClaimType.Equals(roleClaimType) && roleIds.Contains(r.Id.ToString())
+                select new { role = r, roleClaim = rc };
+            
+            var roles = await rolesQ.ToListAsync();
+
+            var deleteClaimTask = new List<Task>();
+            roles.ForEach(r => deleteClaimTask.Add(RoleManager.RemoveClaimAsync(r.role, r.roleClaim.ToClaim())));
+            await Task.WhenAll(deleteClaimTask);
+
+
+            return await AutoSaveChangesAsync();
+        }
+
+        public virtual async Task<int> AddClaimToRolesAsync(IList<string> roleIds, string roleClaimType, string roleClaimValue)
+        {
+            var roles = await DbContext.Set<TRole>().Where(r => roleIds.Contains(r.Id.ToString())).ToListAsync();
+            var addClaimTasks = new List<Task>();
+
+            roles.ForEach(r => addClaimTasks.Add(RoleManager.AddClaimAsync(r, new Claim(roleClaimType, roleClaimValue))));
+
+            await Task.WhenAll(addClaimTasks);
+
+            return await AutoSaveChangesAsync();
+        }
+
+        public virtual async Task<PagedList<TRole>> GetRolesWithClaimTypeAsync(string roleClaimType, int page = 1, int pageSize = 10)
+        {
+            var rolesQ = from r in DbContext.Set<TRole>()
+                join rc in DbContext.Set<TRoleClaim>() on r.Id equals rc.RoleId
+                where rc.ClaimType.Equals(roleClaimType)
+                select r;
+
+            var roles = await rolesQ.PageBy(x => x.Id, page, pageSize).ToListAsync();
+
+            var pagedList = new PagedList<TRole>();
+
+            pagedList.Data.AddRange(roles);
+            pagedList.TotalCount = await rolesQ.CountAsync();
+            pagedList.PageSize = pageSize;
+
+            return pagedList;
+        }
+
         private async Task<int> AutoSaveChangesAsync()
         {
             return AutoSaveChanges ? await DbContext.SaveChangesAsync() : (int)SavedStatus.WillBeSavedExplicitly;

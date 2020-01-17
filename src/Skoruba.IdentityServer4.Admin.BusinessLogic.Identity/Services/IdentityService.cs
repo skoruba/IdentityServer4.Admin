@@ -473,5 +473,44 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
 
             return HandleIdentityError(identityResult, IdentityServiceResources.RoleDeleteFailed().Description, IdentityServiceResources.IdentityErrorKey().Description, role);
         }
+
+        public virtual async Task<int> DeleteClaimForRolesAsync(List<string> roleIds, string roleClaimType)
+        {
+            foreach (var roleId in roleIds)
+            {
+                var roleExists = await IdentityRepository.ExistsRoleAsync(roleId);
+                if (!roleExists) throw new UserFriendlyErrorPageException(string.Format(IdentityServiceResources.RoleDoesNotExist().Description, roleId ), IdentityServiceResources.RoleDoesNotExist().Description);
+            }
+
+            var deleted = await IdentityRepository.DeleteClaimForRolesAsync(roleIds, roleClaimType);
+
+            await AuditEventLogger.LogEventAsync(new RoleClaimDeletedFromRolesEvent(roleClaimType, roleIds));
+            
+            return deleted;
+        }
+
+        public virtual async Task<int> CreateRoleClaimForRolesAsync(IList<string> roleIds, string roleClaimType, string roleClaimValue)
+        {
+            foreach (var roleId in roleIds)
+            {
+                var roleExists = await IdentityRepository.ExistsRoleAsync(roleId);
+                if (!roleExists) throw new UserFriendlyErrorPageException(string.Format(IdentityServiceResources.RoleDoesNotExist().Description, roleId ), IdentityServiceResources.RoleDoesNotExist().Description);
+            }
+
+            var added = await IdentityRepository.AddClaimToRolesAsync(roleIds, roleClaimType, roleClaimValue);
+
+            await AuditEventLogger.LogEventAsync(new RoleClaimDeletedFromRolesEvent(roleClaimType, roleIds));
+            
+            return added;
+        }
+
+        public virtual async Task<TRolesDto> GetRolesWithClaimTypeAsync(string roleClaimType, int page = 1, int pageSize = 10)
+        {
+            await AuditEventLogger.LogEventAsync(new RolesWithClaimTypeRequestedEvent(roleClaimType));
+            
+            PagedList<TRole> pagedList = await IdentityRepository.GetRolesWithClaimTypeAsync(roleClaimType, page, pageSize);
+
+            return Mapper.Map<TRolesDto>(pagedList);
+        }
     }
 }

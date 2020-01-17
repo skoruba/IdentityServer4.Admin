@@ -76,5 +76,11 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.In
         Task<int> DeleteRoleClaimsAsync(string roleId, int claimId);
 
         Task<IdentityResult> DeleteRoleAsync(TRole role);
+
+        Task<int> DeleteClaimForRolesAsync(List<string> roleIds, string roleClaimType);
+
+        Task<int> AddClaimToRolesAsync(IList<string> roleIds, string roleClaimType, string roleClaimValue);
+
+        Task<PagedList<TRole>> GetRolesWithClaimTypeAsync(string roleClaimType, int page = 1, int pageSize = 10);
     }
 }
