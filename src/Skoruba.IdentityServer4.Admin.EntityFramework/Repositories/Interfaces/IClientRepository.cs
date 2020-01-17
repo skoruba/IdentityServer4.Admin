@@ -22,14 +22,18 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
 	        bool cloneClientRedirectUris = true,
 	        bool cloneClientClaims = true,
 	        bool cloneClientProperties = true);
-        
-        Task<bool> CanInsertClientAsync(Client client, bool isCloned = false);
+
+		Task<int> CloneClientExportAsync(Client client);
+
+		Task<bool> CanInsertClientAsync(Client client, bool isCloned = false);
 
         Task<Client> GetClientAsync(int clientId);
 
 	    Task<(string ClientId, string ClientName)> GetClientIdAsync(int clientId);
 
-        Task<PagedList<Client>> GetClientsAsync(string search = "", int page = 1, int pageSize = 10);
+		Task<Client[]> GetClientsExportAsync();
+
+		Task<PagedList<Client>> GetClientsAsync(string search = "", int page = 1, int pageSize = 10);
 
 		Task<List<string>> GetScopesAsync(string scope, int limit = 0);
 

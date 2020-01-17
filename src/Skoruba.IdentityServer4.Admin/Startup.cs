@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -52,6 +53,12 @@ namespace Skoruba.IdentityServer4.Admin
             
             // Add exception filters in MVC
             services.AddMvcExceptionFilters();
+
+            services.Configure<FormOptions>(options =>
+            {
+                // Set the limit to 10 MB
+                options.MultipartBodyLengthLimit = 10485760;
+            });
 
             // Add all dependencies for IdentityServer Admin
             services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();

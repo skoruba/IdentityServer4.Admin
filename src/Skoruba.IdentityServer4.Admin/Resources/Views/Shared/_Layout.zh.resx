@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ExportConfig" xml:space="preserve">
+    <value>配置上传</value>
+  </data>
   <data name="FooterCopyright" xml:space="preserve">
     <value>&amp;copy; 2018</value>
   </data>
   <data name="FooterTitle" xml:space="preserve">
     <value>Skoruba IdentityServer4 Admin</value>
+  </data>
+  <data name="ImportConfig" xml:space="preserve">
+    <value>加载配置</value>
   </data>
   <data name="LinkApiResources" xml:space="preserve">
     <value>Api 资源</value>

@@ -301,7 +301,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TContext : DbContext
         {
             var connectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
-            services.AddDbContext<TContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<TContext>(options => options.UseNpgsql(connectionString));
         }
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TContext : DbContext
         {
             var connectionString = configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey);
-            services.AddDbContext<TContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<TContext>(options => options.UseNpgsql(connectionString));
         }
 
         /// <summary>
@@ -375,7 +375,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             builder.AddConfigurationStore<TConfigurationDbContext>(options =>
             {
                 options.ConfigureDbContext = b =>
-                    b.UseSqlServer(
+                    b.UseNpgsql(
                         configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey),
                         sql => sql.MigrationsAssembly(migrationsAssembly));
             });
@@ -388,7 +388,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 options.TokenCleanupInterval = 15;
 #endif
                 options.ConfigureDbContext = b =>
-                    b.UseSqlServer(
+                    b.UseNpgsql(
                         configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey),
                         sql => sql.MigrationsAssembly(migrationsAssembly));
             });

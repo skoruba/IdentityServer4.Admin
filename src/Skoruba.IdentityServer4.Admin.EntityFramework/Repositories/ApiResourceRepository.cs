@@ -48,6 +48,17 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
                 .SingleOrDefaultAsync();
         }
 
+        public virtual async Task<ApiResource[]> GetApiResourcesExportAsync()
+        {
+            return await DbContext.ApiResources
+                .Include(x => x.UserClaims)
+                .Include(x => x.Properties)
+                .Include(x => x.Scopes)
+                .Include(x => x.Secrets)
+                .AsNoTracking()
+                .ToArrayAsync();
+        }
+
         public virtual async Task<PagedList<ApiResourceProperty>> GetApiResourcePropertiesAsync(int apiResourceId, int page = 1, int pageSize = 10)
         {
             var pagedList = new PagedList<ApiResourceProperty>();
@@ -78,6 +89,21 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             await DbContext.ApiResourceProperties.AddAsync(apiResourceProperty);
 
             return await AutoSaveChangesAsync();
+        }
+
+        public virtual async Task<int> CloneApiResourceAsync(ApiResource apiResource)
+        {
+            //Clean original ids
+            apiResource.Id = 0;
+            apiResource.UserClaims.ForEach(x => x.Id = 0);
+            apiResource.Properties.ForEach(x => x.Id = 0);
+            apiResource.Scopes.ForEach(x => x.Id = 0);
+            apiResource.Secrets.ForEach(x => x.Id = 0);
+
+            await DbContext.ApiResources.AddAsync(apiResource);
+            await AutoSaveChangesAsync();
+
+            return apiResource.Id;
         }
 
         public virtual async Task<int> DeleteApiResourcePropertyAsync(ApiResourceProperty apiResourceProperty)

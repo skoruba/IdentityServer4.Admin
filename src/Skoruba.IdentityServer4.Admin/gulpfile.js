@@ -18,6 +18,7 @@ function processScripts() {
         .src([
             './node_modules/jquery/dist/jquery.js',
             './node_modules/jquery-validation/dist/jquery.validate.js',
+            './node_modules/jquery-ajax-unobtrusive/dist/jquery.unobtrusive-ajax.js',
             './node_modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js',
             './node_modules/popper.js/dist/umd/popper.js',
             './node_modules/bootstrap/dist/js/bootstrap.js',

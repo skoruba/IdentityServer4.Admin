@@ -58,7 +58,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             var storeOptions = new ConfigurationStoreOptions();
             services.AddSingleton(storeOptions);
 
-            services.AddDbContext<TContext>(options => options.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey), optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
+            services.AddDbContext<TContext>(options => options.UseNpgsql(configuration.GetConnectionString(ConfigurationConsts.AdminConnectionStringKey), optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
         }
 
         /// <summary>
@@ -100,14 +100,14 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
             // Config DB for identity
             services.AddDbContext<TIdentityDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey),
+                options.UseNpgsql(configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey),
                     sql => sql.MigrationsAssembly(migrationsAssembly)));
 
             // Config DB from existing connection
             services.AddConfigurationDbContext<TConfigurationDbContext>(options =>
             {
                 options.ConfigureDbContext = b =>
-                    b.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey),
+                    b.UseNpgsql(configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey),
                         sql => sql.MigrationsAssembly(migrationsAssembly));
             });
 
@@ -115,13 +115,13 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             services.AddOperationalDbContext<TPersistedGrantDbContext>(options =>
             {
                 options.ConfigureDbContext = b =>
-                    b.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey),
+                    b.UseNpgsql(configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey),
                         sql => sql.MigrationsAssembly(migrationsAssembly));
             });
 
             // Log DB from existing connection
             services.AddDbContext<TLogDbContext>(options =>
-                options.UseSqlServer(
+                options.UseNpgsql(
                     configuration.GetConnectionString(ConfigurationConsts.AdminLogDbConnectionStringKey),
                     optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
         }
@@ -432,18 +432,18 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         options =>
                         {
                             options.Cookie.Name = AuthenticationConsts.IdentityAdminCookieName;
-                            
+
                             // Issue: https://github.com/aspnet/Announcements/issues/318
                             options.Cookie.SameSite = SameSiteMode.None;
                         })
                     .AddOpenIdConnect(AuthenticationConsts.OidcAuthenticationScheme, options =>
                     {
                         options.Authority = adminConfiguration.IdentityServerBaseUrl;
-#if DEBUG
+                        // #if DEBUG
                         options.RequireHttpsMetadata = false;
-#else
-                        options.RequireHttpsMetadata = true;
-#endif
+                        // #else
+                        // options.RequireHttpsMetadata = true;
+                        // #endif
                         options.ClientId = adminConfiguration.ClientId;
                         options.ClientSecret = adminConfiguration.ClientSecret;
                         options.ResponseType = adminConfiguration.OidcResponseType;

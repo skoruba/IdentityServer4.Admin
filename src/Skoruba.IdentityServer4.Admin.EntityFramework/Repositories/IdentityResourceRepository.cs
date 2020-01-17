@@ -39,6 +39,15 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             return pagedList;
         }
 
+        public virtual async Task<IdentityResource[]> GetIdentityResourcesExportAsync()
+        {
+            return await DbContext.IdentityResources
+                .Include(x => x.UserClaims)
+                .Include(x => x.Properties)
+                .AsNoTracking()
+                .ToArrayAsync();
+        }
+
         public virtual Task<IdentityResource> GetIdentityResourceAsync(int identityResourceId)
         {
             return DbContext.IdentityResources
@@ -78,6 +87,19 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             await DbContext.IdentityResourceProperties.AddAsync(identityResourceProperty);
 
             return await AutoSaveChangesAsync();
+        }
+
+        public virtual async Task<int> CloneIdentityResourceAsync(IdentityResource identityResource)
+        {
+            //Clean original ids
+            identityResource.Id = 0;
+            identityResource.UserClaims.ForEach(x => x.Id = 0);
+            identityResource.Properties.ForEach(x => x.Id = 0);
+
+            await DbContext.IdentityResources.AddAsync(identityResource);
+            await AutoSaveChangesAsync();
+
+            return identityResource.Id;
         }
 
         public virtual async Task<int> DeleteIdentityResourcePropertyAsync(IdentityResourceProperty identityResourceProperty)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -53,6 +54,20 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
             // Add authorization policies for MVC
             services.AddAuthorizationPolicies();
+
+            services.AddAuthentication(IdentityConstants.ExternalScheme).AddGoogle(googleOptions =>
+            {
+                var authNSection = Configuration.GetSection("Authentication:Google");
+                googleOptions.ClientId = authNSection["ClientId"];
+                googleOptions.ClientSecret = authNSection["ClientSecret"];
+                googleOptions.Scope.Add("openid");
+                googleOptions.Scope.Add("email");
+            }).AddYandex(yandexOptions =>
+            {
+                var authNSection = Configuration.GetSection("Authentication:Yandex");
+                yandexOptions.ClientId = authNSection["ClientId"];
+                yandexOptions.ClientSecret = authNSection["ClientSecret"];
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

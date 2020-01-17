@@ -35,6 +35,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddTransient<IApiResourceService, ApiResourceService>();
             services.AddTransient<IIdentityResourceService, IdentityResourceService>();
             services.AddTransient<IPersistedGrantService, PersistedGrantService>();
+            services.AddTransient<IExportService, ExportService>();
             services.AddTransient<ILogService, LogService>();
 
             //Resources

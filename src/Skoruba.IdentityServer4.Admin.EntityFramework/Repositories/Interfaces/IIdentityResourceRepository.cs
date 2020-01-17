@@ -6,6 +6,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
 {
     public interface IIdentityResourceRepository
     {
+        Task<IdentityResource[]> GetIdentityResourcesExportAsync();
         Task<PagedList<IdentityResource>> GetIdentityResourcesAsync(string search, int page = 1, int pageSize = 10);
 
         Task<IdentityResource> GetIdentityResourceAsync(int identityResourceId);
@@ -13,6 +14,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
         Task<bool> CanInsertIdentityResourceAsync(IdentityResource identityResource);
 
         Task<int> AddIdentityResourceAsync(IdentityResource identityResource);
+
+        Task<int> CloneIdentityResourceAsync(IdentityResource identityResource);
 
         Task<int> UpdateIdentityResourceAsync(IdentityResource identityResource);
 

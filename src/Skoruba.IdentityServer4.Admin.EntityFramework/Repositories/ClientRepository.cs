@@ -45,6 +45,22 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
                 .SingleOrDefaultAsync();
         }
 
+        public virtual async Task<Client[]> GetClientsExportAsync()
+        {
+            return await DbContext.Clients
+                .Include(x => x.AllowedGrantTypes)
+                .Include(x => x.RedirectUris)
+                .Include(x => x.PostLogoutRedirectUris)
+                .Include(x => x.AllowedScopes)
+                .Include(x => x.ClientSecrets)
+                .Include(x => x.Claims)
+                .Include(x => x.IdentityProviderRestrictions)
+                .Include(x => x.AllowedCorsOrigins)
+                .Include(x => x.Properties)
+                .AsNoTracking()
+                .ToArrayAsync();
+        }
+
         public virtual async Task<PagedList<Client>> GetClientsAsync(string search = "", int page = 1, int pageSize = 10)
         {
             var pagedList = new PagedList<Client>();
@@ -394,6 +410,26 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             var id = clientToClone.Id;
 
             return id;
+        }
+
+        public virtual async Task<int> CloneClientExportAsync(Client client)
+        {
+            //Clean original ids
+            client.Id = 0;
+            client.AllowedCorsOrigins.ForEach(x => x.Id = 0);
+            client.RedirectUris.ForEach(x => x.Id = 0);
+            client.PostLogoutRedirectUris.ForEach(x => x.Id = 0);
+            client.AllowedScopes.ForEach(x => x.Id = 0);
+            client.ClientSecrets.ForEach(x => x.Id = 0);
+            client.IdentityProviderRestrictions.ForEach(x => x.Id = 0);
+            client.Claims.ForEach(x => x.Id = 0);
+            client.AllowedGrantTypes.ForEach(x => x.Id = 0);
+            client.Properties.ForEach(x => x.Id = 0);
+
+            await DbContext.Clients.AddAsync(client);
+            await AutoSaveChangesAsync();
+
+            return client.Id;
         }
 
         private async Task RemoveClientRelationsAsync(Client client)

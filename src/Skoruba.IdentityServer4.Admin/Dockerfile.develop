@@ -1,0 +1,23 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2
+ARG BUILD_CONFIGURATION=Debug
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+EXPOSE 80
+
+WORKDIR /src
+
+COPY ["IdentityServer4.Admin/src/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj", "IdentityServer4.Admin/src/Skoruba.IdentityServer4.Admin/"]
+COPY ["IdentityServer4.Admin/src/Skoruba.IdentityServer4.Admin.BusinessLogic/Skoruba.IdentityServer4.Admin.BusinessLogic.csproj", "IdentityServer4.Admin/src/Skoruba.IdentityServer4.Admin.BusinessLogic/"]
+COPY ["IdentityServer4.Admin/src/Skoruba.IdentityServer4.Admin.EntityFramework/Skoruba.IdentityServer4.Admin.EntityFramework.csproj", "IdentityServer4.Admin/src/Skoruba.IdentityServer4.Admin.EntityFramework/"]
+COPY ["IdentityServer4.Admin/src/Skoruba.IdentityServer4.Admin.EntityFramework.Extensions/Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.csproj", "IdentityServer4.Admin/src/Skoruba.IdentityServer4.Admin.EntityFramework.Extensions/"]
+COPY ["IdentityServer4.Admin/src/Skoruba.IdentityServer4.Admin.BusinessLogic.Shared/Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.csproj", "IdentityServer4.Admin/src/Skoruba.IdentityServer4.Admin.BusinessLogic.Shared/"]
+COPY ["IdentityServer4.Admin/src/Skoruba.IdentityServer4.Admin.BusinessLogic.Identity/Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.csproj", "IdentityServer4.Admin/src/Skoruba.IdentityServer4.Admin.BusinessLogic.Identity/"]
+COPY ["IdentityServer4.Admin/src/Skoruba.IdentityServer4.Admin.EntityFramework.Identity/Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj", "IdentityServer4.Admin/src/Skoruba.IdentityServer4.Admin.EntityFramework.Identity/"]
+COPY ["IdentityServer4.Admin/src/Skoruba.IdentityServer4.Admin.EntityFramework.Shared/Skoruba.IdentityServer4.Admin.EntityFramework.Shared.csproj", "IdentityServer4.Admin/src/Skoruba.IdentityServer4.Admin.EntityFramework.Shared/"]
+
+RUN dotnet restore IdentityServer4.Admin/src/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj -nowarn:msb3202,nu1503
+COPY . .
+WORKDIR "IdentityServer4.Admin/src/Skoruba.IdentityServer4.Admin"
+RUN dotnet build --no-restore -c Debug
+
+ENTRYPOINT ["dotnet", "run", "--no-build", "--no-launch-profile", "-c", "Debug", "--"]

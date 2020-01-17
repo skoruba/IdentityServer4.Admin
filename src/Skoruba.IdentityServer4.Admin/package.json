@@ -15,6 +15,7 @@
         "jquery": "3.4.1",
         "jquery-validation": "1.19.0",
         "jquery-validation-unobtrusive": "3.2.11",
+        "jquery-ajax-unobtrusive": "3.2.6",
         "knockout": "3.5.0",
         "moment": "2.24.0",
         "moment-timezone": "0.5.25",

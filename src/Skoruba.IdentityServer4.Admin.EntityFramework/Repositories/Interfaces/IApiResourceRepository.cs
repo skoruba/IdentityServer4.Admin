@@ -7,6 +7,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
 {
     public interface IApiResourceRepository
     {
+        Task<ApiResource[]> GetApiResourcesExportAsync();
         Task<PagedList<ApiResource>> GetApiResourcesAsync(string search, int page = 1, int pageSize = 10);
 
         Task<ApiResource> GetApiResourceAsync(int apiResourceId);
@@ -16,6 +17,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
         Task<ApiResourceProperty> GetApiResourcePropertyAsync(int apiResourcePropertyId);
 
         Task<int> AddApiResourcePropertyAsync(int apiResourceId, ApiResourceProperty apiResourceProperty);
+
+        Task<int> CloneApiResourceAsync(ApiResource apiResource);
 
         Task<int> DeleteApiResourcePropertyAsync(ApiResourceProperty apiResourceProperty);
 
