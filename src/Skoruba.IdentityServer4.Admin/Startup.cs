@@ -49,11 +49,10 @@ namespace Skoruba.IdentityServer4.Admin
             services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
 
             // Add all dependencies for Asp.Net Core Identity
-            // If you want to change primary keys or use another db model for Asp.Net Core Identity
-            // Default configuration which we can not use for now cause we have no default IdentityDbContext and IdentityServerPersistedGrantDbContext in Skoruba.IdentityServer4.Admin.BusinessLogic.Identity
-            //services.AddAdminAspNetIdentityServices();
-            // Custom configuration
-            services.AddAdminAspNetIdentityServices<string>(adminBuilder => adminBuilder.UseUser<UserIdentity>()
+            // Default configuration
+            services.AddAdminAspNetIdentityServices();
+            // Custom configuration (If you want to change primary keys or use another db model for Asp.Net Core Identity)
+            /*services.AddAdminAspNetIdentityServices<string>(adminBuilder => adminBuilder.UseUser<UserIdentity>()
                     .UseRole<UserIdentityRole>()
                     .UseUserClaim<UserIdentityUserClaim>()
                     .UseUserRole<UserIdentityUserRole>()
@@ -72,7 +71,7 @@ namespace Skoruba.IdentityServer4.Admin
                         .UseUserProviders<UserProvidersDto<string>>()
                         .UseUserChangePassword<UserChangePasswordDto<string>>()
                     )
-            );
+            );*/
             
             // Add all dependencies for Asp.Net Core Identity in MVC - these dependencies are injected into generic Controllers
             // Including settings for MVC and Localization

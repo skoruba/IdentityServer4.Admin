@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using IdentityModel;
 using IdentityServer4.AccessTokenValidation;
 using IdentityServer4.EntityFramework.Options;
@@ -24,6 +25,8 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
 
 namespace Skoruba.IdentityServer4.Admin.Api.Helpers
@@ -321,6 +324,31 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                         throw new NotImplementedException($"Health checks not defined for database provider {databaseProvider.ProviderType}");
                 }
             }
+        }
+
+        public static void AddAdminAspNetIdentityServices(this IServiceCollection services, HashSet<Type> profileTypes = null)
+        {
+            services.AddAdminAspNetIdentityServices(adminBuilder => adminBuilder.UseUser<UserIdentity>()
+                    .UseRole<UserIdentityRole>()
+                    .UseUserClaim<UserIdentityUserClaim>()
+                    .UseUserRole<UserIdentityUserRole>()
+                    .UseUserLogin<UserIdentityUserLogin>()
+                    .UseRoleClaim<UserIdentityRoleClaim>()
+                    .UseUserToken<UserIdentityUserToken>()
+                    .UseIdentityDbContext<AdminIdentityDbContext>()
+                    .UsePersistedGrantDbContext<IdentityServerPersistedGrantDbContext>()
+                    .UseDto(dtoBuilder => dtoBuilder.UseRole<RoleDto<string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string>>()
+                        .UseRoleClaim<RoleClaimDto<string>>()
+                        .UseRoleClaims<RoleClaimsDto<string>>()
+                        .UseUser<UserDto<string>, UsersDto<UserDto<string>, string>>()
+                        .UseUserClaim<UserClaimDto<string>>()
+                        .UseUserClaims<UserClaimsDto<string>>()
+                        .UseUserProvider<UserProviderDto<string>>()
+                        .UseUserProviders<UserProvidersDto<string>>()
+                        .UseUserChangePassword<UserChangePasswordDto<string>>()
+                    ),
+                    profileTypes
+            );
         }
     }
 }

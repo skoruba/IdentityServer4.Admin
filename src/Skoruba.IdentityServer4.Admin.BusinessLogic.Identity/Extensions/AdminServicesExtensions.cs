@@ -14,20 +14,15 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class AdminServicesExtensions
     {
-        public static IServiceCollection AddAdminAspNetIdentityServices(this IServiceCollection services) =>
-            AddAdminAspNetIdentityServices<string>(services, null, null);
+        public static IServiceCollection AddAdminAspNetIdentityServices(this IServiceCollection services, Func<IAdminAspNetIdentityConfigurationBuilder<string>, IConfiguredAdminAspNetIdentityConfigurationBuilder<string>> configure, HashSet<Type> profileTypes = null) =>
+            AddAdminAspNetIdentityServices<string>(services, configure, profileTypes);
 
-        public static IServiceCollection AddAdminAspNetIdentityServices(this IServiceCollection services, HashSet<Type> profileTypes) =>
-            AddAdminAspNetIdentityServices<string>(services, null, profileTypes);
-
-        public static IServiceCollection AddAdminAspNetIdentityServices(this IServiceCollection services, Func<IAdminAspNetIdentityConfigurationBuilder<string>, IConfiguredAdminAspNetIdentityConfigurationBuilder<string>> configure) =>
-            AddAdminAspNetIdentityServices<string>(services, configure, null);
-
-        public static IServiceCollection AddAdminAspNetIdentityServices<TKey>(this IServiceCollection services, Func<IAdminAspNetIdentityConfigurationBuilder<TKey>, IConfiguredAdminAspNetIdentityConfigurationBuilder<TKey>> configure = null, HashSet<Type> profileTypes = null)
+        public static IServiceCollection AddAdminAspNetIdentityServices<TKey>(this IServiceCollection services, Func<IAdminAspNetIdentityConfigurationBuilder<TKey>, IConfiguredAdminAspNetIdentityConfigurationBuilder<TKey>> configure, HashSet<Type> profileTypes = null)
             where TKey : IEquatable<TKey>
         {
             if (configure is null)
-                throw new NotImplementedException("We have no default IdentityDbContext and IdentityServerPersistedGrantDbContext in here");
+                throw new ArgumentNullException(nameof(configure));
+
             var builder = new AdminAspNetIdentityConfigurationBuilder<TKey>();
             var configuration = configure(builder).Build();
             services.AddRepositories(configuration);
