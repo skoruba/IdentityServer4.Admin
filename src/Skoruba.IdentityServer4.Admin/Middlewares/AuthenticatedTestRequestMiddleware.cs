@@ -10,7 +10,6 @@ namespace Skoruba.IdentityServer4.Admin.Middlewares
     {
         private readonly RequestDelegate _next;
         public static readonly string TestAuthorizationHeader = "FakeAuthorization";
-        public const string TestAdministrationRole = "SkorubaIdentityAdminAdministrator";
         public AuthenticatedTestRequestMiddleware(RequestDelegate next)
         {
             _next = next;

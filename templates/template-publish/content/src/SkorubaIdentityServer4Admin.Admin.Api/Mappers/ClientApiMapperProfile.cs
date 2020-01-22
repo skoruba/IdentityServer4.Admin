@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using SkorubaIdentityServer4Admin.Admin.Api.Dtos.Clients;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 
@@ -11,7 +11,6 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Mappers
             // Client
             CreateMap<ClientDto, ClientApiDto>(MemberList.Destination)
                 .ForMember(dest => dest.ProtocolType, opt => opt.Condition(srs => srs != null))
-                .ForMember(x => x.ClientSecrets, opt => opt.Ignore())
                 .ReverseMap();
 
             CreateMap<ClientsDto, ClientsApiDto>(MemberList.Destination)
@@ -25,7 +24,9 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Mappers
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ClientSecretId))
                 .ReverseMap();
 
-            CreateMap<ClientSecretDto, ClientSecretApiDto>(MemberList.Destination);
+            CreateMap<ClientSecretDto, ClientSecretApiDto>(MemberList.Destination)
+                .ReverseMap();
+
             CreateMap<ClientSecretsDto, ClientSecretsApiDto>(MemberList.Destination);
 
             // Client Properties
@@ -33,7 +34,9 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Mappers
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ClientPropertyId))
                 .ReverseMap();
 
-            CreateMap<ClientPropertyDto, ClientPropertyApiDto>(MemberList.Destination);
+            CreateMap<ClientPropertyDto, ClientPropertyApiDto>(MemberList.Destination)
+                .ReverseMap();
+
             CreateMap<ClientPropertiesDto, ClientPropertiesApiDto>(MemberList.Destination);
 
             // Client Claims
@@ -41,8 +44,14 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Mappers
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ClientClaimId))
                 .ReverseMap();
 
-            CreateMap<ClientClaimDto, ClientClaimApiDto>(MemberList.Destination);
+            CreateMap<ClientClaimDto, ClientClaimApiDto>(MemberList.Destination)
+                .ReverseMap();
             CreateMap<ClientClaimsDto, ClientClaimsApiDto>(MemberList.Destination);
         }
     }
 }
+
+
+
+
+

@@ -126,34 +126,25 @@
   <data name="ExternalLogins" xml:space="preserve">
     <value>ورودی های خارجی من</value>
   </data>
-  <data name="Footer" xml:space="preserve">
-    <value>Skoruba IdentityServer4</value>
-  </data>
   <data name="FooterCopyright" xml:space="preserve">
-    <value>© 2019</value>
+    <value>©</value>
   </data>
   <data name="Grants" xml:space="preserve">
     <value>واگذاری ها</value>
-     </data>
+  </data>
   <data name="ManagePersonalData" xml:space="preserve">
     <value>اطلاعات شخصی من</value>
   </data>
-    <data name="ManageProfile" xml:space="preserve">
+  <data name="ManageProfile" xml:space="preserve">
     <value>پروفایل من</value>
   </data>
   <data name="Menu" xml:space="preserve">
     <value>فهرست</value>
-  </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>IdentityServer4</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>تنظیمات</value>
   </data>
   <data name="Signout" xml:space="preserve">
     <value>خروج</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>Skoruba IdentityServer4</value>
   </data>
 </root>

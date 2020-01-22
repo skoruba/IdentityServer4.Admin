@@ -1,15 +1,17 @@
-﻿using Microsoft.Extensions.Options;
 using SkorubaIdentityServer4Admin.Admin.Configuration.Interfaces;
 
 namespace SkorubaIdentityServer4Admin.Admin.Configuration
 {
     public class RootConfiguration : IRootConfiguration
     {
-        public IAdminConfiguration AdminConfiguration { get; set; }
-
-        public RootConfiguration(IOptions<AdminConfiguration> adminConfiguration)
-        {
-            AdminConfiguration = adminConfiguration.Value;
-        }
+        public AdminConfiguration AdminConfiguration { get; set; } = new AdminConfiguration();
+        public IdentityDataConfiguration IdentityDataConfiguration { get; set; } = new IdentityDataConfiguration();
+        public IdentityServerDataConfiguration IdentityServerDataConfiguration { get; set; } = new IdentityServerDataConfiguration();
     }
 }
+
+
+
+
+
+
