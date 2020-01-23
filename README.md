@@ -109,6 +109,9 @@ docker-compose up -d
     - `skoruba/identityserver4-admin-api:rc1`
   - STS:
     - `skoruba/identityserver4-sts-identity:rc1`
+    
+### Publish Docker images to Docker hub
+- Check the script in `build/publish-docker-images.ps1` - change the profile name according to your requirements.
 
 ## Installation of the Client Libraries
 
