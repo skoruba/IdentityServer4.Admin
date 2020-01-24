@@ -1,9 +1,11 @@
-﻿using Skoruba.IdentityServer4.STS.Identity.Configuration.Intefaces;
-
-namespace Skoruba.IdentityServer4.STS.Identity.Configuration
+﻿namespace Skoruba.IdentityServer4.STS.Identity.Configuration
 {
-    public class AdminConfiguration : IAdminConfiguration
+    public class AdminConfiguration
     {
-        public string IdentityAdminBaseUrl { get; set; } = "http://localhost:9000";
+        public string PageTitle { get; set; }
+        public string HomePageLogoUri { get; set; }
+        public string FaviconUri { get; set; }
+        public string IdentityAdminBaseUrl { get; set; }
+        public string AdministrationRole { get; set; }
     }
 }

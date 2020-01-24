@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.PersistedGrants
 {
@@ -16,3 +16,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.PersistedGrants
         public List<PersistedGrantSubjectApiDto> PersistedGrants { get; set; }
     }
 }
+
+
+
+
+

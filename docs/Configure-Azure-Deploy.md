@@ -13,10 +13,6 @@ If you don't have publicly accessible database you will need to create one. Foll
 
 Replace connection strings in `appSettings.json` with connection string to generated database.
 
-Then you can generate migrations:
-
-[Follow these steps for generating of DB migrations](/README.md#ef-core--data-access)
-
 ## Deploying webbaps to Azure App Service
 
 We will assume in the tutorial that STS and Admin were deployed to:
@@ -69,27 +65,23 @@ While we're at it we can allow only https traffic to our STS and admin:
 
 ![Always https](Images/https_always.PNG)
 
+Then head to "Application Settings" section within your Azure App Service and create a new Application setting with the following parameters:
+
+```
+Name: WEBSITE_LOAD_CERTIFICATES
+Value: *
+```
+
 Last step before deploy - we need to update `src/Skoruba.IdentityServer4.STS.Identity/appsettings.json` and modify following lines:
 
 ```json
 "CertificateConfiguration": {
     "UseTemporarySigningKeyForDevelopment": false,
+    "CertificateStoreLocation": "CurrentUser",
+    "CertificateValidOnly": false,
     "UseSigningCertificateThumbprint": true,
     "SigningCertificateThumbprint": "<enter here thumbprint from Azure>"
 }
 ```
-
-In `src/Skoruba.IdentityServer4.STS.Identity/Helpers/IdentityServerBuilderExtensions.cs` - change loading certificates from `StoreLocation.LocalMachine` to `StoreLocation.CurrentUser`.
-
-And change in method: `AddCustomSigningCredential` 
-from:
-```
-var certCollection = certStore.Certificates.Find(X509FindType.FindByThumbprint, certificateConfiguration.SigningCertificateThumbprint, true);
-```
-to:
-```
-var certCollection = certStore.Certificates.Find(X509FindType.FindByThumbprint, certificateConfiguration.SigningCertificateThumbprint, false);
-```
-
 
 Now we can (re)deploy both apps to Azure.

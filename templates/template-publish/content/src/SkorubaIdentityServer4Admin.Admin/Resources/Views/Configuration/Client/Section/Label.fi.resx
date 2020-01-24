@@ -1,0 +1,462 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AbsoluteRefreshTokenLifetime_Info" xml:space="preserve">
+    <value>Päivitysmerkin enimmäiskesto sekunneissa. Oletusarvo on 2592000 sekuntia / 30 päivää</value>
+  </data>
+  <data name="AbsoluteRefreshTokenLifetime_Label" xml:space="preserve">
+    <value>Absoluuttinen päivitysmerkin käyttöikä</value>
+  </data>
+  <data name="AccessTokenLifetime_Info" xml:space="preserve">
+    <value>Käyttöoikeustunnuksen elinikä sekunneissa (oletusarvo on 3600 sekuntia / 1 tunti)</value>
+  </data>
+  <data name="AccessTokenLifetime_Label" xml:space="preserve">
+    <value>Access Token Lifetime</value>
+  </data>
+  <data name="AccessTokenTypes_Info" xml:space="preserve">
+    <value>Määrittää, onko käyttöoikeustunnus viitetunniste vai itsenäinen JWT-tunnus (oletusarvo on Jwt).</value>
+  </data>
+  <data name="AccessTokenTypes_Label" xml:space="preserve">
+    <value>Käyttöoikeustyyppi</value>
+  </data>
+  <data name="AllowAccessTokensViaBrowser_Info" xml:space="preserve">
+    <value>Määrittää, sallitaanko tämän Sovelluksen vastaanottaa käyttöoikeuksia selaimen kautta. Tämä on hyödyllistä kovettaa vuoita, jotka sallivat useita vastaustyyppejä (esim. Estämällä hybridivirtausasiakas, jonka oletetaan käyttävän koodia id_token lisätäkseen tokenin vastaustyypin ja vuotaen siten tokenin selaimeen.</value>
+  </data>
+  <data name="AllowAccessTokensViaBrowser_Label" xml:space="preserve">
+    <value>Salli Access Token selaimen kautta</value>
+  </data>
+  <data name="AllowOfflineAccess_Info" xml:space="preserve">
+    <value>Määrittää, voiko tämä Sovellus pyytää päivitystunnuksia (pyytää offline_access-laajuutta)</value>
+  </data>
+  <data name="AllowOfflineAccess_Label" xml:space="preserve">
+    <value>Salli offline-käyttö</value>
+  </data>
+  <data name="AllowPlainTextPkce_Info" xml:space="preserve">
+    <value>Määrittää, voivatko PKCE: tä käyttävät asiakkaat käyttää tekstitekstin haastetta (ei suositella - ja oletusarvo on väärä)</value>
+  </data>
+  <data name="AllowPlainTextPkce_Label" xml:space="preserve">
+    <value>Salli pelkkää tekstiä</value>
+  </data>
+  <data name="AllowRememberConsent_Info" xml:space="preserve">
+    <value>Määrittää, voiko käyttäjä Tallenna suostumuspäätökset. Oletusarvo totta.</value>
+  </data>
+  <data name="AllowRememberConsent_Label" xml:space="preserve">
+    <value>Salli Muista suostumus</value>
+  </data>
+  <data name="AlwaysIncludeUserClaimsInIdToken_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AlwaysIncludeUserClaimsInIdToken_Label" xml:space="preserve">
+    <value>Sisällytä Käyttäjän ominaisuudet aina IdTokeniin</value>
+  </data>
+  <data name="AlwaysSendClientClaims_Info" xml:space="preserve">
+    <value>Jos asetettu, asiakasvaatimukset lähetetään jokaisesta vuoista. Jos ei, vain Sovelluksen käyttöoikeustiedot -virta (oletus on väärä)</value>
+  </data>
+  <data name="AlwaysSendClientClaims_Label" xml:space="preserve">
+    <value>Lähetä asiakasvaatimukset aina</value>
+  </data>
+  <data name="AuthorizationCodeLifetime_Info" xml:space="preserve">
+    <value>Valtuutuskoodin elinikä sekunneissa (oletusarvo 300 sekuntia / 5 minuuttia)</value>
+  </data>
+  <data name="AuthorizationCodeLifetime_Label" xml:space="preserve">
+    <value>Valtuutuskoodin käyttöikä</value>
+  </data>
+  <data name="ClientId_Info" xml:space="preserve">
+    <value>Sovelluksen yksilöivä tunnus</value>
+  </data>
+  <data name="ClientId_Label" xml:space="preserve">
+    <value>Asiakastunnus</value>
+  </data>
+  <data name="ClientName_Info" xml:space="preserve">
+    <value>Sovelluksen näyttönimi (käytetään kirjautumiseen ja suostumusnäyttöön)</value>
+  </data>
+  <data name="ClientName_Label" xml:space="preserve">
+    <value>Sovelluksen Nimi</value>
+  </data>
+  <data name="ClientUri_Info" xml:space="preserve">
+    <value>URI lisätietoja asiakkaasta (käytetään suostumusnäytössä)</value>
+  </data>
+  <data name="ClientUri_Label" xml:space="preserve">
+    <value>Sovellus Uri</value>
+  </data>
+  <data name="Enabled_Info" xml:space="preserve">
+    <value>Määrittää, onko Sovellus käytössä. Oletusarvo totta.</value>
+  </data>
+  <data name="Enabled_Label" xml:space="preserve">
+    <value>Käytössä</value>
+  </data>
+  <data name="EnableLocalLogin_Info" xml:space="preserve">
+    <value>Määrittää, pystyykö tämä Sovellus käyttämään paikallisia tilejä vai vain ulkoisia IdP: tä. Oletusarvo totta.</value>
+  </data>
+  <data name="EnableLocalLogin_Label" xml:space="preserve">
+    <value>Ota paikallinen sisäänkirjautuminen käyttöön</value>
+  </data>
+  <data name="IdentityTokenLifetime_Info" xml:space="preserve">
+    <value>Elinikä identiteettitunnukseen sekunneissa (oletusarvo 300 sekuntia / 5 minuuttia)</value>
+  </data>
+  <data name="IdentityTokenLifetime_Label" xml:space="preserve">
+    <value>Identity Token Lifetime</value>
+  </data>
+  <data name="IncludeJwtId_Info" xml:space="preserve">
+    <value>Määrittää, onko JWT-käyttöoikeustunnuksilla oltava upotettu yksilöllinen tunnus (jti-vaatimuksen kautta).</value>
+  </data>
+  <data name="IncludeJwtId_Label" xml:space="preserve">
+    <value>Sisällytä Jwt-tunnus</value>
+  </data>
+  <data name="LogoUri_Info" xml:space="preserve">
+    <value>URI Sovelluksen logoon (käytetään suostumusnäytössä)</value>
+  </data>
+  <data name="LogoUri_Label" xml:space="preserve">
+    <value>Logo Uri</value>
+  </data>
+  <data name="RefreshTokenExpiration_Info" xml:space="preserve">
+    <value>Absoluuttinen päivitystunnus vanhenee kiinteänä ajankohtana (määritelty AbsoluteRefreshTokenLifetime)
+
+Liukusäädintä päivitettäessä merkkiä, päivityksen tokenin käyttöikä uusitaan (SlidingRefreshTokenLifetime-kohdassa määritetyn määrän verran). Elinikä ei ylitä AbsoluteRefreshTokenLifetime -aikaa.</value>
+  </data>
+  <data name="RefreshTokenExpiration_Label" xml:space="preserve">
+    <value>Päivitä tokenin vanheneminen</value>
+  </data>
+  <data name="RefreshTokenUsage.Info" xml:space="preserve">
+    <value>Uudelleenkäyttö Päivitä merkinnän kahva pysyy samana päivitettäessä merkkejä
+
+Yhden kerran päivitysmerkin kahva päivitetään, kun päivitetään merkkejä</value>
+  </data>
+  <data name="RefreshTokenUsage.Label" xml:space="preserve">
+    <value>Päivitä Token-käyttö</value>
+  </data>
+  <data name="RefreshTokenUsage_Info" xml:space="preserve">
+    <value>Uudelleenkäyttö Päivitä merkinnän kahva pysyy samana päivitettäessä merkkejä
+
+Yhden kerran päivitysmerkin kahva päivitetään, kun päivitetään merkkejä</value>
+  </data>
+  <data name="RefreshTokenUsage_Label" xml:space="preserve">
+    <value>Päivitä Token-käyttö</value>
+  </data>
+  <data name="RequireClientSecret_Info" xml:space="preserve">
+    <value>Määrittää, tarvitseeko tämä Sovellus salaisuuden tokenien pyytämiseen tokenin päätepisteestä (oletusarvo on tosi)</value>
+  </data>
+  <data name="RequireClientSecret_Label" xml:space="preserve">
+    <value>Vaadi asiakassalaisuus</value>
+  </data>
+  <data name="RequireConsent_Info" xml:space="preserve">
+    <value>Määrittää, tarvitaanko oikeuksien myöntämisnäyttö. Oletusarvo totta.</value>
+  </data>
+  <data name="RequireConsent_Label" xml:space="preserve">
+    <value>Vaatii suostumus</value>
+  </data>
+  <data name="RequirePkce_Info" xml:space="preserve">
+    <value>Määrittää, onko valtuuskoodipohjaista avustustyyppiä käyttävien asiakkaiden lähetettävä todisteavain</value>
+  </data>
+  <data name="RequirePkce_Label" xml:space="preserve">
+    <value>Vaadi Pkce</value>
+  </data>
+  <data name="SlidingRefreshTokenLifetime_Info" xml:space="preserve">
+    <value>Päivitysmerkin liukuva käyttöikä sekunneissa. Oletusarvo on 1296000 sekuntia / 15 päivää</value>
+  </data>
+  <data name="SlidingRefreshTokenLifetime_Label" xml:space="preserve">
+    <value>Liukuva päivitysmerkin käyttöikä</value>
+  </data>
+  <data name="UpdateAccessTokenClaimsOnRefresh_Info" xml:space="preserve">
+    <value>Hanki tai asettaa arvon, joka ilmaisee, onko käyttöoikeustunnus (ja sen vaatimukset) päivitettävä päivitystunnuspyynnössä.</value>
+  </data>
+  <data name="UpdateAccessTokenClaimsOnRefresh_Label" xml:space="preserve">
+    <value>Päivitä Access Token -vaatimukset päivitettäessä</value>
+  </data>
+  <data name="AllowedCorsOrigins_Info" xml:space="preserve">
+    <value>Jos määritetään, sitä käytetään oletus CORS-käytäntöpalvelun toteutuksissa (muistissa ja EF) rakentamaan CORS-käytäntö JavaScript-asiakkaille.</value>
+  </data>
+  <data name="AllowedCorsOrigins_Label" xml:space="preserve">
+    <value>Sallittujen korsien alkuperä</value>
+  </data>
+  <data name="AllowedGrantTypes_Info" xml:space="preserve">
+    <value>Määrittää avustyypit, joita Sovelluksen sallitaan käyttää. Käytä GrantTypes-luokkaa yleisiin yhdistelmiin. Oletusapurahojen luettelo: implisiittinen käyttöoikeus - (implisiittinen), asiakastodistusten myöntäminen - (asiakas_koodit), käyttöoikeuskoodin myöntäminen - (valtuuskoodi), yhdistelmäapu - (hybridi), resurssin omistajan salasanan käyttöoikeudet - (salasana)</value>
+  </data>
+  <data name="AllowedGrantTypes_Label" xml:space="preserve">
+    <value>Sallitut avustuslajit</value>
+  </data>
+  <data name="AllowedScopes_Info" xml:space="preserve">
+    <value>Oletuksena asiakkaalla ei ole pääsyä resursseihin - määritä sallitut resurssit lisäämällä vastaavat laajuusnimet</value>
+  </data>
+  <data name="AllowedScopes_Label" xml:space="preserve">
+    <value>Sallitut laajuudet</value>
+  </data>
+  <data name="Claims_Info" xml:space="preserve">
+    <value>Sallii asiakasasetuksia koskevat vaatimukset (sisällytetään käyttöoikeustunnukseen).</value>
+  </data>
+  <data name="Claims_Label" xml:space="preserve">
+    <value>väittää</value>
+  </data>
+  <data name="ClientSecrets_Info" xml:space="preserve">
+    <value>Luettelo asiakassalaisuuksista - käyttöoikeustiedot avataksesi token-päätepiste.</value>
+  </data>
+  <data name="ClientSecrets_Label" xml:space="preserve">
+    <value>Asiakassalaisuudet</value>
+  </data>
+  <data name="IdentityProviderRestrictions_Info" xml:space="preserve">
+    <value>Määrittää, mitä ulkoisia IdP: itä voidaan käyttää tämän Sovelluksen kanssa (jos luettelo on tyhjä, kaikki IdP: t ovat sallittuja). Oletusasetus on tyhjä.</value>
+  </data>
+  <data name="IdentityProviderRestrictions_Label" xml:space="preserve">
+    <value>Henkilöllisyyden tarjoajan rajoitukset</value>
+  </data>
+  <data name="PostLogoutRedirectUris_Info" xml:space="preserve">
+    <value>Määrittää sallitut URI: t uudelleenohjautua uloskirjautumisen jälkeen</value>
+  </data>
+  <data name="PostLogoutRedirectUris_Label" xml:space="preserve">
+    <value>Uloskirjautumisen uudelleenohjaus Uris</value>
+  </data>
+  <data name="RedirectUris_Info" xml:space="preserve">
+    <value>Määrittää sallitut URI: t, joihin palautetaan tokenit tai valtuuskoodit</value>
+  </data>
+  <data name="RedirectUris_Label" xml:space="preserve">
+    <value>Ohjaa Uris</value>
+  </data>
+  <data name="Type_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Type_Label" xml:space="preserve">
+    <value>Vaatimuksen tyyppi</value>
+  </data>
+  <data name="Value_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Value_Label" xml:space="preserve">
+    <value>Vaatimuksen arvo</value>
+  </data>
+  <data name="SecretType_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SecretType_Label" xml:space="preserve">
+    <value>Salainen tyyppi</value>
+  </data>
+  <data name="SecretValue_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SecretValue_Label" xml:space="preserve">
+    <value>Salainen arvo</value>
+  </data>
+  <data name="HashType_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="HashType_Label" xml:space="preserve">
+    <value>Hash-tyyppi</value>
+  </data>
+  <data name="RoleNormalizedName_Info" xml:space="preserve">
+    <value>Normalisoitu roolinimi</value>
+  </data>
+  <data name="RoleNormalizedName_Label" xml:space="preserve">
+    <value>Normalisoitu nimi</value>
+  </data>
+  <data name="BackChannelLogoutSessionRequired_Info" xml:space="preserve">
+    <value>Määrittää, lähetetäänkö käyttäjän istunnon tunnus pyynnössä BackChannelLogoutUri -sivulle. Oletusarvo totta.</value>
+  </data>
+  <data name="BackChannelLogoutSessionRequired_Label" xml:space="preserve">
+    <value>Takaisin kanavan uloskirjautumisistunto vaaditaan</value>
+  </data>
+  <data name="BackChannelLogoutUri_Info" xml:space="preserve">
+    <value>Määrittää uloskirjautumisen URI: n asiakkaassa HTTP-pohjaisen takakanavan uloskirjautumisen yhteydessä. Katso lisätietoja OIDC-takakanavan teknisistä tiedoista.</value>
+  </data>
+  <data name="BackChannelLogoutUri_Label" xml:space="preserve">
+    <value>Takaisin kanavan uloskirjautuminen Uri</value>
+  </data>
+  <data name="ClientClaimsPrefix_Info" xml:space="preserve">
+    <value>Jos asetettu, etuliiteasiakkaan vaatimustyypit etuliitetetään. Oletusarvot asiakas_. Tarkoituksena on varmistaa, etteivät ne törmää vahingossa käyttäjän vaatimuksiin.</value>
+  </data>
+  <data name="ClientClaimsPrefix_Label" xml:space="preserve">
+    <value>Asiakasvaatimusten etuliite</value>
+  </data>
+  <data name="Description_Info" xml:space="preserve">
+    <value>Sovelluksen kuvaus</value>
+  </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Kuvaus</value>
+  </data>
+  <data name="FrontChannelLogoutSessionRequired_Info" xml:space="preserve">
+    <value>Määrittää, onko käyttäjän istunnon tunnus lähetettävä FrontChannelLogoutUri -sovellukseen. Oletusarvo totta.</value>
+  </data>
+  <data name="FrontChannelLogoutSessionRequired_Label" xml:space="preserve">
+    <value>Etuskanavan uloskirjautumisistunto vaaditaan</value>
+  </data>
+  <data name="FrontChannelLogoutUri_Info" xml:space="preserve">
+    <value>Määrittää uloskirjautumisen URI asiakasohjelmassa HTTP-pohjaisen etukanavan uloskirjautumisen yhteydessä. Katso lisätietoja OIDC Front Channel -spesifikaatiosta.</value>
+  </data>
+  <data name="FrontChannelLogoutUri_Label" xml:space="preserve">
+    <value>Front Channel Logout Uri</value>
+  </data>
+  <data name="PairWiseSubjectSalt_Info" xml:space="preserve">
+    <value>Suola-arvo, jota käytetään parinpohjaisessa subjektien luonnissa tämän Sovelluksen käyttäjille.</value>
+  </data>
+  <data name="PairWiseSubjectSalt_Label" xml:space="preserve">
+    <value>Yhdistä viisas aiheinen suola</value>
+  </data>
+  <data name="Properties_Info" xml:space="preserve">
+    <value>Sanakirja pitää tarvittavat mukautetut asiakaskohtaiset arvot.</value>
+  </data>
+  <data name="Properties_Label" xml:space="preserve">
+    <value>Ominaisuudet</value>
+  </data>
+  <data name="PropertyKey_Info" xml:space="preserve">
+    <value>Avain</value>
+  </data>
+  <data name="PropertyKey_Label" xml:space="preserve">
+    <value>Avain</value>
+  </data>
+  <data name="PropertyValue_Info" xml:space="preserve">
+    <value>Arvo</value>
+  </data>
+  <data name="PropertyValue_Label" xml:space="preserve">
+    <value>Arvo</value>
+  </data>
+  <data name="ProtocolType_Info" xml:space="preserve">
+    <value>Oletus on OpenID Connect -protokolla</value>
+  </data>
+  <data name="ProtocolType_Label" xml:space="preserve">
+    <value>Protokollan tyyppi</value>
+  </data>
+  <data name="UserSsoLifetime_Info" xml:space="preserve">
+    <value>Enimmäiskesto (sekunteina) viimeisimmästä käyttäjän todennuksesta. Oletusarvo on nolla</value>
+  </data>
+  <data name="UserSsoLifetime_Label" xml:space="preserve">
+    <value>User Sso Lifetime</value>
+  </data>
+  <data name="DeviceCodeLifetime_Info" xml:space="preserve">
+    <value>Laitekoodin käyttöikä sekunneissa (oletusarvo 300 sekuntia / 5 minuuttia)</value>
+  </data>
+  <data name="DeviceCodeLifetime_Label" xml:space="preserve">
+    <value>Laitekoodin käyttöikä</value>
+  </data>
+  <data name="UserCodeType_Info" xml:space="preserve">
+    <value>Määrittää asiakaskoodin tyypin, jota Sovellus käyttää. Muutoin palaa takaisin oletusasetukseen.</value>
+  </data>
+  <data name="UserCodeType_Label" xml:space="preserve">
+    <value>Käyttäjätunnuksen tyyppi</value>
+  </data>
+  <data name="Expiration_Info" xml:space="preserve">
+    <value>Päättyminen</value>
+  </data>
+  <data name="Expiration_Label" xml:space="preserve">
+    <value>Päättyminen</value>
+  </data>
+  <data name="SecretDescription_Info" xml:space="preserve">
+    <value>Kuvaus</value>
+  </data>
+  <data name="SecretDescription_Label" xml:space="preserve">
+    <value>Kuvaus</value>
+  </data>
+</root>

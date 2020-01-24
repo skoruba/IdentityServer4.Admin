@@ -1,4 +1,4 @@
-﻿namespace SkorubaIdentityServer4Admin.Admin.Api.Configuration.Constants
+namespace SkorubaIdentityServer4Admin.Admin.Api.Configuration.Constants
 {
     public class ConfigurationConsts
     {
@@ -9,5 +9,12 @@
         public const string IdentityDbConnectionStringKey = "IdentityDbConnection";
 
         public const string AdminLogDbConnectionStringKey = "AdminLogDbConnection";
+
+        public const string AdminAuditLogDbConnectionStringKey = "AdminAuditLogDbConnection";
     }
 }
+
+
+
+
+
