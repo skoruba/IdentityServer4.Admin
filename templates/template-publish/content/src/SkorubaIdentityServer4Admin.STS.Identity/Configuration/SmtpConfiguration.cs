@@ -1,4 +1,4 @@
-﻿namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration
+namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration
 {
     public class SmtpConfiguration
     {
@@ -9,3 +9,9 @@
         public bool UseSSL { get; set; } = true;
     }
 }
+
+
+
+
+
+

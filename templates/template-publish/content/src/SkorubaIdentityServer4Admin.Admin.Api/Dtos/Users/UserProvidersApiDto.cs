@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Users
 {
@@ -12,3 +12,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Users
         public List<UserProviderApiDto<TUserDtoKey>> Providers { get; set; }
     }
 }
+
+
+
+
+

@@ -1,13 +1,15 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.Configuration.Interfaces
+@inject  IRootConfiguration RootConfiguration
 @inject IViewLocalizer Localizer
 
 @{
-	ViewBag.Title = Localizer["PageTitle"];
+	ViewBag.Title = RootConfiguration.AdminConfiguration.PageTitle;
 	Layout = "_Layout";
 }
 
 <div class="welcome-block px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-	<h1 class="display-4">@Localizer["PageTitle"]</h1>
+	<h1 class="display-4">@RootConfiguration.AdminConfiguration.PageTitle</h1>
 	<p class="lead">@Localizer["PageSubTitle"]</p>
 </div>
 

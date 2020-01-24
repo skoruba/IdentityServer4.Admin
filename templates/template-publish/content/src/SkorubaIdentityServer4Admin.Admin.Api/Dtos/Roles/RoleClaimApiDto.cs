@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Roles
 {
@@ -16,3 +16,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Roles
         public string ClaimValue { get; set; }
     }
 }
+
+
+
+
+

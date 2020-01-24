@@ -29,8 +29,14 @@ namespace Skoruba.IdentityServer4.Admin.Api.Configuration.Test
                 .AddEntityFrameworkStores<AdminIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(IdentityServerAuthenticationDefaults.AuthenticationScheme);
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultForbidScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+            }).AddCookie(IdentityServerAuthenticationDefaults.AuthenticationScheme);
         }
 
         public override void RegisterAuthorization(IServiceCollection services)

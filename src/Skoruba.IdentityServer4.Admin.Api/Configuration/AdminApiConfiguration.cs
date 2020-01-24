@@ -17,5 +17,9 @@
         public string OidcApiName { get; set; }
 
         public string AdministrationRole { get; set; }
+
+        public bool CorsAllowAnyOrigin { get; set; }
+
+        public string[] CorsAllowOrigins { get; set; }
     }
 }

@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   skoruba.identityserver4.admin:
-    image: ${DOCKER_REGISTRY-}skorubaidentityserver4admin
+    image: ${DOCKER_REGISTRY-}skoruba-identityserver4-admin
     ports:
       - 9000:80
     build:
@@ -31,9 +31,13 @@ services:
     depends_on:
       - db
       - skoruba.identityserver4.sts.identity
+    volumes:
+      - "./shared/serilog.json:/app/serilog.json"
+      - "./shared/identitydata.json:/app/identitydata.json"
+      - "./shared/identityserverdata.json:/app/identityserverdata.json"
 
   skoruba.identityserver4.admin.api:
-    image: ${DOCKER_REGISTRY-}skorubaidentityserver4adminapi
+    image: ${DOCKER_REGISTRY-}skoruba-identityserver4-admin-api
     build:
       context: .
       dockerfile: src/Skoruba.IdentityServer4.Admin.Api/Dockerfile
@@ -41,6 +45,7 @@ services:
       - 5000:80
     environment:
       - "AdminApiConfiguration__RequireHttpsMetadata=false"
+      - "AdminApiConfiguration__ApiBaseUrl=http://127.0.0.1.xip.io:5000"
       - "AdminApiConfiguration__IdentityServerBaseUrl=http://127.0.0.1.xip.io"
       - "ConnectionStrings__ConfigurationDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
       - "ConnectionStrings__PersistedGrantDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
@@ -48,9 +53,11 @@ services:
       - "ConnectionStrings__AdminLogDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
       - "ConnectionStrings__AdminAuditLogDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
     container_name: skoruba-identityserver4-admin-api
+    volumes:
+      - "./shared/serilog.json:/app/serilog.json"
 
   skoruba.identityserver4.sts.identity:
-    image: ${DOCKER_REGISTRY-}skorubaidentityserver4stsidentity
+    image: ${DOCKER_REGISTRY-}skoruba-identityserver4-sts-identity
     ports:
       - 80:80
     build:
@@ -65,6 +72,8 @@ services:
       - "AdminConfiguration__IdentityAdminBaseUrl=http://127.0.0.1.xip.io:9000"
     depends_on:
       - db
+    volumes:
+      - "./shared/serilog.json:/app/serilog.json"
     networks:
       default:
         aliases:

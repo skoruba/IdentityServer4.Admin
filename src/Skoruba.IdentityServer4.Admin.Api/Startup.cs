@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +18,6 @@ using Skoruba.IdentityServer4.Admin.Api.Resources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace Skoruba.IdentityServer4.Admin.Api
 {
@@ -63,6 +64,8 @@ namespace Skoruba.IdentityServer4.Admin.Api
 
             services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
 
+            services.AddAdminApiCors(adminApiConfiguration);
+
             services.AddMvcServices<UserDto<string>, string, RoleDto<string>, string, string, string,
                 UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
                 UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
@@ -92,6 +95,8 @@ namespace Skoruba.IdentityServer4.Admin.Api
             });
 
             services.AddAuditEventLogging<AdminAuditLogDbContext, AuditLog>(Configuration);
+
+            services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, AdminLogDbContext, AdminAuditLogDbContext>(Configuration, adminApiConfiguration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AdminApiConfiguration adminApiConfiguration)
@@ -100,8 +105,6 @@ namespace Skoruba.IdentityServer4.Admin.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            UseAuthentication(app);
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -113,8 +116,17 @@ namespace Skoruba.IdentityServer4.Admin.Api
             });
 
             app.UseRouting();
+            UseAuthentication(app);
+            app.UseCors();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints => { endpoints.MapDefaultControllerRoute(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapDefaultControllerRoute();
+                endpoints.MapHealthChecks("/health", new HealthCheckOptions
+                {
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
+            });
         }
 
         public virtual void RegisterDbContexts(IServiceCollection services)
