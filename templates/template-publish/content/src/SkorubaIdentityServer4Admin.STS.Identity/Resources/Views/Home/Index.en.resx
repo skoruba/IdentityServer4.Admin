@@ -129,15 +129,6 @@
   <data name="Grants" xml:space="preserve">
     <value>Persisted Grants</value>
   </data>
-  <data name="LinkSamples" xml:space="preserve">
-    <value>ready to use samples</value>
-  </data>
-  <data name="LinkSource" xml:space="preserve">
-    <value>source code repository</value>
-  </data>
-  <data name="LinkTitle" xml:space="preserve">
-    <value>Here are links to the</value>
-  </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
   </data>
@@ -148,9 +139,6 @@
     <value>My profile</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
-    <value>Welcome to Skoruba IdentityServer4</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>Skoruba IdentityServer4</value>
+    <value>Welcome to {0}</value>
   </data>
 </root>

@@ -1,4 +1,4 @@
-﻿namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Users
+namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Users
 {
     public class UserProviderApiDto<TUserDtoKey>
     {
@@ -13,3 +13,8 @@
         public string ProviderDisplayName { get; set; }
     }
 }
+
+
+
+
+

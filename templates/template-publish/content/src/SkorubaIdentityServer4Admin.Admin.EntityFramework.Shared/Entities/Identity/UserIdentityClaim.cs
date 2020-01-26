@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Entities.Identity
 {
@@ -6,3 +6,9 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Entities.Iden
     {
     }
 }
+
+
+
+
+
+
