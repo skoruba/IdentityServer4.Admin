@@ -10,7 +10,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
 {
     public class IdentityServerTests : BaseClassFixture
     {
-        public IdentityServerTests(WebApplicationFactory<StartupTest> factory) : base(factory)
+        public IdentityServerTests(WebApplicationFactory<StartupTestSingleTenant> factory) : base(factory)
         {
         }
 
