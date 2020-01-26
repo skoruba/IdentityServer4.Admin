@@ -88,14 +88,14 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
 
             // Config DB for identity
             services.AddDbContext<TIdentityDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey),
+                options.UseNpgsql(configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey),
                     sql => sql.MigrationsAssembly(migrationsAssembly)));
 
             // Config DB from existing connection
             services.AddConfigurationDbContext<TConfigurationDbContext>(options =>
             {
                 options.ConfigureDbContext = b =>
-                    b.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey),
+                    b.UseNpgsql(configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey),
                         sql => sql.MigrationsAssembly(migrationsAssembly));
             });
 
@@ -103,13 +103,13 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
             services.AddOperationalDbContext<TPersistedGrantDbContext>(options =>
             {
                 options.ConfigureDbContext = b =>
-                    b.UseSqlServer(configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey),
+                    b.UseNpgsql(configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey),
                         sql => sql.MigrationsAssembly(migrationsAssembly));
             });
 
             // Log DB from existing connection
             services.AddDbContext<TLogDbContext>(options =>
-                options.UseSqlServer(
+                options.UseNpgsql(
                     configuration.GetConnectionString(ConfigurationConsts.AdminLogDbConnectionStringKey),
                     optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
         }

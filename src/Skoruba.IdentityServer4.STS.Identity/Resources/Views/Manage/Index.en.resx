@@ -123,11 +123,32 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First name</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Gender</value>
+  </data>
   <data name="Locality" xml:space="preserve">
     <value>City</value>
   </data>
+  <data name="MiddleName" xml:space="preserve">
+    <value>Middle name</value>
+  </data>
   <data name="Name" xml:space="preserve">
-    <value>Full name</value>
+    <value>Name</value>
+  </data>
+  <data name="NameOrg" xml:space="preserve">
+    <value>Name of the organization</value>
+  </data>
+  <data name="OgrnIp" xml:space="preserve">
+    <value>OGRN of individual entrepreneur</value>
+  </data>
+  <data name="OgrnUl" xml:space="preserve">
+    <value>OGRN of a legal entity</value>
+  </data>
+  <data name="Opf" xml:space="preserve">
+    <value>Opf</value>
   </data>
   <data name="PhoneNumber" xml:space="preserve">
     <value>Phone Number</value>

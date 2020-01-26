@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Logging;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
@@ -37,6 +38,8 @@ namespace Skoruba.IdentityServer4.STS.Identity
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureRootConfiguration(Configuration);
+
+            IdentityModelEventSource.ShowPII = true;
 
             // Add DbContext for Asp.Net Core Identity
             services.AddIdentityDbContext<AdminIdentityDbContext>(Configuration, Environment);

@@ -661,7 +661,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Export()
         {
-            var stream = new MemoryStream(await _exportService.GetExportBytesAsync());
+            var stream = new MemoryStream(await _exportService.GetExportBytesConfigAsync());
             return new FileStreamResult(stream, "application/....")
             {
                 FileDownloadName = $"config_{DateTime.Now.ToString("d")}.json"
@@ -681,7 +681,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             }
             using (var reader = new StreamReader(file.OpenReadStream()))
             {
-                await _exportService.ImportAsync(await reader.ReadToEndAsync());
+                await _exportService.ImportConfigAsync(await reader.ReadToEndAsync());
             }
             return Ok();
         }

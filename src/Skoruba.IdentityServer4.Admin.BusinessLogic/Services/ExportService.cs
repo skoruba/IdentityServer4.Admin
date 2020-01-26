@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using Newtonsoft.Json;
@@ -23,7 +22,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             _apiResourceRepository = apiResourceRepository;
         }
 
-        public async Task<byte[]> GetExportBytesAsync()
+        public async Task<byte[]> GetExportBytesConfigAsync()
         {
             var export = new Export();
             export.Clients = await _clientRepository.GetClientsExportAsync();
@@ -36,7 +35,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
                 }));
         }
 
-        public async Task ImportAsync(string txt)
+        public async Task ImportConfigAsync(string txt)
         {
             var config = JsonConvert.DeserializeObject<Export>(txt);
             if (config == null || config.Clients == null)

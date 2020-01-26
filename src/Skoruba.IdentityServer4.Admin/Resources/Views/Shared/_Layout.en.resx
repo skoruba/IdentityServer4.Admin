@@ -129,6 +129,9 @@
   <data name="ImportConfig" xml:space="preserve">
     <value>Import configuration</value>
   </data>
+  <data name="ImportUsers" xml:space="preserve">
+    <value>User upload</value>
+  </data>
   <data name="LinkApiResources" xml:space="preserve">
     <value>Api Resources</value>
   </data>

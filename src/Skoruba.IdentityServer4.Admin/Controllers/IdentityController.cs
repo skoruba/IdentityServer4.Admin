@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfaces;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.ExceptionHandling;
@@ -47,6 +50,8 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         private readonly IGenericControllerLocalizer<IdentityController<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
             TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> _localizer;
+        private readonly IExportService _exportService;
+        private readonly IExportIdentityService _exportIdentityService;
 
         public IdentityController(IIdentityService<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
@@ -54,10 +59,12 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             ILogger<ConfigurationController> logger,
             IGenericControllerLocalizer<IdentityController<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> localizer) : base(logger)
+                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> localizer, IExportService exportService, IExportIdentityService exportIdentityService) : base(logger)
         {
             _identityService = identityService;
             _localizer = localizer;
+            _exportService = exportService;
+            _exportIdentityService = exportIdentityService;
         }
 
         [HttpGet]
@@ -433,6 +440,24 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             if (user == null) return NotFound();
 
             return View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Import(IFormFile file)
+        {
+            if (file == null)
+            {
+                return new EmptyResult();
+            }
+            if (Path.GetExtension(file.FileName) != ".json")
+            {
+                return BadRequest("Invalid file extension");
+            }
+            using (var reader = new StreamReader(file.OpenReadStream()))
+            {
+                await _exportIdentityService.ImportUsersAsync(await reader.ReadToEndAsync());
+            }
+            return Ok();
         }
     }
 }

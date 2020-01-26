@@ -123,11 +123,32 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>Фамилия</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Пол</value>
+  </data>
   <data name="Locality" xml:space="preserve">
     <value>Город</value>
   </data>
+  <data name="MiddleName" xml:space="preserve">
+    <value>Отчество</value>
+  </data>
   <data name="Name" xml:space="preserve">
-    <value>Имя полностью</value>
+    <value>Имя</value>
+  </data>
+  <data name="NameOrg" xml:space="preserve">
+    <value>Название организации</value>
+  </data>
+  <data name="OgrnIp" xml:space="preserve">
+    <value>ОГРН ИП</value>
+  </data>
+  <data name="OgrnUl" xml:space="preserve">
+    <value>ОГРН ЮЛ</value>
+  </data>
+  <data name="Opf" xml:space="preserve">
+    <value>Form of incorporation</value>
   </data>
   <data name="PhoneNumber" xml:space="preserve">
     <value>Номер телефона</value>

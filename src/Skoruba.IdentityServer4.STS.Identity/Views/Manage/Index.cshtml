@@ -13,82 +13,196 @@
         <img-gravatar email="@Model.Email" class="img-thumbnail" size="150" />
     </div>
     <div class="col-sm-10">
-        <form method="post">
-            <div class="form-group">
-                <label asp-for="Username">@Localizer["UserName"]</label>
-                <input asp-for="Username" class="form-control" disabled />
+      <form method="post">
+        <div class="form-group">
+          <label asp-for="Username">@Localizer["UserName"]</label>
+          <input asp-for="Username" class="form-control" disabled />
+        </div>
+        <div class="form-group">
+          <label asp-for="Email">@Localizer["Email"]</label>
+          <input type="hidden" asp-for="IsEmailConfirmed" />
+          @if (Model.IsEmailConfirmed)
+          {
+            <div class="input-group">
+              <input asp-for="Email" class="form-control" />
             </div>
-            <div class="form-group">
-                <label asp-for="Email">@Localizer["Email"]</label>
-                <input type="hidden" asp-for="IsEmailConfirmed" />
-                @if (Model.IsEmailConfirmed)
-                {
-                    <div class="input-group">
-                        <input asp-for="Email" class="form-control" />
-                    </div>
-                }
-                else
-                {
-                    <input asp-for="Email" class="form-control" />
-                    <button asp-action="SendVerificationEmail" class="btn btn-link">@Localizer["SendVerificationEmail"]</button>
-                }
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber">@Localizer["PhoneNumber"]</label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
+          }
+          else
+          {
+            <input asp-for="Email" class="form-control" />
+            <button asp-action="SendVerificationEmail" class="btn btn-link">@Localizer["SendVerificationEmail"]</button>
+          }
+          <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+          <label asp-for="PhoneNumber">@Localizer["PhoneNumber"]</label>
+          <input asp-for="PhoneNumber" class="form-control" />
+          <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
 
-            <div class="form-group">
-                <label asp-for="Name">@Localizer["Name"]</label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
+        <div class="form-group">
+          <label asp-for="FirstName">@Localizer["FirstName"]</label>
+          <input asp-for="FirstName" class="form-control" />
+          <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
 
-            <div class="form-group">
-                <label asp-for="Website">@Localizer["Website"]</label>
-                <input asp-for="Website" class="form-control" />
-                <span asp-validation-for="Website" class="text-danger"></span>
-            </div>
+        <div class="form-group">
+          <label asp-for="Name">@Localizer["Name"]</label>
+          <input asp-for="Name" class="form-control" />
+          <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
 
-            <div class="form-group">
-                <label asp-for="Profile">@Localizer["Profile"]</label>
-                <input asp-for="Profile" class="form-control" />
-                <span asp-validation-for="Profile" class="text-danger"></span>
-            </div>
+        <div class="form-group">
+          <label asp-for="MiddleName">@Localizer["MiddleName"]</label>
+          <input asp-for="MiddleName" class="form-control" />
+          <span asp-validation-for="MiddleName" class="text-danger"></span>
+        </div>
 
-            <div class="form-group">
-                <label asp-for="StreetAddress">@Localizer["StreetAddress"]</label>
-                <input asp-for="StreetAddress" class="form-control" />
-                <span asp-validation-for="StreetAddress" class="text-danger"></span>
-            </div>
+        @*<div class="form-group">
+          <label asp-for="Gender">@Localizer["Gender"]</label>
+          <input asp-for="Gender" class="form-control" />
+          <span asp-validation-for="Gender" class="text-danger"></span>
+        </div>*@
 
-            <div class="form-group">
-                <label asp-for="Locality">@Localizer["Locality"]</label>
-                <input asp-for="Locality" class="form-control" />
-                <span asp-validation-for="Locality" class="text-danger"></span>
-            </div>
+        <div class="form-group">
+          <label asp-for="UserType">@Localizer["UserType"]</label>
+          <input asp-for="UserType" class="form-control" />
+          <span asp-validation-for="UserType" class="text-danger"></span>
+        </div>
 
-            <div class="form-group">
-                <label asp-for="Region">@Localizer["Region"]</label>
-                <input asp-for="Region" class="form-control" />
-                <span asp-validation-for="Region" class="text-danger"></span>
-            </div>
+        <div class="form-group">
+          <label asp-for="SignNotifyActive">@Localizer["SignNotifyActive"]</label>
+          <input asp-for="SignNotifyActive" class="form-control" />
+          <span asp-validation-for="SignNotifyActive" class="text-danger"></span>
+        </div>
 
-            <div class="form-group">
-                <label asp-for="PostalCode">@Localizer["PostalCode"]</label>
-                <input asp-for="PostalCode" class="form-control" />
-                <span asp-validation-for="PostalCode" class="text-danger"></span>
-            </div>
+        <div class="form-group">
+          <label asp-for="SignPushNotifyActive">@Localizer["SignPushNotifyActive"]</label>
+          <input asp-for="SignPushNotifyActive" class="form-control" />
+          <span asp-validation-for="SignPushNotifyActive" class="text-danger"></span>
+        </div>
 
-            <div class="form-group">
-                <label asp-for="Country">@Localizer["Country"]</label>
-                <input asp-for="Country" class="form-control" />
-                <span asp-validation-for="Country" class="text-danger"></span>
-            </div>
+        <div class="form-group">
+          <label asp-for="RegionAddrRef">@Localizer["RegionAddrRef"]</label>
+          <input asp-for="RegionAddrRef" class="form-control" />
+          <span asp-validation-for="RegionAddrRef" class="text-danger"></span>
+        </div>
 
-            <button type="submit" class="btn btn-primary">@Localizer["Save"]</button>
-        </form>
+        <div class="form-group">
+          <label asp-for="UserFromEsia">@Localizer["UserFromEsia"]</label>
+          <input asp-for="UserFromEsia" class="form-control" />
+          <span asp-validation-for="UserFromEsia" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+          <label asp-for="SignAutoLocationActive">@Localizer["SignAutoLocationActive"]</label>
+          <input asp-for="SignAutoLocationActive" class="form-control" />
+          <span asp-validation-for="SignAutoLocationActive" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+          <label asp-for="AddressFias">@Localizer["AddressFias"]</label>
+          <input asp-for="AddressFias" class="form-control" />
+          <span asp-validation-for="AddressFias" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+          <label asp-for="LoginNameIp">@Localizer["LoginNameIp"]</label>
+          <input asp-for="LoginNameIp" class="form-control" />
+          <span asp-validation-for="LoginNameIp" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+          <label asp-for="LoginNameUl">@Localizer["LoginNameUl"]</label>
+          <input asp-for="LoginNameUl" class="form-control" />
+          <span asp-validation-for="LoginNameUl" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+          <label asp-for="NameOrg">@Localizer["NameOrg"]</label>
+          <input asp-for="NameOrg" class="form-control" />
+          <span asp-validation-for="NameOrg" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+          <label asp-for="OgrnIp">@Localizer["OgrnIp"]</label>
+          <input asp-for="OgrnIp" class="form-control" />
+          <span asp-validation-for="OgrnIp" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+          <label asp-for="OgrnUl">@Localizer["OgrnUl"]</label>
+          <input asp-for="OgrnUl" class="form-control" />
+          <span asp-validation-for="OgrnUl" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+          <label asp-for="Opf">@Localizer["Opf"]</label>
+          <input asp-for="Opf" class="form-control" />
+          <span asp-validation-for="Opf" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+          <label asp-for="ShowSvetAttributes">@Localizer["ShowSvetAttributes"]</label>
+          <input asp-for="ShowSvetAttributes" class="form-control" />
+          <span asp-validation-for="ShowSvetAttributes" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+          <label asp-for="ShowExtendedAttributes">@Localizer["ShowExtendedAttributes"]</label>
+          <input asp-for="ShowExtendedAttributes" class="form-control" />
+          <span asp-validation-for="ShowExtendedAttributes" class="text-danger"></span>
+        </div>
+
+        @*<div class="form-group">
+        <label asp-for="Name">@Localizer["Name"]</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Website">@Localizer["Website"]</label>
+        <input asp-for="Website" class="form-control" />
+        <span asp-validation-for="Website" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Profile">@Localizer["Profile"]</label>
+        <input asp-for="Profile" class="form-control" />
+        <span asp-validation-for="Profile" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="StreetAddress">@Localizer["StreetAddress"]</label>
+        <input asp-for="StreetAddress" class="form-control" />
+        <span asp-validation-for="StreetAddress" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Locality">@Localizer["Locality"]</label>
+        <input asp-for="Locality" class="form-control" />
+        <span asp-validation-for="Locality" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Region">@Localizer["Region"]</label>
+        <input asp-for="Region" class="form-control" />
+        <span asp-validation-for="Region" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PostalCode">@Localizer["PostalCode"]</label>
+        <input asp-for="PostalCode" class="form-control" />
+        <span asp-validation-for="PostalCode" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Country">@Localizer["Country"]</label>
+        <input asp-for="Country" class="form-control" />
+        <span asp-validation-for="Country" class="text-danger"></span>
+    </div>*@
+
+        <button type="submit" class="btn btn-primary">@Localizer["Save"]</button>
+      </form>
     </div>
 </div>
