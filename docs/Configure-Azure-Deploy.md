@@ -13,10 +13,6 @@ If you don't have publicly accessible database you will need to create one. Foll
 
 Replace connection strings in `appSettings.json` with connection string to generated database.
 
-Then you can generate migrations:
-
-[Follow these steps for generating of DB migrations](/README.md#ef-core--data-access)
-
 ## Deploying webbaps to Azure App Service
 
 We will assume in the tutorial that STS and Admin were deployed to:
