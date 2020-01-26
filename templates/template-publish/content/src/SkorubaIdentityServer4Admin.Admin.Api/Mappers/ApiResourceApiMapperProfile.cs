@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using SkorubaIdentityServer4Admin.Admin.Api.Dtos.ApiResources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 
@@ -44,3 +44,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Mappers
         }
     }
 }
+
+
+
+
+

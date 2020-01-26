@@ -73,13 +73,17 @@
         {
           "condition": "(!dockersupport)",
           "exclude": [
+            "shared/**",
             "docker-compose.dcproj",
             ".dockerignore",
             "docker-compose.yml",
+            "docker-compose.override.yml",
+            "docker-compose.vs.debug.yml",
+            "docker-compose.vs.release.yml",
             "src/SkorubaIdentityServer4Admin.Admin/Dockerfile",
             "src/SkorubaIdentityServer4Admin.Admin.Api/Dockerfile",
             "src/SkorubaIdentityServer4Admin.STS.Identity/Dockerfile",
-            "SkorubaIdentityServer4Admin.AdminUI.sln"
+            "SkorubaIdentityServer4Admin.AdminUI.sln"            
           ]
         },
         {

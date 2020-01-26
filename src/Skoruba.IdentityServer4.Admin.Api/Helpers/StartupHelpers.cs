@@ -50,6 +50,30 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
             return services;
         }
 
+        public static IServiceCollection AddAdminApiCors(this IServiceCollection services, AdminApiConfiguration adminApiConfiguration)
+        {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        if (adminApiConfiguration.CorsAllowAnyOrigin)
+                        {
+                            builder.AllowAnyOrigin();
+                        }
+                        else
+                        {
+                            builder.WithOrigins(adminApiConfiguration.CorsAllowOrigins);
+                        }
+
+                        builder.AllowAnyHeader();
+                        builder.AllowAnyMethod();
+                    });
+            });
+
+            return services;
+        }
+
         /// <summary>
         /// Register services for MVC
         /// </summary>
@@ -114,7 +138,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
             where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
         {
             var databaseProvider = configuration.GetSection(nameof(DatabaseProviderConfiguration)).Get<DatabaseProviderConfiguration>();
-            
+
             var identityConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
             var configurationConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
             var persistedGrantsConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);
@@ -151,17 +175,24 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
             where TRole : class
             where TUser : class
         {
-            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+            services.AddIdentity<TUser, TRole>(options => { options.User.RequireUniqueEmail = true; })
+                .AddEntityFrameworkStores<TIdentityDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultForbidScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+            })
                 .AddIdentityServerAuthentication(options =>
                 {
                     options.Authority = adminApiConfiguration.IdentityServerBaseUrl;
                     options.ApiName = adminApiConfiguration.OidcApiName;
                     options.RequireHttpsMetadata = adminApiConfiguration.RequireHttpsMetadata;
                 });
-
-            services.AddIdentity<TUser, TRole>(options => { options.User.RequireUniqueEmail = true; })
-                .AddEntityFrameworkStores<TIdentityDbContext>()
-                .AddDefaultTokenProviders();
         }
 
         /// <summary>

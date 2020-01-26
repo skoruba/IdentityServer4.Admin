@@ -18,6 +18,10 @@ namespace Skoruba.IdentityServer4.Admin
 
         public static async Task Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(Configuration)
+                .CreateLogger();
+
             try
             {
                 var seed = args.Any(x => x == SeedArgs);
@@ -39,17 +43,34 @@ namespace Skoruba.IdentityServer4.Admin
             }
             catch (Exception ex)
             {
-                throw ex;
+                Log.Fatal(ex, "Host terminated unexpectedly");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
             }
         }
+
+        public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .AddJsonFile("serilog.json", optional: true, reloadOnChange: true)
+            .AddEnvironmentVariables()
+            .Build();
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                  .ConfigureAppConfiguration((hostContext, configApp) =>
                  {
-                     configApp.AddJsonFile($"serilog.json", optional: true);
-                     configApp.AddJsonFile($"identitydata.json", optional: true);
-                     configApp.AddJsonFile($"identityserverdata.json", optional: true);
+                     configApp.AddJsonFile("serilog.json", optional: true, reloadOnChange: true);
+                     configApp.AddJsonFile("identitydata.json", optional: true, reloadOnChange: true);
+                     configApp.AddJsonFile("identityserverdata.json", optional: true, reloadOnChange: true);
+
+                     if (hostContext.HostingEnvironment.IsDevelopment())
+                     {
+                         configApp.AddUserSecrets<Startup>();
+                     }
+
                      configApp.AddEnvironmentVariables();
                      configApp.AddCommandLine(args);
                  })
@@ -62,7 +83,7 @@ namespace Skoruba.IdentityServer4.Admin
                 {
                     loggerConfig
                         .ReadFrom.Configuration(hostContext.Configuration)
-                        .Enrich.WithProperty("ComponentName", hostContext.HostingEnvironment.ApplicationName);
+                        .Enrich.WithProperty("ApplicationName", hostContext.HostingEnvironment.ApplicationName);
                 });
     }
 }

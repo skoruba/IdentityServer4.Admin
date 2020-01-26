@@ -1,32 +1,52 @@
 param([string] $migration = 'DbInit', [string] $migrationProviderName = 'All')
+$projectName = "Skoruba.IdentityServer4";
 $currentPath = Get-Location
-Set-Location ../src/Skoruba.IdentityServer4.Admin
-
+Set-Location "../src/$projectName.Admin"
 Copy-Item appsettings.json -Destination appsettings-backup.json
 $settings = Get-Content appsettings.json -raw
 
-$dbProviders = @{ }
+#Initialze db context and define the target directory
+$targetContexts = @{ 
+    AdminIdentityDbContext                = "Migrations\Identity"
+    AdminLogDbContext                     = "Migrations\Logging";
+    IdentityServerConfigurationDbContext  = "Migrations\IdentityServerConfiguration";
+    IdentityServerPersistedGrantDbContext = "Migrations\IdentityServerGrants";
+    AdminAuditLogDbContext                = "Migrations\AuditLogging";
+}
 
-$dbProviders.Add("SqlServer", "..\..\src\Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer\Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.csproj")
-$dbProviders.Add("PostgreSQL", "..\..\src\Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL\Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.csproj")
-$dbProviders.Add("MySql", "..\..\src\Skoruba.IdentityServer4.Admin.EntityFramework.MySql\Skoruba.IdentityServer4.Admin.EntityFramework.MySql.csproj")
+#Initialize the db providers and it's respective projects
+$dpProviders = @{
+    SqlServer  = "..\..\src\$projectName.Admin.EntityFramework.SqlServer\$projectName.Admin.EntityFramework.SqlServer.csproj";
+    PostgreSQL = "..\..\src\$projectName.Admin.EntityFramework.PostgreSQL\$projectName.Admin.EntityFramework.PostgreSQL.csproj";
+    MySql      = "..\..\src\$projectName.Admin.EntityFramework.MySql\$projectName.Admin.EntityFramework.MySql.csproj";
+}
 
-foreach ($key in $dbProviders.Keys) {
+#Fix issue when the tools is not installed and the nuget package does not work see https://github.com/MicrosoftDocs/azure-docs/issues/40048
+Write-Host "Updating donet ef tools"
+$env:Path += "	% USERPROFILE % \.dotnet\tools";
+dotnet tool update --global dotnet-ef --version 3.1.0 
 
-    if ($migrationProviderName -eq 'All' -or $migrationProviderName -eq $key) {
+Write-Host "Start migrate projects"
+foreach ($provider in $dpProviders.Keys) {
+
+    if ($migrationProviderName -eq 'All' -or $migrationProviderName -eq $provider) {
     
-        Write-Host "Generate migration for db provider:" $key ", for project path - " $dbProviders[$key]
+        $projectPath = (Get-Item -Path $dpProviders[$provider] -Verbose).FullName;
+        Write-Host "Generate migration for db provider:" $provider ", for project path - " $projectPath
 
-        $providerName = '"ProviderType": "' + $key + '"'
+        $providerName = '"ProviderType": "' + $provider + '"'
 
         $settings = $settings -replace '"ProviderType".*', $providerName
         $settings | set-content appsettings.json
+        if ((Test-Path $projectPath) -eq $true) {
+            foreach ($context in $targetContexts.Keys) {
+                $migrationPath = $targetContexts[$context];
 
-        dotnet ef migrations add $migration -c AdminIdentityDbContext -o Migrations/Identity -p $dbProviders[$key]
-        dotnet ef migrations add $migration -c AdminLogDbContext -o Migrations/Logging -p $dbProviders[$key]
-        dotnet ef migrations add $migration -c IdentityServerConfigurationDbContext -o Migrations/IdentityServerConfiguration -p $dbProviders[$key]
-        dotnet ef migrations add $migration -c IdentityServerPersistedGrantDbContext -o Migrations/IdentityServerGrants -p $dbProviders[$key]
-        dotnet ef migrations add $migration -c AdminAuditLogDbContext -o Migrations/AuditLogging -p $dbProviders[$key]
+                Write-Host "Migrating context " $context
+                dotnet ef migrations add $migration -c $context -o $migrationPath -p $projectPath
+            } 
+        }
+        
     }
 }
 

@@ -1,12 +1,11 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 // https://github.com/aspnet/Extensions/blob/master/src/Localization/Abstractions/src/StringLocalizerOfT.cs
-// Modified by Jan Škoruba
+// Modified by Jan �koruba
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Reflection;
 using Microsoft.Extensions.Localization;
 
@@ -32,13 +31,6 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers.Localization
             _localizer = factory.Create(baseName, assemblyName);
         }
 
-        /// <inheritdoc />
-        public virtual IStringLocalizer WithCulture(CultureInfo culture)
-        {
-            return _localizer.WithCulture(culture);
-        }
-
-        /// <inheritdoc />
         public virtual LocalizedString this[string name]
         {
             get
@@ -49,7 +41,6 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers.Localization
             }
         }
 
-        /// <inheritdoc />
         public virtual LocalizedString this[string name, params object[] arguments]
         {
             get
@@ -60,10 +51,14 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers.Localization
             }
         }
 
-        /// <inheritdoc />
         public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
         {
             return _localizer.GetAllStrings(includeParentCultures);
         }
     }
 }
+
+
+
+
+
