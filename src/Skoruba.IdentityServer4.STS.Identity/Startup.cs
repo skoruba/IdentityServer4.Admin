@@ -55,17 +55,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
             // Add authorization policies for MVC
             RegisterAuthorization(services);
 
-            // If single tenant app then change to false and remove app configuration
-            services.AddMultiTenant(true)
-                // required if using app.AddMultiTenantFromForm()
-                .RegisterConfiguration(Configuration.GetSection("MultiTenantConfiguration"))
-                // custom store
-                .WithEFCacheStore(options => options.UseSqlServer(Configuration.GetConnectionString("TenantsDbConnection")))
-                // custom strategy to get tenant from form data at login
-                .WithStrategy<FormStrategy>(ServiceLifetime.Singleton)
-                // dont require tenant resolution for identity endpoints
-                .RegisterTenantIsRequiredValidation<TenantNotRequiredForIdentityServerEndpoints>()
-            ;
+            RegisterMultiTenantConfiguration(services);
 
             services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext>(Configuration);
         }
@@ -89,12 +79,12 @@ namespace Skoruba.IdentityServer4.STS.Identity
             app.UseRouting();
 
             // configure default multitenant middleware before authentication
-            app.UseMultiTenant();
+            UsePreAuthenticationMultitenantMiddleware(app);
 
             UseAuthentication(app);
 
             // configure custom multitenant middleware for claims after authentication
-            app.UseMultiTenantFromClaims();
+            UsePostAuthenticationMultitenantMiddleware(app);
 
             app.UseMvcLocalizationServices();
 
@@ -126,6 +116,21 @@ namespace Skoruba.IdentityServer4.STS.Identity
             var rootConfiguration = CreateRootConfiguration();
             services.AddAuthorizationPolicies(rootConfiguration);
         }
+        public virtual void RegisterMultiTenantConfiguration(IServiceCollection services) {
+ 
+            // If single tenant app then change to false and remove app configuration
+            services.AddMultiTenant(true)
+                // required if using app.AddMultiTenantFromForm()
+                .RegisterConfiguration(Configuration.GetSection("MultiTenantConfiguration"))
+                // custom store
+                .WithEFCacheStore(options => options.UseSqlServer(Configuration.GetConnectionString("TenantsDbConnection")))
+                // custom strategy to get tenant from form data at login
+                .WithStrategy<FormStrategy>(ServiceLifetime.Singleton)
+                // dont require tenant resolution for identity endpoints
+                .RegisterTenantIsRequiredValidation<TenantNotRequiredForIdentityServerEndpoints>()
+            ;
+
+        }
 
         public virtual void UseAuthentication(IApplicationBuilder app)
         {
@@ -142,6 +147,17 @@ namespace Skoruba.IdentityServer4.STS.Identity
             });
         }
 
+
+        public virtual void UsePreAuthenticationMultitenantMiddleware(IApplicationBuilder app)
+        {
+            // configure default multitenant middleware before authentication
+            app.UseMultiTenant();
+        }
+        public virtual void UsePostAuthenticationMultitenantMiddleware(IApplicationBuilder app)
+        {
+            // configure custom multitenant middleware for claims after authentication
+            app.UseMultiTenantFromClaims();
+        }
         protected IRootConfiguration CreateRootConfiguration()
         {
             var rootConfiguration = new RootConfiguration();

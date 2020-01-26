@@ -81,13 +81,7 @@ namespace Skoruba.IdentityServer4.Admin
             // Add audit logging
             services.AddAuditEventLogging<AdminAuditLogDbContext, AuditLog>(Configuration);
 
-            // Add multitenancy
-            services.AddMultiTenant(true)
-                // custom store
-                .WithEFCacheStore(options => options.UseSqlServer(Configuration.GetConnectionString("TenantsDbConnection")))
-                // custom strategy to get tenant id from user claims
-                .WithStrategy<ClaimsStrategy>(ServiceLifetime.Singleton)
-                ;
+            RegisterMultiTenantConfiguration(services);
 
             services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, AdminLogDbContext, AdminAuditLogDbContext>(Configuration, rootConfiguration.AdminConfiguration);
         }
@@ -146,7 +140,17 @@ namespace Skoruba.IdentityServer4.Admin
             var rootConfiguration = CreateRootConfiguration();
             services.AddAuthorizationPolicies(rootConfiguration);
         }
-
+        public virtual void RegisterMultiTenantConfiguration(IServiceCollection services)
+        {
+            // Add multitenancy
+            services.AddMultiTenant(true)
+                // custom store
+                .WithEFCacheStore(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("TenantsDbConnection")))
+                // custom strategy to get tenant id from user claims
+                .WithStrategy<ClaimsStrategy>(ServiceLifetime.Singleton)
+                ;
+        }
         public virtual void UseAuthentication(IApplicationBuilder app)
         {
             app.UseAuthentication();
