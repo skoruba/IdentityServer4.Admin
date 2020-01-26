@@ -56,7 +56,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
             RegisterAuthorization(services);
 
             // If single tenant app then change to false and remove app configuration
-            services.AddMultiTenant(false)
+            services.AddMultiTenant(true)
                 // required if using app.AddMultiTenantFromForm()
                 .RegisterConfiguration(Configuration.GetSection("MultiTenantConfiguration"))
                 // custom store
@@ -85,7 +85,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
             app.UseSecurityHeaders();
 
             app.UseStaticFiles();
-           
+
             app.UseRouting();
 
             // configure default multitenant middleware before authentication
@@ -99,9 +99,9 @@ namespace Skoruba.IdentityServer4.STS.Identity
             app.UseMvcLocalizationServices();
 
             app.UseAuthorization();
-         
-            app.UseEndpoints(endpoint => 
-            { 
+
+            app.UseEndpoints(endpoint =>
+            {
                 endpoint.MapDefaultControllerRoute();
                 endpoint.MapHealthChecks("/health", new HealthCheckOptions
                 {

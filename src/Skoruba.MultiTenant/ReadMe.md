@@ -20,7 +20,7 @@ but that is not necessary.  There may need to be additional changes
 like this to dto's and other objects when
 more tenant enhancements are added, such as tenant pages for adding/editing
 tenants.
-- A const flag IsMultiTenant is referenced in various places for configuration
+- A const flag MultiTenantEnabled is referenced in various places for configuration
 purposes.  This flag currently resides in the Skoruba.MultiTenant project and must
 be changed when deciding on being multitenant or not.
 - The AdminIdentityDbContext uses a const flag to modify indexes if

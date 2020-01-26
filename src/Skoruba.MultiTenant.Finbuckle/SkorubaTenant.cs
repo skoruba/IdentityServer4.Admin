@@ -13,7 +13,7 @@ namespace Skoruba.MultiTenant.Finbuckle
         public SkorubaTenant(IHttpContextAccessor httpContextAccessor, TenantInfo tenantInfo = null, ValidateTenantRequirement validateTenantRequirement = null)
         {
             // TODO: Why is tenantInfo null when the multitenantcontext is not null?
-            Tenant = tenantInfo ?? httpContextAccessor.HttpContext.GetMultiTenantContext().TenantInfo;
+            Tenant = tenantInfo ?? httpContextAccessor.HttpContext?.GetMultiTenantContext()?.TenantInfo;
             TenantResolutionRequired = validateTenantRequirement?.TenantIsRequired() ?? MultiTenantConstants.MultiTenantEnabled;
         }
 
