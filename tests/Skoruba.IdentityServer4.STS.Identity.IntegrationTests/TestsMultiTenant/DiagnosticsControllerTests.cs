@@ -1,0 +1,33 @@
+﻿using System.Net;
+using System.Threading.Tasks;
+using FluentAssertions;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Skoruba.IdentityServer4.STS.Identity.Configuration.Test;
+using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.TestsMultiTenant.Base;
+using Xunit;
+
+namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.TestsMultiTenant
+{
+    public class DiagnosticsControllerTests : BaseClassFixture
+    {
+        public DiagnosticsControllerTests(WebApplicationFactory<StartupTestMultiTenant> factory) : base(factory)
+        {
+        }
+
+        [Fact]
+        public async Task UnAuthorizeUserCannotAccessDiagnosticsView()
+        {
+            // Clear headers
+            Client.DefaultRequestHeaders.Clear();
+
+            // Act
+            var response = await Client.GetAsync("/Diagnostics/Index");
+
+            // Assert      
+            response.StatusCode.Should().Be(HttpStatusCode.Redirect);
+
+            //The redirect to login
+            response.Headers.Location.ToString().Should().Contain("Account/Login");
+        }
+    }
+}

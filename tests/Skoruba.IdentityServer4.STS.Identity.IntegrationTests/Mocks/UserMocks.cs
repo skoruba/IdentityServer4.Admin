@@ -24,14 +24,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Mocks
             };
         }
 
-        public static Dictionary<string, string> GenerateLoginData(string userName, string password, string antiForgeryToken)
+        public static Dictionary<string, string> GenerateLoginData(string userName, string password, string tenantCode, string antiForgeryToken)
         {
             var loginDataForm = new Dictionary<string, string>
             {
                 {"Username", userName},
                 {"Password", password},
                 {"button", "login"},
-                {"TenantCode", TenantCode },
+                {"TenantCode", tenantCode },
                 {AntiForgeryTokenKey, antiForgeryToken}
             };
 

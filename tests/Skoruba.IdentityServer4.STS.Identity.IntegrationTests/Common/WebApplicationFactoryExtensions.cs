@@ -25,7 +25,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Common
         {
             var options = new WebApplicationFactoryClientOptions
             {
-                AllowAutoRedirect = false
+                AllowAutoRedirect = false,
+                HandleCookies = false
             };
 
             return fixture.WithWebHostBuilder(

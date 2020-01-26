@@ -50,7 +50,7 @@ namespace Skoruba.MultiTenant.Finbuckle.Strategies
                     {
                         tenantInfo = await store.TryGetByIdentifierAsync(value);
                     }
-                    else if (r.Type == 1)
+                    else
                     {
                         _logger.LogDebug($"Returning tenant id for form value: {value}, controller: {controller}, and action: {action}.");
                         return value;

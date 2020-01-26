@@ -9,14 +9,14 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Test;
 using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Common;
 using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Mocks;
-using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests.Base;
+using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.TestsMultiTenant.Base;
 using Xunit;
 
-namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
+namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.TestsMultiTenant
 {
     public class AccountControllerTests : BaseClassFixture
     {
-        public AccountControllerTests(WebApplicationFactory<StartupTestSingleTenant> factory) : base(factory)
+        public AccountControllerTests(WebApplicationFactory<StartupTestMultiTenant> factory) : base(factory)
         {
         }
 
@@ -103,7 +103,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
             var loginResponse = await Client.GetAsync(accountLoginAction);
             var antiForgeryToken = await loginResponse.ExtractAntiForgeryToken();
 
-            var loginDataForm = UserMocks.GenerateLoginData(registerFormData["UserName"], registerFormData["Password"],registerFormData["TenantCode"],
+            var loginDataForm = UserMocks.GenerateLoginData(registerFormData["UserName"], registerFormData["Password"], registerFormData["TenantCode"],
                 antiForgeryToken);
 
             // Login
@@ -183,5 +183,65 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
             // Assert Identity cookie
             existsCookie.Should().BeFalse();
         }
+        [Fact]
+        public async Task UserIsNotAbleToLoginWithIncorrectTenant()
+        {
+            // Clear headers
+            Client.DefaultRequestHeaders.Clear();
+
+            // Register new user
+            var registerFormData = UserMocks.GenerateRegisterData();
+            await UserMocks.RegisterNewUserAsync(Client, registerFormData);
+
+            // Clear headers
+            Client.DefaultRequestHeaders.Clear();
+
+            // Prepare request to login
+            const string accountLoginAction = "/Account/Login";
+            var loginResponse = await Client.GetAsync(accountLoginAction);
+            var antiForgeryToken = await loginResponse.ExtractAntiForgeryToken();
+
+            // User Guid like fake password
+            var loginDataForm = UserMocks.GenerateLoginData(registerFormData["UserName"], registerFormData["Password"], "1111", antiForgeryToken);
+
+            // Login
+            var requestMessage = RequestHelper.CreatePostRequestWithCookies(accountLoginAction, loginDataForm, loginResponse);
+            var responseMessage = await Client.SendAsync(requestMessage);
+
+            // Get html content
+            var contentWithErrorMessage = await responseMessage.Content.ReadAsStringAsync();
+
+            // Assert status code    
+            responseMessage.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            // From String
+            var doc = new HtmlDocument();
+            doc.LoadHtml(contentWithErrorMessage);
+
+            // Get error messages from validation summary
+            var errorNodes = doc.DocumentNode
+                .SelectNodes("//div[contains(@class, 'validation-summary-errors')]/ul/li");
+
+            errorNodes.Should().HaveCount(1);
+
+            // Build expected error messages
+            var expectedErrorMessages = new List<string>
+            {
+                "Invalid username or password"
+            };
+
+            // Assert
+            var containErrors = errorNodes.Select(x => x.InnerText).ToList().SequenceEqual(expectedErrorMessages);
+
+            containErrors.Should().BeTrue();
+
+            // Check if response contain cookie with Identity
+            const string identityCookieName = ".AspNetCore.Identity.Application";
+            var existsCookie = CookiesHelper.ExistsCookie(responseMessage, identityCookieName);
+
+            // Assert Identity cookie
+            existsCookie.Should().BeFalse();
+        }
     }
+
 }

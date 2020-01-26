@@ -26,16 +26,30 @@ namespace Skoruba.IdentityServer4.STS.Identity.Configuration.Test
         public override void RegisterMultiTenantConfiguration(IServiceCollection services)
         {
             services.AddMultiTenant(false);
+
+            //var tenantDatabaseName = Guid.NewGuid().ToString();
+
+            //// If single tenant app then change to false and remove app configuration
+            //services.AddMultiTenant(true)
+            //    // required if using app.AddMultiTenantFromForm()
+            //    .RegisterConfiguration(Configuration.GetSection("MultiTenantConfiguration"))
+            //    // custom store
+            //    .WithEFCacheStore(options => options.UseInMemoryDatabase(tenantDatabaseName))
+            //    // custom strategy to get tenant from form data at login
+            //    .WithStrategy<FormStrategy>(ServiceLifetime.Singleton)
+            //    // dont require tenant resolution for identity endpoints
+            //    .RegisterTenantIsRequiredValidation<TenantNotRequiredForIdentityServerEndpoints>()
+            //;
         }
 
         public override void UsePreAuthenticationMultitenantMiddleware(IApplicationBuilder app)
         {
-
+            
         }
 
         public override void UsePostAuthenticationMultitenantMiddleware(IApplicationBuilder app)
         {
-
+            
         }
     }
 }

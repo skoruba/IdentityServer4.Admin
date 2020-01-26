@@ -1,28 +1,27 @@
 ﻿# Skoruba.MultiTenant
 
-Skoruba.Multitenant provides an abstraction allowing a developer to implement 
-their own multitenant strategy.  Additional helpers for  ASP.NET Identity and 
-Identity Server 4 are also provided.  An example implementation is provided 
+Skoruba.Multitenant provides an abstraction for multi-tenancy along with ASP.NET
+and Identity Server 4 support.  An example implementation is provided 
 using [Finbuckle.MultiTenant](https://www.finbuckle.com/MultiTenant)
 for tenant resolution which includes several resolution strategies including
-custom stragegies.  
+the ability to create custom strategies.  
 
-## Impact on Admin and STS projects
+## PR impact on Admin and STS projects
 One of the goals of this implementation is to minimize the number of changes
 required within Admin and STS when enabling or disabling multitenancy.  The 
 following outlines noteable concessions:
 
 - The Profile resource needs to include "TenantId" claim.
 - A TenantId/TenantCode property was included in a few default objects like
-the Role and User entity objects and the login viewmodel.  Single tenant 
+the Role and User entity objects and the login and register viewmodels.  Single tenant 
 developers can ignore these properties, or they can remove them if they wish, 
 but that is not necessary.  There may need to be additional changes 
 like this to dto's and other objects when
 more tenant enhancements are added, such as tenant pages for adding/editing
 tenants.
-- A const flag MultiTenantEnabled is referenced in various places for configuration
-purposes.  This flag currently resides in the Skoruba.MultiTenant project and must
-be changed when deciding on being multitenant or not.
+- A static flag MultiTenantEnabled is referenced in various places during setup
+for configuration purposes.  This flag currently resides in the Skoruba.MultiTenant 
+project and must be changed when deciding on being multitenant or not.
 - The AdminIdentityDbContext uses a const flag to modify indexes if
 multitenancy is enabled.  This is essentially a non-change.
 - Skoruba.Dbmigrator is a console project to make it easier to migrate and
