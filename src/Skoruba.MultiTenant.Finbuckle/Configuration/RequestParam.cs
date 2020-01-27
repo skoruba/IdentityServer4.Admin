@@ -13,6 +13,12 @@
         /// <summary>
         /// 1 = Code, 2 = Identifier, 3 = Id
         /// </summary>
-        public int Type { get; set; } = 1;
+        public RequestParamType Type { get; set; } = RequestParamType.Identifier;
+    }
+
+    public enum RequestParamType
+    {
+        Identifier = 1,
+        Id = 2
     }
 }

@@ -36,6 +36,7 @@ namespace Skoruba.MultiTenant.Identity
             _skorubaMultiTenant = skorubaMultiTenant;
 
         }
+
         public override Task<IdentityResult> CreateAsync(TUser user, CancellationToken cancellationToken = default)
         {
             if (user == null)
@@ -54,6 +55,23 @@ namespace Skoruba.MultiTenant.Identity
             return base.CreateAsync(user, cancellationToken);
         }
 
+        public override Task<IdentityResult> UpdateAsync(TUser user, CancellationToken cancellationToken = default)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            if (_skorubaMultiTenant.TenantResolutionRequired && !_skorubaMultiTenant.TenantResolved)
+            {
+                throw new Exception("Tenant is required.");
+            }
+
+            // TODO: if tenant is not required, but the current tenant is null, should the supplied tenant id be used?
+            user.TenantId = CurrentTenantId ?? user.TenantId;
+
+            return base.UpdateAsync(user, cancellationToken);
+        }
 
         /// <summary>
         /// A navigation property for the users the store contains, filtered by the current tenant id (if exists).

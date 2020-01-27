@@ -46,7 +46,7 @@ namespace Skoruba.MultiTenant.Finbuckle.Strategies
                     var formOptions = new FormOptions { BufferBody = true };
                     var form = await httpContext.Request.ReadFormAsync(formOptions);
                     string value = form[r.Name];
-                    if (r.Type == 1)
+                    if (r.Type == Configuration.RequestParamType.Identifier)
                     {
                         tenantInfo = await store.TryGetByIdentifierAsync(value);
                     }
