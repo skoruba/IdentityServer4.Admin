@@ -29,9 +29,9 @@ spec:
         - name: AdminApiConfiguration__RequireHttpsMetadata
           value: "false"
         - name: AdminApiConfiguration__IdentityServerBaseUrl
-          value: http://identityadmin.k8s.local
+          value: http://host.docker.internal
         - name: AdminApiConfiguration__ApiBaseUrl
-          value: http://identityadmin.k8s.local:5000
+          value: http://host.docker.internal:5000
         - name: ConnectionStrings__ConfigurationDbConnection
           value: Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true
         - name: ConnectionStrings__PersistedGrantDbConnection
@@ -42,7 +42,7 @@ spec:
           value: Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true
         - name: ConnectionStrings__AdminAuditLogDbConnection
           value: Server=db;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true
-        image: skorubaidentityserver4adminapi:latest
+        image: skoruba/identityserver4-admin-api:rc1
         imagePullPolicy: IfNotPresent
         name: identity-api
         ports:

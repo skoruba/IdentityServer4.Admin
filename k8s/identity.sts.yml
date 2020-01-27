@@ -31,10 +31,10 @@ spec:
         - name: ConnectionStrings__IdentityDbConnection
           value: Server=sqlserver;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true
         - name: AdminConfiguration__IdentityAdminBaseUrl
-          value: http://identityadmin.k8s.local:9000
+          value: http://host.docker.internal:9000
         - name: Serilog__MinimumLevel__Default
           value: Information
-        image: skorubaidentityserver4stsidentity:latest
+        image: skoruba/identityserver4-sts-identity:rc1
         imagePullPolicy: IfNotPresent
         name: identity-sts
         ports:
