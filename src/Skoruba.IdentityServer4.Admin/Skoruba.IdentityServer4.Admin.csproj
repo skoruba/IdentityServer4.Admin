@@ -5,7 +5,6 @@
     <LangVersion>latest</LangVersion>
     <UserSecretsId>8fe260ca-ef4c-4fa3-9364-029146f8d339</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -103,7 +102,4 @@
     <Content Include="Dockerfile.develop" />
     <Content Include="Dockerfile.publish" />
   </ItemGroup>
-  <ProjectExtensions>
-    <VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio>
-  </ProjectExtensions>
 </Project>
