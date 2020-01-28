@@ -5,13 +5,11 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Skoruba.MultiTenant.Abstractions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Skoruba.MultiTenant.Identity
+namespace Skoruba.MultiTenant.Identity.Stores
 {
 
     // TODO: Can MultiTenantUserStore be used regardless of tenant implementation and be renamed to UserMightHaveTenantStore?
@@ -30,55 +28,19 @@ namespace Skoruba.MultiTenant.Identity
         private readonly ISkorubaTenant _skorubaMultiTenant;
 
         protected string CurrentTenantId => _skorubaMultiTenant.Id;
-       
+
         public MultiTenantUserStore(TContext context, ISkorubaTenant skorubaMultiTenant, IdentityErrorDescriber describer = null) : base(context, describer)
         {
             _skorubaMultiTenant = skorubaMultiTenant;
 
         }
 
-        public override Task<IdentityResult> CreateAsync(TUser user, CancellationToken cancellationToken = default)
-        {
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
-
-            if (_skorubaMultiTenant.TenantResolutionRequired && !_skorubaMultiTenant.TenantResolved)
-            {
-                throw MultiTenantException.MissingTenant;
-            }
-
-            // TODO: if tenant is not required, but the current tenant is null, should the supplied tenant id be used?
-            user.TenantId = CurrentTenantId ?? user.TenantId;
-            
-            return base.CreateAsync(user, cancellationToken);
-        }
-
-        public override Task<IdentityResult> UpdateAsync(TUser user, CancellationToken cancellationToken = default)
-        {
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
-
-            if (_skorubaMultiTenant.TenantResolutionRequired && !_skorubaMultiTenant.TenantResolved)
-            {
-                throw MultiTenantException.MissingTenant;
-            }
-
-            // TODO: if tenant is not required, but the current tenant is null, should the supplied tenant id be used?
-            user.TenantId = CurrentTenantId ?? user.TenantId;
-
-            return base.UpdateAsync(user, cancellationToken);
-        }
-
         /// <summary>
         /// A navigation property for the users the store contains, filtered by the current tenant id (if exists).
         /// </summary>
-        public override IQueryable<TUser> Users => !_skorubaMultiTenant.TenantResolved && !_skorubaMultiTenant.TenantResolutionRequired 
+        public override IQueryable<TUser> Users => !_skorubaMultiTenant.TenantResolved && !_skorubaMultiTenant.TenantResolutionRequired
             // return the base users (no tenant filtering) if tenant is not required
-            ? base.Users 
+            ? base.Users
             // return users filtered on tenant if tenant is required
             : base.Users.Where(u => u.TenantId == CurrentTenantId);
 
@@ -91,7 +53,7 @@ namespace Skoruba.MultiTenant.Identity
             // Therefore, overriding this method to use the Context
             // User set so that we do not include the tenant id
             // in the filter.
-            return this.Context.Set<TUser>().SingleOrDefaultAsync(u => u.Id.Equals(userId), cancellationToken);
+            return Context.Set<TUser>().SingleOrDefaultAsync(u => u.Id.Equals(userId), cancellationToken);
         }
 
         /// <summary>
@@ -109,7 +71,7 @@ namespace Skoruba.MultiTenant.Identity
                 ? base.FindRoleAsync(normalizedRoleName, cancellationToken)
                 : Context.Set<TRole>()
                     .Where(r => r.TenantId == CurrentTenantId)
-                    .SingleOrDefaultAsync(r => r.NormalizedName == normalizedRoleName, cancellationToken);                
+                    .SingleOrDefaultAsync(r => r.NormalizedName == normalizedRoleName, cancellationToken);
         }
     }
 }

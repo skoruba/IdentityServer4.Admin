@@ -28,5 +28,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
         public int AccessFailedCount { get; set; }
 
         public DateTimeOffset? LockoutEnd { get; set; }
+        public string TenantId { get; set; }
     }
 }

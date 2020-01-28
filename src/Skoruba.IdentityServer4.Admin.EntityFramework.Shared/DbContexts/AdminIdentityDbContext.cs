@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Constants;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.MultiTenant.Configuration;
-using Skoruba.MultiTenant.Identity;
+using Skoruba.MultiTenant.Identity.Extensions;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts
 {

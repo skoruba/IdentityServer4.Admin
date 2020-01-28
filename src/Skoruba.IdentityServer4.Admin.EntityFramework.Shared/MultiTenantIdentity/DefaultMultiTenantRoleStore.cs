@@ -2,7 +2,7 @@
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.MultiTenant.Abstractions;
-using Skoruba.MultiTenant.Identity;
+using Skoruba.MultiTenant.Identity.Stores;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.MultiTenantIdentity
 {

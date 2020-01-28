@@ -33,14 +33,16 @@
 		<div class="form-group row">
 			<div class="col-sm-12">
 				<a asp-action="RoleClaims" asp-route-id="@Model.Id" class="btn btn-outline-primary"><span class="oi oi-plus"></span> @Localizer["ActionAddClaims"]</a>
-			    <a asp-action="RoleUsers" asp-route-id="@Model.Id" class="btn btn-primary"> @Localizer["ActionRoleUsers"]</a>
-			    <a asp-action="RoleDelete" asp-route-id="@Model.Id" class="btn btn-danger"> @Localizer["ActionDeleteRole"]</a>			    
+				<a asp-action="RoleUsers" asp-route-id="@Model.Id" class="btn btn-primary"> @Localizer["ActionRoleUsers"]</a>
+				<a asp-action="RoleDelete" asp-route-id="@Model.Id" class="btn btn-danger"> @Localizer["ActionDeleteRole"]</a>
 			</div>
 		</div>
 	}
 
 	<!--Hidden -->
 	<input type="hidden" asp-for="Id" />
+	<input type="hidden" asp-for="TenantId" />
+
 	<div class="card mt-3">
 		<h5 class="card-header">@Localizer["Title"]</h5>
 		<div class="card-body">

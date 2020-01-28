@@ -61,7 +61,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers
                     opt => opt.MapFrom(src => src.Data));
 
             CreateMap<TUserClaim, TUserClaimDto>(MemberList.Destination)
-                .ForMember(x => x.ClaimId, opt => opt.MapFrom(src => src.Id));
+                .ForMember(x => x.ClaimId, opt => opt.MapFrom(src => src.Id))
+                ;
 
             CreateMap<TUserClaim, TUserClaimsDto>(MemberList.Destination)
                 .ForMember(x => x.ClaimId, opt => opt.MapFrom(src => src.Id));

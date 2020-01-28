@@ -221,7 +221,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 })
                 .AddEntityFrameworkStores<TIdentityDbContext>()
                 .AddDefaultTokenProviders()
-                .AddMultiTenantServicesIfMultiTenant<TUserIdentity, TUserIdentityRole, DefaultMultiTenantUserStore, DefaultMultiTenantRoleStore>();
+                .AddMultiTenantServicesIfMultiTenantWithValidators<TUserIdentity, TUserIdentityRole, DefaultMultiTenantUserStore, DefaultMultiTenantRoleStore>();
 
             services.Configure<IISOptions>(iis =>
             {

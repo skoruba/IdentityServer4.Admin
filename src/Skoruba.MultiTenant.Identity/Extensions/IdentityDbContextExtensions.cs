@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Skoruba.MultiTenant.Identity
+namespace Skoruba.MultiTenant.Identity.Extensions
 {
     public static class IdentityDbContextExtensions
     {

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Skoruba.MultiTenant.Identity
+namespace Skoruba.MultiTenant.Identity.Stores
 {
     // TODO: Can MultiTenantRoleStore be used regardless of tenant implementation and be renamed to RoleMightHaveTenantStore?
     public abstract class MultiTenantRoleStore<TRole, TContext, TKey, TUserRole, TRoleClaim> :
@@ -32,41 +32,6 @@ namespace Skoruba.MultiTenant.Identity
             // return roles filtered on tenant if tenant is required
             : base.Roles.Where(r => r.TenantId == CurrentTenantId);
 
-        public override Task<IdentityResult> CreateAsync(TRole role, CancellationToken cancellationToken = default)
-        {
-            if (role == null)
-            {
-                throw new ArgumentNullException(nameof(role));
-            }
-
-            if (_skorubaMultiTenant.TenantResolutionRequired && !_skorubaMultiTenant.TenantResolved)
-            {
-                throw MultiTenantException.MissingTenant;
-            }
-
-            // TODO: if tenant is not required, but the current tenant is null, should the supplied tenant id be used?
-            role.TenantId = CurrentTenantId ?? role.TenantId;
-            
-            return base.CreateAsync(role, cancellationToken);
-        }
-        public override Task<IdentityResult> UpdateAsync(TRole role, CancellationToken cancellationToken = default)
-        {
-            if (role == null)
-            {
-                throw new ArgumentNullException(nameof(role));
-            }
-
-            if (_skorubaMultiTenant.TenantResolutionRequired && !_skorubaMultiTenant.TenantResolved)
-            {
-                throw MultiTenantException.MissingTenant;
-            }
-
-            // TODO: if tenant is not required, but the current tenant is null, should the supplied tenant id be used?
-            role.TenantId = CurrentTenantId ?? role.TenantId;
-           
-            return base.UpdateAsync(role, cancellationToken);
-        }
-
         public override Task<TRole> FindByNameAsync(string normalizedName, CancellationToken cancellationToken = default)
         {
             if (!_skorubaMultiTenant.TenantResolved && !_skorubaMultiTenant.TenantResolutionRequired)
@@ -76,7 +41,7 @@ namespace Skoruba.MultiTenant.Identity
 
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-            
+
             return Roles.FirstOrDefaultAsync(r => r.NormalizedName == normalizedName && r.TenantId == CurrentTenantId, cancellationToken);
         }
     }

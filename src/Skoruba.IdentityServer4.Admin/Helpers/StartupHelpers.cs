@@ -321,7 +321,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 })
                 .AddEntityFrameworkStores<TContext>()
                 .AddDefaultTokenProviders()
-                .AddMultiTenantServicesIfMultiTenant<TUserIdentity, TUserIdentityRole, DefaultMultiTenantUserStore, DefaultMultiTenantRoleStore>();
+                .AddMultiTenantServicesIfMultiTenantWithValidators<TUserIdentity, TUserIdentityRole, DefaultMultiTenantUserStore, DefaultMultiTenantRoleStore>();
 
 
             services.AddAuthentication(options =>
@@ -356,7 +356,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 })
                 .AddEntityFrameworkStores<TContext>()
                 .AddDefaultTokenProviders()
-                .AddMultiTenantServicesIfMultiTenant<TUserIdentity, TUserIdentityRole, DefaultMultiTenantUserStore, DefaultMultiTenantRoleStore>();
+                .AddMultiTenantServicesIfMultiTenantWithValidators<TUserIdentity, TUserIdentityRole, DefaultMultiTenantUserStore, DefaultMultiTenantRoleStore>();
 
             services.AddAuthentication(options =>
                 {
