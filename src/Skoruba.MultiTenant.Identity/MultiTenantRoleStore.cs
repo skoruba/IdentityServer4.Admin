@@ -41,7 +41,7 @@ namespace Skoruba.MultiTenant.Identity
 
             if (_skorubaMultiTenant.TenantResolutionRequired && !_skorubaMultiTenant.TenantResolved)
             {
-                throw new Exception("Tenant is required.");
+                throw MultiTenantException.MissingTenant;
             }
 
             // TODO: if tenant is not required, but the current tenant is null, should the supplied tenant id be used?
@@ -58,7 +58,7 @@ namespace Skoruba.MultiTenant.Identity
 
             if (_skorubaMultiTenant.TenantResolutionRequired && !_skorubaMultiTenant.TenantResolved)
             {
-                throw new Exception("Tenant is required.");
+                throw MultiTenantException.MissingTenant;
             }
 
             // TODO: if tenant is not required, but the current tenant is null, should the supplied tenant id be used?
