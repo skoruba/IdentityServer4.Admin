@@ -14,6 +14,8 @@ using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using System;
 using Skoruba.MultiTenant;
+using Skoruba.MultiTenant.Configuration;
+using Skoruba.MultiTenant.Finbuckle;
 using Skoruba.MultiTenant.Finbuckle.Strategies;
 using Skoruba.MultiTenant.IdentityServer;
 
@@ -23,7 +25,6 @@ namespace Skoruba.IdentityServer4.STS.Identity
     {
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment Environment { get; }
-
         public Startup(IWebHostEnvironment environment, IConfiguration configuration)
         {
             Configuration = configuration;
@@ -34,6 +35,9 @@ namespace Skoruba.IdentityServer4.STS.Identity
         {
             var rootConfiguration = CreateRootConfiguration();
             services.AddSingleton(rootConfiguration);
+
+            // Register tenant configuration after root configuration
+            RegisterMultiTenantConfiguration(services);
 
             // Register DbContexts for IdentityServer and Identity
             RegisterDbContexts(services);
@@ -55,7 +59,6 @@ namespace Skoruba.IdentityServer4.STS.Identity
             // Add authorization policies for MVC
             RegisterAuthorization(services);
 
-            RegisterMultiTenantConfiguration(services);
 
             services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext>(Configuration);
         }
@@ -116,20 +119,32 @@ namespace Skoruba.IdentityServer4.STS.Identity
             var rootConfiguration = CreateRootConfiguration();
             services.AddAuthorizationPolicies(rootConfiguration);
         }
-        public virtual void RegisterMultiTenantConfiguration(IServiceCollection services) {
- 
-            // If single tenant app then change to false and remove app configuration
-            services.AddMultiTenant(true)
-                // required if using app.AddMultiTenantFromForm()
-                .RegisterConfiguration(Configuration.GetSection("MultiTenantConfiguration"))
-                // custom store
-                .WithEFCacheStore(options => options.UseSqlServer(Configuration.GetConnectionString("TenantsDbConnection")))
-                // custom strategy to get tenant from form data at login
-                .WithStrategy<FormStrategy>(ServiceLifetime.Singleton)
-                // dont require tenant resolution for identity endpoints
-                .RegisterTenantIsRequiredValidation<TenantNotRequiredForIdentityServerEndpoints>()
-            ;
+        public virtual void RegisterMultiTenantConfiguration(IServiceCollection services)
+        {
+            var configuration = Configuration.GetSection(ConfigurationConsts.MultiTenantConfiguration).Get<MultiTenantConfiguration>();
 
+            if (configuration.MultiTenantEnabled)
+            {
+                services.AddMultiTenantConfiguration<SkorubaTenantContext>(configuration)
+                    // do not require tenant resolution for identity endpoints
+                    .RegisterTenantIsRequiredValidation<TenantNotRequiredForIdentityServerEndpoints>()
+                    // 
+                    // Add your multi tenant implementation services here
+                    // Changes here should also be considered in 
+                    // Skoruba.IdentityServer4.STS.Identity.Configuration.Test.StartupTestMultiTenant
+                    //
+                    // register the default finbuckle multitenant services
+                    // include configuration settings for the FormStrategy
+                    .WithFinbuckleMultiTenant(Configuration.GetSection(ConfigurationConsts.MultiTenantConfiguration))
+                    // custom store
+                    .WithEFCacheStore(options => options.UseSqlServer(Configuration.GetConnectionString("TenantsDbConnection")))
+                    // custom strategy to get tenant from form data at login
+                    .WithStrategy<FormStrategy>(ServiceLifetime.Singleton);
+            }
+            else
+            {
+                services.AddSingleTenantConfiguration();
+            }
         }
 
         public virtual void UseAuthentication(IApplicationBuilder app)
@@ -150,19 +165,41 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
         public virtual void UsePreAuthenticationMultitenantMiddleware(IApplicationBuilder app)
         {
-            // configure default multitenant middleware before authentication
-            app.UseMultiTenant();
+            var configuration = Configuration.GetSection(ConfigurationConsts.MultiTenantConfiguration).Get<MultiTenantConfiguration>();
+            if (configuration.MultiTenantEnabled)
+            {
+                // if your multienant implementation requires any middleware 
+                // to be configured BEFORE the authentication middleware
+                // then put it here.
+                //
+                // for the default Finbuckle implementation we are registering
+                // their middleware here.  This middleware will use the
+                // resolution strategy defined in the services.
+                app.UseMultiTenant();
+            }
         }
         public virtual void UsePostAuthenticationMultitenantMiddleware(IApplicationBuilder app)
         {
-            // configure custom multitenant middleware for claims after authentication
-            app.UseMultiTenantFromClaims();
+            var configuration = Configuration.GetSection(ConfigurationConsts.MultiTenantConfiguration).Get<MultiTenantConfiguration>();
+            if (configuration.MultiTenantEnabled)
+            {
+                // if your multienant implementation requires any middleware 
+                // to be configured AFTER the authentication middleware
+                // then put it here.
+                //
+                // for the default Finbuckle implementation we are registering
+                // an claims based middleware to resolve the tenant from
+                // the user claims.  This middleware will resolve the tenant
+                // if the first middleware fails.
+                app.UseMultiTenantFromClaims();
+            }
         }
         protected IRootConfiguration CreateRootConfiguration()
         {
             var rootConfiguration = new RootConfiguration();
             Configuration.GetSection(ConfigurationConsts.AdminConfigurationKey).Bind(rootConfiguration.AdminConfiguration);
             Configuration.GetSection(ConfigurationConsts.RegisterConfigurationKey).Bind(rootConfiguration.RegisterConfiguration);
+            Configuration.GetSection(ConfigurationConsts.MultiTenantConfiguration).Bind(rootConfiguration.MultiTenantConfiguration);
             return rootConfiguration;
         }
     }

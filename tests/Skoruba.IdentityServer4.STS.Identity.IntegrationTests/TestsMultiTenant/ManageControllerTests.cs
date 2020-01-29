@@ -24,10 +24,26 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.TestsMultiTenant
 
             // Register new user
             var registerFormData = UserMocks.GenerateRegisterData();
-            var registerResponse = await UserMocks.RegisterNewUserAsync(Client, registerFormData);
+            await UserMocks.RegisterNewUserAsync(Client, registerFormData);
+
+            // Clear headers
+            Client.DefaultRequestHeaders.Clear();
+
+            // Prepare request to login
+            const string accountLoginAction = "/Account/Login";
+            var loginResponse = await Client.GetAsync(accountLoginAction);
+            var antiForgeryToken = await loginResponse.ExtractAntiForgeryToken();
+
+            // User Guid like fake password
+            var loginDataForm = UserMocks.GenerateLoginData(registerFormData["UserName"], registerFormData["Password"], registerFormData["TenantCode"], antiForgeryToken);
+
+            // Login
+            var requestMessage = RequestHelper.CreatePostRequestWithCookies(accountLoginAction, loginDataForm, loginResponse);
+            var responseMessage = await Client.SendAsync(requestMessage);
+
 
             // Get cookie with user identity for next request
-            Client.PutCookiesOnRequest(registerResponse);
+            Client.PutCookiesOnRequest(responseMessage);
 
             foreach (var route in RoutesConstants.GetManageRoutes())
             {

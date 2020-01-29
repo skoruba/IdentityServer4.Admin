@@ -8,12 +8,12 @@ using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Tests.Base
 {
-    public class BaseClassFixture : IClassFixture<WebApplicationFactory<StartupTest>>
+    public class BaseClassFixture : IClassFixture<WebApplicationFactory<StartupTestSingleTenant>>
     {
-        protected readonly WebApplicationFactory<StartupTest> Factory;
+        protected readonly WebApplicationFactory<StartupTestSingleTenant> Factory;
         protected readonly HttpClient Client;
 
-        public BaseClassFixture(WebApplicationFactory<StartupTest> factory)
+        public BaseClassFixture(WebApplicationFactory<StartupTestSingleTenant> factory)
         {
             Factory = factory;
             Client = factory.SetupClient();

@@ -18,7 +18,7 @@ namespace Skoruba.MultiTenant.Stores
 {
     public class EFCoreStoreDbContext : EFCoreStoreDbContextBase<TenantEntity>
     {
-        public EFCoreStoreDbContext(DbContextOptions options) : base(options)
+        public EFCoreStoreDbContext(DbContextOptions<EFCoreStoreDbContext> options) : base(options)
         {
         }
     }

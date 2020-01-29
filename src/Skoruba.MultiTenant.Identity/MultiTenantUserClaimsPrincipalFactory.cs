@@ -9,42 +9,71 @@ using System.Threading.Tasks;
 
 namespace Skoruba.MultiTenant.Identity
 {
+
+
+    /// <summary>
+    /// Creates claims for a multi tenant user ensuring that the TenantId claim is added to the user.
+    /// </summary>
+    /// <remarks>
+    /// STS Account/Login uses the UserManager to generate an identity.  By default the UserManager
+    /// will retreive claims from the user store and only get claims from the store.  
+    /// </remarks>
+    /// <typeparam name="TUser"></typeparam>
+    /// <typeparam name="TUserRole"></typeparam>
     public class MultiTenantUserClaimsPrincipalFactory<TUser, TUserRole> : UserClaimsPrincipalFactory<TUser, TUserRole> where TUser : class where TUserRole : class
     {
-        private readonly ISkorubaTenant _skorubaMultiTenant;
-
         public MultiTenantUserClaimsPrincipalFactory(
             UserManager<TUser> userManager,
             RoleManager<TUserRole> roleManager,
-            IOptions<IdentityOptions> options,
-            ISkorubaTenant skorubaMultiTenant) : base(userManager, roleManager, options)
-        {
-            _skorubaMultiTenant = skorubaMultiTenant;
-        }
+            IOptions<IdentityOptions> options) : base(userManager, roleManager, options)
+        { }
 
+        /// <summary>
+        /// Generate the claims for a user including TenantId.
+        /// </summary>
+        /// <param name="user">The user to create a <see cref="ClaimsIdentity"/> from.</param>
+        /// <returns>The <see cref="Task"/> that represents the asynchronous creation operation, containing the created <see cref="ClaimsIdentity"/>.</returns>
         protected override async Task<ClaimsIdentity> GenerateClaimsAsync(TUser user)
         {
-            var userclaims = await UserManager.GetClaimsAsync(user);
+            var id = await base.GenerateClaimsAsync(user);
 
-            //if (!_skorubaMultiTenant.TenantResolved && _skorubaMultiTenant.TenantResolutionRequired)
-            //{
-            //    throw new System.Exception("Tenant is required.");
-            //}
-
-            if (_skorubaMultiTenant.TenantResolved)
+            if (user is IHaveTenantId)
             {
-                // validate that the tenant id is stored as a claim for the user
-                // this is important becuase this storage location is where idsrv
-                // retrieves claims for client requests
-                if (!userclaims.Any(a => a.Type == Claims.ClaimTypes.TenantId))
+                // get the tenantid from the user
+                string tenantId = ((IHaveTenantId)user).TenantId;
+
+                // if the tenantid is not already a user claim then we need to add it
+                if (!id.Claims.Any(a => a.Type == Claims.ClaimTypes.TenantId))
                 {
-                    var result = await UserManager.AddClaimAsync(user, new Claim(Claims.ClaimTypes.TenantId, _skorubaMultiTenant.Id));
+                    id.AddClaim(new Claim(Claims.ClaimTypes.TenantId, tenantId));
                 }
             }
 
-            var identity = await base.GenerateClaimsAsync(user);
-
-            return identity;
+            return id;
         }
+        
+        
+        //protected override async Task<ClaimsIdentity> GenerateClaimsAsync(TUser user)
+        //{
+        //    // only do the following if this is multi tenant
+        //    if (user is IHaveTenantId)
+        //    {
+        //        // get the users claims from store
+        //        var userclaims = await UserManager.GetClaimsAsync(user);
+
+        //        // get the tenantid from the user
+        //        string tenantId = ((IHaveTenantId)user).TenantId;
+
+        //        // if the tenantid is not already a user claim then we need to add it
+        //        if (!userclaims.Any(a => a.Type == Claims.ClaimTypes.TenantId))
+        //        {
+        //            // add the claim to the user store
+        //            var result = await UserManager.AddClaimAsync(user, new Claim(Claims.ClaimTypes.TenantId, tenantId));
+        //        }
+        //    }
+
+        //    // use the base class to generate claims
+        //    return await base.GenerateClaimsAsync(user);
+        //}
     }
 }

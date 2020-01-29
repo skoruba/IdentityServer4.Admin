@@ -6,7 +6,7 @@
 @using Skoruba.MultiTenant.Abstractions
 @inject IRootConfiguration RootConfiguration
 @inject IViewLocalizer Localizer
-@inject ISkorubaTenant SkorubaTenant
+@inject ISkorubaTenantContext SkorubaTenantContext
 
 @{
     string name = null;
@@ -50,7 +50,7 @@
         @if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(name))
         {
             <!--Tenant name-->
-            <p>@SkorubaTenant?.Name</p>
+            <p>@SkorubaTenantContext?.Tenant?.Name</p>
 
             <!--Menu item -->
             <vc:identity-server-admin-link></vc:identity-server-admin-link>

@@ -12,14 +12,17 @@ namespace Skoruba.MultiTenant.Finbuckle
 {
     public class MigrateTenantDbContext : MigrateAndSeedBase
     {
-        public MigrateTenantDbContext(ILogger<MigrateTenantDbContext> logger) : base(logger)
+        private readonly MultiTenantConfiguration _multiTenantConfiguration;
+
+        public MigrateTenantDbContext(ILogger<MigrateTenantDbContext> logger, MultiTenantConfiguration multiTenantConfiguration) : base(logger)
         {
+            _multiTenantConfiguration = multiTenantConfiguration;
         }
 
         public override async Task Migrate(IServiceCollection services)
         {
 #pragma warning disable CS0162 // Unreachable code detected
-            if (MultiTenantConstants.MultiTenantEnabled)
+            if (_multiTenantConfiguration.MultiTenantEnabled)
             {
                 await MigrateDbContext<EFCoreStoreDbContext>(services.BuildServiceProvider());
             }
@@ -33,7 +36,7 @@ namespace Skoruba.MultiTenant.Finbuckle
         public override async Task Seed(IServiceCollection services, IConfigurationRoot configurationRoot)
         {
 #pragma warning disable CS0162 // Unreachable code detected
-            if (MultiTenantConstants.MultiTenantEnabled)
+            if (_multiTenantConfiguration.MultiTenantEnabled)
             {
                 await DoSeed<EFCoreStoreDbContext, TenantEntity>(services, configurationRoot);
             }

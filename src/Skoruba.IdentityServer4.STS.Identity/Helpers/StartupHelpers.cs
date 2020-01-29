@@ -210,6 +210,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         {
             var loginConfiguration = GetLoginConfiguration(configuration);
             var registrationConfiguration = GetRegistrationConfiguration(configuration);
+            var multiTenantConfiguration = configuration.GetSection(ConfigurationConsts.MultiTenantConfiguration).Get<MultiTenantConfiguration>();
 
             services
                 .AddSingleton(registrationConfiguration)
@@ -221,7 +222,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 })
                 .AddEntityFrameworkStores<TIdentityDbContext>()
                 .AddDefaultTokenProviders()
-                .AddMultiTenantServicesIfMultiTenantWithValidators<TUserIdentity, TUserIdentityRole, DefaultMultiTenantUserStore, DefaultMultiTenantRoleStore>();
+                .AddDefaultMultiTenantIdentityServices<TUserIdentity, TUserIdentityRole, DefaultMultiTenantUserStore, DefaultMultiTenantRoleStore>(multiTenantConfiguration.MultiTenantEnabled);
 
             services.Configure<IISOptions>(iis =>
             {
@@ -289,6 +290,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TUserIdentity : class
         {
+            var multiTenantConfiguration = configuration.GetSection(ConfigurationConsts.MultiTenantConfiguration).Get<MultiTenantConfiguration>();
+
             var builder = services.AddIdentityServer(options =>
                 {
                     options.Events.RaiseErrorEvents = true;
@@ -300,7 +303,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 .AddOperationalStore<TPersistedGrantDbContext>()
                 .AddAspNetIdentity<TUserIdentity>();
 
-            if (MultiTenantConstants.MultiTenantEnabled)
+            if (multiTenantConfiguration.MultiTenantEnabled)
                 builder.AddProfileService<MultiTenant.IdentityServer.MultiTenantProfileService<TUserIdentity>>();
 
             builder.AddCustomSigningCredential(configuration);

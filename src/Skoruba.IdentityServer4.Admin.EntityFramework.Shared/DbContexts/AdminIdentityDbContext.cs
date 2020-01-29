@@ -4,16 +4,22 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Constants;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.MultiTenant.Configuration;
 using Skoruba.MultiTenant.Identity.Extensions;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts
 {
     public class AdminIdentityDbContext : IdentityDbContext<UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>
     {
+        private readonly bool _isMultiTenant = false;
+
         public AdminIdentityDbContext(DbContextOptions<AdminIdentityDbContext> options) : base(options)
         {
-
         }
 
+        public AdminIdentityDbContext(DbContextOptions<AdminIdentityDbContext> options, bool isMultiTenant) : base(options)
+        {
+            _isMultiTenant = isMultiTenant;
+        }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -24,7 +30,9 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts
         }
         protected void ConfigureIdentityForMultiTenant(ModelBuilder builder)
         {
-            if (MultiTenantConstants.MultiTenantEnabled)
+            var configuration = Database.TryGetService<MultiTenantConfiguration>();
+            
+            if (configuration?.MultiTenantEnabled ?? _isMultiTenant)
             {
                 var userBuilder = builder.Entity<UserIdentity>();
                 userBuilder.RemoveIndex("NormalizedUserName");

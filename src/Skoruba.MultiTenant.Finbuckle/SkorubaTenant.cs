@@ -7,23 +7,17 @@ using System.Collections.Generic;
 
 namespace Skoruba.MultiTenant.Finbuckle
 {
-    public class SkorubaTenant : ISkorubaTenant
+    public class SkorubaTenant : ISkorubaT
     {
-
-        public SkorubaTenant(IHttpContextAccessor httpContextAccessor, TenantInfo tenantInfo = null, ValidateTenantRequirement validateTenantRequirement = null)
+        public SkorubaTenant(TenantInfo tenantInfo)
         {
-            // TODO: Why is tenantInfo null when the multitenantcontext is not null?
-            Tenant = tenantInfo ?? httpContextAccessor.HttpContext?.GetMultiTenantContext()?.TenantInfo;
-            TenantResolutionRequired = validateTenantRequirement?.TenantIsRequired() ?? MultiTenantConstants.MultiTenantEnabled;
+            Tenant = tenantInfo;
         }
-
         public string Id => Tenant?.Id;
         public string Name => Tenant?.Name;
         public string Identifier => Tenant?.Identifier;
         public string ConnectionString => Tenant?.ConnectionString;
         public IDictionary<string, object> Items => Tenant?.Items;
-        public bool TenantResolved => Tenant != null;
         private TenantInfo Tenant { get; }
-        public bool TenantResolutionRequired { get; }
     }
 }

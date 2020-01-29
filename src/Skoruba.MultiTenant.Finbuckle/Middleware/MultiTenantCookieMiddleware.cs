@@ -15,9 +15,12 @@ namespace Skoruba.MultiTenant.Finbuckle.Middleware
             _next = next;
         }
 
-        public async Task Invoke(HttpContext context, IMultiTenantStore store, Configuration.Configuration multiTenantConfiguration)
+        public async Task Invoke(HttpContext context, 
+            IMultiTenantStore store, 
+            MultiTenantConfiguration multiTenantConfiguration,
+            Skoruba.MultiTenant.Finbuckle.Configuration.Configuration finbuckleConfiguration)
         {
-            if (MultiTenantConstants.MultiTenantEnabled)
+            if (multiTenantConfiguration.MultiTenantEnabled)
             {
 #pragma warning disable CS0162 // Unreachable code detected
                 var multiTenantContext = context.GetMultiTenantContext();
@@ -30,7 +33,7 @@ namespace Skoruba.MultiTenant.Finbuckle.Middleware
                 {
                     TenantInfo tenantInfo = null;
 
-                    var tenantId = context.Request?.Cookies[multiTenantConfiguration.TenantKey];
+                    var tenantId = context.Request?.Cookies[finbuckleConfiguration.TenantKey];
                     if (!string.IsNullOrWhiteSpace(tenantId))
                     {
                         tenantInfo = await store.TryGetAsync(tenantId);

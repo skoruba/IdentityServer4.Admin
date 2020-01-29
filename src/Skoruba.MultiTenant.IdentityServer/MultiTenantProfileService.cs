@@ -43,11 +43,11 @@ namespace Skoruba.MultiTenant.IdentityServer
 
                 if (principal == null) throw new Exception("ClaimsFactory failed to create a principal");
 
-                var claims = principal.Claims;
+                var claims = principal.Claims.ToList();
 
                 if (tenantClaim != null)
                 {
-                    claims.Union(new[] { tenantClaim });
+                    claims.Add(tenantClaim);
                 }
 
                 context.AddRequestedClaims(claims);

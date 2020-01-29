@@ -50,7 +50,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         private readonly IGenericControllerLocalizer<IdentityController<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
             TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> _localizer;
-        private readonly ISkorubaTenant _skorubaTenant;
+        private readonly ISkorubaTenantContext _skorubaTenantContext;
 
         public IdentityController(IIdentityService<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
@@ -59,11 +59,11 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             IGenericControllerLocalizer<IdentityController<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
                 TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> localizer,
-            ISkorubaTenant skorubaTenant) : base(logger)
+            ISkorubaTenantContext skorubaTenantContext) : base(logger)
         {
             _identityService = identityService;
             _localizer = localizer;
-            _skorubaTenant = skorubaTenant;
+            _skorubaTenantContext = skorubaTenantContext;
         }
 
         [HttpGet]
@@ -84,10 +84,10 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             {
                 var role = new TRoleDto();
 
-                if (MultiTenantConstants.MultiTenantEnabled)
+                if (_skorubaTenantContext.MultiTenantEnabled)
                 {
                     // TODO: Is this business logic and should a new role be retrieved from a service, or is that over engineering?
-                    role.TenantId = _skorubaTenant.Id;
+                    role.TenantId = _skorubaTenantContext.Tenant.Id;
                 }
 
                 return View(role);
@@ -180,10 +180,10 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         {
             var newUser = new TUserDto();
 
-            if (MultiTenantConstants.MultiTenantEnabled)
+            if (_skorubaTenantContext.MultiTenantEnabled)
             {
-                // TODO: Is this business logic and should a new user be retrieved from a service, or is that over engineering?
-                newUser.TenantId = _skorubaTenant.Id;
+                // TODO: Is this business logic and should a new role be retrieved from a service, or is that over engineering?
+                newUser.TenantId = _skorubaTenantContext.Tenant.Id;
             }
 
             return View("UserProfile", newUser);

@@ -1,7 +1,8 @@
 ﻿@inject IViewLocalizer Localizer
 @using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.MultiTenant.Configuration
+@using Skoruba.MultiTenant.Abstractions
 @model Skoruba.IdentityServer4.STS.Identity.ViewModels.Account.RegisterViewModel
+@inject ISkorubaTenantContext SkorubaTenantContext
 @{
     ViewData["Title"] = Localizer["Title"];
 }
@@ -13,7 +14,7 @@
 <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
     <h4>@Localizer["SubTitle"]</h4>
     <hr />
-    @if (MultiTenantConstants.MultiTenantEnabled)
+    @if (SkorubaTenantContext.MultiTenantEnabled)
     {
         <div class="form-group">
             <label asp-for="TenantCode" class="col-md-2 control-label">@Localizer["TenantCode"]</label>

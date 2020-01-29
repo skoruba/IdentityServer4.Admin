@@ -8,11 +8,11 @@ namespace Skoruba.MultiTenant.Identity.Validators
     public class UserRequiresTwoFactorAuthenticationValidator<TUser> : IUserValidator<TUser>
         where TUser : class
     {
-        private readonly ISkorubaTenant _skorubaTenant;
+        private readonly ISkorubaTenantContext _skorubaTenantContext;
 
-        public UserRequiresTwoFactorAuthenticationValidator(ISkorubaTenant skorubaTenant)
+        public UserRequiresTwoFactorAuthenticationValidator(ISkorubaTenantContext skorubaTenantContext)
         {
-            _skorubaTenant = skorubaTenant;
+            _skorubaTenantContext = skorubaTenantContext;
         }
 
         public Task<IdentityResult> ValidateAsync(UserManager<TUser> manager, TUser user)
@@ -26,7 +26,7 @@ namespace Skoruba.MultiTenant.Identity.Validators
                     return Task.FromResult(IdentityResult.Success);
                 }
 
-                if (_skorubaTenant.TenantResolutionRequired && !_skorubaTenant.TenantResolved)
+                if (_skorubaTenantContext.TenantResolutionRequired && !_skorubaTenantContext.TenantResolved)
                 {
                     throw MultiTenantException.MissingTenant;
                 }
@@ -40,7 +40,7 @@ namespace Skoruba.MultiTenant.Identity.Validators
                 }
 #endif
 
-                if (_skorubaTenant.Items.TryGetValue(MultiTenantConstants.RequiresTwoFactorAuthentication, out var isrequired))
+                if (_skorubaTenantContext.Tenant.Items.TryGetValue(MultiTenantConstants.RequiresTwoFactorAuthentication, out var isrequired))
                 {
                     bool requires2fa = false;
                     if (!bool.TryParse((string)isrequired, out requires2fa))

@@ -1,10 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces
 @using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization
-@using Skoruba.MultiTenant.Configuration
+@using Skoruba.MultiTenant.Abstractions
 @inject IViewLocalizer Localizer
 @model Skoruba.IdentityServer4.STS.Identity.ViewModels.Account.LoginViewModel
 @inject IRootConfiguration RootConfiguration
+@inject ISkorubaTenantContext SkorubaTenantContext
 
 <div class="login-page">
     <div class="page-header">
@@ -25,7 +26,7 @@
                             <input type="hidden" asp-for="ReturnUrl" />
 
                             <fieldset>
-                                @if (MultiTenantConstants.MultiTenantEnabled)
+                                @if (SkorubaTenantContext.MultiTenantEnabled)
                                 {
                                     <div class="form-group row">
                                         <div class="col-sm-12">

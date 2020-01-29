@@ -7,16 +7,16 @@ namespace Skoruba.MultiTenant.Identity.Validators
     public class RoleRequiresTenantIdValidator<TRole> : IRoleValidator<TRole>
         where TRole : class
     {
-        private readonly ISkorubaTenant _skorubaTenant;
+        private readonly ISkorubaTenantContext _skorubaTenantContext;
 
-        public RoleRequiresTenantIdValidator(ISkorubaTenant skorubaTenant)
+        public RoleRequiresTenantIdValidator(ISkorubaTenantContext skorubaTenantContext)
         {
-            _skorubaTenant = skorubaTenant;
+            _skorubaTenantContext = skorubaTenantContext;
         }
 
         public Task<IdentityResult> ValidateAsync(RoleManager<TRole> manager, TRole role)
         {
-            if (_skorubaTenant.TenantResolutionRequired && !_skorubaTenant.TenantResolved)
+            if (_skorubaTenantContext.TenantResolutionRequired && !_skorubaTenantContext.TenantResolved)
             {
                 throw MultiTenantException.MissingTenant;
             }
@@ -24,7 +24,7 @@ namespace Skoruba.MultiTenant.Identity.Validators
             {
                 return Task.FromResult(IdentityResult.Failed(new IdentityError { Code = "Tenant_Required", Description = "A tenant id is required." }));
             }
-            if (((IHaveTenantId)role).TenantId != _skorubaTenant.Id)
+            if (((IHaveTenantId)role).TenantId != _skorubaTenantContext.Tenant.Id)
             {
                 return Task.FromResult(IdentityResult.Failed(new IdentityError { Code = "Tenant_Invalid", Description = "The tenant id must be the same as the current user's tenant id." }));
             }

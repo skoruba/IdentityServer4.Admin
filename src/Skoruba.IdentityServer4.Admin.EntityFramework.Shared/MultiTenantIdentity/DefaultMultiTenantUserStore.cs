@@ -8,7 +8,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.MultiTenantIdenti
 {
     public class DefaultMultiTenantUserStore : MultiTenantUserStore<UserIdentity, UserIdentityRole, AdminIdentityDbContext, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityUserToken, UserIdentityRoleClaim>
     {
-        public DefaultMultiTenantUserStore(AdminIdentityDbContext context, ISkorubaTenant skorubaMultiTenant, IdentityErrorDescriber describer = null) : base(context, skorubaMultiTenant, describer)
+        public DefaultMultiTenantUserStore(AdminIdentityDbContext context, ISkorubaTenantContext skorubaMultiTenantContext, IdentityErrorDescriber describer = null) : base(context, skorubaMultiTenantContext, describer)
         {
         }
     }

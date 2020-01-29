@@ -10,6 +10,7 @@ using Skoruba.IdentityServer4.Admin.Configuration;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
+using Skoruba.MultiTenant.Abstractions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,8 +34,8 @@ namespace Skoruba.DbMigrator.MigrateAndSeed
         }
 
         private async Task DoSeed<TUser, TRole>(IServiceCollection services)
-            where TUser : IdentityUser, new()
-            where TRole : IdentityRole, new()
+            where TUser : UserIdentity, new()
+            where TRole : UserIdentityRole, new()
         {
             IdentityDataConfiguration seeddata = null;
 
@@ -81,9 +82,9 @@ namespace Skoruba.DbMigrator.MigrateAndSeed
                         // reliably update role names.
                         var role = new TRole
                         {
-                            Name = r.Name
+                            Name = r.Name,
+                            TenantId = r.TenantId
                         };
-
                         if (!await roleManager.RoleExistsAsync(role.Name))
                         {
                             _logger.LogDebug("Role {Role} does not exist, adding role.", role);
@@ -113,7 +114,8 @@ namespace Skoruba.DbMigrator.MigrateAndSeed
                         {
                             UserName = u.Username,
                             Email = u.Email,
-                            EmailConfirmed = true
+                            EmailConfirmed = true,
+                            TenantId = u.TenantId
                         };
 
                         // The tenant id is injected into the usermanager object

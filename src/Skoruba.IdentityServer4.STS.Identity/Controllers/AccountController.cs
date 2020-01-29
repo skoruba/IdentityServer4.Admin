@@ -25,6 +25,8 @@ using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 using Skoruba.IdentityServer4.STS.Identity.ViewModels.Account;
+using Skoruba.MultiTenant;
+using Skoruba.MultiTenant.Abstractions;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 {
@@ -45,6 +47,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         private readonly IGenericControllerLocalizer<AccountController<TUser, TKey>> _localizer;
         private readonly LoginConfiguration _loginConfiguration;
         private readonly RegisterConfiguration _registerConfiguration;
+        private readonly ISkorubaTenantContext _skorubaTenantContext;
 
         public AccountController(
             UserResolver<TUser> userResolver,
@@ -57,7 +60,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             IEmailSender emailSender,
             IGenericControllerLocalizer<AccountController<TUser, TKey>> localizer,
             LoginConfiguration loginConfiguration,
-            RegisterConfiguration registerConfiguration)
+            RegisterConfiguration registerConfiguration,
+            ISkorubaTenantContext skorubaTenantContext)
         {
             _userResolver = userResolver;
             _userManager = userManager;
@@ -70,6 +74,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             _localizer = localizer;
             _loginConfiguration = loginConfiguration;
             _registerConfiguration = registerConfiguration;
+            _skorubaTenantContext = skorubaTenantContext;
         }
 
         /// <summary>
@@ -575,6 +580,16 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 UserName = model.UserName,
                 Email = model.Email
             };
+
+            if (_skorubaTenantContext.MultiTenantEnabled)
+            {
+                if (_skorubaTenantContext.TenantResolutionRequired && !_skorubaTenantContext.TenantResolutionRequired)
+                {
+                    throw MultiTenantException.MissingTenant;
+                }
+
+                ((IHaveTenantId)user).TenantId = _skorubaTenantContext.Tenant.Id;
+            }
 
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)

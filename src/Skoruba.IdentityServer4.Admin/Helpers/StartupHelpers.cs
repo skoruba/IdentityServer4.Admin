@@ -314,6 +314,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             this IServiceCollection services)
             where TContext : DbContext where TUserIdentity : class where TUserIdentityRole : class
         {
+            var multiTenantConfiguration = services.BuildServiceProvider().GetService<MultiTenantConfiguration>();
             services
                 .AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
                 {
@@ -321,7 +322,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 })
                 .AddEntityFrameworkStores<TContext>()
                 .AddDefaultTokenProviders()
-                .AddMultiTenantServicesIfMultiTenantWithValidators<TUserIdentity, TUserIdentityRole, DefaultMultiTenantUserStore, DefaultMultiTenantRoleStore>();
+                .AddDefaultMultiTenantIdentityServices<TUserIdentity, TUserIdentityRole, DefaultMultiTenantUserStore, DefaultMultiTenantRoleStore>(multiTenantConfiguration.MultiTenantEnabled);
 
 
             services.AddAuthentication(options =>
@@ -350,13 +351,15 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, AdminConfiguration adminConfiguration)
             where TContext : DbContext where TUserIdentity : class where TUserIdentityRole : class
         {
+            var multiTenantConfiguration = services.BuildServiceProvider().GetService<MultiTenantConfiguration>();
+
             services.AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
                 {
                     options.User.RequireUniqueEmail = true;
                 })
                 .AddEntityFrameworkStores<TContext>()
                 .AddDefaultTokenProviders()
-                .AddMultiTenantServicesIfMultiTenantWithValidators<TUserIdentity, TUserIdentityRole, DefaultMultiTenantUserStore, DefaultMultiTenantRoleStore>();
+                .AddDefaultMultiTenantIdentityServices<TUserIdentity, TUserIdentityRole, DefaultMultiTenantUserStore, DefaultMultiTenantRoleStore>(multiTenantConfiguration.MultiTenantEnabled);
 
             services.AddAuthentication(options =>
                 {

@@ -18,15 +18,15 @@ namespace Skoruba.MultiTenant.Identity.Stores
         where TUserRole : IdentityUserRole<TKey>, new()
         where TRoleClaim : IdentityRoleClaim<TKey>, new()
     {
-        private readonly ISkorubaTenant _skorubaMultiTenant;
-        protected string CurrentTenantId => _skorubaMultiTenant.Id;
+        private readonly ISkorubaTenantContext _skorubaMultiTenantContext;
+        protected string CurrentTenantId => _skorubaMultiTenantContext.Tenant?.Id;
 
-        public MultiTenantRoleStore(TContext context, ISkorubaTenant skorubaMultiTenant, IdentityErrorDescriber describer = null) : base(context, describer)
+        public MultiTenantRoleStore(TContext context, ISkorubaTenantContext skorubaMultiTenantContext, IdentityErrorDescriber describer = null) : base(context, describer)
         {
-            _skorubaMultiTenant = skorubaMultiTenant;
+            _skorubaMultiTenantContext = skorubaMultiTenantContext;
         }
 
-        public override IQueryable<TRole> Roles => _skorubaMultiTenant == null && !_skorubaMultiTenant.TenantResolutionRequired
+        public override IQueryable<TRole> Roles => _skorubaMultiTenantContext == null && !_skorubaMultiTenantContext.TenantResolutionRequired
             // return the roles not filtered if tenant is not required
             ? base.Roles
             // return roles filtered on tenant if tenant is required
@@ -34,7 +34,7 @@ namespace Skoruba.MultiTenant.Identity.Stores
 
         public override Task<TRole> FindByNameAsync(string normalizedName, CancellationToken cancellationToken = default)
         {
-            if (!_skorubaMultiTenant.TenantResolved && !_skorubaMultiTenant.TenantResolutionRequired)
+            if (!_skorubaMultiTenantContext.TenantResolved && !_skorubaMultiTenantContext.TenantResolutionRequired)
             {
                 return base.FindByNameAsync(normalizedName, cancellationToken);
             }

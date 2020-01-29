@@ -22,10 +22,10 @@ namespace Skoruba.MultiTenant.Finbuckle.Middleware
             _next = next;
         }
 
-        public async Task Invoke(HttpContext context, IMultiTenantStore store)
+        public async Task Invoke(HttpContext context, MultiTenantConfiguration multiTenantConfiguration, IMultiTenantStore store)
         {
 
-            if (MultiTenantConstants.MultiTenantEnabled)
+            if (multiTenantConfiguration.MultiTenantEnabled)
             {
 #pragma warning disable CS0162 // Unreachable code detected
                 var multiTenantContext = context.GetMultiTenantContext();

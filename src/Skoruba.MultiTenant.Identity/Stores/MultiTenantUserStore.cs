@@ -25,20 +25,20 @@ namespace Skoruba.MultiTenant.Identity.Stores
         where TUserToken : IdentityUserToken<TKey>, new()
         where TRoleClaim : IdentityRoleClaim<TKey>, new()
     {
-        private readonly ISkorubaTenant _skorubaMultiTenant;
+        private readonly ISkorubaTenantContext _skorubaMultiTenantContext;
 
-        protected string CurrentTenantId => _skorubaMultiTenant.Id;
+        protected string CurrentTenantId => _skorubaMultiTenantContext.Tenant?.Id;
 
-        public MultiTenantUserStore(TContext context, ISkorubaTenant skorubaMultiTenant, IdentityErrorDescriber describer = null) : base(context, describer)
+        public MultiTenantUserStore(TContext context, ISkorubaTenantContext skorubaMultiTenantContext, IdentityErrorDescriber describer = null) : base(context, describer)
         {
-            _skorubaMultiTenant = skorubaMultiTenant;
+            _skorubaMultiTenantContext = skorubaMultiTenantContext;
 
         }
 
         /// <summary>
         /// A navigation property for the users the store contains, filtered by the current tenant id (if exists).
         /// </summary>
-        public override IQueryable<TUser> Users => !_skorubaMultiTenant.TenantResolved && !_skorubaMultiTenant.TenantResolutionRequired
+        public override IQueryable<TUser> Users => !_skorubaMultiTenantContext.TenantResolved && !_skorubaMultiTenantContext.TenantResolutionRequired
             // return the base users (no tenant filtering) if tenant is not required
             ? base.Users
             // return users filtered on tenant if tenant is required
@@ -67,7 +67,7 @@ namespace Skoruba.MultiTenant.Identity.Stores
             // Unfortuantely the base method utilizes a
             // private member Roles which cannot be overriden
 
-            return !_skorubaMultiTenant.TenantResolved && !_skorubaMultiTenant.TenantResolutionRequired
+            return !_skorubaMultiTenantContext.TenantResolved && !_skorubaMultiTenantContext.TenantResolutionRequired
                 ? base.FindRoleAsync(normalizedRoleName, cancellationToken)
                 : Context.Set<TRole>()
                     .Where(r => r.TenantId == CurrentTenantId)

@@ -8,6 +8,24 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <None Remove="appsettings.multitenant.json" />
+      <None Remove="appsettings.singletenant.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="appsettings.multitenant.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+      <Content Include="appsettings.singletenant.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="FluentAssertions" Version="5.9.0" />
         <PackageReference Include="HtmlAgilityPack" Version="1.11.17" />
         <PackageReference Include="IdentityModel" Version="4.1.1" />

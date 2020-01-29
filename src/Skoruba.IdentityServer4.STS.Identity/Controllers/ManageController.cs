@@ -613,7 +613,17 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
             if (string.IsNullOrEmpty(unformattedKey))
             {
-                await _userManager.ResetAuthenticatorKeyAsync(user);
+                try
+                {
+                    var result = await _userManager.ResetAuthenticatorKeyAsync(user);
+
+                }
+                catch (Exception e)
+                {
+
+                    throw e;
+                }
+                
                 unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
             }
 

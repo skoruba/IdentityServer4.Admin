@@ -15,5 +15,7 @@
         public const string AdminConfigurationKey = "AdminConfiguration";
 
         public const string RegisterConfigurationKey = "RegisterConfiguration";
+ 
+        public const string MultiTenantConfiguration = "MultiTenantConfiguration";
     }
 }

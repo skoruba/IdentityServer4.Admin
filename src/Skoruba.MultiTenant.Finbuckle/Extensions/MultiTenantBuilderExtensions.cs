@@ -11,56 +11,37 @@ using System.Linq;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    public static class MultiTenantBuilderExtensions
+    public static class DependencyInjection
     {
         /// <summary>
-        /// Configure Finbuckle.MultiTenant services for the application.
+        /// Adds <see cref="Skoruba.MultiTenant.Finbuckle.Configuration.Configuration"/> services.
         /// </summary>
-        /// <param name="services">The IServiceCollection<c/> instance the extension method applies to.</param>
-        /// <param name="isMultiTenant">Sets the <see cref="Skoruba.MultiTenant.Finbuckle.Configuration.Configuration"/> service IsMultiTenant value.</param>
-        /// <returns>An new instance of MultiTenantBuilder.</returns>
-        /// <returns></returns>
-        public static FinbuckleMultiTenantBuilder AddMultiTenant(this IServiceCollection services, bool isMultiTenant)
+        /// <param name="builder">The SkorubaTenantConfigurationBuilder<c/> instance the extension method applies to.</param>
+        /// <returns>An new instance of Finbuckle MultiTenantBuilder.</returns>
+        public static FinbuckleMultiTenantBuilder WithFinbuckleMultiTenant(this SkorubaTenantConfigurationBuilder builder)
         {
-            var builder = isMultiTenant
-                ? services.AddMultiTenant()
-                : new FinbuckleMultiTenantBuilder(services);
+            var finbuckleBuilder = builder.Services.AddMultiTenant();
 
             var data = new Skoruba.MultiTenant.Finbuckle.Configuration.Configuration();
             builder.Services.AddSingleton(data);
-            builder.Services.AddScoped<ISkorubaTenant, SkorubaTenant>();
-            return builder;
 
+            return finbuckleBuilder;
         }
 
         /// <summary>
-        /// Adds <see cref="Skoruba.MultiTenant.Finbuckle.Configuration.Configuration"/> service with values from the configuration section provided.  IsMultiTenant is set to true.
+        /// Adds <see cref="Skoruba.MultiTenant.Finbuckle.Configuration.Configuration"/> services with optional <see cref="Skoruba.MultiTenant.Finbuckle.Configuration.Configuration"/> configuration values.
         /// </summary>
-        /// <param name="builder">The MultiTenantBuilder<c/> instance the extension method applies to.</param>
-        /// <returns>An new instance of MultiTenantBuilder.</returns>
-        public static FinbuckleMultiTenantBuilder RegisterConfiguration(this FinbuckleMultiTenantBuilder builder, IConfigurationSection configurationSection)
+        /// <param name="builder">The SkorubaTenantConfigurationBuilder<c/> instance the extension method applies to.</param>
+        /// <returns>An new instance of Finbuckle MultiTenantBuilder.</returns>
+        public static FinbuckleMultiTenantBuilder WithFinbuckleMultiTenant(this SkorubaTenantConfigurationBuilder builder, IConfigurationSection configurationSection)
         {
-            builder.Services.Remove(builder.Services.FirstOrDefault(d => d.ServiceType == typeof(Skoruba.MultiTenant.Finbuckle.Configuration.Configuration)));
+            var finbuckleBuilder = builder.Services.AddMultiTenant();
 
             var data = new Skoruba.MultiTenant.Finbuckle.Configuration.Configuration();
             configurationSection.Bind(data);
             builder.Services.AddSingleton(data);
-            builder.Services.AddScoped<ISkorubaTenant, SkorubaTenant>();
-            return builder;
-        }
 
-        /// <summary>
-        /// Adds validation for determining if the tenant must be resolved or not.  Typical implementation is to allow a null tenant for data access code where the tenant may not be available and also not necessary.
-        /// </summary>
-        /// <typeparam name="TValidator"></typeparam>
-        /// <param name="builder"></param>
-        /// <returns></returns>
-        public static FinbuckleMultiTenantBuilder RegisterTenantIsRequiredValidation<TValidator>(this FinbuckleMultiTenantBuilder builder)
-        where TValidator : class, IValidateTenantRequirement
-        {
-            builder.Services.TryAddScoped<ValidateTenantRequirement>();
-            builder.Services.AddScoped<IValidateTenantRequirement, TValidator>();
-            return builder;
+            return finbuckleBuilder;
         }
     }
 }
