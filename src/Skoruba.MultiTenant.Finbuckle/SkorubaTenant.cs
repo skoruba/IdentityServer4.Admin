@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Skoruba.MultiTenant.Finbuckle
 {
-    public class SkorubaTenant : ISkorubaT
+    public class SkorubaTenant : ISkorubaTenant
     {
         public SkorubaTenant(TenantInfo tenantInfo)
         {

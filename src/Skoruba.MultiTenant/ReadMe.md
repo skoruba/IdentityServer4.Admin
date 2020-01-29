@@ -1,154 +1,194 @@
 ﻿# Skoruba.MultiTenant
+Skoruba.MultiTenant is an abstraction for multi-tenant support within the Skoruba.IdentityServer4
+infrastructure.  It allows custom tenant resolution strategies as well as support
+for Identity and Identity Server.
 
-Skoruba.Multitenant provides an abstraction for multi-tenancy along with ASP.NET
-and Identity Server 4 support.  An example implementation is provided 
-using [Finbuckle.MultiTenant](https://www.finbuckle.com/MultiTenant)
-for tenant resolution which includes several resolution strategies including
-the ability to create custom strategies.  
+A sample implementation is provided using [Finbuckle.MultiTenant](https://www.finbuckle.com/MultiTenant)
+using the project Skoruba.MultiTenant.Finbuckle.
 
-## PR impact on Admin and STS projects
-One of the goals of this implementation is to minimize the number of changes
-required within Admin and STS when enabling or disabling multitenancy.  The 
-following outlines noteable concessions:
+## Overview
+Multi-tenancy works by injecting a ISkorubaTenantContext wherever a tenant needs
+to be known.  By injecting this object developers can use the TenantId to filter
+data to ensure data isolation.  The developer is responsible to create an object that 
+implements this interface and defines the various context properties including
+the tenant information.
 
-- The Profile resource needs to include "TenantId" claim.
-- A TenantId/TenantCode property was included in a few default objects like
-the Role and User entity objects and the login and register viewmodels.  Single tenant 
-developers can ignore these properties, or they can remove them if they wish, 
-but that is not necessary.  There may need to be additional changes 
-like this to dto's and other objects when
-more tenant enhancements are added, such as tenant pages for adding/editing
-tenants.
-- A static flag MultiTenantEnabled is referenced in various places during setup
-for configuration purposes.  This flag currently resides in the Skoruba.MultiTenant 
-project and must be changed when deciding on being multitenant or not.
-- The AdminIdentityDbContext uses a const flag to modify indexes if
-multitenancy is enabled.  This is essentially a non-change.
-- Skoruba.Dbmigrator is a console project to make it easier to migrate and
-seed.  The existing migration code was left alone and can still be utilizied;
-howeer, DbMigrator must be used for the current Finbuckle implemenation.  More
-on this below.
+Configuring the solution for multi-tenancy is kept simple through the appsetting
+MultiTenantConfiguration:MultiTenantEnabled.  False will maintain a single-tenant
+solution and true will maintain a multi-tenant solution.
 
-- User and Role stores were added to the EF Shared project for ASP.NET Identity.
-These stores are used to override the default ASP.NET Identity stors.
+Single tenant solutions need no further changes. Multi tenant solutions will 
+require the developer to implement the necessary 
+services and middleware to resolve and provide the tenant information.
 
-## Using Skoruba.MultiTenant.Finbuckle
-To implement multitenancy you must add services and middleware.  
+Services are available for Asp.Net Identity to help with data isolation.  These services
+will make use of the resolved tenant and filter any underlying queries.  They also
+allow users to belong to multiple tenants with the same username/email as well
+as roles to be specific to each tenant.
 
-### Admin Project
-The following line will register the required services and return a builder object
-specific for Finbuckle.  
+## Basics
+To configure the solution for multi-tenancy set the appsetting 
+MultiTenantConfiguration:MultiTenantEnabled to true.
 
-```c#
-services.AddMultiTenant(true);
-```
+Next, configure the STS and Admin projects.  The configuration only
+needs to be done in the Startup class and only if MultiTenantEnabled is true.
+The Startup class has three virtual methods that need to be configured.  These are
+virtual so that they can be overriden for integration tests.
 
-From there you can register the tenant store and strategy.  See 
-[Finbuckle.MultiTenant](https://www.finbuckle.com/MultiTenant) for details.
-Skoruba.MultiTenant.Finbuckle includes a claims strategy and a FormStrategy which are not provided
-by Finbuckle.  But you can use any of the Finbuckle strategies and stores.
+- **RegisterMultiTenantConfiguration** This method is used to register the 
+services for the tenant resolution strategy. *Note that any changes here should 
+be considered for changes to the Skoruba.IdentityServer4.Admin.Configuration.Test.StartupTestMultiTenant 
+class.*
 
-```C#
-// Add multitenancy
-services.AddMultiTenant(true)
-    // custom store
+- **UsePreAuthenticationMultitenantMiddleware** This method is used to configure 
+any middleware that needs to be configured BEFORE the authentication middleware.
+
+- **UsePostAuthenticationMultitenantMiddleware** This method is used to configure
+any middleware that needs to be configured AFTER the authentication middleware.
+
+- **TODO:** startup helpers that register additional services may need to be modified
+depending on a chosen implementation.
+
+## Default Configuration Deep Dive
+There's a lot going on, so let's break down how the default implementation is
+configured and why.  Keep in mind that this is an opinionated implementation.
+
+### Use Case
+The use case of the default implementation is:
+
+##### To maintain a single url (no domain or route urls for tenants)
+No configuration is required for this one.  This is part of the use case so that we
+explicitly clarify that we are <ins>not</ins> using a domain or route strategy.  These are 
+common strategies, but we are <ins>not</ins> using them for this example.
+
+##### Isolate users and roles so that user can belong to multiple tenants with the same username/email as well as allow tenants to have unique roles
+To accomplish these we'll need to make sure we isolate our user and roles tables
+with a TenantId.  The TenantId is already added to the entities and part of the db,
+but in order to make sure we keep tenants in their own data we'll register 
+MultiTenantUserStore and MultiTenantRoleStore.
+These stores will replace the default Asp.Net Identity stores and will use the resolved
+TenantId from ISkorubaTenantContext to filter any queries.
+
+##### Keep the login simple
+Users who belong to multiple tenants should not have to remember url's or domains
+in order to login.  And once the user is logged in the application should be able
+to know what tenant the user belongs to.
+
+In order to keep it simple we're going to use a company code that the user will
+include during login.  The company code will resolve the tenant using the FormStrategy.
+After login we will use claims to determine the tenant which will be resolved
+using the ClaimsStrategy or the MultiTenantClaimMiddleware.
+
+We're going to make use of some additional services to make our lives easier.
+
+- MultiTenantUserClaimsPrincipalFactory will automatically create a claim for the
+user's TenantId and add it to the db.
+
+- MultiTenantProfileService will make sure that all Identity Server profile requests
+include the users TenantId as a claim.  *(Note: This may not be necessary since
+we're using the MultiTenantUserClaimsPrincipalFactory.  Testing is required to confirm.)*
+
+- TenantNotRequiredForIdentityServerEndpoints is a service that compares the url to
+the IdentityServer endpoints, and if the request is going to one of those endpoints
+the ISkorubaTenantContext will indicate that resolving the tenant is not required.  This
+will allow the MultiTenantUserStore and MultiTenantRoleStore to exclude TenantId
+filtering.
+  
+### Configuring STS
+##### appsetting 
+In the appsettings set the MultiTenantConfiguration:MultiTenantEnabled to true.
+
+##### Startup method RegisterMultiTenantConfiguration
+
+```cs
+var configuration = Configuration.GetSection(ConfigurationConsts.MultiTenantConfiguration).Get<MultiTenantConfiguration>();
+services.AddMultiTenantConfiguration<SkorubaTenantContext>(configuration)
+    .RegisterTenantIsRequiredValidation<TenantNotRequiredForIdentityServerEndpoints>()
+    .WithFinbuckleMultiTenant(Configuration.GetSection(ConfigurationConsts.MultiTenantConfiguration))
     .WithEFCacheStore(options => options.UseSqlServer(Configuration.GetConnectionString("TenantsDbConnection")))
-    // custom strategy to get tenant id from user claims
-    .WithStrategy<ClaimsStrategy>(ServiceLifetime.Singleton)
-    ;
+    .WithStrategy<FormStrategy>(ServiceLifetime.Singleton);
 ```
+- **services.AddMultiTenantConfiguration<SkorubaTenantContext>(configuration)** Registers
+the SkorubaTenantContext which implements the ISkorubaTenantContext.  This class wraps the
+Finbuckle TenantInfo.  The configuration is added to the service so that it can be injected 
+with the SkorubTenantContext and other areas of the application.  This configuration 
+allows configuration program execution to change depending on being single or multi-tenant.
 
-To configure the middleware add this line in the Startup.  Becuase the ClaimsStrategy 
-requires authentication middleware to run first, we add the following line after 
-adding authentication. Other strategies may require this line to come before
-authentication.  Review the Finbuckle docs for more details.
+- **.RegisterTenantIsRequiredValidation<TenantNotRequiredForIdentityServerEndpoints>()** Registers
+the service to not require tenant resolution for Identity Server endpoints.
 
-```c#
-// configure multitenant middleware after authentication when the strategy is to use claims
-// note: other strategies may require the configuration to come before authentication.
-app.UseMultiTenant();
+- **.WithFinbuckleMultiTenant(Configuration.GetSection(ConfigurationConsts.MultiTenantConfiguration))**
+Registers the Finbuckle.MultiTenant implementation.  It also uses the settings in the IConfigurationSection
+to know about what actions and form values will be used in the FormStrategy to determine
+the tenant.
+
+- **.WithEFCacheStore(options => options.UseSqlServer(Configuration.GetConnectionString("TenantsDbConnection")))**
+Registers a custom store per Finbuckle instructions.  The store we're implementing caches
+tenants for 48 hours.  You can use any store you want.  Finbuckle has several out of the box.
+
+- **.WithStrategy<FormStrategy>(ServiceLifetime.Singleton);** Registers the Finbuckle
+strategy we're going to primarily use to resolve the tenant.  Resolving using claims will
+come later.
+
+##### Startup method UsePreAuthenticationMultitenantMiddleware
+Since our resolution strategy is the FormStrategy we are going simply add the default
+Finbuckle middleware here.
+
+##### Startup method UsePostAuthenticationMultitenantMiddleware
+This is where we need to configure middleware for using claims.  Claim resolution 
+strategies must come after authentication middleware.
+
+##### Notes about StartupHelpers
+You dont need to do anything in this class.  The flag for MultiTenantEnabled will be
+used to add (or not) additional services.
+
+
+### Configuring Admin
+##### appsetting 
+In the appsettings set the MultiTenantConfiguration:MultiTenantEnabled to true.
+
+##### Startup method RegisterMultiTenantConfiguration
+
+```cs
+var configuration = Configuration.GetSection(ConfigurationConsts.MultiTenantConfiguration).Get<MultiTenantConfiguration>();
+services.AddMultiTenantConfiguration<SkorubaTenantContext>(configuration)
+    .WithFinbuckleMultiTenant()
+    .WithEFCacheStore(options => options.UseSqlServer(Configuration.GetConnectionString("TenantsDbConnection")))
+    .WithStrategy<ClaimsStrategy>(ServiceLifetime.Singleton);
 ```
+- **services.AddMultiTenantConfiguration<SkorubaTenantContext>(configuration)** Registers
+the SkorubaTenantContext which implements the ISkorubaTenantContext.  This class wraps the
+Finbuckle TenantInfo.  The configuration is added to the service so that it can be injected 
+with the SkorubTenantContext and other areas of the application.  This configuration 
+allows configuration program execution to change depending on being single or multi-tenant.
 
-### STS Project
-The STS project is a little different configuration.  This is becuase we are adding
-an addditional strategy to resolve the tenant, FormStrategy.  The FormStrategy
-resolves the tenant from the POST form.  These are configuration dependent.
+- **Note:** we are not registering the TenantNotRequiredForIdentityServerEndpoints service
+becuase this is the admin project and we dont have those endpoints here.
 
-```c#
-    // If single tenant app then change to false and remove app configuration
-    services.AddMultiTenant(true)
-        // required if using app.AddMultiTenantFromForm()
-        .RegisterConfiguration(Configuration.GetSection("MultiTenantConfiguration"))
-        // custom store
-        .WithEFCacheStore(options => options.UseSqlServer(Configuration.GetConnectionString("TenantsDbConnection")))
-        // custom strategy to get tenant from form data at login
-        .WithStrategy<FormStrategy>(ServiceLifetime.Singleton)
-        // dont require tenant resolution for identity endpoints
-        .RegisterTenantIsRequiredValidation<TenantNotRequiredForIdentityServerEndpoints>()
-    ;
-```
-In the above we are also registering IValidateTenantRequirement.  This is being registered in
-STS because the Identity Server 4 endpoints do not require tenant resoltuion.  In the Admin project
-this is not added becuase the admin project requires the tenant to always be resolved.
+- **.WithFinbuckleMultiTenant()**
+Registers the Finbuckle.MultiTenant implementation.  We dont need any configuration settings
+so we're not passing in the IConfigurationSection.
 
-For middleware we are doing this differently in STS.  The reason is becuase we need to
-resolve the tenant with the FormStrategy as well as the ClaimStrategy.  But the claim stategy
-must come after the authentication.  So this is what it looks like:
+- **.WithEFCacheStore(options => options.UseSqlServer(Configuration.GetConnectionString("TenantsDbConnection")))**
+This store should be the same as the STS store.  
 
-```c#
-// configure default multitenant middleware before authentication
-app.UseMultiTenant();
+- **.WithStrategy<ClaimsStrategy>(ServiceLifetime.Singleton);** Registers the strategy
+to resolve tenants using the user claims.  With this strategy we have to add our middleware
+after authentication.
 
-UseAuthentication(app);
+##### Startup method UsePreAuthenticationMultitenantMiddleware
+Since our resolution strategy is the ClaimsStrategy we are not going to configure any 
+middleware here.
 
-// configure custom multitenant middleware for claims after authentication
-app.UseMultiTenantFromClaims();
-``` 
+##### Startup method UsePostAuthenticationMultitenantMiddleware
+This is where we need to configure our middleware.  *NOTE: The UseMultiTenantFromClaims middleware
+is only used after the UseMultiTenant middleware is configured.  Think of the 
+UseMultiTenantFromClaims as a backup middleware if the UseMultiTenant middleware does not
+resolve the tenant.**
 
-## Configuring for single tenant
-Three things need to occur.
-
-First, set the MultiTenantEnable constant to false in Skoruba.MultiTeant.
-
-Second, change the services line to false and remove all of the other service configurations.
-
-```C#
-// Add multitenancy
-services.AddMultiTenant(false);
-```
-
-And third, delete or comment the middleware for multitenancy.
-
-
-## Implementing Skoruba.MultiTenant
-
-### ISkorubaMultiTenant
-Various objects within the Skoruba infrastructure depend on this object.  This
-object defines the tenant properties.  A sample implementation of this is in
-the Finbuckle project and illustrates how ISkorubaTenant "wraps" the Finbuckle
-TenantInfo object. 
-
-### IValidateTenantRequirement
-This allows some code to execute without a resolved tenant.  For instance,
-if the user table is a single table for all tenants, it is not necessary
-for Identity Server endpoints to know the tenant. However, if you use
-a domain or url strategy for resolving the tenant then you may be able
-to reliably define the tenant for each endpoint.  In such scenarios this
-object may not need to be implementated.
-
-## ASP.NET Identity
-Tenant specific user tables is difficult (impossible?) unless a domain or url strategy
-is implementated.  The current implementation with Finbuckle does not address
-either of these strategies but it should be possible.
-
-The current example implementation uses a single user table with a TenantId
-property.  In order to ensure data isolation a new UserStore and RoleStore
-were implemented.  These are abstracted in the Skoruba.MultiTenant.Identity 
-project and implementd in the Skoruba.IdentityServer4Admin.EndityFramework.Shared
-project.
-
-It is currently assumed that the User and Role are tenant specific.  A tenant
-may define unique roles for their implementation.
+##### Notes about StartupHelpers
+You dont need to do anything in this class.  The flag for MultiTenantEnabled will be
+used to add (or not) additional services.
 
 ## Notes
 

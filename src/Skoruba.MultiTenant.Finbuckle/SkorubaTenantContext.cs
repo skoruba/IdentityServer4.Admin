@@ -45,7 +45,7 @@ namespace Skoruba.MultiTenant.Finbuckle
             )
         { }
 
-        public ISkorubaT Tenant { get; }
+        public ISkorubaTenant Tenant { get; }
         public bool MultiTenantEnabled => MultiTenantConfiguration?.MultiTenantEnabled ?? false;
         public bool TenantResolved => !string.IsNullOrWhiteSpace(Tenant?.Id);
         public bool TenantResolutionRequired { get; }

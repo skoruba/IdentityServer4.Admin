@@ -14,7 +14,7 @@ namespace Microsoft.Extensions.DependencyInjection
             MultiTenantConfiguration = multiTenantConfiguration;
         }
 
-        public ISkorubaT Tenant { get; }
+        public ISkorubaTenant Tenant { get; }
         public bool MultiTenantEnabled =>  false;
         public bool TenantResolved => false;
         public bool TenantResolutionRequired => false;
@@ -22,7 +22,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public MultiTenantConfiguration MultiTenantConfiguration { get; }
     }
 
-    public class SingleTenant : ISkorubaT
+    public class SingleTenant : ISkorubaTenant
     {
         public string Id { get; }
         public string Identifier { get; }
