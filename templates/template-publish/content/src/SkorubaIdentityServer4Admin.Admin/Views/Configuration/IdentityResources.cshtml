@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.IdentityResourcesDto
 @inject IViewLocalizer Localizer
@@ -55,3 +55,8 @@
 		@await Html.PartialAsync("Common/Pager", new Pager { Action = "IdentityResources", PageSize = Model.PageSize, TotalCount = Model.TotalCount, EnableSearch = true, Search = ViewBag.Search })
 	</div>
 </div>
+
+
+
+
+

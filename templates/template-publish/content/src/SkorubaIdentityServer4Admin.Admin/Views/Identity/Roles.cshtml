@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Interfaces.IRolesDto
 @inject IViewLocalizer Localizer
@@ -35,7 +35,7 @@
 						<tr>
 						    <th>
 						        <a class="btn btn-primary" asp-action="Role" asp-route-id="@role.Id">@Localizer["TableButtonEdit"]</a>
-						        <a class="btn btn-primary" asp-action="RoleUsers" asp-route-roleId="@role.Id">@Localizer["TableButtonUsers"]</a>
+						        <a class="btn btn-primary" asp-action="RoleUsers" asp-route-id="@role.Id">@Localizer["TableButtonUsers"]</a>
 						    </th>
 							<td>@role.Name</td>
 							<td>
@@ -54,3 +54,8 @@
 		@await Html.PartialAsync("Common/Pager", new Pager { Action = "Roles", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
 	</div>
 </div>
+
+
+
+
+

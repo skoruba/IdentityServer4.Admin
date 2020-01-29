@@ -27,8 +27,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         public IActionResult Logout()
         {
-            return new SignOutResult(new List<string> { AuthenticationConsts.SignInScheme, AuthenticationConsts.OidcAuthenticationScheme },
-                new AuthenticationProperties { RedirectUri = "/" });
+            return new SignOutResult(new List<string> { AuthenticationConsts.SignInScheme, AuthenticationConsts.OidcAuthenticationScheme });
         }
     }
 }

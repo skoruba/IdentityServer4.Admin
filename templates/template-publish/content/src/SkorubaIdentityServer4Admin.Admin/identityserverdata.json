@@ -1,0 +1,127 @@
+﻿{
+  "IdentityServerData": {
+    "IdentityResources": [
+      {
+        "Name": "roles",
+        "Enabled": true,
+        "DisplayName": "Roles",
+        "UserClaims": [
+          "role"
+        ]
+      },
+      {
+        "Name": "openid",
+        "Enabled": true,
+        "Required": true,
+        "DisplayName": "Your user identifier",
+        "UserClaims": [
+          "sub"
+        ]
+      },
+      {
+        "Name": "profile",
+        "Enabled": true,
+        "DisplayName": "User profile",
+        "Description": "Your user profile information (first name, last name, etc.)",
+        "Emphasize": true,
+        "UserClaims": [
+          "name",
+          "family_name",
+          "given_name",
+          "middle_name",
+          "nickname",
+          "preferred_username",
+          "profile",
+          "picture",
+          "website",
+          "gender",
+          "birthdate",
+          "zoneinfo",
+          "locale",
+          "updated_at"
+        ]
+      },
+      {
+        "Name": "email",
+        "Enabled": true,
+        "DisplayName": "Your email address",
+        "Emphasize": true,
+        "UserClaims": [
+          "email",
+          "email_verified"
+        ]
+      },
+      {
+        "Name": "address",
+        "Enabled": true,
+        "DisplayName": "Your address",
+        "Emphasize": true,
+        "UserClaims": [
+          "address"
+        ]
+      }
+    ],
+    "ApiResources": [
+      {
+        "Name": "skoruba_identity_admin_api",
+        "Scopes": [
+          {
+            "Name": "skoruba_identity_admin_api",
+            "DisplayName": "skoruba_identity_admin_api",
+            "Required": true,
+            "UserClaims": [
+              "role",
+              "name"
+            ]
+          }
+        ]
+      }
+    ],
+    "Clients": [
+      {
+        "ClientId": "skoruba_identity_admin",
+        "ClientName": "skoruba_identity_admin",
+        "ClientUri": "http://localhost:9000",
+        "AllowedGrantTypes": [
+          "hybrid"
+        ],
+        "ClientSecrets": [
+          {
+            "Value": "skoruba_admin_client_secret"
+          }
+        ],
+        "RedirectUris": [
+          "http://localhost:9000/signin-oidc"
+        ],
+        "FrontChannelLogoutUri": "http://localhost:9000/signout-oidc",
+        "PostLogoutRedirectUris": [
+          "http://localhost:9000/signout-callback-oidc"
+        ],
+        "AllowedCorsOrigins": [
+          "http://localhost:9000"
+        ],
+        "AllowedScopes": [
+          "openid",
+          "email",
+          "profile",
+          "roles"
+        ]
+      },
+      {
+        "ClientId": "skoruba_identity_admin_api_swaggerui",
+        "ClientName": "skoruba_identity_admin_api_swaggerui",
+        "AllowedGrantTypes": [
+          "implicit"
+        ],
+        "RedirectUris": [
+          "http://localhost:5001/swagger/oauth2-redirect.html"
+        ],
+        "AllowedScopes": [
+          "skoruba_identity_admin_api"
+        ],
+        "AllowAccessTokensViaBrowser": true
+
+      }
+    ]
+  }
+}

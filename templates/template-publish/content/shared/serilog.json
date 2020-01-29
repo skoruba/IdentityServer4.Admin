@@ -1,0 +1,36 @@
+{
+  "Serilog": {
+    "Using": [ "Serilog.Sinks.Console" ],
+    "MinimumLevel": {
+      "Default": "Debug",
+      "Override": {
+        "Microsoft": "Information",
+        "System": "Error"
+      }
+    },
+    "WriteTo": [
+      {
+        "Args": {
+          "outputTemplate": "[{Timestamp:o}][{Level:u4}][{ThreadId}][{SourceContext}] {Message}{NewLine}{Exception}"
+        },
+        "Name": "Console"
+      },
+      {
+        "Args": {
+          "buffered": true,
+          "flushToDiskInterval": 15,
+          "outputTemplate": "[{Timestamp:o}][{Level:u4}][{ThreadId}][{SourceContext}] {Message}{NewLine}{Exception}",
+          "pathFormat": "Logs//log-{Date}.txt",
+          "retainedFileCountLimit": 3,
+          "textFormatter": "Serilog.Formatting.Json.JsonFormatter, Serilog"
+        },
+        "Name": "RollingFile"
+      }
+    ],
+    "Enrich": [ "FromLogContext", "WithMachineName", "WithThreadId" ],
+    "Properties": {
+      "Product": "Admin",
+      "Env": ""
+    }
+  }
+}

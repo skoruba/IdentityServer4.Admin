@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Reflection;
 using Microsoft.Extensions.Localization;
 
@@ -32,13 +31,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers.Localization
             _localizer = factory.Create(baseName, assemblyName);
         }
 
-        /// <inheritdoc />
-        public virtual IStringLocalizer WithCulture(CultureInfo culture)
-        {
-            return _localizer.WithCulture(culture);
-        }
-
-        /// <inheritdoc />
         public virtual LocalizedString this[string name]
         {
             get
@@ -49,7 +41,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers.Localization
             }
         }
 
-        /// <inheritdoc />
         public virtual LocalizedString this[string name, params object[] arguments]
         {
             get
@@ -60,7 +51,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers.Localization
             }
         }
 
-        /// <inheritdoc />
         public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
         {
             return _localizer.GetAllStrings(includeParentCultures);

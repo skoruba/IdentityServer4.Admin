@@ -1,4 +1,4 @@
-﻿namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration.Constants
+namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration.Constants
 {
     public static class AddressClaimConstants
     {
@@ -9,3 +9,9 @@
         public static readonly string Country = "country";
     }
 }
+
+
+
+
+
+

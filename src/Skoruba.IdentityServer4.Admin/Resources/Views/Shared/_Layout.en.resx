@@ -121,10 +121,7 @@
     <value>Export configuration</value>
   </data>
   <data name="FooterCopyright" xml:space="preserve">
-    <value>&amp;copy; 2018</value>
-  </data>
-  <data name="FooterTitle" xml:space="preserve">
-    <value>Skoruba IdentityServer4 Admin</value>
+    <value>&amp;copy;</value>
   </data>
   <data name="ImportConfig" xml:space="preserve">
     <value>Import configuration</value>
@@ -155,9 +152,6 @@
   </data>
   <data name="MenuButton" xml:space="preserve">
     <value>Menu</value>
-  </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>Skoruba IdentityServer4 Admin</value>
   </data>
   <data name="TitleConfiguration" xml:space="preserve">
     <value>Clients/Resources</value>

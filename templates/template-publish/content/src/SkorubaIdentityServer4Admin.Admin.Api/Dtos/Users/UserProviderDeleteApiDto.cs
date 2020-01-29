@@ -1,4 +1,4 @@
-﻿namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Users
+namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Users
 {
     public class UserProviderDeleteApiDto<TUserDtoKey>
     {
@@ -9,3 +9,8 @@
         public string LoginProvider { get; set; }
     }
 }
+
+
+
+
+

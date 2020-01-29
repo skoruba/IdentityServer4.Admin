@@ -1,21 +1,21 @@
 # Introduction
 
-Tutorial covers configuration of Admin on Ubuntu 18.04 with fresh instance of PostgreSQL database.
+Tutorial covers configuration of Admin on Ubuntu 19.04 with fresh instance of PostgreSQL database.
 
 # Prerequisites
 
-## .NET Core 2.2 SDK
+## .NET Core 3.1 SDK
 
-Instructions from: https://dotnet.microsoft.com/download/linux-package-manager/ubuntu18-04/sdk-2.2.101
+Instructions from: https://docs.microsoft.com/en-us/dotnet/core/install/linux-package-manager-ubuntu-1904
 
 ```
-wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
+wget -q https://packages.microsoft.com/config/ubuntu/19.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 sudo dpkg -i packages-microsoft-prod.deb
 
-sudo add-apt-repository universe
+sudo apt-get update
 sudo apt-get install apt-transport-https
 sudo apt-get update
-sudo apt-get install dotnet-sdk-2.2
+sudo apt-get install dotnet-sdk-3.1
 ```
 
 ## PostgreSQL
@@ -55,26 +55,21 @@ First change connection strings in `src/Skoruba.IdentityServer4.Admin/appsetting
 Server=localhost; User Id=postgres; Database=is4admin; Port=5432; Password=postgres; SSL Mode=Prefer; Trust Server Certificate=true
 ```
 
-## Install required packages
+## Swith to PostgreSQL
 
-Next we need to install PostgreSQL support for EntityFramework Core in Skoruba.IdentityServer4.Admin and Skoruba.IdentityServer4.STS.Identity in order to do that run in each project's directory:
-
+It is possible to change database provider in `appsettings.json` in following projects:
+ - Skoruba.IdentityServer4.Admin
+ - Skoruba.IdentityServer4.Admin.Api
+ - Skoruba.IdentityServer4.STS.Identity
+ 
+Change parameter `ProviderType` in section to:
 ```
-dotnet add src/Skoruba.IdentityServer4.Admin package Npgsql.EntityFrameworkCore.PostgreSQL
-dotnet add src/Skoruba.IdentityServer4.Admin package Npgsql.EntityFrameworkCore.PostgreSQL.Design
-dotnet add src/Skoruba.IdentityServer4.STS.Identity package Npgsql.EntityFrameworkCore.PostgreSQL
-dotnet add src/Skoruba.IdentityServer4.STS.Identity package Npgsql.EntityFrameworkCore.PostgreSQL.Design
+"DatabaseProviderConfiguration": {
+    "ProviderType": "PostgreSQL"
+  }
 ```
 
-## Replace UseSqlServer with UseNpgsql
-
-In `src/Skoruba.IdentityServer4.Admin` and `src/Skoruba.IdentityServer4.STS.Identity` in `Helpers/StartupHelpers.cs` replace all occurences of `UseSqlServer` with `UseNpgsql`. This will inform EntityFramework that PostgreSQL will be used instead of SQL Server.
-
-# Final setup
-
-## Generate initial migrations 
-
-[Follow these steps for generating of DB migrations](/README.md#ef-core--data-access)
+# Final setup 
 
 ## Run STS and Admin
 
@@ -90,7 +85,7 @@ Admin also needs to seed the database so seperate terminal in `src/Skoruba.Ident
 dotnet run /seed
 ```
 
-After that we should have STS listening on http://localhost:5000 and Admin on http://localhost:9000.  We can go to the latter and we should be redirected to our STS for authentication (admin/Pa$$word123 is the default combination).
+After that we should have STS listening on http://localhost:5000 and Admin on http://localhost:9000.  We can go to the latter and we should be redirected to our STS for authentication. You can find the default credentials in `identitydata.json` in project called `Skoruba.IdentityServer4.Admin`.
 
 # Final thoughts
 

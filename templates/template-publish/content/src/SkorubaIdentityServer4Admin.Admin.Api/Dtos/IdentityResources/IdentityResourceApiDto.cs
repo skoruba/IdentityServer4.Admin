@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.IdentityResources
@@ -30,3 +30,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.IdentityResources
         public List<string> UserClaims { get; set; }
     }
 }
+
+
+
+
+
