@@ -1,9 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
@@ -22,13 +18,11 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         private readonly IIdentityResourceService _identityResourceService;
         private readonly IApiResourceService _apiResourceService;
         private readonly IClientService _clientService;
-        private readonly IExportService _exportService;
         private readonly IStringLocalizer<ConfigurationController> _localizer;
 
         public ConfigurationController(IIdentityResourceService identityResourceService,
             IApiResourceService apiResourceService,
             IClientService clientService,
-            IExportService exportService,
             IStringLocalizer<ConfigurationController> localizer,
             ILogger<ConfigurationController> logger)
             : base(logger)
@@ -36,7 +30,6 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             _identityResourceService = identityResourceService;
             _apiResourceService = apiResourceService;
             _clientService = clientService;
-            _exportService = exportService;
             _localizer = localizer;
         }
 
@@ -656,34 +649,6 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             var identityResource = await _identityResourceService.GetIdentityResourceAsync(id);
 
             return View(identityResource);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Export()
-        {
-            var stream = new MemoryStream(await _exportService.GetExportBytesConfigAsync());
-            return new FileStreamResult(stream, "application/....")
-            {
-                FileDownloadName = $"config_{DateTime.Now.ToString("d")}.json"
-            };
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Import(IFormFile file)
-        {
-            if (file == null)
-            {
-                return new EmptyResult();
-            }
-            if (Path.GetExtension(file.FileName) != ".json")
-            {
-                return BadRequest("Invalid file extension");
-            }
-            using (var reader = new StreamReader(file.OpenReadStream()))
-            {
-                await _exportService.ImportConfigAsync(await reader.ReadToEndAsync());
-            }
-            return Ok();
         }
     }
 }

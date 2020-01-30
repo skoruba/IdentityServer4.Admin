@@ -15,30 +15,12 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "profiles": {
-        "IIS Express": {
-            "commandName": "IISExpress",
-            "commandLineArgs": "/seed",
-            "launchBrowser": true,
-            "environmentVariables": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            }
-        },
-        "Skoruba.IdentityServer4.Admin": {
-            "commandName": "Project",
-            "launchBrowser": true,
-            "environmentVariables": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "applicationUrl": "http://localhost:9000/"
-        },
-        "Docker": {
-            "commandName": "Docker",
-            "launchBrowser": true,
-            "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
-            "environmentVariables": {},
-            "httpPort": 10000
-        }
+    "profiles": {},
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "publishAllPorts": true
     }
   }
 }

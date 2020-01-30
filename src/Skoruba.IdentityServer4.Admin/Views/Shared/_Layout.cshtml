@@ -45,8 +45,8 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" asp-area="" asp-controller="Grant" asp-action="PersistedGrants">@Localizer["LinkPersistedGrants"]</a>
 				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" asp-area="" asp-controller="Configuration" asp-action="Export">@Localizer["ExportConfig"]</a>
-				<form id="export_config_form" data-ajax-url="/Configuration/Import" data-ajax="true" data-ajax-method="POST"
+				<a class="dropdown-item" asp-area="" asp-controller="Export" asp-action="ExportConfig">@Localizer["ExportConfig"]</a>
+				<form id="export_config_form" data-ajax-url="/Export/ImportConfig" data-ajax="true" data-ajax-method="POST"
 							data-ajax-confirm="Вы действительно хотите обновить конфигурацию?" data-ajax-complete="exportConfigCompleted" enctype="multipart/form-data" style="cursor: pointer">
 					<input type="file" id="export_config_file" name="file" style="display:none" onchange="onchangeUploadedConfigFile()" />
 					<a class="dropdown-item" onclick="exportButton(export_config_file);">@Localizer["ImportConfig"]</a>
@@ -63,7 +63,7 @@
                 <a class="dropdown-item" asp-area="" asp-controller="Identity" asp-action="Users">@Localizer["LinkUsers"]</a>
                 <a class="dropdown-item" asp-area="" asp-controller="Identity" asp-action="Roles">@Localizer["LinkRoles"]</a>
 				<div class="dropdown-divider"></div>
-				<form id="export_users_form" data-ajax-url="/Identity/Import" data-ajax="true" data-ajax-method="POST"
+				<form id="export_users_form" data-ajax-url="/Export/ImportUsers" data-ajax="true" data-ajax-method="POST"
 							data-ajax-confirm="Вы действительно хотите добавить пользователей?" data-ajax-complete="exportUsersCompleted" enctype="multipart/form-data" style="cursor: pointer">
 					<input type="file" id="export_users_file" name="file" style="display:none" onchange="onchangeUploadedUsersFile()" />
 					<a class="dropdown-item" onclick="exportButton(export_users_file);">@Localizer["ImportUsers"]</a>
