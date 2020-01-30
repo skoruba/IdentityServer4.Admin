@@ -138,7 +138,9 @@ namespace Skoruba.IdentityServer4.STS.Identity
                     .WithFinbuckleMultiTenant(Configuration.GetSection(ConfigurationConsts.MultiTenantConfiguration))
                     // custom store
                     .WithEFCacheStore(options => options.UseSqlServer(Configuration.GetConnectionString("TenantsDbConnection")))
-                    // custom strategy to get tenant from form data at login
+                    // custom strategy to get tenant from user claims
+                    .WithStrategy<ClaimsStrategy>(ServiceLifetime.Singleton)
+                    // if that fails, then use custom strategy to get tenant from form data at login
                     .WithStrategy<FormStrategy>(ServiceLifetime.Singleton);
             }
             else
@@ -175,7 +177,6 @@ namespace Skoruba.IdentityServer4.STS.Identity
                 // for the default Finbuckle implementation we are registering
                 // their middleware here.  This middleware will use the
                 // resolution strategy defined in the services.
-                app.UseMultiTenant();
             }
         }
         public virtual void UsePostAuthenticationMultitenantMiddleware(IApplicationBuilder app)
@@ -191,7 +192,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
                 // an claims based middleware to resolve the tenant from
                 // the user claims.  This middleware will resolve the tenant
                 // if the first middleware fails.
-                app.UseMultiTenantFromClaims();
+                app.UseMultiTenant();
             }
         }
         protected IRootConfiguration CreateRootConfiguration()

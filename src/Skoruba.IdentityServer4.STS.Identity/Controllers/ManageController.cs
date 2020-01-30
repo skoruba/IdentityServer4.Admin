@@ -15,7 +15,7 @@ using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 using Skoruba.IdentityServer4.STS.Identity.ViewModels.Manage;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Controllers
-{    
+{
     [Authorize]
     public class ManageController<TUser, TKey> : Controller
         where TUser : IdentityUser<TKey>, new()
@@ -58,7 +58,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             return View(model);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(IndexViewModel model)
@@ -93,14 +93,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                     throw new ApplicationException(_localizer["ErrorSettingPhone", user.Id]);
                 }
             }
-            
+
             await UpdateUserClaimsAsync(model, user);
 
             StatusMessage = _localizer["ProfileUpdated"];
 
             return RedirectToAction(nameof(Index));
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendVerificationEmail(IndexViewModel model)
@@ -613,17 +613,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
             if (string.IsNullOrEmpty(unformattedKey))
             {
-                try
-                {
-                    var result = await _userManager.ResetAuthenticatorKeyAsync(user);
-
-                }
-                catch (Exception e)
-                {
-
-                    throw e;
-                }
-                
+                await _userManager.ResetAuthenticatorKeyAsync(user);
                 unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
             }
 

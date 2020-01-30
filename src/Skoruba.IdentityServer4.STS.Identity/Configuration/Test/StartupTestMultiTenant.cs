@@ -43,7 +43,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Configuration.Test
                 .WithFinbuckleMultiTenant(Configuration.GetSection(ConfigurationConsts.MultiTenantConfiguration))
                 // custom store
                 .WithEFCacheStore(options => options.UseInMemoryDatabase(tenantDatabaseName))
-                // custom strategy to get tenant from form data at login
+                // custom strategy to get tenant from user claims
+                .WithStrategy<ClaimsStrategy>(ServiceLifetime.Singleton)
+                // if that fails, then use custom strategy to get tenant from form data at login
                 .WithStrategy<FormStrategy>(ServiceLifetime.Singleton);
 
             // seed tenant for integration tests
@@ -55,12 +57,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Configuration.Test
         public override void UsePreAuthenticationMultitenantMiddleware(IApplicationBuilder app)
         {
             // configure default multitenant middleware before authentication
-            app.UseMultiTenant();
         }
         public override void UsePostAuthenticationMultitenantMiddleware(IApplicationBuilder app)
         {
             // configure custom multitenant middleware for claims after authentication
-            app.UseMultiTenantFromClaims();
+            app.UseMultiTenant();
         }
     }
 }

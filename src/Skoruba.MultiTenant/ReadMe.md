@@ -109,6 +109,7 @@ services.AddMultiTenantConfiguration<SkorubaTenantContext>(configuration)
     .RegisterTenantIsRequiredValidation<TenantNotRequiredForIdentityServerEndpoints>()
     .WithFinbuckleMultiTenant(Configuration.GetSection(ConfigurationConsts.MultiTenantConfiguration))
     .WithEFCacheStore(options => options.UseSqlServer(Configuration.GetConnectionString("TenantsDbConnection")))
+    .WithStrategy<ClaimsStrategy>(ServiceLifetime.Singleton)
     .WithStrategy<FormStrategy>(ServiceLifetime.Singleton);
 ```
 - **services.AddMultiTenantConfiguration<SkorubaTenantContext>(configuration)** Registers
@@ -129,16 +130,17 @@ the tenant.
 Registers a custom store per Finbuckle instructions.  The store we're implementing caches
 tenants for 48 hours.  You can use any store you want.  Finbuckle has several out of the box.
 
+- **.WithStrategy<ClaimsStrategy>(ServiceLifetime.Singleton);** Registers the Finbuckle
+strategy we're going to primarily use to resolve the tenant.  
+
 - **.WithStrategy<FormStrategy>(ServiceLifetime.Singleton);** Registers the Finbuckle
-strategy we're going to primarily use to resolve the tenant.  Resolving using claims will
-come later.
+strategy we're going to use during login and register.
 
 ##### Startup method UsePreAuthenticationMultitenantMiddleware
-Since our resolution strategy is the FormStrategy we are going simply add the default
-Finbuckle middleware here.
+Since our resolution strategies include claims, we dont want to configure our middleware here.
 
 ##### Startup method UsePostAuthenticationMultitenantMiddleware
-This is where we need to configure middleware for using claims.  Claim resolution 
+This is where we need to configure middleware when using claims.  Claim resolution 
 strategies must come after authentication middleware.
 
 ##### Notes about StartupHelpers
@@ -180,20 +182,37 @@ to resolve tenants using the user claims.  With this strategy we have to add our
 after authentication.
 
 ##### Startup method UsePreAuthenticationMultitenantMiddleware
-Since our resolution strategy is the ClaimsStrategy we are not going to configure any 
-middleware here.
+Since our resolution strategies include claims, we dont want to configure our middleware here.
 
 ##### Startup method UsePostAuthenticationMultitenantMiddleware
-This is where we need to configure our middleware.  *NOTE: The UseMultiTenantFromClaims middleware
-is only used after the UseMultiTenant middleware is configured.  Think of the 
-UseMultiTenantFromClaims as a backup middleware if the UseMultiTenant middleware does not
-resolve the tenant.**
+This is where we need to configure our middleware.
 
 ##### Notes about StartupHelpers
 You dont need to do anything in this class.  The flag for MultiTenantEnabled will be
 used to add (or not) additional services.
 
 ## Notes
+
+### Middleware order
+The authentication middleware creates the identity (and claims) for the user.  Creating
+claims includes using the registered ClaimsPrincipalFactory and this object constructs
+a UserManager which in turn constructs a UserStore which constructs the ISkorubaTenantContext.
+In short, authentication middleware creates the SkorubaTenantContext which establishes the
+tenant.  Those services are all registered as scoped in DI.
+
+So when the multi-tenant middleware is called after authentication, the ISkorubaTenantContext
+has already been constructed in the DI container and will continue to use the already
+defined object through the lifetime of the request. 
+
+As is in the Finbuckle implementation, the developer should make use of factory properties
+for getting tenant information.  The Finbuckle multi-tenant middleware uses the httpcontext
+to store the tenant info.  This allows us to implement the ISkorubaTenantContext with
+an injected httpcontext and then retrieve the most current tenant info from that httpcontext.
+So when the authentication middleware executes the httpcontext doesn't have a tenant, but
+after the multi-tenant middleware executes the httpcontext has the tenant.
+
+This is only important if you adding the multi-tenant middleware AFTER the authentication
+middleware. 
 
 ### Skoruba.MultiTenant.EfCacheStore
 This project is a custom tenant store.  The Finbuckle tenant store for dbcontext
