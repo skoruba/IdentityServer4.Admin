@@ -56,12 +56,15 @@ configured and why.  Keep in mind that this is an opinionated implementation.
 ### Use Case
 The use case of the default implementation is:
 
-##### To maintain a single url (no domain or route urls for tenants)
+#### To support multiple tenants for a single application
+This implementation is not focused on client or api resource tenant isolation.
+
+#### To maintain a single url (no domain or route urls for tenants)
 No configuration is required for this one.  This is part of the use case so that we
 explicitly clarify that we are <ins>not</ins> using a domain or route strategy.  These are 
 common strategies, but we are <ins>not</ins> using them for this example.
 
-##### Isolate users and roles so that user can belong to multiple tenants with the same username/email as well as allow tenants to have unique roles
+#### Isolate users and roles so that user can belong to multiple tenants with the same username/email as well as allow tenants to have unique roles
 To accomplish these we'll need to make sure we isolate our user and roles tables
 with a TenantId.  The TenantId is already added to the entities and part of the db,
 but in order to make sure we keep tenants in their own data we'll register 
@@ -69,7 +72,7 @@ MultiTenantUserStore and MultiTenantRoleStore.
 These stores will replace the default Asp.Net Identity stores and will use the resolved
 TenantId from ISkorubaTenantContext to filter any queries.
 
-##### Keep the login simple
+#### Keep the login simple
 Users who belong to multiple tenants should not have to remember url's or domains
 in order to login.  And once the user is logged in the application should be able
 to know what tenant the user belongs to.
