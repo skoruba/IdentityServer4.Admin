@@ -124,7 +124,7 @@
     <value>Identitäts-Ressource Eigenschaften</value>
   </data>
   <data name="NavigationIdentityResources" xml:space="preserve">
-    <value>Identitäts-Ressources</value>
+    <value>Identitäts-Ressourcen</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Identitäts-Ressource Eigenschaft löschen</value>

@@ -134,7 +134,7 @@
     <value>Den QR Code scannen oder den Code eingeben</value>
   </data>
   <data name="ScanQRSubTitle" xml:space="preserve">
-    <value>in Ihre Zwei-Faktor-Authentifizierer-Anwendung. Leerzeichen und Gehäuse spielen keine Rolle..</value>
+    <value>in Ihre Zwei-Faktor-Authentifizierer-App. Leerzeichen und Gehäuse spielen keine Rolle.</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
     <value>Um eine Authentifizierungs-App zu verwenden, gehen Sie die folgenden Schritte durch:</value>

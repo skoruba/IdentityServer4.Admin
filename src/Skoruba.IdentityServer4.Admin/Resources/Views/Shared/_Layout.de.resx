@@ -117,28 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ButtonApiResources" xml:space="preserve">
+  <data name="FooterCopyright" xml:space="preserve">
+    <value>&amp;copy;</value>
+  </data>
+  <data name="LinkApiResources" xml:space="preserve">
     <value>Api Ressourcen</value>
   </data>
-  <data name="ButtonClients" xml:space="preserve">
+  <data name="LinkClients" xml:space="preserve">
     <value>Clients</value>
   </data>
-  <data name="ButtonIdentityClients" xml:space="preserve">
-    <value>Identitäts-Ressourcen</value>
+  <data name="LinkIdentityResources" xml:space="preserve">
+    <value>Identitäts-Ressources</value>
   </data>
-  <data name="ButtonManage" xml:space="preserve">
-    <value>Manage</value>
+  <data name="LinkLogout" xml:space="preserve">
+    <value>Logout</value>
   </data>
-  <data name="ButtonPersistedGrants" xml:space="preserve">
+  <data name="LinkPersistedGrants" xml:space="preserve">
     <value>Persisted Grants</value>
   </data>
-  <data name="ButtonRoles" xml:space="preserve">
+  <data name="LinkRoles" xml:space="preserve">
     <value>Rollen</value>
   </data>
-  <data name="ButtonUsers" xml:space="preserve">
+  <data name="LinkUsers" xml:space="preserve">
     <value>Benutzer</value>
   </data>
-  <data name="PageSubTitle" xml:space="preserve">
-    <value>DIe Administration für IdentityServer4 und Asp.Net Core Identity</value>
+  <data name="MenuButton" xml:space="preserve">
+    <value>Menü</value>
+  </data>
+  <data name="TitleConfiguration" xml:space="preserve">
+    <value>Clients/Ressourcen</value>
+  </data>
+  <data name="TitleLogs" xml:space="preserve">
+    <value>Logs</value>
+  </data>
+  <data name="TitleUsermanagement" xml:space="preserve">
+    <value>Benutzer/Rollen</value>
   </data>
 </root>

@@ -117,28 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ButtonApiResources" xml:space="preserve">
-    <value>Api Ressourcen</value>
+  <data name="Action" xml:space="preserve">
+    <value>Aktion</value>
   </data>
-  <data name="ButtonClients" xml:space="preserve">
-    <value>Clients</value>
+  <data name="Are you sure?" xml:space="preserve">
+    <value>Sind Sie sicher?</value>
   </data>
-  <data name="ButtonIdentityClients" xml:space="preserve">
-    <value>Identitäts-Ressourcen</value>
+  <data name="Audit Log" xml:space="preserve">
+    <value>Audit Log</value>
   </data>
-  <data name="ButtonManage" xml:space="preserve">
-    <value>Manage</value>
+  <data name="Category" xml:space="preserve">
+    <value>Kategorie</value>
   </data>
-  <data name="ButtonPersistedGrants" xml:space="preserve">
-    <value>Persisted Grants</value>
+  <data name="Created" xml:space="preserve">
+    <value>Erstellt</value>
   </data>
-  <data name="ButtonRoles" xml:space="preserve">
-    <value>Rollen</value>
+  <data name="Delete logs older than" xml:space="preserve">
+    <value>Logs löschen die älter sind als</value>
   </data>
-  <data name="ButtonUsers" xml:space="preserve">
-    <value>Benutzer</value>
+  <data name="Detail" xml:space="preserve">
+    <value>Details</value>
   </data>
-  <data name="PageSubTitle" xml:space="preserve">
-    <value>DIe Administration für IdentityServer4 und Asp.Net Core Identity</value>
+  <data name="Event" xml:space="preserve">
+    <value>Ereignis</value>
+  </data>
+  <data name="No - close" xml:space="preserve">
+    <value>Nein - schließen</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Suchen</value>
+  </data>
+  <data name="Show detail" xml:space="preserve">
+    <value>Details anzeigen</value>
+  </data>
+  <data name="Source" xml:space="preserve">
+    <value>Quelle</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Subjekt</value>
+  </data>
+  <data name="Subject Identifier" xml:space="preserve">
+    <value>Subject-Identifier</value>
+  </data>
+  <data name="Subject Name" xml:space="preserve">
+    <value>Subject-Name</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warnung</value>
+  </data>
+  <data name="Yes - delete" xml:space="preserve">
+    <value>Ja - löschen</value>
   </data>
 </root>
