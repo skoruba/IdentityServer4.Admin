@@ -118,21 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ClientClaimDoesNotExist" xml:space="preserve">
-    <value>Client Claim mit ID {0} exisiert nicht</value>
+    <value>Client Claim mit ID {0} existiert nicht</value>
   </data>
   <data name="ClientDoesNotExist" xml:space="preserve">
-    <value>Client mit ID {0} exisiert nicht</value>
+    <value>Client mit ID {0} existiert nicht</value>
   </data>
   <data name="ClientExistsKey" xml:space="preserve">
-    <value>Client exisiert bereits</value>
+    <value>Client existiert bereits</value>
   </data>
   <data name="ClientExistsValue" xml:space="preserve">
-    <value>Client Id ({0}) exisiert bereits</value>
+    <value>Client Id ({0}) existiert bereits</value>
   </data>
   <data name="ClientPropertyDoesNotExist" xml:space="preserve">
-    <value>Client Eigenschaft mit ID {0} exisiert nicht</value>
+    <value>Client Eigenschaft mit ID {0} existiert nicht</value>
   </data>
   <data name="ClientSecretDoesNotExist" xml:space="preserve">
-    <value>Client-Secret mit ID {0} exisiert nicht</value>
+    <value>Client-Secret mit ID {0} existiert nicht</value>
   </data>
 </root>

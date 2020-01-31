@@ -118,33 +118,33 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ApiResourceDoesNotExist" xml:space="preserve">
-    <value>Api Ressource mit ID {0} exisitiert nicht</value>
+    <value>Api Ressource mit ID {0} existiert nicht</value>
   </data>
   <data name="ApiResourceExistsKey" xml:space="preserve">
-    <value>Api Ressource exisitiert bereits</value>
+    <value>Api Ressource existiert bereits</value>
   </data>
   <data name="ApiResourceExistsValue" xml:space="preserve">
-    <value>Api Ressource ({0}) exisitiert bereits</value>
+    <value>Api Ressource ({0}) existiert bereits</value>
   </data>
   <data name="ApiResourcePropertyDoesNotExist" xml:space="preserve">
-    <value>Api Ressource Property mit ID {0} exisitiert nicht</value>
+    <value>Api Ressource Property mit ID {0} existiert nicht</value>
   </data>
   <data name="ApiResourcePropertyExistsKey" xml:space="preserve">
-    <value>Api Ressource Property exisitiert bereits</value>
+    <value>Api Ressource Property existiert bereits</value>
   </data>
   <data name="ApiResourcePropertyExistsValue" xml:space="preserve">
-    <value>Api Ressource Property mit Key ({0}) exisitiert bereits</value>
+    <value>Api Ressource Property mit Key ({0}) existiert bereits</value>
   </data>
   <data name="ApiScopeDoesNotExist" xml:space="preserve">
-    <value>Api Scope mit ID {0} exisitiert nicht</value>
+    <value>Api Scope mit ID {0} existiert nicht</value>
   </data>
   <data name="ApiScopeExistsKey" xml:space="preserve">
-    <value>Api Scope exisitiert bereits</value>
+    <value>Api Scope existiert bereits</value>
   </data>
   <data name="ApiScopeExistsValue" xml:space="preserve">
-    <value>Api Scope ({0}) exisitiert bereits</value>
+    <value>Api Scope ({0}) existiert bereits</value>
   </data>
   <data name="ApiSecretDoesNotExist" xml:space="preserve">
-    <value>Api Secret mit ID {0} exisitiert nicht</value>
+    <value>Api Secret mit ID {0} existiert nicht</value>
   </data>
 </root>

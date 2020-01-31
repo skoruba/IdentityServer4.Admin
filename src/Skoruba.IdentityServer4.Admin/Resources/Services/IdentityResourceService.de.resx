@@ -118,18 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="IdentityResourceExistsKey" xml:space="preserve">
-    <value>Identity Resource {0} exisiert bereits</value>
+    <value>Identity Resource {0} existiert bereits</value>
   </data>
   <data name="IdentityResourceExistsValue" xml:space="preserve">
-    <value>Identity Resource {0} exisiert bereits</value>
+    <value>Identity Resource {0} existiert bereits</value>
   </data>
   <data name="IdentityResourcePropertyDoesNotExist" xml:space="preserve">
-    <value>Identity-Ressource Eigenschaft with id {0} exisiert nicht</value>
+    <value>Identity-Ressource Eigenschaft with id {0} existiert nicht</value>
   </data>
   <data name="IdentityResourcePropertyExistsKey" xml:space="preserve">
-    <value>Identity-Ressource Eigenschaft exisiert bereits</value>
+    <value>Identity-Ressource Eigenschaft existiert bereits</value>
   </data>
   <data name="IdentityResourcePropertyExistsValue" xml:space="preserve">
-    <value>Identity-Ressource Eigenschaft mit Key ({0}) exisiert bereits</value>
+    <value>Identity-Ressource Eigenschaft mit Key ({0}) existiert bereits</value>
   </data>
 </root>

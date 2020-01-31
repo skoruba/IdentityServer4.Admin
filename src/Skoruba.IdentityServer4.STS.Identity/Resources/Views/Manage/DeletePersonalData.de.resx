@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Alert" xml:space="preserve">
-    <value>Das Löschen dieser Daten wird auch Ihren Account permanent löschen. Dies kann nich rückgängig gemacht werden.</value>
+    <value>Das Löschen dieser Daten wird auch Ihren Account permanent löschen. Dies kann nicht rückgängig gemacht werden.</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Daten löschen und den Account schließen</value>
