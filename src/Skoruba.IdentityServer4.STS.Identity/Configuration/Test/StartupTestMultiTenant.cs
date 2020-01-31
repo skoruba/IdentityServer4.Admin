@@ -27,7 +27,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Configuration.Test
             services.RegisterDbContextsStaging<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext>();
         }
 
-        public override void RegisterMultiTenantConfiguration(IServiceCollection services)
+        public override void ConfigureMultiTenantServices(IServiceCollection services)
         {
             var tenantDatabaseName = Guid.NewGuid().ToString();
             var configuration = Configuration.GetSection(ConfigurationConsts.MultiTenantConfiguration).Get<MultiTenantConfiguration>();
@@ -54,13 +54,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Configuration.Test
             tenantStore.SaveChanges();
         }
 
-        public override void UsePreAuthenticationMultitenantMiddleware(IApplicationBuilder app)
+        public override void ConfigureMultiTenantMiddleware(IApplicationBuilder app)
         {
             // configure default multitenant middleware before authentication
-        }
-        public override void UsePostAuthenticationMultitenantMiddleware(IApplicationBuilder app)
-        {
-            // configure custom multitenant middleware for claims after authentication
             app.UseMultiTenant();
         }
     }

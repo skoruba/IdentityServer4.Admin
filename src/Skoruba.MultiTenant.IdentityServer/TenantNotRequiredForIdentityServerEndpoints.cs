@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Skoruba.MultiTenant.Abstractions;
-using System;
 using System.Collections.Generic;
 
 namespace Skoruba.MultiTenant.IdentityServer

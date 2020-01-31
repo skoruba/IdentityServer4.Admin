@@ -23,20 +23,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.Configuration.Test
         {
             services.RegisterDbContextsStaging<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext>();
         }
-        public override void RegisterMultiTenantConfiguration(IServiceCollection services)
+        public override void ConfigureMultiTenantServices(IServiceCollection services)
         {
-            var configuration = Configuration.GetSection(ConfigurationConsts.MultiTenantConfiguration).Get<MultiTenantConfiguration>();
-            services.AddMultiTenantConfiguration<SkorubaSingleTenantContext>(configuration);
+            services.AddSingleTenantConfiguration();
         }
 
-        public override void UsePreAuthenticationMultitenantMiddleware(IApplicationBuilder app)
+        public override void ConfigureMultiTenantMiddleware(IApplicationBuilder app)
         {
-            
-        }
-
-        public override void UsePostAuthenticationMultitenantMiddleware(IApplicationBuilder app)
-        {
-            
+            // intentionally left empty
         }
     }
 }
