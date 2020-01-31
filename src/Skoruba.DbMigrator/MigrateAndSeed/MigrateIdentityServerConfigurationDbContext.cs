@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Skoruba.DbMigrator.Abstractions;
+using Skoruba.DbMigrator.Abstractions.Dependency;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace Skoruba.DbMigrator.MigrateAndSeed
 {
+    [DependsOn(typeof(MigrateAdminIdentityDbContext))]
     public class MigrateIdentityServerConfigurationDbContext : MigrateAndSeedBase
     {
         public MigrateIdentityServerConfigurationDbContext(ILogger<MigrateIdentityServerConfigurationDbContext> logger) : base(logger)

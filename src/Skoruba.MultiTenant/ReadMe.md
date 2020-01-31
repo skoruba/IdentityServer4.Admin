@@ -35,25 +35,27 @@ needs to be done in the Startup class and only if MultiTenantEnabled is true.
 The Startup class has three virtual methods that need to be configured.  These are
 virtual so that they can be overriden for integration tests.
 
-- **RegisterMultiTenantConfiguration** This method is used to register the 
+- **ConfigureMultiTenantServices** This method is used to register the 
 services for the tenant resolution strategy. *Note that any changes here should 
 be considered for changes to the Skoruba.IdentityServer4.Admin.Configuration.Test.StartupTestMultiTenant 
 class.*
 
-- **UsePreAuthenticationMultitenantMiddleware** This method is used to configure 
-any middleware that needs to be configured BEFORE the authentication middleware.
+- **ConfigureMultiTenantMiddleware** This method is used to configure 
+any middleware for resolving the tenant.  Note that this method may need to come
+before or after the authentication middleware configuration depending on your
+choice of tenant resolution.  For instance, claim based resolution requires
+this middleware to come after authentication middleware.
 
-- **UsePostAuthenticationMultitenantMiddleware** This method is used to configure
-any middleware that needs to be configured AFTER the authentication middleware.
-
-- **TODO:** startup helpers that register additional services may need to be modified
-depending on a chosen implementation.
+- **TODO:** startup helpers register additional services may need to be modified
+depending on a chosen implementation. By default no new services are registered
+for single-tenant.  For multi-tenant there are new services registered that is
+customizable.
 
 ## Default Configuration Deep Dive
 There's a lot going on, so let's break down how the default implementation is
 configured and why.  Keep in mind that this is an opinionated implementation.
 
-### Use Case
+### Use Case & Goals
 The use case of the default implementation is:
 
 #### To support multiple tenants for a single application
@@ -101,7 +103,7 @@ filtering.
 ##### appsetting 
 In the appsettings set the MultiTenantConfiguration:MultiTenantEnabled to true.
 
-##### Startup method RegisterMultiTenantConfiguration
+##### Startup method: ConfigureMultiTenantServices
 
 ```cs
 var configuration = Configuration.GetSection(ConfigurationConsts.MultiTenantConfiguration).Get<MultiTenantConfiguration>();
@@ -136,12 +138,8 @@ strategy we're going to primarily use to resolve the tenant.
 - **.WithStrategy<FormStrategy>(ServiceLifetime.Singleton);** Registers the Finbuckle
 strategy we're going to use during login and register.
 
-##### Startup method UsePreAuthenticationMultitenantMiddleware
-Since our resolution strategies include claims, we dont want to configure our middleware here.
-
-##### Startup method UsePostAuthenticationMultitenantMiddleware
-This is where we need to configure middleware when using claims.  Claim resolution 
-strategies must come after authentication middleware.
+##### Startup method: ConfigureMultiTenantMiddleware
+This is where we need to configure middleware for our tenant resolution.
 
 ##### Notes about StartupHelpers
 You dont need to do anything in this class.  The flag for MultiTenantEnabled will be
@@ -152,7 +150,7 @@ used to add (or not) additional services.
 ##### appsetting 
 In the appsettings set the MultiTenantConfiguration:MultiTenantEnabled to true.
 
-##### Startup method RegisterMultiTenantConfiguration
+##### Startup method: ConfigureMultiTenantServices
 
 ```cs
 var configuration = Configuration.GetSection(ConfigurationConsts.MultiTenantConfiguration).Get<MultiTenantConfiguration>();
@@ -181,10 +179,7 @@ This store should be the same as the STS store.
 to resolve tenants using the user claims.  With this strategy we have to add our middleware
 after authentication.
 
-##### Startup method UsePreAuthenticationMultitenantMiddleware
-Since our resolution strategies include claims, we dont want to configure our middleware here.
-
-##### Startup method UsePostAuthenticationMultitenantMiddleware
+##### Startup method: ConfigureMultiTenantMiddleware
 This is where we need to configure our middleware.
 
 ##### Notes about StartupHelpers
@@ -198,10 +193,10 @@ The authentication middleware creates the identity (and claims) for the user.  C
 claims includes using the registered ClaimsPrincipalFactory and this object constructs
 a UserManager which in turn constructs a UserStore which constructs the ISkorubaTenantContext.
 In short, authentication middleware creates the SkorubaTenantContext which establishes the
-tenant.  Those services are all registered as scoped in DI.
+tenant.  Those services are all registered as scoped in DI and wont change.
 
 So when the multi-tenant middleware is called after authentication, the ISkorubaTenantContext
-has already been constructed in the DI container and will continue to use the already
+has already been constructed in the DI container which will continue to use the already
 defined object through the lifetime of the request. 
 
 As is in the Finbuckle implementation, the developer should make use of factory properties

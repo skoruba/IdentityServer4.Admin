@@ -30,5 +30,4 @@ namespace Skoruba.DbMigrator.Abstractions
             }
         }
     }
-
 }

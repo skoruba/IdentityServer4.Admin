@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Skoruba.DbMigrator.Abstractions;
+using Skoruba.DbMigrator.Abstractions.Dependency;
 using Skoruba.MultiTenant.Configuration;
 using Skoruba.MultiTenant.EFCacheStore;
 using Skoruba.MultiTenant.Stores;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Skoruba.MultiTenant.Finbuckle
 {
+    [DependsOn("Skoruba.DbMigrator.MigrateAdminIdentityDbContext")]
     public class MigrateTenantDbContext : MigrateAndSeedBase
     {
         private readonly MultiTenantConfiguration _multiTenantConfiguration;

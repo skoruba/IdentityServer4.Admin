@@ -1,13 +1,20 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyModel;
+using Scrutor;
 using Serilog;
 using Serilog.Events;
 using Skoruba.DbMigrator.Abstractions;
+using Skoruba.DbMigrator.Abstractions.Dependency;
+using Skoruba.DbMigrator.Abstractions.Extensions;
 using Skoruba.DbMigrator.MigrateAndSeed;
 using Skoruba.MultiTenant.Finbuckle;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Skoruba.DbMigrator
@@ -32,7 +39,15 @@ namespace Skoruba.DbMigrator
             
             AddMigrateAndSeedServices(services);
 
-            var migrators = services.BuildServiceProvider().GetServices<IMigrateAndSeed>();
+            var migrators = services
+                .BuildServiceProvider()
+                .GetServices<IMigrateAndSeed>()
+                .Select(m => new DependencyItem(m.GetType(), m))
+                .ToList()
+                .SetDependencies()
+                .SortByDependencies(m => m.Dependencies)
+                .Select(m => m.Instance as IMigrateAndSeed);
+
 
             foreach (var migrator in migrators)
             {
@@ -87,23 +102,12 @@ namespace Skoruba.DbMigrator
 
         static void AddMigrateAndSeedServices(IServiceCollection services)
         {
-            services.AddTransient<IMigrateAndSeed, MigrateAdminLogDbContext>();
-            services.AddTransient<IMigrateAndSeed, MigrateAdminAuditLogDbContext>();
-            services.AddTransient<IMigrateAndSeed, MigrateIdentityServerPersistedGrantDbContext>();
-            services.AddTransient<IMigrateAndSeed, MigrateIdentityServerConfigurationDbContext>();
-            services.AddTransient<IMigrateAndSeed, MigrateAdminIdentityDbContext>();
-            services.AddTransient<IMigrateAndSeed, MigrateTenantDbContext>();
-
-            // TODO: Implement Scrutor to scan all dependencies and auto add implementations of IMigrationAndSeed
-
-            //services.Scan(scan => scan
-            //    .FromAssemblyOf<Program>()
-            //    //.FromAssemblyDependencies(Assembly.GetAssembly(typeof(Program)))
-            //    .AddClasses(c => c.AssignableTo<IMigrateAndSeed>())
-            //    .UsingRegistrationStrategy(RegistrationStrategy.Append)
-            //    .AsMatchingInterface()
-            //    .WithScopedLifetime());
+            services.Scan(scan => scan
+                .FromApplicationDependencies(dep => dep.FullName.Contains("Skoruba"))
+                .AddClasses(c => c.AssignableTo<IMigrateAndSeed>())
+                .UsingRegistrationStrategy(RegistrationStrategy.Append)
+                .AsImplementedInterfaces()
+                .WithScopedLifetime());
         }
     }
-
 }
