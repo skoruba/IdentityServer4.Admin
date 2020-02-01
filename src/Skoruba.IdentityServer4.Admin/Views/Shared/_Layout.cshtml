@@ -46,8 +46,7 @@
                 <a class="dropdown-item" asp-area="" asp-controller="Grant" asp-action="PersistedGrants">@Localizer["LinkPersistedGrants"]</a>
 				<div class="dropdown-divider"></div>
 				<a class="dropdown-item" asp-area="" asp-controller="Export" asp-action="ExportConfig">@Localizer["ExportConfig"]</a>
-				<form id="export_config_form" data-ajax-url="/Export/ImportConfig" data-ajax="true" data-ajax-method="POST"
-							data-ajax-confirm="Вы действительно хотите обновить конфигурацию?" data-ajax-complete="exportConfigCompleted" enctype="multipart/form-data" style="cursor: pointer">
+				<form id="export_config_form" action="/Export/ImportConfig" method="POST" enctype="multipart/form-data" style="cursor: pointer">
 					<input type="file" id="export_config_file" name="file" style="display:none" onchange="onchangeUploadedConfigFile()" />
 					<a class="dropdown-item" onclick="exportButton(export_config_file);">@Localizer["ImportConfig"]</a>
 				</form>
@@ -63,8 +62,7 @@
                 <a class="dropdown-item" asp-area="" asp-controller="Identity" asp-action="Users">@Localizer["LinkUsers"]</a>
                 <a class="dropdown-item" asp-area="" asp-controller="Identity" asp-action="Roles">@Localizer["LinkRoles"]</a>
 				<div class="dropdown-divider"></div>
-				<form id="export_users_form" data-ajax-url="/Export/ImportUsers" data-ajax="true" data-ajax-method="POST"
-							data-ajax-confirm="Вы действительно хотите добавить пользователей?" data-ajax-complete="exportUsersCompleted" enctype="multipart/form-data" style="cursor: pointer">
+				<form id="export_users_form" action="/Export/ImportUsers" method="POST" enctype="multipart/form-data" style="cursor: pointer">
 					<input type="file" id="export_users_file" name="file" style="display:none" onchange="onchangeUploadedUsersFile()" />
 					<a class="dropdown-item" onclick="exportButton(export_users_file);">@Localizer["ImportUsers"]</a>
 				</form>
@@ -124,23 +122,13 @@
 			btn.click();
 		}
 		function onchangeUploadedConfigFile() {
-			$('#export_config_form').submit();
-		}
-		function onchangeUploadedUsersFile() {
-			$('#export_users_form').submit();
-		}
-		function exportConfigCompleted(xhr) {
-			if (xhr.status === 200) {
-				alert('Конфигурация обновлена!');
-			} else {
-				alert(`Ошибка. ${xhr.responseText}!`);
+			if (confirm('Вы действительно хотите обновить конфигурацию?')) {
+				$('#export_config_form').submit();
 			}
 		}
-		function exportUsersCompleted(xhr) {
-			if (xhr.status === 200) {
-				alert('Пользователи добавлены!');
-			} else {
-				alert(`Ошибка. ${xhr.responseText}!`);
+		function onchangeUploadedUsersFile() {
+			if (confirm('Вы действительно хотите добавить пользователей?')) {
+  			$('#export_users_form').submit();
 			}
 		}
 	</script>

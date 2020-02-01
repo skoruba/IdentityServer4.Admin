@@ -37,7 +37,7 @@ namespace Microsoft.Extensions.DependencyInjection
             this IServiceCollection services)
             where TIdentityDbContext : IdentityDbContext<TUser, IdentityRole, string, IdentityUserClaim<string>, IdentityUserRole<string>, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
-            where TUser : IdentityUser
+            where TUser : IdentityUser, new()
         {
             return services.AddAdminAspNetIdentityServices<TIdentityDbContext, TPersistedGrantDbContext, UserDto<string>, string, RoleDto<string>, string, string,
                 string, TUser, IdentityRole, string, IdentityUserClaim<string>, IdentityUserRole<string>, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>,
@@ -56,7 +56,7 @@ namespace Microsoft.Extensions.DependencyInjection
             IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>,
             IAdminPersistedGrantDbContext
             where TUserDto : UserDto<TUserDtoKey>
-            where TUser : IdentityUser<TKey>
+            where TUser : IdentityUser<TKey>, new()
             where TRole : IdentityRole<TKey>
             where TKey : IEquatable<TKey>
             where TUserClaim : IdentityUserClaim<TKey>
@@ -90,7 +90,7 @@ namespace Microsoft.Extensions.DependencyInjection
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TIdentityDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
             where TUserDto : UserDto<TUserDtoKey>
-            where TUser : IdentityUser<TKey>
+            where TUser : IdentityUser<TKey>, new()
             where TRole : IdentityRole<TKey>
             where TKey : IEquatable<TKey>
             where TUserClaim : IdentityUserClaim<TKey>
@@ -125,7 +125,7 @@ namespace Microsoft.Extensions.DependencyInjection
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TIdentityDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
             where TUserDto : UserDto<TUserDtoKey>
-            where TUser : IdentityUser<TKey>
+            where TUser : IdentityUser<TKey>, new()
             where TRole : IdentityRole<TKey>
             where TKey : IEquatable<TKey>
             where TUserClaim : IdentityUserClaim<TKey>

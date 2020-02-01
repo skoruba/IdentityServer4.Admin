@@ -50,6 +50,15 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
             services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext>(Configuration);
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+            });
             services.AddAuthentication(IdentityConstants.ExternalScheme).AddGoogle(googleOptions =>
             {
                 var authNSection = Configuration.GetSection("Authentication:Google");

@@ -1,14 +1,14 @@
 {
   "Clients": [
     {
-      "Id": 8,
+      "Id": 1002,
       "Enabled": true,
       "ClientId": "skoruba_identity_admin",
       "ProtocolType": "oidc",
       "ClientSecrets": [
         {
-          "ClientId": 8,
-          "Id": 4,
+          "ClientId": 1002,
+          "Id": 1003,
           "Description": null,
           "Value": "tvzpwTHl+cZB7h0GjO+QlJ0Wy15z+quGoqLRWGMZjzM=",
           "Expiration": null,
@@ -19,16 +19,16 @@
       "RequireClientSecret": true,
       "ClientName": "skoruba_identity_admin",
       "Description": null,
-      "ClientUri": "http://host.internal.ru:5002",
+      "ClientUri": "http://mlkdemo.rosseti.ru:5002",
       "LogoUri": null,
       "RequireConsent": true,
       "AllowRememberConsent": true,
       "AlwaysIncludeUserClaimsInIdToken": false,
       "AllowedGrantTypes": [
         {
-          "Id": 19,
+          "Id": 1019,
           "GrantType": "hybrid",
-          "ClientId": 8
+          "ClientId": 1002
         }
       ],
       "RequirePkce": false,
@@ -36,43 +36,43 @@
       "AllowAccessTokensViaBrowser": false,
       "RedirectUris": [
         {
-          "Id": 27,
-          "RedirectUri": "http://host.internal.ru:5002/signin-oidc",
-          "ClientId": 8
+          "Id": 1028,
+          "RedirectUri": "http://mlkdemo.rosseti.ru:5002/signin-oidc",
+          "ClientId": 1002
         }
       ],
       "PostLogoutRedirectUris": [
         {
-          "Id": 3,
-          "PostLogoutRedirectUri": "http://host.internal.ru:5002/signout-callback-oidc",
-          "ClientId": 8
+          "Id": 1002,
+          "PostLogoutRedirectUri": "http://mlkdemo.rosseti.ru:5002/signout-callback-oidc",
+          "ClientId": 1002
         }
       ],
-      "FrontChannelLogoutUri": "http://host.internal.ru:5002/signout-oidc",
+      "FrontChannelLogoutUri": "http://mlkdemo.rosseti.ru:5002/signout-oidc",
       "FrontChannelLogoutSessionRequired": true,
       "BackChannelLogoutUri": null,
       "BackChannelLogoutSessionRequired": true,
       "AllowOfflineAccess": false,
       "AllowedScopes": [
         {
-          "Id": 54,
+          "Id": 1065,
           "Scope": "roles",
-          "ClientId": 8
+          "ClientId": 1002
         },
         {
-          "Id": 55,
+          "Id": 1066,
           "Scope": "email",
-          "ClientId": 8
+          "ClientId": 1002
         },
         {
-          "Id": 56,
+          "Id": 1067,
           "Scope": "profile",
-          "ClientId": 8
+          "ClientId": 1002
         },
         {
-          "Id": 57,
+          "Id": 1068,
           "Scope": "openid",
-          "ClientId": 8
+          "ClientId": 1002
         }
       ],
       "IdentityTokenLifetime": 300,
@@ -94,9 +94,9 @@
       "PairWiseSubjectSalt": null,
       "AllowedCorsOrigins": [
         {
-          "Id": 8,
-          "Origin": "http://host.internal.ru:5002",
-          "ClientId": 8
+          "Id": 1014,
+          "Origin": "http://mlkdemo.rosseti.ru:5002",
+          "ClientId": 1002
         }
       ],
       "Properties": [],
@@ -109,7 +109,7 @@
       "NonEditable": false
     },
     {
-      "Id": 9,
+      "Id": 1003,
       "Enabled": true,
       "ClientId": "skoruba_identity_admin_api_swaggerui",
       "ProtocolType": "oidc",
@@ -124,9 +124,9 @@
       "AlwaysIncludeUserClaimsInIdToken": false,
       "AllowedGrantTypes": [
         {
-          "Id": 20,
+          "Id": 1020,
           "GrantType": "implicit",
-          "ClientId": 9
+          "ClientId": 1003
         }
       ],
       "RequirePkce": false,
@@ -134,9 +134,9 @@
       "AllowAccessTokensViaBrowser": true,
       "RedirectUris": [
         {
-          "Id": 28,
-          "RedirectUri": "http://host.internal.ru:5003/swagger/oauth2-redirect.html",
-          "ClientId": 9
+          "Id": 1029,
+          "RedirectUri": "http://mlkdemo.rosseti.ru:5003/swagger/oauth2-redirect.html",
+          "ClientId": 1003
         }
       ],
       "PostLogoutRedirectUris": [],
@@ -147,9 +147,9 @@
       "AllowOfflineAccess": false,
       "AllowedScopes": [
         {
-          "Id": 58,
+          "Id": 1069,
           "Scope": "skoruba_identity_admin_api",
-          "ClientId": 9
+          "ClientId": 1003
         }
       ],
       "IdentityTokenLifetime": 300,
@@ -180,7 +180,7 @@
       "NonEditable": false
     },
     {
-      "Id": 10,
+      "Id": 1004,
       "Enabled": true,
       "ClientId": "iserv_mlk_api",
       "ProtocolType": "oidc",
@@ -195,9 +195,9 @@
       "AlwaysIncludeUserClaimsInIdToken": false,
       "AllowedGrantTypes": [
         {
-          "Id": 21,
+          "Id": 1021,
           "GrantType": "implicit",
-          "ClientId": 10
+          "ClientId": 1004
         }
       ],
       "RequirePkce": false,
@@ -205,9 +205,9 @@
       "AllowAccessTokensViaBrowser": true,
       "RedirectUris": [
         {
-          "Id": 29,
+          "Id": 1030,
           "RedirectUri": "io.identityserver.demo:/oauthredirect",
-          "ClientId": 10
+          "ClientId": 1004
         }
       ],
       "PostLogoutRedirectUris": [],
@@ -218,34 +218,34 @@
       "AllowOfflineAccess": true,
       "AllowedScopes": [
         {
-          "Id": 64,
-          "Scope": "profile",
-          "ClientId": 10
-        },
-        {
-          "Id": 63,
-          "Scope": "email",
-          "ClientId": 10
-        },
-        {
-          "Id": 59,
-          "Scope": "openid",
-          "ClientId": 10
-        },
-        {
-          "Id": 60,
-          "Scope": "iserv_mlk_api",
-          "ClientId": 10
-        },
-        {
-          "Id": 61,
-          "Scope": "offline_access",
-          "ClientId": 10
-        },
-        {
-          "Id": 62,
+          "Id": 1070,
           "Scope": "roles",
-          "ClientId": 10
+          "ClientId": 1004
+        },
+        {
+          "Id": 1071,
+          "Scope": "offline_access",
+          "ClientId": 1004
+        },
+        {
+          "Id": 1072,
+          "Scope": "iserv_mlk_api",
+          "ClientId": 1004
+        },
+        {
+          "Id": 1073,
+          "Scope": "openid",
+          "ClientId": 1004
+        },
+        {
+          "Id": 1074,
+          "Scope": "email",
+          "ClientId": 1004
+        },
+        {
+          "Id": 1075,
+          "Scope": "profile",
+          "ClientId": 1004
         }
       ],
       "IdentityTokenLifetime": 300,
@@ -267,9 +267,9 @@
       "PairWiseSubjectSalt": null,
       "AllowedCorsOrigins": [
         {
-          "Id": 9,
-          "Origin": "http://host.internal.ru:5012",
-          "ClientId": 10
+          "Id": 1015,
+          "Origin": "http://mlkdemo.rosseti.ru:5012",
+          "ClientId": 1004
         }
       ],
       "Properties": [],
@@ -282,7 +282,7 @@
       "NonEditable": false
     },
     {
-      "Id": 11,
+      "Id": 1005,
       "Enabled": true,
       "ClientId": "iserv_mlk_api_swaggerui",
       "ProtocolType": "oidc",
@@ -297,9 +297,9 @@
       "AlwaysIncludeUserClaimsInIdToken": false,
       "AllowedGrantTypes": [
         {
-          "Id": 24,
+          "Id": 1022,
           "GrantType": "implicit",
-          "ClientId": 11
+          "ClientId": 1005
         }
       ],
       "RequirePkce": false,
@@ -307,9 +307,9 @@
       "AllowAccessTokensViaBrowser": true,
       "RedirectUris": [
         {
-          "Id": 33,
-          "RedirectUri": "http://host.internal.ru:5012/swagger/oauth2-redirect.html",
-          "ClientId": 11
+          "Id": 1031,
+          "RedirectUri": "http://mlkdemo.rosseti.ru:5012/swagger/oauth2-redirect.html",
+          "ClientId": 1005
         }
       ],
       "PostLogoutRedirectUris": [],
@@ -320,9 +320,9 @@
       "AllowOfflineAccess": false,
       "AllowedScopes": [
         {
-          "Id": 68,
+          "Id": 1076,
           "Scope": "iserv_mlk_api",
-          "ClientId": 11
+          "ClientId": 1005
         }
       ],
       "IdentityTokenLifetime": 300,
@@ -353,19 +353,19 @@
       "NonEditable": false
     },
     {
-      "Id": 12,
+      "Id": 1006,
       "Enabled": true,
       "ClientId": "iserv_mlk_mobile",
       "ProtocolType": "oidc",
       "ClientSecrets": [
         {
-          "ClientId": 12,
-          "Id": 5,
+          "ClientId": 1006,
+          "Id": 1006,
           "Description": null,
-          "Value": "tW3LahQYx1DI2Qp8ZkGwcXOxvSzyHmhE6a0uBjUyhTI=",
+          "Value": "KaPFlwXzXpl0AFmgmtA3qC1bm8HrdDkw0Vp8No0QqYg=",
           "Expiration": null,
           "Type": "SharedSecret",
-          "Created": "2020-01-20T11:28:13.085999"
+          "Created": "2020-01-31T05:14:09.6017858"
         }
       ],
       "RequireClientSecret": true,
@@ -373,26 +373,20 @@
       "Description": null,
       "ClientUri": null,
       "LogoUri": null,
-      "RequireConsent": true,
+      "RequireConsent": false,
       "AllowRememberConsent": true,
       "AlwaysIncludeUserClaimsInIdToken": false,
       "AllowedGrantTypes": [
         {
-          "Id": 23,
-          "GrantType": "authorization_code",
-          "ClientId": 12
+          "Id": 1028,
+          "GrantType": "password",
+          "ClientId": 1006
         }
       ],
       "RequirePkce": false,
       "AllowPlainTextPkce": false,
       "AllowAccessTokensViaBrowser": false,
-      "RedirectUris": [
-        {
-          "Id": 32,
-          "RedirectUri": "io.identityserver.demo:/oauthredirect",
-          "ClientId": 12
-        }
-      ],
+      "RedirectUris": [],
       "PostLogoutRedirectUris": [],
       "FrontChannelLogoutUri": null,
       "FrontChannelLogoutSessionRequired": true,
@@ -401,14 +395,24 @@
       "AllowOfflineAccess": true,
       "AllowedScopes": [
         {
-          "Id": 66,
-          "Scope": "iserv_mlk_api",
-          "ClientId": 12
+          "Id": 1093,
+          "Scope": "offline_access",
+          "ClientId": 1006
         },
         {
-          "Id": 67,
-          "Scope": "offline_access",
-          "ClientId": 12
+          "Id": 1094,
+          "Scope": "iserv_mlk_api",
+          "ClientId": 1006
+        },
+        {
+          "Id": 1095,
+          "Scope": "profile",
+          "ClientId": 1006
+        },
+        {
+          "Id": 1096,
+          "Scope": "openid",
+          "ClientId": 1006
         }
       ],
       "IdentityTokenLifetime": 300,
@@ -428,9 +432,15 @@
       "AlwaysSendClientClaims": false,
       "ClientClaimsPrefix": "client_",
       "PairWiseSubjectSalt": null,
-      "AllowedCorsOrigins": [],
+      "AllowedCorsOrigins": [
+        {
+          "Id": 1018,
+          "Origin": "http://mlkdemo.rosseti.ru:4200",
+          "ClientId": 1006
+        }
+      ],
       "Properties": [],
-      "Created": "2020-01-20T12:21:54.705451",
+      "Created": "2020-01-31T05:15:15.4172752",
       "Updated": null,
       "LastAccessed": null,
       "UserSsoLifetime": null,
@@ -441,7 +451,7 @@
   ],
   "IdentityResources": [
     {
-      "Id": 10,
+      "Id": 1002,
       "Enabled": true,
       "Name": "openid",
       "DisplayName": "Your user identifier",
@@ -451,8 +461,8 @@
       "ShowInDiscoveryDocument": true,
       "UserClaims": [
         {
-          "IdentityResourceId": 10,
-          "Id": 39,
+          "IdentityResourceId": 1002,
+          "Id": 1002,
           "Type": "sub"
         }
       ],
@@ -462,7 +472,7 @@
       "NonEditable": false
     },
     {
-      "Id": 11,
+      "Id": 1003,
       "Enabled": true,
       "Name": "profile",
       "DisplayName": "User profile",
@@ -472,73 +482,73 @@
       "ShowInDiscoveryDocument": true,
       "UserClaims": [
         {
-          "IdentityResourceId": 11,
-          "Id": 40,
-          "Type": "updated_at"
-        },
-        {
-          "IdentityResourceId": 11,
-          "Id": 41,
-          "Type": "locale"
-        },
-        {
-          "IdentityResourceId": 11,
-          "Id": 42,
-          "Type": "zoneinfo"
-        },
-        {
-          "IdentityResourceId": 11,
-          "Id": 43,
-          "Type": "birthdate"
-        },
-        {
-          "IdentityResourceId": 11,
-          "Id": 44,
-          "Type": "gender"
-        },
-        {
-          "IdentityResourceId": 11,
-          "Id": 45,
-          "Type": "website"
-        },
-        {
-          "IdentityResourceId": 11,
-          "Id": 46,
-          "Type": "picture"
-        },
-        {
-          "IdentityResourceId": 11,
-          "Id": 47,
-          "Type": "profile"
-        },
-        {
-          "IdentityResourceId": 11,
-          "Id": 48,
+          "IdentityResourceId": 1003,
+          "Id": 1003,
           "Type": "preferred_username"
         },
         {
-          "IdentityResourceId": 11,
-          "Id": 49,
+          "IdentityResourceId": 1003,
+          "Id": 1004,
+          "Type": "profile"
+        },
+        {
+          "IdentityResourceId": 1003,
+          "Id": 1005,
+          "Type": "picture"
+        },
+        {
+          "IdentityResourceId": 1003,
+          "Id": 1006,
+          "Type": "website"
+        },
+        {
+          "IdentityResourceId": 1003,
+          "Id": 1007,
+          "Type": "gender"
+        },
+        {
+          "IdentityResourceId": 1003,
+          "Id": 1008,
+          "Type": "birthdate"
+        },
+        {
+          "IdentityResourceId": 1003,
+          "Id": 1009,
+          "Type": "zoneinfo"
+        },
+        {
+          "IdentityResourceId": 1003,
+          "Id": 1010,
+          "Type": "locale"
+        },
+        {
+          "IdentityResourceId": 1003,
+          "Id": 1011,
+          "Type": "updated_at"
+        },
+        {
+          "IdentityResourceId": 1003,
+          "Id": 1012,
           "Type": "nickname"
         },
         {
-          "IdentityResourceId": 11,
-          "Id": 50,
+          "IdentityResourceId": 1003,
+          "Id": 1013,
           "Type": "middle_name"
         },
         {
-          "IdentityResourceId": 11,
-          "Id": 51,
+          "IdentityResourceId": 1003,
+          "Id": 1014,
           "Type": "given_name"
         },
         {
-          "IdentityResourceId": 11,
-          "Id": 52,
+          "IdentityResourceId": 1003,
+          "Id": 1015,
           "Type": "family_name"
         },
         {
-          "IdentityResourceId": 11,
-          "Id": 53,
+          "IdentityResourceId": 1003,
+          "Id": 1016,
           "Type": "name"
         }
       ],
@@ -548,7 +558,7 @@
       "NonEditable": false
     },
     {
-      "Id": 12,
+      "Id": 1004,
       "Enabled": true,
       "Name": "email",
       "DisplayName": "Your email address",
@@ -558,14 +568,14 @@
       "ShowInDiscoveryDocument": true,
       "UserClaims": [
         {
-          "IdentityResourceId": 12,
-          "Id": 54,
-          "Type": "email"
+          "IdentityResourceId": 1004,
+          "Id": 1017,
+          "Type": "email_verified"
         },
         {
-          "IdentityResourceId": 12,
-          "Id": 55,
-          "Type": "email_verified"
+          "IdentityResourceId": 1004,
+          "Id": 1018,
+          "Type": "email"
         }
       ],
       "Properties": [],
@@ -574,7 +584,7 @@
       "NonEditable": false
     },
     {
-      "Id": 13,
+      "Id": 1005,
       "Enabled": true,
       "Name": "roles",
       "DisplayName": "Roles",
@@ -584,8 +594,8 @@
       "ShowInDiscoveryDocument": true,
       "UserClaims": [
         {
-          "IdentityResourceId": 13,
-          "Id": 56,
+          "IdentityResourceId": 1005,
+          "Id": 1019,
           "Type": "role"
         }
       ],
@@ -595,7 +605,7 @@
       "NonEditable": false
     },
     {
-      "Id": 14,
+      "Id": 1006,
       "Enabled": true,
       "Name": "phone",
       "DisplayName": "phone",
@@ -605,14 +615,14 @@
       "ShowInDiscoveryDocument": true,
       "UserClaims": [
         {
-          "IdentityResourceId": 14,
-          "Id": 57,
-          "Type": "phone_verified"
+          "IdentityResourceId": 1006,
+          "Id": 1020,
+          "Type": "phone"
         },
         {
-          "IdentityResourceId": 14,
-          "Id": 58,
-          "Type": "phone"
+          "IdentityResourceId": 1006,
+          "Id": 1021,
+          "Type": "phone_verified"
         }
       ],
       "Properties": [],
@@ -623,7 +633,7 @@
   ],
   "ApiResources": [
     {
-      "Id": 4,
+      "Id": 1002,
       "Enabled": true,
       "Name": "skoruba_identity_admin_api",
       "DisplayName": null,
@@ -631,7 +641,7 @@
       "Secrets": [],
       "Scopes": [
         {
-          "Id": 4,
+          "Id": 1002,
           "Name": "skoruba_identity_admin_api",
           "DisplayName": "skoruba_identity_admin_api",
           "Description": null,
@@ -639,7 +649,7 @@
           "Emphasize": false,
           "ShowInDiscoveryDocument": true,
           "UserClaims": null,
-          "ApiResourceId": 4
+          "ApiResourceId": 1002
         }
       ],
       "UserClaims": [],
@@ -650,7 +660,7 @@
       "NonEditable": false
     },
     {
-      "Id": 5,
+      "Id": 1003,
       "Enabled": true,
       "Name": "iserv_mlk_api",
       "DisplayName": "ISERV MLK API",
@@ -658,7 +668,7 @@
       "Secrets": [],
       "Scopes": [
         {
-          "Id": 5,
+          "Id": 1003,
           "Name": "iserv_mlk_api",
           "DisplayName": "ISERV MLK API",
           "Description": null,
@@ -666,12 +676,12 @@
           "Emphasize": false,
           "ShowInDiscoveryDocument": true,
           "UserClaims": null,
-          "ApiResourceId": 5
+          "ApiResourceId": 1003
         }
       ],
       "UserClaims": [
         {
-          "ApiResourceId": 5,
+          "ApiResourceId": 1003,
           "Id": 2,
           "Type": "profile"
         }
