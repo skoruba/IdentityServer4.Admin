@@ -23,13 +23,13 @@ The application is written in the **Asp.Net Core MVC - using .NET Core 3.1**
 - Install the dotnet new template:
 
 ```sh
-dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-rc1-update1
+dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-rc1-update2
 ```
 
 - Create new project:
 
 ```sh
-dotnet new skoruba.is4admin --name MyProject --title MyProject --adminemail "admin@skoruba.com" --adminpassword "Pa$$word123" --adminrole MyRole --adminclientid MyClientId --adminclientsecret MyClientSecret --dockersupport true
+dotnet new skoruba.is4admin --name MyProject --title MyProject --adminemail "admin@example.com" --adminpassword "Pa$$word123" --adminrole MyRole --adminclientid MyClientId --adminclientsecret MyClientSecret --dockersupport true
 ```
 
 Project template options:
@@ -109,6 +109,9 @@ docker-compose up -d
     - `skoruba/identityserver4-admin-api:rc1`
   - STS:
     - `skoruba/identityserver4-sts-identity:rc1`
+    
+### Publish Docker images to Docker hub
+- Check the script in `build/publish-docker-images.ps1` - change the profile name according to your requirements.
 
 ## Installation of the Client Libraries
 
@@ -555,6 +558,10 @@ It is possible to define the configuration according the client type - by defaul
 
 - [ ] Create a project template using dotnet CLI - `dotnet new template`
   - [ ] Second template: The administration of the IdentityServer4 (without Asp.Net Core Identity) ([#79](https://github.com/skoruba/IdentityServer4.Admin/issues/79))
+- [ ] Simplify Admin Identity middleware (#430)
+- [ ] Connect Admin Api to the Admin UI (#478)
+- [ ] Add windows authentication (#479)
+
 
 ### Future:
 
