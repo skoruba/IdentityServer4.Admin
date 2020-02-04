@@ -236,5 +236,21 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
 
 			return Ok(roleClaimsApiDto);
 		}
-	}
+
+        [HttpGet("ClaimType/{claimType}/ClaimValue/{claimValue}")]
+        public async Task<ActionResult<RoleClaimsApiDto<TRoleDtoKey>>> GetClaimUsers(string claimType, string claimValue, int page = 1, int pageSize = 10)
+        {
+            var usersDto = await _identityService.GetClaimUsersAsync(claimType, claimValue, page, pageSize);
+
+            return Ok(usersDto);
+        }
+
+        [HttpGet("ClaimType/{claimType}")]
+        public async Task<ActionResult<RoleClaimsApiDto<TRoleDtoKey>>> GetClaimUsers(string claimType, int page = 1, int pageSize = 10)
+        {
+            var usersDto = await _identityService.GetClaimUsersAsync(claimType, null, page, pageSize);
+
+            return Ok(usersDto);
+        }
+    }
 }
