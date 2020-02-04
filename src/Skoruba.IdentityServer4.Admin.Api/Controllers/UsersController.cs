@@ -114,8 +114,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(TUserDtoKey id)
         {
-            var currentUserId = User.GetSubjectId();
-            if (id.ToString() == currentUserId)
+            if (IsDeleteForbidden(id))
                 return StatusCode((int)System.Net.HttpStatusCode.Forbidden);
 
             var user = new TUserDto { Id = id };
@@ -124,6 +123,21 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
             await _identityService.DeleteUserAsync(user.Id.ToString(), user);
 
             return Ok();
+        }
+
+        private bool IsDeleteForbidden(TUserDtoKey id)
+        {
+            // we know we are Authenticated but not sure if API is accessed by machine or person
+            // GetSubjectId throws exception if there is no sub claim so we know it's machine in that case 
+            try
+            {
+                var currentUserId = User.GetSubjectId();
+                return currentUserId == id.ToString();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         [HttpGet("{id}/Roles")]
