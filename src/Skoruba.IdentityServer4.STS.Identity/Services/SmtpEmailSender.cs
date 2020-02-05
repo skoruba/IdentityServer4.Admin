@@ -35,7 +35,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Services
             _logger.LogInformation($"Sending email: {email}, subject: {subject}, message: {htmlMessage}");
             try
             {
-                var mail = new MailMessage(_configuration.Login, email);
+                var from = String.IsNullOrEmpty(_configuration.From) ? _configuration.Login : _configuration.From;
+                var mail = new MailMessage(from, email);
                 mail.IsBodyHtml = true;
                 mail.Subject = subject;
                 mail.Body = htmlMessage;
