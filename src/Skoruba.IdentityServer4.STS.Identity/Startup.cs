@@ -11,6 +11,7 @@ using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
+using System;
 
 namespace Skoruba.IdentityServer4.STS.Identity
 {
@@ -38,7 +39,10 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
             // Add services for authentication, including Identity model and external providers
             RegisterAuthentication(services);
-            
+
+            // Add HSTS options
+            RegisterHstsOptions(services);
+
             // Add all dependencies for Asp.Net Core Identity in MVC - these dependencies are injected into generic Controllers
             // Including settings for MVC and Localization
             // If you want to change primary keys or use another db model for Asp.Net Core Identity:
@@ -55,6 +59,10 @@ namespace Skoruba.IdentityServer4.STS.Identity
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseHsts();
             }
 
             // Add custom security headers
@@ -96,6 +104,16 @@ namespace Skoruba.IdentityServer4.STS.Identity
         public virtual void UseAuthentication(IApplicationBuilder app)
         {
             app.UseIdentityServer();
+        }
+
+        public virtual void RegisterHstsOptions(IServiceCollection services)
+        {
+            services.AddHsts(options =>
+            {
+                options.Preload = true;
+                options.IncludeSubDomains = true;
+                options.MaxAge = TimeSpan.FromDays(365);
+            });
         }
 
         protected IRootConfiguration CreateRootConfiguration()
