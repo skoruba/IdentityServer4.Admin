@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
+using IdentityModel;
 using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.Builder;
@@ -16,6 +17,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Skoruba.AuditLogging.EntityFramework.Entities;
+using Skoruba.AuditLogging.EntityFramework.Extensions;
+using Skoruba.AuditLogging.EntityFramework.Repositories;
+using Skoruba.AuditLogging.EntityFramework.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
@@ -787,6 +792,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var efServiceProvider = new ServiceCollection().AddEntityFrameworkInMemoryDatabase().BuildServiceProvider();
             services.AddOptions();
             services.AddDbContext<IdentityServerConfigurationDbContext>(b => b.UseInMemoryDatabase(Guid.NewGuid().ToString()).UseInternalServiceProvider(efServiceProvider));
+            services.AddDbContext<AdminAuditLogDbContext>(b => b.UseInMemoryDatabase(Guid.NewGuid().ToString()).UseInternalServiceProvider(efServiceProvider));
 
             //Http Context
             var context = new DefaultHttpContext();
@@ -796,6 +802,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             services.AddSingleton<ConfigurationStoreOptions>();
             services.AddSingleton<OperationalStoreOptions>();
 
+            //Audit logging
+            services.AddAuditLogging()
+                .AddDefaultEventData()
+                .AddAuditSinks<DatabaseAuditEventLoggerSink<AuditLog>>();
+            services.AddTransient<IAuditLoggingRepository<AuditLog>, AuditLoggingRepository<AdminAuditLogDbContext, AuditLog>>();
+            
             //Add Admin services
             services.AddMvcExceptionFilters();
 
@@ -810,7 +822,6 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             services.AddSession();
             services.AddMvc()
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
             .AddViewLocalization(
                 LanguageViewLocationExpanderFormat.Suffix,
                 opts => { opts.ResourcesPath = "Resources"; })

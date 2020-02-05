@@ -1,13 +1,30 @@
-﻿using SkorubaIdentityServer4Admin.Admin.Api.Configuration.Constants;
-
 namespace SkorubaIdentityServer4Admin.Admin.Api.Configuration
 {
     public class AdminApiConfiguration
     {
-        public string IdentityServerBaseUrl { get; set; } = AuthorizationConsts.IdentityServerBaseUrl;
+        public string ApiName { get; set; }
 
-        public string OidcSwaggerUIClientId { get; set; } = AuthorizationConsts.OidcSwaggerUIClientId;
+        public string ApiVersion { get; set; }
 
-        public string OidcApiName { get; set; } = AuthorizationConsts.OidcApiName;
+        public string IdentityServerBaseUrl { get; set; }
+
+        public string ApiBaseUrl { get; set; }
+
+        public string OidcSwaggerUIClientId { get; set; }
+
+        public bool RequireHttpsMetadata { get; set; }
+
+        public string OidcApiName { get; set; }
+
+        public string AdministrationRole { get; set; }
+
+        public bool CorsAllowAnyOrigin { get; set; }
+
+        public string[] CorsAllowOrigins { get; set; }
     }
 }
+
+
+
+
+

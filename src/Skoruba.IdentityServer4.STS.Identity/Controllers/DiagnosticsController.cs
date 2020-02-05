@@ -20,8 +20,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
     {
         public async Task<IActionResult> Index()
         {
-            var localAddresses = new string[] { "127.0.0.1", "::1", HttpContext.Connection.LocalIpAddress.ToString() };
-            if (!localAddresses.Contains(HttpContext.Connection.RemoteIpAddress.ToString()))
+            var localAddresses = new string[] { "127.0.0.1", "::1", HttpContext.Connection?.LocalIpAddress?.ToString() };
+            if (!localAddresses.Contains(HttpContext.Connection?.RemoteIpAddress?.ToString()))
             {
                 return NotFound();
             }

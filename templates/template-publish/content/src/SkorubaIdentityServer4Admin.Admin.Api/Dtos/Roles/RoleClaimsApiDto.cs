@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Roles
 {
@@ -16,3 +16,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Roles
         public int PageSize { get; set; }
     }
 }
+
+
+
+
+

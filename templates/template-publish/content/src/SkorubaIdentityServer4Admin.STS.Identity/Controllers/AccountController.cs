@@ -1,8 +1,8 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 // Original file: https://github.com/IdentityServer/IdentityServer4.Samples
-// Modified by Jan Škoruba
+// Modified by Jan �koruba
 
 using System;
 using System.Linq;
@@ -359,6 +359,14 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
             {
                 return RedirectToLocal(returnUrl);
             }
+            if (result.RequiresTwoFactor)
+            {
+                return RedirectToAction(nameof(LoginWith2fa), new { ReturnUrl = returnUrl });
+            }
+            if (result.IsLockedOut)
+            {
+                return View("Lockout");
+            }
 
             // If the user does not have an account, then ask the user to create an account.
             ViewData["ReturnUrl"] = returnUrl;
@@ -540,7 +548,15 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
 
             ViewData["ReturnUrl"] = returnUrl;
 
-            return View();
+            switch (_loginConfiguration.ResolutionPolicy)
+            {
+                case LoginResolutionPolicy.Username:
+                    return View();
+                case LoginResolutionPolicy.Email:
+                    return View("RegisterWithoutUsername");
+                default:
+                    return View("RegisterFailure");
+            }
         }
 
         [HttpPost]
@@ -577,6 +593,23 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterWithoutUsername(RegisterWithoutUsernameViewModel model, string returnUrl = null)
+        {
+            var registerModel = new RegisterViewModel
+            {
+                UserName = model.Email,
+                Email = model.Email,
+                Password = model.Password,
+                ConfirmPassword = model.ConfirmPassword
+            };
+
+            return await Register(registerModel, returnUrl);
+        }
+        
 
         /*****************************************/
         /* helper APIs for the AccountController */
@@ -724,3 +757,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
         }
     }
 }
+
+
+
+
+

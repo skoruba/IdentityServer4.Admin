@@ -486,3 +486,10 @@ label.radio-img > h3, label > h4 {
 /*Pages*/
 .client .action-butons {
   margin: 20px 0 20px 0; }
+
+.audit-log-container .modal-dialog {
+  overflow-y: initial !important; }
+
+.audit-log-container .modal-body {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto; }

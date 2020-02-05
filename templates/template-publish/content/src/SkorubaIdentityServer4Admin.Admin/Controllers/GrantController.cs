@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -80,3 +80,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Controllers
         }
     }
 }
+
+
+
+
+

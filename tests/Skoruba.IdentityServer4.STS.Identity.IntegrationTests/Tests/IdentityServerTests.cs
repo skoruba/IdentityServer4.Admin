@@ -1,26 +1,24 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using FluentAssertions;
 using IdentityModel.Client;
-using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Common;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Skoruba.IdentityServer4.STS.Identity.Configuration.Test;
+using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests.Base;
 using Xunit;
 
 namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
 {
-    public class IdentityServerTests : IClassFixture<TestFixture>
+    public class IdentityServerTests : BaseClassFixture
     {
-        private readonly HttpClient _client;
-
-        public IdentityServerTests(TestFixture fixture)
+        public IdentityServerTests(WebApplicationFactory<StartupTest> factory) : base(factory)
         {
-            _client = fixture.Client;
         }
 
         [Fact]
         public async Task CanShowDiscoveryEndpoint()
         {
-            var disco = await _client.GetDiscoveryDocumentAsync("http://localhost");
-  
+            var disco = await Client.GetDiscoveryDocumentAsync("http://localhost");
+
             disco.Should().NotBeNull();
             disco.IsError.Should().Be(false);
 

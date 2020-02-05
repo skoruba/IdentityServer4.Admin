@@ -1,4 +1,4 @@
-﻿namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.IdentityResources
+namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.IdentityResources
 {
     public class IdentityResourcePropertyApiDto
     {
@@ -7,3 +7,8 @@
         public string Value { get; set; }
     }
 }
+
+
+
+
+

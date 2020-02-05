@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using SkorubaIdentityServer4Admin.STS.Identity.Configuration;
 using System.Threading.Tasks;
 
@@ -29,3 +29,9 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
         }
     }
 }
+
+
+
+
+
+

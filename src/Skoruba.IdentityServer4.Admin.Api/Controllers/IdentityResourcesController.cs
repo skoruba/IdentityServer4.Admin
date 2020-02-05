@@ -6,6 +6,7 @@ using Skoruba.IdentityServer4.Admin.Api.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.Api.Dtos.IdentityResources;
 using Skoruba.IdentityServer4.Admin.Api.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Api.Mappers;
+using Skoruba.IdentityServer4.Admin.Api.Resources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 
@@ -14,15 +15,17 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
-    [Produces("application/json")]
-    [Authorize(AuthenticationSchemes = IdentityServerAuthenticationDefaults.AuthenticationScheme, Policy = AuthorizationConsts.AdministrationPolicy)]
+    [Produces("application/json", "application/problem+json")]
+    [Authorize(Policy = AuthorizationConsts.AdministrationPolicy)]
     public class IdentityResourcesController : ControllerBase
     {
         private readonly IIdentityResourceService _identityResourceService;
+        private readonly IApiErrorResources _errorResources;
 
-        public IdentityResourcesController(IIdentityResourceService identityResourceService)
+        public IdentityResourcesController(IIdentityResourceService identityResourceService, IApiErrorResources errorResources)
         {
             _identityResourceService = identityResourceService;
+            _errorResources = errorResources;
         }
 
         [HttpGet]
@@ -44,12 +47,21 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> Post([FromBody]IdentityResourceApiDto identityResourceApi)
         {
             var identityResourceDto = identityResourceApi.ToIdentityResourceApiModel<IdentityResourceDto>();
-            await _identityResourceService.AddIdentityResourceAsync(identityResourceDto);
 
-            return Ok();
+            if (!identityResourceDto.Id.Equals(default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
+
+            var id = await _identityResourceService.AddIdentityResourceAsync(identityResourceDto);
+            identityResourceApi.Id = id;
+
+            return CreatedAtAction(nameof(Get), new { id }, identityResourceApi);
         }
 
         [HttpPut]
@@ -93,14 +105,22 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpPost("{id}/Properties")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> PostProperty(int id, [FromBody]IdentityResourcePropertyApiDto identityResourcePropertyApi)
         {
             var identityResourcePropertiesDto = identityResourcePropertyApi.ToIdentityResourceApiModel<IdentityResourcePropertiesDto>();
             identityResourcePropertiesDto.IdentityResourceId = id;
 
-            await _identityResourceService.AddIdentityResourcePropertyAsync(identityResourcePropertiesDto);
+            if (!identityResourcePropertiesDto.IdentityResourcePropertyId.Equals(default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
 
-            return Ok();
+            var propertyId = await _identityResourceService.AddIdentityResourcePropertyAsync(identityResourcePropertiesDto);
+            identityResourcePropertyApi.Id = propertyId;
+
+            return CreatedAtAction(nameof(GetProperty), new { propertyId }, identityResourcePropertyApi);
         }
 
         [HttpDelete("Properties/{propertyId}")]
