@@ -15,6 +15,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.Helpers;
 using Skoruba.IdentityServer4.Admin.Configuration;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
+using System;
 
 namespace Skoruba.IdentityServer4.Admin
 {
@@ -41,7 +42,10 @@ namespace Skoruba.IdentityServer4.Admin
 
             // Add Asp.Net Core Identity Configuration and OpenIdConnect auth as well
             RegisterAuthentication(services);
-            
+
+            // Add HSTS options
+            RegisterHstsOptions(services);
+
             // Add exception filters in MVC
             services.AddMvcExceptionFilters();
 
@@ -85,6 +89,7 @@ namespace Skoruba.IdentityServer4.Admin
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
             }
 
             // Add custom security headers
@@ -129,6 +134,16 @@ namespace Skoruba.IdentityServer4.Admin
         public virtual void UseAuthentication(IApplicationBuilder app)
         {
             app.UseAuthentication();
+        }
+
+        public virtual void RegisterHstsOptions(IServiceCollection services)
+        {
+            services.AddHsts(options =>
+            {
+                options.Preload = true;
+                options.IncludeSubDomains = true;
+                options.MaxAge = TimeSpan.FromDays(365);
+            });
         }
 
         protected IRootConfiguration CreateRootConfiguration()
