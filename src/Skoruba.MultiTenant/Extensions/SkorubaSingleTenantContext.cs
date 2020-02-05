@@ -20,6 +20,11 @@ namespace Microsoft.Extensions.DependencyInjection
         public bool TenantResolutionRequired => false;
         public string TenantResolutionStrategy => "None";
         public MultiTenantConfiguration MultiTenantConfiguration { get; }
+
+        public void SetTenantId(IHaveTenantId obj)
+        {
+            // do nothing
+        }
     }
 
     public class SingleTenant : ISkorubaTenant

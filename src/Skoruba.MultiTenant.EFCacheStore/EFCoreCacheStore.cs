@@ -1,6 +1,7 @@
 ﻿using Finbuckle.MultiTenant;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using Skoruba.MultiTenant.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,11 @@ namespace Skoruba.MultiTenant.Stores
         private readonly MemoryCacheEntryOptions _cacheOptions = new MemoryCacheEntryOptions()
             .SetSlidingExpiration(TimeSpan.FromHours(48));
 
-        public EFCoreCacheStore(TEFCoreStoreDbContext dbContext, IMemoryCache memoryCache)
+        public EFCoreCacheStore(TEFCoreStoreDbContext dbContext, IMemoryCache memoryCache, MultiTenantConfiguration multiTenantConfiguration)
         {
             this._dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _memoryCache = memoryCache;
+            _cacheOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromHours(multiTenantConfiguration.TenantStoreCacheHours));
         }
 
         private async Task<List<TenantInfo>> GetTenantsFromCacheAsync()

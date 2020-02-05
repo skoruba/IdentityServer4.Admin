@@ -31,18 +31,9 @@ namespace Skoruba.MultiTenant.Identity.Validators
                     throw MultiTenantException.MissingTenant;
                 }
 
-
-#if DEBUG
-                // Ignore seeded email
-                if (identityUser.Email.EndsWith("@skoruba.com"))
-                {
-                    return Task.FromResult(IdentityResult.Success);
-                }
-#endif
-
                 if (_skorubaTenantContext.Tenant.Items.TryGetValue(MultiTenantConstants.RequiresTwoFactorAuthentication, out var isrequired))
                 {
-                    bool requires2fa = false;
+                    bool requires2fa;
                     if (!bool.TryParse((string)isrequired, out requires2fa))
                     {
                         requires2fa = (string)isrequired == "1";

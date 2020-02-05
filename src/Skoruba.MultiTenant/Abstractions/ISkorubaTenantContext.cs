@@ -7,5 +7,6 @@
         bool TenantResolved { get; }
         bool TenantResolutionRequired { get; }
         string TenantResolutionStrategy { get; }
+        void SetTenantId(IHaveTenantId obj);
     }
 }

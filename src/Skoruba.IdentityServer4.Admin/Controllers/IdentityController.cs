@@ -83,19 +83,12 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             if (EqualityComparer<TRoleDtoKey>.Default.Equals(id, default))
             {
                 var role = new TRoleDto();
-
-                if (_skorubaTenantContext.MultiTenantEnabled)
-                {
-                    // TODO: Is this business logic and should a new role be retrieved from a service, or is that over engineering?
-                    role.TenantId = _skorubaTenantContext.Tenant.Id;
-                }
-
+                _skorubaTenantContext.SetTenantId(role);
                 return View(role);
             }
             else
             {
                 var role = await _identityService.GetRoleAsync(id.ToString());
-
                 return View(role);
             }
         }
@@ -179,13 +172,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         public IActionResult UserProfile()
         {
             var newUser = new TUserDto();
-
-            if (_skorubaTenantContext.MultiTenantEnabled)
-            {
-                // TODO: Is this business logic and should a new role be retrieved from a service, or is that over engineering?
-                newUser.TenantId = _skorubaTenantContext.Tenant.Id;
-            }
-
+            _skorubaTenantContext.SetTenantId(newUser);
             return View("UserProfile", newUser);
         }
 

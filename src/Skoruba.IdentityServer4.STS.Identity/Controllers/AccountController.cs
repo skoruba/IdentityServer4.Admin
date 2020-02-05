@@ -583,9 +583,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             if (_skorubaTenantContext.MultiTenantEnabled)
             {
-                if (_skorubaTenantContext.TenantResolutionRequired && !_skorubaTenantContext.TenantResolutionRequired)
+                if (_skorubaTenantContext.TenantResolutionRequired && !_skorubaTenantContext.TenantResolved)
                 {
-                    throw MultiTenantException.MissingTenant;
+                    ModelState.AddModelError("TenantCode", "The tenant code is invalid.");
+                    return View(model);                   
                 }
 
                 ((IHaveTenantId)user).TenantId = _skorubaTenantContext.Tenant.Id;

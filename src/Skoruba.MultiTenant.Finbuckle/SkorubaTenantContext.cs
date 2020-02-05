@@ -29,5 +29,15 @@ namespace Skoruba.MultiTenant.Finbuckle
         public bool TenantResolutionRequired => _validateTenantRequirement?.TenantIsRequired() ?? true;
         public string TenantResolutionStrategy => _httpContextAccessor.HttpContext?.GetMultiTenantContext()?.StrategyInfo?.StrategyType?.Name ?? "Unknown";
         public MultiTenantConfiguration MultiTenantConfiguration { get; }
+
+        public void SetTenantId(IHaveTenantId obj)
+        {
+            if (TenantResolutionRequired && !TenantResolved)
+            {
+                throw MultiTenantException.MissingTenant;
+            }
+            
+            obj.TenantId = Tenant.Id;
+        }
     }
 }
