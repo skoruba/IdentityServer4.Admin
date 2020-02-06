@@ -581,7 +581,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 Email = model.Email
             };
 
-            if (_skorubaTenantContext.MultiTenantEnabled)
+            if (_skorubaTenantContext.Configuration.UseTenantCode)
             {
                 if (_skorubaTenantContext.TenantResolutionRequired && !_skorubaTenantContext.TenantResolved)
                 {

@@ -26,7 +26,7 @@
                             <input type="hidden" asp-for="ReturnUrl" />
 
                             <fieldset>
-                                @if (SkorubaTenantContext.MultiTenantEnabled)
+                                @if (SkorubaTenantContext.Configuration.UseTenantCode)
                                 {
                                     <div class="form-group row">
                                         <div class="col-sm-12">

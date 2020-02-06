@@ -14,7 +14,7 @@
 <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
     <h4>@Localizer["SubTitle"]</h4>
     <hr />
-    @if (SkorubaTenantContext.MultiTenantEnabled)
+    @if (SkorubaTenantContext.Configuration.UseTenantCode)
     {
         <div class="form-group">
             <label asp-for="TenantCode" class="col-md-2 control-label">@Localizer["TenantCode"]</label>

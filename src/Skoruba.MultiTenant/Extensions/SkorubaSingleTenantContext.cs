@@ -11,7 +11,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public SkorubaSingleTenantContext(MultiTenantConfiguration multiTenantConfiguration)
         {
             Tenant = new SingleTenant();
-            MultiTenantConfiguration = multiTenantConfiguration;
+            Configuration = multiTenantConfiguration;
         }
 
         public ISkorubaTenant Tenant { get; }
@@ -19,7 +19,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public bool TenantResolved => false;
         public bool TenantResolutionRequired => false;
         public string TenantResolutionStrategy => "None";
-        public MultiTenantConfiguration MultiTenantConfiguration { get; }
+        public MultiTenantConfiguration Configuration { get; }
 
         public void SetTenantId(IHaveTenantId obj)
         {

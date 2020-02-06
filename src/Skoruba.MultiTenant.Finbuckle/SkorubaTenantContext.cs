@@ -20,15 +20,14 @@ namespace Skoruba.MultiTenant.Finbuckle
             _httpContextAccessor = httpContextAccessor;
             _tenantInfo = tenantInfo;
             _validateTenantRequirement = validateTenantRequirement;
-            MultiTenantConfiguration = multiTenantConfiguration;
+            Configuration = multiTenantConfiguration;
         }
 
         public ISkorubaTenant Tenant => new SkorubaTenant(_tenantInfo ?? _httpContextAccessor?.HttpContext?.GetMultiTenantContext()?.TenantInfo);
-        public bool MultiTenantEnabled => MultiTenantConfiguration?.MultiTenantEnabled ?? false;
         public bool TenantResolved => !string.IsNullOrWhiteSpace(Tenant?.Id);
         public bool TenantResolutionRequired => _validateTenantRequirement?.TenantIsRequired() ?? true;
         public string TenantResolutionStrategy => _httpContextAccessor.HttpContext?.GetMultiTenantContext()?.StrategyInfo?.StrategyType?.Name ?? "Unknown";
-        public MultiTenantConfiguration MultiTenantConfiguration { get; }
+        public MultiTenantConfiguration Configuration { get; }
 
         public void SetTenantId(IHaveTenantId obj)
         {
