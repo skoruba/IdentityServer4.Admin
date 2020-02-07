@@ -12,6 +12,7 @@ using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.Configuration;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -28,7 +29,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
             where TAuditLogDbContext: DbContext, IAuditLoggingDbContext<AuditLog>
-            where TUser : IdentityUser, new()
+            where TUser : UserIdentity, new()
             where TRole : IdentityRole, new()
         {
             using (var serviceScope = host.Services.CreateScope())
@@ -77,7 +78,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
         public static async Task EnsureSeedData<TIdentityServerDbContext, TUser, TRole>(IServiceProvider serviceProvider)
         where TIdentityServerDbContext : DbContext, IAdminConfigurationDbContext
-        where TUser : IdentityUser, new()
+        where TUser : UserIdentity, new()
         where TRole : IdentityRole, new()
         {
             using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
@@ -97,7 +98,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// </summary>
         private static async Task EnsureSeedIdentityData<TUser, TRole>(UserManager<TUser> userManager,
             RoleManager<TRole> roleManager, IdentityDataConfiguration identityDataConfiguration)
-            where TUser : IdentityUser, new()
+            where TUser : UserIdentity, new()
             where TRole : IdentityRole, new()
         {
             if (!await roleManager.Roles.AnyAsync())

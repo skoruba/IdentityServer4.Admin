@@ -30,6 +30,7 @@
         <PackageReference Include="IdentityServer4.AspNetIdentity" Version="3.1.0" />
         <PackageReference Include="IdentityServer4.EntityFramework" Version="3.1.0" />
         <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="2.0.0" />
+        <PackageReference Include="RestSharp" Version="106.10.1" />
         <PackageReference Include="Sendgrid" Version="9.12.0" />
         <PackageReference Include="Serilog" Version="2.9.0" />
         <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
@@ -46,10 +47,32 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.csproj" />
         <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.MySql\Skoruba.IdentityServer4.Admin.EntityFramework.MySql.csproj" />
         <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL\Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.csproj" />
         <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.Shared\Skoruba.IdentityServer4.Admin.EntityFramework.Shared.csproj" />
         <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer\Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Core.BaseDataAccessInterfaces">
+        <HintPath>..\..\..\PortalSlaveService\PortalSlaveService\Infrastucture.PortalRequests\bin\Release\netstandard2.0\Core.BaseDataAccessInterfaces.dll</HintPath>
+      </Reference>
+      <Reference Include="Core.DataAccessInterfaces">
+        <HintPath>..\..\..\PortalSlaveService\PortalSlaveService\Infrastucture.PortalRequests\bin\Release\netstandard2.0\Core.DataAccessInterfaces.dll</HintPath>
+      </Reference>
+      <Reference Include="Core.Domain">
+        <HintPath>..\..\..\PortalSlaveService\PortalSlaveService\Infrastucture.PortalRequests\bin\Release\netstandard2.0\Core.Domain.dll</HintPath>
+      </Reference>
+      <Reference Include="Core.Interfaces">
+        <HintPath>..\..\..\PortalSlaveService\PortalSlaveService\Infrastucture.PortalRequests\bin\Release\netstandard2.0\Core.Interfaces.dll</HintPath>
+      </Reference>
+      <Reference Include="Core.Portal">
+        <HintPath>..\..\..\PortalSlaveService\PortalSlaveService\Infrastucture.PortalRequests\bin\Release\netstandard2.0\Core.Portal.dll</HintPath>
+      </Reference>
+      <Reference Include="Infrastucture.PortalRequests">
+        <HintPath>..\..\..\PortalSlaveService\PortalSlaveService\Infrastucture.PortalRequests\bin\Release\netstandard2.0\Infrastucture.PortalRequests.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

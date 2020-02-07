@@ -19,7 +19,29 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.BusinessLogic.Shared\Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.csproj" />
 		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.Identity\Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj" />
+		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.Shared\Skoruba.IdentityServer4.Admin.EntityFramework.Shared.csproj" />
 		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.IdentityServer4.Admin.EntityFramework.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="Core.BaseDataAccessInterfaces">
+	    <HintPath>..\..\..\PortalSlaveService\PortalSlaveService\Infrastucture.PortalRequests\bin\Release\netstandard2.0\Core.BaseDataAccessInterfaces.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Core.DataAccessInterfaces">
+	    <HintPath>..\..\..\PortalSlaveService\PortalSlaveService\Infrastucture.PortalRequests\bin\Release\netstandard2.0\Core.DataAccessInterfaces.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Core.Domain">
+	    <HintPath>..\..\..\PortalSlaveService\PortalSlaveService\Infrastucture.PortalRequests\bin\Release\netstandard2.0\Core.Domain.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Core.Interfaces">
+	    <HintPath>..\..\..\PortalSlaveService\PortalSlaveService\Infrastucture.PortalRequests\bin\Release\netstandard2.0\Core.Interfaces.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Core.Portal">
+	    <HintPath>..\..\..\PortalSlaveService\PortalSlaveService\Infrastucture.PortalRequests\bin\Release\netstandard2.0\Core.Portal.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Infrastucture.PortalRequests">
+	    <HintPath>..\..\..\PortalSlaveService\PortalSlaveService\Infrastucture.PortalRequests\bin\Release\netstandard2.0\Infrastucture.PortalRequests.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 
 </Project>

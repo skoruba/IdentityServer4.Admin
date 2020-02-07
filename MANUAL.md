@@ -1,15 +1,7 @@
 ### Разворачивание Identity Server 4 и АРМ его администрирования
 1. Создать файлы миграции БД:
-### В NUGET консоле
-Add-Migration AspNetIdentityDbInit -context AdminIdentityDbContext -output Data/Migrations/Identity
-Add-Migration LoggingDbInit -context AdminLogDbContext -output Data/Migrations/Logging
-Add-Migration IdentityServerConfigurationDbInit -context IdentityServerConfigurationDbContext -output Data/Migrations/IdentityServerConfiguration
-Add-Migration IdentityServerPersistedGrantsDbInit -context IdentityServerPersistedGrantDbContext -output Data/Migrations/IdentityServerGrants
-### Or via `dotnet CLI`
-dotnet ef migrations add AspNetIdentityDbInit -c AdminIdentityDbContext -o Data/Migrations/Identity
-dotnet ef migrations add LoggingDbInit -c AdminLogDbContext -o Data/Migrations/Logging
-dotnet ef migrations add IdentityServerConfigurationDbInit -c IdentityServerConfigurationDbContext -o Data/Migrations/IdentityServerConfiguration
-dotnet ef migrations add IdentityServerPersistedGrantsDbInit -c IdentityServerPersistedGrantDbContext -o Data/Migrations/IdentityServerGrants
+Запустить с папки build
+.\add-migrations.ps1 -migration dbIdtInit -migrationProviderName PostgreSQL
 
 2. Развернуть в Docker.
 3. Для отладки на локальном ПК дополнительно нужно:
