@@ -19,7 +19,7 @@
       "RequireClientSecret": true,
       "ClientName": "skoruba_identity_admin",
       "Description": null,
-      "ClientUri": "http://mlkdemo.rosseti.ru:5002",
+      "ClientUri": "http://host.internal.ru:5002",
       "LogoUri": null,
       "RequireConsent": true,
       "AllowRememberConsent": true,
@@ -37,18 +37,18 @@
       "RedirectUris": [
         {
           "Id": 1037,
-          "RedirectUri": "http://mlkdemo.rosseti.ru:5002/signin-oidc",
+          "RedirectUri": "http://host.internal.ru:5002/signin-oidc",
           "ClientId": 1012
         }
       ],
       "PostLogoutRedirectUris": [
         {
           "Id": 1004,
-          "PostLogoutRedirectUri": "http://mlkdemo.rosseti.ru:5002/signout-callback-oidc",
+          "PostLogoutRedirectUri": "http://host.internal.ru:5002/signout-callback-oidc",
           "ClientId": 1012
         }
       ],
-      "FrontChannelLogoutUri": "http://mlkdemo.rosseti.ru:5002/signout-oidc",
+      "FrontChannelLogoutUri": "http://host.internal.ru:5002/signout-oidc",
       "FrontChannelLogoutSessionRequired": true,
       "BackChannelLogoutUri": null,
       "BackChannelLogoutSessionRequired": true,
@@ -95,7 +95,7 @@
       "AllowedCorsOrigins": [
         {
           "Id": 1022,
-          "Origin": "http://mlkdemo.rosseti.ru:5002",
+          "Origin": "http://host.internal.ru:5002",
           "ClientId": 1012
         }
       ],
@@ -135,7 +135,7 @@
       "RedirectUris": [
         {
           "Id": 1038,
-          "RedirectUri": "http://mlkdemo.rosseti.ru:5003/swagger/oauth2-redirect.html",
+          "RedirectUri": "http://host.internal.ru:5003/swagger/oauth2-redirect.html",
           "ClientId": 1013
         }
       ],
@@ -268,7 +268,7 @@
       "AllowedCorsOrigins": [
         {
           "Id": 1023,
-          "Origin": "http://mlkdemo.rosseti.ru:5012",
+          "Origin": "http://host.internal.ru:5012",
           "ClientId": 1014
         }
       ],
@@ -308,7 +308,7 @@
       "RedirectUris": [
         {
           "Id": 1040,
-          "RedirectUri": "http://mlkdemo.rosseti.ru:5012/swagger/oauth2-redirect.html",
+          "RedirectUri": "http://host.internal.ru:5012/swagger/oauth2-redirect.html",
           "ClientId": 1015
         }
       ],

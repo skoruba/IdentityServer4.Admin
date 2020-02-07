@@ -11,6 +11,14 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity
 
     public class UserIdentity : UserIdentity<string>
     {
-
+        public UserIdentity()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
+        public UserIdentity(string userName)
+        {
+            Id = Guid.NewGuid().ToString();
+            UserName = userName;
+        }
     }
 }

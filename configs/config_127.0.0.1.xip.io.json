@@ -135,7 +135,7 @@
       "RedirectUris": [
         {
           "Id": 1038,
-          "RedirectUri": "http://127.0.0.1.xip.io:5003/swagger/oauth2-redirect.html",
+          "RedirectUri": "http://127.0.0.1.xip.io:5000/swagger/oauth2-redirect.html",
           "ClientId": 1013
         }
       ],
