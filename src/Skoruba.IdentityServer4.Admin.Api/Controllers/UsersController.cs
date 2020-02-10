@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using IdentityModel;
 using IdentityServer4.AccessTokenValidation;
 using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -127,17 +128,9 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
 
         private bool IsDeleteForbidden(TUserDtoKey id)
         {
-            // we know we are Authenticated but not sure if API is accessed by machine or person
-            // GetSubjectId throws exception if there is no sub claim so we know it's machine in that case 
-            try
-            {
-                var currentUserId = User.GetSubjectId();
-                return currentUserId == id.ToString();
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            var userId = User.FindFirst(JwtClaimTypes.Subject);
+
+            return userId == null ? false : userId.Value == id.ToString();
         }
 
         [HttpGet("{id}/Roles")]
