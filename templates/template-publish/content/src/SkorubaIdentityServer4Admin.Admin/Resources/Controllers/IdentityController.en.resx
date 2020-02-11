@@ -126,6 +126,9 @@
   <data name="SuccessCreateRoleClaims" xml:space="preserve">
     <value>Claim {0} - {1} is successfully saved!</value>
   </data>
+  <data name="SuccessInvitationSent" xml:space="preserve">
+    <value>Einladung versendet!</value>
+  </data>
   <data name="SuccessCreateUser" xml:space="preserve">
     <value>User {0} is successfully saved!</value>
   </data>

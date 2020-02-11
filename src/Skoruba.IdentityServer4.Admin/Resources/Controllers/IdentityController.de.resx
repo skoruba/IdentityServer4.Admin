@@ -126,6 +126,15 @@
   <data name="SuccessCreateRoleClaims" xml:space="preserve">
     <value>Claims {0} - {1} wurden erfolgreich gespeichert!</value>
   </data>
+  <data name="SuccessInvitationSent" xml:space="preserve">
+    <value>Einladung versendet!</value>
+  </data>
+  <data name="InvitationBody" xml:space="preserve">
+    <value>Beenden Sie die Registrierung mit &lt;a href='{0}'&gt;hier klicken&lt;/a&gt;.</value>
+  </data>
+  <data name="InvitationTitle" xml:space="preserve">
+    <value>Herzlich Willkommen!</value>
+  </data>
   <data name="SuccessCreateUser" xml:space="preserve">
     <value>Benutzer {0} wurde erfolgreich gespeichert!</value>
   </data>

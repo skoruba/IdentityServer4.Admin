@@ -123,6 +123,15 @@
   <data name="SuccessCreateRoleClaims" xml:space="preserve">
     <value>声明 {0} - {1} 已成功保存！</value>
   </data>
+  <data name="SuccessInvitationSent" xml:space="preserve">
+    <value>邀请已发送!</value>
+  </data>
+  <data name="InvitationBody" xml:space="preserve">
+    <value>完成注册 &lt;a href='{0}'&gt;点击这里&lt;/a&gt;.</value>
+  </data>
+  <data name="InvitationTitle" xml:space="preserve">
+    <value>欢迎!</value>
+  </data>
   <data name="SuccessCreateUser" xml:space="preserve">
     <value>用户 {0} 已成功保存！</value>
   </data>

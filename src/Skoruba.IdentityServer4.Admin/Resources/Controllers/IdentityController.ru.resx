@@ -123,6 +123,15 @@
   <data name="SuccessCreateRoleClaims" xml:space="preserve">
     <value>Утверждение {0} - {1} успешно сохранено!</value>
   </data>
+  <data name="SuccessInvitationSent" xml:space="preserve">
+    <value>Приглашение отправлено!</value>
+  </data>
+  <data name="InvitationBody" xml:space="preserve">
+    <value>Завершить регистрацию &lt;a href='{0}'&gt;нажав здесь&lt;/a&gt;.</value>
+  </data>
+  <data name="InvitationTitle" xml:space="preserve">
+    <value>желанный!</value>
+  </data>
   <data name="SuccessCreateUser" xml:space="preserve">
     <value>Пользователь {0} успешно сохранён!</value>
   </data>

@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
+using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Helpers.Localization;
+using Skoruba.IdentityServer4.Admin.Helpers.Messaging.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.Controllers
 {
@@ -49,16 +53,24 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
             TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> _localizer;
 
-        public IdentityController(IIdentityService<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
+        private readonly IEmailSender _emailSender;
+        private readonly IRootConfiguration _rootConfiguration;
+
+        public IdentityController(
+            IIdentityService<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
                 TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto> identityService,
             ILogger<ConfigurationController> logger,
             IGenericControllerLocalizer<IdentityController<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> localizer) : base(logger)
+                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> localizer,
+            IRootConfiguration rootConfiguration,
+            IEmailSender emailSender = null) : base(logger)
         {
             _identityService = identityService;
             _localizer = localizer;
+            _rootConfiguration = rootConfiguration;
+            _emailSender = emailSender;
         }
 
         [HttpGet]
@@ -135,7 +147,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UserProfile(TUserDto user)
+        public async Task<IActionResult> UserProfile(TUserDto user, String submit)
         {
             if (!ModelState.IsValid)
             {
@@ -155,7 +167,18 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
                 userId = userData.userId;
             }
 
-            SuccessNotification(string.Format(_localizer["SuccessCreateUser"], user.UserName), _localizer["SuccessTitle"]);
+            if ("InviteUser".Equals(submit))
+            {
+                var code = await _identityService.GenerateInvitationTokenAsync(user.Id.ToString());
+                var url = _rootConfiguration.AdminConfiguration.IdentityServerBaseUrl + "/Account/RegisterByInvitation?userId=" + user.Id.ToString() + "&code=" + code;
+                await _emailSender.SendEmailAsync(user.Email, _localizer["InvitationTitle"], _localizer["InvitationBody", HtmlEncoder.Default.Encode(url)]);
+
+                SuccessNotification(_localizer["SuccessInvitationSent"], _localizer["SuccessTitle"]);
+            }
+            else
+            {
+                SuccessNotification(string.Format(_localizer["SuccessCreateUser"], user.UserName), _localizer["SuccessTitle"]);
+            }
 
             return RedirectToAction(nameof(UserProfile), new { Id = userId });
         }
@@ -309,7 +332,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
             return RedirectToAction(nameof(UserProviders), new { Id = provider.UserId });
         }
-
+        
         [HttpGet]
         public async Task<IActionResult> UserChangePassword(TUserDtoKey id)
         {

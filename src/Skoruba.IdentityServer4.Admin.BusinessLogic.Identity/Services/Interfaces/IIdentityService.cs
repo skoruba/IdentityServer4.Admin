@@ -83,6 +83,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfac
 
         Task<IdentityResult> UserChangePasswordAsync(TUserChangePasswordDto userPassword);
 
+        Task<string> GenerateInvitationTokenAsync(string userId);
+
         Task<IdentityResult> CreateRoleClaimsAsync(TRoleClaimsDto claimsDto);
 
         Task<TRoleClaimsDto> GetRoleClaimsAsync(string roleId, int page = 1, int pageSize = 10);

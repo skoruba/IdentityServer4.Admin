@@ -123,6 +123,15 @@
   <data name="SuccessCreateRoleClaims" xml:space="preserve">
     <value>Anspråken {0} - {1} sparades!</value>
   </data>
+  <data name="SuccessInvitationSent" xml:space="preserve">
+    <value>Inbjudan skickad!</value>
+  </data>
+  <data name="InvitationBody" xml:space="preserve">
+    <value>Slutför registreringen senast &lt;a href='{0}'&gt;klicka här&lt;/a&gt;.</value>
+  </data>
+  <data name="InvitationTitle" xml:space="preserve">
+    <value>Welcome!</value>
+  </data>
   <data name="SuccessCreateUser" xml:space="preserve">
     <value>Användaren {0} sparades!</value>
   </data>

@@ -35,6 +35,7 @@
                 <a asp-action="UserRoles" asp-route-id="@Model.Id" class="btn btn-outline-primary">@Localizer["ButtonManageUserRoles"]</a>
                 <a asp-action="UserProviders" asp-route-id="@Model.Id" class="btn btn-outline-primary">@Localizer["ButtonManageUserExternalProviders"]</a>
                 <a asp-action="AuditLog" asp-controller="Log" asp-route-subjectIdentifier="@Model.Id" class="btn btn-primary">@Localizer["Audit Log"]</a>
+                <button type="submit" name="submit" value="InviteUser" class="btn btn-dark">@Localizer["ButtonInviteUser"]</button>
                 <a asp-action="UserChangePassword" asp-route-id="@Model.Id" class="btn btn-dark">@Localizer["ButtonChangePassword"]</a>
                 <a asp-action="UserDelete" asp-route-id="@Model.Id" class="btn btn-danger">@Localizer["ButtonDeleteUser"]</a>
             </div>
@@ -163,7 +164,7 @@
                         <label class="col-sm-3 col-form-label">
                         </label>
                         <div class="col-sm-9">
-                            <button type="submit" class="btn btn-primary">@Localizer["ButtonSaveUser"]</button>
+                            <button type="submit" name="submit" value="SaveProfile" class="btn btn-primary">@Localizer["ButtonSaveUser"]</button>
                         </div>
                     </div>
                 </div>

@@ -120,6 +120,9 @@
   <data name="Audit loki" xml:space="preserve">
     <value>Tarkastusloki</value>
   </data>
+  <data name="ButtonInviteUser" xml:space="preserve">
+    <value>Kutsu Käyttäjä</value>
+  </data>
   <data name="ButtonChangePassword" xml:space="preserve">
     <value>Vaihda salasana</value>
   </data>

@@ -126,6 +126,9 @@
   <data name="SuccessCreateRoleClaims" xml:space="preserve">
     <value>Vaatimus {0} - {1} on tallennettu onnistuneesti!</value>
   </data>
+  <data name="SuccessInvitationSent" xml:space="preserve">
+    <value>Kutsu lähetetty!</value>
+  </data>
   <data name="SuccessCreateUser" xml:space="preserve">
     <value>Käyttäjän {0} tallennus onnistui!</value>
   </data>

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using IdentityModel;
 using IdentityServer4.AccessTokenValidation;
 using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -115,7 +114,8 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(TUserDtoKey id)
         {
-            if (IsDeleteForbidden(id))
+            var currentUserId = User.GetSubjectId();
+            if (id.ToString() == currentUserId)
                 return StatusCode((int)System.Net.HttpStatusCode.Forbidden);
 
             var user = new TUserDto { Id = id };
@@ -124,13 +124,6 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
             await _identityService.DeleteUserAsync(user.Id.ToString(), user);
 
             return Ok();
-        }
-
-        private bool IsDeleteForbidden(TUserDtoKey id)
-        {
-            var userId = User.FindFirst(JwtClaimTypes.Subject);
-
-            return userId == null ? false : userId.Value == id.ToString();
         }
 
         [HttpGet("{id}/Roles")]

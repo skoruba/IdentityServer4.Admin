@@ -120,6 +120,9 @@
   <data name="Audit Log" xml:space="preserve">
     <value>Audit Log</value>
   </data>
+  <data name="ButtonInviteUser" xml:space="preserve">
+    <value>Invite User</value>
+  </data>
   <data name="ButtonChangePassword" xml:space="preserve">
     <value>Change Password</value>
   </data>

@@ -123,6 +123,9 @@
   <data name="SuccessCreateRoleClaims" xml:space="preserve">
     <value>¡La reclamación {0} - {1} fue guardada con éxito!</value>
   </data>
+  <data name="SuccessInvitationSent" xml:space="preserve">
+    <value>Invitación enviada!</value>
+  </data>
   <data name="SuccessCreateUser" xml:space="preserve">
     <value>¡El usuario {0} fue guardado con éxito!</value>
   </data>

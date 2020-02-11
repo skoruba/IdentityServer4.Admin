@@ -542,6 +542,78 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        public IActionResult RegisterByInvitation(string userId = null, string code = null, string returnUrl = null)
+        {
+            if (String.IsNullOrEmpty(code) || String.IsNullOrEmpty(userId)) return View("RegisterFailure");
+
+            ViewData["ReturnUrl"] = returnUrl;
+            ViewData["UserId"] = userId;
+            ViewData["Code"] = code;
+
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterByInvitation(RegisterByInvitationViewModel model, string returnUrl = null)
+        {
+            const string INVITATION_TOKEN_TYPE = "invitation_token"; // TODO: Should be a more global constant
+
+            // Validate e-mail
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            var validInvitation = (user != null);
+
+            // Validate user code vs email entered
+            if (validInvitation) validInvitation = user.Id.ToString().Equals(model.UserId);
+
+            if (validInvitation)
+            {
+                // Validate the invitation token
+                var claims = await _userManager.GetClaimsAsync(user);
+                var invitationTokenClaim = claims.Where(i => i.Type == INVITATION_TOKEN_TYPE).FirstOrDefault();
+                validInvitation = (invitationTokenClaim != null);
+
+                if (validInvitation) validInvitation = (invitationTokenClaim.Value == model.Code);
+
+                // All is well?  Remove the invitation token now
+                if (validInvitation) await _userManager.RemoveClaimAsync(user, invitationTokenClaim);
+            }
+
+            // If we weren't able to validate?
+            if (!validInvitation)
+            {
+                // Simply redirect to registration
+                return RedirectToAction(nameof(Register));                
+            }
+
+            // Assuming we've continued thos far, we can now apply the password and continue with the registration process
+            returnUrl = returnUrl ?? Url.Content("~/");
+
+            ViewData["ReturnUrl"] = returnUrl;
+
+            if (!ModelState.IsValid) return View(model);
+
+            var result = await _userManager.AddPasswordAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, HttpContext.Request.Scheme);
+
+                await _emailSender.SendEmailAsync(model.Email, _localizer["ConfirmEmailTitle"], _localizer["ConfirmEmailBody", HtmlEncoder.Default.Encode(callbackUrl)]);
+                await _signInManager.SignInAsync(user, isPersistent: false);
+
+                return RedirectToLocal(returnUrl);
+            }
+
+            AddErrors(result);
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
             if (!_registerConfiguration.Enabled) return View("RegisterFailure");

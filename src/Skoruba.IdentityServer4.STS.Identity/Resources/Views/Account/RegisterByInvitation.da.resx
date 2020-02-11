@@ -117,55 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ErrorDeleteUser_CannotSelfDelete" xml:space="preserve">
-    <value>You cannot delete yourself. If you want to delete this account, first create a new administrative account, then switch to it and delete this account from there.</value>
+  <data name="Button" xml:space="preserve">
+    <value>Registrer</value>
   </data>
-  <data name="SuccessCreateRole" xml:space="preserve">
-    <value>Role {0} is successfully saved!</value>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Bekræft Password</value>
   </data>
-  <data name="SuccessCreateRoleClaims" xml:space="preserve">
-    <value>Claim {0} - {1} is successfully saved!</value>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
   </data>
-  <data name="SuccessInvitationSent" xml:space="preserve">
-    <value>Invitation sent!</value>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
   </data>
-  <data name="InvitationBody" xml:space="preserve">
-    <value>Finish registration by &lt;a href='{0}'&gt;clicking here&lt;/a&gt;.</value>
+  <data name="SubTitle" xml:space="preserve">
+    <value>Opret en ny konto.</value>
   </data>
-  <data name="InvitationTitle" xml:space="preserve">
-    <value>Welcome!</value>
+  <data name="Title" xml:space="preserve">
+    <value>Registrer</value>
   </data>
-  <data name="SuccessCreateUser" xml:space="preserve">
-    <value>User {0} is successfully saved!</value>
-  </data>
-  <data name="SuccessCreateUserClaims" xml:space="preserve">
-    <value>Claim {0} - {1} is successfully saved!</value>
-  </data>
-  <data name="SuccessCreateUserRole" xml:space="preserve">
-    <value>Role is successfully saved!</value>
-  </data>
-  <data name="SuccessDeleteRole" xml:space="preserve">
-    <value>Role is successfully deleted!</value>
-  </data>
-  <data name="SuccessDeleteRoleClaims" xml:space="preserve">
-    <value>Claim is successfully deleted!</value>
-  </data>
-  <data name="SuccessDeleteUser" xml:space="preserve">
-    <value>User is successfully deleted!</value>
-  </data>
-  <data name="SuccessDeleteUserClaims" xml:space="preserve">
-    <value>Claim is successfully deleted!</value>
-  </data>
-  <data name="SuccessDeleteUserProviders" xml:space="preserve">
-    <value>User Provider is successfully deleted!</value>
-  </data>
-  <data name="SuccessDeleteUserRole" xml:space="preserve">
-    <value>Role is successfully deleted!</value>
-  </data>
-  <data name="SuccessTitle" xml:space="preserve">
-    <value>Success</value>
-  </data>
-  <data name="SuccessUserChangePassword" xml:space="preserve">
-    <value>New Password is successfully changed!</value>
+  <data name="UserName" xml:space="preserve">
+    <value>Brugernavn</value>
   </data>
 </root>

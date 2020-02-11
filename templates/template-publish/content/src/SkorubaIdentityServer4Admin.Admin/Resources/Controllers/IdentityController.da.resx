@@ -123,6 +123,9 @@
   <data name="SuccessCreateRoleClaims" xml:space="preserve">
     <value>Claim {0} - {1} er gemt succesfuldt!</value>
   </data>
+  <data name="SuccessInvitationSent" xml:space="preserve">
+    <value>Invitation sendt!</value>
+  </data>
   <data name="SuccessCreateUser" xml:space="preserve">
     <value>Bruger {0} er gemt succesfuldt!</value>
   </data>

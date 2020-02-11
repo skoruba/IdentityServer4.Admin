@@ -400,6 +400,35 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             return userProviderDto;
         }
 
+        public virtual async Task<string> GenerateInvitationTokenAsync(string userId)
+        {
+            const string INVITATION_TOKEN_TYPE = "invitation_token"; // TODO: Should be a more global constant
+
+            var userExists = await IdentityRepository.ExistsUserAsync(userId);
+            if (!userExists) throw new UserFriendlyErrorPageException(string.Format(IdentityServiceResources.UserDoesNotExist().Description, userId), IdentityServiceResources.UserDoesNotExist().Description);
+
+            var invitationToken = Guid.NewGuid().ToString();
+            await AuditEventLogger.LogEventAsync(new GenerateInvitationTokenEvent(invitationToken));
+
+            // Delete any existing invitation token
+            var existingClaim = await IdentityRepository.GetUserClaimByTypeAsync(userId, INVITATION_TOKEN_TYPE);
+            if (existingClaim != null)
+            {
+                await IdentityRepository.DeleteUserClaimsAsync(userId, existingClaim.Id);
+            }
+
+            var claim = new UserClaimsDto<TUserDtoKey>();
+            claim.UserId = ConvertUserDtoKeyFromString(userId);
+            claim.ClaimType = INVITATION_TOKEN_TYPE;
+            claim.ClaimValue = invitationToken;
+
+            var userClaimDto = Mapper.Map<TUserClaimsDto>(claim);
+            var createUserClaimResult = await this.CreateUserClaimsAsync(userClaimDto);
+            if (!createUserClaimResult.Succeeded) throw new UserFriendlyErrorPageException(string.Format(IdentityServiceResources.UserClaimsCreateFailed().Description, userId), IdentityServiceResources.UserClaimsCreateFailed().Description);
+
+            return invitationToken;
+        }
+
         public virtual async Task<IdentityResult> UserChangePasswordAsync(TUserChangePasswordDto userPassword)
         {
             var userExists = await IdentityRepository.ExistsUserAsync(userPassword.UserId.ToString());

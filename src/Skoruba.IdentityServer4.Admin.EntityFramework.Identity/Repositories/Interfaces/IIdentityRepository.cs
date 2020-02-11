@@ -52,6 +52,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.In
 
         Task<PagedList<TUserClaim>> GetUserClaimsAsync(string userId, int page = 1, int pageSize = 10);
 
+        Task<TUserClaim> GetUserClaimByTypeAsync(string userId, string claimType);
+
         Task<TUserClaim> GetUserClaimAsync(string userId, int claimId);
 
         Task<IdentityResult> CreateUserClaimsAsync(TUserClaim claims);

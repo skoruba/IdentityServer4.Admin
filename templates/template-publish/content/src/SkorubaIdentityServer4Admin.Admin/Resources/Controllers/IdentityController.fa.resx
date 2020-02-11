@@ -123,6 +123,9 @@
   <data name="SuccessCreateRoleClaims" xml:space="preserve">
     <value>ادعا {0} - {1} با موفقیت ذخیره شد!</value>
   </data>
+  <data name="SuccessInvitationSent" xml:space="preserve">
+    <value>دعوتنامه ارسال شد!</value>
+  </data>
   <data name="SuccessCreateUser" xml:space="preserve">
     <value>کاربر {0} با موفقیت ذخیره شد!</value>
   </data>
