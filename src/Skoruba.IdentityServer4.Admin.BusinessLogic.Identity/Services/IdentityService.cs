@@ -100,6 +100,15 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             return usersDto;
         }
 
+        public virtual async Task<TUsersDto> GetClaimUsersAsync(string claimType, string claimValue, int page = 1, int pageSize = 10)
+        {
+            var pagedList = await IdentityRepository.GetClaimUsersAsync(claimType, claimValue, page, pageSize);
+            var usersDto = Mapper.Map<TUsersDto>(pagedList);
+
+            await AuditEventLogger.LogEventAsync(new ClaimUsersRequestedEvent<TUsersDto>(usersDto));
+
+            return usersDto;
+        }
         public virtual async Task<TRolesDto> GetRolesAsync(string search, int page = 1, int pageSize = 10)
         {
             PagedList<TRole> pagedList = await IdentityRepository.GetRolesAsync(search, page, pageSize);
