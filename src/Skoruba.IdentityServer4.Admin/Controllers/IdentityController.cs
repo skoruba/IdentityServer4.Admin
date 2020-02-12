@@ -147,7 +147,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UserProfile(TUserDto user, String submit)
+        public async Task<IActionResult> UserProfile(TUserDto user, String submit = "SaveProfile")
         {
             if (!ModelState.IsValid)
             {

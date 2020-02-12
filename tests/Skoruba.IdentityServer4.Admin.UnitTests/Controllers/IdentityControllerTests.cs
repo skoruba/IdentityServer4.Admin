@@ -30,6 +30,10 @@ using Skoruba.IdentityServer4.Admin.Helpers;
 using Skoruba.IdentityServer4.Admin.Helpers.Localization;
 using Xunit;
 using System.Security.Claims;
+using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
+using Skoruba.IdentityServer4.Admin.Helpers.Messaging.Interfaces;
+using Skoruba.IdentityServer4.Admin.Configuration;
+using Skoruba.IdentityServer4.Admin.Helpers.Messaging;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 {
@@ -566,6 +570,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var logger = serviceProvider.GetRequiredService<ILogger<ConfigurationController>>();
             var tempDataDictionaryFactory = serviceProvider.GetRequiredService<ITempDataDictionaryFactory>();
             var identityService = GetIdentityService(serviceProvider);
+            var rootConfiguration = new RootConfiguration();
+            var emailSender = serviceProvider.GetRequiredService<IEmailSender>();
 
             //Get Controller
             var controller = new IdentityController<UserDto<string>, string, RoleDto<string>, string, string, string,
@@ -573,7 +579,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
                 UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
                 UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
                 UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-                RoleClaimsDto<string>>(identityService, logger, localizer);
+                RoleClaimsDto<string>>(identityService, logger, localizer, rootConfiguration, emailSender);
 
             //Setup TempData for notofication in basecontroller
             var httpContext = serviceProvider.GetRequiredService<IHttpContextAccessor>().HttpContext;
@@ -651,6 +657,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
                 });
 
             services.AddLogging();
+
+            services.AddTransient<IEmailSender, EmailSender>();
 
             return services.BuildServiceProvider();
         }
