@@ -27,6 +27,18 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
+using IdentityServer4;
+using RestSharp;
+using Microsoft.Extensions.Caching.Memory;
+using Iserv.IdentityServer4.BusinessLogic.Services;
+using Iserv.IdentityServer4.BusinessLogic.Sms;
+using Iserv.IdentityServer4.BusinessLogic.Settings;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
+using System.Net.Http;
+using System.Net;
+using Iserv.IdentityServer4.BusinessLogic.Providers;
+using Iserv.IdentityServer4.BusinessLogic.Validators;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
@@ -142,7 +154,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
         {
             var databaseProvider = configuration.GetSection(nameof(DatabaseProviderConfiguration)).Get<DatabaseProviderConfiguration>();
-            
+
             var identityConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
             var configurationConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
             var persistedGrantsConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);
@@ -202,9 +214,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <typeparam name="TUserIdentityRole">User Identity Role class</typeparam>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        public static void AddAuthenticationServices<TIdentityDbContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IConfiguration configuration) where TIdentityDbContext : DbContext
-            where TUserIdentity : class
-            where TUserIdentityRole : class
+        public static void AddAuthenticationServices<TIdentityDbContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IConfiguration configuration)
+            where TIdentityDbContext : DbContext
+            where TUserIdentity : IdentityUser<string>, new()
+            where TUserIdentityRole : IdentityRole<string>
         {
             var loginConfiguration = GetLoginConfiguration(configuration);
             var registrationConfiguration = GetRegistrationConfiguration(configuration);
@@ -217,6 +230,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 {
                     options.User.RequireUniqueEmail = true;
                 })
+                .AddUserStore<CustomUserStore<TUserIdentity, TUserIdentityRole, TIdentityDbContext, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityUserToken, UserIdentityRoleClaim>>()
                 .AddEntityFrameworkStores<TIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -275,12 +289,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <typeparam name="TPersistedGrantDbContext"></typeparam>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        public static IIdentityServerBuilder AddIdentityServer<TConfigurationDbContext, TPersistedGrantDbContext, TUserIdentity>(
+        public static IIdentityServerBuilder AddIdentityServer<TConfigurationDbContext, TPersistedGrantDbContext>(
             this IServiceCollection services,
             IConfiguration configuration)
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
-            where TUserIdentity : class
         {
             var builder = services.AddIdentityServer(options =>
                 {
@@ -291,11 +304,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 })
                 .AddConfigurationStore<TConfigurationDbContext>()
                 .AddOperationalStore<TPersistedGrantDbContext>()
-                .AddAspNetIdentity<TUserIdentity>();
+                .AddAspNetIdentity<UserIdentity>()
+                .AddResourceOwnerValidator<ResourceOwnerValidatorPassword<UserIdentity, string>>();
 
             builder.AddCustomSigningCredential(configuration);
             builder.AddCustomValidationKey(configuration);
-
             return builder;
         }
 
@@ -338,10 +351,16 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         public static void AddAuthorizationPolicies(this IServiceCollection services,
                 IRootConfiguration rootConfiguration)
         {
+            services.AddLocalApiAuthentication();
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(AuthorizationConsts.AdministrationPolicy,
-                    policy => policy.RequireRole(rootConfiguration.AdminConfiguration.AdministrationRole));
+                options.AddPolicy(AuthorizationConsts.AdministrationPolicy, policy => policy.RequireRole(rootConfiguration.AdminConfiguration.AdministrationRole));
+                options.AddPolicy(IdentityServerConstants.LocalApi.PolicyName, policy =>
+                {
+                    policy.AddAuthenticationSchemes(IdentityServerConstants.LocalApi.AuthenticationScheme);
+                    policy.RequireAuthenticatedUser();
+                    // custom requirements
+                });
             });
         }
 
@@ -351,9 +370,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TIdentityDbContext : DbContext
         {
             var configurationDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
-            var persistedGrantsDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);            
+            var persistedGrantsDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);
             var identityDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
-            
+
             var healthChecksBuilder = services.AddHealthChecks()
                 .AddDbContextCheck<TConfigurationDbContext>("ConfigurationDbContext")
                 .AddDbContextCheck<TPersistedGrantDbContext>("PersistedGrantsDbContext")
@@ -399,6 +418,56 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                         throw new NotImplementedException($"Health checks not defined for database provider {databaseProvider.ProviderType}");
                 }
             }
+        }
+
+        public static void AddAccountService<TIdentityDbContext>(this IServiceCollection services, IConfiguration configuration)
+             where TIdentityDbContext : IdentityDbContext<UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>
+        {
+            var repairPwdSMSExpiration = 300;
+            var cacheSetting = configuration?.GetSection("Cache");
+            if (cacheSetting != null)
+            {
+                repairPwdSMSExpiration = int.Parse(cacheSetting["RepairPwdSMSExpiration"]);
+            }
+
+            var smsSetting = new SMSSetting();
+            var smsSettingSection = configuration.GetSection("SMSSetting");
+            smsSettingSection.Bind(smsSetting);
+
+            var portalOptions = new AuthPortalOptions();
+            var portalOptionsSection = configuration.GetSection("Portal");
+            portalOptionsSection.Bind(portalOptions);
+
+            var messageTemplates = new MessageTemplates();
+            var messageTemplatesSection = configuration.GetSection("MessageTemplates");
+            messageTemplatesSection.Bind(messageTemplates);
+
+            services.AddScoped(provider => portalOptions);
+            services.AddScoped(provider => messageTemplates);
+
+            services.AddMemoryCache();
+            services.AddScoped<IPortalService, PortalService>();
+            services.AddHttpClient(PortalService.PortalCode, (provider, client) =>
+            {
+                client.BaseAddress = new Uri(portalOptions.RootAddress);
+                client.DefaultRequestHeaders.Add("cache-control", "no-cache");
+                client.DefaultRequestHeaders.Add("Connection", "keep-alive");
+                client.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate");
+                client.DefaultRequestHeaders.Add("Cache-Control", "no-cache");
+                client.DefaultRequestHeaders.Add("Accept", "*/*");
+            }).ConfigurePrimaryHttpMessageHandler(provider =>
+            {
+                var memoryCache = provider.GetRequiredService<IMemoryCache>();
+                var handler = new HttpClientHandler();
+                handler.CookieContainer = new CookieContainer();
+                handler.CookieContainer.Add(new Uri(portalOptions.RootAddress), new Cookie("JSESSIONID", memoryCache.Get(PortalService.PortalCode)?.ToString()));
+                return handler;
+            });
+            services.AddScoped<ISMSSender>(sender => new SMSSenderTwilio(smsSetting));
+            services.AddScoped<IConfirmBySMSService>(provider =>
+                new ConfirmBySMSService(TimeSpan.FromSeconds(repairPwdSMSExpiration), provider.GetRequiredService<IMemoryCache>(), provider.GetRequiredService<ISMSSender>()));
+            services.AddScoped<IAccountService<UserIdentity, string>, AccountService<TIdentityDbContext, UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>>();
+            services.AddHostedService<AuthPortalHostedService>();
         }
     }
 }

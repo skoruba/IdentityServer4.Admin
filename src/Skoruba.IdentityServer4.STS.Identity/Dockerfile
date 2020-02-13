@@ -5,13 +5,6 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 
-COPY ["BaseService/Core.BaseDataAccessInterfaces/bin/Release/netstandard2.0/Core.BaseDataAccessInterfaces.dll", "BaseService/Core.BaseDataAccessInterfaces/bin/Release/netstandard2.0/"]
-COPY ["BaseService/Core.Interfaces/bin/Release/netstandard2.0/Core.Interfaces.dll", "BaseService/Core.Interfaces/bin/Release/netstandard2.0/"]
-COPY ["BaseService/Infrastucture.AutoMapper/bin/Release/netstandard2.0/Infrastucture.AutoMapper.dll", "BaseService/Infrastucture.AutoMapper/bin/Release/netstandard2.0/"]
-COPY ["BaseService/Infrastucture.Newtonsoft/bin/Release/netstandard2.0/Infrastucture.Newtonsoft.dll", "BaseService/Infrastucture.Newtonsoft/bin/Release/netstandard2.0/"]
-COPY ["BaseService/Infrastucture.Tools/bin/Release/netstandard2.0/Infrastucture.Tools.dll", "BaseService/Infrastucture.Tools/bin/Release/netstandard2.0/"]
-COPY ["BaseService/PostrgresLink2db.BaseDataAcess/bin/Release/netstandard2.0/PostrgresLink2db.BaseDataAccess.dll", "BaseService/PostrgresLink2db.BaseDataAcess/bin/Release/netstandard2.0/"]
-
 COPY ["IdentityServer4/src/Skoruba.IdentityServer4.STS.Identity/Skoruba.IdentityServer4.STS.Identity.csproj", "IdentityServer4/src/Skoruba.IdentityServer4.STS.Identity/"]
 COPY ["IdentityServer4/src/Skoruba.IdentityServer4.Admin.EntityFramework.MySql/Skoruba.IdentityServer4.Admin.EntityFramework.MySql.csproj", "IdentityServer4/src/Skoruba.IdentityServer4.Admin.EntityFramework.MySql/"]
 COPY ["IdentityServer4/src/Skoruba.IdentityServer4.Admin.EntityFramework.Identity/Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj", "IdentityServer4/src/Skoruba.IdentityServer4.Admin.EntityFramework.Identity/"]

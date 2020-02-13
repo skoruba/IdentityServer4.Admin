@@ -78,15 +78,10 @@ namespace Skoruba.IdentityServer4.Admin
             // Add authorization policies for MVC
             RegisterAuthorization(services);
 
-            services.Configure<IdentityOptions>(options =>
-            {
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = true;
-                options.Password.RequiredLength = 6;
-                options.Password.RequiredUniqueChars = 1;
-            });
+            var identityOptions = new IdentityOptions();
+            var identityOptionsSection = Configuration.GetSection("IdentityOptions");
+            identityOptionsSection.Bind(identityOptions);
+            services.Configure<IdentityOptions>(identityOptionsSection);
 
             // Add audit logging
             services.AddAuditEventLogging<AdminAuditLogDbContext, AuditLog>(Configuration);
