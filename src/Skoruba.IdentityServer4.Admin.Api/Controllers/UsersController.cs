@@ -188,8 +188,6 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
                 return BadRequest(_errorResources.CannotSetId());
             }
 
-            await _identityService.GetUserClaimAsync(userClaimDto.UserId.ToString(), userClaimDto.ClaimId);
-
             await _identityService.CreateUserClaimsAsync(userClaimDto);
 
             return Ok();
