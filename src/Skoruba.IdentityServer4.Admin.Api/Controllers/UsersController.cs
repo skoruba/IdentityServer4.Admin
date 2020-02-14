@@ -147,6 +147,9 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         {
             var userRolesDto = _mapper.Map<TUserRolesDto>(role);
 
+            await _identityService.GetUserAsync(userRolesDto.UserId.ToString());
+            await _identityService.GetRoleAsync(userRolesDto.RoleId.ToString());
+            
             await _identityService.CreateUserRoleAsync(userRolesDto);
 
             return Ok();
@@ -184,6 +187,8 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
             {
                 return BadRequest(_errorResources.CannotSetId());
             }
+
+            await _identityService.GetUserClaimAsync(userClaimDto.UserId.ToString(), userClaimDto.ClaimId);
 
             await _identityService.CreateUserClaimsAsync(userClaimDto);
 
