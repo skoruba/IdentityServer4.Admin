@@ -285,3 +285,4 @@ __pycache__/
 /src/Skoruba.IdentityServer4.Admin.Api/Logs/
 /src/Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL/Migrations/
 /src/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer/Migrations/
+*.sln.DotSettings
