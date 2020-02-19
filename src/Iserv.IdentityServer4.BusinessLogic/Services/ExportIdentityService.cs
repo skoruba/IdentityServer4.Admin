@@ -29,8 +29,8 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
             var userFields = JsonConvert.DeserializeObject<Dictionary<string, object>>(objUser.ToString());
 
             string password;
-            var userBase = OpenIdClaimHelpers.GetUserBase<TUser, TKey>(userFields, out password);
-            var claimsNew = OpenIdClaimHelpers.GetClaims<TKey>(userFields);
+            var userBase = UserClaimsHelpers.GetUserBase<TUser, TKey>(userFields, out password);
+            var claimsNew = UserClaimsHelpers.GetClaims<TKey>(userFields);
 
             var user = await _userManager.FindByIdAsync(userBase.Id.ToString());
             if (user == null)
@@ -53,9 +53,9 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
             else
             {
                 var claimsOld = (await _userManager.GetClaimsAsync(user)).ToArray();
-                var claimsToRemove = OpenIdClaimHelpers.ExtractClaimsToRemove(claimsOld, claimsNew);
-                var claimsToAdd = OpenIdClaimHelpers.ExtractClaimsToAdd(claimsOld, claimsNew);
-                var claimsToReplace = OpenIdClaimHelpers.ExtractClaimsToReplace(claimsOld, claimsNew);
+                var claimsToRemove = UserClaimsHelpers.ExtractClaimsToRemove(claimsOld, claimsNew);
+                var claimsToAdd = UserClaimsHelpers.ExtractClaimsToAdd(claimsOld, claimsNew);
+                var claimsToReplace = UserClaimsHelpers.ExtractClaimsToReplace(claimsOld, claimsNew);
 
                 var result = await _userManager.RemoveClaimsAsync(user, claimsToRemove);
                 if (!result.Succeeded)

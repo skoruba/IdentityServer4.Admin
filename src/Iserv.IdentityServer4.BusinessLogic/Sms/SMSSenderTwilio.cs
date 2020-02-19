@@ -4,21 +4,21 @@ using Twilio.Rest.Api.V2010.Account;
 
 namespace Iserv.IdentityServer4.BusinessLogic.Sms
 {
-    public class SMSSenderTwilio : ISMSSender
+    public class SMSSenderTwilio : ISmsSender
     {
-        private readonly SMSSetting _smsSetting;
+        private readonly SmsSetting _smsSetting;
 
-        public SMSSenderTwilio(SMSSetting smsSetting)
+        public SMSSenderTwilio(SmsSetting smsSetting)
         {
             _smsSetting = smsSetting;
         }
 
-        public async Task<string> SendSMSAsync(string numberTo, string message)
+        public async Task<string> SendSmsAsync(string numberTo, string message)
         {
-            return await SendSMSAsync(_smsSetting.DefaultPhoneFrom, numberTo, message);
+            return await SendSmsAsync(_smsSetting.DefaultPhoneFrom, numberTo, message);
         }
 
-        public async Task<string> SendSMSAsync(string numberFrom, string numberTo, string message)
+        public async Task<string> SendSmsAsync(string numberFrom, string numberTo, string message)
         {
             if (string.IsNullOrEmpty(numberFrom) || string.IsNullOrEmpty(numberTo) || string.IsNullOrEmpty(message))
             {

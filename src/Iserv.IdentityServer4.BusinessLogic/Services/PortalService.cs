@@ -18,7 +18,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
 {
     public class PortalService : IPortalService
     {
-        public static readonly string PortalCode = "portal";
+        public const string PortalCode = "portal";
 
         private readonly AuthPortalOptions _options;
         private readonly IHttpClientFactory _clientFactory;
@@ -33,36 +33,31 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
             _logger = logger;
         }
 
-        private async Task<string> readResponseAsStringAsync(HttpResponseMessage response)
+        private async Task<string> ReadResponseAsStringAsync(HttpResponseMessage response)
         {
-            var result = await response.Content?.ReadAsStringAsync();
-            if (!response.IsSuccessStatusCode)
+            var result = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode) return result;
+            switch (response.StatusCode)
             {
-                if (response.StatusCode == HttpStatusCode.Unauthorized)
-                {
+                case HttpStatusCode.Unauthorized:
                     return "Portal. Unauthorized";
-                }
-                else if (response.StatusCode == HttpStatusCode.BadRequest)
+                case HttpStatusCode.BadRequest:
                 {
                     if (!string.IsNullOrWhiteSpace(result)) _logger.LogInformation(result);
                     return "Portal. " + result;
                 }
-                else
-                {
+                default:
                     throw new PortalException(result);
-                }
             }
-            return result;
         }
 
         public async Task UpdateSessionAsync()
         {
-            var handler = new HttpClientHandler();
-            handler.CookieContainer = new CookieContainer();
-            var client = new HttpClient(handler);
-            client.BaseAddress = new Uri(_options.RootAddress);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", _options.Login, _options.Password))));
-            await client.GetAsync("");
+            var handler = new HttpClientHandler {CookieContainer = new CookieContainer()};
+            var client = new HttpClient(handler) {BaseAddress = new Uri(_options.RootAddress)};
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes(
+                $"{_options.Login}:{_options.Password}")));
+            await client.GetAsync("tehprisEE_lookups");
             var cookie = handler.CookieContainer.GetCookies(new Uri(_options.RootAddress)).FirstOrDefault();
             if (cookie != null)
             {
@@ -82,15 +77,11 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
             if (string.IsNullOrWhiteSpace(password))
                 throw new ValidationException("Пароль пользователя не указан");
             var client = _clientFactory.CreateClient(PortalCode);
-            var response = await client.PostAsync("tehprisEE_auth/signin", new StringContent(JsonConvert.SerializeObject(new { email = userName, password }), Encoding.UTF8));
-            var txt = await readResponseAsStringAsync(response);
-            if (response.IsSuccessStatusCode)
-            {
-                var result = JsonConvert.DeserializeObject<PortalAuthResultSuccess>(txt);
-                if (result != null)
-                    return new PortalResult<Guid>() { Value = result.UserId };
-            }
-            return new PortalResult<Guid>() { IsError = true, Message = txt };
+            var response = await client.PostAsync("tehprisEE_auth/signin", new StringContent(JsonConvert.SerializeObject(new {email = userName, password}), Encoding.UTF8));
+            var txt = await ReadResponseAsStringAsync(response);
+            if (!response.IsSuccessStatusCode) return new PortalResult<Guid>() {IsError = true, Message = txt};
+            var result = JsonConvert.DeserializeObject<PortalAuthResultSuccess>(txt);
+            return result != null ? new PortalResult<Guid>() {Value = result.UserId} : new PortalResult<Guid>() {IsError = true, Message = txt};
         }
 
         public async Task<PortalResult<Dictionary<string, object>>> GetUserAsync(Guid idext)
@@ -99,82 +90,58 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
                 throw new ValidationException("Внешний Id пользователя на портале пустой");
             var client = _clientFactory.CreateClient(PortalCode);
             var response = await client.GetAsync("tehprisEE_profiles/" + idext);
-            var txt = await readResponseAsStringAsync(response);
-            if (response.IsSuccessStatusCode)
+            var txt = await ReadResponseAsStringAsync(response);
+            if (!response.IsSuccessStatusCode) return new PortalResult<Dictionary<string, object>>() {IsError = true, Message = txt};
+            try
             {
-                try
-                {
-                    return new PortalResult<Dictionary<string, object>>() { Value = JsonConvert.DeserializeObject<Dictionary<string, object>>(txt) };
-                }
-                catch
-                {
-                    new PortalResult<Dictionary<string, object>>() { IsError = true, Message = txt };
-                }
+                return new PortalResult<Dictionary<string, object>>() {Value = JsonConvert.DeserializeObject<Dictionary<string, object>>(txt)};
             }
-            return new PortalResult<Dictionary<string, object>>() { IsError = true, Message = txt };
+            catch
+            {
+                return new PortalResult<Dictionary<string, object>>() {IsError = true, Message = txt};
+            }
         }
 
-        public async Task<PortalResult<Guid>> RegistrateAsync(PortalRegistrationData userProfile)
+        public async Task<PortalResult<Guid>> RegisterAsync(PortalRegistrationData userProfile)
         {
             var client = _clientFactory.CreateClient(PortalCode);
             var response = await client.PostAsync("tehprisEE_auth/register", new StringContent(JsonConvert.SerializeObject(userProfile), Encoding.UTF8));
-            var txt = await readResponseAsStringAsync(response);
-            if (response.IsSuccessStatusCode)
-            {
-                var result = JsonConvert.DeserializeObject<PortalAuthResultSuccess>(txt);
-                if (result != null)
-                    return new PortalResult<Guid>() { Value = result.UserId };
-            }
-            return new PortalResult<Guid>() { IsError = true, Message = txt };
+            var txt = await ReadResponseAsStringAsync(response);
+            if (!response.IsSuccessStatusCode) return new PortalResult<Guid>() {IsError = true, Message = txt};
+            var result = JsonConvert.DeserializeObject<PortalAuthResultSuccess>(txt);
+            return result != null ? new PortalResult<Guid>() {Value = result.UserId} : new PortalResult<Guid>() {IsError = true, Message = txt};
         }
 
         public async Task<PortalResult> UpdateUserAsync(Guid idext, Dictionary<string, object> values, IEnumerable<FileModel> files = null)
         {
             var client = _clientFactory.CreateClient(PortalCode);
-            var multiForm = new MultipartFormDataContent();
-            multiForm.Add(new StringContent(JsonConvert.SerializeObject(values), Encoding.UTF8), "attributes");
+            var multiForm = new MultipartFormDataContent {{new StringContent(JsonConvert.SerializeObject(values), Encoding.UTF8), "attributes"}};
             foreach (var file in files)
             {
                 var imageContent = new ByteArrayContent(file.FileData);
                 imageContent.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
                 multiForm.Add(imageContent, file.Tag, file.Name);
             }
-        
+
             var response = await client.PostAsync("tehprisEE_profiles/" + idext, multiForm);
-            var txt = await readResponseAsStringAsync(response);
-            if (response.IsSuccessStatusCode)
-            {
-                return new PortalResult() { Message = txt };
-            }
-            return new PortalResult() { IsError = true, Message = txt };
+            var txt = await ReadResponseAsStringAsync(response);
+            return response.IsSuccessStatusCode ? new PortalResult() {Message = txt} : new PortalResult() {IsError = true, Message = txt};
         }
 
-        ///// <summary>
-        ///// Изменение пароля профиля
-        ///// </summary>
-        ///// <param name="extProfileId">Внешний идентификатор профиля</param>
-        ///// <param name="password">Новый пароль профиля</param>
-        ///// <returns></returns>
-        //public async Task<ResponseResult<string>> SetPasswordAsync(Guid extProfileId, string password)
-        //{
-        //    var request = new RestRequest("tehprisEE_profiles/{userid}", Method.POST);
-        //    request.AddParameter(new Parameter("userid", extProfileId, ParameterType.UrlSegment));
-        //    request.AlwaysMultipartFormData = true;
-        //    request.AddHeader("cache-control", "no-cache");
-        //    request.AddParameter("attributes\"\r\nContent-Type: text/plain; charset=UTF-8\"", $@"{{ ""password"": ""{ password }"" }}", ParameterType.GetOrPost);
+        public async Task<PortalResult> UpdatePasswordAsync(Guid idext, string password)
+        {
+            var client = _clientFactory.CreateClient(PortalCode);
+            var response = await client.PostAsync("tehprisEE_profiles/" + idext, new StringContent(JsonConvert.SerializeObject(new {password}), Encoding.UTF8));
+            var txt = await ReadResponseAsStringAsync(response);
+            return !response.IsSuccessStatusCode ? new PortalResult() {IsError = true, Message = txt} : new PortalResult();
+        }
 
-        //    var response = await _requestSender.SendRequestAsync(request);
-        //    var result = new ResponseResult<string> { HttpStatusCode = response.StatusCode, Content = response.Content };
-
-        //    if (response.StatusCode == HttpStatusCode.OK)
-        //    {
-        //        result.Value = response.Content;
-        //        return result;
-        //    }
-
-        //    result.IsError = true;
-        //    result.Message = result.Content;
-        //    return result;
-        //}
+        public async Task<PortalResult> RestorePasswordByEmailAsync(string email)
+        {
+            var client = _clientFactory.CreateClient(PortalCode);
+            var response = await client.PostAsync("tehprisEE_auth/restore", new StringContent(JsonConvert.SerializeObject(new {email}), Encoding.UTF8));
+            var txt = await ReadResponseAsStringAsync(response);
+            return !response.IsSuccessStatusCode ? new PortalResult() {IsError = true, Message = txt} : new PortalResult();
+        }
     }
 }

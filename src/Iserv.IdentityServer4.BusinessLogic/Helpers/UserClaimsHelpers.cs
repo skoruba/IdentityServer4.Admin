@@ -4,21 +4,23 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Principal;
+using IdentityServer4.Extensions;
 
 namespace Iserv.IdentityServer4.BusinessLogic.Helpers
 {
-    public static class OpenIdClaimHelpers
+    public static class UserClaimsHelpers
     {
-        private readonly static string _fieldId = "id";
-        private readonly static string _fieldIdExt = "idext";
-        private readonly static string _fieldLogin = "login";
-        private readonly static string _fieldPassword = "password";
-        private readonly static string[] _fieldsEmail = new string[] { "email", "e_mail" };
-        private readonly static string[] _fieldsPhone = new string[] { "phone", "phone_number" };
-        private readonly static string _fieldEmailConfirmed = "emailConfirmed";
-        private readonly static string _fieldPhoneConfirmed = "phoneConfirmed";
+        private const string FieldId = "id";
+        private const string FieldIdExt = "idext";
+        private const string FieldLogin = "login";
+        private const string FieldPassword = "password";
+        private static readonly string[] FieldsEmail = new string[] {"email", "e_mail"};
+        private static readonly string[] FieldsPhone = new string[] {"phone", "phone_number"};
+        private const string FieldEmailConfirmed = "emailConfirmed";
+        private const string FieldPhoneConfirmed = "phoneConfirmed";
 
-        private static void validNotNullField(Dictionary<string, object> item, string fieldName)
+        private static void ValidNotNullField(Dictionary<string, object> item, string fieldName)
         {
             if (!item.ContainsKey(fieldName))
                 throw new ValidationException($"Field '{fieldName}' is not defined");
@@ -38,15 +40,41 @@ namespace Iserv.IdentityServer4.BusinessLogic.Helpers
             return GetUserBase<TUser, TKey>(userFields, true, out password);
         }
 
-        private static object getValue(Dictionary<string, object> userFields, string[] keys)
+        private static object GetValue(IReadOnlyDictionary<string, object> userFields, string[] keys)
         {
-            foreach (var key in keys)
-            {
-                var value = userFields.GetValueOrDefault(key);
-                if (value != null)
-                    return value;
-            }
-            return null;
+            return keys.Select(key => userFields.GetValueOrDefault(key)).FirstOrDefault(value => value != null);
+        }
+        
+        public static Guid GetIdext(IEnumerable<Claim> claims)
+        {
+            var val = claims.FirstOrDefault(c => c.Type == FieldIdExt)?.Value;
+            if (string.IsNullOrWhiteSpace(val))
+                throw new ValidationException($"Invalid field '{FieldIdExt}'");
+            if (!Guid.TryParse(val, out var idext))
+                throw new ValidationException($"Invalid field '{FieldIdExt}'");
+            return idext;
+        }
+
+        public static Guid GetIdext(IIdentity identity)
+        {
+            return GetIdext(identity.GetAuthenticationMethods());
+        }
+
+        public static Guid GetIdext(Dictionary<string, object> userFields)
+        {
+            if (!Guid.TryParse(userFields[FieldIdExt].ToString(), out var idext))
+                throw new ValidationException($"Invalid field '{FieldIdExt}'");
+            return idext;
+        }
+
+        public static string GetEmail(Dictionary<string, object> userFields)
+        {
+            return GetValue(userFields, FieldsEmail)?.ToString();
+        }
+
+        public static string GetPhone(Dictionary<string, object> userFields)
+        {
+            return GetValue(userFields, FieldsPhone)?.ToString();
         }
 
         private static TUser GetUserBase<TUser, TKey>(Dictionary<string, object> userFields, bool isPassword, out string password)
@@ -54,39 +82,38 @@ namespace Iserv.IdentityServer4.BusinessLogic.Helpers
             where TKey : IEquatable<TKey>
         {
             TKey id = default;
-            if (userFields.ContainsKey(_fieldId))
+            if (userFields.ContainsKey(FieldId))
             {
-                validNotNullField(userFields, _fieldId);
-                id = (TKey)Convert.ChangeType(userFields[_fieldId], typeof(TKey));
+                ValidNotNullField(userFields, FieldId);
+                id = (TKey) Convert.ChangeType(userFields[FieldId], typeof(TKey));
                 if (id == null || id.Equals(default))
                 {
-                    throw new ValidationException($"Invalid field '{_fieldId}'");
+                    throw new ValidationException($"Invalid field '{FieldId}'");
                 }
             }
 
-            validNotNullField(userFields, _fieldIdExt);
-            Guid idExt;
-            if (!Guid.TryParse(userFields[_fieldIdExt].ToString(), out idExt))
+            ValidNotNullField(userFields, FieldIdExt);
+            if (!Guid.TryParse(userFields[FieldIdExt].ToString(), out var idext))
             {
-                throw new ValidationException($"Invalid field '{_fieldIdExt}'");
+                throw new ValidationException($"Invalid field '{FieldIdExt}'");
             }
 
             password = null;
             if (isPassword)
             {
-                validNotNullField(userFields, _fieldPassword);
-                password = userFields[_fieldPassword]?.ToString();
+                ValidNotNullField(userFields, FieldPassword);
+                password = userFields[FieldPassword]?.ToString();
                 if (string.IsNullOrWhiteSpace(password))
-                    throw new ValidationException($"Invalid field '{_fieldPassword}'");
+                    throw new ValidationException($"Invalid field '{FieldPassword}'");
             }
 
-            var email = getValue(userFields, _fieldsEmail)?.ToString();
-            var phone = getValue(userFields, _fieldsPhone)?.ToString();
-            
-            if (string.IsNullOrWhiteSpace(email) && string.IsNullOrWhiteSpace(phone))
-                throw new ValidationException($"Fields '{string.Join(", ", _fieldsEmail)}' and '{string.Join(", ", _fieldsPhone)}' is not defined");
+            var email = GetEmail(userFields);
+            var phone = GetPhone(userFields);
 
-            var login = userFields.GetValueOrDefault(_fieldLogin)?.ToString();
+            if (string.IsNullOrWhiteSpace(email) && string.IsNullOrWhiteSpace(phone))
+                throw new ValidationException($"Fields '{string.Join(", ", FieldsEmail)}' and '{string.Join(", ", FieldsPhone)}' is not defined");
+
+            var login = userFields.GetValueOrDefault(FieldLogin)?.ToString();
             if (string.IsNullOrWhiteSpace(login))
             {
                 login = string.IsNullOrWhiteSpace(email) ? phone : email;
@@ -98,6 +125,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Helpers
                 if (!vEmail.IsValid(email))
                     throw new ValidationException($"Invalid email. {vEmail.ErrorMessage}");
             }
+
             if (!string.IsNullOrWhiteSpace(phone))
             {
                 var vPhone = new PhoneAttribute();
@@ -105,31 +133,34 @@ namespace Iserv.IdentityServer4.BusinessLogic.Helpers
                     throw new ValidationException($"Invalid phone. {vPhone.ErrorMessage}");
             }
 
-            var emailConfirmed = userFields.GetValueOrDefault(_fieldEmailConfirmed);
-            var phoneConfirmed = userFields.GetValueOrDefault(_fieldPhoneConfirmed);
+            var emailConfirmed = userFields.GetValueOrDefault(FieldEmailConfirmed);
+            var phoneConfirmed = userFields.GetValueOrDefault(FieldPhoneConfirmed);
 
             var user = new TUser
             {
-                Idext = idExt,
+                Idext = idext,
                 UserName = login,
                 Email = email,
-                EmailConfirmed = emailConfirmed is bool && (bool)emailConfirmed == true,
+                EmailConfirmed = emailConfirmed is bool && (bool) emailConfirmed == true,
                 PhoneNumber = phone,
-                PhoneNumberConfirmed = phoneConfirmed is bool && (bool)phoneConfirmed == true,
+                PhoneNumberConfirmed = phoneConfirmed is bool && (bool) phoneConfirmed == true,
             };
             if (id != null && !id.Equals(default))
             {
                 user.Id = id;
             }
+
             return user;
         }
 
         public static Claim[] GetClaims<TUserKey>(Dictionary<string, object> userFields) where TUserKey : IEquatable<TUserKey>
         {
-            return userFields?.Where(u => u.Value != null && u.Key != _fieldId && u.Key != _fieldIdExt
-                && u.Key != _fieldLogin && u.Key != _fieldPassword
-                && !_fieldsEmail.Contains(u.Key) && u.Key != _fieldEmailConfirmed
-                && !_fieldsPhone.Contains(u.Key) && u.Key != _fieldPhoneConfirmed).Select(u => new Claim(u.Key, u.Value.ToString())).ToArray();
+            return userFields?.Where(u => u.Value != null && u.Key != FieldId && u.Key != FieldIdExt
+                                          && u.Key != FieldLogin && u.Key != FieldPassword
+                                          && !FieldsEmail.Contains(u.Key) && u.Key != FieldEmailConfirmed
+                                          && !FieldsPhone.Contains(u.Key) && u.Key != FieldPhoneConfirmed)
+                .Select(u => new Claim(u.Key, u.Value.ToString()))
+                .ToArray();
         }
 
         public static IList<Claim> ExtractClaimsToRemove(Claim[] claimsOld, Claim[] claimsNew)
@@ -143,6 +174,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Helpers
                     claimsToRemove.Add(claimOld);
                 }
             }
+
             return claimsToRemove;
         }
 
@@ -155,12 +187,14 @@ namespace Iserv.IdentityServer4.BusinessLogic.Helpers
                 {
                     continue;
                 }
+
                 var claimOld = claimsOld?.FirstOrDefault(c => c.Type == claimNew.Type);
                 if (claimOld == null || string.IsNullOrWhiteSpace(claimOld.Value))
                 {
                     claimsToAdd.Add(claimNew);
                 }
             }
+
             return claimsToAdd;
         }
 
@@ -175,6 +209,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Helpers
                     claimsToReplace.Add(new Tuple<Claim, Claim>(claimOld, claimNew));
                 }
             }
+
             return claimsToReplace;
         }
     }

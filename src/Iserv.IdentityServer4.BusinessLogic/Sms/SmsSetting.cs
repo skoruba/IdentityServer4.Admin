@@ -3,7 +3,7 @@
     /// <summary>
     /// Параметры отправки смс
     /// </summary>
-    public class SMSSetting
+    public class SmsSetting
     {
         /// <summary>
         /// Идентификатор аккаунта

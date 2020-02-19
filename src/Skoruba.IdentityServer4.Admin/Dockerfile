@@ -5,20 +5,20 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 
-COPY ["IdentityServer4/src/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj", "IdentityServer4/src/Skoruba.IdentityServer4.Admin/"]
-COPY ["IdentityServer4/src/Skoruba.IdentityServer4.Admin.EntityFramework.MySql/Skoruba.IdentityServer4.Admin.EntityFramework.MySql.csproj", "IdentityServer4/src/Skoruba.IdentityServer4.Admin.EntityFramework.MySql/"]
-COPY ["IdentityServer4/src/Skoruba.IdentityServer4.Admin.EntityFramework.Identity/Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj", "IdentityServer4/src/Skoruba.IdentityServer4.Admin.EntityFramework.Identity/"]
-COPY ["IdentityServer4/src/Skoruba.IdentityServer4.Admin.EntityFramework/Skoruba.IdentityServer4.Admin.EntityFramework.csproj", "IdentityServer4/src/Skoruba.IdentityServer4.Admin.EntityFramework/"]
-COPY ["IdentityServer4/src/Skoruba.IdentityServer4.Admin.EntityFramework.Extensions/Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.csproj", "IdentityServer4/src/Skoruba.IdentityServer4.Admin.EntityFramework.Extensions/"]
-COPY ["IdentityServer4/src/Skoruba.IdentityServer4.Admin.EntityFramework.Shared/Skoruba.IdentityServer4.Admin.EntityFramework.Shared.csproj", "IdentityServer4/src/Skoruba.IdentityServer4.Admin.EntityFramework.Shared/"]
-COPY ["IdentityServer4/src/Skoruba.IdentityServer4.Admin.BusinessLogic/Skoruba.IdentityServer4.Admin.BusinessLogic.csproj", "IdentityServer4/src/Skoruba.IdentityServer4.Admin.BusinessLogic/"]
-COPY ["IdentityServer4/src/Skoruba.IdentityServer4.Admin.BusinessLogic.Shared/Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.csproj", "IdentityServer4/src/Skoruba.IdentityServer4.Admin.BusinessLogic.Shared/"]
-COPY ["IdentityServer4/src/Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL/Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.csproj", "IdentityServer4/src/Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL/"]
-COPY ["IdentityServer4/src/Skoruba.IdentityServer4.Admin.BusinessLogic.Identity/Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.csproj", "IdentityServer4/src/Skoruba.IdentityServer4.Admin.BusinessLogic.Identity/"]
-COPY ["IdentityServer4/src/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.csproj", "IdentityServer4/src/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer/"]
-RUN dotnet restore "IdentityServer4/src/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj"
+COPY ["src/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj", "src/Skoruba.IdentityServer4.Admin/"]
+COPY ["src/Skoruba.IdentityServer4.Admin.EntityFramework.MySql/Skoruba.IdentityServer4.Admin.EntityFramework.MySql.csproj", "src/Skoruba.IdentityServer4.Admin.EntityFramework.MySql/"]
+COPY ["src/Skoruba.IdentityServer4.Admin.EntityFramework.Identity/Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj", "src/Skoruba.IdentityServer4.Admin.EntityFramework.Identity/"]
+COPY ["src/Skoruba.IdentityServer4.Admin.EntityFramework/Skoruba.IdentityServer4.Admin.EntityFramework.csproj", "src/Skoruba.IdentityServer4.Admin.EntityFramework/"]
+COPY ["src/Skoruba.IdentityServer4.Admin.EntityFramework.Extensions/Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.csproj", "src/Skoruba.IdentityServer4.Admin.EntityFramework.Extensions/"]
+COPY ["src/Skoruba.IdentityServer4.Admin.EntityFramework.Shared/Skoruba.IdentityServer4.Admin.EntityFramework.Shared.csproj", "src/Skoruba.IdentityServer4.Admin.EntityFramework.Shared/"]
+COPY ["src/Skoruba.IdentityServer4.Admin.BusinessLogic/Skoruba.IdentityServer4.Admin.BusinessLogic.csproj", "src/Skoruba.IdentityServer4.Admin.BusinessLogic/"]
+COPY ["src/Skoruba.IdentityServer4.Admin.BusinessLogic.Shared/Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.csproj", "src/Skoruba.IdentityServer4.Admin.BusinessLogic.Shared/"]
+COPY ["src/Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL/Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.csproj", "src/Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL/"]
+COPY ["src/Skoruba.IdentityServer4.Admin.BusinessLogic.Identity/Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.csproj", "src/Skoruba.IdentityServer4.Admin.BusinessLogic.Identity/"]
+COPY ["src/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.csproj", "src/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer/"]
+RUN dotnet restore "src/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj"
 COPY . .
-WORKDIR "/src/IdentityServer4/src/Skoruba.IdentityServer4.Admin"
+WORKDIR "/src/src/Skoruba.IdentityServer4.Admin"
 RUN dotnet build "Skoruba.IdentityServer4.Admin.csproj" -c Release -o /app/build
 
 FROM build AS publish

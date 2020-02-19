@@ -56,18 +56,12 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 
             services.TryAddTransient(typeof(IGenericControllerLocalizer<>), typeof(GenericControllerLocalizer<>));
 
-            var mvcBuilder = services.AddControllersWithViews(o =>
-                {
-                    o.Conventions.Add(new GenericControllerRouteConvention());
-                })
+            var mvcBuilder = services.AddControllersWithViews(o => { o.Conventions.Add(new GenericControllerRouteConvention()); })
                 .AddViewLocalization(
                     LanguageViewLocationExpanderFormat.Suffix,
                     opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; })
                 .AddDataAnnotationsLocalization()
-                .ConfigureApplicationPartManager(m =>
-                {
-                    m.FeatureProviders.Add(new GenericTypeControllerFeatureProvider<TUser, TKey>());
-                });
+                .ConfigureApplicationPartManager(m => { m.FeatureProviders.Add(new GenericTypeControllerFeatureProvider<TUser, TKey>()); });
 
             var cultureConfiguration = configuration.GetSection(nameof(CultureConfiguration)).Get<CultureConfiguration>();
             services.Configure<RequestLocalizationOptions>(
@@ -75,16 +69,17 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 {
                     // If cultures are specified in the configuration, use them (making sure they are among the available cultures),
                     // otherwise use all the available cultures
-                    var supportedCultureCodes = (cultureConfiguration?.Cultures?.Count > 0 ?
-                        cultureConfiguration.Cultures.Intersect(CultureConfiguration.AvailableCultures) :
-                        CultureConfiguration.AvailableCultures).ToArray();
+                    var supportedCultureCodes = (cultureConfiguration?.Cultures?.Count > 0
+                        ? cultureConfiguration.Cultures.Intersect(CultureConfiguration.AvailableCultures)
+                        : CultureConfiguration.AvailableCultures).ToArray();
 
                     if (!supportedCultureCodes.Any()) supportedCultureCodes = CultureConfiguration.AvailableCultures;
                     var supportedCultures = supportedCultureCodes.Select(c => new CultureInfo(c)).ToList();
 
                     // If the default culture is specified use it, otherwise use CultureConfiguration.DefaultRequestCulture ("en")
-                    var defaultCultureCode = string.IsNullOrEmpty(cultureConfiguration?.DefaultCulture) ?
-                        CultureConfiguration.DefaultRequestCulture : cultureConfiguration?.DefaultCulture;
+                    var defaultCultureCode = string.IsNullOrEmpty(cultureConfiguration?.DefaultCulture)
+                        ? CultureConfiguration.DefaultRequestCulture
+                        : cultureConfiguration?.DefaultCulture;
 
                     // If the default culture is not among the supported cultures, use the first supported culture as default
                     if (!supportedCultureCodes.Contains(defaultCultureCode)) defaultCultureCode = supportedCultureCodes.FirstOrDefault();
@@ -162,16 +157,20 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             switch (databaseProvider.ProviderType)
             {
                 case DatabaseProviderType.SqlServer:
-                    services.RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString);
+                    services.RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext>(identityConnectionString,
+                        configurationConnectionString, persistedGrantsConnectionString);
                     break;
                 case DatabaseProviderType.PostgreSQL:
-                    services.RegisterNpgSqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString);
+                    services.RegisterNpgSqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext>(identityConnectionString,
+                        configurationConnectionString, persistedGrantsConnectionString);
                     break;
                 case DatabaseProviderType.MySql:
-                    services.RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString);
+                    services.RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext>(identityConnectionString, configurationConnectionString,
+                        persistedGrantsConnectionString);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(databaseProvider.ProviderType), $@"The value needs to be one of {string.Join(", ", Enum.GetNames(typeof(DatabaseProviderType)))}.");
+                    throw new ArgumentOutOfRangeException(nameof(databaseProvider.ProviderType),
+                        $@"The value needs to be one of {string.Join(", ", Enum.GetNames(typeof(DatabaseProviderType)))}.");
             }
         }
 
@@ -195,15 +194,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             var configurationDatabaseName = Guid.NewGuid().ToString();
             var operationalDatabaseName = Guid.NewGuid().ToString();
 
-            services.AddConfigurationDbContext<TConfigurationDbContext>(options =>
-            {
-                options.ConfigureDbContext = b => b.UseInMemoryDatabase(configurationDatabaseName);
-            });
+            services.AddConfigurationDbContext<TConfigurationDbContext>(options => { options.ConfigureDbContext = b => b.UseInMemoryDatabase(configurationDatabaseName); });
 
-            services.AddOperationalDbContext<TPersistedGrantDbContext>(options =>
-            {
-                options.ConfigureDbContext = b => b.UseInMemoryDatabase(operationalDatabaseName);
-            });
+            services.AddOperationalDbContext<TPersistedGrantDbContext>(options => { options.ConfigureDbContext = b => b.UseInMemoryDatabase(operationalDatabaseName); });
         }
 
         /// <summary>
@@ -226,11 +219,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 .AddSingleton(registrationConfiguration)
                 .AddSingleton(loginConfiguration)
                 .AddScoped<UserResolver<TUserIdentity>>()
-                .AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
-                {
-                    options.User.RequireUniqueEmail = true;
-                })
-                .AddUserStore<CustomUserStore<TUserIdentity, TUserIdentityRole, TIdentityDbContext, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityUserToken, UserIdentityRoleClaim>>()
+                .AddIdentity<TUserIdentity, TUserIdentityRole>(options => { options.User.RequireUniqueEmail = true; })
+                .AddUserStore<CustomUserStore<TUserIdentity, TUserIdentityRole, TIdentityDbContext, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin,
+                    UserIdentityUserToken, UserIdentityRoleClaim>>()
                 .AddEntityFrameworkStores<TIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -284,7 +275,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <summary>
         /// Add configuration for IdentityServer4
         /// </summary>
-        /// <typeparam name="TUserIdentity"></typeparam>
         /// <typeparam name="TConfigurationDbContext"></typeparam>
         /// <typeparam name="TPersistedGrantDbContext"></typeparam>
         /// <param name="services"></param>
@@ -349,7 +339,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <param name="services"></param>
         /// <param name="rootConfiguration"></param>
         public static void AddAuthorizationPolicies(this IServiceCollection services,
-                IRootConfiguration rootConfiguration)
+            IRootConfiguration rootConfiguration)
         {
             services.AddLocalApiAuthentication();
             services.AddAuthorization(options =>
@@ -421,17 +411,18 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         }
 
         public static void AddAccountService<TIdentityDbContext>(this IServiceCollection services, IConfiguration configuration)
-             where TIdentityDbContext : IdentityDbContext<UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>
+            where TIdentityDbContext : IdentityDbContext<UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin,
+                UserIdentityRoleClaim, UserIdentityUserToken>
         {
-            var repairPwdSMSExpiration = 300;
-            var cacheSetting = configuration?.GetSection("Cache");
+            var repairPwdSmsExpiration = 300;
+            var cacheSetting = configuration.GetSection("Cache");
             if (cacheSetting != null)
             {
-                repairPwdSMSExpiration = int.Parse(cacheSetting["RepairPwdSMSExpiration"]);
+                repairPwdSmsExpiration = int.Parse(cacheSetting["RepairPwdSMSExpiration"]);
             }
 
-            var smsSetting = new SMSSetting();
-            var smsSettingSection = configuration.GetSection("SMSSetting");
+            var smsSetting = new SmsSetting();
+            var smsSettingSection = configuration.GetSection("SmsSetting");
             smsSettingSection.Bind(smsSetting);
 
             var portalOptions = new AuthPortalOptions();
@@ -458,15 +449,25 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             }).ConfigurePrimaryHttpMessageHandler(provider =>
             {
                 var memoryCache = provider.GetRequiredService<IMemoryCache>();
+                var cookie = memoryCache.Get(PortalService.PortalCode)?.ToString();
+                if (string.IsNullOrWhiteSpace(cookie))
+                {
+                    var portalService = provider.GetRequiredService<IPortalService>();
+                    portalService.UpdateSessionAsync().Wait();
+                    cookie = memoryCache.Get(PortalService.PortalCode)?.ToString();
+                }
                 var handler = new HttpClientHandler();
                 handler.CookieContainer = new CookieContainer();
-                handler.CookieContainer.Add(new Uri(portalOptions.RootAddress), new Cookie("JSESSIONID", memoryCache.Get(PortalService.PortalCode)?.ToString()));
+                handler.CookieContainer.Add(new Uri(portalOptions.RootAddress), new Cookie("JSESSIONID", cookie));
                 return handler;
             });
-            services.AddScoped<ISMSSender>(sender => new SMSSenderTwilio(smsSetting));
-            services.AddScoped<IConfirmBySMSService>(provider =>
-                new ConfirmBySMSService(TimeSpan.FromSeconds(repairPwdSMSExpiration), provider.GetRequiredService<IMemoryCache>(), provider.GetRequiredService<ISMSSender>()));
-            services.AddScoped<IAccountService<UserIdentity, string>, AccountService<TIdentityDbContext, UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>>();
+            services.AddScoped<ISmsSender>(sender => new SMSSenderTwilio(smsSetting));
+            services.AddScoped<IConfirmService>(provider =>
+                new ConfirmService(TimeSpan.FromSeconds(repairPwdSmsExpiration), provider.GetRequiredService<IMemoryCache>(), provider.GetRequiredService<IEmailSender>(),
+                    provider.GetRequiredService<ISmsSender>()));
+            services
+                .AddScoped<IAccountService<UserIdentity, string>, AccountService<TIdentityDbContext, UserIdentity, UserIdentityRole, string, UserIdentityUserClaim,
+                    UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>>();
             services.AddHostedService<AuthPortalHostedService>();
         }
     }

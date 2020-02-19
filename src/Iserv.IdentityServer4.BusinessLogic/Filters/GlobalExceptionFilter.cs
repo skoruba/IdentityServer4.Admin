@@ -18,7 +18,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Filters
         public void OnException(ExceptionContext context)
         {
             var status = context.HttpContext.Response.StatusCode == HttpStatusCode.OK.GetHashCode() ? HttpStatusCode.BadRequest : (HttpStatusCode)context.HttpContext.Response.StatusCode;
-            string title = "Identity Server 4";
+            var title = "Identity Server 4";
             if (context.Exception is PortalException) {
                 title = "Portal";
             }
@@ -26,12 +26,13 @@ namespace Iserv.IdentityServer4.BusinessLogic.Filters
             {
                 _logger.LogError(context.Exception.Message, context.Exception);
             }
-            context.Result = new JsonResult(new
+            context.Result = new BadRequestObjectResult(new
             {
                 status,
                 title,
                 error = context.Exception.Message
             });
+            context.ExceptionHandled = true;
         }
     }
 }
