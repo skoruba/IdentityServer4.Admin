@@ -11,7 +11,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 {
     [ApiController]
     [Authorize(AuthorizationConsts.SealedPolicy)]
-    [Route("[controller]")]
+    [Route("api")]
     public class SealedController<TUser, TKey> : Controller
         where TUser : UserIdentity<TKey>, new()
         where TKey : IEquatable<TKey>
