@@ -46,8 +46,8 @@ namespace Skoruba.IdentityServer4.STS.Identity
             JsonConvert.DefaultSettings = () => new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore,
-                Formatting = Formatting.Indented,
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
+                Formatting = Formatting.Indented
+                // ContractResolver = new CamelCasePropertyNamesContractResolver()
             };
             services.AddMvc(config =>
             {
@@ -56,7 +56,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
             {
                 opt.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                 opt.SerializerSettings.Formatting = Formatting.Indented;
-                opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                // opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
 
             // Add all dependencies for Asp.Net Core Identity in MVC - these dependencies are injected into generic Controllers

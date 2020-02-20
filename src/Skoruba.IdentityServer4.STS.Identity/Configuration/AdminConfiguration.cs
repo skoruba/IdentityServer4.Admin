@@ -7,5 +7,7 @@
         public string FaviconUri { get; set; }
         public string IdentityAdminBaseUrl { get; set; }
         public string AdministrationRole { get; set; }
+        public string LocalApiResource { get; set; }
+        public string ExternalApiResource { get; set; }
     }
 }

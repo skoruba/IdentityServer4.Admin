@@ -28,7 +28,6 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using IdentityServer4;
-using RestSharp;
 using Microsoft.Extensions.Caching.Memory;
 using Iserv.IdentityServer4.BusinessLogic.Services;
 using Iserv.IdentityServer4.BusinessLogic.Sms;
@@ -38,6 +37,7 @@ using System.Net.Http;
 using System.Net;
 using Iserv.IdentityServer4.BusinessLogic.Providers;
 using Iserv.IdentityServer4.BusinessLogic.Validators;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
@@ -344,12 +344,17 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             services.AddLocalApiAuthentication();
             services.AddAuthorization(options =>
             {
+                options.AddPolicy(AuthorizationConsts.SealedPolicy, policy =>
+                {
+                    policy.AddAuthenticationSchemes(IdentityServerConstants.LocalApi.AuthenticationScheme);
+                    policy.RequireScope(rootConfiguration.AdminConfiguration.LocalApiResource);
+                });
                 options.AddPolicy(AuthorizationConsts.AdministrationPolicy, policy => policy.RequireRole(rootConfiguration.AdminConfiguration.AdministrationRole));
                 options.AddPolicy(IdentityServerConstants.LocalApi.PolicyName, policy =>
                 {
                     policy.AddAuthenticationSchemes(IdentityServerConstants.LocalApi.AuthenticationScheme);
                     policy.RequireAuthenticatedUser();
-                    // custom requirements
+                    policy.RequireScope(rootConfiguration.AdminConfiguration.ExternalApiResource);
                 });
             });
         }
@@ -456,6 +461,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     portalService.UpdateSessionAsync().Wait();
                     cookie = memoryCache.Get(PortalService.PortalCode)?.ToString();
                 }
+
                 var handler = new HttpClientHandler();
                 handler.CookieContainer = new CookieContainer();
                 handler.CookieContainer.Add(new Uri(portalOptions.RootAddress), new Cookie("JSESSIONID", cookie));

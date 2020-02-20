@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Iserv.IdentityServer4.BusinessLogic.Helpers;
 using Newtonsoft.Json;
+using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using static IdentityServer4.IdentityServerConstants;
 
@@ -37,7 +38,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             _localizer = localizer;
             _accountService = accountService;
         }
-
+        
         /// <summary>
         /// Получение данных пользователя
         /// </summary>
