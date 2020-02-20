@@ -4,16 +4,16 @@ using System.Linq;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
 {
-    public class UserClaimsDto<TUserDtoKey> : UserClaimDto<TUserDtoKey>, IUserClaimsDto
+    public class UserClaimsDto<TKey> : UserClaimDto<TKey>, IUserClaimsDto
     {
         public UserClaimsDto()
         {
-            Claims = new List<UserClaimDto<TUserDtoKey>>();
+            Claims = new List<UserClaimDto<TKey>>();
         }
 
         public string UserName { get; set; }
 
-        public List<UserClaimDto<TUserDtoKey>> Claims { get; set; }
+        public List<UserClaimDto<TKey>> Claims { get; set; }
 
         public int TotalCount { get; set; }
 

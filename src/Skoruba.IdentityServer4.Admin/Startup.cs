@@ -53,21 +53,37 @@ namespace Skoruba.IdentityServer4.Admin
             services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
 
             // Add all dependencies for Asp.Net Core Identity
-            // If you want to change primary keys or use another db model for Asp.Net Core Identity:
-            services.AddAdminAspNetIdentityServices<AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, UserDto<string>, string, RoleDto<string>, string, string, string,
-                                UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
-                                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
-                                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
-                                UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-                                RoleClaimsDto<string>, UserClaimDto<string>, RoleClaimDto<string>>();
+            // Default configuration
+            services.AddAdminAspNetIdentityServices();
+            // Custom configuration (If you want to change primary keys or use another db model for Asp.Net Core Identity)
+            /*services.AddAdminAspNetIdentityServices<string>(adminBuilder => adminBuilder.UseUser<UserIdentity>()
+                    .UseRole<UserIdentityRole>()
+                    .UseUserClaim<UserIdentityUserClaim>()
+                    .UseUserRole<UserIdentityUserRole>()
+                    .UseUserLogin<UserIdentityUserLogin>()
+                    .UseRoleClaim<UserIdentityRoleClaim>()
+                    .UseUserToken<UserIdentityUserToken>()
+                    .UseIdentityDbContext<AdminIdentityDbContext>()
+                    .UsePersistedGrantDbContext<IdentityServerPersistedGrantDbContext>()
+                    .UseDto(dtoBuilder => dtoBuilder.UseRole<RoleDto<string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string>>()
+                        .UseRoleClaim<RoleClaimDto<string>>()
+                        .UseRoleClaims<RoleClaimsDto<string>>()
+                        .UseUser<UserDto<string>, UsersDto<UserDto<string>, string>>()
+                        .UseUserClaim<UserClaimDto<string>>()
+                        .UseUserClaims<UserClaimsDto<string>>()
+                        .UseUserProvider<UserProviderDto<string>>()
+                        .UseUserProviders<UserProvidersDto<string>>()
+                        .UseUserChangePassword<UserChangePasswordDto<string>>()
+                    )
+            );*/
             
             // Add all dependencies for Asp.Net Core Identity in MVC - these dependencies are injected into generic Controllers
             // Including settings for MVC and Localization
             // If you want to change primary keys or use another db model for Asp.Net Core Identity:
-            services.AddMvcWithLocalization<UserDto<string>, string, RoleDto<string>, string, string, string,
+            services.AddMvcWithLocalization<UserDto<string>, RoleDto<string>,
                 UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
                 UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
-                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
+                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string>,
                 UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
                 RoleClaimsDto<string>>(Configuration);
 
