@@ -27,6 +27,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
@@ -127,7 +128,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         }
 
         /// <summary>
-        /// Register DbContexts for IdentityServer ConfigurationStore and PersistedGrants and Identity
+        /// Register DbContexts for IdentityServer ConfigurationStore, PersistedGrants, Identity and DataProtection
         /// Configure the connection strings in AppSettings.json
         /// </summary>
         /// <typeparam name="TConfigurationDbContext"></typeparam>
@@ -135,27 +136,29 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <typeparam name="TIdentityDbContext"></typeparam>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        public static void RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext>(this IServiceCollection services, IConfiguration configuration)
+        public static void RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TDataProtectionDbContext>(this IServiceCollection services, IConfiguration configuration)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
+            where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
         {
             var databaseProvider = configuration.GetSection(nameof(DatabaseProviderConfiguration)).Get<DatabaseProviderConfiguration>();
             
             var identityConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
             var configurationConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
             var persistedGrantsConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);
+            var dataProtectionConnectionString = configuration.GetConnectionString(ConfigurationConsts.DataProtectionDbConnectionStringKey);
 
             switch (databaseProvider.ProviderType)
             {
                 case DatabaseProviderType.SqlServer:
-                    services.RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString);
+                    services.RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TDataProtectionDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString, dataProtectionConnectionString);
                     break;
                 case DatabaseProviderType.PostgreSQL:
-                    services.RegisterNpgSqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString);
+                    services.RegisterNpgSqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TDataProtectionDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString, dataProtectionConnectionString);
                     break;
                 case DatabaseProviderType.MySql:
-                    services.RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString);
+                    services.RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TDataProtectionDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString, dataProtectionConnectionString);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(databaseProvider.ProviderType), $@"The value needs to be one of {string.Join(", ", Enum.GetNames(typeof(DatabaseProviderType)))}.");
@@ -163,24 +166,26 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         }
 
         /// <summary>
-        /// Register InMemory DbContexts for IdentityServer ConfigurationStore and PersistedGrants and Identity
+        /// Register InMemory DbContexts for IdentityServer ConfigurationStore, PersistedGrants, Identity and DataProtection
         /// Configure the connection strings in AppSettings.json
         /// </summary>
         /// <typeparam name="TConfigurationDbContext"></typeparam>
         /// <typeparam name="TPersistedGrantDbContext"></typeparam>
         /// <typeparam name="TIdentityDbContext"></typeparam>
         /// <param name="services"></param>
-        public static void RegisterDbContextsStaging<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext>(
+        public static void RegisterDbContextsStaging<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TDataProtectionDbContext>(
             this IServiceCollection services)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
+            where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
         {
             var identityDatabaseName = Guid.NewGuid().ToString();
             services.AddDbContext<TIdentityDbContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(identityDatabaseName));
 
             var configurationDatabaseName = Guid.NewGuid().ToString();
             var operationalDatabaseName = Guid.NewGuid().ToString();
+            var dataProtectionDatabaseName = Guid.NewGuid().ToString();
 
             services.AddConfigurationDbContext<TConfigurationDbContext>(options =>
             {
@@ -190,6 +195,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             services.AddOperationalDbContext<TPersistedGrantDbContext>(options =>
             {
                 options.ConfigureDbContext = b => b.UseInMemoryDatabase(operationalDatabaseName);
+            });
+
+            services.AddDbContext<TDataProtectionDbContext>(options =>
+            {
+                options.UseInMemoryDatabase(dataProtectionDatabaseName);
             });
         }
 
@@ -344,19 +354,22 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             });
         }
 
-        public static void AddIdSHealthChecks<TConfigurationDbContext, TPersistedGrantDbContext, TIdentityDbContext>(this IServiceCollection services, IConfiguration configuration)
+        public static void AddIdSHealthChecks<TConfigurationDbContext, TPersistedGrantDbContext, TIdentityDbContext, TDataProtectionDbContext>(this IServiceCollection services, IConfiguration configuration)
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TIdentityDbContext : DbContext
+            where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
         {
             var configurationDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
             var persistedGrantsDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);            
             var identityDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
-            
+            var dataProtectionDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.DataProtectionDbConnectionStringKey);
+
             var healthChecksBuilder = services.AddHealthChecks()
                 .AddDbContextCheck<TConfigurationDbContext>("ConfigurationDbContext")
                 .AddDbContextCheck<TPersistedGrantDbContext>("PersistedGrantsDbContext")
-                .AddDbContextCheck<TIdentityDbContext>("IdentityDbContext");
+                .AddDbContextCheck<TIdentityDbContext>("IdentityDbContext")
+                .AddDbContextCheck<TDataProtectionDbContext>("DataProtectionDbContext");
 
             var serviceProvider = services.BuildServiceProvider();
             var scopeFactory = serviceProvider.GetRequiredService<IServiceScopeFactory>();
@@ -365,6 +378,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 var configurationTableName = DbContextHelpers.GetEntityTable<TConfigurationDbContext>(scope.ServiceProvider);
                 var persistedGrantTableName = DbContextHelpers.GetEntityTable<TPersistedGrantDbContext>(scope.ServiceProvider);
                 var identityTableName = DbContextHelpers.GetEntityTable<TIdentityDbContext>(scope.ServiceProvider);
+                var dataProtectionTableName = DbContextHelpers.GetEntityTable<TDataProtectionDbContext>(scope.ServiceProvider);
 
                 var databaseProvider = configuration.GetSection(nameof(DatabaseProviderConfiguration)).Get<DatabaseProviderConfiguration>();
                 switch (databaseProvider.ProviderType)
@@ -376,7 +390,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                             .AddSqlServer(persistedGrantsDbConnectionString, name: "PersistentGrantsDb",
                                 healthQuery: $"SELECT TOP 1 * FROM dbo.[{persistedGrantTableName}]")
                             .AddSqlServer(identityDbConnectionString, name: "IdentityDb",
-                                healthQuery: $"SELECT TOP 1 * FROM dbo.[{identityTableName}]");
+                                healthQuery: $"SELECT TOP 1 * FROM dbo.[{identityTableName}]")
+                            .AddSqlServer(dataProtectionDbConnectionString, name: "DataProtectionDb",
+                                healthQuery: $"SELECT TOP 1 * FROM dbo.[{dataProtectionTableName}]");
 
                         break;
                     case DatabaseProviderType.PostgreSQL:
@@ -386,13 +402,16 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                             .AddNpgSql(persistedGrantsDbConnectionString, name: "PersistentGrantsDb",
                                 healthQuery: $"SELECT * FROM {persistedGrantTableName} LIMIT 1")
                             .AddNpgSql(identityDbConnectionString, name: "IdentityDb",
-                                healthQuery: $"SELECT * FROM {identityTableName} LIMIT 1");
+                                healthQuery: $"SELECT * FROM {identityTableName} LIMIT 1")
+                            .AddNpgSql(dataProtectionDbConnectionString, name: "DataProtectionDb",
+                                healthQuery: $"SELECT * FROM {dataProtectionTableName}  LIMIT 1");
                         break;
                     case DatabaseProviderType.MySql:
                         healthChecksBuilder
                             .AddMySql(configurationDbConnectionString, name: "ConfigurationDb")
                             .AddMySql(persistedGrantsDbConnectionString, name: "PersistentGrantsDb")
-                            .AddMySql(identityDbConnectionString, name: "IdentityDb");
+                            .AddMySql(identityDbConnectionString, name: "IdentityDb")
+                            .AddMySql(dataProtectionDbConnectionString, name: "DataProtectionDb");
                         break;
                     default:
                         throw new NotImplementedException($"Health checks not defined for database provider {databaseProvider.ProviderType}");
