@@ -291,12 +291,17 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TUserIdentity : class
         {
+            var advancedConfiguration = configuration.GetSection(nameof(AdvancedConfiguration)).Get<AdvancedConfiguration>();
+
             var builder = services.AddIdentityServer(options =>
                 {
                     options.Events.RaiseErrorEvents = true;
                     options.Events.RaiseInformationEvents = true;
                     options.Events.RaiseFailureEvents = true;
                     options.Events.RaiseSuccessEvents = true;
+
+                    if (!string.IsNullOrEmpty(advancedConfiguration.PublicOrigin))
+                        options.PublicOrigin = advancedConfiguration.PublicOrigin;
                 })
                 .AddConfigurationStore<TConfigurationDbContext>()
                 .AddOperationalStore<TPersistedGrantDbContext>()
