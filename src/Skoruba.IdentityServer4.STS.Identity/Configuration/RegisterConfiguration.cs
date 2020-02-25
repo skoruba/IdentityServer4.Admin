@@ -3,5 +3,6 @@
     public class RegisterConfiguration
     {
         public bool Enabled { get; set; } = true;
+        public string ApiConfirmationUrl { get; set; }
     }
 }
