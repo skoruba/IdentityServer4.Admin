@@ -18,7 +18,7 @@ using Skoruba.IdentityServer4.STS.Identity.ViewModels.Account;
 namespace Skoruba.IdentityServer4.STS.Identity.api.v1.Account
 {
 	[Route("api/v1/[controller]")]
-	public class AccountController<TUser, TKey> : Controller where TUser : IdentityUser<TKey>, new() where TKey : IEquatable<TKey>
+	public class AccountApiController<TUser, TKey> : Controller where TUser : IdentityUser<TKey>, new() where TKey : IEquatable<TKey>
 	{
 		protected UserManager<TUser> UserManager { get; }
 		protected SignInManager<TUser> SignInManager { get; }
@@ -26,16 +26,16 @@ namespace Skoruba.IdentityServer4.STS.Identity.api.v1.Account
 		protected IEmailSender EmailSender { get; }
 		protected LoginConfiguration LoginConfiguration { get; }
 		protected RegisterConfiguration RegisterConfiguration { get; }
-		protected IGenericControllerLocalizer<AccountController<TUser, TKey>> Localizer { get; }
+		protected IGenericControllerLocalizer<AccountApiController<TUser, TKey>> Localizer { get; }
 
-		public AccountController(
+		public AccountApiController(
 			UserManager<TUser> userManager,
 			SignInManager<TUser> signInManager,
 			IEventService events,
 			IEmailSender emailSender,
 			RegisterConfiguration registerConfiguration,
 			LoginConfiguration loginConfiguration,
-			IGenericControllerLocalizer<AccountController<TUser, TKey>> localizer)
+			IGenericControllerLocalizer<AccountApiController<TUser, TKey>> localizer)
 		{
 			UserManager = userManager;
 			SignInManager = signInManager;
@@ -163,6 +163,13 @@ namespace Skoruba.IdentityServer4.STS.Identity.api.v1.Account
 				await EmailSender.SendEmailAsync(model.Email, Localizer["ConfirmEmailTitle"], Localizer["ConfirmEmailBody", callbackUrl]);
 				await SignInManager.SignInAsync(user, isPersistent: false);
 
+				if (!string.IsNullOrWhiteSpace(RegisterConfiguration.NewUserDefaultRole) && UserManager.SupportsUserRole)
+				{
+					string[] roles = RegisterConfiguration.NewUserDefaultRole.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
+					foreach (var role in roles)
+						await UserManager.AddToRoleAsync(user, role.Trim());
+				}
+
 				return Ok(new { Succeeded = true });
 			}
 
@@ -229,6 +236,5 @@ namespace Skoruba.IdentityServer4.STS.Identity.api.v1.Account
 
 			return BadRequest(result);
 		}
-
 	}
 }
