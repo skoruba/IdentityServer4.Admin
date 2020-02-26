@@ -12,7 +12,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Iserv.IdentityServer4.BusinessLogic.Helpers;
 using Newtonsoft.Json;
-using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using static IdentityServer4.IdentityServerConstants;
 
@@ -168,7 +167,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         [Route("updatePassword")]
         public async Task<IActionResult> UpdatePasswordAsync([FromBody] string password)
         {
-            await _accountService.UpdatePasswordAsync(UserClaimsHelpers.GetIdext(User.Identity), password);
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+                return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
+            // await _accountService.UpdatePasswordAsync(UserClaimsHelpers.GetIdext(User.Identity), password);
+            await _accountService.UpdatePasswordAsync(user.Idext, password);
             return Ok();
         }
         
