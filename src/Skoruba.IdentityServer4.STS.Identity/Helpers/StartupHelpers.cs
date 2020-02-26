@@ -383,11 +383,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     case DatabaseProviderType.PostgreSQL:
                         healthChecksBuilder
                             .AddNpgSql(configurationDbConnectionString, name: "ConfigurationDb",
-                                healthQuery: $"SELECT * FROM {configurationTableName} LIMIT 1")
+                                healthQuery: $"SELECT * FROM \"{configurationTableName}\" LIMIT 1")
                             .AddNpgSql(persistedGrantsDbConnectionString, name: "PersistentGrantsDb",
-                                healthQuery: $"SELECT * FROM {persistedGrantTableName} LIMIT 1")
+                                healthQuery: $"SELECT * FROM \"{persistedGrantTableName}\" LIMIT 1")
                             .AddNpgSql(identityDbConnectionString, name: "IdentityDb",
-                                healthQuery: $"SELECT * FROM {identityTableName} LIMIT 1");
+                                healthQuery: $"SELECT * FROM \"{identityTableName}\" LIMIT 1");
                         break;
                     case DatabaseProviderType.MySql:
                         healthChecksBuilder
