@@ -467,10 +467,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 handler.CookieContainer.Add(new Uri(portalOptions.RootAddress), new Cookie("JSESSIONID", cookie));
                 return handler;
             });
-            services.AddScoped<ISmsSender>(sender => new SMSSenderTwilio(smsSetting));
+            services.AddScoped<ISmsService>(sender => new SmsService(smsSetting));
             services.AddScoped<IConfirmService>(provider =>
                 new ConfirmService(TimeSpan.FromSeconds(repairPwdSmsExpiration), provider.GetRequiredService<IMemoryCache>(), provider.GetRequiredService<IEmailSender>(),
-                    provider.GetRequiredService<ISmsSender>()));
+                    provider.GetRequiredService<ISmsService>()));
             services
                 .AddScoped<IAccountService<UserIdentity, string>, AccountService<TIdentityDbContext, UserIdentity, UserIdentityRole, string, UserIdentityUserClaim,
                     UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken>>();

@@ -4,11 +4,11 @@ using Twilio.Rest.Api.V2010.Account;
 
 namespace Iserv.IdentityServer4.BusinessLogic.Sms
 {
-    public class SMSSenderTwilio : ISmsSender
+    public class SmsSenderTwilio : ISmsSender
     {
         private readonly SmsSetting _smsSetting;
 
-        public SMSSenderTwilio(SmsSetting smsSetting)
+        public SmsSenderTwilio(SmsSetting smsSetting)
         {
             _smsSetting = smsSetting;
         }
@@ -27,19 +27,16 @@ namespace Iserv.IdentityServer4.BusinessLogic.Sms
             TwilioClient.Init(_smsSetting.AccountSid, _smsSetting.AuthToken);
             var result = await MessageResource.CreateAsync(
                 body: message,
-                from: new Twilio.Types.PhoneNumber(numberFrom),
+                @from: new Twilio.Types.PhoneNumber(numberFrom),
                 to: new Twilio.Types.PhoneNumber(numberTo)
             );
-            if (result.ErrorCode != null)
+            if (result.ErrorCode == null) return null;
+            var msg = "Failed to send SMS to " + numberTo;
+            if (!string.IsNullOrEmpty(result.ErrorMessage))
             {
-                var msg = "Failed to send SMS to " + numberTo;
-                if (!string.IsNullOrEmpty(result.ErrorMessage))
-                {
-                    msg += ". " + result.ErrorMessage;
-                }
-                return msg;
+                msg += ". " + result.ErrorMessage;
             }
-            return null;
+            return msg;
         }
 
         public void Dispose()

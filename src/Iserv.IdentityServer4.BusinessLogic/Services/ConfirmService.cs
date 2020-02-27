@@ -15,14 +15,14 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
         private readonly TimeSpan _timeSpan;
         private readonly IMemoryCache _memoryCache;
         private readonly IEmailSender _emailSender;
-        private readonly ISmsSender _smsSender;
+        private readonly ISmsService _smsService;
 
-        public ConfirmService(TimeSpan timeSpan, IMemoryCache memoryCache, IEmailSender emailSender, ISmsSender smsSender)
+        public ConfirmService(TimeSpan timeSpan, IMemoryCache memoryCache, IEmailSender emailSender, ISmsService smsService)
         {
             _timeSpan = timeSpan;
             _memoryCache = memoryCache;
             _emailSender = emailSender;
-            _smsSender = smsSender;
+            _smsService = smsService;
         }
 
         private void ValidActionName(string actionName)
@@ -79,7 +79,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
             ValidActionName(actionName);
             ValidPhoneNumber(phone);
             var code = (new Random()).Next(999999).ToString("D6");
-            var msg = await _smsSender.SendSmsAsync(phone, string.Format(templateMessage, code));
+            var msg = await _smsService.SendSmsAsync(phone, string.Format(templateMessage, code));
             var cacheKey = GetCacheKey(phone, actionName);
             if (string.IsNullOrEmpty(msg))
             {

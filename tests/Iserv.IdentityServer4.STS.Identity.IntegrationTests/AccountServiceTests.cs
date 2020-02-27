@@ -50,7 +50,7 @@ namespace Iserv.IdentityServer4.STS.Identity.IntegrationTests
 
             services.AddMemoryCache();
             var emailSenderMock = new Mock<IEmailSender>();
-            var smsSenderMock = new Mock<ISmsSender>();
+            var smsSenderMock = new Mock<ISmsService>();
             services.AddSingleton<IConfirmService, ConfirmService>(provider =>
                 new ConfirmService(new TimeSpan(1000000000), _memoryCache, emailSenderMock.Object, smsSenderMock.Object));
 
