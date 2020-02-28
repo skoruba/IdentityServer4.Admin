@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <Reference Include="Infrastructure.Tracing, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\BaseService\Infrastructure.Tracing\bin\Release\netcoreapp2.2\Infrastructure.Tracing.dll</HintPath>
+      <HintPath>lib\Infrastructure.Tracing.dll</HintPath>
     </Reference>
   </ItemGroup>
 
