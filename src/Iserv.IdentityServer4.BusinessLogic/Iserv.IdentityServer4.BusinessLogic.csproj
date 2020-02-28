@@ -8,6 +8,7 @@
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.1.1" />
+    <PackageReference Include="OpenTracing" Version="0.12.0" />
     <PackageReference Include="Twilio" Version="5.37.4" />
   </ItemGroup>
 
@@ -15,6 +16,12 @@
     <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.BusinessLogic.Shared\Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.csproj" />
     <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.Shared\Skoruba.IdentityServer4.Admin.EntityFramework.Shared.csproj" />
     <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.IdentityServer4.Admin.EntityFramework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Infrastructure.Tracing, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\BaseService\Infrastructure.Tracing\bin\Release\netcoreapp2.2\Infrastructure.Tracing.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

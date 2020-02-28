@@ -268,12 +268,16 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
                 ValidSmsCode(model.PhoneNumber, model.SmsCode);
             }
 
-            var portalResult = await _portalService.RegisterAsync(new PortalRegistrationData()
+            var portalModel = new PortalRegistrationData()
             {
                 Email = model.Email,
                 Phone = model.PhoneNumber,
                 Password = model.Password,
-            });
+            };
+            if (string.IsNullOrWhiteSpace(model.FirstName)) portalModel.FirstName = model.FirstName;
+            if (string.IsNullOrWhiteSpace(model.LastName)) portalModel.LastName = model.LastName;
+            if (string.IsNullOrWhiteSpace(model.MiddleName)) portalModel.MiddleName = model.MiddleName;
+            var portalResult = await _portalService.RegisterAsync(portalModel);
             if (portalResult.IsError)
                 throw new ValidationException(portalResult.Message);
             if (!(await CreateUserFromPortalAsync(portalResult.Value, model.Password)).Succeeded)
@@ -302,7 +306,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
             {
                 ValidPhone(model.PhoneNumber);
                 values.Add("phone", model.PhoneNumber);
-                ValidSmsCode(model.PhoneNumber, model.SmsCode);
+                // ValidSmsCode(model.PhoneNumber, model.SmsCode);
             }
 
             var portalResult = await _portalService.UpdateUserAsync(user.Idext, values, model.Files);

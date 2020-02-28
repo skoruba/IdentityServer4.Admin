@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Iserv.IdentityServer4.BusinessLogic.Helpers;
 using Newtonsoft.Json;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using static IdentityServer4.IdentityServerConstants;
@@ -204,7 +203,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         /// </summary>
         /// <param name="model">Модель проверки номера телефона</param>
         [HttpPost]
-        [Route("repairPasswordBySms")]
+        [Route("validSmsCodeChangePassword")]
         public IActionResult ValidSmsCodeChangePassword([FromBody] ValidSmsCodeModel model)
         {
             _accountService.ValidSmsCodeChangePassword(model.PhoneNumber, model.SmsCode);
@@ -216,10 +215,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         /// </summary>
         /// <param name="model">Модель изменения пароля через смс код востановления пароля пользователя через телефон</param>
         [HttpPost]
-        [Route("repairPasswordBySms")]
-        public IActionResult ChangePasswordBySmsAsync([FromBody] ChangePasswordBySmsCodeModel model)
+        [Route("changePasswordBySms")]
+        public async Task<IActionResult> ChangePasswordBySmsAsync([FromBody] ChangePasswordBySmsCodeModel model)
         {
-            _accountService.ChangePasswordBySmsAsync(model.PhoneNumber, model.SmsCode, model.Password);
+            await _accountService.ChangePasswordBySmsAsync(model.PhoneNumber, model.SmsCode, model.Password);
             return Ok();
         }
     }

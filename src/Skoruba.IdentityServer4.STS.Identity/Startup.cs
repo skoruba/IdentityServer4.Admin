@@ -1,4 +1,5 @@
 ﻿using HealthChecks.UI.Client;
+using Iserv.IdentityServer4.BusinessLogic.Extension;
 using Iserv.IdentityServer4.BusinessLogic.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -49,9 +50,10 @@ namespace Skoruba.IdentityServer4.STS.Identity
                 Formatting = Formatting.Indented
                 // ContractResolver = new CamelCasePropertyNamesContractResolver()
             };
-            services.AddMvc(config =>
+            services.AddMvc(options =>
             {
-                config.Filters.Add(typeof(GlobalExceptionFilter));
+                options.Filters.Add(typeof(GlobalExceptionFilter));
+                options.AddTracingFilters();
             }).AddNewtonsoftJson(opt =>
             {
                 opt.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
@@ -89,6 +91,9 @@ namespace Skoruba.IdentityServer4.STS.Identity
                 yandexOptions.ClientId = authNSection["ClientId"];
                 yandexOptions.ClientSecret = authNSection["ClientSecret"];
             });
+            
+            // Tracing
+            services.AddTracing(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

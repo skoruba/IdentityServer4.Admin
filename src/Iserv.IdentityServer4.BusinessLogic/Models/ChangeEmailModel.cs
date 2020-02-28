@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace Iserv.IdentityServer4.BusinessLogic.Models
@@ -19,6 +20,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Models
         /// Код email проверяемого Email
         /// </summary>
         [JsonProperty("code")]
+        [FromForm(Name = "code")]
         [Required]
         public string EmailCode { get; set; }
     }

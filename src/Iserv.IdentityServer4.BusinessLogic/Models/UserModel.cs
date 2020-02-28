@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace Iserv.IdentityServer4.BusinessLogic.Models
@@ -15,6 +16,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Models
 
         [Phone]
         [JsonProperty("phone")]
+        [FromForm(Name = "phone")]
         public string PhoneNumber { get; set; }
 
         public Dictionary<string, object> Fields { get; set; }

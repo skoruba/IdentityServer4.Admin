@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace Iserv.IdentityServer4.BusinessLogic.Models
@@ -18,6 +19,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Models
         /// Номер телефона нового пользователя
         /// </summary>
         [JsonProperty("phone")]
+        [FromForm(Name = "phone")]
         [Phone]
         public string PhoneNumber { get; set; }
 
@@ -25,7 +27,23 @@ namespace Iserv.IdentityServer4.BusinessLogic.Models
         /// Код смс проверяемого номера телефона
         /// </summary>
         [JsonProperty("code")]
+        [FromForm(Name = "code")]
         public string SmsCode { get; set; }
+        
+        /// <summary>
+        /// Имя
+        /// </summary>
+        public string FirstName { get; set; }
+        
+        /// <summary>
+        /// Фамилия
+        /// </summary>
+        public string LastName { get; set; }
+        
+        /// <summary>
+        /// Отчество
+        /// </summary>
+        public string MiddleName { get; set; }
 
         /// <summary>
         /// Пароль нового пользователя

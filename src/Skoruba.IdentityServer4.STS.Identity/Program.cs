@@ -1,9 +1,12 @@
 ﻿using System;
 using System.IO;
+using Iserv.IdentityServer4.BusinessLogic.Extension;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Serilog;
+using Microsoft.Extensions.Logging;
+using NLog;
+using NLog.Web;
 
 namespace Skoruba.IdentityServer4.STS.Identity
 {
@@ -11,54 +14,50 @@ namespace Skoruba.IdentityServer4.STS.Identity
     {
         public static void Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(Configuration)
-                .CreateLogger();
+            TracingExtensions.InitTraceIdRenderer();
+
+            var logger = NLogBuilder.ConfigureNLog(LogManager.Configuration).GetCurrentClassLogger();
+
             try
             {
+                logger.Info("Запуск сервиса");
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "Host terminated unexpectedly");
+                logger.Error(ex, "Host terminated unexpectedly");
+                throw;
             }
             finally
             {
-                Log.CloseAndFlush();
+                LogManager.Shutdown();
             }
         }
 
         public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-            .AddJsonFile("serilog.json", optional: true, reloadOnChange: true)
             .AddEnvironmentVariables()
             .Build();
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                 .ConfigureAppConfiguration((hostContext, configApp) =>
-                 {
-                     configApp.AddJsonFile("serilog.json", optional: true, reloadOnChange: true);
+                .ConfigureAppConfiguration((hostContext, configApp) =>
+                {
+                    if (hostContext.HostingEnvironment.IsDevelopment())
+                    {
+                        configApp.AddUserSecrets<Startup>();
+                    }
 
-                     if (hostContext.HostingEnvironment.IsDevelopment())
-                     {
-                         configApp.AddUserSecrets<Startup>();
-                     }
-
-                     configApp.AddEnvironmentVariables();
-                     configApp.AddCommandLine(args);
-                 })
+                    configApp.AddEnvironmentVariables();
+                    configApp.AddCommandLine(args);
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.ConfigureKestrel(options => options.AddServerHeader = false);
                     webBuilder.UseStartup<Startup>();
                 })
-                .UseSerilog((hostContext, loggerConfig) =>
-                {
-                    loggerConfig
-                        .ReadFrom.Configuration(hostContext.Configuration)
-                        .Enrich.WithProperty("ApplicationName", hostContext.HostingEnvironment.ApplicationName);
-                });
+                .ConfigureLogging(logging => logging.ClearProviders())
+                .UseNLog();
     }
 }
