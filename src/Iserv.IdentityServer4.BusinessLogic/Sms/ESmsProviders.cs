@@ -3,7 +3,7 @@
     /// <summary>
     /// Поставщики сервиса смс
     /// </summary>
-    public enum SmsProvider
+    public enum ESmsProviders
     {
         Twilio,
         Devino

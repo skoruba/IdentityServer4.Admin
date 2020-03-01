@@ -12,10 +12,10 @@ namespace Iserv.IdentityServer4.BusinessLogic.Sms
             var smsSetting1 = smsSetting;
             switch (smsSetting.Provider)
             {
-                case SmsProvider.Devino:
+                case ESmsProviders.Devino:
                     _smsSender = new SmsSenderDevino(smsSetting1);
                     break;
-                case SmsProvider.Twilio:
+                case ESmsProviders.Twilio:
                     _smsSender = new SmsSenderTwilio(smsSetting1);
                     break;
                 default:

@@ -8,7 +8,7 @@
         /// <summary>
         /// Поставщик сервиса смс
         /// </summary>
-        public SmsProvider Provider { get; set; }
+        public ESmsProviders Provider { get; set; }
         
         /// <summary>
         /// Логин аккаунта
