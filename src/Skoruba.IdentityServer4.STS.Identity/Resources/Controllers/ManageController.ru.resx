@@ -124,7 +124,7 @@
     <value>Приложение аутентификатора проверено.</value>
   </data>
   <data name="ConfirmEmailBody" xml:space="preserve">
-    <value>Пожалуйста, подтвердите вашу учетную запись нажатием &lt;a href='{0}'&gt;</value>
+    <value>Пожалуйста, подтвердите вашу учетную запись &lt;a href='{0}'&gt;нажатием&lt;/a&gt;</value>
   </data>
   <data name="ConfirmEmailTitle" xml:space="preserve">
     <value>Подтвердите ваш адрес электронной почты</value>
