@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Iserv.IdentityServer4.BusinessLogic.Settings;
 using Newtonsoft.Json;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using static IdentityServer4.IdentityServerConstants;
@@ -24,14 +25,17 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         where TUser : UserIdentity<TKey>, new()
         where TKey : IEquatable<TKey>
     {
+        private readonly AuthPortalOptions _authPortalOptions;
         private readonly UserManager<TUser> _userManager;
         private readonly IGenericControllerLocalizer<ApiController<TUser, TKey>> _localizer;
         private readonly IAccountService<TUser, TKey> _accountService;
 
-        public ApiController(UserManager<TUser> userManager,
+        public ApiController(AuthPortalOptions authPortalOptions,
+            UserManager<TUser> userManager,
             IGenericControllerLocalizer<ApiController<TUser, TKey>> localizer,
             IAccountService<TUser, TKey> accountService)
         {
+            _authPortalOptions = authPortalOptions;
             _userManager = userManager;
             _localizer = localizer;
             _accountService = accountService;
@@ -53,6 +57,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             result.Add("emailConfirmed", user.EmailConfirmed.ToString().ToLower());
             result.Add("phone", user.PhoneNumber);
             result.Add("phoneConfirmed", user.PhoneNumberConfirmed.ToString().ToLower());
+            if (_authPortalOptions.IgnoreCamelCaseForExtraProp)
+            {
+                return Json(result, new JsonSerializerSettings());
+            }
             return Ok(result);
         }
 
