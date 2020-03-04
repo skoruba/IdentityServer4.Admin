@@ -107,7 +107,12 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
 
         public async Task<Dictionary<string, string>> GetExtraFieldsAsync(TUser user)
         {
-            return (await _userManager.GetClaimsAsync(user)).ToDictionary(c => c.Type, c => c.Value);
+            return (await _userManager.GetClaimsAsync(user)).ToDictionary(c => c.Type, c => c.Value switch
+            {
+                "True" => "true",
+                "False" => "false",
+                _ => c.Value
+            });
         }
 
         public async Task<IdentityResult> CreateUserFromPortalAsync(Guid idext, string password)
