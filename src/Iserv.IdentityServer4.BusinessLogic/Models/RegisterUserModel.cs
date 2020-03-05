@@ -26,8 +26,6 @@ namespace Iserv.IdentityServer4.BusinessLogic.Models
         /// <summary>
         /// Код смс проверяемого номера телефона
         /// </summary>
-        [JsonProperty("code")]
-        [FromForm(Name = "code")]
         public string SmsCode { get; set; }
         
         /// <summary>

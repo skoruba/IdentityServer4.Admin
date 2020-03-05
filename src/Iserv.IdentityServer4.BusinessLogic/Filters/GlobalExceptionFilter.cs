@@ -18,9 +18,9 @@ namespace Iserv.IdentityServer4.BusinessLogic.Filters
         public void OnException(ExceptionContext context)
         {
             var status = context.HttpContext.Response.StatusCode == HttpStatusCode.OK.GetHashCode() ? HttpStatusCode.BadRequest : (HttpStatusCode)context.HttpContext.Response.StatusCode;
-            var title = "Identity Server 4";
+            var title = "Россети - Мобильный личный кабинет";
             if (context.Exception is PortalException) {
-                title = "Portal";
+                title = "Россети - Портал ТП";
             }
             if (!(context.Exception is ValidationException))
             {
@@ -30,7 +30,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Filters
             {
                 status,
                 title,
-                error = context.Exception.Message
+                text = context.Exception.Message
             });
             context.ExceptionHandled = true;
         }

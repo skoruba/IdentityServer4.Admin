@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
@@ -39,6 +38,7 @@ using Iserv.IdentityServer4.BusinessLogic.Providers;
 using Iserv.IdentityServer4.BusinessLogic.Validators;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
@@ -295,7 +295,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 .AddConfigurationStore<TConfigurationDbContext>()
                 .AddOperationalStore<TPersistedGrantDbContext>()
                 .AddAspNetIdentity<UserIdentity>()
-                .AddResourceOwnerValidator<ResourceOwnerValidatorPassword<UserIdentity, string>>();
+                .AddResourceOwnerValidator<ResourceOwnerValidatorPassword<UserIdentity, string>>()
+                .AddDelegationGrant<UserIdentity, String>()   // Register the extension grant 
+                .AddDefaultSocialLoginValidators();
 
             builder.AddCustomSigningCredential(configuration);
             builder.AddCustomValidationKey(configuration);
@@ -321,6 +323,20 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     options.Scope.Add("user:email");
                 });
             }
+            
+            authenticationBuilder.AddGoogle(googleOptions =>
+            {
+                var authNSection = configuration.GetSection("Authentication:Google");
+                googleOptions.ClientId = authNSection["ClientId"];
+                googleOptions.ClientSecret = authNSection["ClientSecret"];
+                googleOptions.Scope.Add("openid");
+                googleOptions.Scope.Add("email");
+            }).AddYandex(yandexOptions =>
+            {
+                var authNSection = configuration.GetSection("Authentication:Yandex");
+                yandexOptions.ClientId = authNSection["ClientId"];
+                yandexOptions.ClientSecret = authNSection["ClientSecret"];
+            });
         }
 
         /// <summary>

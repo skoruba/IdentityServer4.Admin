@@ -40,11 +40,11 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
             switch (response.StatusCode)
             {
                 case HttpStatusCode.Unauthorized:
-                    return "Portal. Unauthorized";
+                    return "Запрос не авторизованный";
                 case HttpStatusCode.BadRequest:
                 {
                     if (!string.IsNullOrWhiteSpace(result)) _logger.LogInformation(result);
-                    return "Portal. " + result;
+                    return result;
                 }
                 default:
                     throw new PortalException(result);

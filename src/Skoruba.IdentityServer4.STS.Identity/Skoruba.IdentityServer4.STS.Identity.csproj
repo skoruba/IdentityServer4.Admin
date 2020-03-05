@@ -13,6 +13,7 @@
         <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="3.0.0" />
         <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="3.0.0" />
         <PackageReference Include="AspNetCore.HealthChecks.UI" Version="3.0.3" />
+        <PackageReference Include="IdentityServer.ExtensionGrant.Delegation" Version="1.0.1" />
         <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
         <PackageReference Include="Jaeger" Version="0.3.6" />
         <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />

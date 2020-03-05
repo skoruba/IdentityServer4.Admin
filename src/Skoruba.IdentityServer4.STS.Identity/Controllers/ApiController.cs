@@ -40,7 +40,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             _localizer = localizer;
             _accountService = accountService;
         }
-        
+
         /// <summary>
         /// Получение данных пользователя
         /// </summary>
@@ -105,6 +105,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values);
+
             await _accountService.RegisterAsync(model);
             return Ok();
         }
@@ -119,6 +120,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values);
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
                 return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
@@ -127,11 +129,13 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             {
                 model.Values = JsonConvert.DeserializeObject<Dictionary<string, object>>(values);
             }
+
             model.Files = Request.Form.Files.Select(f => f.ConvertToFileModel());
+
             await _accountService.UpdateUserAsync(model);
             return Ok();
         }
-        
+
         /// <summary>
         /// Изменение email пользователя
         /// </summary>
@@ -142,13 +146,15 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values);
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
                 return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
+
             await _accountService.ChangeEmailAsync(user, model.Email, model.EmailCode);
             return Ok();
         }
-        
+
         /// <summary>
         /// Изменение номера телбефона пользователя
         /// </summary>
@@ -159,13 +165,15 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values);
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
                 return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
+
             await _accountService.ChangePhoneAsync(user, model.PhoneNumber, model.SmsCode);
             return Ok();
         }
-        
+
         /// <summary>
         /// Изменение пароля пользователя
         /// </summary>
@@ -177,11 +185,12 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
                 return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
+
             // await _accountService.UpdatePasswordAsync(UserClaimsHelpers.GetIdext(User.Identity), password);
             await _accountService.UpdatePasswordAsync(user.Idext, password);
             return Ok();
         }
-        
+
         /// <summary>
         /// Востановление пароля пользователя через email
         /// </summary>
@@ -193,7 +202,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             await _accountService.RestorePasswordByEmailAsync(email);
             return Ok();
         }
-        
+
         /// <summary>
         /// Востановление пароля пользователя через телефон
         /// </summary>
@@ -205,7 +214,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             await _accountService.RepairPasswordBySmsAsync(phoneNumber);
             return Ok();
         }
-        
+
         /// <summary>
         /// Проверка смс кода для востановление пароля пользователя через телефон
         /// </summary>
@@ -217,7 +226,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             _accountService.ValidSmsCodeChangePassword(model.PhoneNumber, model.SmsCode);
             return Ok();
         }
-        
+
         /// <summary>
         /// Изменение пароля через смс код востановления пароля пользователя через телефон
         /// </summary>
