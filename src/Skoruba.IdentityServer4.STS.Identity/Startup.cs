@@ -80,20 +80,6 @@ namespace Skoruba.IdentityServer4.STS.Identity
             identityOptionsSection.Bind(identityOptions);
             services.Configure<IdentityOptions>(identityOptionsSection);
 
-            // services.AddAuthentication(IdentityConstants.ExternalScheme).AddGoogle(googleOptions =>
-            // {
-            //     var authNSection = Configuration.GetSection("Authentication:Google");
-            //     googleOptions.ClientId = authNSection["ClientId"];
-            //     googleOptions.ClientSecret = authNSection["ClientSecret"];
-            //     googleOptions.Scope.Add("openid");
-            //     googleOptions.Scope.Add("email");
-            // }).AddYandex(yandexOptions =>
-            // {
-            //     var authNSection = Configuration.GetSection("Authentication:Yandex");
-            //     yandexOptions.ClientId = authNSection["ClientId"];
-            //     yandexOptions.ClientSecret = authNSection["ClientSecret"];
-            // });
-            
             // Tracing
             services.AddTracing(Configuration);
         }

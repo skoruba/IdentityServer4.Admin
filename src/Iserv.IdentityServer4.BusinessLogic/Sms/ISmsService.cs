@@ -14,7 +14,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Sms
         /// <param name="numberTo">Кому номер телефона</param>
         /// <param name="message">Сообщение</param>
         /// <returns></returns>
-        Task<string> SendSmsAsync(string numberTo, string message);
+        Task<SmsResult> SendSmsAsync(string numberTo, string message);
 
         /// <summary>
         /// Отправить сообщение
@@ -23,6 +23,6 @@ namespace Iserv.IdentityServer4.BusinessLogic.Sms
         /// <param name="numberTo">Кому номер телефона</param>
         /// <param name="message">Сообщение</param>
         /// <returns></returns>
-        Task<string> SendSmsAsync(string numberFrom, string numberTo, string message);
+        Task<SmsResult> SendSmsAsync(string numberFrom, string numberTo, string message);
     }
 }

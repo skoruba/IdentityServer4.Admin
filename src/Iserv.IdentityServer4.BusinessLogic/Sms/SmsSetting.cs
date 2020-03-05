@@ -36,6 +36,11 @@
         public string AuthToken { get; set; }
 
         /// <summary>
+        /// Адрес отправителя
+        /// </summary>
+        public string SourceAddress { get; set; }
+        
+        /// <summary>
         /// Номер телефона отправителя по умолчанию
         /// </summary>
         public string DefaultPhoneFrom { get; set; }

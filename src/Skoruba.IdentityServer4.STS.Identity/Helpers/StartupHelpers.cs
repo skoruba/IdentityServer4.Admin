@@ -39,6 +39,7 @@ using Iserv.IdentityServer4.BusinessLogic.Validators;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
@@ -296,7 +297,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 .AddOperationalStore<TPersistedGrantDbContext>()
                 .AddAspNetIdentity<UserIdentity>()
                 .AddResourceOwnerValidator<ResourceOwnerValidatorPassword<UserIdentity, string>>()
-                .AddDelegationGrant<UserIdentity, String>()   // Register the extension grant 
+                .AddDelegationGrant<UserIdentity, String>() // Register the extension grant 
                 .AddDefaultSocialLoginValidators();
 
             builder.AddCustomSigningCredential(configuration);
@@ -323,7 +324,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     options.Scope.Add("user:email");
                 });
             }
-            
+
             authenticationBuilder.AddGoogle(googleOptions =>
             {
                 var authNSection = configuration.GetSection("Authentication:Google");
@@ -483,7 +484,13 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 handler.CookieContainer.Add(new Uri(portalOptions.RootAddress), new Cookie("JSESSIONID", cookie));
                 return handler;
             });
-            services.AddScoped<ISmsService>(sender => new SmsService(smsSetting));
+            services.AddScoped<ISmsService>(provider =>
+            {
+                if (smsSetting.Provider == ESmsProviders.Devino)
+                    return new SmsSenderDevino(smsSetting, provider.GetService<ILogger<SmsSenderDevino>>());
+                else
+                    return new SmsSenderTwilio(smsSetting, provider.GetService<ILogger<SmsSenderTwilio>>());
+            });
             services.AddScoped<IConfirmService>(provider =>
                 new ConfirmService(TimeSpan.FromSeconds(repairPwdSmsExpiration), provider.GetRequiredService<IMemoryCache>(), provider.GetRequiredService<IEmailSender>(),
                     provider.GetRequiredService<ISmsService>()));

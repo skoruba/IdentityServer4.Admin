@@ -79,16 +79,16 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
             ValidActionName(actionName);
             ValidPhoneNumber(phone);
             var code = (new Random()).Next(999999).ToString("D6");
-            var msg = await _smsService.SendSmsAsync(phone, string.Format(templateMessage, code));
+            var result = await _smsService.SendSmsAsync(phone, string.Format(templateMessage, code));
             var cacheKey = GetCacheKey(phone, actionName);
-            if (string.IsNullOrEmpty(msg))
+            if (!result.IsError)
             {
                 _memoryCache.Set(cacheKey, code, new MemoryCacheEntryOptions().SetAbsoluteExpiration(_timeSpan));
             }
             else
             {
                 _memoryCache.Remove(cacheKey);
-                throw new ValidationException(msg);
+                throw new ValidationException(result.Message);
             }
         }
 
