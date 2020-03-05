@@ -314,7 +314,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 
             if (externalProviderConfiguration.UseSaml2Provider)
             {
-                authenticationBuilder.AddSaml2( options => {
+                authenticationBuilder.AddSaml2(options => 
+                {
                     options.SignInScheme = IdentityConstants.ExternalScheme;
                     options.SignOutScheme = IdentityServerConstants.DefaultCookieAuthenticationScheme;
                     options.SPOptions.EntityId = new EntityId(externalProviderConfiguration.Saml2OurEntityId);
@@ -324,8 +325,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                             MetadataLocation = externalProviderConfiguration.Saml2TheirMetadataLocation,
                             LoadMetadata = true
                         });
-
-                    options.SPOptions.ServiceCertificates.Add(new System.Security.Cryptography.X509Certificates.X509Certificate2(externalProviderConfiguration.Saml2OurCertificatePath, externalProviderConfiguration.Saml2OurCertificatePassword));
+                    if (!string.IsNullOrEmpty(externalProviderConfiguration.Saml2OurCertificatePath))
+                    {
+                        options.SPOptions.ServiceCertificates.Add(new System.Security.Cryptography.X509Certificates.X509Certificate2(externalProviderConfiguration.Saml2OurCertificatePath, externalProviderConfiguration.Saml2OurCertificatePassword));
+                    }
                 });
             }
 
