@@ -44,7 +44,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Helpers
         {
             return keys.Select(key => userFields.GetValueOrDefault(key)).FirstOrDefault(value => value != null);
         }
-        
+
         public static Guid GetIdext(IEnumerable<Claim> claims)
         {
             var val = claims.FirstOrDefault(c => c.Type == FieldIdExt)?.Value;
@@ -159,8 +159,16 @@ namespace Iserv.IdentityServer4.BusinessLogic.Helpers
                                           && u.Key != FieldLogin && u.Key != FieldPassword
                                           && !FieldsEmail.Contains(u.Key) && u.Key != FieldEmailConfirmed
                                           && !FieldsPhone.Contains(u.Key) && u.Key != FieldPhoneConfirmed)
-                .Select(u => new Claim(u.Key, u.Value.ToString()))
+                .Select(u => new Claim(u.Key, u.Value.ToString() == "False" ? "false" : u.Value.ToString() == "True" ? "true" : u.Value.ToString()))
                 .ToArray();
+        }
+
+        public static Dictionary<string, object> GetClaimsValues<TUserKey>(Dictionary<string, object> userFields) where TUserKey : IEquatable<TUserKey>
+        {
+            return userFields?.Where(u => u.Value != null && u.Key != FieldId && u.Key != FieldIdExt
+                                          && u.Key != FieldLogin && u.Key != FieldPassword
+                                          && !FieldsEmail.Contains(u.Key) && u.Key != FieldEmailConfirmed
+                                          && !FieldsPhone.Contains(u.Key) && u.Key != FieldPhoneConfirmed).ToDictionary(i => i.Key, i => i.Value);
         }
 
         public static IList<Claim> ExtractClaimsToRemove(Claim[] claimsOld, Claim[] claimsNew)

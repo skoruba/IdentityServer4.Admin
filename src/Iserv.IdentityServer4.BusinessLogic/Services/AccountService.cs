@@ -298,8 +298,11 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
                 throw new ValidationException($"User with id = '{model.Id}' not found");
             }
 
-            var claimsNew = UserClaimsHelpers.GetClaims<TKey>(model.Values);
-            var values = claimsNew?.ToDictionary(c => c.Type, c => c.Value as object) ?? new Dictionary<string, object>();
+            var values = UserClaimsHelpers.GetClaimsValues<TKey>(model.Values) ?? new Dictionary<string, object>();
+            foreach (var val in model.Values.Where(val => val.Value == null))
+            {
+                values.Add(val.Key, null);
+            }
 
             if (!string.IsNullOrWhiteSpace(model.Email) && user.Email != model.Email)
             {
