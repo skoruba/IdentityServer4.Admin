@@ -315,7 +315,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 			if (externalProviderConfiguration.UseSaml2Provider)
             {
 				authenticationBuilder.AddSaml2( options => {
-					options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+					options.SignInScheme = IdentityConstants.ExternalScheme;
 					options.SignOutScheme = IdentityServerConstants.DefaultCookieAuthenticationScheme;
 					options.SPOptions.EntityId = new EntityId(externalProviderConfiguration.Saml2OurEntityId);
 					options.IdentityProviders.Add(
