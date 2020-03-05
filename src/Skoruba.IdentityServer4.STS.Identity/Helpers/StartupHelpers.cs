@@ -312,22 +312,22 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         {
             var externalProviderConfiguration = configuration.GetSection(nameof(ExternalProvidersConfiguration)).Get<ExternalProvidersConfiguration>();
 
-			if (externalProviderConfiguration.UseSaml2Provider)
+            if (externalProviderConfiguration.UseSaml2Provider)
             {
-				authenticationBuilder.AddSaml2( options => {
-					options.SignInScheme = IdentityConstants.ExternalScheme;
-					options.SignOutScheme = IdentityServerConstants.DefaultCookieAuthenticationScheme;
-					options.SPOptions.EntityId = new EntityId(externalProviderConfiguration.Saml2OurEntityId);
-					options.IdentityProviders.Add(
-						new IdentityProvider(
-								new EntityId(externalProviderConfiguration.Saml2TheirEntityId), options.SPOptions) {
-							MetadataLocation = externalProviderConfiguration.Saml2TheirMetadataLocation,
-							LoadMetadata = true
-						});
+                authenticationBuilder.AddSaml2( options => {
+                    options.SignInScheme = IdentityConstants.ExternalScheme;
+                    options.SignOutScheme = IdentityServerConstants.DefaultCookieAuthenticationScheme;
+                    options.SPOptions.EntityId = new EntityId(externalProviderConfiguration.Saml2OurEntityId);
+                    options.IdentityProviders.Add(
+                        new IdentityProvider(
+                                new EntityId(externalProviderConfiguration.Saml2TheirEntityId), options.SPOptions) {
+                            MetadataLocation = externalProviderConfiguration.Saml2TheirMetadataLocation,
+                            LoadMetadata = true
+                        });
 
-					options.SPOptions.ServiceCertificates.Add(new System.Security.Cryptography.X509Certificates.X509Certificate2(externalProviderConfiguration.Saml2OurCertificatePath, externalProviderConfiguration.Saml2OurCertificatePassword));
-				});
-			}
+                    options.SPOptions.ServiceCertificates.Add(new System.Security.Cryptography.X509Certificates.X509Certificate2(externalProviderConfiguration.Saml2OurCertificatePath, externalProviderConfiguration.Saml2OurCertificatePassword));
+                });
+            }
 
             if (externalProviderConfiguration.UseGitHubProvider)
             {
