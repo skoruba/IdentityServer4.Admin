@@ -18,19 +18,20 @@ namespace Iserv.IdentityServer4.BusinessLogic.Sms
         private readonly SmsSetting _smsSetting;
         private readonly ILogger<SmsSenderDevino> _logger;
         private static string _sessionId = null;
-        private readonly Timer _timerRefreshSessionId = new Timer();
+        private static Timer _timerRefreshSessionId;
 
         public SmsSenderDevino(SmsSetting smsSetting, ILogger<SmsSenderDevino> logger)
         {
             _smsSetting = smsSetting;
             _logger = logger;
-            _timerRefreshSessionId.Interval = 5000000;
+            if (_timerRefreshSessionId != null) return;
+            _timerRefreshSessionId = new Timer {Interval = 5000000};
             _timerRefreshSessionId.Elapsed += timerRefreshSessionId_Elapsed;
             _timerRefreshSessionId.Enabled = true;
-            GetSessionIdAsync().Wait();
+            RefreshSessionId();
         }
-
-        private void timerRefreshSessionId_Elapsed(object sender, EventArgs e)
+        
+        private void RefreshSessionId()
         {
             _sessionId = null;
             var result = GetSessionIdAsync().Result;
@@ -39,8 +40,13 @@ namespace Iserv.IdentityServer4.BusinessLogic.Sms
                 _sessionId = result.Message;
                 return;
             }
-
+            _logger.LogError(result.Message);
             _sessionId = null;
+        } 
+
+        private void timerRefreshSessionId_Elapsed(object sender, EventArgs e)
+        {
+            RefreshSessionId();
         }
 
         private async Task<string> ReadResponseAsStringAsync(HttpResponseMessage response)
@@ -70,17 +76,25 @@ namespace Iserv.IdentityServer4.BusinessLogic.Sms
         private async Task<SmsResult> GetSessionIdAsync()
         {
             if (_sessionId != null) return new SmsResult {Message = _sessionId};
-            var values = HttpUtility.ParseQueryString(string.Empty);
-            values["login"] = _smsSetting.Login;
-            values["password"] = _smsSetting.Password;
-            var requestUrl = "user/sessionid" + "?" + values;
-            var client = new HttpClient() {BaseAddress = new Uri(_smsSetting.RootUrl)};
-            client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/x-www-form-urlencoded");
-            var response = await client.GetAsync(requestUrl);
-            var result = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode) return new SmsResult() {Message = result.Substring(1, result.Length - 2)};
-            _logger.LogError(result);
-            return new SmsResult {IsError = true, Message = "Не удалось получить идентификатор сессии отправки смс"};
+            try
+            {
+                var values = HttpUtility.ParseQueryString(string.Empty);
+                values["login"] = _smsSetting.Login;
+                values["password"] = _smsSetting.Password;
+                var requestUrl = "user/sessionid" + "?" + values;
+                var client = new HttpClient() {BaseAddress = new Uri(_smsSetting.RootUrl)};
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/x-www-form-urlencoded");
+                var response = await client.GetAsync(requestUrl);
+                var result = await response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode) return new SmsResult() {Message = result.Substring(1, result.Length - 2)};
+                _logger.LogError(result);
+                return new SmsResult {IsError = true, Message = "Не удалось получить идентификатор сессии отправки смс"};
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new SmsResult {IsError = true, Message = "Не удалось получить идентификатор сессии отправки смс"};
+            }
         }
 
         private async Task<SmsResult> SendAsync(bool isPost, string path, NameValueCollection values)
