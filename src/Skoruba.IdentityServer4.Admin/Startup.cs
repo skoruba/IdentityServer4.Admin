@@ -17,6 +17,7 @@ using Skoruba.IdentityServer4.Admin.Helpers;
 using Skoruba.IdentityServer4.Admin.Configuration;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
 using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 
 namespace Skoruba.IdentityServer4.Admin
 {
@@ -89,7 +90,7 @@ namespace Skoruba.IdentityServer4.Admin
             services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, AdminLogDbContext, AdminAuditLogDbContext>(Configuration, rootConfiguration.AdminConfiguration);
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, ILogger<Startup> logger, IRootConfiguration rootConfiguration)
         {
             if (env.IsDevelopment())
             {
@@ -99,6 +100,8 @@ namespace Skoruba.IdentityServer4.Admin
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            
+            logger.LogInformation(JsonConvert.SerializeObject(rootConfiguration.AdminConfiguration));
 
             // Add custom security headers
             app.UseSecurityHeaders();

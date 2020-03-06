@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:5002",
+      "applicationUrl": "http://localhost:5001",
       "sslPort": 0
     }
   },
@@ -15,7 +15,14 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "profiles": {},
+    "Skoruba.IdentityServer4.Admin": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://127.0.0.1.xip.io:9000;http://10.10.1.167:5001"
+    },
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,

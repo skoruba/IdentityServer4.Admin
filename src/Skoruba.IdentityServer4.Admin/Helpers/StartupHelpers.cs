@@ -37,6 +37,10 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.Helpers.Localization;
 using System.Linq;
+using Iserv.IdentityServer4.BusinessLogic.Handlers;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
@@ -344,12 +348,20 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, AdminConfiguration adminConfiguration)
             where TContext : DbContext where TUserIdentity : class where TUserIdentityRole : class
         {
+            var serviceProvider = services.BuildServiceProvider();
+            var logger = serviceProvider.GetService<ILogger<Startup>>();
+            
             services.AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
                 {
                     options.User.RequireUniqueEmail = true;
                 })
                 .AddEntityFrameworkStores<TContext>()
                 .AddDefaultTokenProviders();
+            
+            if (!adminConfiguration.IdentityServerEnabled)
+            {
+                services.AddSingleton<IAuthorizationHandler, AllowAnonymous>();
+            }
 
             services.AddAuthentication(options =>
                 {
@@ -397,24 +409,25 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
                         options.Events = new OpenIdConnectEvents
                         {
-                            OnMessageReceived = context => OnMessageReceived(context, adminConfiguration),
-                            OnRedirectToIdentityProvider = context => OnRedirectToIdentityProvider(context, adminConfiguration)
+                            OnMessageReceived = context => OnMessageReceived(context, adminConfiguration, logger),
+                            OnRedirectToIdentityProvider = context => OnRedirectToIdentityProvider(context, adminConfiguration, logger)
                         };
                     });
         }
 
-        private static Task OnMessageReceived(MessageReceivedContext context, AdminConfiguration adminConfiguration)
+        private static Task OnMessageReceived(MessageReceivedContext context, AdminConfiguration adminConfiguration, ILogger<Startup> logger)
         {
             context.Properties.IsPersistent = true;
             context.Properties.ExpiresUtc = new DateTimeOffset(DateTime.Now.AddHours(adminConfiguration.IdentityAdminCookieExpiresUtcHours));
-
+            logger.LogInformation("ProtocolMessage: " + string.Join(", ", context.ProtocolMessage.Parameters.Select(p => $"{p.Key}: {p.Value}")));
+            logger.LogInformation($"Url: {context.Request.Scheme}://{context.Request.Host}{context.Request.Path}");
             return Task.FromResult(0);
         }
 
-        private static Task OnRedirectToIdentityProvider(RedirectContext n, AdminConfiguration adminConfiguration)
+        private static Task OnRedirectToIdentityProvider(RedirectContext n, AdminConfiguration adminConfiguration, ILogger<Startup> logger)
         {
             n.ProtocolMessage.RedirectUri = adminConfiguration.IdentityAdminRedirectUri;
-
+            logger.LogInformation($"RedirectUri: {n.Request.Scheme}://{n.Request.Host}{n.Request.Path}");
             return Task.FromResult(0);
         }
 

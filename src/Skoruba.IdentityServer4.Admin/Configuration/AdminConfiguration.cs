@@ -2,6 +2,7 @@
 {
     public class AdminConfiguration
     {
+        public bool IdentityServerEnabled { get; set; }
         public string PageTitle { get; set; }
         public string FaviconUri { get; set; }
         public string IdentityAdminRedirectUri { get; set; }

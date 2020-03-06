@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using HealthChecks.UI.Client;
+﻿using HealthChecks.UI.Client;
 using Iserv.IdentityServer4.BusinessLogic.Extension;
 using Iserv.IdentityServer4.BusinessLogic.Filters;
-using Iserv.IdentityServer4.BusinessLogic.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
