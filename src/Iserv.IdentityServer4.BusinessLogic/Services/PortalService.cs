@@ -12,6 +12,7 @@ using Iserv.IdentityServer4.BusinessLogic.ExceptionHandling;
 using Iserv.IdentityServer4.BusinessLogic.Models;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using IdentityServer4.Stores.Serialization;
 using Microsoft.Extensions.Logging;
 
 namespace Iserv.IdentityServer4.BusinessLogic.Services
@@ -115,7 +116,10 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
         public async Task<PortalResult> UpdateUserAsync(Guid idext, Dictionary<string, object> values, IEnumerable<FileModel> files = null)
         {
             var client = _clientFactory.CreateClient(PortalCode);
-            var multiForm = new MultipartFormDataContent {{new StringContent(JsonConvert.SerializeObject(values), Encoding.UTF8), "attributes"}};
+            var dataContext = new StringContent(
+                JsonConvert.SerializeObject(values, new JsonSerializerSettings {Formatting = Formatting.None, ContractResolver = new CustomContractResolver()}), Encoding.UTF8);
+            dataContext.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+            var multiForm = new MultipartFormDataContent {{dataContext, "attributes"}};
             foreach (var file in files)
             {
                 var imageContent = new ByteArrayContent(file.FileData);
@@ -124,6 +128,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
             }
 
             var response = await client.PostAsync("tehprisEE_profiles/" + idext, multiForm);
+            _logger.LogInformation(response.RequestMessage.ToString());
             var txt = await ReadResponseAsStringAsync(response);
             return response.IsSuccessStatusCode ? new PortalResult() {Message = txt} : new PortalResult() {IsError = true, Message = txt};
         }
