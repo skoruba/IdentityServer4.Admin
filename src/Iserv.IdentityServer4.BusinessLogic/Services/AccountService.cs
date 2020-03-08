@@ -151,12 +151,16 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
             {
                 return IdentityResult.Failed(new IdentityError() {Code = IdentityServerCode, Description = $"User with external id = '{idext}' not found"});
             }
-
-            var resultPortalData = await _portalService.GetUserAsync(idext);
+            return await UpdateUserFromPortalAsync(user);
+        }
+        
+        public async Task<IdentityResult> UpdateUserFromPortalAsync(TUser user)
+        {
+            var resultPortalData = await _portalService.GetUserAsync(user.Idext);
             if (resultPortalData.IsError)
                 return IdentityResult.Failed(new IdentityError() {Code = PortalService.PortalCode, Description = resultPortalData.Message});
             if (!resultPortalData.Value.ContainsKey("idext"))
-                resultPortalData.Value.Add("idext", idext.ToString());
+                resultPortalData.Value.Add("idext", user.Idext.ToString());
 
             var userBase = UserClaimsHelpers.GetUserBase<TUser, TKey>(resultPortalData.Value);
             user.Email = userBase.Email;
@@ -320,7 +324,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
             var portalResult = await _portalService.UpdateUserAsync(user.Idext, values, model.Files);
             if (portalResult.IsError)
                 throw new PortalException(portalResult.Message);
-            await UpdateUserFromPortalAsync(user.Idext);
+            await UpdateUserFromPortalAsync(user);
         }
 
         public async Task ChangeEmailAsync(TUser user, string email, string code)

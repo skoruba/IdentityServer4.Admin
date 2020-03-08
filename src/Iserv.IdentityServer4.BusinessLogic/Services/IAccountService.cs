@@ -55,6 +55,12 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
         /// </summary>
         /// <param name="idext">Внешний Id пользователя портала</param>
         Task<IdentityResult> UpdateUserFromPortalAsync(Guid idext);
+        
+        /// <summary>
+        /// Обновление данных пользователя из портала
+        /// </summary>
+        /// <param name="user">Изменяемый пользователь</param>
+        Task<IdentityResult> UpdateUserFromPortalAsync(TUser user);
 
         /// <summary>
         /// Запрос на проверку подленности email пользователю по email

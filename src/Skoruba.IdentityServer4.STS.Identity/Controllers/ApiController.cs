@@ -121,10 +121,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values);
 
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-                return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
-            model.Id = Guid.Parse(user.Id.ToString());
+            model.Id = User.GetUserId();
             if (Request.Form.TryGetValue("values", out var values))
             {
                 model.Values = JsonConvert.DeserializeObject<Dictionary<string, object>>(values);

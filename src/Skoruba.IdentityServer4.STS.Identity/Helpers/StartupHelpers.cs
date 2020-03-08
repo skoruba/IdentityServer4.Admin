@@ -366,6 +366,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     policy.AddAuthenticationSchemes(IdentityServerConstants.LocalApi.AuthenticationScheme);
                     policy.RequireScope(rootConfiguration.AdminConfiguration.LocalApiResource);
                 });
+                options.AddPolicy(AuthorizationConsts.PortalPolicy, policy =>
+                {
+                    policy.AddAuthenticationSchemes(IdentityServerConstants.LocalApi.AuthenticationScheme);
+                    policy.RequireScope(rootConfiguration.AdminConfiguration.PortalApiResource);
+                });
                 options.AddPolicy(AuthorizationConsts.AdministrationPolicy, policy => policy.RequireRole(rootConfiguration.AdminConfiguration.AdministrationRole));
                 options.AddPolicy(IdentityServerConstants.LocalApi.PolicyName, policy =>
                 {

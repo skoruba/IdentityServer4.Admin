@@ -9,5 +9,6 @@
         public string AdministrationRole { get; set; }
         public string LocalApiResource { get; set; }
         public string ExternalApiResource { get; set; }
+        public string PortalApiResource { get; set; }
     }
 }
