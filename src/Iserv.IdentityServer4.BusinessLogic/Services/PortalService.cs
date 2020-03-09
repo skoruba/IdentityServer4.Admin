@@ -118,7 +118,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
             var client = _clientFactory.CreateClient(PortalCode);
             var dataContext = new StringContent(
                 JsonConvert.SerializeObject(values, new JsonSerializerSettings {Formatting = Formatting.None, ContractResolver = new CustomContractResolver()}), Encoding.UTF8);
-            dataContext.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+            dataContext.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json;charset=UTF-8");
             var multiForm = new MultipartFormDataContent {{dataContext, "attributes"}};
             foreach (var file in files)
             {
