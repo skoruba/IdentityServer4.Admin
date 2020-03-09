@@ -9,11 +9,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Services
 {
     public class SmtpEmailSender : IEmailSender
     {
-        private readonly ILogger<EmailSender> _logger;
+        private readonly ILogger<SmtpEmailSender> _logger;
         private readonly SmtpConfiguration _configuration;
         private readonly SmtpClient _client;
 
-        public SmtpEmailSender(SmtpConfiguration configuration, ILogger<EmailSender> logger)
+        public SmtpEmailSender(SmtpConfiguration configuration, ILogger<SmtpEmailSender> logger)
         {
             _logger = logger;
             _configuration = configuration;
