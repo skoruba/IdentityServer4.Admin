@@ -131,7 +131,7 @@ namespace Skoruba.IdentityServer4.Admin.Api
 
         public virtual void RegisterDbContexts(IServiceCollection services)
         {
-            services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext>(Configuration);
+            services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext>(Configuration);
         }
 
         public virtual void RegisterAuthentication(IServiceCollection services)

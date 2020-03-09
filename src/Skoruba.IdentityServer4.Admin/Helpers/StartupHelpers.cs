@@ -42,6 +42,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -86,12 +87,13 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <typeparam name="TAuditLoggingDbContext"></typeparam>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        public static void RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext>(this IServiceCollection services, IConfiguration configuration)
+        public static void RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(this IServiceCollection services, IConfiguration configuration)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
             where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
+            where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
         {
             var databaseProvider = configuration.GetSection(nameof(DatabaseProviderConfiguration)).Get<DatabaseProviderConfiguration>();
 
@@ -100,17 +102,18 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             var persistedGrantsConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);
             var errorLoggingConnectionString = configuration.GetConnectionString(ConfigurationConsts.AdminLogDbConnectionStringKey);
             var auditLoggingConnectionString = configuration.GetConnectionString(ConfigurationConsts.AdminAuditLogDbConnectionStringKey);
+            var dataProtectionConnectionString = configuration.GetConnectionString(ConfigurationConsts.DataProtectionDbConnectionStringKey);
 
             switch (databaseProvider.ProviderType)
             {
                 case DatabaseProviderType.SqlServer:
-                    services.RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString, errorLoggingConnectionString, auditLoggingConnectionString);
+                    services.RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString, errorLoggingConnectionString, auditLoggingConnectionString, dataProtectionConnectionString);
                     break;
                 case DatabaseProviderType.PostgreSQL:
-                    services.RegisterNpgSqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString, errorLoggingConnectionString, auditLoggingConnectionString);
+                    services.RegisterNpgSqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString, errorLoggingConnectionString, auditLoggingConnectionString, dataProtectionConnectionString);
                     break;
                 case DatabaseProviderType.MySql:
-                    services.RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString, errorLoggingConnectionString, auditLoggingConnectionString);
+                    services.RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString, errorLoggingConnectionString, auditLoggingConnectionString, dataProtectionConnectionString);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(databaseProvider.ProviderType), $@"The value needs to be one of {string.Join(", ", Enum.GetNames(typeof(DatabaseProviderType)))}.");
@@ -127,18 +130,20 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <typeparam name="TIdentityDbContext"></typeparam>
         /// <typeparam name="TAuditLoggingDbContext"></typeparam>
         /// <param name="services"></param>
-        public static void RegisterDbContextsStaging<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext>(this IServiceCollection services)
+        public static void RegisterDbContextsStaging<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(this IServiceCollection services)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
             where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
+            where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
         {
             var persistedGrantsDatabaseName = Guid.NewGuid().ToString();
             var configurationDatabaseName = Guid.NewGuid().ToString();
             var logDatabaseName = Guid.NewGuid().ToString();
             var identityDatabaseName = Guid.NewGuid().ToString();
             var auditLoggingDatabaseName = Guid.NewGuid().ToString();
+            var dataProtectionDatabaseName = Guid.NewGuid().ToString();
 
             var operationalStoreOptions = new OperationalStoreOptions();
             services.AddSingleton(operationalStoreOptions);
@@ -151,6 +156,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             services.AddDbContext<TConfigurationDbContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(configurationDatabaseName));
             services.AddDbContext<TLogDbContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(logDatabaseName));
             services.AddDbContext<TAuditLoggingDbContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(auditLoggingDatabaseName));
+            services.AddDbContext<TDataProtectionDbContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(dataProtectionDatabaseName));
         }
 
         /// <summary>
@@ -418,18 +424,20 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             return Task.FromResult(0);
         }
 
-        public static void AddIdSHealthChecks<TConfigurationDbContext, TPersistedGrantDbContext, TIdentityDbContext, TLogDbContext, TAuditLoggingDbContext>(this IServiceCollection services, IConfiguration configuration, AdminConfiguration adminConfiguration)
+        public static void AddIdSHealthChecks<TConfigurationDbContext, TPersistedGrantDbContext, TIdentityDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(this IServiceCollection services, IConfiguration configuration, AdminConfiguration adminConfiguration)
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TIdentityDbContext : DbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
             where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
+            where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
         {
             var configurationDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
             var persistedGrantsDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);
             var identityDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
             var logDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.AdminLogDbConnectionStringKey);
             var auditLogDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.AdminAuditLogDbConnectionStringKey);
+            var dataProtectionDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.DataProtectionDbConnectionStringKey);
 
             var identityServerUri = adminConfiguration.IdentityServerBaseUrl;
             var healthChecksBuilder = services.AddHealthChecks()
@@ -438,6 +446,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 .AddDbContextCheck<TIdentityDbContext>("IdentityDbContext")
                 .AddDbContextCheck<TLogDbContext>("LogDbContext")
                 .AddDbContextCheck<TAuditLoggingDbContext>("AuditLogDbContext")
+                .AddDbContextCheck<TDataProtectionDbContext>("DataProtectionDbContext")
 
                 .AddIdentityServer(new Uri(identityServerUri), "Identity Server");
 
@@ -450,6 +459,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 var identityTableName = DbContextHelpers.GetEntityTable<TIdentityDbContext>(scope.ServiceProvider);
                 var logTableName = DbContextHelpers.GetEntityTable<TLogDbContext>(scope.ServiceProvider);
                 var auditLogTableName = DbContextHelpers.GetEntityTable<TAuditLoggingDbContext>(scope.ServiceProvider);
+                var dataProtectionTableName = DbContextHelpers.GetEntityTable<TDataProtectionDbContext>(scope.ServiceProvider);
 
                 var databaseProvider = configuration.GetSection(nameof(DatabaseProviderConfiguration)).Get<DatabaseProviderConfiguration>();
                 switch (databaseProvider.ProviderType)
@@ -465,7 +475,9 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                             .AddSqlServer(logDbConnectionString, name: "LogDb",
                                 healthQuery: $"SELECT TOP 1 * FROM dbo.[{logTableName}]")
                             .AddSqlServer(auditLogDbConnectionString, name: "AuditLogDb",
-                                healthQuery: $"SELECT TOP 1 * FROM dbo.[{auditLogTableName}]");
+                                healthQuery: $"SELECT TOP 1 * FROM dbo.[{auditLogTableName}]")
+                            .AddSqlServer(dataProtectionDbConnectionString, name: "DataProtectionDb",
+                                healthQuery: $"SELECT TOP 1 * FROM dbo.[{dataProtectionTableName}]");
                         break;
                     case DatabaseProviderType.PostgreSQL:
                         healthChecksBuilder
@@ -478,7 +490,9 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                             .AddNpgSql(logDbConnectionString, name: "LogDb",
                                 healthQuery: $"SELECT * FROM \"{logTableName}\" LIMIT 1")
                             .AddNpgSql(auditLogDbConnectionString, name: "AuditLogDb",
-                                healthQuery: $"SELECT * FROM \"{auditLogTableName}\"  LIMIT 1");
+                                healthQuery: $"SELECT * FROM \"{auditLogTableName}\"  LIMIT 1")
+                            .AddNpgSql(dataProtectionDbConnectionString, name: "DataProtectionDb",
+                                healthQuery: $"SELECT * FROM \"{dataProtectionTableName}\"  LIMIT 1");
                         break;
                     case DatabaseProviderType.MySql:
                         healthChecksBuilder
@@ -486,7 +500,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                             .AddMySql(persistedGrantsDbConnectionString, name: "PersistentGrantsDb")
                             .AddMySql(identityDbConnectionString, name: "IdentityDb")
                             .AddMySql(logDbConnectionString, name: "LogDb")
-                            .AddMySql(auditLogDbConnectionString, name: "AuditLogDb");
+                            .AddMySql(auditLogDbConnectionString, name: "AuditLogDb")
+                            .AddMySql(dataProtectionDbConnectionString, name: "DataProtectionDb");
                         break;
                     default:
                         throw new NotImplementedException($"Health checks not defined for database provider {databaseProvider.ProviderType}");

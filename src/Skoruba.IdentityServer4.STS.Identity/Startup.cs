@@ -12,6 +12,7 @@ using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using System;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace Skoruba.IdentityServer4.STS.Identity
 {
@@ -30,9 +31,11 @@ namespace Skoruba.IdentityServer4.STS.Identity
         {
             var rootConfiguration = CreateRootConfiguration();
             services.AddSingleton(rootConfiguration);
-
             // Register DbContexts for IdentityServer and Identity
             RegisterDbContexts(services);
+
+            // Save data protection keys to db
+            services.AddDataProtection().PersistKeysToDbContext<IdentityServerDataProtectionDbContext>();
 
             // Add email senders which is currently setup for SendGrid and SMTP
             services.AddEmailSenders(Configuration);
@@ -51,7 +54,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
             // Add authorization policies for MVC
             RegisterAuthorization(services);
 
-            services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext>(Configuration);
+            services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, IdentityServerDataProtectionDbContext>(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -86,7 +89,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
         public virtual void RegisterDbContexts(IServiceCollection services)
         {
-            services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext>(Configuration);
+            services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, IdentityServerDataProtectionDbContext>(Configuration);
         }
 
         public virtual void RegisterAuthentication(IServiceCollection services)
