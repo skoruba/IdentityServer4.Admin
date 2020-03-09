@@ -104,6 +104,8 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
             where TUserChangePasswordDto : UserChangePasswordDto<TUserDtoKey>
             where TRoleClaimsDto : RoleClaimsDto<TRoleDtoKey>
         {
+            services.AddLocalization(opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; });
+
             services.TryAddTransient(typeof(IGenericControllerLocalizer<>), typeof(GenericControllerLocalizer<>));
 
             services.AddControllersWithViews(o => { o.Conventions.Add(new GenericControllerRouteConvention()); })
