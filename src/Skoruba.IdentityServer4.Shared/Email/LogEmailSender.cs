@@ -1,14 +1,14 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
-namespace Skoruba.IdentityServer4.STS.Identity.Services
+namespace Skoruba.IdentityServer4.Shared.Email
 {
-    public class EmailSender : IEmailSender
+    public class LogEmailSender : IEmailSender
     {
-        private readonly ILogger<EmailSender> _logger;
+        private readonly ILogger<LogEmailSender> _logger;
 
-        public EmailSender(ILogger<EmailSender> logger)
+        public LogEmailSender(ILogger<LogEmailSender> logger)
         {
             _logger = logger;
         }

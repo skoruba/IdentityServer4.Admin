@@ -14,12 +14,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using SendGrid;
+using Skoruba.IdentityServer4.Shared.Configuration.Email;
+using Skoruba.IdentityServer4.Shared.Email;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.ApplicationParts;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
-using Skoruba.IdentityServer4.STS.Identity.Services;
 using System.Linq;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions;
@@ -108,13 +109,13 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         public static void AddEmailSenders(this IServiceCollection services, IConfiguration configuration)
         {
             var smtpConfiguration = configuration.GetSection(nameof(SmtpConfiguration)).Get<SmtpConfiguration>();
-            var sendGridConfiguration = configuration.GetSection(nameof(SendgridConfiguration)).Get<SendgridConfiguration>();
+            var sendGridConfiguration = configuration.GetSection(nameof(SendGridConfiguration)).Get<SendGridConfiguration>();
 
             if (sendGridConfiguration != null && !string.IsNullOrWhiteSpace(sendGridConfiguration.ApiKey))
             {
                 services.AddSingleton<ISendGridClient>(_ => new SendGridClient(sendGridConfiguration.ApiKey));
                 services.AddSingleton(sendGridConfiguration);
-                services.AddTransient<IEmailSender, SendgridEmailSender>();
+                services.AddTransient<IEmailSender, SendGridEmailSender>();
             }
             else if (smtpConfiguration != null && !string.IsNullOrWhiteSpace(smtpConfiguration.Host))
             {
@@ -123,7 +124,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             }
             else
             {
-                services.AddSingleton<IEmailSender, EmailSender>();
+                services.AddSingleton<IEmailSender, LogEmailSender>();
             }
         }
 
