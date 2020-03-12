@@ -193,6 +193,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         /// </summary>
         /// <param name="email">Email востановления пароля пользователя</param>
         [HttpPost]
+        [AllowAnonymous]
         [Route("restorePasswordByEmail")]
         public async Task<IActionResult> RestorePasswordByEmailAsync([FromBody] string email)
         {
@@ -205,6 +206,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         /// </summary>
         /// <param name="phoneNumber">Номер телефона востановления пароля пользователя</param>
         [HttpPost]
+        [AllowAnonymous]
         [Route("repairPasswordBySms")]
         public async Task<IActionResult> RepairPasswordBySmsAsync([FromBody] string phoneNumber)
         {
@@ -217,6 +219,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         /// </summary>
         /// <param name="model">Модель проверки номера телефона</param>
         [HttpPost]
+        [AllowAnonymous]
         [Route("validSmsCodeChangePassword")]
         public IActionResult ValidSmsCodeChangePassword([FromBody] ValidSmsCodeModel model)
         {
@@ -229,6 +232,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         /// </summary>
         /// <param name="model">Модель изменения пароля через смс код востановления пароля пользователя через телефон</param>
         [HttpPost]
+        [AllowAnonymous]
         [Route("changePasswordBySms")]
         public async Task<IActionResult> ChangePasswordBySmsAsync([FromBody] ChangePasswordBySmsCodeModel model)
         {

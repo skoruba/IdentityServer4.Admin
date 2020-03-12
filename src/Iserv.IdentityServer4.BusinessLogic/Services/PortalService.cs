@@ -71,14 +71,17 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
             return _memoryCache.Get(PortalCode)?.ToString();
         }
 
-        public async Task<PortalResult<Guid>> GetUserIdByAuthAsync(string userName, string password)
+        public async Task<PortalResult<Guid>> GetUserIdByAuthAsync(ELoginTypes loginTypes, string login, string password)
         {
-            if (string.IsNullOrWhiteSpace(userName))
+            if (string.IsNullOrWhiteSpace(login))
                 throw new ValidationException("Логин пользователя не указан");
             if (string.IsNullOrWhiteSpace(password))
                 throw new ValidationException("Пароль пользователя не указан");
             var client = _clientFactory.CreateClient(PortalCode);
-            var response = await client.PostAsync("tehprisEE_auth/signin", new StringContent(JsonConvert.SerializeObject(new {email = userName, password}), Encoding.UTF8));
+            var data = JsonConvert.SerializeObject(new {email = login, password});
+            if (loginTypes == ELoginTypes.Phone)
+                data = data.Replace("email", "phone");
+            var response = await client.PostAsync("tehprisEE_auth/signin", new StringContent(data, Encoding.UTF8));
             var txt = await ReadResponseAsStringAsync(response);
             if (!response.IsSuccessStatusCode) return new PortalResult<Guid>() {IsError = true, Message = txt};
             var result = JsonConvert.DeserializeObject<PortalAuthResultSuccess>(txt);

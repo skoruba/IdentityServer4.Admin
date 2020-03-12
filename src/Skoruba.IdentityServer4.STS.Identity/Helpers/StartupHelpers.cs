@@ -35,6 +35,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using System.Net.Http;
 using System.Net;
 using Iserv.IdentityServer4.BusinessLogic.Providers;
+using Iserv.IdentityServer4.BusinessLogic.TokenValidators;
 using Iserv.IdentityServer4.BusinessLogic.Validators;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -234,7 +235,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 
             var authenticationBuilder = services.AddAuthentication();
 
-            AddExternalProviders(authenticationBuilder, configuration);
+            services.AddExternalProviders(authenticationBuilder, configuration);
         }
 
         /// <summary>
@@ -297,9 +298,19 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 .AddOperationalStore<TPersistedGrantDbContext>()
                 .AddAspNetIdentity<UserIdentity>()
                 .AddResourceOwnerValidator<ResourceOwnerValidatorPassword<UserIdentity, string>>()
-                .AddDelegationGrant<UserIdentity, String>() // Register the extension grant 
-                .AddDefaultSocialLoginValidators();
+                .AddDelegationGrant<UserIdentity, string>() // Register the extension grant 
+                .AddDefaultSocialLoginValidators()
+                .AddTokenValidators(options =>
+                {
+                    options.AddValidator<IYandexTokenValidator>("yandex");
+                    options.AddValidator<IVkTokenValidator>("vk");
+                    options.AddValidator<IOkTokenValidator>("ok");
+                });
 
+            services.AddScoped<IYandexTokenValidator, YandexTokenValidator>();
+            services.AddScoped<IVkTokenValidator, VkTokenValidator>();
+            services.AddScoped<IOkTokenValidator, OkTokenValidator>();
+            
             builder.AddCustomSigningCredential(configuration);
             builder.AddCustomValidationKey(configuration);
             return builder;
@@ -310,8 +321,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// </summary>
         /// <param name="authenticationBuilder"></param>
         /// <param name="configuration"></param>
-        private static void AddExternalProviders(AuthenticationBuilder authenticationBuilder,
-            IConfiguration configuration)
+        private static void AddExternalProviders(this IServiceCollection services, AuthenticationBuilder authenticationBuilder, IConfiguration configuration)
         {
             var externalProviderConfiguration = configuration.GetSection(nameof(ExternalProvidersConfiguration)).Get<ExternalProvidersConfiguration>();
 
@@ -325,18 +335,18 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 });
             }
 
+            var socialOptions = configuration.GetSection(nameof(SocialOptions)).Get<SocialOptions>();
+            services.AddSingleton(socialOptions);
             authenticationBuilder.AddGoogle(googleOptions =>
             {
-                var authNSection = configuration.GetSection("Authentication:Google");
-                googleOptions.ClientId = authNSection["ClientId"];
-                googleOptions.ClientSecret = authNSection["ClientSecret"];
+                googleOptions.ClientId = socialOptions.GoogleParams.WebClientId;
+                googleOptions.ClientSecret = socialOptions.GoogleParams.WebClientSecret;
                 googleOptions.Scope.Add("openid");
                 googleOptions.Scope.Add("email");
             }).AddYandex(yandexOptions =>
             {
-                var authNSection = configuration.GetSection("Authentication:Yandex");
-                yandexOptions.ClientId = authNSection["ClientId"];
-                yandexOptions.ClientSecret = authNSection["ClientSecret"];
+                yandexOptions.ClientId = socialOptions.YandexParams.WebClientId;;
+                yandexOptions.ClientSecret = socialOptions.YandexParams.WebClientSecret;
             });
         }
 

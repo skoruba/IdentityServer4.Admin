@@ -21,10 +21,11 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
         /// <summary>
         /// Получение Id пользователя через аутентификацию на портале
         /// </summary>
-        /// <param name="userName">Логин пользователя</param>
+        /// <param name="loginTypes">Тип логина</param>
+        /// <param name="login">Логин пользователя</param>
         /// <param name="password">Пароль пользователя</param>
         /// <returns>Внешний Id пользователя портала</returns>
-        Task<PortalResult<Guid>> GetUserIdByAuthAsync(string userName, string password);
+        Task<PortalResult<Guid>> GetUserIdByAuthAsync(ELoginTypes loginTypes, string login, string password);
 
         /// <summary>
         /// Получение данных пользователя с портала
