@@ -29,6 +29,8 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using Skoruba.IdentityServer4.Shared.Authentication;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
@@ -229,6 +231,15 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 })
                 .AddEntityFrameworkStores<TIdentityDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
+                options.OnAppendCookie = cookieContext =>
+                    AuthenticationHelpers.CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
+                options.OnDeleteCookie = cookieContext =>
+                    AuthenticationHelpers.CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
+            });
 
             services.Configure<IISOptions>(iis =>
             {

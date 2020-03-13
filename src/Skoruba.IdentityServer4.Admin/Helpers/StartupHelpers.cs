@@ -43,6 +43,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
+using Skoruba.IdentityServer4.Shared.Authentication;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -350,6 +351,15 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, AdminConfiguration adminConfiguration)
             where TContext : DbContext where TUserIdentity : class where TUserIdentityRole : class
         {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
+                options.OnAppendCookie = cookieContext =>
+                    AuthenticationHelpers.CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
+                options.OnDeleteCookie = cookieContext =>
+                    AuthenticationHelpers.CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
+            });
+
             services.AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
                 {
                     options.User.RequireUniqueEmail = true;
@@ -371,9 +381,6 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         options =>
                         {
                             options.Cookie.Name = adminConfiguration.IdentityAdminCookieName;
-
-                            // Issue: https://github.com/aspnet/Announcements/issues/318
-                            options.Cookie.SameSite = SameSiteMode.None;
                         })
                     .AddOpenIdConnect(AuthenticationConsts.OidcAuthenticationScheme, options =>
                     {
