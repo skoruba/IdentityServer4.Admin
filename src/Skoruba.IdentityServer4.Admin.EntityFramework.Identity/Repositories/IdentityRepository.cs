@@ -166,9 +166,9 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
 
         public virtual async Task<(IdentityResult identityResult, TKey roleId)> UpdateRoleAsync(TRole role)
         {
-            var thisRole = await RoleManager.FindByIdAsync(role.Id.ToString());
-            thisRole.Name = role.Name;
-            var identityResult = await RoleManager.UpdateAsync(thisRole);
+            var existingRole = await RoleManager.FindByIdAsync(role.Id.ToString());
+            Mapper.Map(role, existingRole);
+            var identityResult = await RoleManager.UpdateAsync(existingRole);
 
             return (identityResult, role.Id);
         }

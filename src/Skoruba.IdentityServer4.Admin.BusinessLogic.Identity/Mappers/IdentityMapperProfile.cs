@@ -56,6 +56,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers
             CreateMap<TUser, TUser>(MemberList.Destination)
                 .ForMember(x => x.SecurityStamp, opt => opt.Ignore());
 
+            CreateMap<TRole, TRole>(MemberList.Destination);
+
             CreateMap<PagedList<TUser>, TUsersDto>(MemberList.Destination)
                 .ForMember(x => x.Users,
                     opt => opt.MapFrom(src => src.Data));
