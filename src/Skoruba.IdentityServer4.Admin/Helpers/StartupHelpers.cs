@@ -381,6 +381,9 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         options =>
                         {
                             options.Cookie.Name = adminConfiguration.IdentityAdminCookieName;
+
+                            // Issue: https://github.com/aspnet/Announcements/issues/318
+                            options.Cookie.SameSite = SameSiteMode.None;
                         })
                     .AddOpenIdConnect(AuthenticationConsts.OidcAuthenticationScheme, options =>
                     {
