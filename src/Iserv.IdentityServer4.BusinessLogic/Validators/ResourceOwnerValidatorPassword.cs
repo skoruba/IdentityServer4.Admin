@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using System;
 using System.Threading.Tasks;
+using IdentityModel;
 using Iserv.IdentityServer4.BusinessLogic.Models;
 
 namespace Iserv.IdentityServer4.BusinessLogic.Validators
@@ -16,6 +17,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Validators
         where TKey : IEquatable<TKey>
     {
         private readonly UserManager<TUser> _userManager;
+        private readonly SignInManager<TUser> _signInManager;
         private readonly IAccountService<TUser, TKey> _accountService;
         private readonly IPortalService _portalService;
         private readonly ILogger<ResourceOwnerPasswordValidator<TUser>> _logger;
@@ -25,6 +27,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Validators
             : base(userManager, signInManager, events, logger)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
             _accountService = accountService;
             _portalService = portalService;
             _logger = logger;
@@ -32,22 +35,20 @@ namespace Iserv.IdentityServer4.BusinessLogic.Validators
 
         private async Task<bool> ValidateAsync(ResourceOwnerPasswordValidationContext context, ELoginTypes loginTypes)
         {
+            TUser user = null;
             if (loginTypes == ELoginTypes.Email)
             {
-                await base.ValidateAsync(context);
-                if (!context.Result.IsError)
-                    return true;
+                user = await _accountService.FindByEmailAsync(context.UserName);
             }
             else
             {
-                var user = await _accountService.FindByPhoneAsync(context.UserName);
-                if (user == null) return false;
-                context.UserName = user.Email;
-                await base.ValidateAsync(context);
-                return true;
+                user = await _accountService.FindByPhoneAsync(context.UserName);
             }
-
-            return false;
+            if (user == null) return false;
+            var result = await _signInManager.CheckPasswordSignInAsync(user, context.Password, true);
+            if (!result.Succeeded) return false;
+            context.Result = new GrantValidationResult(user.Id.ToString(), OidcConstants.AuthenticationMethods.Password);
+            return true;
         }
 
         public override async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
@@ -62,7 +63,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Validators
                 var resultPortalId = await _portalService.GetUserIdByAuthAsync(loginTypes, context.UserName, context.Password);
                 if (resultPortalId.IsError)
                     return;
-                var user = await _userManager.FindByNameAsync(context.UserName);
+                var user = loginTypes == ELoginTypes.Email ? await _accountService.FindByEmailAsync(context.UserName) : await _accountService.FindByPhoneAsync(context.UserName);
                 if (user != null)
                 {
                     var tokenPassword = await _userManager.GeneratePasswordResetTokenAsync(user);

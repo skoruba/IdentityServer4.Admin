@@ -77,14 +77,14 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
         /// <param name="code">Код email проверяемого email</param>
         /// <returns>Результат проверки кода</returns>
         void ValidEmailCode(string email, string code);
-        
+
         /// <summary>
         /// Запрос на проверку подленности номера телефона пользователю по смс
         /// </summary>
         /// <param name="phone">Проверяемый номер телефона</param>
-        /// <param name="validatingUser">Необходимость проверки пользоватля по смс</param>
+        /// <param name="isNew">Флаг нового номера телефона</param>
         /// <returns>Результат запуска проверки подленности номера телефона по смс</returns>
-        Task RequestCheckPhoneAsync(string phone, bool validatingUser = true);
+        Task RequestCheckPhoneAsync(string phone, bool isNew);
 
         /// <summary>
         /// Проверка кода верификации номера телефона по смс
@@ -128,6 +128,13 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
         /// <param name="idext">Внешний id пользователя портала</param>
         /// <param name="password">Новый пароль пользователя</param>
         Task UpdatePasswordAsync(Guid idext, string password);
+        
+        /// <summary>
+        /// Изменение пароля пользователя
+        /// </summary>
+        /// <param name="user">Изменяемый пользователь</param>
+        /// <param name="password">Новый пароль пользователя</param>
+        Task UpdatePasswordAsync(TUser user, string password);
 
         /// <summary>
         /// Восстановление пароля по email

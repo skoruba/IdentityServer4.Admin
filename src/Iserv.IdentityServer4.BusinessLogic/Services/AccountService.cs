@@ -127,6 +127,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
                 resultPortalData.Value.Add("idext", idext.ToString());
             var userNew = UserClaimsHelpers.GetUserBase<TUser, TKey>(resultPortalData.Value);
             var claimsNew = UserClaimsHelpers.GetClaims<TKey>(resultPortalData.Value);
+            userNew.UserName = idext.ToString();
             var result = await _userManager.CreateAsync(userNew, password);
             if (!result.Succeeded)
             {
@@ -151,9 +152,10 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
             {
                 return IdentityResult.Failed(new IdentityError() {Code = IdentityServerCode, Description = $"User with external id = '{idext}' not found"});
             }
+
             return await UpdateUserFromPortalAsync(user);
         }
-        
+
         public async Task<IdentityResult> UpdateUserFromPortalAsync(TUser user)
         {
             var resultPortalData = await _portalService.GetUserAsync(user.Idext);
@@ -226,18 +228,23 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
             _confirmService.ValidEmailCode(email, ActionNameEmail, code);
         }
 
-        public async Task RequestCheckPhoneAsync(string phone, bool validatingUser)
+        public async Task RequestCheckPhoneAsync(string phone, bool isNew)
         {
             if (string.IsNullOrWhiteSpace(phone))
                 throw new ValidationException("Phone number not specified");
             var vPhone = new PhoneAttribute();
             if (!vPhone.IsValid(phone))
                 throw new ValidationException($"Invalid phone number. {string.Format(vPhone.ErrorMessage, phone)}");
-            if (validatingUser)
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phone);
+            if (isNew)
             {
-                var user = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phone);
+                if (user != null)
+                    throw new ValidationException($"Пользователь с номером телефона {phone} уже существует");
+            }
+            else
+            {
                 if (user == null)
-                    throw new ValidationException($"The user with the phone number {phone} was not found");
+                    throw new ValidationException($"Пользователь с номером телефона {phone} не найден");
                 if (user.Idext == Guid.Empty)
                     throw new ValidationException($"Idext is not defined");
             }
@@ -256,10 +263,10 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
                 throw new ValidationException($"Password not specified");
             if (string.IsNullOrWhiteSpace(model.Email) && string.IsNullOrWhiteSpace(model.PhoneNumber))
                 throw new ValidationException($"Email and phone is not defined");
-            ValidEmail(model.Email);
-            ValidPhone(model.PhoneNumber);
+
             if (!string.IsNullOrWhiteSpace(model.Email))
             {
+                ValidEmail(model.Email);
                 var userLocal = await _userManager.FindByEmailAsync(model.Email);
                 if (userLocal != null)
                     throw new ValidationException($"Пользователь с почтой '{model.Email}' уже существует");
@@ -267,6 +274,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
 
             if (!string.IsNullOrWhiteSpace(model.PhoneNumber))
             {
+                ValidPhone(model.PhoneNumber);
                 var userLocal = await FindByPhoneAsync(model.PhoneNumber);
                 if (userLocal != null)
                     throw new ValidationException($"Пользователь с номером телефона '{model.PhoneNumber}' уже существует");
@@ -283,14 +291,14 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
                 Phone = model.PhoneNumber,
                 Password = model.Password,
             };
-            if (string.IsNullOrWhiteSpace(model.FirstName)) portalModel.FirstName = model.FirstName;
-            if (string.IsNullOrWhiteSpace(model.LastName)) portalModel.LastName = model.LastName;
-            if (string.IsNullOrWhiteSpace(model.MiddleName)) portalModel.MiddleName = model.MiddleName;
+            if (!string.IsNullOrWhiteSpace(model.FirstName)) portalModel.FirstName = model.FirstName;
+            if (!string.IsNullOrWhiteSpace(model.LastName)) portalModel.LastName = model.LastName;
+            if (!string.IsNullOrWhiteSpace(model.MiddleName)) portalModel.MiddleName = model.MiddleName;
             var portalResult = await _portalService.RegisterAsync(portalModel);
             if (portalResult.IsError)
-                throw new ValidationException(portalResult.Message);
+                throw new PortalException(portalResult.Message);
             if (!(await CreateUserFromPortalAsync(portalResult.Value, model.Password)).Succeeded)
-                throw new ValidationException(portalResult.Message);
+                throw new PortalException(portalResult.Message);
             return portalResult.Value;
         }
 
@@ -382,9 +390,19 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
             var user = await FindByIdextAsync(idext);
             if (user == null)
                 throw new ValidationException($"User with external id = '{idext}' not found");
-            var result = await _portalService.UpdatePasswordAsync(idext, password);
+            await UpdatePasswordAsync(user, password);
+        }
+
+        public async Task UpdatePasswordAsync(TUser user, string password)
+        {
+            if (string.IsNullOrWhiteSpace(password))
+                throw new ValidationException("Password number not specified");
+            var result = await _portalService.UpdatePasswordAsync(user.Idext, password);
             if (result.IsError)
                 throw new PortalException(result.Message);
+            //TODO: Реализавать получение хеш пароля с портала и сравнить перед записью в БД
+            var tokenPassword = await _userManager.GeneratePasswordResetTokenAsync(user);
+            await _userManager.ResetPasswordAsync(user, tokenPassword, password);
         }
 
         public async Task RestorePasswordByEmailAsync(string email)
@@ -430,7 +448,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
                 throw new ValidationException($"The user with the phone number {phoneNumber} was not found");
             if (user.Idext == null)
                 throw new ValidationException($"Idext is not defined");
-            await UpdatePasswordAsync(user.Idext, password);
+            await UpdatePasswordAsync(user, password);
         }
     }
 }

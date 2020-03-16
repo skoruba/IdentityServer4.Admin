@@ -61,6 +61,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             {
                 return Json(result, new JsonSerializerSettings());
             }
+
             return Ok(result);
         }
 
@@ -72,9 +73,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         [AllowAnonymous]
         [ProducesResponseType(typeof(string), 500)]
         [Route("requestCheckPhone")]
-        public async Task<IActionResult> RequestCheckPhoneAsync([FromBody] string phone)
+        public async Task<IActionResult> RequestCheckPhoneForRegisterAsync([FromBody] string phone)
         {
-            await _accountService.RequestCheckPhoneAsync(phone, false);
+            await _accountService.RequestCheckPhoneAsync(phone, true);
             return Ok();
         }
 
@@ -182,9 +183,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
                 return NotFound(_localizer["UserNotFound", _userManager.GetUserId(User)]);
-
-            // await _accountService.UpdatePasswordAsync(UserClaimsHelpers.GetIdext(User.Identity), password);
-            await _accountService.UpdatePasswordAsync(user.Idext, password);
+            await _accountService.UpdatePasswordAsync(user, password);
             return Ok();
         }
 

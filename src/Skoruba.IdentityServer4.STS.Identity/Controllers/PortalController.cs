@@ -5,6 +5,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 using System;
 using System.Threading.Tasks;
+using Iserv.IdentityServer4.BusinessLogic.Models;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Controllers
@@ -29,17 +30,20 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         /// <summary>
         /// Обновление пользователя
         /// </summary>
-        /// <param name="id">Id пользователя</param>
+        /// <param name="model">Модель пользователя портала</param>
         [HttpPost]
         [Route("updateUser")]
-        public async Task<IActionResult> UpdateUserAsync([FromBody] Guid id)
+        public async Task<IActionResult> UpdateUserAsync([FromForm] IdModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values);
 
-            var user = await _accountService.FindByIdextAsync(id);
+            var user = await _accountService.FindByIdextAsync(model.Id);
             if (user == null)
-                return NotFound(_localizer["UserNotFound", id]);
+            {
+                return NotFound(_localizer["UserNotFound", model.Id]);
+            }
+
             await _accountService.UpdateUserFromPortalAsync(user);
             return Ok();
         }

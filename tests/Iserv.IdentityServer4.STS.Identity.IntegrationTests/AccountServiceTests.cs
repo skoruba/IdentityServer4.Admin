@@ -4,7 +4,6 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 using Iserv.IdentityServer4.BusinessLogic.ExceptionHandling;
 using Iserv.IdentityServer4.BusinessLogic.Models;
@@ -51,6 +50,7 @@ namespace Iserv.IdentityServer4.STS.Identity.IntegrationTests
             services.AddMemoryCache();
             var emailSenderMock = new Mock<IEmailSender>();
             var smsSenderMock = new Mock<ISmsService>();
+            smsSenderMock.Setup(p => p.SendSmsAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(new SmsResult() { Message = "Ok"});
             services.AddSingleton<IConfirmService, ConfirmService>(provider =>
                 new ConfirmService(new TimeSpan(1000000000), _memoryCache, emailSenderMock.Object, smsSenderMock.Object));
 
@@ -151,7 +151,7 @@ namespace Iserv.IdentityServer4.STS.Identity.IntegrationTests
         public async Task UpdateUserFromPortalAsync()
         {
             var accountService = GetAccountService(_dbContext, true);
-            await accountService.RequestCheckPhoneAsync(_phone, false);
+            await accountService.RequestCheckPhoneAsync(_phone, true);
             var userModel = new RegisterUserModel()
             {
                 Email = _email,
@@ -192,9 +192,9 @@ namespace Iserv.IdentityServer4.STS.Identity.IntegrationTests
             var accountService = GetAccountService(_dbContext, true);
             Assert.Equal(await accountService.CreateUserFromPortalAsync(_idext, _password), IdentityResult.Success);
 
-            await Assert.ThrowsAsync<ValidationException>(() => accountService.RequestCheckPhoneAsync("---"));
-            await Assert.ThrowsAsync<ValidationException>(() => accountService.RequestCheckPhoneAsync("+79372222222"));
-            await accountService.RequestCheckPhoneAsync(_phone);
+            await Assert.ThrowsAsync<ValidationException>(() => accountService.RequestCheckPhoneAsync("---", false));
+            await Assert.ThrowsAsync<ValidationException>(() => accountService.RequestCheckPhoneAsync("+79372222222", false));
+            await accountService.RequestCheckPhoneAsync(_phone, false);
             var smsCode = _memoryCache.Get(_phone + "_phone")?.ToString();
             Assert.Throws<ValidationException>(() => accountService.ValidSmsCode("---", smsCode));
             Assert.Throws<ValidationException>(() => accountService.ValidSmsCode("+79372222222", smsCode));
@@ -218,9 +218,9 @@ namespace Iserv.IdentityServer4.STS.Identity.IntegrationTests
             await Assert.ThrowsAsync<ValidationException>(() => accountService.RegisterAsync(model));
             model.SmsCode = "000000";
             await Assert.ThrowsAsync<ValidationException>(() => accountService.RegisterAsync(model));
-            await accountService.RequestCheckPhoneAsync(_phone, false);
+            await accountService.RequestCheckPhoneAsync(_phone, true);
             model.SmsCode = _memoryCache.Get(_phone + "_phone")?.ToString();
-            await Assert.ThrowsAsync<ValidationException>(() => accountService.RegisterAsync(model));
+            await Assert.ThrowsAsync<PortalException>(() => accountService.RegisterAsync(model));
 
             accountService = GetAccountService(_dbContext, true);
             await accountService.RegisterAsync(model);
@@ -238,7 +238,7 @@ namespace Iserv.IdentityServer4.STS.Identity.IntegrationTests
             var emailNew = "test@mail.ru";
             var phoneNew = "+793722222222";
             var accountService = GetAccountService(_dbContext, true);
-            await accountService.RequestCheckPhoneAsync(_phone, false);
+            await accountService.RequestCheckPhoneAsync(_phone, true);
             var userModel = new RegisterUserModel()
             {
                 Email = _email,
@@ -266,12 +266,12 @@ namespace Iserv.IdentityServer4.STS.Identity.IntegrationTests
             model.Email = "111";
             await Assert.ThrowsAsync<ValidationException>(() => accountService.UpdateUserAsync(model));
             model.Email = emailNew;
-            model.PhoneNumber = "123";
+            model.PhoneNumber = "1fgh23";
             await Assert.ThrowsAsync<ValidationException>(() => accountService.UpdateUserAsync(model));
             model.PhoneNumber = phoneNew;
-            await Assert.ThrowsAsync<ValidationException>(() => accountService.UpdateUserAsync(model));
+            // await Assert.ThrowsAsync<ValidationException>(() => accountService.UpdateUserAsync(model));
 
-            await accountService.RequestCheckPhoneAsync(phoneNew, false);
+            await accountService.RequestCheckPhoneAsync(phoneNew, true);
             model.SmsCode = _memoryCache.Get(phoneNew + "_phone")?.ToString();
             await accountService.UpdateUserAsync(model);
             user = await accountService.FindByEmailAsync(emailNew);
@@ -316,9 +316,8 @@ namespace Iserv.IdentityServer4.STS.Identity.IntegrationTests
             await accountService.RequestCheckPhoneAsync(_phone, false);
             var code = _memoryCache.Get(_phone + "_phone")?.ToString();
             await Assert.ThrowsAsync<ValidationException>(() => accountService.ChangePhoneAsync(user, _phone, code));
-
             var phoneNew = "79373732222";
-            await accountService.RequestCheckPhoneAsync(phoneNew, false);
+            await accountService.RequestCheckPhoneAsync(phoneNew, true);
             code = _memoryCache.Get(phoneNew + "_phone")?.ToString();
             await Assert.ThrowsAsync<ValidationException>(() => accountService.ChangePhoneAsync(null, _phone, code));
             await Assert.ThrowsAsync<ValidationException>(() => accountService.ChangePhoneAsync(user, "+79372222222", code));

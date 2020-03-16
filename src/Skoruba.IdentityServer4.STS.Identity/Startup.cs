@@ -50,10 +50,10 @@ namespace Skoruba.IdentityServer4.STS.Identity
                 Formatting = Formatting.Indented,
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             };
-            services.AddMvc(options =>
+            services.AddMvc(opt =>
             {
-                options.Filters.Add(typeof(GlobalExceptionFilter));
-                options.AddTracingFilters();
+                opt.Filters.Add(typeof(GlobalExceptionFilter));
+                opt.AddTracingFilters();
             }).AddNewtonsoftJson(opt =>
             {
                 opt.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;

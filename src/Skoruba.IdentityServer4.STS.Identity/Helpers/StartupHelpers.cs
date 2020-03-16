@@ -221,7 +221,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 .AddSingleton(registrationConfiguration)
                 .AddSingleton(loginConfiguration)
                 .AddScoped<UserResolver<TUserIdentity>>()
-                .AddIdentity<TUserIdentity, TUserIdentityRole>(options => { options.User.RequireUniqueEmail = true; })
+                .AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
+                {
+                    options.User.RequireUniqueEmail = false;
+                })
                 .AddUserStore<CustomUserStore<TUserIdentity, TUserIdentityRole, TIdentityDbContext, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin,
                     UserIdentityUserToken, UserIdentityRoleClaim>>()
                 .AddEntityFrameworkStores<TIdentityDbContext>()
