@@ -235,6 +235,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
+                options.Secure = CookieSecurePolicy.SameAsRequest;
                 options.OnAppendCookie = cookieContext =>
                     AuthenticationHelpers.CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
                 options.OnDeleteCookie = cookieContext =>
