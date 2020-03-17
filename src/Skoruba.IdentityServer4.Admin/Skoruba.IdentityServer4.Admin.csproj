@@ -114,6 +114,7 @@
         <None Include="Views\Shared\Common\SelectLanguage.cshtml" />
         <None Include="Views\Shared\Error.cshtml" />
         <None Include="Views\Shared\_Layout.cshtml" />
+        <None Remove="mono_crash.mem.21061.1.blob" />
     </ItemGroup>
 
     <ItemGroup>
