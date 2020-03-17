@@ -15,23 +15,23 @@
         <PackageReference Include="AspNetCore.HealthChecks.OpenIdConnectServer" Version="3.0.0" />
         <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="3.0.0" />
         <PackageReference Include="AspNetCore.HealthChecks.UI" Version="3.0.9" />
-        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="3.1.0" />
-        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="3.1.0" />
+        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="3.1.1" />
+        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="3.1.1" />
 
-        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0">
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.10" />
         <PackageReference Include="AutoMapper" Version="9.0.0" />
         <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
         <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4" />
-        <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.0.0-rc4" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.0.0" />
         <PackageReference Include="Serilog" Version="2.9.0" />
         <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
         <PackageReference Include="Serilog.Extensions.Hosting" Version="3.0.0" />

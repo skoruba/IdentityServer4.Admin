@@ -114,6 +114,25 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             return pagedList;
         }
 
+        public virtual async Task<PagedList<TUser>> GetClaimUsersAsync(string claimType, string claimValue, int page = 1, int pageSize = 10)
+        {
+            var pagedList = new PagedList<TUser>();
+            var users = DbContext.Set<TUser>()  
+                .Join(DbContext.Set<TUserClaim>(), u => u.Id, uc => uc.UserId, (u, uc) => new { u, uc })
+                .Where(t => t.uc.ClaimType.Equals(claimType))
+                .WhereIf(!string.IsNullOrEmpty(claimValue), t => t.uc.ClaimValue.Equals(claimValue))
+                .Select(t => t.u).Distinct();
+
+            var pagedUsers = await users.PageBy(x => x.Id, page, pageSize)
+                .ToListAsync();
+
+            pagedList.Data.AddRange(pagedUsers);
+            pagedList.TotalCount = await users.CountAsync();
+            pagedList.PageSize = pageSize;
+
+            return pagedList;
+        }
+
         public virtual Task<List<TRole>> GetRolesAsync()
         {
             return RoleManager.Roles.ToListAsync();
@@ -147,9 +166,9 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
 
         public virtual async Task<(IdentityResult identityResult, TKey roleId)> UpdateRoleAsync(TRole role)
         {
-            var thisRole = await RoleManager.FindByIdAsync(role.Id.ToString());
-            thisRole.Name = role.Name;
-            var identityResult = await RoleManager.UpdateAsync(thisRole);
+            var existingRole = await RoleManager.FindByIdAsync(role.Id.ToString());
+            Mapper.Map(role, existingRole);
+            var identityResult = await RoleManager.UpdateAsync(existingRole);
 
             return (identityResult, role.Id);
         }

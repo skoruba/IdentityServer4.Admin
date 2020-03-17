@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using IdentityModel;
 using IdentityServer4.EntityFramework.Mappers;
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,29 +23,31 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// https://github.com/skoruba/IdentityServer4.Admin#ef-core--data-access
         /// </summary>
         /// <param name="host"></param>      
-        public static async Task EnsureSeedData<TIdentityServerDbContext, TIdentityDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLogDbContext, TUser, TRole>(IHost host)
+        public static async Task EnsureSeedData<TIdentityServerDbContext, TIdentityDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLogDbContext, TDataProtectionDbContext, TUser, TRole>(IHost host)
             where TIdentityServerDbContext : DbContext, IAdminConfigurationDbContext
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
             where TAuditLogDbContext: DbContext, IAuditLoggingDbContext<AuditLog>
+            where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
             where TUser : IdentityUser, new()
             where TRole : IdentityRole, new()
         {
             using (var serviceScope = host.Services.CreateScope())
             {
                 var services = serviceScope.ServiceProvider;
-                await EnsureDatabasesMigrated<TIdentityDbContext, TIdentityServerDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLogDbContext>(services);
+                await EnsureDatabasesMigrated<TIdentityDbContext, TIdentityServerDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLogDbContext, TDataProtectionDbContext>(services);
                 await EnsureSeedData<TIdentityServerDbContext, TUser, TRole>(services);
             }
         }
 
-        public static async Task EnsureDatabasesMigrated<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLogDbContext>(IServiceProvider services)
+        public static async Task EnsureDatabasesMigrated<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLogDbContext, TDataProtectionDbContext>(IServiceProvider services)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext
             where TConfigurationDbContext : DbContext
             where TLogDbContext : DbContext
             where TAuditLogDbContext: DbContext
+            where TDataProtectionDbContext : DbContext
         {
             using (var scope = services.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
@@ -69,6 +72,11 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 }
 
                 using (var context = scope.ServiceProvider.GetRequiredService<TAuditLogDbContext>())
+                {
+                    await context.Database.MigrateAsync();
+                }
+
+                using (var context = scope.ServiceProvider.GetRequiredService<TDataProtectionDbContext>())
                 {
                     await context.Database.MigrateAsync();
                 }
