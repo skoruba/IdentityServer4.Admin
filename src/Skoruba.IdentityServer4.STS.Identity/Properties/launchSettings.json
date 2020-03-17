@@ -21,7 +21,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://127.0.0.1.xip.io;http://10.10.1.167:5000"
+      "applicationUrl": "http://10.10.1.167:5000"
     },
     "Docker": {
       "commandName": "Docker",

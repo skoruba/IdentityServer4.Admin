@@ -10,7 +10,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
         /// <summary>
         /// Обновление сессии портала
         /// </summary>
-        Task UpdateSessionAsync();
+        Task<PortalResult> UpdateSessionAsync();
 
         /// <summary>
         /// Получение сессии портала

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace Iserv.IdentityServer4.BusinessLogic.Services
 {
@@ -22,43 +23,40 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            using (var scope = _scopeFactory.CreateScope())
-            {
-                var options = scope.ServiceProvider.GetRequiredService<AuthPortalOptions>();
-                _logger.LogInformation("Запуск планировщика аутентификации на портале.");
-                if (!TimeSpan.TryParse(options.Interval, out TimeSpan interval))
-                    interval = new TimeSpan(0, 30, 0);
-                _timer = new Timer(DoWork, null, TimeSpan.Zero, interval);
-                return Task.CompletedTask;
-            }
+            using var scope = _scopeFactory.CreateScope();
+            var options = scope.ServiceProvider.GetRequiredService<AuthPortalOptions>();
+            _logger.LogInformation("Запуск планировщика аутентификации на портале.");
+            if (!TimeSpan.TryParse(options.Interval, out TimeSpan interval))
+                interval = new TimeSpan(0, 30, 0);
+            _timer = new Timer(DoWork, null, TimeSpan.Zero, interval);
+            return Task.CompletedTask;
         }
 
         private void DoWork(object state)
         {
-            using (var scope = _scopeFactory.CreateScope())
+            using var scope = _scopeFactory.CreateScope();
+            var authPortal = scope.ServiceProvider.GetRequiredService<IPortalService>();
+            _logger.LogInformation("Старт обновления интеграционного токена");
+            try
             {
-                var authPortal = scope.ServiceProvider.GetRequiredService<IPortalService>();
-                _logger.LogInformation("Аутентификация");
-                try
-                {
-                    Task.WaitAll(authPortal.UpdateSessionAsync());
-                    _logger.LogInformation("Аутентификация выполнена");
-                }
-                catch (Exception exc)
-                {
-                    _logger.LogError(exc, exc.Message);
-                }
+                var result = authPortal.UpdateSessionAsync().Result;
+                if (result.IsError)
+                    _logger.LogError($"Обновление токена не выполнено. Ответ портала: {result.Message}");
+                else
+                    _logger.LogInformation("Обновления интеграционного токена выполнена");
+            }
+            catch (Exception exc)
+            {
+                _logger.LogError(exc, exc.Message);
             }
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            using (var scope = _scopeFactory.CreateScope())
-            {
-                _logger.LogInformation("Остановка планировщика аутентификации на портале.");
-                _timer?.Change(Timeout.Infinite, 0);
-                return Task.CompletedTask;
-            }
+            using var scope = _scopeFactory.CreateScope();
+            _logger.LogInformation("Остановка планировщика аутентификации на портале.");
+            _timer?.Change(Timeout.Infinite, 0);
+            return Task.CompletedTask;
         }
 
         public void Dispose()

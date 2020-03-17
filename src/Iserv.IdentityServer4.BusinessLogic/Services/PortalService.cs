@@ -52,18 +52,22 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
             }
         }
 
-        public async Task UpdateSessionAsync()
+        public async Task<PortalResult> UpdateSessionAsync()
         {
             var handler = new HttpClientHandler {CookieContainer = new CookieContainer()};
             var client = new HttpClient(handler) {BaseAddress = new Uri(_options.RootAddress)};
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes(
                 $"{_options.Login}:{_options.Password}")));
-            await client.GetAsync("tehprisEE_lookups");
+            var response = await client.PostAsync("tehprisEE_auth", null);
+            var txt = await ReadResponseAsStringAsync(response);
+            if (!response.IsSuccessStatusCode) return new PortalResult() {IsError = true, Message = "Неудалось получить интеграционный токен. Ответ портала: " + txt};
             var cookie = handler.CookieContainer.GetCookies(new Uri(_options.RootAddress)).FirstOrDefault();
             if (cookie != null)
             {
                 _memoryCache.Set(PortalCode, cookie.Value);
             }
+
+            return new PortalResult() {Message = "Интеграционный токен обнавлен"};
         }
 
         public string GetCookie()

@@ -1,14 +1,14 @@
 {
   "Clients": [
     {
-      "Id": 3,
+      "Id": 8,
       "Enabled": true,
       "ClientId": "skoruba_identity_admin",
       "ProtocolType": "oidc",
       "ClientSecrets": [
         {
-          "ClientId": 3,
-          "Id": 2,
+          "ClientId": 8,
+          "Id": 5,
           "Description": null,
           "Value": "tvzpwTHl+cZB7h0GjO+QlJ0Wy15z+quGoqLRWGMZjzM=",
           "Expiration": null,
@@ -26,9 +26,9 @@
       "AlwaysIncludeUserClaimsInIdToken": false,
       "AllowedGrantTypes": [
         {
-          "Id": 3,
+          "Id": 9,
           "GrantType": "hybrid",
-          "ClientId": 3
+          "ClientId": 8
         }
       ],
       "RequirePkce": false,
@@ -36,16 +36,16 @@
       "AllowAccessTokensViaBrowser": false,
       "RedirectUris": [
         {
-          "Id": 3,
+          "Id": 7,
           "RedirectUri": "http://127.0.0.1.xip.io:9000/signin-oidc",
-          "ClientId": 3
+          "ClientId": 8
         }
       ],
       "PostLogoutRedirectUris": [
         {
-          "Id": 2,
+          "Id": 3,
           "PostLogoutRedirectUri": "http://127.0.0.1.xip.io:9000/signout-callback-oidc",
-          "ClientId": 3
+          "ClientId": 8
         }
       ],
       "FrontChannelLogoutUri": "http://127.0.0.1.xip.io:9000/signout-oidc",
@@ -55,24 +55,24 @@
       "AllowOfflineAccess": false,
       "AllowedScopes": [
         {
-          "Id": 6,
+          "Id": 26,
           "Scope": "roles",
-          "ClientId": 3
+          "ClientId": 8
         },
         {
-          "Id": 7,
+          "Id": 27,
           "Scope": "email",
-          "ClientId": 3
+          "ClientId": 8
         },
         {
-          "Id": 8,
+          "Id": 28,
           "Scope": "profile",
-          "ClientId": 3
+          "ClientId": 8
         },
         {
-          "Id": 9,
+          "Id": 29,
           "Scope": "openid",
-          "ClientId": 3
+          "ClientId": 8
         }
       ],
       "IdentityTokenLifetime": 300,
@@ -94,9 +94,9 @@
       "PairWiseSubjectSalt": null,
       "AllowedCorsOrigins": [
         {
-          "Id": 2,
+          "Id": 5,
           "Origin": "http://127.0.0.1.xip.io:9000",
-          "ClientId": 3
+          "ClientId": 8
         }
       ],
       "Properties": [],
@@ -109,7 +109,7 @@
       "NonEditable": false
     },
     {
-      "Id": 4,
+      "Id": 9,
       "Enabled": true,
       "ClientId": "skoruba_identity_admin_api_swaggerui",
       "ProtocolType": "oidc",
@@ -124,9 +124,9 @@
       "AlwaysIncludeUserClaimsInIdToken": false,
       "AllowedGrantTypes": [
         {
-          "Id": 4,
+          "Id": 10,
           "GrantType": "implicit",
-          "ClientId": 4
+          "ClientId": 9
         }
       ],
       "RequirePkce": false,
@@ -134,9 +134,9 @@
       "AllowAccessTokensViaBrowser": true,
       "RedirectUris": [
         {
-          "Id": 4,
-          "RedirectUri": "http://127.0.0.1.xip.io:5503/swagger/oauth2-redirect.html",
-          "ClientId": 4
+          "Id": 8,
+          "RedirectUri": "http://dev.it-serv.ru:5002/swagger/oauth2-redirect.html",
+          "ClientId": 9
         }
       ],
       "PostLogoutRedirectUris": [],
@@ -147,9 +147,9 @@
       "AllowOfflineAccess": false,
       "AllowedScopes": [
         {
-          "Id": 10,
+          "Id": 30,
           "Scope": "skoruba_identity_admin_api",
-          "ClientId": 4
+          "ClientId": 9
         }
       ],
       "IdentityTokenLifetime": 300,
@@ -180,19 +180,19 @@
       "NonEditable": false
     },
     {
-      "Id": 5,
+      "Id": 10,
       "Enabled": true,
       "ClientId": "iserv_mlk_api",
       "ProtocolType": "oidc",
       "ClientSecrets": [
         {
-          "ClientId": 5,
-          "Id": 4,
+          "ClientId": 10,
+          "Id": 6,
           "Description": null,
           "Value": "4ZlG5174pf3Z2SHBABWS678DR9DkKxtxigWeXgBIJpg=",
           "Expiration": null,
           "Type": "SharedSecret",
-          "Created": "2020-02-20T11:00:31.7612606"
+          "Created": "2020-02-20T10:06:03.64581"
         }
       ],
       "RequireClientSecret": true,
@@ -205,14 +205,14 @@
       "AlwaysIncludeUserClaimsInIdToken": false,
       "AllowedGrantTypes": [
         {
-          "Id": 3017,
+          "Id": 11,
           "GrantType": "implicit",
-          "ClientId": 5
+          "ClientId": 10
         },
         {
-          "Id": 3018,
+          "Id": 12,
           "GrantType": "client_credentials",
-          "ClientId": 5
+          "ClientId": 10
         }
       ],
       "RequirePkce": false,
@@ -220,9 +220,9 @@
       "AllowAccessTokensViaBrowser": false,
       "RedirectUris": [
         {
-          "Id": 1011,
+          "Id": 9,
           "RedirectUri": "io.identityserver.demo:/oauthredirect",
-          "ClientId": 5
+          "ClientId": 10
         }
       ],
       "PostLogoutRedirectUris": [],
@@ -233,34 +233,34 @@
       "AllowOfflineAccess": false,
       "AllowedScopes": [
         {
-          "Id": 3055,
-          "Scope": "iserv_mlk_local_api",
-          "ClientId": 5
-        },
-        {
-          "Id": 3056,
-          "Scope": "IdentityServerApi",
-          "ClientId": 5
-        },
-        {
-          "Id": 3057,
-          "Scope": "profile",
-          "ClientId": 5
-        },
-        {
-          "Id": 3058,
-          "Scope": "email",
-          "ClientId": 5
-        },
-        {
-          "Id": 3059,
-          "Scope": "openid",
-          "ClientId": 5
-        },
-        {
-          "Id": 3060,
+          "Id": 31,
           "Scope": "roles",
-          "ClientId": 5
+          "ClientId": 10
+        },
+        {
+          "Id": 32,
+          "Scope": "profile",
+          "ClientId": 10
+        },
+        {
+          "Id": 33,
+          "Scope": "email",
+          "ClientId": 10
+        },
+        {
+          "Id": 34,
+          "Scope": "IdentityServerApi",
+          "ClientId": 10
+        },
+        {
+          "Id": 35,
+          "Scope": "iserv_mlk_local_api",
+          "ClientId": 10
+        },
+        {
+          "Id": 36,
+          "Scope": "openid",
+          "ClientId": 10
         }
       ],
       "IdentityTokenLifetime": 300,
@@ -282,13 +282,13 @@
       "PairWiseSubjectSalt": null,
       "AllowedCorsOrigins": [
         {
-          "Id": 3010,
-          "Origin": "http://127.0.0.1.xip.io:5512",
-          "ClientId": 5
+          "Id": 6,
+          "Origin": "http://dev.it-serv.ru:5012",
+          "ClientId": 10
         }
       ],
       "Properties": [],
-      "Created": "2020-02-20T12:43:55.2610778",
+      "Created": "2020-02-26T13:26:02.310053",
       "Updated": null,
       "LastAccessed": null,
       "UserSsoLifetime": null,
@@ -297,7 +297,7 @@
       "NonEditable": false
     },
     {
-      "Id": 6,
+      "Id": 11,
       "Enabled": true,
       "ClientId": "iserv_mlk_api_swaggerui",
       "ProtocolType": "oidc",
@@ -312,9 +312,9 @@
       "AlwaysIncludeUserClaimsInIdToken": false,
       "AllowedGrantTypes": [
         {
-          "Id": 3020,
+          "Id": 13,
           "GrantType": "implicit",
-          "ClientId": 6
+          "ClientId": 11
         }
       ],
       "RequirePkce": false,
@@ -322,9 +322,24 @@
       "AllowAccessTokensViaBrowser": true,
       "RedirectUris": [
         {
-          "Id": 1012,
-          "RedirectUri": "http://127.0.0.1.xip.io:5512/swagger/oauth2-redirect.html",
-          "ClientId": 6
+          "Id": 10,
+          "RedirectUri": "http://dev.it-serv.ru:5011/swagger/oauth2-redirect.html",
+          "ClientId": 11
+        },
+        {
+          "Id": 11,
+          "RedirectUri": "http://localhost:5011/swagger/oauth2-redirect.html",
+          "ClientId": 11
+        },
+        {
+          "Id": 12,
+          "RedirectUri": "http://localhost:5012/swagger/oauth2-redirect.html",
+          "ClientId": 11
+        },
+        {
+          "Id": 13,
+          "RedirectUri": "http://dev.it-serv.ru:5012/swagger/oauth2-redirect.html",
+          "ClientId": 11
         }
       ],
       "PostLogoutRedirectUris": [],
@@ -335,9 +350,9 @@
       "AllowOfflineAccess": false,
       "AllowedScopes": [
         {
-          "Id": 3069,
+          "Id": 37,
           "Scope": "iserv_mlk_external_api",
-          "ClientId": 6
+          "ClientId": 11
         }
       ],
       "IdentityTokenLifetime": 300,
@@ -359,7 +374,7 @@
       "PairWiseSubjectSalt": null,
       "AllowedCorsOrigins": [],
       "Properties": [],
-      "Created": "2020-02-20T12:53:15.0670759",
+      "Created": "2020-02-20T12:51:13.779303",
       "Updated": null,
       "LastAccessed": null,
       "UserSsoLifetime": null,
@@ -368,19 +383,19 @@
       "NonEditable": false
     },
     {
-      "Id": 7,
+      "Id": 12,
       "Enabled": true,
       "ClientId": "iserv_mlk_mobile",
       "ProtocolType": "oidc",
       "ClientSecrets": [
         {
-          "ClientId": 7,
-          "Id": 3,
+          "ClientId": 12,
+          "Id": 7,
           "Description": null,
           "Value": "KaPFlwXzXpl0AFmgmtA3qC1bm8HrdDkw0Vp8No0QqYg=",
           "Expiration": null,
           "Type": "SharedSecret",
-          "Created": "2020-01-31T05:14:09.6017858"
+          "Created": "2020-01-31T05:14:09.601785"
         }
       ],
       "RequireClientSecret": true,
@@ -393,9 +408,14 @@
       "AlwaysIncludeUserClaimsInIdToken": false,
       "AllowedGrantTypes": [
         {
-          "Id": 3019,
+          "Id": 16,
+          "GrantType": "delegation",
+          "ClientId": 12
+        },
+        {
+          "Id": 17,
           "GrantType": "password",
-          "ClientId": 7
+          "ClientId": 12
         }
       ],
       "RequirePkce": false,
@@ -410,48 +430,43 @@
       "AllowOfflineAccess": true,
       "AllowedScopes": [
         {
-          "Id": 3061,
+          "Id": 52,
           "Scope": "IdentityServerApi",
-          "ClientId": 7
+          "ClientId": 12
         },
         {
-          "Id": 3062,
-          "Scope": "email",
-          "ClientId": 7
-        },
-        {
-          "Id": 3063,
-          "Scope": "openid",
-          "ClientId": 7
-        },
-        {
-          "Id": 3064,
-          "Scope": "profile",
-          "ClientId": 7
-        },
-        {
-          "Id": 3065,
+          "Id": 53,
           "Scope": "offline_access",
-          "ClientId": 7
+          "ClientId": 12
         },
         {
-          "Id": 3066,
-          "Scope": "phone",
-          "ClientId": 7
+          "Id": 54,
+          "Scope": "profile",
+          "ClientId": 12
         },
         {
-          "Id": 3067,
-          "Scope": "roles",
-          "ClientId": 7
+          "Id": 55,
+          "Scope": "openid",
+          "ClientId": 12
         },
         {
-          "Id": 3068,
+          "Id": 56,
+          "Scope": "email",
+          "ClientId": 12
+        },
+        {
+          "Id": 57,
           "Scope": "iserv_mlk_external_api",
-          "ClientId": 7
+          "ClientId": 12
+        },
+        {
+          "Id": 58,
+          "Scope": "phone",
+          "ClientId": 12
         }
       ],
       "IdentityTokenLifetime": 300,
-      "AccessTokenLifetime": 3600,
+      "AccessTokenLifetime": 36000,
       "AuthorizationCodeLifetime": 300,
       "ConsentLifetime": null,
       "AbsoluteRefreshTokenLifetime": 2592000,
@@ -469,13 +484,124 @@
       "PairWiseSubjectSalt": null,
       "AllowedCorsOrigins": [
         {
-          "Id": 3011,
+          "Id": 9,
           "Origin": "http://localhost:4200",
-          "ClientId": 7
+          "ClientId": 12
         }
       ],
       "Properties": [],
-      "Created": "2020-02-20T12:52:56.4614279",
+      "Created": "2020-03-17T12:46:50.7232888",
+      "Updated": null,
+      "LastAccessed": null,
+      "UserSsoLifetime": null,
+      "UserCodeType": null,
+      "DeviceCodeLifetime": 300,
+      "NonEditable": false
+    },
+    {
+      "Id": 13,
+      "Enabled": true,
+      "ClientId": "iserv_mlk_portal",
+      "ProtocolType": "oidc",
+      "ClientSecrets": [
+        {
+          "ClientId": 13,
+          "Id": 8,
+          "Description": null,
+          "Value": "E0i/rfxfWBqKQB8JrXHbX4OgItISMizgMEu5HmUvWAQ=",
+          "Expiration": null,
+          "Type": "SharedSecret",
+          "Created": "2020-03-08T10:08:18.718757"
+        }
+      ],
+      "RequireClientSecret": true,
+      "ClientName": "ISERV MLK Portal",
+      "Description": null,
+      "ClientUri": null,
+      "LogoUri": null,
+      "RequireConsent": false,
+      "AllowRememberConsent": true,
+      "AlwaysIncludeUserClaimsInIdToken": false,
+      "AllowedGrantTypes": [
+        {
+          "Id": 15,
+          "GrantType": "password",
+          "ClientId": 13
+        }
+      ],
+      "RequirePkce": false,
+      "AllowPlainTextPkce": false,
+      "AllowAccessTokensViaBrowser": false,
+      "RedirectUris": [],
+      "PostLogoutRedirectUris": [],
+      "FrontChannelLogoutUri": null,
+      "FrontChannelLogoutSessionRequired": true,
+      "BackChannelLogoutUri": null,
+      "BackChannelLogoutSessionRequired": true,
+      "AllowOfflineAccess": true,
+      "AllowedScopes": [
+        {
+          "Id": 45,
+          "Scope": "iserv_mlk_portal_api",
+          "ClientId": 13
+        },
+        {
+          "Id": 46,
+          "Scope": "phone",
+          "ClientId": 13
+        },
+        {
+          "Id": 47,
+          "Scope": "offline_access",
+          "ClientId": 13
+        },
+        {
+          "Id": 48,
+          "Scope": "profile",
+          "ClientId": 13
+        },
+        {
+          "Id": 49,
+          "Scope": "openid",
+          "ClientId": 13
+        },
+        {
+          "Id": 50,
+          "Scope": "email",
+          "ClientId": 13
+        },
+        {
+          "Id": 51,
+          "Scope": "IdentityServerApi",
+          "ClientId": 13
+        }
+      ],
+      "IdentityTokenLifetime": 300,
+      "AccessTokenLifetime": 36000,
+      "AuthorizationCodeLifetime": 300,
+      "ConsentLifetime": null,
+      "AbsoluteRefreshTokenLifetime": 2592000,
+      "SlidingRefreshTokenLifetime": 1296000,
+      "RefreshTokenUsage": 1,
+      "UpdateAccessTokenClaimsOnRefresh": false,
+      "RefreshTokenExpiration": 1,
+      "AccessTokenType": 0,
+      "EnableLocalLogin": true,
+      "IdentityProviderRestrictions": [],
+      "IncludeJwtId": false,
+      "Claims": [],
+      "AlwaysSendClientClaims": false,
+      "ClientClaimsPrefix": "client_",
+      "PairWiseSubjectSalt": null,
+      "AllowedCorsOrigins": [
+        {
+          "Id": 8,
+          "Origin": "http://localhost:4200",
+          "ClientId": 13
+        }
+      ],
+      "Properties": [],
+      "Created": "2020-03-08T10:07:38.009475",
       "Updated": null,
       "LastAccessed": null,
       "UserSsoLifetime": null,
@@ -486,7 +612,7 @@
   ],
   "IdentityResources": [
     {
-      "Id": 6,
+      "Id": 11,
       "Enabled": true,
       "Name": "openid",
       "DisplayName": "Your user identifier",
@@ -496,8 +622,8 @@
       "ShowInDiscoveryDocument": true,
       "UserClaims": [
         {
-          "IdentityResourceId": 6,
-          "Id": 20,
+          "IdentityResourceId": 11,
+          "Id": 40,
           "Type": "sub"
         }
       ],
@@ -507,7 +633,7 @@
       "NonEditable": false
     },
     {
-      "Id": 7,
+      "Id": 12,
       "Enabled": true,
       "Name": "profile",
       "DisplayName": "User profile",
@@ -517,73 +643,73 @@
       "ShowInDiscoveryDocument": true,
       "UserClaims": [
         {
-          "IdentityResourceId": 7,
-          "Id": 21,
-          "Type": "nickname"
-        },
-        {
-          "IdentityResourceId": 7,
-          "Id": 22,
-          "Type": "updated_at"
-        },
-        {
-          "IdentityResourceId": 7,
-          "Id": 23,
-          "Type": "locale"
-        },
-        {
-          "IdentityResourceId": 7,
-          "Id": 24,
-          "Type": "zoneinfo"
-        },
-        {
-          "IdentityResourceId": 7,
-          "Id": 25,
-          "Type": "birthdate"
-        },
-        {
-          "IdentityResourceId": 7,
-          "Id": 26,
-          "Type": "gender"
-        },
-        {
-          "IdentityResourceId": 7,
-          "Id": 27,
-          "Type": "website"
-        },
-        {
-          "IdentityResourceId": 7,
-          "Id": 28,
-          "Type": "picture"
-        },
-        {
-          "IdentityResourceId": 7,
-          "Id": 29,
-          "Type": "profile"
-        },
-        {
-          "IdentityResourceId": 7,
-          "Id": 30,
-          "Type": "preferred_username"
-        },
-        {
-          "IdentityResourceId": 7,
-          "Id": 31,
+          "IdentityResourceId": 12,
+          "Id": 41,
           "Type": "middle_name"
         },
         {
-          "IdentityResourceId": 7,
-          "Id": 32,
+          "IdentityResourceId": 12,
+          "Id": 42,
+          "Type": "preferred_username"
+        },
+        {
+          "IdentityResourceId": 12,
+          "Id": 43,
+          "Type": "profile"
+        },
+        {
+          "IdentityResourceId": 12,
+          "Id": 44,
+          "Type": "picture"
+        },
+        {
+          "IdentityResourceId": 12,
+          "Id": 45,
+          "Type": "website"
+        },
+        {
+          "IdentityResourceId": 12,
+          "Id": 46,
+          "Type": "gender"
+        },
+        {
+          "IdentityResourceId": 12,
+          "Id": 47,
+          "Type": "birthdate"
+        },
+        {
+          "IdentityResourceId": 12,
+          "Id": 48,
+          "Type": "zoneinfo"
+        },
+        {
+          "IdentityResourceId": 12,
+          "Id": 49,
+          "Type": "locale"
+        },
+        {
+          "IdentityResourceId": 12,
+          "Id": 50,
+          "Type": "updated_at"
+        },
+        {
+          "IdentityResourceId": 12,
+          "Id": 51,
+          "Type": "nickname"
+        },
+        {
+          "IdentityResourceId": 12,
+          "Id": 52,
           "Type": "given_name"
         },
         {
-          "IdentityResourceId": 7,
-          "Id": 33,
+          "IdentityResourceId": 12,
+          "Id": 53,
           "Type": "family_name"
         },
         {
-          "IdentityResourceId": 7,
-          "Id": 34,
+          "IdentityResourceId": 12,
+          "Id": 54,
           "Type": "name"
         }
       ],
@@ -593,7 +719,7 @@
       "NonEditable": false
     },
     {
-      "Id": 8,
+      "Id": 13,
       "Enabled": true,
       "Name": "email",
       "DisplayName": "Your email address",
@@ -603,14 +729,14 @@
       "ShowInDiscoveryDocument": true,
       "UserClaims": [
         {
-          "IdentityResourceId": 8,
-          "Id": 35,
-          "Type": "email"
+          "IdentityResourceId": 13,
+          "Id": 55,
+          "Type": "email_verified"
         },
         {
-          "IdentityResourceId": 8,
-          "Id": 36,
-          "Type": "email_verified"
+          "IdentityResourceId": 13,
+          "Id": 56,
+          "Type": "email"
         }
       ],
       "Properties": [],
@@ -619,7 +745,7 @@
       "NonEditable": false
     },
     {
-      "Id": 9,
+      "Id": 14,
       "Enabled": true,
       "Name": "roles",
       "DisplayName": "Roles",
@@ -629,8 +755,8 @@
       "ShowInDiscoveryDocument": true,
       "UserClaims": [
         {
-          "IdentityResourceId": 9,
-          "Id": 37,
+          "IdentityResourceId": 14,
+          "Id": 57,
           "Type": "role"
         }
       ],
@@ -640,7 +766,7 @@
       "NonEditable": false
     },
     {
-      "Id": 10,
+      "Id": 15,
       "Enabled": true,
       "Name": "phone",
       "DisplayName": "phone",
@@ -650,25 +776,25 @@
       "ShowInDiscoveryDocument": true,
       "UserClaims": [
         {
-          "IdentityResourceId": 10,
-          "Id": 38,
-          "Type": "phone_number"
+          "IdentityResourceId": 15,
+          "Id": 58,
+          "Type": "phone_number_verified"
         },
         {
-          "IdentityResourceId": 10,
-          "Id": 39,
-          "Type": "phone_number_verified"
+          "IdentityResourceId": 15,
+          "Id": 59,
+          "Type": "phone_number"
         }
       ],
       "Properties": [],
-      "Created": "2020-02-01T08:51:54.5338547",
+      "Created": "2020-02-01T08:51:54.533854",
       "Updated": null,
       "NonEditable": false
     }
   ],
   "ApiResources": [
     {
-      "Id": 2,
+      "Id": 6,
       "Enabled": true,
       "Name": "skoruba_identity_admin_api",
       "DisplayName": null,
@@ -676,7 +802,7 @@
       "Secrets": [],
       "Scopes": [
         {
-          "Id": 2,
+          "Id": 6,
           "Name": "skoruba_identity_admin_api",
           "DisplayName": "skoruba_identity_admin_api",
           "Description": null,
@@ -684,24 +810,24 @@
           "Emphasize": false,
           "ShowInDiscoveryDocument": true,
           "UserClaims": null,
-          "ApiResourceId": 2
+          "ApiResourceId": 6
         }
       ],
       "UserClaims": [
         {
-          "ApiResourceId": 2,
-          "Id": 1,
+          "ApiResourceId": 6,
+          "Id": 5,
           "Type": "idext"
         }
       ],
       "Properties": [],
-      "Created": "2020-02-08T11:32:58.5448771",
+      "Created": "2020-02-08T11:32:58.544877",
       "Updated": null,
       "LastAccessed": null,
       "NonEditable": false
     },
     {
-      "Id": 3,
+      "Id": 7,
       "Enabled": true,
       "Name": "iserv_mlk_external_api",
       "DisplayName": "ISERV MLK EXTERNAL API",
@@ -709,7 +835,7 @@
       "Secrets": [],
       "Scopes": [
         {
-          "Id": 3,
+          "Id": 7,
           "Name": "iserv_mlk_external_api",
           "DisplayName": "ISERV MLK EXTERNAL API",
           "Description": null,
@@ -717,24 +843,29 @@
           "Emphasize": false,
           "ShowInDiscoveryDocument": true,
           "UserClaims": null,
-          "ApiResourceId": 3
+          "ApiResourceId": 7
         }
       ],
       "UserClaims": [
         {
-          "ApiResourceId": 3,
-          "Id": 10,
+          "ApiResourceId": 7,
+          "Id": 6,
           "Type": "profile"
+        },
+        {
+          "ApiResourceId": 7,
+          "Id": 7,
+          "Type": "idext"
         }
       ],
       "Properties": [],
-      "Created": "2020-02-20T12:52:20.2028918",
+      "Created": "2020-02-20T12:49:31.487204",
       "Updated": null,
       "LastAccessed": null,
       "NonEditable": false
     },
     {
-      "Id": 4,
+      "Id": 8,
       "Enabled": true,
       "Name": "IdentityServerApi",
       "DisplayName": null,
@@ -742,7 +873,7 @@
       "Secrets": [],
       "Scopes": [
         {
-          "Id": 4,
+          "Id": 8,
           "Name": "IdentityServerApi",
           "DisplayName": null,
           "Description": null,
@@ -750,24 +881,24 @@
           "Emphasize": false,
           "ShowInDiscoveryDocument": true,
           "UserClaims": null,
-          "ApiResourceId": 4
+          "ApiResourceId": 8
         }
       ],
       "UserClaims": [
         {
-          "ApiResourceId": 4,
-          "Id": 4,
+          "ApiResourceId": 8,
+          "Id": 8,
           "Type": "profile"
         }
       ],
       "Properties": [],
-      "Created": "2020-02-08T12:53:18.7078864",
+      "Created": "2020-02-08T12:53:18.707886",
       "Updated": null,
       "LastAccessed": null,
       "NonEditable": false
     },
     {
-      "Id": 5,
+      "Id": 9,
       "Enabled": true,
       "Name": "iserv_mlk_local_api",
       "DisplayName": "ISERV MLK LOCAL API",
@@ -775,7 +906,7 @@
       "Secrets": [],
       "Scopes": [
         {
-          "Id": 5,
+          "Id": 9,
           "Name": "iserv_mlk_local_api",
           "DisplayName": "ISERV MLK LOCAL API",
           "Description": null,
@@ -783,18 +914,51 @@
           "Emphasize": false,
           "ShowInDiscoveryDocument": true,
           "UserClaims": null,
-          "ApiResourceId": 5
+          "ApiResourceId": 9
         }
       ],
       "UserClaims": [
         {
-          "ApiResourceId": 5,
+          "ApiResourceId": 9,
           "Id": 9,
           "Type": "profile"
         }
       ],
       "Properties": [],
-      "Created": "2020-02-20T12:39:05.2797733",
+      "Created": "2020-02-20T12:47:06.419012",
+      "Updated": null,
+      "LastAccessed": null,
+      "NonEditable": false
+    },
+    {
+      "Id": 10,
+      "Enabled": true,
+      "Name": "iserv_mlk_portal_api",
+      "DisplayName": "ISERV MLK PORTAL API",
+      "Description": null,
+      "Secrets": [],
+      "Scopes": [
+        {
+          "Id": 10,
+          "Name": "iserv_mlk_portal_api",
+          "DisplayName": "ISERV MLK PORTAL API",
+          "Description": null,
+          "Required": true,
+          "Emphasize": false,
+          "ShowInDiscoveryDocument": true,
+          "UserClaims": null,
+          "ApiResourceId": 10
+        }
+      ],
+      "UserClaims": [
+        {
+          "ApiResourceId": 10,
+          "Id": 10,
+          "Type": "profile"
+        }
+      ],
+      "Properties": [],
+      "Created": "2020-03-08T10:04:49.499258",
       "Updated": null,
       "LastAccessed": null,
       "NonEditable": false

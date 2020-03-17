@@ -1,5 +1,16 @@
 ### Разворачивание Identity Server 4 и АРМ его администрирования
 1. Создать файлы миграции БД:
+Для linux:
+  установить:
+    dotnet add package Microsoft.EntityFrameworkCore.Tools --version 3.1.2
+  переименовать в файле add-migrations.ps1 слэшь \ на /
+  $targetContexts = @{ 
+    AdminIdentityDbContext                = "Migrations/Identity"
+    AdminLogDbContext                     = "Migrations/Logging";
+    IdentityServerConfigurationDbContext  = "Migrations/IdentityServerConfiguration";
+    IdentityServerPersistedGrantDbContext = "Migrations/IdentityServerGrants";
+    AdminAuditLogDbContext                = "Migrations/AuditLogging";
+  }
 Запустить с папки build
 .\add-migrations.ps1 -migration dbIdtInit -migrationProviderName PostgreSQL
 

@@ -350,7 +350,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
             ValidEmailCode(email, code);
             var portalResult = await _portalService.UpdateUserAsync(user.Idext, new Dictionary<string, object>() {{"email", email}});
             if (portalResult.IsError)
-                throw new ValidationException(portalResult.Message);
+                throw new PortalException(portalResult.Message);
             var token = await _userManager.GenerateChangeEmailTokenAsync(user, email);
             var setEmailResult = await _userManager.ChangeEmailAsync(user, email, token);
             if (!setEmailResult.Succeeded)
@@ -374,7 +374,7 @@ namespace Iserv.IdentityServer4.BusinessLogic.Services
             ValidSmsCode(phoneNumber, code);
             var portalResult = await _portalService.UpdateUserAsync(user.Idext, new Dictionary<string, object>() {{"phone", phoneNumber}});
             if (portalResult.IsError)
-                throw new ValidationException(portalResult.Message);
+                throw new PortalException(portalResult.Message);
             var token = await _userManager.GenerateChangePhoneNumberTokenAsync(user, phoneNumber);
             var setPhoneResult = await _userManager.ChangePhoneNumberAsync(user, phoneNumber, token);
             if (!setPhoneResult.Succeeded)

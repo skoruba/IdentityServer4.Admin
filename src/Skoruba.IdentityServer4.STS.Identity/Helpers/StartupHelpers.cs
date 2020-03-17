@@ -221,10 +221,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 .AddSingleton(registrationConfiguration)
                 .AddSingleton(loginConfiguration)
                 .AddScoped<UserResolver<TUserIdentity>>()
-                .AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
-                {
-                    options.User.RequireUniqueEmail = false;
-                })
+                .AddIdentity<TUserIdentity, TUserIdentityRole>(options => { options.User.RequireUniqueEmail = false; })
                 .AddUserStore<CustomUserStore<TUserIdentity, TUserIdentityRole, TIdentityDbContext, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin,
                     UserIdentityUserToken, UserIdentityRoleClaim>>()
                 .AddEntityFrameworkStores<TIdentityDbContext>()
@@ -313,7 +310,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             services.AddScoped<IYandexTokenValidator, YandexTokenValidator>();
             services.AddScoped<IVkTokenValidator, VkTokenValidator>();
             services.AddScoped<IOkTokenValidator, OkTokenValidator>();
-            
+
             builder.AddCustomSigningCredential(configuration);
             builder.AddCustomValidationKey(configuration);
             return builder;
@@ -348,7 +345,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 googleOptions.Scope.Add("email");
             }).AddYandex(yandexOptions =>
             {
-                yandexOptions.ClientId = socialOptions.YandexParams.WebClientId;;
+                yandexOptions.ClientId = socialOptions.YandexParams.WebClientId;
+                ;
                 yandexOptions.ClientSecret = socialOptions.YandexParams.WebClientSecret;
             });
         }
@@ -490,11 +488,19 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             {
                 var memoryCache = provider.GetRequiredService<IMemoryCache>();
                 var cookie = memoryCache.Get(PortalService.PortalCode)?.ToString();
+                var logger = provider.GetService<ILogger<Startup>>();
                 if (string.IsNullOrWhiteSpace(cookie))
                 {
                     var portalService = provider.GetRequiredService<IPortalService>();
-                    portalService.UpdateSessionAsync().Wait();
-                    cookie = memoryCache.Get(PortalService.PortalCode)?.ToString();
+                    var result = portalService.UpdateSessionAsync().Result;
+                    if (result.IsError)
+                    {
+                        logger.LogError("Ошибка получения интеграционного токена. Ответ портала: " + result.Message);
+                    }
+                    else
+                    {
+                        cookie = memoryCache.Get(PortalService.PortalCode)?.ToString();
+                    }
                 }
 
                 var handler = new HttpClientHandler();

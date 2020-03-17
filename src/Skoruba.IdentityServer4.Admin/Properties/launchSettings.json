@@ -21,6 +21,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
+      "commandLineArgs": "/seed",
       "applicationUrl": "http://127.0.0.1.xip.io:9000"
     },
     "Docker": {
