@@ -13,7 +13,7 @@ namespace Skoruba.IdentityServer4.Shared.Authentication
             if (options.SameSite == SameSiteMode.None)
             {
                 var userAgent = httpContext.Request.Headers["User-Agent"].ToString();
-                if (DisallowsSameSiteNone(userAgent))
+                if (!httpContext.Request.IsHttps || DisallowsSameSiteNone(userAgent))
                 {
                     // For .NET Core < 3.1 set SameSite = (SameSiteMode)(-1)
                     options.SameSite = SameSiteMode.Unspecified;
