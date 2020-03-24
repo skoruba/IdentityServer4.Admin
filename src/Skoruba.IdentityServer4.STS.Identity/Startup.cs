@@ -34,8 +34,10 @@ namespace Skoruba.IdentityServer4.STS.Identity
             // Register DbContexts for IdentityServer and Identity
             RegisterDbContexts(services);
 
-            // Save data protection keys to db
-            services.AddDataProtection().PersistKeysToDbContext<IdentityServerDataProtectionDbContext>();
+            // Save data protection keys to db, using a common application name shared between Admin and STS
+            services.AddDataProtection()
+                .SetApplicationName("Skoruba.IdentityServer4")
+                .PersistKeysToDbContext<IdentityServerDataProtectionDbContext>();
 
             // Add email senders which is currently setup for SendGrid and SMTP
             services.AddEmailSenders(Configuration);
