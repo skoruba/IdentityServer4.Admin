@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -38,7 +38,9 @@ namespace Skoruba.IdentityServer4.Admin.Api
             var configurationBuilder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile("serilog.json", optional: true, reloadOnChange: true);
+                .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("serilog.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"serilog.{environment}.json", optional: true, reloadOnChange: true);
 
             if (isDevelopment)
             {
@@ -57,7 +59,11 @@ namespace Skoruba.IdentityServer4.Admin.Api
                  {
                      configApp.AddJsonFile("serilog.json", optional: true, reloadOnChange: true);
 
-                     if (hostContext.HostingEnvironment.IsDevelopment())
+                     var env = hostContext.HostingEnvironment;
+
+                     configApp.AddJsonFile($"serilog.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
+                     if (env.IsDevelopment())
                      {
                          configApp.AddUserSecrets<Startup>();
                      }
