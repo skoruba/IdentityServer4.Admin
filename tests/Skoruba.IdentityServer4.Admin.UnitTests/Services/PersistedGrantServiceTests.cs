@@ -4,6 +4,7 @@ using FluentAssertions;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using Skoruba.AuditLogging.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfaces;
@@ -48,10 +49,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
         }
 
         private IPersistedGrantAspNetIdentityService
-            GetPersistedGrantService(IPersistedGrantAspNetIdentityRepository repository, IPersistedGrantAspNetIdentityServiceResources persistedGrantServiceResources)
+            GetPersistedGrantService(IPersistedGrantAspNetIdentityRepository repository, IPersistedGrantAspNetIdentityServiceResources persistedGrantServiceResources, IAuditEventLogger auditEventLogger)
         {
             var persistedGrantService = new PersistedGrantAspNetIdentityService(repository,
-                persistedGrantServiceResources);
+                persistedGrantServiceResources, auditEventLogger);
 
             return persistedGrantService;
         }
@@ -68,7 +69,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                     var localizerMock = new Mock<IPersistedGrantAspNetIdentityServiceResources>();
                     var localizer = localizerMock.Object;
 
-                    var persistedGrantService = GetPersistedGrantService(persistedGrantRepository, localizer);
+                    var auditLoggerMock = new Mock<IAuditEventLogger>();
+                    var auditLogger = auditLoggerMock.Object;
+                    
+                    var persistedGrantService = GetPersistedGrantService(persistedGrantRepository, localizer, auditLogger);
 
                     //Generate persisted grant
                     var persistedGrantKey = Guid.NewGuid().ToString();
@@ -99,7 +103,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                     var localizerMock = new Mock<IPersistedGrantAspNetIdentityServiceResources>();
                     var localizer = localizerMock.Object;
 
-                    var persistedGrantService = GetPersistedGrantService(persistedGrantRepository, localizer);
+                    var auditLoggerMock = new Mock<IAuditEventLogger>();
+                    var auditLogger = auditLoggerMock.Object;
+
+                    var persistedGrantService = GetPersistedGrantService(persistedGrantRepository, localizer, auditLogger);
 
                     //Generate persisted grant
                     var persistedGrantKey = Guid.NewGuid().ToString();
@@ -132,7 +139,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                     var localizerMock = new Mock<IPersistedGrantAspNetIdentityServiceResources>();
                     var localizer = localizerMock.Object;
 
-                    var persistedGrantService = GetPersistedGrantService(persistedGrantRepository, localizer);
+                    var auditLoggerMock = new Mock<IAuditEventLogger>();
+                    var auditLogger = auditLoggerMock.Object;
+
+                    var persistedGrantService = GetPersistedGrantService(persistedGrantRepository, localizer, auditLogger);
 
                     const int subjectId = 1;
 

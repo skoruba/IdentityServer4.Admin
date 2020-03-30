@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Interfaces.IRoleDto
 @inject IViewLocalizer Localizer
 
@@ -33,7 +33,7 @@
 		<div class="form-group row">
 			<div class="col-sm-12">
 				<a asp-action="RoleClaims" asp-route-id="@Model.Id" class="btn btn-outline-primary"><span class="oi oi-plus"></span> @Localizer["ActionAddClaims"]</a>
-			    <a asp-action="RoleUsers" asp-route-roleid="@Model.Id" class="btn btn-primary"> @Localizer["ActionRoleUsers"]</a>
+			    <a asp-action="RoleUsers" asp-route-id="@Model.Id" class="btn btn-primary"> @Localizer["ActionRoleUsers"]</a>
 			    <a asp-action="RoleDelete" asp-route-id="@Model.Id" class="btn btn-danger"> @Localizer["ActionDeleteRole"]</a>			    
 			</div>
 		</div>
@@ -67,3 +67,8 @@
 		</div>
 	</div>
 </form>
+
+
+
+
+

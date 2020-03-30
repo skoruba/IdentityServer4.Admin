@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -37,3 +37,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration.ApplicationPart
         }
     }
 }
+
+
+
+
+

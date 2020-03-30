@@ -6,15 +6,15 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.Interfaces
 {
-	public interface IIdentityRepository<TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>	    
-	    where TUser : IdentityUser<TKey>
-	    where TRole : IdentityRole<TKey>
-	    where TKey : IEquatable<TKey>
-	    where TUserClaim : IdentityUserClaim<TKey>
-	    where TUserRole : IdentityUserRole<TKey>
-	    where TUserLogin : IdentityUserLogin<TKey>
-	    where TRoleClaim : IdentityRoleClaim<TKey>
-	    where TUserToken : IdentityUserToken<TKey>
+    public interface IIdentityRepository<TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
+        where TUser : IdentityUser<TKey>
+        where TRole : IdentityRole<TKey>
+        where TKey : IEquatable<TKey>
+        where TUserClaim : IdentityUserClaim<TKey>
+        where TUserRole : IdentityUserRole<TKey>
+        where TUserLogin : IdentityUserLogin<TKey>
+        where TRoleClaim : IdentityRoleClaim<TKey>
+        where TUserToken : IdentityUserToken<TKey>
     {
         Task<bool> ExistsUserAsync(string userId);
 
@@ -23,6 +23,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.In
         Task<PagedList<TUser>> GetUsersAsync(string search, int page = 1, int pageSize = 10);
 
         Task<PagedList<TUser>> GetRoleUsersAsync(string roleId, string search, int page = 1, int pageSize = 10);
+
+        Task<PagedList<TUser>> GetClaimUsersAsync(string claimType, string claimValue, int page = 1, int pageSize = 10);
 
         Task<PagedList<TRole>> GetRolesAsync(string search, int page = 1, int pageSize = 10);
 
@@ -50,7 +52,6 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.In
 
         Task<PagedList<TUserClaim>> GetUserClaimsAsync(string userId, int page = 1, int pageSize = 10);
 
-        Task<List<TUserClaim>> GetUserClaimByType(string userId, string claimType);
         Task<TUserClaim> GetUserClaimAsync(string userId, int claimId);
 
         Task<IdentityResult> CreateUserClaimsAsync(TUserClaim claims);
@@ -68,6 +69,9 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.In
         Task<IdentityResult> CreateRoleClaimsAsync(TRoleClaim claims);
 
         Task<PagedList<TRoleClaim>> GetRoleClaimsAsync(string roleId, int page = 1, int pageSize = 10);
+
+        Task<PagedList<TRoleClaim>> GetUserRoleClaimsAsync(string userId, string claimSearchText, int page = 1, int pageSize = 10);
+
 
         Task<TRoleClaim> GetRoleClaimAsync(string roleId, int claimId);
 

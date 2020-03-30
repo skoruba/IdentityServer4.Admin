@@ -14,3 +14,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Device
         public bool ConfirmUserCode { get; set; }
     }
 }
+
+
+
+
+

@@ -1,13 +1,16 @@
-﻿@using IdentityServer4.Extensions
+@using IdentityServer4.Extensions
 @using Microsoft.AspNetCore.Mvc.Localization
+@using SkorubaIdentityServer4Admin.Admin.Configuration.Interfaces
 @inject IViewLocalizer Localizer
+@inject IRootConfiguration RootConfiguration
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <link rel="icon" type="image/png" href="/images/skoruba-ico.png" />
-    <title>@ViewData["Title"] - @Localizer["PageTitle"]</title>
+    <link rel="icon" type="image/x-icon" href="@RootConfiguration.AdminConfiguration.FaviconUri" />
+    <link rel="shortcut icon" type="image/x-icon" href="@RootConfiguration.AdminConfiguration.FaviconUri" />
+    <title>@ViewData["Title"] - @RootConfiguration.AdminConfiguration.PageTitle</title>
 
     <environment include="Development">
         <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
@@ -24,7 +27,7 @@
 
     <div class="menu d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
         <!--Site name -->
-        <h3 class="menu-logo my-0 mr-md-auto font-weight-normal"><a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["PageTitle"]</a></h3>
+        <h3 class="menu-logo my-0 mr-md-auto font-weight-normal"><a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@RootConfiguration.AdminConfiguration.PageTitle</a></h3>
 
         <!--Menu item -->
         <vc:identity-server-link></vc:identity-server-link>
@@ -56,8 +59,16 @@
         </div>
 
         <!--Menu item -->
-        <a class="menu-item btn btn-primary mr-md-3" asp-area="" asp-controller="Log" asp-action="ErrorsLog">@Localizer["TitleLogs"]</a>
-
+        <div class="menu-item my-2 my-md-0 mr-md-3 dropdown">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                @Localizer["TitleLogs"]
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" asp-area="" asp-controller="Log" asp-action="AuditLog">@Localizer["Audit Logs"]</a>
+                <a class="dropdown-item" asp-area="" asp-controller="Log" asp-action="ErrorsLog">@Localizer["Error Logs"]</a>
+            </div>
+        </div>
+        
         <!--Menu item -->
         @if (User.Identity.IsAuthenticated)
         {
@@ -76,8 +87,8 @@
         <footer class="pt-4 my-md-5 pt-md-5 border-top">
             <div class="row">
                 <div class="col-6 col-md">
-                    @Localizer["FooterTitle"]
-                    <small class="d-block mb-3 text-muted">@Localizer["FooterCopyright"]</small>
+                    @RootConfiguration.AdminConfiguration.PageTitle
+                    <small class="d-block mb-3 text-muted">@Localizer["FooterCopyright"] @DateTime.Now.Year</small>
                 </div>
                 <div class="col-md-6 text-right">
                     @await Html.PartialAsync("Common/SelectLanguage")
@@ -100,3 +111,8 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+
+
+
+

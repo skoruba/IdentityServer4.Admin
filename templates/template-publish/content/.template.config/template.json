@@ -1,7 +1,11 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "Jan Skoruba",
-  "classifications": ["Web", "IdentityServer4", "Admin"],
+  "classifications": [
+    "Web",
+    "IdentityServer4",
+    "Admin"
+  ],
   "name": "Skoruba IdentityServer4 Admin",
   "identity": "Skoruba.IdentityServer4.Admin",
   "groupIdentity": "Skoruba.IdentityServer4.Admin",
@@ -18,7 +22,21 @@
       "defaultValue": "Skoruba IdentityServer4 Admin",
       "replaces": "Skoruba IdentityServer4 Admin",
       "isRequired": true,
-      "description": "The title and footer of the administration"
+      "description": "The title and footer of the Admin UI"
+    },
+    "adminpassword": {
+      "type": "parameter",
+      "defaultValue": "Pa$$word123",
+      "replaces": "Pa$$word123",
+      "isRequired": true,
+      "description": "The admin password, that is used to first login (default is Pa$$word123)."
+    },
+    "adminemail": {
+      "type": "parameter",
+      "defaultValue": "admin@skoruba.com",
+      "replaces": "admin@skoruba.com",
+      "isRequired": true,
+      "description": "The admin email."
     },
     "adminrole": {
       "type": "parameter",
@@ -32,16 +50,51 @@
       "defaultValue": "skoruba_identity_admin",
       "replaces": "skoruba_identity_admin",
       "isRequired": true,
-      "description": "The name of client, that is be used in the IdentityServer4"
+      "description": "The name of client, that is used in the IdentityServer4"
     },
     "adminclientsecret": {
       "type": "parameter",
       "defaultValue": "skoruba_admin_client_secret",
       "replaces": "skoruba_admin_client_secret",
       "isRequired": true,
-      "description": "The value of client secret, that is be used in the IdentityServer4"
+      "description": "The value of client secret, that is used in the IdentityServer4"
+    },
+    "dockersupport": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false",
+      "isRequired": true,
+      "description": "Add docker support for Admin UI"
     }
   },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(!dockersupport)",
+          "exclude": [
+            "shared/**",
+            "docker-compose.dcproj",
+            ".dockerignore",
+            "docker-compose.yml",
+            "docker-compose.override.yml",
+            "docker-compose.vs.debug.yml",
+            "docker-compose.vs.release.yml",
+            "src/SkorubaIdentityServer4Admin.Admin/Dockerfile",
+            "src/SkorubaIdentityServer4Admin.Admin.Api/Dockerfile",
+            "src/SkorubaIdentityServer4Admin.STS.Identity/Dockerfile",
+            "SkorubaIdentityServer4Admin.AdminUI.sln"            
+          ]
+        },
+        {
+          "condition": "(dockersupport)",
+          "exclude": [
+            "SkorubaIdentityServer4Admin.Admin.sln"
+          ]
+        }
+      ]
+    }
+  ],
   "primaryOutputs": [
     {
       "path": "src/SkorubaIdentityServer4Admin.Admin/SkorubaIdentityServer4Admin.Admin.csproj"
@@ -54,13 +107,22 @@
     },
     {
       "path": "src/SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared/SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.csproj"
+    },
+    {
+      "path": "src/SkorubaIdentityServer4Admin.Admin.EntityFramework.MySql/SkorubaIdentityServer4Admin.Admin.EntityFramework.MySql.csproj"
+    },
+    {
+      "path": "src/SkorubaIdentityServer4Admin.Admin.EntityFramework.PostgreSQL/SkorubaIdentityServer4Admin.Admin.EntityFramework.PostgreSQL.csproj"
+    },
+    {
+      "path": "src/SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer/SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.csproj"
     }
   ],
   "postActions": [
     {
       "actionId": "D396686C-DE0E-4DE6-906D-291CD29FC5DE",
       "args": {
-        "primaryOutputIndexes": "0;1;2;3"
+        "primaryOutputIndexes": "0;1;2;3;4;5;6"
       },
       "continueOnError": false,
       "manualInstructions": [

@@ -38,7 +38,8 @@ function processScripts() {
             './Scripts/App/helpers/FormMvcHelpers.js',
             './Scripts/App/helpers/jsontree.min.js',
             './Scripts/App/helpers/DateTimeHelpers.js',
-            './Scripts/App/pages/ErrorsLog.es5.js',
+            './Scripts/App/pages/ErrorsLog.js',
+            './Scripts/App/pages/AuditLog.js',
             './Scripts/App/pages/Secrets.js',
             './Scripts/App/components/DatePicker.js'
         ])

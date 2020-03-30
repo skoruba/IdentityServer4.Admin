@@ -2,14 +2,14 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Security.Claims;
-using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
+using Skoruba.IdentityServer4.Admin.Configuration;
 using Skoruba.IdentityServer4.Admin.Middlewares;
 
 namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Common
 {
     public static class HttpClientExtensions
     {
-        public static void SetAdminClaimsViaHeaders(this HttpClient client, IAdminConfiguration adminConfiguration)
+        public static void SetAdminClaimsViaHeaders(this HttpClient client, AdminConfiguration adminConfiguration)
         {
             var claims = new[]
             {

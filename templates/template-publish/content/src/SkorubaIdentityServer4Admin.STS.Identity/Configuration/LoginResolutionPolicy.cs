@@ -1,4 +1,4 @@
-﻿namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration
+namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration
 {
     // From where should the login be sourced
     // by default it's sourced from Username
@@ -8,3 +8,9 @@
         Email = 1
     }
 }
+
+
+
+
+
+

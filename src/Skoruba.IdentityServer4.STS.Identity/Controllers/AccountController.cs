@@ -10,6 +10,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Text.Encodings.Web;
+using System.Threading;
 using System.Threading.Tasks;
 using IdentityModel;
 using IdentityServer4;
@@ -25,10 +26,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
-using Skoruba.IdentityServer4.STS.Identity.Helpers.ADUtilities;
+using Skoruba.IdentityServer4.STS.Identity.Helpers.ADServices;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 using Skoruba.IdentityServer4.STS.Identity.ViewModels.Account;
 
@@ -40,7 +42,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         where TUser : IdentityUser<TKey>, new()
         where TKey : IEquatable<TKey>
     {
-        private readonly UserResolver<TUser> _userResolver;
+        private readonly ADUserSynchronizer<TUser, TKey> _adUsersSynchronizer;
+        private readonly ADUserInfoExtractor _adUserInfoExtractor;
         private readonly UserManager<TUser> _userManager;
         private readonly SignInManager<TUser> _signInManager;
         private readonly IIdentityServerInteractionService _interaction;
@@ -51,12 +54,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         private readonly IGenericControllerLocalizer<AccountController<TUser, TKey>> _localizer;
         private readonly LoginConfiguration _loginConfiguration;
         private readonly RegisterConfiguration _registerConfiguration;
-        private readonly WindowsAuthConfiguration _windowsAuthConfiguration;
-        private readonly IADUtilities _ADUtilities;
+        private readonly IOptions<WindowsAuthConfiguration> _windowsAuthConfiguration;
+        private readonly ADLogonService _adLogonService;
         private readonly ILogger<AccountController<TUser, TKey>> _logger;
 
         public AccountController(
-            UserResolver<TUser> userResolver,
             UserManager<TUser> userManager,
             SignInManager<TUser> signInManager,
             IIdentityServerInteractionService interaction,
@@ -67,11 +69,13 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             IGenericControllerLocalizer<AccountController<TUser, TKey>> localizer,
             LoginConfiguration loginConfiguration,
             RegisterConfiguration registerConfiguration,
-            WindowsAuthConfiguration windowsAuthConfiguration,
-            IADUtilities adUtilities,
+            IOptions<WindowsAuthConfiguration> windowsAuthConfiguration,
+            ADLogonService adUtilities,
+            ADUserSynchronizer<TUser, TKey> usersSynchronizer,
+            ADUserInfoExtractor adUserInfoExtractor,
             ILogger<AccountController<TUser, TKey>> logger)
         {
-            _userResolver = userResolver;
+            _adUsersSynchronizer = usersSynchronizer;
             _userManager = userManager;
             _signInManager = signInManager;
             _interaction = interaction;
@@ -83,7 +87,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             _loginConfiguration = loginConfiguration;
             _registerConfiguration = registerConfiguration;
             _windowsAuthConfiguration = windowsAuthConfiguration;
-            _ADUtilities = adUtilities;
+            _adLogonService = adUtilities;
+            _adUserInfoExtractor = adUserInfoExtractor;
             _logger = logger;
         }
 
@@ -97,7 +102,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl, bool forceLoginScreen = false)
         {
-            if (_windowsAuthConfiguration.AutomaticWindowsLogin && !forceLoginScreen && Request.IsFromLocalSubnet())
+            if (_windowsAuthConfiguration.Value != null && _windowsAuthConfiguration.Value.AutomaticWindowsLogin && !forceLoginScreen && Request.IsFromLocalSubnet())
             {
                 return RedirectToAction("ExternalLogin", new { provider = AccountOptions.WindowsAuthenticationSchemeName, returnUrl });
             }
@@ -151,7 +156,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = await _userResolver.GetUserAsync(model.Username);
+                var user = await _userManager.FindByNameAsync(model.Username);
                 if (user != default(TUser))
                 {
                     var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberLogin, lockoutOnFailure: true);
@@ -227,29 +232,27 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                     ModelState.AddModelError("Username", _localizer["InvalidUsernameFormat"]);
                 else
                 {
-                    var wi = _ADUtilities.LogonWindowsUser(usernameParts.Length > 1 ? usernameParts[1] : usernameParts[0], 
-                        vm.Password, 
+                    var wi = _adLogonService.LogonWindowsUser(usernameParts.Length > 1 ? usernameParts[1] : usernameParts[0],
+                        vm.Password,
                         usernameParts.Length > 1 ? usernameParts[0] : null);
                     if (wi != null)
-                        return await IssueExternalCookie(vm.ReturnUrl, wi);
+                        return await IssueWindowsLoginCookie(vm.ReturnUrl, wi);
 
                     ModelState.AddModelError(string.Empty, _localizer["WindowsAuthenticationFailed"]);
                 }
             }
-            
+
             return View(vm);
         }
 
-        private async Task<IActionResult> IssueExternalCookie(string returnUrl, IIdentity wi)
+        private async Task<IActionResult> IssueWindowsLoginCookie(string returnUrl, IIdentity wi)
         {
-            var adProperties = _ADUtilities.GetUserInfoFromAD(wi.Name);
+            var adProperties = _adUserInfoExtractor.GetADUserInfo(wi.Name);
 
             var id = new ClaimsIdentity(AccountOptions.WindowsAuthenticationSchemeName);
-            var name = wi.Name;
-            name = name.Substring(name.IndexOf('\\') + 1);
 
-            id.AddClaim(new Claim(JwtClaimTypes.Subject, name));
-            id.AddClaim(new Claim(ClaimTypes.NameIdentifier, name));
+            id.AddClaim(new Claim(JwtClaimTypes.Subject, adProperties.Username));
+            id.AddClaim(new Claim(ClaimTypes.NameIdentifier, adProperties.UsernameFQDN));
             id.AddClaim(new Claim(JwtClaimTypes.Name, adProperties.DisplayName));
             id.AddClaim(new Claim(JwtClaimTypes.Email, adProperties.Email));
 
@@ -456,10 +459,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
             if (result.Succeeded)
             {
-                if (info.LoginProvider == AccountOptions.WindowsAuthenticationSchemeName &&
-                    _windowsAuthConfiguration.SyncUserProfileWithWindows)
+                if (info.LoginProvider == AccountOptions.WindowsAuthenticationSchemeName && (_windowsAuthConfiguration.Value != null && _windowsAuthConfiguration.Value.SyncUserProfileWithWindows))
                 {
-                    await SyncUserProfileWithAD(info);
+                    var adUserInfo = _adUserInfoExtractor.GetADUserInfo(info.ProviderKey);
+                    await _adUsersSynchronizer.SynchronizeOne(adUserInfo);
                 }
                 return RedirectToLocal(returnUrl);
             }
@@ -479,6 +482,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return RedirectToLocal(returnUrl);
             }
+            if (result.RequiresTwoFactor)
+            {
+                return RedirectToAction(nameof(LoginWith2fa), new { ReturnUrl = returnUrl });
+            }
+            if (result.IsLockedOut)
+            {
+                return View("Lockout");
+            }
 
             // Otherwise ask the user to fill the missing data to create an account
             ViewData["ReturnUrl"] = returnUrl;
@@ -486,100 +497,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email, UserName = username });
         }
-
-        private async Task SyncUserProfileWithAD(ExternalLoginInfo info)
-        {
-            var adInfo = _ADUtilities.GetUserInfoFromAD(info.ProviderKey);
-            var user = await _userResolver.GetUserAsync(info.ProviderKey);
-
-            user.Email = adInfo.Email;
-            user.NormalizedEmail = adInfo.Email?.ToUpper();
-            user.EmailConfirmed = !string.IsNullOrEmpty(adInfo.Email);
-            user.PhoneNumber = adInfo.PhoneNumber;
-
-            var currentClaims = await _userManager.GetClaimsAsync(user);
-            await UpdateUserClaim(user, currentClaims, JwtClaimTypes.Email, adInfo.Email);
-            await UpdateUserClaim(user, currentClaims, JwtClaimTypes.Picture, adInfo.Photo);
-            await UpdateUserClaim(user, currentClaims, JwtClaimTypes.WebSite, adInfo.WebSite);
-            await UpdateUserClaim(user, currentClaims, JwtClaimTypes.Address,
-                (!string.IsNullOrEmpty(adInfo.Country) || !string.IsNullOrEmpty(adInfo.StreetAddress)) ?
-                Newtonsoft.Json.JsonConvert.SerializeObject(new { country = adInfo.Country, street_address = adInfo.StreetAddress }) :
-                null);
-
-            if (_windowsAuthConfiguration.IncludeWindowsGroups)
-            {
-                // Remove the groups that the user doesn't belong to anymore.
-                // If a policy has been configured for choosing which AD groups should become user claims 
-                // (via WindowsGroupsPrefix and WindowsGroupsOURoot settings), only those complying with that policy will be removed
-                foreach (var currentGroup in _ADUtilities.FilterADGroups(currentClaims.Where(c => c.Type == JwtClaimTypes.Role).Select(c => c.Value)))
-                {
-                    if (!adInfo.Groups.Contains(currentGroup))
-                    {
-                        var removeClaimRes = await _userManager.RemoveClaimAsync(user, currentClaims.First(c => c.Type == JwtClaimTypes.Role && c.Value == currentGroup));
-                        if (!removeClaimRes.Succeeded)
-                        {
-                            _logger.LogError(_localizer["ErrorRemovingRoleClaim", currentGroup, user.UserName]);
-                            foreach (var error in removeClaimRes.Errors)
-                            {
-                                _logger.LogError(error.Description);
-                            }
-                        }
-                    }
-                }
-
-                // Add new groups
-                foreach (var newGroup in adInfo.Groups)
-                {
-                    if (currentClaims.FirstOrDefault(c => c.Type == JwtClaimTypes.Role && c.Value == newGroup) == null)
-                    {
-                        var addClaimRes = await _userManager.AddClaimAsync(user, new Claim(JwtClaimTypes.Role, newGroup));
-                        if (!addClaimRes.Succeeded)
-                        {
-                            _logger.LogError(_localizer["ErrorAddingRoleClaim", newGroup, user.UserName]);
-                            foreach (var error in addClaimRes.Errors)
-                            {
-                                _logger.LogError(error.Description);
-                            }
-                        }
-                    }
-                }
-            }
-
-            var updateUserRes = await _userManager.UpdateAsync(user);
-            if (!updateUserRes.Succeeded)
-            {
-                _logger.LogError(_localizer["ErrorSyncingUserProfile", user.UserName]);
-                foreach (var error in updateUserRes.Errors)
-                {
-                    _logger.LogError(error.Description);
-                }
-            }
-        }
-
-        private async Task<IdentityResult> UpdateUserClaim(TUser user, IList<Claim> currentClaims, string claimType, string claimNewValue)
-        {
-            IdentityResult res = IdentityResult.Success;
-            var currentClaim = currentClaims.FirstOrDefault(c => c.Type == claimType);
-            if (currentClaim != null)
-            {
-                if (string.IsNullOrEmpty(claimNewValue))
-                    res = await _userManager.RemoveClaimAsync(user, currentClaim);
-                else if (currentClaim.Value != claimNewValue)
-                    res = await _userManager.ReplaceClaimAsync(user, currentClaim, new Claim(claimType, claimNewValue));
-            }
-            else if (!string.IsNullOrEmpty(claimNewValue))
-                res = await _userManager.AddClaimAsync(user, new Claim(claimType, claimNewValue));
-
-            if (!res.Succeeded)
-            {
-                _logger.LogError(_localizer["ErrorUpdatingClaim", claimType, user.UserName, claimNewValue]);
-                foreach (var error in res.Errors)
-                {
-                    _logger.LogError(error.Description);
-                }
-            }
-            return res;
-        }        
 
         [HttpPost]
         [HttpGet]
@@ -829,35 +746,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
         [HttpPost]
         [Authorize(AuthorizationConsts.AdministrationPolicy)]
-        public async Task<IActionResult> ImportAllWindowsUsers(ImportAllWindowsUsersViewModel model)
+        public async Task<IActionResult> ImportAllWindowsUsers(ImportAllWindowsUsersViewModel model, CancellationToken cancellationToken = default)
         {
-            int nErrors = 0, nImported = 0, nUpdated = 0;
-            foreach (var username in _ADUtilities.ReadAllUsernamesFromAD())
-            {
-                try
-                {
-                    var loginInfo = new ExternalLoginInfo(new ClaimsPrincipal(new ClaimsIdentity()), AccountOptions.WindowsAuthenticationSchemeName, username, null);
-                    var existingUser = await _userManager.FindByLoginAsync(AccountOptions.WindowsAuthenticationSchemeName, username);
-                    if (existingUser == null)
-                    {
-                        await ProvideExternalUserAsync(loginInfo, username, null);
-                        nImported++;
-                    }
-                    else if (_windowsAuthConfiguration.SyncUserProfileWithWindows)
-                    {
-                        await SyncUserProfileWithAD(loginInfo);
-                        nUpdated++;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    nErrors++;
-                    _logger.LogError(ex, "Error importing user {0}", username);
-                }
-            }
-
-            model.StatusMessage = _localizer["WindowsUsersImported", nImported, nUpdated, nErrors];
-
+            var syncResult = await _adUsersSynchronizer.SynchronizeAll(cancellationToken);
+            model.StatusMessage = _localizer["WindowsUsersImported", syncResult.NewUsersCount, syncResult.UpdatedUsersCount, syncResult.SyncErrorsCount];
             return View(model);
         }
 
@@ -1012,7 +904,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             var result = await HttpContext.AuthenticateAsync(AccountOptions.WindowsAuthenticationSchemeName);
             if (result?.Principal is WindowsPrincipal wp)
             {
-                return await IssueExternalCookie(returnUrl, wp.Identity);
+                return await IssueWindowsLoginCookie(returnUrl, wp.Identity);
             }
             else if (Request.IsFromLocalSubnet())
             {
@@ -1031,53 +923,46 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
         private async Task<TUser> ProvideExternalUserAsync(ExternalLoginInfo info, string username, string email)
         {
-            var claims = info.Principal.Claims;
+            TUser user = null;
 
-            // create a list of claims that we want to transfer into our store
-            var filtered = new List<Claim>();
-
-            // user's display name
-            var name = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Name)?.Value ??
-                claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
-            if(name == null)
-            {
-                var first = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.GivenName)?.Value ??
-                    claims.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value;
-                var last = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.FamilyName)?.Value ??
-                    claims.FirstOrDefault(x => x.Type == ClaimTypes.Surname)?.Value;
-                if (first != null && last != null)
-                {
-                    name = first + " " + last;
-                }
-                else if (first != null)
-                {
-                    name = first;
-                }
-                else if (last != null)
-                {
-                    name = last;
-                }
-            }
-
-            string thumbnail, phoneNumber, website, country, streetAddress;
             if (info.LoginProvider == AccountOptions.WindowsAuthenticationSchemeName)
             {
-                var adInfo = _ADUtilities.GetUserInfoFromAD(info.ProviderKey);
-                if (string.IsNullOrEmpty(name))
-                    name = adInfo.DisplayName;
-                if(string.IsNullOrEmpty(email))
-                    email = adInfo.Email;
-                thumbnail = adInfo.Photo;
-                phoneNumber = adInfo.PhoneNumber;
-                website = adInfo.WebSite;
-                country = adInfo.Country;
-                streetAddress = adInfo.StreetAddress;
-
-                var roles = adInfo.Groups.Select(x => new Claim(JwtClaimTypes.Role, x));
-                filtered.AddRange(roles);
+                var adUserInfo = _adUserInfoExtractor.GetADUserInfo(info.ProviderKey);
+                var syncResult = await _adUsersSynchronizer.SynchronizeOne(adUserInfo);
+                user = syncResult.User;
             }
             else
             {
+                var claims = info.Principal.Claims;
+
+                // create a list of claims that we want to transfer into our store
+                var claimsToAdd = new List<Claim>();
+
+                // user's display name
+                var name = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Name)?.Value ??
+                    claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+                if (name == null)
+                {
+                    var first = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.GivenName)?.Value ??
+                        claims.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value;
+                    var last = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.FamilyName)?.Value ??
+                        claims.FirstOrDefault(x => x.Type == ClaimTypes.Surname)?.Value;
+                    if (first != null && last != null)
+                    {
+                        name = first + " " + last;
+                    }
+                    else if (first != null)
+                    {
+                        name = first;
+                    }
+                    else if (last != null)
+                    {
+                        name = last;
+                    }
+                }
+
+                string thumbnail, phoneNumber, website, country, streetAddress;
+
                 if (string.IsNullOrEmpty(email))
                     email = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Email)?.Value ??
                         claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
@@ -1086,38 +971,45 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 website = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.WebSite)?.Value;
                 country = null;
                 streetAddress = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Address)?.Value;
-            }
 
-            if (name != null)
-                filtered.Add(new Claim(JwtClaimTypes.Name, name));
-            if (!string.IsNullOrEmpty(email))
-                filtered.Add(new Claim(JwtClaimTypes.Email, email));
-            if (!string.IsNullOrEmpty(thumbnail))
-                filtered.Add(new Claim(JwtClaimTypes.Picture, thumbnail));
-            if (!string.IsNullOrEmpty(website))
-                filtered.Add(new Claim(JwtClaimTypes.WebSite, website));
-            if (!string.IsNullOrEmpty(country) || !string.IsNullOrEmpty(streetAddress))
-                filtered.Add(new Claim(JwtClaimTypes.Address,
-                    Newtonsoft.Json.JsonConvert.SerializeObject(new { country = country, street_address = streetAddress })));
+                if (name != null)
+                    claimsToAdd.Add(new Claim(JwtClaimTypes.Name, name));
+                if (!string.IsNullOrEmpty(email))
+                    claimsToAdd.Add(new Claim(JwtClaimTypes.Email, email));
+                if (!string.IsNullOrEmpty(thumbnail))
+                    claimsToAdd.Add(new Claim(JwtClaimTypes.Picture, thumbnail));
+                if (!string.IsNullOrEmpty(website))
+                    claimsToAdd.Add(new Claim(JwtClaimTypes.WebSite, website));
+                if (!string.IsNullOrEmpty(country) || !string.IsNullOrEmpty(streetAddress))
+                    claimsToAdd.Add(new Claim(JwtClaimTypes.Address,
+                        Newtonsoft.Json.JsonConvert.SerializeObject(new { country = country, street_address = streetAddress })));
 
-            var user = new TUser
-            {
-                UserName = username ?? info.ProviderKey,
-                Email = email,
-                NormalizedEmail = email?.ToUpper(),
-                EmailConfirmed = info.LoginProvider == AccountOptions.WindowsAuthenticationSchemeName && !string.IsNullOrEmpty(email),
-                PhoneNumber = phoneNumber,
-            };
-            var identityResult = await _userManager.CreateAsync(user);
-            if (!identityResult.Succeeded)
-            {
-                AddErrors(identityResult);
-                return null;
-            }
+                user = new TUser
+                {
+                    UserName = username ?? info.ProviderKey,
+                    Email = email,
+                    NormalizedEmail = email?.ToUpper(),
+                    EmailConfirmed = info.LoginProvider == AccountOptions.WindowsAuthenticationSchemeName && !string.IsNullOrEmpty(email),
+                    PhoneNumber = phoneNumber,
+                };
+                var identityResult = await _userManager.CreateAsync(user);
+                if (!identityResult.Succeeded)
+                {
+                    AddErrors(identityResult);
+                    return null;
+                }
 
-            if (filtered.Any())
-            {
-                identityResult = await _userManager.AddClaimsAsync(user, filtered);
+                if (claimsToAdd.Any())
+                {
+                    identityResult = await _userManager.AddClaimsAsync(user, claimsToAdd);
+                    if (!identityResult.Succeeded)
+                    {
+                        AddErrors(identityResult);
+                        return null;
+                    }
+                }
+
+                identityResult = await _userManager.AddLoginAsync(user, info);
                 if (!identityResult.Succeeded)
                 {
                     AddErrors(identityResult);
@@ -1125,14 +1017,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 }
             }
 
-            identityResult = await _userManager.AddLoginAsync(user, info);
-            if (!identityResult.Succeeded)
-            {
-                AddErrors(identityResult);
-                return null;
-            }
-
             return user;
-        }        
+        }
     }
 }

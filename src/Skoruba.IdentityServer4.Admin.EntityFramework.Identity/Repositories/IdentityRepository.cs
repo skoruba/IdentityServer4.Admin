@@ -114,6 +114,25 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             return pagedList;
         }
 
+        public virtual async Task<PagedList<TUser>> GetClaimUsersAsync(string claimType, string claimValue, int page = 1, int pageSize = 10)
+        {
+            var pagedList = new PagedList<TUser>();
+            var users = DbContext.Set<TUser>()  
+                .Join(DbContext.Set<TUserClaim>(), u => u.Id, uc => uc.UserId, (u, uc) => new { u, uc })
+                .Where(t => t.uc.ClaimType.Equals(claimType))
+                .WhereIf(!string.IsNullOrEmpty(claimValue), t => t.uc.ClaimValue.Equals(claimValue))
+                .Select(t => t.u).Distinct();
+
+            var pagedUsers = await users.PageBy(x => x.Id, page, pageSize)
+                .ToListAsync();
+
+            pagedList.Data.AddRange(pagedUsers);
+            pagedList.TotalCount = await users.CountAsync();
+            pagedList.PageSize = pageSize;
+
+            return pagedList;
+        }
+
         public virtual Task<List<TRole>> GetRolesAsync()
         {
             return RoleManager.Roles.ToListAsync();
@@ -147,9 +166,9 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
 
         public virtual async Task<(IdentityResult identityResult, TKey roleId)> UpdateRoleAsync(TRole role)
         {
-            var thisRole = await RoleManager.FindByIdAsync(role.Id.ToString());
-            thisRole.Name = role.Name;
-            var identityResult = await RoleManager.UpdateAsync(thisRole);
+            var existingRole = await RoleManager.FindByIdAsync(role.Id.ToString());
+            Mapper.Map(role, existingRole);
+            var identityResult = await RoleManager.UpdateAsync(existingRole);
 
             return (identityResult, role.Id);
         }
@@ -254,15 +273,25 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             return pagedList;
         }
 
-        public virtual Task<List<TUserClaim>> GetUserClaimByType(string userId, string claimType)
-        {
-            var userIdConverted = ConvertUserKeyFromString(userId);
+		public virtual async Task<PagedList<TRoleClaim>> GetUserRoleClaimsAsync(string userId, string claimSearchText, int page = 1, int pageSize = 10)
+		{
+			var id = ConvertUserKeyFromString(userId);
+			Expression<Func<TRoleClaim, bool>> searchCondition = x => x.ClaimType.Contains(claimSearchText);
+			var claimsQ = DbContext.Set<TUserRole>().Where(x => x.UserId.Equals(id))
+				.Join(DbContext.Set<TRoleClaim>().WhereIf(!string.IsNullOrEmpty(claimSearchText), searchCondition), ur => ur.RoleId, rc => rc.RoleId, (ur, rc) => rc);
 
-            return DbContext.Set<TUserClaim>().Where(x => x.UserId.Equals(userIdConverted) && x.ClaimType == claimType)
-                .ToListAsync();
-        }
+			var claims= await claimsQ.PageBy(x => x.Id, page, pageSize)
+				.ToListAsync();
 
-        public virtual Task<TUserClaim> GetUserClaimAsync(string userId, int claimId)
+			var pagedList = new PagedList<TRoleClaim>();
+			pagedList.Data.AddRange(claims);
+			pagedList.TotalCount = await claimsQ.CountAsync();
+			pagedList.PageSize = pageSize;
+
+			return pagedList;
+		}
+
+		public virtual Task<TUserClaim> GetUserClaimAsync(string userId, int claimId)
         {
             var userIdConverted = ConvertUserKeyFromString(userId);
 
@@ -292,18 +321,20 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
 
         public virtual async Task<int> DeleteUserClaimsAsync(string userId, int claimId)
         {
+            var user = await UserManager.FindByIdAsync(userId);
             var userClaim = await DbContext.Set<TUserClaim>().Where(x => x.Id == claimId).SingleOrDefaultAsync();
 
-            DbContext.UserClaims.Remove(userClaim);
+            await UserManager.RemoveClaimAsync(user, new Claim(userClaim.ClaimType, userClaim.ClaimValue));
 
             return await AutoSaveChangesAsync();
         }
 
         public virtual async Task<int> DeleteRoleClaimsAsync(string roleId, int claimId)
         {
+            var role = await RoleManager.FindByIdAsync(roleId);
             var roleClaim = await DbContext.Set<TRoleClaim>().Where(x => x.Id == claimId).SingleOrDefaultAsync();
 
-            DbContext.Set<TRoleClaim>().Remove(roleClaim);
+            await RoleManager.RemoveClaimAsync(role, new Claim(roleClaim.ClaimType, roleClaim.ClaimValue));
 
             return await AutoSaveChangesAsync();
         }

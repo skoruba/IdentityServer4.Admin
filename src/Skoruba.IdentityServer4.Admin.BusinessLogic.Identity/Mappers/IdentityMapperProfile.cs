@@ -56,6 +56,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers
             CreateMap<TUser, TUser>(MemberList.Destination)
                 .ForMember(x => x.SecurityStamp, opt => opt.Ignore());
 
+            CreateMap<TRole, TRole>(MemberList.Destination);
+
             CreateMap<PagedList<TUser>, TUsersDto>(MemberList.Destination)
                 .ForMember(x => x.Users,
                     opt => opt.MapFrom(src => src.Data));
@@ -94,7 +96,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers
             CreateMap<TUserLogin, TUserProviderDto>(MemberList.Destination);
 
             // model to entity
-            CreateMap<TRoleDto, TRole>(MemberList.Source);
+            CreateMap<TRoleDto, TRole>(MemberList.Source)
+                .ForMember(dest => dest.Id, opt => opt.Condition(srs => srs.Id != null)); ;
 
             CreateMap<TRoleClaimsDto, TRoleClaim>(MemberList.Source);
 
@@ -103,7 +106,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers
                     opt => opt.MapFrom(src => src.ClaimId));
 
             // model to entity
-            CreateMap<TUserDto, TUser>(MemberList.Source);
+            CreateMap<TUserDto, TUser>(MemberList.Source)
+                .ForMember(dest => dest.Id, opt => opt.Condition(srs => srs.Id != null)); ;
         }
     }
 }

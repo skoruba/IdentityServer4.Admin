@@ -1,0 +1,44 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.Helpers
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common.Pager
+@inject IViewLocalizer Localizer
+@{
+    var currentPage = PagerHelpers.GetCurrentPage(Context.Request.Query["page"]);
+    var totalCount = PagerHelpers.GetTotalPages(Model.PageSize, Model.TotalCount);
+    var minPage = PagerHelpers.GetMinPageToRender(Model.MaxPages, totalCount, currentPage);
+    var maxPage = PagerHelpers.GetMaxPageToRender(Model.MaxPages, totalCount, currentPage);
+}
+
+@if (currentPage <= maxPage)
+{
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+
+            <li class="page-item"><a class="page-link" href="@PagerHelpers.GetUrl(Model.Action, PagerHelpers.GetQueryString(Context, 1))">@Localizer["FirstButtonText"]</a></li>
+            
+            @if (PagerHelpers.ShowLeftPagerButton(Model.MaxPages, totalCount, currentPage))
+            {
+                <li class="page-item"><a class="page-link" href="@PagerHelpers.GetUrl(Model.Action, PagerHelpers.GetQueryString(Context, minPage - 1))">...</a></li>
+            }
+
+            @for (var i = minPage; i <= maxPage; i++)
+            {
+                if (PagerHelpers.IsActivePage(currentPage, i))
+                {
+                    <li class="page-item active"><a class="page-link" href="@PagerHelpers.GetUrl(Model.Action, PagerHelpers.GetQueryString(Context, i))">@i</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link" href="@PagerHelpers.GetUrl(Model.Action, PagerHelpers.GetQueryString(Context, i))">@i</a></li>
+                }
+            }
+
+            @if (PagerHelpers.ShowRightPagerButton(Model.MaxPages, totalCount, currentPage))
+            {
+                <li class="page-item"><a class="page-link" href="@PagerHelpers.GetUrl(Model.Action, PagerHelpers.GetQueryString(Context, maxPage + 1))">...</a></li>
+            }
+
+            <li class="page-item"><a class="page-link" href="@PagerHelpers.GetUrl(Model.Action, PagerHelpers.GetQueryString(Context, totalCount))">@Localizer["LastButtonText"]</a></li>
+        </ul>
+    </nav>
+}

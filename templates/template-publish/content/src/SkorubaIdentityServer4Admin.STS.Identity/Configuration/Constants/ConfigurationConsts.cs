@@ -1,4 +1,4 @@
-﻿namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration.Constants
+namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration.Constants
 {
     public class ConfigurationConsts
     {
@@ -14,6 +14,11 @@
 
         public const string AdminConfigurationKey = "AdminConfiguration";
 
-        public const string RegisterConfiguration = "RegisterConfiguration";
+        public const string RegisterConfigurationKey = "RegisterConfiguration";
     }
 }
+
+
+
+
+
