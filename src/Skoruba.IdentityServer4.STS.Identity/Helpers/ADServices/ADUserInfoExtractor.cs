@@ -16,11 +16,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers.ADServices
     public class ADUserInfoExtractor
     {
         private readonly ILogger<ADUserInfoExtractor> _logger;
-        private readonly IOptions<WindowsAuthConfiguration> _windowsAuthConfiguration;
+        private readonly IOptionsMonitor<WindowsAuthConfiguration> _windowsAuthConfiguration;
 
         public ADUserInfoExtractor(
             ILogger<ADUserInfoExtractor> logger,
-            IOptions<WindowsAuthConfiguration> windowsAuthConfiguration
+            IOptionsMonitor<WindowsAuthConfiguration> windowsAuthConfiguration
         )
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -57,7 +57,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers.ADServices
 
         public ADUserInfo GetADUserInfo(string username, string domainFQDN)
         { 
-            var domainConfig = _windowsAuthConfiguration.Value?.Domains?.Where(p => p.DomainFullQualifiedName == domainFQDN).FirstOrDefault();
+            var domainConfig = _windowsAuthConfiguration.CurrentValue?.Domains?.Where(p => p.DomainFullQualifiedName == domainFQDN).FirstOrDefault();
             PrincipalContext ctx = null;
             if (domainConfig != null && !string.IsNullOrWhiteSpace(domainConfig.DomainUserName))
                 ctx = new PrincipalContext(ContextType.Domain, domainConfig.DomainFullQualifiedName, domainConfig.DomainUserName, domainConfig.DomainUserPassword);
@@ -66,8 +66,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers.ADServices
             using (ctx)
             {
                 UserPrincipal up = new UserPrincipal(ctx);
-                PrincipalSearcher ps = new PrincipalSearcher(up);
-                ps.QueryFilter = new UserPrincipal(ctx) { SamAccountName = username };
+                PrincipalSearcher ps = new PrincipalSearcher(up)
+                {
+                    QueryFilter = new UserPrincipal(ctx) { SamAccountName = username }
+                };
                 var principalFound = ps.FindOne();
                 var userPrincipalFound = principalFound as UserPrincipal;
                 if (userPrincipalFound != null)

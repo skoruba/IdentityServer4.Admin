@@ -12,6 +12,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Configuration
 
         // At each Windows login, keep the user profile in sync with any changes made to the AD
         public bool SyncUserProfileWithWindows { get; set; } = false;
+        
+        public bool BackgroundSynchronization { get; set; } = true;
+
+        public TimeSpan BackgroundSynchronizationSleep { get; set; } = TimeSpan.FromMinutes(30);
 
         public List<ActiveDirectoryDomainConfiguration> Domains { get; set; } = new List<ActiveDirectoryDomainConfiguration>();
     }

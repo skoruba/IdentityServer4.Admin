@@ -21,8 +21,9 @@ namespace Microsoft.Extensions.DependencyInjection
                 .Bind(configuration.GetSection(nameof(WindowsAuthConfiguration))).ValidateDataAnnotations();
             services
                 .AddSingleton<ADLogonService>()
-                .AddScoped<ADUserInfoExtractor>()
-                .AddScoped<ADUserSynchronizer<TUser,TKey>>();
+                .AddSingleton<ADUserInfoExtractor>()
+                .AddScoped<ADUserSynchronizer<TUser, TKey>>();
+            services.AddHostedService<ADUserSynchronizerHostedService<TUser, TKey>>();
 
             services.Configure<IISServerOptions>(iis =>
             {

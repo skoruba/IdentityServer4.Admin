@@ -3,10 +3,8 @@ using System.Threading.Tasks;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers.ADServices
 {
-    public interface IExternalUserSynchronizer
+    public interface IADUserSynchronizer
     {
-        string LoginProvider { get; }
-
         Task<UsersSynchronizationResult> SynchronizeAll(CancellationToken cancellationToken = default);
     }
 }

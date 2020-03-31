@@ -15,20 +15,20 @@ using System.Threading.Tasks;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers.ADServices
 {
-    public class ADUserSynchronizer<TUser, TKey> : IExternalUserSynchronizer
+    public class ADUserSynchronizer<TUser, TKey> : IADUserSynchronizer
         where TUser : IdentityUser<TKey>, new()
         where TKey : IEquatable<TKey>
     {
         private readonly ILogger<ADUserSynchronizer<TUser, TKey>> _logger;
         private readonly ADUserInfoExtractor _adUserInfoExtractor;
         private readonly UserManager<TUser> _userManager;
-        private readonly IOptions<WindowsAuthConfiguration> _adOptions;
+        private readonly IOptionsMonitor<WindowsAuthConfiguration> _adOptions;
 
         public ADUserSynchronizer(
             ILogger<ADUserSynchronizer<TUser, TKey>> logger,
             ADUserInfoExtractor adUserInfoExtractor,
             UserManager<TUser> userManager,
-            IOptions<WindowsAuthConfiguration> adOptions
+            IOptionsMonitor<WindowsAuthConfiguration> adOptions
         )
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -37,14 +37,13 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers.ADServices
             _adOptions = adOptions ?? throw new ArgumentNullException(nameof(adOptions));
         }
 
-        public string LoginProvider { get { return AccountOptions.WindowsAuthenticationSchemeName; } }
-
         public async Task<UsersSynchronizationResult> SynchronizeAll(CancellationToken cancellationToken = default)
         {
             UsersSynchronizationResult result = new UsersSynchronizationResult();
-            if (_adOptions.Value != null && _adOptions.Value.Domains != null)
+            var adOptionsCurrentValue = _adOptions.CurrentValue;
+            if (adOptionsCurrentValue != null && adOptionsCurrentValue.Domains != null)
             {
-                foreach (var domainConfiguration in _adOptions.Value.Domains)
+                foreach (var domainConfiguration in adOptionsCurrentValue.Domains)
                 {
                     var adUsersInfos = _adUserInfoExtractor.GetAllUsersFromAD(domainConfiguration);
                     foreach (var adUserInfo in adUsersInfos)
