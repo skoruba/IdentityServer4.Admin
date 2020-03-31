@@ -1,5 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using IdentityServer4.Admin.Configuration.Interfaces
 @inject IViewLocalizer Localizer
+@inject IRootConfiguration RootConfiguration
 @{
     Layout = null;
 }
@@ -8,8 +10,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <link rel="icon" type="image/x-icon" href="@ViewData["FaviconUri"]" />
-    <link rel="shortcut icon" type="image/x-icon" href="@ViewData["FaviconUri"]" />
+    <link rel="icon" type="image/x-icon" href="@RootConfiguration.AdminConfiguration.FaviconUri" />
+    <link rel="shortcut icon" type="image/x-icon" href="@RootConfiguration.AdminConfiguration.FaviconUri" />
     <title>@Localizer["PageTitle"]</title>
 
     <environment include="Development">
@@ -34,7 +36,7 @@
                             <h1 class="card-title">
                                 <span class="oi oi-circle-x" title="Warning" aria-hidden="true"></span>
                             </h1>
-                            <a href="@ViewData["IdentityServerBaseUrl"]" class="btn btn-lg btn-block btn-danger">@Localizer["ReturnToIdentityServer"]</a>
+                            <a href="@RootConfiguration.AdminConfiguration.IdentityServerBaseUrl" class="btn btn-lg btn-block btn-danger">@Localizer["ReturnToIdentityServer"]</a>
                             <a asp-controller="Account" asp-action="Logout" class="btn btn-lg btn-block btn-danger">@Localizer["Logout"]</a>
                         </div>
                     </div>
