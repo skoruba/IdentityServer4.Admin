@@ -21,6 +21,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         public IActionResult AccessDenied()
         {
             ViewData["IdentityServerBaseUrl"] = _rootConfiguration.AdminConfiguration.IdentityServerBaseUrl;
+            ViewData["FaviconUri"] = _rootConfiguration.AdminConfiguration.FaviconUri;
 
             return View();
         }
