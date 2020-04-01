@@ -98,13 +98,17 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             return secrets;
         }
 
-        public virtual List<string> GetStandardClaims(string claim, int limit = 0)
+        public virtual async Task<List<string>> GetStandardClaimsAsync(string claim, int limit = 0)
         {
             var filteredClaims = ClientConsts.GetStandardClaims()
                 .WhereIf(!string.IsNullOrWhiteSpace(claim), x => x.Contains(claim))
                 .TakeIf(x => x, limit > 0, limit)
                 .ToList();
-
+            if (limit == 0 || filteredClaims.Count < limit)
+            {
+                var usedClaims = await DbContext.ApiResourceClaims.Select(r => r.Type).WhereIf(!string.IsNullOrWhiteSpace(claim), x => x.Contains(claim)).Distinct().ToListAsync().ConfigureAwait(false);
+                filteredClaims = filteredClaims.Concat(usedClaims).Distinct().TakeIf(x => x, limit > 0, limit).ToList();
+            }
             return filteredClaims;
         }
 
