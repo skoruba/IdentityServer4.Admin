@@ -330,9 +330,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             return HandleIdentityError(identityResult, IdentityServiceResources.UserClaimsCreateFailed().Description, IdentityServiceResources.IdentityErrorKey().Description, claimsDto);
         }
 
-        public virtual async Task<int> DeleteUserClaimsAsync(TUserClaimsDto claim)
+        public virtual async Task<IdentityResult> DeleteUserClaimAsync(TUserClaimsDto claim)
         {
-            var deleted = await IdentityRepository.DeleteUserClaimsAsync(claim.UserId.ToString(), claim.ClaimId);
+            var deleted = await IdentityRepository.DeleteUserClaimAsync(claim.UserId.ToString(), claim.ClaimId);
 
             await AuditEventLogger.LogEventAsync(new UserClaimsDeletedEvent<TUserClaimsDto>(claim));
 
@@ -464,9 +464,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             return roleClaimsDto;
         }
 
-        public virtual async Task<int> DeleteRoleClaimsAsync(TRoleClaimsDto role)
+        public virtual async Task<IdentityResult> DeleteRoleClaimAsync(TRoleClaimsDto role)
         {
-            var deleted = await IdentityRepository.DeleteRoleClaimsAsync(role.RoleId.ToString(), role.ClaimId);
+            var deleted = await IdentityRepository.DeleteRoleClaimAsync(role.RoleId.ToString(), role.ClaimId);
 
             await AuditEventLogger.LogEventAsync(new RoleClaimsDeletedEvent<TRoleClaimsDto>(role));
 

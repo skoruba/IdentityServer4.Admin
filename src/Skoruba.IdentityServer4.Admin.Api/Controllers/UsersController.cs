@@ -203,7 +203,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
             };
 
             await _identityService.GetUserClaimAsync(id.ToString(), claimId);
-            await _identityService.DeleteUserClaimsAsync(userClaimsDto);
+            await _identityService.DeleteUserClaimAsync(userClaimsDto);
 
             return Ok();
         }

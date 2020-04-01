@@ -56,7 +56,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.In
 
         Task<IdentityResult> CreateUserClaimsAsync(TUserClaim claims);
 
-        Task<int> DeleteUserClaimsAsync(string userId, int claimId);
+        Task<IdentityResult> DeleteUserClaimAsync(string userId, int claimId);
 
         Task<List<UserLoginInfo>> GetUserProvidersAsync(string userId);
 
@@ -72,11 +72,14 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.In
 
 		Task<PagedList<TRoleClaim>> GetUserRoleClaimsAsync(string userId, string claimSearchText, int page = 1, int pageSize = 10);
 
-
 		Task<TRoleClaim> GetRoleClaimAsync(string roleId, int claimId);
 
-        Task<int> DeleteRoleClaimsAsync(string roleId, int claimId);
+        Task<IdentityResult> DeleteRoleClaimAsync(string roleId, int claimId);
 
         Task<IdentityResult> DeleteRoleAsync(TRole role);
+
+        bool AutoSaveChanges { get; set; }
+
+        Task<int> SaveAllChangesAsync();
     }
 }
