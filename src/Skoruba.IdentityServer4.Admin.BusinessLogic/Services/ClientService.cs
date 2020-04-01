@@ -304,9 +304,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return protocolTypes;
         }
 
-        public virtual List<string> GetStandardClaims(string claim, int limit = 0)
+        public virtual async Task<List<string>> GetStandardClaimsAsync(string claim, int limit = 0)
         {
-            var standardClaims = ClientRepository.GetStandardClaims(claim, limit);
+            var standardClaims = await ClientRepository.GetStandardClaimsAsync(claim, limit);
 
             return standardClaims;
         }

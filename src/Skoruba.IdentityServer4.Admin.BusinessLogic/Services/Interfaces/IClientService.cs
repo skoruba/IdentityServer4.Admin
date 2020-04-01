@@ -41,7 +41,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
 
         List<SelectItemDto> GetSecretTypes();
 
-        List<string> GetStandardClaims(string claim, int limit = 0);
+        Task<List<string>> GetStandardClaimsAsync(string claim, int limit = 0);
 
         Task<int> AddClientSecretAsync(ClientSecretsDto clientSecret);
 

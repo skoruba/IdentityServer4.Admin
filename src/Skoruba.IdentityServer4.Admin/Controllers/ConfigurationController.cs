@@ -353,9 +353,9 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult SearchClaims(string claim, int limit = 0)
+        public async Task<IActionResult> SearchClaims(string claim, int limit = 0)
         {
-            var claims = _clientService.GetStandardClaims(claim, limit);
+            var claims = await _clientService.GetStandardClaimsAsync(claim, limit);
 
             return Ok(claims);
         }
