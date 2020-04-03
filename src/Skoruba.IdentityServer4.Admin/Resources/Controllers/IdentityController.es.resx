@@ -127,7 +127,7 @@
     <value>Invitación enviada!</value>
   </data>
   <data name="InvitationBody" xml:space="preserve">
-    <value>Finalizar el registro por &lt;a href='{0}'&gt;haciendo clic aquí&lt;/a&gt;.</value>
+    <value>Finalizar el registro como {0} por &lt;a href='{1}'&gt;haciendo clic aquí&lt;/a&gt;.</value>
   </data>
   <data name="InvitationTitle" xml:space="preserve">
     <value>Bienvenido!</value>

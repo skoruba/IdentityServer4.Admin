@@ -127,7 +127,7 @@
     <value>邀请已发送!</value>
   </data>
   <data name="InvitationBody" xml:space="preserve">
-    <value>完成注册 &lt;a href='{0}'&gt;点击这里&lt;/a&gt;.</value>
+    <value>完成{0}的注册 &lt;a href='{1}'&gt;点击这里&lt;/a&gt;.</value>
   </data>
   <data name="InvitationTitle" xml:space="preserve">
     <value>欢迎!</value>

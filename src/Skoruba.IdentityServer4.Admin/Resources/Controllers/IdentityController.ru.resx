@@ -127,7 +127,7 @@
     <value>Приглашение отправлено!</value>
   </data>
   <data name="InvitationBody" xml:space="preserve">
-    <value>Завершить регистрацию &lt;a href='{0}'&gt;нажав здесь&lt;/a&gt;.</value>
+    <value>Завершить регистрацию для {0} &lt;a href='{1}'&gt;нажав здесь&lt;/a&gt;.</value>
   </data>
   <data name="InvitationTitle" xml:space="preserve">
     <value>желанный!</value>

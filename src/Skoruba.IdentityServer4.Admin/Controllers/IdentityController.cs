@@ -171,7 +171,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             {
                 var code = await _identityService.GenerateInvitationTokenAsync(user.Id.ToString());
                 var url = _rootConfiguration.AdminConfiguration.IdentityServerBaseUrl + "/Account/RegisterByInvitation?userId=" + user.Id.ToString() + "&code=" + code;
-                await _emailSender.SendEmailAsync(user.Email, _localizer["InvitationTitle"], _localizer["InvitationBody", HtmlEncoder.Default.Encode(url)]);
+                await _emailSender.SendEmailAsync(user.Email, _localizer["InvitationTitle"], string.Format(_localizer["InvitationBody"], user.UserName, HtmlEncoder.Default.Encode(url)));
 
                 SuccessNotification(_localizer["SuccessInvitationSent"], _localizer["SuccessTitle"]);
             }

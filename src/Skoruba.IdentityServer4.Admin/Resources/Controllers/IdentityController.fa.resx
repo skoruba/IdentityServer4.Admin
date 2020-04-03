@@ -127,7 +127,7 @@
     <value>دعوتنامه ارسال شد!</value>
   </data>
   <data name="InvitationBody" xml:space="preserve">
-    <value>&lt;a href='{0}'&gt;اینجا کلیک کنید&lt;/a&gt; ثبت نام توسط</value>
+    <value>&lt;a href='{1}'&gt;اینجا کلیک کنید&lt;/a&gt; ثبت نام برای {0} توسط</value>
   </data>
   <data name="InvitationTitle" xml:space="preserve">
     <value>خوش آمدی!</value>

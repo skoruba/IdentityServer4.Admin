@@ -127,7 +127,7 @@
     <value>Inbjudan skickad!</value>
   </data>
   <data name="InvitationBody" xml:space="preserve">
-    <value>Slutför registreringen senast &lt;a href='{0}'&gt;klicka här&lt;/a&gt;.</value>
+    <value>Slutför registreringen för {0} av &lt;a href='{1}'&gt;klicka här&lt;/a&gt;.</value>
   </data>
   <data name="InvitationTitle" xml:space="preserve">
     <value>Welcome!</value>

@@ -130,7 +130,7 @@
     <value>Invitation sent!</value>
   </data>
   <data name="InvitationBody" xml:space="preserve">
-    <value>Finish registration by &lt;a href='{0}'&gt;clicking here&lt;/a&gt;.</value>
+    <value>Finish registration as {0} by &lt;a href='{1}'&gt;clicking here&lt;/a&gt;.</value>
   </data>
   <data name="InvitationTitle" xml:space="preserve">
     <value>Welcome!</value>

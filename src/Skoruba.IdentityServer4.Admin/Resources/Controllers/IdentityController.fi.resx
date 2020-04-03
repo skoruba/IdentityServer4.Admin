@@ -130,7 +130,7 @@
     <value>Kutsu lähetetty!</value>
   </data>
   <data name="InvitationBody" xml:space="preserve">
-    <value>Viimeistele rekisteröinti &lt;a href='{0}'&gt;napsauttamalla tätä&lt;/a&gt;.</value>
+    <value>Viimeistele {0} rekisteröinti &lt;a href='{1}'&gt;napsauttamalla tätä&lt;/a&gt;.</value>
   </data>
   <data name="InvitationTitle" xml:space="preserve">
     <value>Tervetuloa!</value>
