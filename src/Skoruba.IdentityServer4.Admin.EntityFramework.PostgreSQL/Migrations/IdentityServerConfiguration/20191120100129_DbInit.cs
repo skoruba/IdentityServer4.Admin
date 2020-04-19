@@ -440,6 +440,21 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Migrations.Id
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "StandardClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ClaimType = table.Column<string>(maxLength: 200, nullable: false),
+                    LastUsedTimestamp = table.Column<DateTimeOffset>(nullable: true),
+                    UseCount = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StandardClaims", x => x.Id);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_ApiClaims_ApiResourceId",
                 table: "ApiClaims",
@@ -543,6 +558,12 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Migrations.Id
                 table: "IdentityResources",
                 column: "Name",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StandardClaims_ClaimType",
+                table: "StandardClaims",
+                column: "ClaimType",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -603,6 +624,9 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Migrations.Id
 
             migrationBuilder.DropTable(
                 name: "ApiResources");
+
+            migrationBuilder.DropTable(
+                name: "StandardClaims");
         }
     }
 }
