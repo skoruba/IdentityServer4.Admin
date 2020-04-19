@@ -122,7 +122,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 			var clientClaimFaker = new Faker<ClientClaimsDto>()
 				.StrictMode(false)
 				.RuleFor(o => o.ClientClaimId, id)
-				.RuleFor(o => o.Type, f => f.PickRandom(ClientConsts.GetStandardClaims()))
+				.RuleFor(o => o.Type, f => f.PickRandom(ClientMock.GetStandardClaims()))
 				.RuleFor(o => o.Value, f => Guid.NewGuid().ToString())
 				.RuleFor(o => o.ClientId, clientId);
 
