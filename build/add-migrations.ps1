@@ -12,6 +12,7 @@ $targetContexts = @{
     IdentityServerConfigurationDbContext  = "Migrations\IdentityServerConfiguration";
     IdentityServerPersistedGrantDbContext = "Migrations\IdentityServerGrants";
     AdminAuditLogDbContext                = "Migrations\AuditLogging";
+	IdentityServerDataProtectionDbContext = "Migrations\DataProtection";
 }
 
 #Initialize the db providers and it's respective projects
