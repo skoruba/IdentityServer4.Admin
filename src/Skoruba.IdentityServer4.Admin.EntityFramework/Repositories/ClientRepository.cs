@@ -100,15 +100,13 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
 
         public virtual async Task<List<string>> GetStandardClaimsAsync(string claim, int limit = 0)
         {
-            var filteredClaims = ClientConsts.GetStandardClaims()
-                .WhereIf(!string.IsNullOrWhiteSpace(claim), x => x.Contains(claim))
-                .TakeIf(x => x, limit > 0, limit)
-                .ToList();
-            if (limit == 0 || filteredClaims.Count < limit)
-            {
-                var usedClaims = await DbContext.ApiResourceClaims.Select(r => r.Type).WhereIf(!string.IsNullOrWhiteSpace(claim), x => x.Contains(claim)).Distinct().ToListAsync().ConfigureAwait(false);
-                filteredClaims = filteredClaims.Concat(usedClaims).Distinct().TakeIf(x => x, limit > 0, limit).ToList();
-            }
+            var filteredClaimsQuery = DbContext.StandardClaims
+                .WhereIf(!string.IsNullOrWhiteSpace(claim), x => x.ClaimType.Contains(claim))
+                .Select(x => x.ClaimType)
+                .TakeIf(x => x, limit > 0, limit);
+
+            var filteredClaims = await filteredClaimsQuery.ToListAsync().ConfigureAwait(false);
+
             return filteredClaims;
         }
 
