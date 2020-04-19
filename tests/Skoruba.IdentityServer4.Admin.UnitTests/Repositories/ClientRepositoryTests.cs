@@ -12,6 +12,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Xunit;
 using IdentityApiResource = IdentityServer4.Models.ApiResource;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
 {
@@ -773,11 +774,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         {
             using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
-                const string claimName = "test-claim";
-                var apiResource = new IdentityApiResource("test-api") { Enabled = true };
-                apiResource.UserClaims.Add(claimName);
+                await context.StandardClaims.AddRangeAsync(ClientMock.GetStandardClaims().Select(c => new StandardClaim { ClaimType = c }));
 
-                await context.AddAsync(apiResource.ToEntity());
                 await context.SaveChangesAsync();
 
                 var clientRepository = GetClientRepository(context);
@@ -788,8 +786,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 var standardClaims = await clientRepository.GetStandardClaimsAsync(randomClientClaim.Type);
                 standardClaims.Contains(randomClientClaim.Type).Should().Be(true);
 
-                standardClaims = await clientRepository.GetStandardClaimsAsync(claimName.Substring(0, 3), 5);
-                standardClaims.Contains(claimName).Should().BeTrue();
+                standardClaims = await clientRepository.GetStandardClaimsAsync(randomClientClaim.Type.Substring(0, 3), 5);
+                standardClaims.Contains(randomClientClaim.Type).Should().BeTrue();
             }
         }
 
