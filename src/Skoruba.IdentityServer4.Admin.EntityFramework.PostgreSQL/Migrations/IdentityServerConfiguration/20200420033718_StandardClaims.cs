@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Migrations.IdentityServerConfiguration
 {
-    public partial class StandardScopes : Migration
+    public partial class StandardClaims : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Migrations.Id
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimType = table.Column<string>(nullable: false),
                     LastUsedTimestamp = table.Column<DateTimeOffset>(nullable: true),
                     UseCount = table.Column<long>(nullable: false)
                 },

@@ -10,8 +10,8 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Migrations.IdentityServerConfiguration
 {
     [DbContext(typeof(IdentityServerConfigurationDbContext))]
-    [Migration("20200420033718_StandardScopes")]
-    partial class StandardScopes
+    [Migration("20200420033718_StandardClaims")]
+    partial class StandardClaims
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
