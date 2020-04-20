@@ -75,5 +75,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
 	    Task<int> DeleteClientPropertyAsync(ClientProperty clientProperty);
 
 	    Task<int> SaveAllChangesAsync();
+
+        bool AutoSaveChanges { get; set; }
 	}
 }

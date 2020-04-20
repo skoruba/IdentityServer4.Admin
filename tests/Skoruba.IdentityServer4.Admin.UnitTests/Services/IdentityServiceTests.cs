@@ -357,7 +357,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 //Assert new user claim
                 userClaimDto.ShouldBeEquivalentTo(newUserClaim);
 
-                await identityService.DeleteUserClaimsAsync(userClaimDto);
+                await identityService.DeleteUserClaimAsync(userClaimDto);
 
                 //Get deleted user claim
                 var deletedClaim = await context.UserClaims.Where(x => x.ClaimType == userClaimDto.ClaimType && x.ClaimValue == userClaimDto.ClaimValue).SingleOrDefaultAsync();
@@ -600,7 +600,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 //Assert new role
                 roleClaimDto.ShouldBeEquivalentTo(newRoleClaimDto, options => options.Excluding(o => o.RoleName));
 
-                await identityService.DeleteRoleClaimsAsync(roleClaimDto);
+                await identityService.DeleteRoleClaimAsync(roleClaimDto);
 
                 var roleClaimToDelete = await context.RoleClaims.Where(x => x.ClaimType == roleClaimDto.ClaimType && x.ClaimValue == roleClaimDto.ClaimValue).SingleOrDefaultAsync();
 

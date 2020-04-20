@@ -37,6 +37,10 @@ namespace Skoruba.IdentityServer4.Admin.Api.Mappers
             CreateMap<RoleClaimsApiDto<TRoleDtoKey>, TRoleClaimsDto>(MemberList.Source);
             CreateMap<RoleClaimApiDto<TRoleDtoKey>, TRoleClaimDto>(MemberList.Destination);
             CreateMap<RoleClaimApiDto<TRoleDtoKey>, TRoleClaimsDto>(MemberList.Destination);
+
+            CreateMap<TRoleClaimsDto, RoleClaimsApiDto<TRoleDtoKey>>(MemberList.Source);
+            CreateMap<TRoleClaimDto, RoleClaimApiDto<TRoleDtoKey>>(MemberList.Destination);
+            CreateMap<TRoleClaimsDto, RoleClaimApiDto<TRoleDtoKey>>(MemberList.Destination);
         }
     }
 }

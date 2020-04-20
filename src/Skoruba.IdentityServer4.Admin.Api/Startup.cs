@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -40,6 +41,10 @@ namespace Skoruba.IdentityServer4.Admin.Api
 
             // Add DbContexts
             RegisterDbContexts(services);
+
+            services.AddDataProtection()
+                .SetApplicationName("Skoruba.IdentityServer4")
+                .PersistKeysToDbContext<IdentityServerDataProtectionDbContext>();
 
             services.AddScoped<ControllerExceptionFilterAttribute>();
             services.AddScoped<IApiErrorResources, ApiErrorResources>();
