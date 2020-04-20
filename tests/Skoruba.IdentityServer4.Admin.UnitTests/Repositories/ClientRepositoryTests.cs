@@ -770,7 +770,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
         }
 
         [Fact]
-        public async Task GetStandardClaims()
+        public async Task GetStandardClaimsAsync()
         {
             using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
