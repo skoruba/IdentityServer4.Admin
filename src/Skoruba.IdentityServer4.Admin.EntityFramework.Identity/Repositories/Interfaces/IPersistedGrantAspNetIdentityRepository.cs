@@ -15,5 +15,6 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.In
         Task<bool> ExistsPersistedGrantsAsync(string subjectId);
         Task<bool> ExistsPersistedGrantAsync(string key);
         Task<int> SaveAllChangesAsync();
-	}
+        bool AutoSaveChanges { get; set; }
+    }
 }

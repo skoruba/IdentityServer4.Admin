@@ -127,25 +127,25 @@
     <value>By</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Fuldt navn</value>
+    <value>Fulde navn</value>
   </data>
   <data name="PhoneNumber" xml:space="preserve">
     <value>Telefonnummer</value>
   </data>
   <data name="PostalCode" xml:space="preserve">
-    <value>Post adresse</value>
+    <value>Postnummer</value>
   </data>
   <data name="Profile" xml:space="preserve">
     <value>Profil URL</value>
   </data>
   <data name="Region" xml:space="preserve">
-    <value>Region</value>
+    <value>Landsdel</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Gem</value>
   </data>
   <data name="SendVerificationEmail" xml:space="preserve">
-    <value>Send bekræftelses email</value>
+    <value>Send bekræftelsesemail</value>
   </data>
   <data name="StreetAddress" xml:space="preserve">
     <value>Adresse</value>

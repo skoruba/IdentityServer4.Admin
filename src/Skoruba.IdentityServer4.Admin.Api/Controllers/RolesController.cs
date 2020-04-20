@@ -158,7 +158,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
             var roleDto = new TRoleClaimsDto { ClaimId = claimId, RoleId = id };
 
             await _identityService.GetRoleClaimAsync(roleDto.RoleId.ToString(), roleDto.ClaimId);
-            await _identityService.DeleteRoleClaimsAsync(roleDto);
+            await _identityService.DeleteRoleClaimAsync(roleDto);
 
             return Ok();
         }

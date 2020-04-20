@@ -273,7 +273,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UserClaimsDelete(TUserClaimsDto claim)
         {
-            await _identityService.DeleteUserClaimsAsync(claim);
+            await _identityService.DeleteUserClaimAsync(claim);
             SuccessNotification(_localizer["SuccessDeleteUserClaims"], _localizer["SuccessTitle"]);
 
             return RedirectToAction(nameof(UserClaims), new { Id = claim.UserId });
@@ -388,7 +388,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RoleClaimsDelete(TRoleClaimsDto claim)
         {
-            await _identityService.DeleteRoleClaimsAsync(claim);
+            await _identityService.DeleteRoleClaimAsync(claim);
             SuccessNotification(_localizer["SuccessDeleteRoleClaims"], _localizer["SuccessTitle"]);
 
             return RedirectToAction(nameof(RoleClaims), new { Id = claim.RoleId });

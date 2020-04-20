@@ -41,8 +41,10 @@ namespace Skoruba.IdentityServer4.Admin
             // Add DbContexts for Asp.Net Core Identity, Logging and IdentityServer - Configuration store and Operational store
             RegisterDbContexts(services);
 
-            // Save data protection keys to db
-            services.AddDataProtection().PersistKeysToDbContext<IdentityServerDataProtectionDbContext>();
+            // Save data protection keys to db, using a common application name shared between Admin and STS
+            services.AddDataProtection()
+                .SetApplicationName("Skoruba.IdentityServer4")
+                .PersistKeysToDbContext<IdentityServerDataProtectionDbContext>();
 
             // Add Asp.Net Core Identity Configuration and OpenIdConnect auth as well
             RegisterAuthentication(services);
