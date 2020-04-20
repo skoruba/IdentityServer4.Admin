@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Entities;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
@@ -47,7 +48,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
 
 	    List<SelectItem> GetSecretTypes();
 
-	    Task<List<string>> GetStandardClaimsAsync(string claim, int limit = 0);
+	    Task<List<string>> GetStandardClaimsAsync(string claim, int limit = 0, bool sortAscending = true, string sortBy = nameof(StandardClaim.ClaimType));
 
         Task<int> AddClientSecretAsync(int clientId, ClientSecret clientSecret);
 

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
 {
@@ -41,7 +42,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
 
         List<SelectItemDto> GetSecretTypes();
 
-        Task<List<string>> GetStandardClaimsAsync(string claim, int limit = 0);
+        Task<List<string>> GetStandardClaimsAsync(string claim, int limit = 0, bool sortAscending = true, string sortBy = nameof(StandardClaim.ClaimType));
 
         Task<int> AddClientSecretAsync(ClientSecretsDto clientSecret);
 

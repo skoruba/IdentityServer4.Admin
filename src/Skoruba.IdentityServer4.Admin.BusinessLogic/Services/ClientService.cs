@@ -13,6 +13,7 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.ExceptionHandling;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
 
@@ -304,7 +305,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return protocolTypes;
         }
 
-        public virtual async Task<List<string>> GetStandardClaimsAsync(string claim, int limit = 0)
+        public virtual async Task<List<string>> GetStandardClaimsAsync(string claim, int limit = 0, bool sortAscending = true, string sortBy = nameof(StandardClaim.ClaimType))
         {
             var standardClaims = await ClientRepository.GetStandardClaimsAsync(claim, limit);
 
