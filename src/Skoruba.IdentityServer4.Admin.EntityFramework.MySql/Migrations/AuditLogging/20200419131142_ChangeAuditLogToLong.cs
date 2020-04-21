@@ -7,6 +7,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.AuditLo
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropPrimaryKey("PK_AuditLog", "AuditLog");
+
             migrationBuilder.AlterColumn<long>(
                 name: "Id",
                 table: "AuditLog",
@@ -15,10 +17,14 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.AuditLo
                 oldType: "int")
                 .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 .OldAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
+
+            migrationBuilder.AddPrimaryKey("PK_AuditLog", "AuditLog", "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropPrimaryKey("PK_AuditLog", "AuditLog");
+
             migrationBuilder.AlterColumn<int>(
                 name: "Id",
                 table: "AuditLog",
@@ -27,6 +33,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.AuditLo
                 oldClrType: typeof(long))
                 .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 .OldAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
+
+            migrationBuilder.AddPrimaryKey("PK_AuditLog", "AuditLog", "Id");
         }
     }
 }
