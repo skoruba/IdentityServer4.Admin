@@ -32,7 +32,7 @@ namespace Skoruba.IdentityServer4.Admin
                 var host = CreateHostBuilder(args).Build();
 
                 // Uncomment this to seed upon startup, alternatively pass in `dotnet run /seed` to seed using CLI
-                await DbMigrationHelpers.EnsureSeedData<IdentityServerConfigurationDbContext, AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext, UserIdentity, UserIdentityRole>(host);
+                // await DbMigrationHelpers.EnsureSeedData<IdentityServerConfigurationDbContext, AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext, UserIdentity, UserIdentityRole>(host);
                 if (seed)
                 {
                     await DbMigrationHelpers
@@ -61,7 +61,9 @@ namespace Skoruba.IdentityServer4.Admin
             var configurationBuilder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile("serilog.json", optional: true, reloadOnChange: true);
+                .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("serilog.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"serilog.{environment}.json", optional: true, reloadOnChange: true);
 
             if (isDevelopment)
             {
@@ -82,7 +84,13 @@ namespace Skoruba.IdentityServer4.Admin
                      configApp.AddJsonFile("identitydata.json", optional: true, reloadOnChange: true);
                      configApp.AddJsonFile("identityserverdata.json", optional: true, reloadOnChange: true);
 
-                     if (hostContext.HostingEnvironment.IsDevelopment())
+                     var env = hostContext.HostingEnvironment;
+
+                     configApp.AddJsonFile($"serilog.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                     configApp.AddJsonFile($"identitydata.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                     configApp.AddJsonFile($"identityserverdata.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
+                     if (env.IsDevelopment())
                      {
                          configApp.AddUserSecrets<Startup>();
                      }

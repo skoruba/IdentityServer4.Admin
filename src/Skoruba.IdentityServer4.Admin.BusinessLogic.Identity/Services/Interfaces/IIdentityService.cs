@@ -6,11 +6,11 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfaces
 {
-    public interface IIdentityService<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, 
+    public interface IIdentityService<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole,
         TUserLogin, TRoleClaim, TUserToken, 
         TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
         TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>        
-        where TUserDto : UserDto<TUserDtoKey>
+        where TUserDto : UserDto<TKey>
         where TUser : IdentityUser<TKey>
         where TRole : IdentityRole<TKey>
         where TKey : IEquatable<TKey>
@@ -19,15 +19,15 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfac
         where TUserLogin : IdentityUserLogin<TKey>
         where TRoleClaim : IdentityRoleClaim<TKey>
         where TUserToken : IdentityUserToken<TKey>
-        where TRoleDto : RoleDto<TRoleDtoKey>
-        where TUsersDto : UsersDto<TUserDto, TUserDtoKey>
-        where TRolesDto : RolesDto<TRoleDto, TRoleDtoKey>
-        where TUserRolesDto : UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey>
-        where TUserClaimsDto: UserClaimsDto<TUserDtoKey>
-        where TUserProviderDto : UserProviderDto<TUserDtoKey>
-        where TUserProvidersDto : UserProvidersDto<TUserDtoKey>
-        where TUserChangePasswordDto: UserChangePasswordDto<TUserDtoKey>
-        where TRoleClaimsDto : RoleClaimsDto<TRoleDtoKey>
+        where TRoleDto : RoleDto<TKey>
+        where TUsersDto : UsersDto<TUserDto, TKey>
+        where TRolesDto : RolesDto<TRoleDto, TKey>
+        where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
+        where TUserClaimsDto: UserClaimsDto<TKey>
+        where TUserProviderDto : UserProviderDto<TKey>
+        where TUserProvidersDto : UserProvidersDto<TKey>
+        where TUserChangePasswordDto: UserChangePasswordDto<TKey>
+        where TRoleClaimsDto : RoleClaimsDto<TKey>
     {
         Task<bool> ExistsUserAsync(string userId);
 
@@ -57,7 +57,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfac
 
         Task<IdentityResult> CreateUserRoleAsync(TUserRolesDto role);
 
-        Task<TUserRolesDto> BuildUserRolesViewModel(TUserDtoKey id, int? page);
+        Task<TUserRolesDto> BuildUserRolesViewModel(TKey id, int? page);
 
         Task<TUserRolesDto> GetUserRolesAsync(string userId, int page = 1,
             int pageSize = 10);
@@ -71,11 +71,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfac
 
         Task<IdentityResult> CreateUserClaimsAsync(TUserClaimsDto claimsDto);
 
-        Task<int> DeleteUserClaimsAsync(TUserClaimsDto claim);
+        Task<IdentityResult> DeleteUserClaimAsync(TUserClaimsDto claim);
 
         Task<TUserProvidersDto> GetUserProvidersAsync(string userId);
 
-        TUserDtoKey ConvertUserDtoKeyFromString(string id);
+        TKey ConvertToKeyFromString(string id);
 
         Task<IdentityResult> DeleteUserProvidersAsync(TUserProviderDto provider);
 
@@ -91,7 +91,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfac
 
 		Task<TRoleClaimsDto> GetRoleClaimAsync(string roleId, int claimId);
 
-        Task<int> DeleteRoleClaimsAsync(TRoleClaimsDto role);
+        Task<IdentityResult> DeleteRoleClaimAsync(TRoleClaimsDto role);
 
         Task<IdentityResult> DeleteRoleAsync(TRoleDto role);
     }

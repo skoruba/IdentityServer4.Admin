@@ -40,7 +40,7 @@
         <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
         <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
         <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.1.3" />
-        <PackageReference Include="Skoruba.AuditLogging.EntityFramework" Version="1.0.0-beta7" />
+        <PackageReference Include="Skoruba.AuditLogging.EntityFramework" Version="1.0.0-beta8" />
     </ItemGroup>
 
     <ItemGroup>
