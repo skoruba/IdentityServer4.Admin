@@ -9,4 +9,8 @@
     <PackageReference Include="Sendgrid" Version="9.12.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.csproj" />
+  </ItemGroup>
+
 </Project>

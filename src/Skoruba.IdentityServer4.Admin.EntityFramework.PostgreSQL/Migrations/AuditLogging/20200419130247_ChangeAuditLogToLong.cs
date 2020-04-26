@@ -7,6 +7,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Migrations.Au
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropPrimaryKey("PK_AuditLog", "AuditLog");
+
             migrationBuilder.AlterColumn<long>(
                 name: "Id",
                 table: "AuditLog",
@@ -15,10 +17,14 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Migrations.Au
                 oldType: "integer")
                 .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                 .OldAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+            migrationBuilder.AddPrimaryKey("PK_AuditLog", "AuditLog", "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropPrimaryKey("PK_AuditLog", "AuditLog");
+
             migrationBuilder.AlterColumn<int>(
                 name: "Id",
                 table: "AuditLog",
@@ -27,6 +33,9 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Migrations.Au
                 oldClrType: typeof(long))
                 .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                 .OldAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+
+            migrationBuilder.AddPrimaryKey("PK_AuditLog", "AuditLog", "Id");
         }
     }
 }
