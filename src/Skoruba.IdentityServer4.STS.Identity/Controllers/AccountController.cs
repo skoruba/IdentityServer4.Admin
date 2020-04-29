@@ -165,7 +165,15 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                         throw new Exception("invalid return URL");
                     }
 
-                    if (result.RequiresTwoFactor)
+                    if (result.IsNotAllowed)
+                    {
+                        if (!user.EmailConfirmed)
+                        {
+                            return RedirectToAction(nameof(RequireEmailConfirmation), new { id = user.Id });
+                        }
+                    }
+
+                   if (result.RequiresTwoFactor)
                     {
                         return RedirectToAction(nameof(LoginWith2fa), new { model.ReturnUrl, RememberMe = model.RememberLogin });
                     }
@@ -253,6 +261,27 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             }
             var result = await _userManager.ConfirmEmailAsync(user, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> RequireEmailConfirmation(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == default(TUser))
+            {
+                return View("Error");
+            }
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, HttpContext.Request.Scheme);
+
+            await _emailSender.SendEmailAsync(user.Email, _localizer["ConfirmEmailTitle"], _localizer["ConfirmEmailBody", HtmlEncoder.Default.Encode(callbackUrl)]);
+            if (ViewBag.FromRegister !=null)
+            {
+                ViewBag.FromRegister = true;
+            }
+            ViewBag.ResendLinkText = @$"Click <a href=""/Account/RequireEmailConfirmation/{id}"" >here</a> to Resend code?";
+            return View();
         }
 
         [HttpGet]
@@ -579,13 +608,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
-                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, HttpContext.Request.Scheme);
-
-                await _emailSender.SendEmailAsync(model.Email, _localizer["ConfirmEmailTitle"], _localizer["ConfirmEmailBody", HtmlEncoder.Default.Encode(callbackUrl)]);
-                await _signInManager.SignInAsync(user, isPersistent: false);
-
-                return RedirectToLocal(returnUrl);
+                ViewBag.FromRegister = true;
+                return RedirectToAction(nameof(RequireEmailConfirmation), new { id = (await _userManager.FindByEmailAsync(model.Email)).Id });
             }
 
             AddErrors(result);
@@ -609,7 +633,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             return await Register(registerModel, returnUrl);
         }
-        
+
 
         /*****************************************/
         /* helper APIs for the AccountController */

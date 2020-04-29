@@ -1,0 +1,25 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = Localizer["Title"];
+}
+
+<h1>@ViewData["Title"]</h1>
+@if (ViewBag.FromRegister != null)
+{
+    <div>
+        <p>
+            @Localizer["ConfirmAccountMessage"]
+        </p>
+    </div>
+}
+<div>
+    <p>
+        @Localizer["RequireConfirmEmailMessage"]
+    </p>
+</div>
+<div>
+    <p>
+        @Html.Raw(ViewBag.ResendLinkText)
+    </p>
+</div>
