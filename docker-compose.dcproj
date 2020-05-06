@@ -6,7 +6,7 @@
     <ProjectGuid>f817047f-018d-4f93-bda5-58602073b634</ProjectGuid>
     <DockerLaunchAction>None</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
-    <DockerServiceName>skoruba.identityserver4.admin</DockerServiceName>
+    <DockerServiceName>identityserver4.admin</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.vs.debug.yml">
