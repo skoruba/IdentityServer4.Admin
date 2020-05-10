@@ -616,4 +616,8 @@ Any feedback is welcome - feel free to create an issue or send me an email - [ja
 
 If you like my work, you can support me by donation. 👍 
 
+### Patreon
+https://www.patreon.com/skoruba
+
+### Paypal
 https://www.paypal.me/skoruba
