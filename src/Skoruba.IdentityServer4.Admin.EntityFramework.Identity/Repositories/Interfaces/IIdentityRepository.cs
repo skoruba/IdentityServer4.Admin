@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -6,15 +6,15 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.Interfaces
 {
-    public interface IIdentityRepository<TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
-        where TUser : IdentityUser<TKey>
-        where TRole : IdentityRole<TKey>
-        where TKey : IEquatable<TKey>
-        where TUserClaim : IdentityUserClaim<TKey>
-        where TUserRole : IdentityUserRole<TKey>
-        where TUserLogin : IdentityUserLogin<TKey>
-        where TRoleClaim : IdentityRoleClaim<TKey>
-        where TUserToken : IdentityUserToken<TKey>
+	public interface IIdentityRepository<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
+	    where TUser : IdentityUser<TKey>
+	    where TRole : IdentityRole<TKey>
+	    where TKey : IEquatable<TKey>
+	    where TUserClaim : IdentityUserClaim<TKey>
+	    where TUserRole : IdentityUserRole<TKey>
+	    where TUserLogin : IdentityUserLogin<TKey>
+	    where TRoleClaim : IdentityRoleClaim<TKey>
+	    where TUserToken : IdentityUserToken<TKey>
     {
         Task<bool> ExistsUserAsync(string userId);
 

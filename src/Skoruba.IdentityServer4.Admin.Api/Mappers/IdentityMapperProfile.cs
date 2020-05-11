@@ -5,42 +5,42 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.Api.Mappers
 {
-    public class IdentityMapperProfile<TRoleDto, TRoleDtoKey, TUserRolesDto, TUserDtoKey, TUserClaimsDto, TUserClaimDto, TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimDto, TRoleClaimsDto> : Profile
-        where TUserClaimsDto : UserClaimsDto<TUserDtoKey>
-        where TUserClaimDto : UserClaimDto<TUserDtoKey>
-        where TRoleDto : RoleDto<TRoleDtoKey>
-        where TUserRolesDto : UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey>
-        where TUserProviderDto : UserProviderDto<TUserDtoKey>
-        where TUserProvidersDto : UserProvidersDto<TUserDtoKey>
-        where TUserChangePasswordDto : UserChangePasswordDto<TUserDtoKey>
-        where TRoleClaimsDto : RoleClaimsDto<TRoleDtoKey>
-        where TRoleClaimDto : RoleClaimDto<TRoleDtoKey>
+    public class IdentityMapperProfile<TRoleDto, TUserRolesDto, TKey, TUserClaimsDto, TUserClaimDto, TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimDto, TRoleClaimsDto> : Profile
+        where TUserClaimsDto : UserClaimsDto<TKey>
+        where TUserClaimDto : UserClaimDto<TKey>
+        where TRoleDto : RoleDto<TKey>
+        where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
+        where TUserProviderDto : UserProviderDto<TKey>
+        where TUserProvidersDto : UserProvidersDto<TKey>
+        where TUserChangePasswordDto : UserChangePasswordDto<TKey>
+        where TRoleClaimsDto : RoleClaimsDto<TKey>
+        where TRoleClaimDto : RoleClaimDto<TKey>
     {
         public IdentityMapperProfile()
         {
             // entity to model
-            CreateMap<TUserClaimsDto, UserClaimsApiDto<TUserDtoKey>>(MemberList.Destination);
-            CreateMap<TUserClaimsDto, UserClaimApiDto<TUserDtoKey>>(MemberList.Destination);
+            CreateMap<TUserClaimsDto, UserClaimsApiDto<TKey>>(MemberList.Destination);
+            CreateMap<TUserClaimsDto, UserClaimApiDto<TKey>>(MemberList.Destination);
 
-            CreateMap<UserClaimApiDto<TUserDtoKey>, TUserClaimsDto>(MemberList.Source);
-            CreateMap<TUserClaimDto, UserClaimApiDto<TUserDtoKey>>(MemberList.Destination);
+            CreateMap<UserClaimApiDto<TKey>, TUserClaimsDto>(MemberList.Source);
+            CreateMap<TUserClaimDto, UserClaimApiDto<TKey>>(MemberList.Destination);
 
             CreateMap<TUserRolesDto, UserRolesApiDto<TRoleDto>>(MemberList.Destination);
-            CreateMap<UserRoleApiDto<TUserDtoKey, TRoleDtoKey>, TUserRolesDto>(MemberList.Destination);
+            CreateMap<UserRoleApiDto<TKey>, TUserRolesDto>(MemberList.Destination);
 
-            CreateMap<TUserProviderDto, UserProviderApiDto<TUserDtoKey>>(MemberList.Destination);
-            CreateMap<TUserProvidersDto, UserProvidersApiDto<TUserDtoKey>>(MemberList.Destination);
-            CreateMap<UserProviderDeleteApiDto<TUserDtoKey>, TUserProviderDto>(MemberList.Source);
+            CreateMap<TUserProviderDto, UserProviderApiDto<TKey>>(MemberList.Destination);
+            CreateMap<TUserProvidersDto, UserProvidersApiDto<TKey>>(MemberList.Destination);
+            CreateMap<UserProviderDeleteApiDto<TKey>, TUserProviderDto>(MemberList.Source);
 
-            CreateMap<UserChangePasswordApiDto<TUserDtoKey>, TUserChangePasswordDto>(MemberList.Destination);
+            CreateMap<UserChangePasswordApiDto<TKey>, TUserChangePasswordDto>(MemberList.Destination);
 
-            CreateMap<RoleClaimsApiDto<TRoleDtoKey>, TRoleClaimsDto>(MemberList.Source);
-            CreateMap<RoleClaimApiDto<TRoleDtoKey>, TRoleClaimDto>(MemberList.Destination);
-            CreateMap<RoleClaimApiDto<TRoleDtoKey>, TRoleClaimsDto>(MemberList.Destination);
+            CreateMap<RoleClaimsApiDto<TKey>, TRoleClaimsDto>(MemberList.Source);
+            CreateMap<RoleClaimApiDto<TKey>, TRoleClaimDto>(MemberList.Destination);
+            CreateMap<RoleClaimApiDto<TKey>, TRoleClaimsDto>(MemberList.Destination);
 
-            CreateMap<TRoleClaimsDto, RoleClaimsApiDto<TRoleDtoKey>>(MemberList.Source);
-            CreateMap<TRoleClaimDto, RoleClaimApiDto<TRoleDtoKey>>(MemberList.Destination);
-            CreateMap<TRoleClaimsDto, RoleClaimApiDto<TRoleDtoKey>>(MemberList.Destination);
+            CreateMap<TRoleClaimsDto, RoleClaimsApiDto<TKey>>(MemberList.Source);
+            CreateMap<TRoleClaimDto, RoleClaimApiDto<TKey>>(MemberList.Destination);
+            CreateMap<TRoleClaimsDto, RoleClaimApiDto<TKey>>(MemberList.Destination);
         }
     }
 }
