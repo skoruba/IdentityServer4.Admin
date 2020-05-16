@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Info" xml:space="preserve">
-    <value>Hvis du mister din enhed og ikke har gendannelseskoder, mister du adgang til din konto.</value>
+    <value>Hvis du mister din enhed og ikke har dine gendannelseskoder, mister du adgang til din konto.</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
     <value>Gem disse koder et sikkert sted.</value>

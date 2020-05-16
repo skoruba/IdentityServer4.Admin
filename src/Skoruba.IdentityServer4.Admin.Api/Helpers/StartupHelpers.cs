@@ -3,6 +3,7 @@ using IdentityModel;
 using IdentityServer4.AccessTokenValidation;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -78,13 +79,13 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
         /// Register services for MVC
         /// </summary>
         /// <param name="services"></param>
-        public static void AddMvcServices<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey,
+        public static void AddMvcServices<TUserDto, TRoleDto,
             TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
             TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>(
             this IServiceCollection services)
-            where TUserDto : UserDto<TUserDtoKey>, new()
-            where TRoleDto : RoleDto<TRoleDtoKey>, new()
+            where TUserDto : UserDto<TKey>, new()
+            where TRoleDto : RoleDto<TKey>, new()
             where TUser : IdentityUser<TKey>
             where TRole : IdentityRole<TKey>
             where TKey : IEquatable<TKey>
@@ -93,17 +94,19 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
             where TUserLogin : IdentityUserLogin<TKey>
             where TRoleClaim : IdentityRoleClaim<TKey>
             where TUserToken : IdentityUserToken<TKey>
-            where TRoleDtoKey : IEquatable<TRoleDtoKey>
-            where TUserDtoKey : IEquatable<TUserDtoKey>
-            where TUsersDto : UsersDto<TUserDto, TUserDtoKey>
-            where TRolesDto : RolesDto<TRoleDto, TRoleDtoKey>
-            where TUserRolesDto : UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey>
-            where TUserClaimsDto : UserClaimsDto<TUserDtoKey>
-            where TUserProviderDto : UserProviderDto<TUserDtoKey>
-            where TUserProvidersDto : UserProvidersDto<TUserDtoKey>
-            where TUserChangePasswordDto : UserChangePasswordDto<TUserDtoKey>
-            where TRoleClaimsDto : RoleClaimsDto<TRoleDtoKey>
+
+
+            where TUsersDto : UsersDto<TUserDto, TKey>
+            where TRolesDto : RolesDto<TRoleDto, TKey>
+            where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
+            where TUserClaimsDto : UserClaimsDto<TKey>
+            where TUserProviderDto : UserProviderDto<TKey>
+            where TUserProvidersDto : UserProvidersDto<TKey>
+            where TUserChangePasswordDto : UserChangePasswordDto<TKey>
+            where TRoleClaimsDto : RoleClaimsDto<TKey>
         {
+            services.AddLocalization(opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; });
+
             services.TryAddTransient(typeof(IGenericControllerLocalizer<>), typeof(GenericControllerLocalizer<>));
 
             services.AddControllersWithViews(o => { o.Conventions.Add(new GenericControllerRouteConvention()); })
@@ -111,8 +114,8 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                 .ConfigureApplicationPartManager(m =>
                 {
                     m.FeatureProviders.Add(
-                        new GenericTypeControllerFeatureProvider<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey,
-                            TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
+                        new GenericTypeControllerFeatureProvider<TUserDto, TRoleDto,
+                            TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
                             TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>());
                 });
@@ -130,12 +133,13 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
         /// <param name="services"></param>
         /// <param name="configuration"></param>
         public static void AddDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext,
-            TLogDbContext, TAuditLoggingDbContext>(this IServiceCollection services, IConfiguration configuration)
+            TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(this IServiceCollection services, IConfiguration configuration)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
             where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
+            where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
         {
             var databaseProvider = configuration.GetSection(nameof(DatabaseProviderConfiguration)).Get<DatabaseProviderConfiguration>();
 
@@ -148,13 +152,13 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
             switch (databaseProvider.ProviderType)
             {
                 case DatabaseProviderType.SqlServer:
-                    services.RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString, errorLoggingConnectionString, auditLoggingConnectionString);
+                    services.RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString, errorLoggingConnectionString, auditLoggingConnectionString);
                     break;
                 case DatabaseProviderType.PostgreSQL:
-                    services.RegisterNpgSqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString, errorLoggingConnectionString, auditLoggingConnectionString);
+                    services.RegisterNpgSqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString, errorLoggingConnectionString, auditLoggingConnectionString);
                     break;
                 case DatabaseProviderType.MySql:
-                    services.RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString, errorLoggingConnectionString, auditLoggingConnectionString);
+                    services.RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString, errorLoggingConnectionString, auditLoggingConnectionString);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(databaseProvider.ProviderType), $@"The value needs to be one of {string.Join(", ", Enum.GetNames(typeof(DatabaseProviderType)))}.");
@@ -299,23 +303,23 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                     case DatabaseProviderType.PostgreSQL:
                         healthChecksBuilder
                             .AddNpgSql(configurationDbConnectionString, name: "ConfigurationDb",
-                                healthQuery: $"SELECT * FROM {configurationTableName} LIMIT 1")
+                                healthQuery: $"SELECT * FROM \"{configurationTableName}\" LIMIT 1")
                             .AddNpgSql(persistedGrantsDbConnectionString, name: "PersistentGrantsDb",
-                                healthQuery: $"SELECT * FROM {persistedGrantTableName} LIMIT 1")
+                                healthQuery: $"SELECT * FROM \"{persistedGrantTableName}\" LIMIT 1")
                             .AddNpgSql(identityDbConnectionString, name: "IdentityDb",
-                                healthQuery: $"SELECT * FROM {identityTableName} LIMIT 1")
+                                healthQuery: $"SELECT * FROM \"{identityTableName}\" LIMIT 1")
                             .AddNpgSql(logDbConnectionString, name: "LogDb",
-                                healthQuery: $"SELECT * FROM {logTableName} LIMIT 1")
+                                healthQuery: $"SELECT * FROM \"{logTableName}\" LIMIT 1")
                             .AddNpgSql(auditLogDbConnectionString, name: "AuditLogDb",
-                                healthQuery: $"SELECT * FROM {auditLogTableName}  LIMIT 1");
+                                healthQuery: $"SELECT * FROM \"{auditLogTableName}\"  LIMIT 1");
                         break;
                     case DatabaseProviderType.MySql:
                         healthChecksBuilder
                             .AddMySql(configurationDbConnectionString, name: "ConfigurationDb")
                             .AddMySql(persistedGrantsDbConnectionString, name: "PersistentGrantsDb")
                             .AddMySql(identityDbConnectionString, name: "IdentityDb")
-                            .AddMySql(logDbConnectionString, name: "PersistentGrantsDb")
-                            .AddMySql(auditLogDbConnectionString, name: "IdentityDb");
+                            .AddMySql(logDbConnectionString, name: "LogDb")
+                            .AddMySql(auditLogDbConnectionString, name: "AuditLogDb");
                         break;
                     default:
                         throw new NotImplementedException($"Health checks not defined for database provider {databaseProvider.ProviderType}");

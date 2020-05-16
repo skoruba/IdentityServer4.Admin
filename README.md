@@ -558,6 +558,10 @@ It is possible to define the configuration according the client type - by defaul
 
 - [ ] Create a project template using dotnet CLI - `dotnet new template`
   - [ ] Second template: The administration of the IdentityServer4 (without Asp.Net Core Identity) ([#79](https://github.com/skoruba/IdentityServer4.Admin/issues/79))
+- [ ] Simplify Admin Identity middleware (#430)
+- [ ] Connect Admin Api to the Admin UI (#478)
+- [ ] Add windows authentication (#479)
+
 
 ### Future:
 

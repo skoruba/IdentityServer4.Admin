@@ -12,6 +12,7 @@ $targetContexts = @{
     IdentityServerConfigurationDbContext  = "Migrations\IdentityServerConfiguration";
     IdentityServerPersistedGrantDbContext = "Migrations\IdentityServerGrants";
     AdminAuditLogDbContext                = "Migrations\AuditLogging";
+	IdentityServerDataProtectionDbContext = "Migrations\DataProtection";
 }
 
 #Initialize the db providers and it's respective projects
@@ -24,7 +25,7 @@ $dpProviders = @{
 #Fix issue when the tools is not installed and the nuget package does not work see https://github.com/MicrosoftDocs/azure-docs/issues/40048
 Write-Host "Updating donet ef tools"
 $env:Path += "	% USERPROFILE % \.dotnet\tools";
-dotnet tool update --global dotnet-ef --version 3.1.0 
+dotnet tool update --global dotnet-ef
 
 Write-Host "Start migrate projects"
 foreach ($provider in $dpProviders.Keys) {
