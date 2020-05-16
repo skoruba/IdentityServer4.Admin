@@ -224,7 +224,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 			var clientClaimFaker = new Faker<ClientClaim>()
 				.StrictMode(false)
 				.RuleFor(o => o.Id, id)
-				.RuleFor(o => o.Type, f => f.PickRandom(ClientConsts.GetStandardClaims()))
+				.RuleFor(o => o.Type, f => f.PickRandom(ClientMock.GetStandardClaims()))
 				.RuleFor(o => o.Value, f => Guid.NewGuid().ToString());
 
 			return clientClaimFaker;
@@ -240,5 +240,30 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 
 			return clientPropertyFaker;
 		}
-	}
+
+        public static List<string> GetStandardClaims()
+        {
+            //http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
+            var standardClaims = new List<string>
+            {
+                "name",
+                "given_name",
+                "family_name",
+                "middle_name",
+                "nickname",
+                "preferred_username",
+                "profile",
+                "picture",
+                "website",
+                "gender",
+                "birthdate",
+                "zoneinfo",
+                "locale",
+                "address",
+                "updated_at"
+            };
+
+            return standardClaims;
+        }
+    }
 }
