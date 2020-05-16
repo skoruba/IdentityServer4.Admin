@@ -13,6 +13,7 @@ using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using System;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Identity;
 
 namespace Skoruba.IdentityServer4.STS.Identity
 {
@@ -43,7 +44,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
             services.AddEmailSenders(Configuration);
 
             // Add services for authentication, including Identity model and external providers
-            RegisterAuthentication(services);
+            RegisterAuthentication<UserIdentity, string>(services);
 
             // Add HSTS options
             RegisterHstsOptions(services);
@@ -81,8 +82,8 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
             app.UseRouting();
             app.UseAuthorization();
-            app.UseEndpoints(endpoint => 
-            { 
+            app.UseEndpoints(endpoint =>
+            {
                 endpoint.MapDefaultControllerRoute();
                 endpoint.MapHealthChecks("/health", new HealthCheckOptions
                 {
@@ -96,8 +97,11 @@ namespace Skoruba.IdentityServer4.STS.Identity
             services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, IdentityServerDataProtectionDbContext>(Configuration);
         }
 
-        public virtual void RegisterAuthentication(IServiceCollection services)
+        public virtual void RegisterAuthentication<TUser, TKey>(IServiceCollection services)
+            where TUser : IdentityUser<TKey>, new()
+            where TKey : IEquatable<TKey>
         {
+            services.AddActiveDirectoryAuth<TUser, TKey>(Configuration);
             services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Configuration);
             services.AddIdentityServer<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, UserIdentity>(Configuration);
         }

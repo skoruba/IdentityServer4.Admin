@@ -1,0 +1,23 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model Skoruba.IdentityServer4.STS.Identity.ViewModels.Account.ImportAllWindowsUsersViewModel
+
+@await Html.PartialAsync("../Manage/_StatusMessage", Model.StatusMessage)
+
+<div>
+    <div class="page-header">
+        <h1>@Localizer["Title"]</h1>
+    </div>
+    <div class="row">
+        @Localizer["Description"]
+    </div>
+    <div class="row">
+        <form asp-action="ImportAllWindowsUsers">
+            <fieldset>
+                <div class="form-group">
+                    <button class="btn btn-primary">@Localizer["StartImport"]</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>

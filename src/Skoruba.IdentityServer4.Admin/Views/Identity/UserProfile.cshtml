@@ -50,7 +50,14 @@
 
             <div class="row">
                 <div class="col-lg-2 mb-3">
-                    <img-gravatar email="@Model.Email" class="img-thumbnail" size="150" />
+                    @if (!string.IsNullOrEmpty(Model.PhotoUrl))
+                    {
+                        <img class="img-thumbnail" size="150" src="@Model.PhotoUrl" />
+                    }
+                    else
+                    {
+                        <img-gravatar email="@Model.Email" class="img-thumbnail" size="150" />
+                    }                    
                 </div>
                 <div class="col-sm-10">
                     <!--Input - text -->

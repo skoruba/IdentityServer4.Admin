@@ -31,6 +31,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Skoruba.IdentityServer4.Shared.Authentication;
+using Skoruba.IdentityServer4.STS.Identity.Helpers.ADServices;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
@@ -224,7 +225,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             services
                 .AddSingleton(registrationConfiguration)
                 .AddSingleton(loginConfiguration)
-                .AddScoped<UserResolver<TUserIdentity>>()
                 .AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
                 {
                     options.User.RequireUniqueEmail = true;
@@ -240,12 +240,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     AuthenticationHelpers.CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
                 options.OnDeleteCookie = cookieContext =>
                     AuthenticationHelpers.CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
-            });
-
-            services.Configure<IISOptions>(iis =>
-            {
-                iis.AuthenticationDisplayName = "Windows";
-                iis.AutomaticAuthentication = false;
             });
 
             var authenticationBuilder = services.AddAuthentication();
