@@ -33,6 +33,8 @@ using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.ADServices;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 using Skoruba.IdentityServer4.STS.Identity.ViewModels.Account;
+using Skoruba.MultiTenant;
+using Skoruba.MultiTenant.Abstractions;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 {
@@ -56,8 +58,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         private readonly RegisterConfiguration _registerConfiguration;
         private readonly IOptions<WindowsAuthConfiguration> _windowsAuthConfiguration;
         private readonly ADLogonService _adLogonService;
-
         private readonly ILogger<AccountController<TUser, TKey>> _logger;
+        private readonly ISkorubaTenantContext _skorubaTenantContext;
+
 
         public AccountController(
             UserManager<TUser> userManager,
@@ -75,6 +78,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             ADUserSynchronizer<TUser, TKey> usersSynchronizer,
             ADUserInfoExtractor adUserInfoExtractor,
             ILogger<AccountController<TUser, TKey>> logger)
+            ISkorubaTenantContext skorubaTenantContext)
         {
             _adUsersSynchronizer = usersSynchronizer;
             _userManager = userManager;
@@ -91,6 +95,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             _adLogonService = adUtilities;
             _adUserInfoExtractor = adUserInfoExtractor;
             _logger = logger;
+            _skorubaTenantContext = skorubaTenantContext;
         }
 
         /// <summary>
@@ -720,6 +725,17 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 UserName = model.UserName,
                 Email = model.Email
             };
+
+            if (_skorubaTenantContext.Configuration.UseTenantCode)
+            {
+                if (_skorubaTenantContext.TenantResolutionRequired && !_skorubaTenantContext.TenantResolved)
+                {
+                    ModelState.AddModelError("TenantCode", "The tenant code is invalid.");
+                    return View(model);                   
+                }
+
+                ((IHaveTenantId)user).TenantId = _skorubaTenantContext.Tenant.Id;
+            }
 
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)

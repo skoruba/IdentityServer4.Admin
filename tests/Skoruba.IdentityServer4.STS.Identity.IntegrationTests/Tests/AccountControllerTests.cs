@@ -16,7 +16,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
 {
     public class AccountControllerTests : BaseClassFixture
     {
-        public AccountControllerTests(WebApplicationFactory<StartupTest> factory) : base(factory)
+        public AccountControllerTests(WebApplicationFactory<StartupTestSingleTenant> factory) : base(factory)
         {
         }
 
@@ -103,7 +103,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
             var loginResponse = await Client.GetAsync(accountLoginAction);
             var antiForgeryToken = await loginResponse.ExtractAntiForgeryToken();
 
-            var loginDataForm = UserMocks.GenerateLoginData(registerFormData["UserName"], registerFormData["Password"],
+            var loginDataForm = UserMocks.GenerateLoginData(registerFormData["UserName"], registerFormData["Password"],registerFormData["TenantCode"],
                 antiForgeryToken);
 
             // Login
@@ -143,7 +143,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
             var antiForgeryToken = await loginResponse.ExtractAntiForgeryToken();
 
             // User Guid like fake password
-            var loginDataForm = UserMocks.GenerateLoginData(registerFormData["UserName"], Guid.NewGuid().ToString(), antiForgeryToken);
+            var loginDataForm = UserMocks.GenerateLoginData(registerFormData["UserName"], Guid.NewGuid().ToString(), registerFormData["TenantCode"], antiForgeryToken);
 
             // Login
             var requestMessage = RequestHelper.CreatePostRequestWithCookies(accountLoginAction, loginDataForm, loginResponse);

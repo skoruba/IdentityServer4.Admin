@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Identity
 {
-    public partial class DbInit : Migration
+    public partial class InitDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ide
                     Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true)
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    TenantId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -39,7 +40,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ide
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    TenantId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -160,9 +162,9 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ide
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "Roles",
-                column: "NormalizedName",
+                columns: new[] { "NormalizedName", "TenantId" },
                 unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                filter: "[NormalizedName] IS NOT NULL AND [TenantId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserClaims_UserId",
@@ -187,9 +189,9 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ide
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "Users",
-                column: "NormalizedUserName",
+                columns: new[] { "NormalizedUserName", "TenantId" },
                 unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                filter: "[NormalizedUserName] IS NOT NULL AND [TenantId] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

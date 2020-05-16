@@ -30,6 +30,7 @@ using Skoruba.IdentityServer4.Admin.Helpers;
 using Skoruba.IdentityServer4.Admin.Helpers.Localization;
 using Xunit;
 using System.Security.Claims;
+using Skoruba.MultiTenant.Abstractions;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 {
@@ -566,6 +567,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var logger = serviceProvider.GetRequiredService<ILogger<ConfigurationController>>();
             var tempDataDictionaryFactory = serviceProvider.GetRequiredService<ITempDataDictionaryFactory>();
             var identityService = GetIdentityService(serviceProvider);
+            var skorubaTenantContext = serviceProvider.GetRequiredService<ISkorubaTenantContext>();
 
             //Get Controller
             var controller = new IdentityController<UserDto<string>, RoleDto<string>,
@@ -573,7 +575,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
                 UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
                 UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string>,
                 UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-                RoleClaimsDto<string>>(identityService, logger, localizer);
+                RoleClaimsDto<string>>(identityService, logger, localizer, skorubaTenantContext);
 
             //Setup TempData for notofication in basecontroller
             var httpContext = serviceProvider.GetRequiredService<IHttpContextAccessor>().HttpContext;
@@ -588,6 +590,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var services = new ServiceCollection();
 
             services.AddSingleton<IConfiguration>(new ConfigurationBuilder().Build());
+
+            // Tenancy
+            services.AddMultiTenantConfiguration<SkorubaSingleTenantContext>(new MultiTenant.Configuration.MultiTenantConfiguration() { MultiTenantEnabled = false });
 
             //Entity framework
             var efServiceProvider = new ServiceCollection().AddEntityFrameworkInMemoryDatabase().BuildServiceProvider();

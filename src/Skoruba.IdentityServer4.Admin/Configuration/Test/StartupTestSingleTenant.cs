@@ -9,9 +9,9 @@ using Skoruba.IdentityServer4.Admin.Middlewares;
 
 namespace Skoruba.IdentityServer4.Admin.Configuration.Test
 {
-    public class StartupTest : Startup
+    public class StartupTestSingleTenant : Startup
     {
-        public StartupTest(IWebHostEnvironment env, IConfiguration configuration) : base(env, configuration)
+        public StartupTestSingleTenant(IWebHostEnvironment env, IConfiguration configuration) : base(env, configuration)
         {
         }
 

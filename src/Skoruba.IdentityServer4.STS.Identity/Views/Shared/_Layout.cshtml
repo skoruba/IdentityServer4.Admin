@@ -9,6 +9,10 @@
 @inject IRootConfiguration RootConfiguration
 @inject IViewLocalizer Localizer
 @inject IAuthorizationService AuthorizationService
+@using Skoruba.MultiTenant.Abstractions
+@inject IRootConfiguration RootConfiguration
+@inject IViewLocalizer Localizer
+@inject ISkorubaTenantContext SkorubaTenantContext
 @{
     string name = null;
     if (!true.Equals(ViewData["signed-out"]))
@@ -48,7 +52,11 @@
 
     <div class="menu d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
         <!--Site name -->
-        <h3 class="menu-logo my-0 mr-md-auto font-weight-normal"><a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@RootConfiguration.AdminConfiguration.PageTitle</a></h3>
+        <div class="menu-logo my-0 mr-md-auto font-weight-normal">
+            <h3 class="my-0"><a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@RootConfiguration.AdminConfiguration.PageTitle</a></h3>
+            <!--Tenant name-->
+            <h6 class="my-0">@SkorubaTenantContext?.Tenant?.Name</h6>
+        </div>
         <!--Menu item -->
         @if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(name))
         {

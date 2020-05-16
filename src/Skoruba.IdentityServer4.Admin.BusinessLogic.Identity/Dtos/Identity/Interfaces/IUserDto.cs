@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Skoruba.MultiTenant.Abstractions;
+using System;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Interfaces
 {
-    public interface IUserDto : IBaseUserDto
+    public interface IUserDto : IBaseUserDto, IHaveTenantId
     {
         string UserName { get; set; }
         string Email { get; set; }

@@ -30,5 +30,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
         public DateTimeOffset? LockoutEnd { get; set; }
 
         public string PhotoUrl { get; set; }
+
+        public string TenantId { get; set; }
+
     }
 }

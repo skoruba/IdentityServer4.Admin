@@ -23,5 +23,8 @@
         public const string AdminAuditLogDbConnectionStringKey = "AdminAuditLogDbConnection";
 
         public const string DataProtectionDbConnectionStringKey = "DataProtectionDbConnection";
+
+        public const string MultiTenantConfiguration = "MultiTenantConfiguration";
+
     }
 }

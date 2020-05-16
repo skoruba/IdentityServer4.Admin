@@ -53,6 +53,9 @@
         <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer\Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.csproj" />
         <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.IdentityServer4.Admin.EntityFramework.csproj" />
         <ProjectReference Include="..\Skoruba.IdentityServer4.Shared\Skoruba.IdentityServer4.Shared.csproj" />
+        <ProjectReference Include="..\Skoruba.MultiTenant.EFCacheStore\Skoruba.MultiTenant.EFCacheStore.csproj" />
+        <ProjectReference Include="..\Skoruba.MultiTenant.Finbuckle\Skoruba.MultiTenant.Finbuckle.csproj" />
+        <ProjectReference Include="..\Skoruba.MultiTenant.IdentityServer\Skoruba.MultiTenant.IdentityServer.csproj" />
     </ItemGroup>
 
 </Project>

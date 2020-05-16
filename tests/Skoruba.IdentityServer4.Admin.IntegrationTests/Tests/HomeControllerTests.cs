@@ -11,7 +11,7 @@ namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Tests
 {
     public class HomeControllerTests : BaseClassFixture
     {
-        public HomeControllerTests(WebApplicationFactory<StartupTest> factory) : 
+        public HomeControllerTests(WebApplicationFactory<StartupTestSingleTenant> factory) : 
             base(factory)
         {
         }

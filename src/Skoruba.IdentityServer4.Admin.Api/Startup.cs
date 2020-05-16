@@ -21,6 +21,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Shared.Dtos;
 using Skoruba.IdentityServer4.Shared.Dtos.Identity;
+using Skoruba.MultiTenant.Configuration;
 
 namespace Skoruba.IdentityServer4.Admin.Api
 {
@@ -40,6 +41,9 @@ namespace Skoruba.IdentityServer4.Admin.Api
         {
             var adminApiConfiguration = Configuration.GetSection(nameof(AdminApiConfiguration)).Get<AdminApiConfiguration>();
             services.AddSingleton(adminApiConfiguration);
+           
+            var multiTenantConfiguration = Configuration.GetSection(nameof(MultiTenantConfiguration)).Get<MultiTenantConfiguration>();
+            services.AddSingleton(multiTenantConfiguration);
 
             // Add DbContexts
             RegisterDbContexts(services);

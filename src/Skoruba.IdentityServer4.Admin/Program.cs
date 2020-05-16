@@ -9,6 +9,7 @@ using Serilog;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.Helpers;
+using Skoruba.MultiTenant.Configuration;
 
 namespace Skoruba.IdentityServer4.Admin
 {
@@ -40,7 +41,6 @@ namespace Skoruba.IdentityServer4.Admin
                             IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext,
                             IdentityServerDataProtectionDbContext, UserIdentity, UserIdentityRole>(host);
                 }
-
                 host.Run();
             }
             catch (Exception ex)

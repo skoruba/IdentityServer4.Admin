@@ -32,6 +32,9 @@ using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Skoruba.IdentityServer4.Shared.Authentication;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.ADServices;
+using Microsoft.IdentityModel.Logging;
+using Skoruba.MultiTenant.Configuration;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.MultiTenantIdentity;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
@@ -147,7 +150,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
         {
             var databaseProvider = configuration.GetSection(nameof(DatabaseProviderConfiguration)).Get<DatabaseProviderConfiguration>();
-            
+
             var identityConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
             var configurationConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
             var persistedGrantsConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);
@@ -221,6 +224,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         {
             var loginConfiguration = GetLoginConfiguration(configuration);
             var registrationConfiguration = GetRegistrationConfiguration(configuration);
+            var multiTenantConfiguration = configuration.GetSection(ConfigurationConsts.MultiTenantConfiguration).Get<MultiTenantConfiguration>();
 
             services
                 .AddSingleton(registrationConfiguration)
@@ -230,7 +234,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     options.User.RequireUniqueEmail = true;
                 })
                 .AddEntityFrameworkStores<TIdentityDbContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders()
+                .AddDefaultMultiTenantIdentityServices<TUserIdentity, TUserIdentityRole, DefaultMultiTenantUserStore, DefaultMultiTenantRoleStore>(multiTenantConfiguration.MultiTenantEnabled);
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -241,6 +246,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 options.OnDeleteCookie = cookieContext =>
                     AuthenticationHelpers.CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
             });
+
+#if DEBUG
+            IdentityModelEventSource.ShowPII = true;
+#endif
 
             var authenticationBuilder = services.AddAuthentication();
 
@@ -299,6 +308,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TUserIdentity : class
         {
             var advancedConfiguration = configuration.GetSection(nameof(AdvancedConfiguration)).Get<AdvancedConfiguration>();
+            var multiTenantConfiguration = configuration.GetSection(ConfigurationConsts.MultiTenantConfiguration).Get<MultiTenantConfiguration>();
 
             var builder = services.AddIdentityServer(options =>
                 {
@@ -313,6 +323,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 .AddConfigurationStore<TConfigurationDbContext>()
                 .AddOperationalStore<TPersistedGrantDbContext>()
                 .AddAspNetIdentity<TUserIdentity>();
+
+            if (multiTenantConfiguration.MultiTenantEnabled)
+                builder.AddProfileService<MultiTenant.IdentityServer.MultiTenantProfileService<TUserIdentity>>();
 
             builder.AddCustomSigningCredential(configuration);
             builder.AddCustomValidationKey(configuration);
@@ -373,7 +386,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
         {
             var configurationDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
-            var persistedGrantsDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);            
+            var persistedGrantsDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);
             var identityDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
             var dataProtectionDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.DataProtectionDbConnectionStringKey);
 

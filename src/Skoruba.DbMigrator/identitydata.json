@@ -1,0 +1,27 @@
+﻿{
+  "IdentityData": {
+    "Roles": [
+      {
+        "TenantId": "00000000-0000-0000-0000-000000000000",
+        "Name": "SkorubaIdentityAdminAdministrator"
+      }
+    ],
+    "Users": [
+      {
+        "TenantId": "00000000-0000-0000-0000-000000000000",
+        "Username": "admin",
+        "Password": "Pa$$word123",
+        "Email": "admin@skoruba.com",
+        "Roles": [
+          "SkorubaIdentityAdminAdministrator"
+        ],
+        "Claims": [
+          {
+            "Type": "name",
+            "Value": "admin"
+          }
+        ]
+      }
+    ]
+  }
+}
