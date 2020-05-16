@@ -56,6 +56,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         private readonly RegisterConfiguration _registerConfiguration;
         private readonly IOptions<WindowsAuthConfiguration> _windowsAuthConfiguration;
         private readonly ADLogonService _adLogonService;
+
         private readonly ILogger<AccountController<TUser, TKey>> _logger;
 
         public AccountController(
@@ -350,7 +351,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
-            return View();
+            return View(new ForgotPasswordViewModel());
         }
 
         [HttpPost]
@@ -360,20 +361,36 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-
+                TUser user = null;
+                switch (model.Policy)
+                {
+                    case LoginResolutionPolicy.Email:
+                        try
+                        {
+                            user = await _userManager.FindByEmailAsync(model.Email);
+                        }
+                        catch (Exception ex)
+                        {
+                            // in case of multiple users with the same email this method would throw and reveal that the email is registered
+                            _logger.LogError("Error retrieving user by email ({0}) for forgot password functionality: {1}", model.Email, ex.Message);
+                            user = null;
+                        }
+                        break;
+                    case LoginResolutionPolicy.Username:
+                        user = await _userManager.FindByNameAsync(model.Username);
+                        break;
+                }
+                
                 if (user == null || !await _userManager.IsEmailConfirmedAsync(user))
                 {
-                    ModelState.AddModelError(string.Empty, _localizer["EmailNotFound"]);
-
-                    return View(model);
+                    // Don't reveal that the user does not exist
+                    return View("ForgotPasswordConfirmation");
                 }
 
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, HttpContext.Request.Scheme);
 
-                await _emailSender.SendEmailAsync(model.Email, _localizer["ResetPasswordTitle"], _localizer["ResetPasswordBody", HtmlEncoder.Default.Encode(callbackUrl)]);
-
+                await _emailSender.SendEmailAsync(user.Email, _localizer["ResetPasswordTitle"], _localizer["ResetPasswordBody", HtmlEncoder.Default.Encode(callbackUrl)]);
 
                 return View("ForgotPasswordConfirmation");
             }

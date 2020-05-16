@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
@@ -9,9 +10,10 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Migrations.IdentityServerConfiguration
 {
     [DbContext(typeof(IdentityServerConfigurationDbContext))]
-    partial class IdentityServerConfigurationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200420033718_StandardClaims")]
+    partial class StandardClaims
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

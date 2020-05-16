@@ -18,31 +18,6 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Constants
             return secretTypes;
         }
 
-        public static List<string> GetStandardClaims()
-        {
-            //http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
-            var standardClaims = new List<string>
-            {
-                "name",
-                "given_name",
-                "family_name",
-                "middle_name",
-                "nickname",
-                "preferred_username",
-                "profile",
-                "picture",
-                "website",
-                "gender",
-                "birthdate",
-                "zoneinfo",
-                "locale",
-                "address",
-                "updated_at"
-            };
-
-            return standardClaims;
-        }
-
         public static List<string> GetGrantTypes()
         {
             var allowedGrantypes = new List<string>

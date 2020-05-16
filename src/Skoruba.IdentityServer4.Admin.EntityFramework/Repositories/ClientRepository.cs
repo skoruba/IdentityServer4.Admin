@@ -7,6 +7,7 @@ using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.Models;
 using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Constants;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Enums;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Extensions;
@@ -98,12 +99,44 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             return secrets;
         }
 
-        public virtual List<string> GetStandardClaims(string claim, int limit = 0)
+        public virtual async Task<List<string>> GetStandardClaimsAsync(string claim, int limit = 0, bool sortAscending = true, string sortBy = nameof(StandardClaim.ClaimType))
         {
-            var filteredClaims = ClientConsts.GetStandardClaims()
-                .WhereIf(!string.IsNullOrWhiteSpace(claim), x => x.Contains(claim))
+            var filteredClaimsQuery = DbContext.StandardClaims
+                .WhereIf(!string.IsNullOrWhiteSpace(claim), x => x.ClaimType.Contains(claim));
+
+            if (!string.IsNullOrWhiteSpace(sortBy))
+            {
+                var parameter = Expression.Parameter(typeof(StandardClaim));
+                Expression<Func<StandardClaim, object>> sort;
+                try
+                {
+                    sort = Expression.Lambda<Func<StandardClaim, object>>(
+                        Expression.Convert(
+                            Expression.Property(parameter, sortBy),
+                            typeof(object)
+                        ),
+                        parameter
+                    );
+                }
+                catch (Exception ex)
+                {
+                    throw new InvalidOperationException($"The sort field '{sortBy}' has illegal value.", ex);
+                }
+                if (sortAscending)
+                {
+                    filteredClaimsQuery = filteredClaimsQuery.OrderBy(sort);
+                }
+                else
+                {
+                    filteredClaimsQuery = filteredClaimsQuery.OrderByDescending(sort);
+                }
+            }
+
+            var filteredClaims = await filteredClaimsQuery
+                .Select(x => x.ClaimType)
                 .TakeIf(x => x, limit > 0, limit)
-                .ToList();
+                .ToListAsync()
+                .ConfigureAwait(false);
 
             return filteredClaims;
         }

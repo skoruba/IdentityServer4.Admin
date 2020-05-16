@@ -2,7 +2,9 @@
 using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Constants;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts
 {
@@ -44,5 +46,20 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ClientClaim> ClientClaims { get; set; }
 
         public DbSet<ClientProperty> ClientProperties { get; set; }
+
+        public DbSet<StandardClaim> StandardClaims { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<StandardClaim>(entityBuilder =>
+            {
+                entityBuilder.ToTable(TableConsts.StandardClaims);
+                entityBuilder.Property(e => e.Id).ValueGeneratedOnAdd();
+                entityBuilder.HasKey(e => e.Id);
+                entityBuilder.HasIndex(e => e.ClaimType).IsUnique();
+            });
+        }
     }
 }

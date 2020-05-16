@@ -16,7 +16,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
                 .RuleFor(o => o.Description, f => f.Random.Words(f.Random.Number(1, 5)))
                 .RuleFor(o => o.DisplayName, f => f.Random.Words(f.Random.Number(1, 5)))
                 .RuleFor(o => o.Enabled, f => f.Random.Bool())                
-                .RuleFor(o => o.UserClaims, f => Enumerable.Range(1, f.Random.Int(1, 10)).Select(x => f.PickRandom(ClientConsts.GetStandardClaims())).ToList());
+                .RuleFor(o => o.UserClaims, f => Enumerable.Range(1, f.Random.Int(1, 10)).Select(x => f.PickRandom(ClientMock.GetStandardClaims())).ToList());
             
             return fakerApiResource;
         }
@@ -65,7 +65,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
                 .RuleFor(o => o.DisplayName, f => f.Random.Words(f.Random.Number(1, 5)))
                 .RuleFor(o => o.UserClaims,
                     f => Enumerable.Range(1, f.Random.Int(1, 10))
-                        .Select(x => f.PickRandom(ClientConsts.GetStandardClaims())).ToList())
+                        .Select(x => f.PickRandom(ClientMock.GetStandardClaims())).ToList())
                 .RuleFor(o => o.Emphasize, f => f.Random.Bool())
                 .RuleFor(o => o.Required, f => f.Random.Bool())
                 .RuleFor(o => o.ShowInDiscoveryDocument, f => f.Random.Bool());              
