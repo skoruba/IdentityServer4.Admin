@@ -1,12 +1,13 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 @using Microsoft.AspNetCore.Hosting
+@using Microsoft.Extensions.Hosting
 @model SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Home.ErrorViewModel
-@inject IHostingEnvironment host
+@inject IWebHostEnvironment Host
 
 @{
 	var error = Model?.Error?.Error;
-	var errorDescription = host.IsDevelopment() ? Model?.Error?.ErrorDescription : null;
+	var errorDescription = Host.IsDevelopment() ? Model?.Error?.ErrorDescription : null;
 	var request_id = Model?.Error?.RequestId;
 }
 
@@ -42,3 +43,9 @@
 		</div>
 	</div>
 </div>
+
+
+
+
+
+

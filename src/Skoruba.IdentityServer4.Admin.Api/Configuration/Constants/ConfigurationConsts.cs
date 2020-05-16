@@ -9,5 +9,9 @@
         public const string IdentityDbConnectionStringKey = "IdentityDbConnection";
 
         public const string AdminLogDbConnectionStringKey = "AdminLogDbConnection";
+
+        public const string AdminAuditLogDbConnectionStringKey = "AdminAuditLogDbConnection";
+        
+        public const string ResourcesPath = "Resources";
     }
 }

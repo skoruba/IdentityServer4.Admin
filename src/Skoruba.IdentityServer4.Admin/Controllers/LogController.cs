@@ -12,11 +12,14 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
     public class LogController : BaseController
     {
         private readonly ILogService _logService;
+        private readonly IAuditLogService _auditLogService;
 
         public LogController(ILogService logService,
-            ILogger<ConfigurationController> logger) : base(logger)
+            ILogger<ConfigurationController> logger,
+            IAuditLogService auditLogService) : base(logger)
         {
             _logService = logService;
+            _auditLogService = auditLogService;
         }
 
         [HttpGet]
@@ -28,18 +31,46 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             return View(logs);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> AuditLog([FromQuery]AuditLogFilterDto filters)
+        {
+            ViewBag.SubjectIdentifier = filters.SubjectIdentifier;
+            ViewBag.SubjectName = filters.SubjectName;
+            ViewBag.Event = filters.Event;
+            ViewBag.Source = filters.Source;
+            ViewBag.Category = filters.Category;
+
+            var logs = await _auditLogService.GetAsync(filters);
+
+            return View(logs);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteLogs(LogsDto logs)
+        public async Task<IActionResult> DeleteLogs(LogsDto log)
         {
             if (!ModelState.IsValid)
             {
-                return View(nameof(ErrorsLog), logs);
+                return View(nameof(ErrorsLog), log);
             }
             
-            await _logService.DeleteLogsOlderThanAsync(logs.DeleteOlderThan.Value);
+            await _logService.DeleteLogsOlderThanAsync(log.DeleteOlderThan.Value);
 
             return RedirectToAction(nameof(ErrorsLog));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteAuditLogs(AuditLogsDto log)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(nameof(AuditLog), log);
+            }
+
+            await _auditLogService.DeleteLogsOlderThanAsync(log.DeleteOlderThan.Value);
+
+            return RedirectToAction(nameof(AuditLog));
         }
     }
 }

@@ -6,8 +6,6 @@
 
 # Content
 
-[How to use other database engines - PostgreSQL, SQLite, MySQL etc.](EFMigration.md)
-
 [How to configure the Administration](Configure-Administration.md)
 
 [How to configure the Administration - for Azure deploy](Configure-Azure-Deploy.md)

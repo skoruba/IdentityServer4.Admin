@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
 {
-    public class RolesDto<TRoleDto, TRoleDtoKey>: IRolesDto where TRoleDto : RoleDto<TRoleDtoKey>
+    public class RolesDto<TRoleDto, TKey>: IRolesDto where TRoleDto : RoleDto<TKey>
     {
         public RolesDto()
         {

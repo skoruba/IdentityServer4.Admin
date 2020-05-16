@@ -1,4 +1,5 @@
-﻿using System.Net.Mail;
+using System;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Logging;
@@ -21,9 +22,12 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Services
                 Host = _configuration.Host,
                 Port = _configuration.Port,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
-                EnableSsl = _configuration.UseSSL,
-                Credentials = new System.Net.NetworkCredential(_configuration.Login, _configuration.Password)
+                EnableSsl = _configuration.UseSSL
             };
+            if (!string.IsNullOrEmpty(_configuration.Password))
+                _client.Credentials = new System.Net.NetworkCredential(_configuration.Login, _configuration.Password);
+            else
+                _client.UseDefaultCredentials = true;
         }
 
         public Task SendEmailAsync(string email, string subject, string htmlMessage)
@@ -39,7 +43,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Services
                 _logger.LogInformation($"Email: {email}, subject: {subject}, message: {htmlMessage} successfully sent");
                 return Task.CompletedTask;
             }
-            catch (SmtpException ex)
+            catch (Exception ex)
             {
                 _logger.LogError($"Exception {ex} during sending email: {email}, subject: {subject}");
                 throw;
@@ -47,3 +51,9 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Services
         }
     }
 }
+
+
+
+
+
+
