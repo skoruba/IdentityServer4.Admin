@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -15,7 +15,6 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Clients
             AllowedCorsOrigins = new List<string>();
             AllowedGrantTypes = new List<string>();
             Claims = new List<ClientClaimApiDto>();
-            ClientSecrets = new List<ClientSecretApiDto>();
             Properties = new List<ClientPropertyApiDto>();
         }
 
@@ -87,7 +86,6 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Clients
         public List<string> AllowedScopes { get; set; }
 
         public List<ClientClaimApiDto> Claims { get; set; }
-        public List<ClientSecretApiDto> ClientSecrets { get; set; }
         public List<ClientPropertyApiDto> Properties { get; set; }
 
         public DateTime? Updated { get; set; }
@@ -98,3 +96,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Clients
         public int DeviceCodeLifetime { get; set; } = 300;
     }
 }
+
+
+
+
+

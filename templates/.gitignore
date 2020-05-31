@@ -1,2 +1,4 @@
 # ignore template build source
 /template-build/content/src
+/template-build/content/docker*
+/template-build/content/shared

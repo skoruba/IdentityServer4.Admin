@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using IdentityServer4.AccessTokenValidation;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SkorubaIdentityServer4Admin.Admin.Api.Configuration.Constants;
@@ -15,7 +14,7 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Controllers
     [ApiController]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
     [Produces("application/json")]
-    [Authorize(AuthenticationSchemes = IdentityServerAuthenticationDefaults.AuthenticationScheme, Policy = AuthorizationConsts.AdministrationPolicy)]
+    [Authorize(Policy = AuthorizationConsts.AdministrationPolicy)]
     public class PersistedGrantsController : ControllerBase
     {
         private readonly IPersistedGrantAspNetIdentityService _persistedGrantsService;
@@ -86,3 +85,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Controllers
         }
     }
 }
+
+
+
+
+

@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
+using Skoruba.AuditLogging.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Grant;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Events.PersistedGrant;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfaces;
@@ -12,18 +14,23 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
     {
         protected readonly IPersistedGrantAspNetIdentityRepository PersistedGrantAspNetIdentityRepository;
         protected readonly IPersistedGrantAspNetIdentityServiceResources PersistedGrantAspNetIdentityServiceResources;
+        protected readonly IAuditEventLogger AuditEventLogger;
 
         public PersistedGrantAspNetIdentityService(IPersistedGrantAspNetIdentityRepository persistedGrantAspNetIdentityRepository,
-            IPersistedGrantAspNetIdentityServiceResources persistedGrantAspNetIdentityServiceResources)
+            IPersistedGrantAspNetIdentityServiceResources persistedGrantAspNetIdentityServiceResources,
+            IAuditEventLogger auditEventLogger)
         {
             PersistedGrantAspNetIdentityRepository = persistedGrantAspNetIdentityRepository;
             PersistedGrantAspNetIdentityServiceResources = persistedGrantAspNetIdentityServiceResources;
+            AuditEventLogger = auditEventLogger;
         }
 
         public virtual async Task<PersistedGrantsDto> GetPersistedGrantsByUsersAsync(string search, int page = 1, int pageSize = 10)
         {
             var pagedList = await PersistedGrantAspNetIdentityRepository.GetPersistedGrantsByUsersAsync(search, page, pageSize);
             var persistedGrantsDto = pagedList.ToModel();
+
+            await AuditEventLogger.LogEventAsync(new PersistedGrantsIdentityByUsersRequestedEvent(persistedGrantsDto));
 
             return persistedGrantsDto;
         }
@@ -36,6 +43,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             var pagedList = await PersistedGrantAspNetIdentityRepository.GetPersistedGrantsByUserAsync(subjectId, page, pageSize);
             var persistedGrantsDto = pagedList.ToModel();
 
+            await AuditEventLogger.LogEventAsync(new PersistedGrantsIdentityByUserRequestedEvent(persistedGrantsDto));
+
             return persistedGrantsDto;
         }
 
@@ -45,6 +54,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             if (persistedGrant == null) throw new UserFriendlyErrorPageException(string.Format(PersistedGrantAspNetIdentityServiceResources.PersistedGrantDoesNotExist().Description, key), PersistedGrantAspNetIdentityServiceResources.PersistedGrantDoesNotExist().Description);
             var persistedGrantDto = persistedGrant.ToModel();
 
+            await AuditEventLogger.LogEventAsync(new PersistedGrantIdentityRequestedEvent(persistedGrantDto));
+
             return persistedGrantDto;
         }
 
@@ -53,7 +64,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             var exists = await PersistedGrantAspNetIdentityRepository.ExistsPersistedGrantAsync(key);
             if (!exists) throw new UserFriendlyErrorPageException(string.Format(PersistedGrantAspNetIdentityServiceResources.PersistedGrantDoesNotExist().Description, key), PersistedGrantAspNetIdentityServiceResources.PersistedGrantDoesNotExist().Description);
 
-            return await PersistedGrantAspNetIdentityRepository.DeletePersistedGrantAsync(key);
+            var deleted = await PersistedGrantAspNetIdentityRepository.DeletePersistedGrantAsync(key);
+
+            await AuditEventLogger.LogEventAsync(new PersistedGrantIdentityDeletedEvent(key));
+
+            return deleted;
         }
 
         public virtual async Task<int> DeletePersistedGrantsAsync(string userId)
@@ -61,7 +76,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             var exists = await PersistedGrantAspNetIdentityRepository.ExistsPersistedGrantsAsync(userId);
             if (!exists) throw new UserFriendlyErrorPageException(string.Format(PersistedGrantAspNetIdentityServiceResources.PersistedGrantWithSubjectIdDoesNotExist().Description, userId), PersistedGrantAspNetIdentityServiceResources.PersistedGrantWithSubjectIdDoesNotExist().Description);
 
-            return await PersistedGrantAspNetIdentityRepository.DeletePersistedGrantsAsync(userId);
+            var deleted = await PersistedGrantAspNetIdentityRepository.DeletePersistedGrantsAsync(userId);
+
+            await AuditEventLogger.LogEventAsync(new PersistedGrantsIdentityDeletedEvent(userId));
+
+            return deleted;
         }
     }
 }

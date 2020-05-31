@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -121,12 +122,12 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> RoleUsers(string roleId, int? page, string search)
+        public async Task<IActionResult> RoleUsers(string id, int? page, string search)
         {
             ViewBag.Search = search;
-            var roleUsers = await _identityService.GetRoleUsersAsync(roleId, search, page ?? 1);
+            var roleUsers = await _identityService.GetRoleUsersAsync(id, search, page ?? 1);
 
-            var roleDto = await _identityService.GetRoleAsync(roleId);
+            var roleDto = await _identityService.GetRoleAsync(id);
             ViewData["RoleName"] = roleDto.Name;
 
             return View(roleUsers);
@@ -418,10 +419,19 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UserDelete(TUserDto user)
         {
-            await _identityService.DeleteUserAsync(user.Id.ToString(), user);
-            SuccessNotification(_localizer["SuccessDeleteUser"], _localizer["SuccessTitle"]);
+            var currentUserId = User.GetSubjectId();
+            if (user.Id.ToString() == currentUserId)
+            {
+                CreateNotification(Helpers.NotificationHelpers.AlertType.Warning, _localizer["ErrorDeleteUser_CannotSelfDelete"]);
+                return RedirectToAction(nameof(UserDelete), user.Id);
+            }
+            else
+            {
+                await _identityService.DeleteUserAsync(user.Id.ToString(), user);
+                SuccessNotification(_localizer["SuccessDeleteUser"], _localizer["SuccessTitle"]);
 
-            return RedirectToAction(nameof(Users));
+                return RedirectToAction(nameof(Users));
+            }
         }
 
         [HttpGet]

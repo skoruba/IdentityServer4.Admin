@@ -1,29 +1,27 @@
 ﻿using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Common;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Skoruba.IdentityServer4.STS.Identity.Configuration.Test;
+using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests.Base;
 using Xunit;
 
 namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
 {
-    public class DiagnosticsControllerTests : IClassFixture<TestFixture>
+    public class DiagnosticsControllerTests : BaseClassFixture
     {
-        private readonly HttpClient _client;
-
-        public DiagnosticsControllerTests(TestFixture fixture)
+        public DiagnosticsControllerTests(WebApplicationFactory<StartupTest> factory) : base(factory)
         {
-            _client = fixture.Client;
         }
 
         [Fact]
         public async Task UnAuthorizeUserCannotAccessDiagnosticsView()
         {
             // Clear headers
-            _client.DefaultRequestHeaders.Clear();
+            Client.DefaultRequestHeaders.Clear();
 
             // Act
-            var response = await _client.GetAsync("/Diagnostics/Index");
+            var response = await Client.GetAsync("/Diagnostics/Index");
 
             // Assert      
             response.StatusCode.Should().Be(HttpStatusCode.Redirect);

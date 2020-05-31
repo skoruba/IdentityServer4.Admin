@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.PersistedGrants
 {
@@ -14,3 +14,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.PersistedGrants
         public string Data { get; set; }
     }
 }
+
+
+
+
+

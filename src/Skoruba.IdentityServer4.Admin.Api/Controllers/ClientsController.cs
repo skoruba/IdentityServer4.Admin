@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices.ComTypes;
+using System.Threading.Tasks;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using Skoruba.IdentityServer4.Admin.Api.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.Api.Dtos.Clients;
 using Skoruba.IdentityServer4.Admin.Api.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Api.Mappers;
+using Skoruba.IdentityServer4.Admin.Api.Resources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 
@@ -14,15 +16,17 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
-    [Produces("application/json")]
-    [Authorize(AuthenticationSchemes = IdentityServerAuthenticationDefaults.AuthenticationScheme, Policy = AuthorizationConsts.AdministrationPolicy)]
+    [Produces("application/json", "application/problem+json")]
+    [Authorize(Policy = AuthorizationConsts.AdministrationPolicy)]
     public class ClientsController : ControllerBase
     {
         private readonly IClientService _clientService;
+        private readonly IApiErrorResources _errorResources;
 
-        public ClientsController(IClientService clientService)
+        public ClientsController(IClientService clientService, IApiErrorResources errorResources)
         {
             _clientService = clientService;
+            _errorResources = errorResources;
         }
 
         [HttpGet]
@@ -44,14 +48,23 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> Post([FromBody]ClientApiDto client)
         {
             var clientDto = client.ToClientApiModel<ClientDto>();
-            await _clientService.AddClientAsync(clientDto);
 
-            return Ok();
+            if (!clientDto.Id.Equals(default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
+
+            var id = await _clientService.AddClientAsync(clientDto);
+            client.Id = id;
+
+            return CreatedAtAction(nameof(Get), new { id }, client);
         }
-        
+
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]ClientApiDto client)
         {
@@ -75,14 +88,17 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpPost("Clone")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> PostClientClone([FromBody]ClientCloneApiDto client)
         {
             var clientCloneDto = client.ToClientApiModel<ClientCloneDto>();
 
-            await _clientService.GetClientAsync(clientCloneDto.Id);
-            await _clientService.CloneClientAsync(clientCloneDto);
+            var originalClient = await _clientService.GetClientAsync(clientCloneDto.Id);
+            var id = await _clientService.CloneClientAsync(clientCloneDto);
+            originalClient.Id = id;
 
-            return Ok();
+            return CreatedAtAction(nameof(Get), new { id }, originalClient);
         }
 
         [HttpGet("{id}/Secrets")]
@@ -104,14 +120,22 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpPost("{id}/Secrets")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> PostSecret(int id, [FromBody]ClientSecretApiDto clientSecretApi)
         {
             var secretsDto = clientSecretApi.ToClientApiModel<ClientSecretsDto>();
             secretsDto.ClientId = id;
 
-            await _clientService.AddClientSecretAsync(secretsDto);
+            if (!secretsDto.ClientSecretId.Equals(default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
 
-            return Ok();
+            var secretId = await _clientService.AddClientSecretAsync(secretsDto);
+            clientSecretApi.Id = secretId;
+
+            return CreatedAtAction(nameof(GetSecret), new { secretId }, clientSecretApi);
         }
 
         [HttpDelete("Secrets/{secretId}")]
@@ -144,14 +168,22 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpPost("{id}/Properties")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> PostProperty(int id, [FromBody]ClientPropertyApiDto clientPropertyApi)
         {
             var clientPropertiesDto = clientPropertyApi.ToClientApiModel<ClientPropertiesDto>();
             clientPropertiesDto.ClientId = id;
 
-            await _clientService.AddClientPropertyAsync(clientPropertiesDto);
+            if (!clientPropertiesDto.ClientPropertyId.Equals(default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
 
-            return Ok();
+            var propertyId = await _clientService.AddClientPropertyAsync(clientPropertiesDto);
+            clientPropertyApi.Id = propertyId;
+
+            return CreatedAtAction(nameof(GetProperty), new { propertyId }, clientPropertyApi);
         }
 
         [HttpDelete("Properties/{propertyId}")]
@@ -184,14 +216,22 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpPost("{id}/Claims")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> PostClaim(int id, [FromBody]ClientClaimApiDto clientClaimApiDto)
         {
             var clientClaimsDto = clientClaimApiDto.ToClientApiModel<ClientClaimsDto>();
             clientClaimsDto.ClientId = id;
 
-            await _clientService.AddClientClaimAsync(clientClaimsDto);
+            if (!clientClaimsDto.ClientClaimId.Equals(default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
 
-            return Ok();
+            var claimId = await _clientService.AddClientClaimAsync(clientClaimsDto);
+            clientClaimApiDto.Id = claimId;
+
+            return CreatedAtAction(nameof(GetClaim), new { claimId }, clientClaimApiDto);
         }
 
         [HttpDelete("Claims/{claimId}")]
