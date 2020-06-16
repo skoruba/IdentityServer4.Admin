@@ -1,4 +1,4 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 // Original file: https://github.com/IdentityServer/IdentityServer4.Samples
@@ -583,6 +583,12 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, HttpContext.Request.Scheme);
 
                 await _emailSender.SendEmailAsync(model.Email, _localizer["ConfirmEmailTitle"], _localizer["ConfirmEmailBody", HtmlEncoder.Default.Encode(callbackUrl)]);
+
+                if (_loginConfiguration.RequireConfirmedEmail)
+                {
+                    return View("CheckEmail");
+                }
+
                 await _signInManager.SignInAsync(user, isPersistent: false);
 
                 return RedirectToLocal(returnUrl);
