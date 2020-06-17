@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Skoruba.IdentityServer4.Admin.Api.Dtos.Clients
@@ -14,6 +14,8 @@ namespace Skoruba.IdentityServer4.Admin.Api.Dtos.Clients
 
         [Required]
         public string Value { get; set; }
+		
+		public string HashType { get; set; }
 
         public DateTime? Expiration { get; set; }       
     }
