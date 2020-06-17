@@ -36,13 +36,13 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
         {
             if (clientSecret.Type != SharedSecret) return;
 
-			if (clientSecret.HashType == ((int)HashType.Sha256).ToString() ||
-				clientSecret.HashType.Equals(HashType.Sha256.ToString(), StringComparison.InvariantCultureIgnoreCase))
+            if (clientSecret.HashType == ((int)HashType.Sha256).ToString() ||
+                clientSecret.HashType.Equals(HashType.Sha256.ToString(), StringComparison.InvariantCultureIgnoreCase))
             {
                 clientSecret.Value = clientSecret.Value.Sha256();
             }
-			else if (clientSecret.HashType == ((int)HashType.Sha512).ToString() ||
-					 clientSecret.HashType.Equals(HashType.Sha512.ToString(), StringComparison.InvariantCultureIgnoreCase))
+            else if (clientSecret.HashType == ((int)HashType.Sha512).ToString() ||
+                clientSecret.HashType.Equals(HashType.Sha512.ToString(), StringComparison.InvariantCultureIgnoreCase))
             {
                 clientSecret.Value = clientSecret.Value.Sha512();
             }
