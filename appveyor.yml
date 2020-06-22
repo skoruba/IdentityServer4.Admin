@@ -1,0 +1,5 @@
+image: Ubuntu
+build:
+  project: Skoruba.IdentityServer4.Admin.sln
+  verbosity: minimal
+version: '1.0.{build}'
