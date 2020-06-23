@@ -15,6 +15,19 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.Test
         {
         }
 
+        public override void RegisterDbContexts(IServiceCollection services)
+        {
+            services.RegisterDbContexts<
+                AdminIdentityDbContext, 
+                IdentityServerConfigurationDbContext, 
+                IdentityServerPersistedGrantDbContext, 
+                AdminLogDbContext, 
+                AdminAuditLogDbContext, 
+                IdentityServerDataProtectionDbContext>(Configuration);
+
+            EnsureDatabaseMigrated(services);
+        }
+
         public override void RegisterAuthentication(IServiceCollection services)
         {
             services.AddAuthenticationServicesStaging<AdminIdentityDbContext, UserIdentity, UserIdentityRole>();
@@ -30,6 +43,17 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.Test
         {
             app.UseAuthentication();
             app.UseMiddleware<AuthenticatedTestRequestMiddleware>();
+        }
+
+        private async void EnsureDatabaseMigrated(IServiceCollection services)
+        {
+            await DbMigrationHelpers.EnsureDatabasesMigrated<
+                AdminIdentityDbContext,
+                IdentityServerConfigurationDbContext, 
+                IdentityServerPersistedGrantDbContext, 
+                AdminLogDbContext, 
+                AdminAuditLogDbContext, 
+                IdentityServerDataProtectionDbContext>(services.BuildServiceProvider());
         }
     }
 }
