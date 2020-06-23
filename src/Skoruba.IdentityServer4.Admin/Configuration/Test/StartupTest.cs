@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,11 +13,6 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.Test
     {
         public StartupTest(IWebHostEnvironment env, IConfiguration configuration) : base(env, configuration)
         {
-        }
-
-        public override void RegisterDbContexts(IServiceCollection services)
-        {
-            services.RegisterDbContextsStaging<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext>();
         }
 
         public override void RegisterAuthentication(IServiceCollection services)

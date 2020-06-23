@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using IdentityServer4.EntityFramework.Storage;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -26,11 +26,20 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions
         /// <param name="persistedGrantConnectionString"></param>
         /// <param name="errorLoggingConnectionString"></param>
         /// <param name="auditLoggingConnectionString"></param>
-        public static void RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext,
-            TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(this IServiceCollection services,
-            string identityConnectionString, string configurationConnectionString,
-            string persistedGrantConnectionString, string errorLoggingConnectionString,
-            string auditLoggingConnectionString, string dataProtectionConnectionString = null)
+        public static void RegisterMySqlDbContexts<
+            TIdentityDbContext, 
+            TConfigurationDbContext,
+            TPersistedGrantDbContext, 
+            TLogDbContext, 
+            TAuditLoggingDbContext, 
+            TDataProtectionDbContext>(
+                this IServiceCollection services,
+                string identityConnectionString, 
+                string configurationConnectionString,
+                string persistedGrantConnectionString, 
+                string errorLoggingConnectionString,
+                string auditLoggingConnectionString, 
+                string dataProtectionConnectionString = null)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
@@ -78,10 +87,16 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions
         /// <param name="identityConnectionString"></param>
         /// <param name="configurationConnectionString"></param>
         /// <param name="persistedGrantConnectionString"></param>
-        public static void RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext,
-            TPersistedGrantDbContext, TDataProtectionDbContext>(this IServiceCollection services,
-            string identityConnectionString, string configurationConnectionString,
-            string persistedGrantConnectionString, string dataProtectionConnectionString)
+        public static void RegisterMySqlDbContexts<
+            TIdentityDbContext, 
+            TConfigurationDbContext,
+            TPersistedGrantDbContext, 
+            TDataProtectionDbContext>(
+                this IServiceCollection services,
+                string identityConnectionString, 
+                string configurationConnectionString,
+                string persistedGrantConnectionString, 
+                string dataProtectionConnectionString)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
