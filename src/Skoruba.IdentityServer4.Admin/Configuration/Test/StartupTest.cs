@@ -1,4 +1,4 @@
-using IdentityServer4.EntityFramework.DbContexts;
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,19 +14,6 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.Test
     {
         public StartupTest(IWebHostEnvironment env, IConfiguration configuration) : base(env, configuration)
         {
-        }
-
-        public override void RegisterDbContexts(IServiceCollection services)
-        {
-            services.RegisterDbContexts<
-                AdminIdentityDbContext,
-                IdentityServerConfigurationDbContext,
-                IdentityServerPersistedGrantDbContext,
-                AdminLogDbContext,
-                AdminAuditLogDbContext,
-                IdentityServerDataProtectionDbContext>(Configuration);
-
-            EnsureDatabaseCreated(services);
         }
 
         public override void RegisterAuthentication(IServiceCollection services)
@@ -46,10 +33,13 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.Test
             app.UseMiddleware<AuthenticatedTestRequestMiddleware>();
         }
 
-        private void EnsureDatabaseCreated(IServiceCollection services)
+        protected override void DoStartupPostProcessing(IApplicationBuilder app)
         {
-            ServiceProvider provider = services.BuildServiceProvider();
+            EnsureDatabaseCreated(app.ApplicationServices);
+        }
 
+        private void EnsureDatabaseCreated(IServiceProvider provider)
+        {
             using (var scope = provider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 using (var context = scope.ServiceProvider.GetRequiredService<IdentityServerPersistedGrantDbContext>())
