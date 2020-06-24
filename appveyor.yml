@@ -1,6 +1,10 @@
 image: Ubuntu
 
+environment:
+  APPVEYOR_SSH_KEY: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO331U/KDT0FmRuw7pRLRkCCkceP1eURu4T4V+dsK4Ky ed25519-appveyor
+
 init:
+  - curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
   - sudo sed -i 's!/var/lib/mysql!/dev/shm/mysql!' /etc/mysql/mysql.conf.d/mysqld.cnf
   - sudo sed -i 's!/var/lib/mysql!/dev/shm/mysql!' /etc/apparmor.d/usr.sbin.mysqld
   - sudo apparmor_parser -r /etc/apparmor.d/usr.sbin.mysqld
