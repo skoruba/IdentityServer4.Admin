@@ -1,3 +1,4 @@
+using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -18,14 +19,14 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.Test
         public override void RegisterDbContexts(IServiceCollection services)
         {
             services.RegisterDbContexts<
-                AdminIdentityDbContext, 
-                IdentityServerConfigurationDbContext, 
-                IdentityServerPersistedGrantDbContext, 
-                AdminLogDbContext, 
-                AdminAuditLogDbContext, 
+                AdminIdentityDbContext,
+                IdentityServerConfigurationDbContext,
+                IdentityServerPersistedGrantDbContext,
+                AdminLogDbContext,
+                AdminAuditLogDbContext,
                 IdentityServerDataProtectionDbContext>(Configuration);
 
-            EnsureDatabaseMigrated(services);
+            EnsureDatabaseCreated(services);
         }
 
         public override void RegisterAuthentication(IServiceCollection services)
@@ -45,15 +46,42 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.Test
             app.UseMiddleware<AuthenticatedTestRequestMiddleware>();
         }
 
-        private async void EnsureDatabaseMigrated(IServiceCollection services)
+        private void EnsureDatabaseCreated(IServiceCollection services)
         {
-            await DbMigrationHelpers.EnsureDatabasesMigrated<
-                AdminIdentityDbContext,
-                IdentityServerConfigurationDbContext, 
-                IdentityServerPersistedGrantDbContext, 
-                AdminLogDbContext, 
-                AdminAuditLogDbContext, 
-                IdentityServerDataProtectionDbContext>(services.BuildServiceProvider());
+            ServiceProvider provider = services.BuildServiceProvider();
+
+            using (var scope = provider.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                using (var context = scope.ServiceProvider.GetRequiredService<IdentityServerPersistedGrantDbContext>())
+                {
+                    context.Database.EnsureCreated();
+                }
+
+                using (var context = scope.ServiceProvider.GetRequiredService<AdminIdentityDbContext>())
+                {
+                    context.Database.EnsureCreated();
+                }
+
+                using (var context = scope.ServiceProvider.GetRequiredService<IdentityServerConfigurationDbContext>())
+                {
+                    context.Database.EnsureCreated();
+                }
+
+                using (var context = scope.ServiceProvider.GetRequiredService<AdminLogDbContext>())
+                {
+                    context.Database.EnsureCreated();
+                }
+
+                using (var context = scope.ServiceProvider.GetRequiredService<AdminAuditLogDbContext>())
+                {
+                    context.Database.EnsureCreated();
+                }
+
+                using (var context = scope.ServiceProvider.GetRequiredService<IdentityServerDataProtectionDbContext>())
+                {
+                    context.Database.EnsureCreated();
+                }
+            }
         }
     }
 }
