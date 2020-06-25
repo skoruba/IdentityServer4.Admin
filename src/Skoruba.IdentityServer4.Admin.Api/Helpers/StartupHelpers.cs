@@ -252,18 +252,20 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
             });
         }
 
-        public static void AddIdSHealthChecks<TConfigurationDbContext, TPersistedGrantDbContext, TIdentityDbContext, TLogDbContext, TAuditLoggingDbContext>(this IServiceCollection services, IConfiguration configuration, AdminApiConfiguration adminApiConfiguration)
+        public static void AddIdSHealthChecks<TConfigurationDbContext, TPersistedGrantDbContext, TIdentityDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(this IServiceCollection services, IConfiguration configuration, AdminApiConfiguration adminApiConfiguration)
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TIdentityDbContext : DbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
             where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
+            where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
         {
             var configurationDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
             var persistedGrantsDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);
             var identityDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
             var logDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.AdminLogDbConnectionStringKey);
             var auditLogDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.AdminAuditLogDbConnectionStringKey);
+            var dataProtectionDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.DataProtectionDbConnectionStringKey);
 
             var identityServerUri = adminApiConfiguration.IdentityServerBaseUrl;
             var healthChecksBuilder = services.AddHealthChecks()
@@ -272,7 +274,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                 .AddDbContextCheck<TIdentityDbContext>("IdentityDbContext")
                 .AddDbContextCheck<TLogDbContext>("LogDbContext")
                 .AddDbContextCheck<TAuditLoggingDbContext>("AuditLogDbContext")
-
+                .AddDbContextCheck<TDataProtectionDbContext>("DataProtectionDbContext")
                 .AddIdentityServer(new Uri(identityServerUri), "Identity Server");
 
             var serviceProvider = services.BuildServiceProvider();
@@ -284,6 +286,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                 var identityTableName = DbContextHelpers.GetEntityTable<TIdentityDbContext>(scope.ServiceProvider);
                 var logTableName = DbContextHelpers.GetEntityTable<TLogDbContext>(scope.ServiceProvider);
                 var auditLogTableName = DbContextHelpers.GetEntityTable<TAuditLoggingDbContext>(scope.ServiceProvider);
+                var dataProtectionTableName = DbContextHelpers.GetEntityTable<TDataProtectionDbContext>(scope.ServiceProvider);
 
                 var databaseProvider = configuration.GetSection(nameof(DatabaseProviderConfiguration)).Get<DatabaseProviderConfiguration>();
                 switch (databaseProvider.ProviderType)
@@ -299,7 +302,9 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                             .AddSqlServer(logDbConnectionString, name: "LogDb",
                                 healthQuery: $"SELECT TOP 1 * FROM dbo.[{logTableName}]")
                             .AddSqlServer(auditLogDbConnectionString, name: "AuditLogDb",
-                                healthQuery: $"SELECT TOP 1 * FROM dbo.[{auditLogTableName}]");
+                                healthQuery: $"SELECT TOP 1 * FROM dbo.[{auditLogTableName}]")
+                            .AddSqlServer(dataProtectionDbConnectionString, name: "DataProtectionDb",
+                            healthQuery: $"SELECT TOP 1 * FROM dbo.[{dataProtectionTableName}]");
                         break;
                     case DatabaseProviderType.PostgreSQL:
                         healthChecksBuilder
@@ -312,7 +317,9 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                             .AddNpgSql(logDbConnectionString, name: "LogDb",
                                 healthQuery: $"SELECT * FROM \"{logTableName}\" LIMIT 1")
                             .AddNpgSql(auditLogDbConnectionString, name: "AuditLogDb",
-                                healthQuery: $"SELECT * FROM \"{auditLogTableName}\"  LIMIT 1");
+                                healthQuery: $"SELECT * FROM \"{auditLogTableName}\"  LIMIT 1")
+                            .AddNpgSql(dataProtectionDbConnectionString, name: "DataProtectionDb",
+                                healthQuery: $"SELECT * FROM \"{dataProtectionTableName}\"  LIMIT 1");
                         break;
                     case DatabaseProviderType.MySql:
                         healthChecksBuilder
@@ -320,7 +327,8 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                             .AddMySql(persistedGrantsDbConnectionString, name: "PersistentGrantsDb")
                             .AddMySql(identityDbConnectionString, name: "IdentityDb")
                             .AddMySql(logDbConnectionString, name: "LogDb")
-                            .AddMySql(auditLogDbConnectionString, name: "AuditLogDb");
+                            .AddMySql(auditLogDbConnectionString, name: "AuditLogDb")
+                            .AddMySql(dataProtectionDbConnectionString, name: "DataProtectionDb");
                         break;
                     default:
                         throw new NotImplementedException($"Health checks not defined for database provider {databaseProvider.ProviderType}");
