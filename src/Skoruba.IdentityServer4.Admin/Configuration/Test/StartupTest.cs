@@ -36,41 +36,47 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.Test
 
         protected override void DoStartupPostProcessing(IApplicationBuilder app)
         {
-            MigrateDb(app.ApplicationServices);
+            ResetDb(app.ApplicationServices);
         }
 
-        private void MigrateDb(IServiceProvider provider)
+        private void ResetDb(IServiceProvider provider)
         {
             using (var scope = provider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 using (var context = scope.ServiceProvider.GetRequiredService<IdentityServerPersistedGrantDbContext>())
                 {
-                    context.Database.Migrate();
+                    context.Database.EnsureDeleted();
+                    context.Database.EnsureCreated();
                 }
 
                 using (var context = scope.ServiceProvider.GetRequiredService<AdminIdentityDbContext>())
                 {
-                    context.Database.Migrate();
+                    context.Database.EnsureDeleted();
+                    context.Database.EnsureCreated();
                 }
 
                 using (var context = scope.ServiceProvider.GetRequiredService<IdentityServerConfigurationDbContext>())
                 {
-                    context.Database.Migrate();
+                    context.Database.EnsureDeleted();
+                    context.Database.EnsureCreated();
                 }
 
                 using (var context = scope.ServiceProvider.GetRequiredService<AdminLogDbContext>())
                 {
-                    context.Database.Migrate();
+                    context.Database.EnsureDeleted();
+                    context.Database.EnsureCreated();
                 }
 
                 using (var context = scope.ServiceProvider.GetRequiredService<AdminAuditLogDbContext>())
                 {
-                    context.Database.Migrate();
+                    context.Database.EnsureDeleted();
+                    context.Database.EnsureCreated();
                 }
 
                 using (var context = scope.ServiceProvider.GetRequiredService<IdentityServerDataProtectionDbContext>())
                 {
-                    context.Database.Migrate();
+                    context.Database.EnsureDeleted();
+                    context.Database.EnsureCreated();
                 }
             }
         }
