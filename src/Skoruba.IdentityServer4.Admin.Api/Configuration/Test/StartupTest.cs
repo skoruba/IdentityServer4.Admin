@@ -1,5 +1,4 @@
-﻿using IdentityServer4.AccessTokenValidation;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +8,7 @@ using Skoruba.IdentityServer4.Admin.Api.Helpers;
 using Skoruba.IdentityServer4.Admin.Api.Middlewares;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin.Api.Configuration.Test
 {
@@ -16,11 +16,6 @@ namespace Skoruba.IdentityServer4.Admin.Api.Configuration.Test
     {
         public StartupTest(IWebHostEnvironment env, IConfiguration configuration) : base(env, configuration)
         {
-        }
-
-        public override void RegisterDbContexts(IServiceCollection services)
-        {
-            services.RegisterDbContextsStaging<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext>();
         }
 
         public override void RegisterAuthentication(IServiceCollection services)
@@ -48,6 +43,11 @@ namespace Skoruba.IdentityServer4.Admin.Api.Configuration.Test
         {
             app.UseAuthentication();
             app.UseMiddleware<AuthenticatedTestRequestMiddleware>();
+        }
+
+        protected override void DoStartupPostProcessing(IApplicationBuilder app)
+        {
+            DbHelpers.ResetDb(app.ApplicationServices);
         }
     }
 }

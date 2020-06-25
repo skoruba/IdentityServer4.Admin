@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
@@ -134,6 +134,8 @@ namespace Skoruba.IdentityServer4.Admin.Api
                     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
                 });
             });
+
+            DoStartupPostProcessing(app);
         }
 
         public virtual void RegisterDbContexts(IServiceCollection services)
@@ -155,6 +157,10 @@ namespace Skoruba.IdentityServer4.Admin.Api
         public virtual void UseAuthentication(IApplicationBuilder app)
         {
             app.UseAuthentication();
+        }
+
+        protected virtual void DoStartupPostProcessing(IApplicationBuilder app)
+        {
         }
     }
 }
