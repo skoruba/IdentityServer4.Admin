@@ -7,9 +7,9 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfaces
 {
     public interface IIdentityService<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole,
-        TUserLogin, TRoleClaim, TUserToken, 
+        TUserLogin, TRoleClaim, TUserToken,
         TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>        
+        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto>
         where TUserDto : UserDto<TKey>
         where TUser : IdentityUser<TKey>
         where TRole : IdentityRole<TKey>
@@ -23,11 +23,12 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfac
         where TUsersDto : UsersDto<TUserDto, TKey>
         where TRolesDto : RolesDto<TRoleDto, TKey>
         where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
-        where TUserClaimsDto: UserClaimsDto<TKey>
+        where TUserClaimsDto : UserClaimsDto<TUserClaimDto, TKey>
         where TUserProviderDto : UserProviderDto<TKey>
         where TUserProvidersDto : UserProvidersDto<TKey>
-        where TUserChangePasswordDto: UserChangePasswordDto<TKey>
+        where TUserChangePasswordDto : UserChangePasswordDto<TKey>
         where TRoleClaimsDto : RoleClaimsDto<TKey>
+        where TUserClaimDto : UserClaimDto<TKey>
     {
         Task<bool> ExistsUserAsync(string userId);
 
@@ -87,9 +88,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfac
 
         Task<TRoleClaimsDto> GetRoleClaimsAsync(string roleId, int page = 1, int pageSize = 10);
 
-		Task<TRoleClaimsDto> GetUserRoleClaimsAsync(string userId, string claimSearchText, int page = 1, int pageSize = 10);
+        Task<TRoleClaimsDto> GetUserRoleClaimsAsync(string userId, string claimSearchText, int page = 1, int pageSize = 10);
 
-		Task<TRoleClaimsDto> GetRoleClaimAsync(string roleId, int claimId);
+        Task<TRoleClaimsDto> GetRoleClaimAsync(string roleId, int claimId);
 
         Task<IdentityResult> DeleteRoleClaimAsync(TRoleClaimsDto role);
 

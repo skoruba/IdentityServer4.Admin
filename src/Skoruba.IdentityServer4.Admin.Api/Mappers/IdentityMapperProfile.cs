@@ -6,7 +6,7 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 namespace Skoruba.IdentityServer4.Admin.Api.Mappers
 {
     public class IdentityMapperProfile<TRoleDto, TUserRolesDto, TKey, TUserClaimsDto, TUserClaimDto, TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimDto, TRoleClaimsDto> : Profile
-        where TUserClaimsDto : UserClaimsDto<TKey>
+        where TUserClaimsDto : UserClaimsDto<TUserClaimDto, TKey>
         where TUserClaimDto : UserClaimDto<TKey>
         where TRoleDto : RoleDto<TKey>
         where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
