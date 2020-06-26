@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4.Models;
 using Skoruba.AuditLogging.Services;
@@ -112,11 +112,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
         {
             if (apiSecret.Type != SharedSecret) return;
 
-            if (apiSecret.HashType == ((int)HashType.Sha256).ToString())
+            if (apiSecret.HashTypeEnum == HashType.Sha256)
             {
                 apiSecret.Value = apiSecret.Value.Sha256();
             }
-            else if (apiSecret.HashType == ((int)HashType.Sha512).ToString())
+            else if (apiSecret.HashTypeEnum == HashType.Sha512)
             {
                 apiSecret.Value = apiSecret.Value.Sha512();
             }
