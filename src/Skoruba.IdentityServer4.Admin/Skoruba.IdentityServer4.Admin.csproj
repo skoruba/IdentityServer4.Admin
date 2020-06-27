@@ -7,6 +7,7 @@
         <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <DockerfileContext>..\..</DockerfileContext>
+      <GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
     </PropertyGroup>
 
     <ItemGroup>
@@ -15,6 +16,10 @@
         <PackageReference Include="AspNetCore.HealthChecks.OpenIdConnectServer" Version="3.0.0" />
         <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="3.0.0" />
         <PackageReference Include="AspNetCore.HealthChecks.UI" Version="3.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="3.1.0" />
         <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="3.1.0" />
 
@@ -32,6 +37,7 @@
         <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.0" />
         <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
         <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="2.0.0" />
         <PackageReference Include="Serilog" Version="2.9.0" />
         <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
