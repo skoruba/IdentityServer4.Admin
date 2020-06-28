@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using IdentityServer4.Admin.MultiTenancy.Infrastructure;
+using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace IdentityServer4.Admin.MultiTenancy.Infrastructure
+namespace IdentityServer4.Admin.MultiTenancy.Implemantation.AspNetCore
 {
     public class MultiTenancyMiddleware : IMiddleware
     {
@@ -26,7 +25,7 @@ namespace IdentityServer4.Admin.MultiTenancy.Infrastructure
             if (resolveResult.TenantIdOrName != null)
             {
                 tenant = await FindTenantAsync(resolveResult.TenantIdOrName);
-                if(tenant == null)
+                if (tenant == null)
                 {
                     throw new Exception("There is no tenant with the tenant id or name: " + resolveResult.TenantIdOrName);
                 }
