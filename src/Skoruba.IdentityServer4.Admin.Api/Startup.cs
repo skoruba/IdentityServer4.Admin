@@ -17,6 +17,7 @@ using Skoruba.IdentityServer4.Admin.Api.Mappers;
 using Skoruba.IdentityServer4.Admin.Api.Resources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.Api
@@ -94,7 +95,7 @@ namespace Skoruba.IdentityServer4.Admin.Api
                 options.OperationFilter<AuthorizeCheckOperationFilter>();
             });
 
-            services.AddAuditEventLogging<AdminAuditLogDbContext, AuditLog>(Configuration);
+            services.AddAuditEventLogging<AdminAuditLogDbContext, AppAuditLog>(Configuration);
 
             services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, AdminLogDbContext, AdminAuditLogDbContext>(Configuration, adminApiConfiguration);
         }
@@ -131,7 +132,7 @@ namespace Skoruba.IdentityServer4.Admin.Api
 
         public virtual void RegisterDbContexts(IServiceCollection services)
         {
-            services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext>(Configuration);
+            services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, MultiTenantDbContext>(Configuration);
         }
 
         public virtual void RegisterAuthentication(IServiceCollection services)

@@ -1,10 +1,11 @@
-﻿using System;
+﻿using IdentityServer4.Admin.MultiTenancy;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Xml.Linq;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Entities
 {    
-    public class Log
+    public class Log : IMultiTenant
     {
         public long Id { get; set; }
 
@@ -24,5 +25,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Entities
 
         [NotMapped]
         public XElement PropertiesXml => XElement.Parse(Properties);
+
+        public Guid? TenantId { get; protected set; }
     }
 }

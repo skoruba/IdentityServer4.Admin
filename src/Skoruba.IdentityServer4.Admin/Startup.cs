@@ -15,6 +15,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.Helpers;
 using Skoruba.IdentityServer4.Admin.Configuration;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities;
 
 namespace Skoruba.IdentityServer4.Admin
 {
@@ -71,7 +72,7 @@ namespace Skoruba.IdentityServer4.Admin
             RegisterAuthorization(services);
 
             // Add audit logging
-            services.AddAuditEventLogging<AdminAuditLogDbContext, AuditLog>(Configuration);
+            services.AddAuditEventLogging<AdminAuditLogDbContext, AppAuditLog>(Configuration);
 
             services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, AdminLogDbContext, AdminAuditLogDbContext>(Configuration, rootConfiguration.AdminConfiguration);
         }
@@ -111,7 +112,7 @@ namespace Skoruba.IdentityServer4.Admin
 
         public virtual void RegisterDbContexts(IServiceCollection services)
         {
-            services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext>(Configuration);
+            services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, MultiTenantDbContext>(Configuration);
         }
 
         public virtual void RegisterAuthentication(IServiceCollection services)

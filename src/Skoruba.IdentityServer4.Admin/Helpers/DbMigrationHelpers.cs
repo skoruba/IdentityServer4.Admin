@@ -12,6 +12,7 @@ using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.Configuration;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -27,7 +28,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
-            where TAuditLogDbContext: DbContext, IAuditLoggingDbContext<AuditLog>
+            where TAuditLogDbContext: DbContext, IAuditLoggingDbContext<AppAuditLog>
             where TUser : IdentityUser, new()
             where TRole : IdentityRole, new()
         {

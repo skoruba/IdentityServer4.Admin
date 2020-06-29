@@ -30,6 +30,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Skoruba.IdentityServer4.Admin.Helpers;
 using Xunit;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 {
@@ -806,7 +807,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             services.AddAuditLogging()
                 .AddDefaultEventData()
                 .AddAuditSinks<DatabaseAuditEventLoggerSink<AuditLog>>();
-            services.AddTransient<IAuditLoggingRepository<AuditLog>, AuditLoggingRepository<AdminAuditLogDbContext, AuditLog>>();
+            services.AddTransient<IAuditLoggingRepository<AppAuditLog>, AuditLoggingRepository<AdminAuditLogDbContext, AppAuditLog>>();
             
             //Add Admin services
             services.AddMvcExceptionFilters();

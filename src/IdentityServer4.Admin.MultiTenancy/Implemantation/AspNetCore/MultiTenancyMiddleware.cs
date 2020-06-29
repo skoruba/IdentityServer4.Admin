@@ -11,11 +11,14 @@ namespace IdentityServer4.Admin.MultiTenancy.Implemantation.AspNetCore
         private readonly ITenantStore _tenantStore;
         private readonly ITenantResolver _tenantResolver;
 
-        public MultiTenancyMiddleware(ICurrentTenant currentTenant,
-            ITenantStore tenantStore)
+        public MultiTenancyMiddleware(
+            ICurrentTenant currentTenant,
+            ITenantStore tenantStore,
+            ITenantResolver tenantResolver)
         {
             _currentTenant = currentTenant;
             _tenantStore = tenantStore;
+            _tenantResolver = tenantResolver;
         }
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)

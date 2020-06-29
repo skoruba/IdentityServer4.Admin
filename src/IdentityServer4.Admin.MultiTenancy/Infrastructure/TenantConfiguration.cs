@@ -10,7 +10,7 @@ namespace IdentityServer4.Admin.MultiTenancy.Infrastructure
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public IEnumerable<string> ConnectionStrings { get; set; }
+        public Dictionary<string, string> ConnectionStrings { get; set; }
 
         public TenantConfiguration()
         {
@@ -25,7 +25,7 @@ namespace IdentityServer4.Admin.MultiTenancy.Infrastructure
             }
             Id = id;
             Name = name;
-            ConnectionStrings = Enumerable.Empty<string>();
+            ConnectionStrings = new Dictionary<string, string>();
         }
     }
 }

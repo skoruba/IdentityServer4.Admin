@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Skoruba.AuditLogging.EntityFramework.DbContexts;
 using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions
 {
@@ -25,12 +26,14 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions
         /// <param name="persistedGrantConnectionString"></param>
         /// <param name="errorLoggingConnectionString"></param>
         /// <param name="auditLoggingConnectionString"></param>
-        public static void RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext>(this IServiceCollection services, string identityConnectionString, string configurationConnectionString, string persistedGrantConnectionString, string errorLoggingConnectionString, string auditLoggingConnectionString)
+        public static void RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, 
+            TLogDbContext, TAuditLoggingDbContext, TMultiTenantDbContext>(this IServiceCollection services, string identityConnectionString, string configurationConnectionString, string persistedGrantConnectionString, string errorLoggingConnectionString, string auditLoggingConnectionString)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
-            where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
+            where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AppAuditLog>
+            where TMultiTenantDbContext : DbContext, IMultiTenantDbContext
         {
             var migrationsAssembly = typeof(DatabaseExtensions).GetTypeInfo().Assembly.GetName().Name;
 
@@ -48,6 +51,9 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions
 
             // Audit logging connection
             services.AddDbContext<TAuditLoggingDbContext>(options => options.UseSqlServer(auditLoggingConnectionString, optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
+
+            // Multi tenant connection
+            services.AddDbContext<TMultiTenantDbContext>(options => options.UseSqlServer(identityConnectionString, optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
         }
 
         /// <summary>
