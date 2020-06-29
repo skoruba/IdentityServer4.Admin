@@ -806,7 +806,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             //Audit logging
             services.AddAuditLogging()
                 .AddDefaultEventData()
-                .AddAuditSinks<DatabaseAuditEventLoggerSink<AuditLog>>();
+                .AddAuditSinks<DatabaseAuditEventLoggerSink<AppAuditLog>>();
             services.AddTransient<IAuditLoggingRepository<AppAuditLog>, AuditLoggingRepository<AdminAuditLogDbContext, AppAuditLog>>();
             
             //Add Admin services

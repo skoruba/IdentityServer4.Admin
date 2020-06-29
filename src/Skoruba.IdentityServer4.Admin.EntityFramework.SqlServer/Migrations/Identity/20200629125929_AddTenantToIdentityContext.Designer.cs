@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 
-namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations
+namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Identity
 {
     [DbContext(typeof(AdminIdentityDbContext))]
     [Migration("20200629125929_AddTenantToIdentityContext")]
