@@ -614,7 +614,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             //Add Admin services
             services.AddMvcExceptionFilters();
 
-            services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
+            services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, MultiTenantDbContext>();
 
             services.AddAdminAspNetIdentityServices<AdminIdentityDbContext, IdentityServerPersistedGrantDbContext,UserDto<string>, string, RoleDto<string>, string, string, string,
                 UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,

@@ -27,7 +27,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions
         /// <param name="errorLoggingConnectionString"></param>
         /// <param name="auditLoggingConnectionString"></param>
         public static void RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext,
-            TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext>(this IServiceCollection services,
+            TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TMultiTenantDbContext>(this IServiceCollection services,
             string identityConnectionString, string configurationConnectionString,
             string persistedGrantConnectionString, string errorLoggingConnectionString,
             string auditLoggingConnectionString)
@@ -36,6 +36,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
             where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AppAuditLog>
+            where TMultiTenantDbContext : DbContext, IMultiTenantDbContext
         {
             var migrationsAssembly = typeof(DatabaseExtensions).GetTypeInfo().Assembly.GetName().Name;
 
@@ -59,6 +60,10 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions
             // Audit logging connection
             services.AddDbContext<TAuditLoggingDbContext>(options => options.UseMySql(auditLoggingConnectionString,
                 optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
+
+            // Multi tenant
+            services.AddDbContext<TMultiTenantDbContext>(options =>
+                options.UseMySql(identityConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
         }
 
         /// <summary>
@@ -73,12 +78,13 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions
         /// <param name="configurationConnectionString"></param>
         /// <param name="persistedGrantConnectionString"></param>
         public static void RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext,
-            TPersistedGrantDbContext>(this IServiceCollection services,
+            TPersistedGrantDbContext, TMultiTenantDbContext>(this IServiceCollection services,
             string identityConnectionString, string configurationConnectionString,
             string persistedGrantConnectionString)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
+            where TMultiTenantDbContext : DbContext, IMultiTenantDbContext
         {
             var migrationsAssembly = typeof(DatabaseExtensions).GetTypeInfo().Assembly.GetName().Name;
 
@@ -90,6 +96,9 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions
 
             // Operational DB from existing connection
             services.AddOperationalDbContext<TPersistedGrantDbContext>(options => options.ConfigureDbContext = b => b.UseMySql(persistedGrantConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
+
+            // Multi tenant
+            services.AddDbContext<TMultiTenantDbContext>(options => options.UseMySql(identityConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
         }
     }
 }
