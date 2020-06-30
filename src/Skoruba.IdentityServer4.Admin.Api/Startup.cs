@@ -63,7 +63,7 @@ namespace Skoruba.IdentityServer4.Admin.Api
                 UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
                 RoleClaimsDto<string>, UserClaimDto<string>, RoleClaimDto<string>>(profileTypes);
 
-            services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
+            services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, MultiTenantDbContext>();
 
             services.AddAdminApiCors(adminApiConfiguration);
 

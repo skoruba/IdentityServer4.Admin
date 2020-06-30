@@ -27,6 +27,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
+using IdentityServer4.Services;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
@@ -136,10 +137,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <typeparam name="TIdentityDbContext"></typeparam>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        public static void RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext>(this IServiceCollection services, IConfiguration configuration)
+        public static void RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TMultiTenantDbContext>(this IServiceCollection services, IConfiguration configuration)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
+            where TMultiTenantDbContext : DbContext, IMultiTenantDbContext
         {
             var databaseProvider = configuration.GetSection(nameof(DatabaseProviderConfiguration)).Get<DatabaseProviderConfiguration>();
             
@@ -150,7 +152,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             switch (databaseProvider.ProviderType)
             {
                 case DatabaseProviderType.SqlServer:
-                    services.RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString);
+                    services.RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TMultiTenantDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString);
                     break;
                 case DatabaseProviderType.PostgreSQL:
                     services.RegisterNpgSqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString);
@@ -292,6 +294,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 .AddConfigurationStore<TConfigurationDbContext>()
                 .AddOperationalStore<TPersistedGrantDbContext>()
                 .AddAspNetIdentity<TUserIdentity>();
+
+            builder.Services.Replace(ServiceDescriptor.Transient<IClaimsService, IdentityClaimsService>());
+            services.AddTransient<IProfileService, ProfileService>();
 
             builder.AddCustomSigningCredential(configuration);
             builder.AddCustomValidationKey(configuration);

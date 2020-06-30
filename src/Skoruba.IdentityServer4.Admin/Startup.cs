@@ -16,6 +16,8 @@ using Skoruba.IdentityServer4.Admin.Helpers;
 using Skoruba.IdentityServer4.Admin.Configuration;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities;
+using IdentityServer4.Admin.MultiTenancy.Implemantation.AspNetCore;
+using IdentityServer4.Admin.MultiTenancy.Extensions;
 
 namespace Skoruba.IdentityServer4.Admin
 {
@@ -40,6 +42,9 @@ namespace Skoruba.IdentityServer4.Admin
             // Add DbContexts for Asp.Net Core Identity, Logging and IdentityServer - Configuration store and Operational store
             RegisterDbContexts(services);
 
+            // Multi tenant dependencies
+            services.AddMultiTenantDependencies();
+
             // Add Asp.Net Core Identity Configuration and OpenIdConnect auth as well
             RegisterAuthentication(services);
             
@@ -47,7 +52,7 @@ namespace Skoruba.IdentityServer4.Admin
             services.AddMvcExceptionFilters();
 
             // Add all dependencies for IdentityServer Admin
-            services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
+            services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, MultiTenantDbContext>();
 
             // Add all dependencies for Asp.Net Core Identity
             // If you want to change primary keys or use another db model for Asp.Net Core Identity:
@@ -94,6 +99,7 @@ namespace Skoruba.IdentityServer4.Admin
             app.UseStaticFiles();
 
             UseAuthentication(app);
+            app.UseMiddleware<MultiTenancyMiddleware>();
 
             // Use Localization
             app.ConfigureLocalization();

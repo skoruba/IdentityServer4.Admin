@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using IdentityServer4.Admin.MultiTenancy.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Stores;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -12,16 +14,17 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddAdminServices<TAdminDbContext>(
             this IServiceCollection services)
-            where TAdminDbContext : DbContext, IAdminPersistedGrantDbContext, IAdminConfigurationDbContext, IAdminLogDbContext
+            where TAdminDbContext : DbContext, IAdminPersistedGrantDbContext, IAdminConfigurationDbContext, IAdminLogDbContext, IMultiTenantDbContext
         {
 
-            return services.AddAdminServices<TAdminDbContext, TAdminDbContext, TAdminDbContext>();
+            return services.AddAdminServices<TAdminDbContext, TAdminDbContext, TAdminDbContext, TAdminDbContext>();
         }
 
-        public static IServiceCollection AddAdminServices<TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext>(this IServiceCollection services)
+        public static IServiceCollection AddAdminServices<TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TMultiTenantDbContext>(this IServiceCollection services)
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
+            where TMultiTenantDbContext : DbContext, IMultiTenantDbContext
         {
             //Repositories
             services.AddTransient<IClientRepository, ClientRepository<TConfigurationDbContext>>();
@@ -29,6 +32,9 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddTransient<IApiResourceRepository, ApiResourceRepository<TConfigurationDbContext>>();
             services.AddTransient<IPersistedGrantRepository, PersistedGrantRepository<TPersistedGrantDbContext>>();
             services.AddTransient<ILogRepository, LogRepository<TLogDbContext>>();
+            services.AddTransient<ITenantRepository, TenantRepository<TMultiTenantDbContext>>();
+
+            services.AddTransient<ITenantStore, TenantStore>();
 
             //Services
             services.AddTransient<IClientService, ClientService>();

@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Stores
+namespace Skoruba.IdentityServer4.Admin.EntityFramework.Stores
 {
     public class TenantStore : ITenantStore
     {

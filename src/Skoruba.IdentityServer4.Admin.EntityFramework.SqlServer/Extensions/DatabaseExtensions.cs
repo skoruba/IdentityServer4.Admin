@@ -68,12 +68,13 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions
         /// <param name="configurationConnectionString"></param>
         /// <param name="persistedGrantConnectionString"></param>
         public static void RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext,
-            TPersistedGrantDbContext>(this IServiceCollection services,
+            TPersistedGrantDbContext, TMultiTenantDbContext>(this IServiceCollection services,
             string identityConnectionString, string configurationConnectionString,
             string persistedGrantConnectionString)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
+            where TMultiTenantDbContext : DbContext, IMultiTenantDbContext
         {
             var migrationsAssembly = typeof(DatabaseExtensions).GetTypeInfo().Assembly.GetName().Name;
 
@@ -85,6 +86,9 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions
 
             // Operational DB from existing connection
             services.AddOperationalDbContext<TPersistedGrantDbContext>(options => options.ConfigureDbContext = b => b.UseSqlServer(persistedGrantConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
+
+            // Multi tenant connection
+            services.AddDbContext<TMultiTenantDbContext>(options => options.UseSqlServer(identityConnectionString, optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
         }
     }
 }

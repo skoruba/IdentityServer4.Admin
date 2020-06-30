@@ -1,12 +1,18 @@
 ﻿using HealthChecks.UI.Client;
+using IdentityServer4.Admin.MultiTenancy.Extensions;
+using IdentityServer4.Admin.MultiTenancy.Implemantation.AspNetCore;
+using IdentityServer4.Admin.MultiTenancy.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Stores;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
@@ -29,6 +35,10 @@ namespace Skoruba.IdentityServer4.STS.Identity
         {
             var rootConfiguration = CreateRootConfiguration();
             services.AddSingleton(rootConfiguration);
+
+            services.AddMultiTenantDependencies();
+            services.AddTransient<ITenantStore, TenantStore>();
+            services.AddTransient<ITenantRepository, TenantRepository<MultiTenantDbContext>>();
 
             // Register DbContexts for IdentityServer and Identity
             RegisterDbContexts(services);
@@ -62,6 +72,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
             app.UseStaticFiles();
             UseAuthentication(app);
+            app.UseMiddleware<MultiTenancyMiddleware>();
             app.UseMvcLocalizationServices();
 
             app.UseRouting();
@@ -78,7 +89,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
         public virtual void RegisterDbContexts(IServiceCollection services)
         {
-            services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext>(Configuration);
+            services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, MultiTenantDbContext>(Configuration);
         }
 
         public virtual void RegisterAuthentication(IServiceCollection services)
