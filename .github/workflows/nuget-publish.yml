@@ -7,7 +7,7 @@ jobs:
 
     name: publish
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -19,7 +19,8 @@ jobs:
           dotnet-version: 3.1.100
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
+      - name: show git token
+        run: echo "${secrets.GITHUB_TOKEN}"
       - name: run tests
         run: | 
             dotnet test ./tests/Skoruba.IdentityServer4.Admin.Api.IntegrationTests -c Release
@@ -64,7 +65,7 @@ jobs:
         run: dotnet nuget --version
         
       - name: publish nuget to github packages
-        run: dotnet nuget push *.nupkg
+        run: dotnet nuget push *.nupkg --skip-duplicate --no-symbols true
 
       - name: set git tag with nuget version
         run: |
