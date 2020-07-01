@@ -21,8 +21,6 @@ jobs:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Setup NuGet.exe for use with actions
         uses: NuGet/setup-nuget@v1.0.2
-      - name: Setup nuget config
-        run: nuget sources add -name "lobster" -Source https://nuget.pkg.github.com/lobsterink/index.json -Username lobsterink -Password ${{ secrets.GITHUB_TOKEN }} 
         
       - name: run tests
         run: | 
