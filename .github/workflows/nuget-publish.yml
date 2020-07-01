@@ -44,19 +44,19 @@ jobs:
 
       - name: get nuget version
         run: |
-          nugetFileName=$(find . -name Skoruba.IdentityServer4.Admin.BusinessLogic.*.nupkg)
+          nugetFileName=$(find . -name "Skoruba.IdentityServer4.Admin.BusinessLogic.[!Identity]*.nupkg")
           version=$(echo $nugetFileName | grep -oP '(?<=Skoruba.IdentityServer4.Admin.BusinessLogic.)\S+(?=.nupkg)')
           echo "::set-env name=NUGET_VERSION::$version"
           
-          nugetFileName=$(find . -name Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.*.nupkg)
+          nugetFileName=$(find . -name "Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.*.nupkg")
           version=$(echo $nugetFileName | grep -oP '(?<=Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.)\S+(?=.nupkg)')
           echo "::set-env name=NUGET_VERSION::$version"
           
-          nugetFileName=$(find . -name Skoruba.IdentityServer4.Admin.EntityFramework.*.nupkg)
+          nugetFileName=$(find . -name "Skoruba.IdentityServer4.Admin.EntityFramework.[!Identity]*.nupkg")
           version=$(echo $nugetFileName | grep -oP '(?<=Skoruba.IdentityServer4.Admin.EntityFramework.)\S+(?=.nupkg)')
           echo "::set-env name=NUGET_VERSION::$version"
           
-          nugetFileName=$(find . -name Skoruba.IdentityServer4.Admin.EntityFramework.Identity.*.nupkg)
+          nugetFileName=$(find . -name "Skoruba.IdentityServer4.Admin.EntityFramework.Identity.*.nupkg")
           version=$(echo $nugetFileName | grep -oP '(?<=Skoruba.IdentityServer4.Admin.EntityFramework.Identity.)\S+(?=.nupkg)')
           echo "::set-env name=NUGET_VERSION::$version"
       
