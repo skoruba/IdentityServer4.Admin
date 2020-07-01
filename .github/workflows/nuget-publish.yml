@@ -50,20 +50,20 @@ jobs:
           version=$(echo $nugetFileName | grep -oP '(?<=Skoruba.IdentityServer4.Admin.BusinessLogic.)\S+(?=.nupkg)')
           echo "::set-env name=NUGET_VERSION::$version"
           dotnet nuget push Skoruba.IdentityServer4.Admin.BusinessLogic.$version.nupkg --skip-duplicate --no-symbols true
-        - name: get version and push 2
-          run: |
+      - name: get version and push 2
+        run: |
           nugetFileName=$(find . -name "Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.*.nupkg")
           version=$(echo $nugetFileName | grep -oP '(?<=Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.)\S+(?=.nupkg)')
           echo "::set-env name=NUGET_VERSION::$version"         
           dotnet nuget push Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.$version.nupkg --skip-duplicate --no-symbols true
-        - name: get version and push 3
-          run: |
+      - name: get version and push 3
+        run: |
           nugetFileName=$(find . -name "Skoruba.IdentityServer4.Admin.EntityFramework.[!Identity]*.nupkg")
           version=$(echo $nugetFileName | grep -oP '(?<=Skoruba.IdentityServer4.Admin.EntityFramework.)\S+(?=.nupkg)')
           echo "::set-env name=NUGET_VERSION::$version"
           dotnet nuget push Skoruba.IdentityServer4.Admin.EntityFramework.$version.nupkg --skip-duplicate --no-symbols true
-        - name: get version and push 4
-          run: |
+      - name: get version and push 4
+        run: |
           nugetFileName=$(find . -name "Skoruba.IdentityServer4.Admin.EntityFramework.Identity.*.nupkg")
           version=$(echo $nugetFileName | grep -oP '(?<=Skoruba.IdentityServer4.Admin.EntityFramework.Identity.)\S+(?=.nupkg)')
           echo "::set-env name=NUGET_VERSION::$version"
