@@ -1,0 +1,68 @@
+name: nuget publish
+
+on: push
+
+jobs:
+  publish:
+
+    name: publish
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          source-url: https://nuget.pkg.github.com/lobsterink/index.json
+          dotnet-version: 3.1.100
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: run tests
+        run: dotnet test ./tests/Skoruba.IdentityServer4.Admin.Api.IntegrationTests -c Release
+        run: dotnet test ./tests/Skoruba.IdentityServer4.Admin.IntegrationTests -c Release
+        run: dotnet test ./tests/Skoruba.IdentityServer4.Admin.UnitTests -c Release
+        run: dotnet test ./tests/Skoruba.IdentityServer4.STS.Identity.IntegrationTests -c Release
+
+      - name: generate nuget
+        run: |
+          if [[ $GITHUB_REF == "refs/heads/master" ]]; then
+            dotnet pack src/Skoruba.IdentityServer4.Admin.BusinessLogic/Skoruba.IdentityServer4.Admin.BusinessLogic.csproj -c Release -o .
+            dotnet pack src/Skoruba.IdentityServer4.Admin.BusinessLogic.Identity/Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.csproj -c Release -o .
+            dotnet pack src/Skoruba.IdentityServer4.Admin.EntityFramework/Skoruba.IdentityServer4.Admin.EntityFramework.csproj -c Release -o .
+            dotnet pack src/Skoruba.IdentityServer4.Admin.EntityFramework.Identity/Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj -c Release -o .
+          else
+            utcnow=$(date +%s) 
+            dotnet pack src/Skoruba.IdentityServer4.Admin.BusinessLogic/Skoruba.IdentityServer4.Admin.BusinessLogic.csproj -c Release -o . --version-suffix preview.$utcnow
+            dotnet pack src/Skoruba.IdentityServer4.Admin.BusinessLogic.Identity/Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.csproj -c Release -o . --version-suffix preview.$utcnow
+            dotnet pack src/Skoruba.IdentityServer4.Admin.EntityFramework/Skoruba.IdentityServer4.Admin.EntityFramework.csproj -c Release -o . --version-suffix preview.$utcnow
+            dotnet pack src/Skoruba.IdentityServer4.Admin.EntityFramework.Identity/Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj -c Release -o . --version-suffix preview.$utcnow
+          fi
+
+      - name: get nuget version
+        run: |
+          nugetFileName=$(find . -name Skoruba.IdentityServer4.Admin.BusinessLogic.*.nupkg)
+          version=$(echo $nugetFileName | grep -oP '(?<=Skoruba.IdentityServer4.Admin.BusinessLogic.)\S+(?=.nupkg)')
+          echo "::set-env name=NUGET_VERSION::$version"
+          
+          nugetFileName=$(find . -name Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.*.nupkg)
+          version=$(echo $nugetFileName | grep -oP '(?<=Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.)\S+(?=.nupkg)')
+          echo "::set-env name=NUGET_VERSION::$version"
+          
+          nugetFileName=$(find . -name Skoruba.IdentityServer4.Admin.EntityFramework.*.nupkg)
+          version=$(echo $nugetFileName | grep -oP '(?<=Skoruba.IdentityServer4.Admin.EntityFramework.)\S+(?=.nupkg)')
+          echo "::set-env name=NUGET_VERSION::$version"
+          
+          nugetFileName=$(find . -name Skoruba.IdentityServer4.Admin.EntityFramework.Identity.*.nupkg)
+          version=$(echo $nugetFileName | grep -oP '(?<=Skoruba.IdentityServer4.Admin.EntityFramework.Identity.)\S+(?=.nupkg)')
+          echo "::set-env name=NUGET_VERSION::$version"
+      
+      - name: publish nuget to github packages
+        run: dotnet nuget push *.nupkg
+
+      - name: set git tag with nuget version
+        run: |
+          git tag $NUGET_VERSION
+          git push origin --tag
