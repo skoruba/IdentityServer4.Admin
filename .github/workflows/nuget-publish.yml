@@ -20,7 +20,7 @@ jobs:
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: show git token
-        run: echo "${secrets.GITHUB_TOKEN}"
+        run: echo $secrets.GITHUB_TOKEN
       - name: run tests
         run: | 
             dotnet test ./tests/Skoruba.IdentityServer4.Admin.Api.IntegrationTests -c Release
