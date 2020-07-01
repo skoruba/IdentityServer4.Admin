@@ -43,8 +43,8 @@ jobs:
             dotnet pack src/Skoruba.IdentityServer4.Admin.EntityFramework/Skoruba.IdentityServer4.Admin.EntityFramework.csproj -c Release -o . --version-suffix preview.$utcnow
             dotnet pack src/Skoruba.IdentityServer4.Admin.EntityFramework.Identity/Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj -c Release -o . --version-suffix preview.$utcnow
           fi
-    - name: Setup nuget config
-      run: sed 's/GITHUB_TOKEN/${{ secrets.GITHUB_TOKEN }}/g' .nuget.config > nuget.config
+      - name: Setup nuget config
+        run: sed 's/GITHUB_TOKEN/${{ secrets.GITHUB_TOKEN }}/g' .nuget.config > nuget.config
       
       - name: get version and push 1
         run: |
