@@ -21,10 +21,11 @@ jobs:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: run tests
-        run: dotnet test ./tests/Skoruba.IdentityServer4.Admin.Api.IntegrationTests -c Release
-        run: dotnet test ./tests/Skoruba.IdentityServer4.Admin.IntegrationTests -c Release
-        run: dotnet test ./tests/Skoruba.IdentityServer4.Admin.UnitTests -c Release
-        run: dotnet test ./tests/Skoruba.IdentityServer4.STS.Identity.IntegrationTests -c Release
+        run: | 
+            dotnet test ./tests/Skoruba.IdentityServer4.Admin.Api.IntegrationTests -c Release
+            dotnet test ./tests/Skoruba.IdentityServer4.Admin.IntegrationTests -c Release
+            dotnet test ./tests/Skoruba.IdentityServer4.Admin.UnitTests -c Release
+            dotnet test ./tests/Skoruba.IdentityServer4.STS.Identity.IntegrationTests -c Release
 
       - name: generate nuget
         run: |
