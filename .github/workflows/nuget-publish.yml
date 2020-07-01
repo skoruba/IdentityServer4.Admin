@@ -19,9 +19,10 @@ jobs:
           dotnet-version: 3.1.100
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        
+      - name: Setup NuGet.exe for use with actions
+        uses: NuGet/setup-nuget@v1.0.2
       - name: Setup nuget config
-        run: dotnet nuget add source -name "lobster" -Source https://nuget.pkg.github.com/lobsterink/index.json -n lobster -u lobsterink -p ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text
+        run: nuget sources add -name "lobster" -Source https://nuget.pkg.github.com/lobsterink/index.json -Username lobsterink -Password ${{ secrets.GITHUB_TOKEN }} 
         
       - name: run tests
         run: | 
@@ -50,25 +51,25 @@ jobs:
           nugetFileName=$(find . -name "Skoruba.IdentityServer4.Admin.BusinessLogic.[!Identity]*.nupkg")
           version=$(echo $nugetFileName | grep -oP '(?<=Skoruba.IdentityServer4.Admin.BusinessLogic.)\S+(?=.nupkg)')
           echo "::set-env name=NUGET_VERSION::$version"
-          dotnet nuget push Skoruba.IdentityServer4.Admin.BusinessLogic.$version.nupkg --skip-duplicate --no-symbols true
+          nuget push Skoruba.IdentityServer4.Admin.BusinessLogic.$version.nupkg --skip-duplicate
       - name: get version and push 2
         run: |
           nugetFileName=$(find . -name "Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.*.nupkg")
           version=$(echo $nugetFileName | grep -oP '(?<=Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.)\S+(?=.nupkg)')
           echo "::set-env name=NUGET_VERSION::$version"         
-          dotnet nuget push Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.$version.nupkg --skip-duplicate --no-symbols true
+          nuget push Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.$version.nupkg --skip-duplicate
       - name: get version and push 3
         run: |
           nugetFileName=$(find . -name "Skoruba.IdentityServer4.Admin.EntityFramework.[!Identity]*.nupkg")
           version=$(echo $nugetFileName | grep -oP '(?<=Skoruba.IdentityServer4.Admin.EntityFramework.)\S+(?=.nupkg)')
           echo "::set-env name=NUGET_VERSION::$version"
-          dotnet nuget push Skoruba.IdentityServer4.Admin.EntityFramework.$version.nupkg --skip-duplicate --no-symbols true
+          nuget push Skoruba.IdentityServer4.Admin.EntityFramework.$version.nupkg --skip-duplicate
       - name: get version and push 4
         run: |
           nugetFileName=$(find . -name "Skoruba.IdentityServer4.Admin.EntityFramework.Identity.*.nupkg")
           version=$(echo $nugetFileName | grep -oP '(?<=Skoruba.IdentityServer4.Admin.EntityFramework.Identity.)\S+(?=.nupkg)')
           echo "::set-env name=NUGET_VERSION::$version"
-          dotnet nuget push Skoruba.IdentityServer4.Admin.EntityFramework.Identity.$version.nupkg --skip-duplicate --no-symbols true
+          nuget push Skoruba.IdentityServer4.Admin.EntityFramework.Identity.$version.nupkg --skip-duplicate
 
       - name: set git tag with nuget version
         run: |
