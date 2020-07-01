@@ -22,9 +22,6 @@ jobs:
       - name: Setup NuGet.exe for use with actions
         uses: NuGet/setup-nuget@v1.0.2
         
-      - name: set source password nuget 
-        run: nuget sources add -Name "lobster" -Source https://nuget.pkg.github.com/lobsterink/index.json -username lobsterink -Password ${{secrets.GITHUB_TOKEN}}
-      
       - name: run tests
         run: | 
             dotnet test ./tests/Skoruba.IdentityServer4.Admin.Api.IntegrationTests -c Release
