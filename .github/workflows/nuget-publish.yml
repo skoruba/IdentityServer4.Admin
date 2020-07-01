@@ -44,7 +44,7 @@ jobs:
             dotnet pack src/Skoruba.IdentityServer4.Admin.EntityFramework.Identity/Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj -c Release -o . --version-suffix preview.$utcnow
           fi
       - name: Setup nuget config
-        run: sed 's/GITHUB_TOKEN/${{ secrets.GITHUB_TOKEN }}/g' .nuget.config > nuget.config
+        run: run: nuget sources add -name "lobster" -Source https://nuget.pkg.github.com/lobsterink/index.json -Username lobsterink -Password ${{ secrets.GITHUB_TOKEN }} 
       
       - name: get version and push 1
         run: |
