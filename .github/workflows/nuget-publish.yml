@@ -23,7 +23,7 @@ jobs:
         uses: NuGet/setup-nuget@v1.0.2
         
       - name: set source password nuget 
-        run: nuget sources update -Name "lobster" -Source https://nuget.pkg.github.com/lobsterink/index.json -username lobsterink -Password ${{secrets.GITHUB_TOKEN}}
+        run: nuget sources add -Name "lobster" -Source https://nuget.pkg.github.com/lobsterink/index.json -username lobsterink -Password ${{secrets.GITHUB_TOKEN}}
       
       - name: run tests
         run: | 
