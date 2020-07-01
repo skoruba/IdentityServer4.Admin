@@ -5,10 +5,12 @@
 		<Version>1.0.0-rc1</Version>
 		<Authors>Jan Škoruba</Authors>
 		<Description>Entity Framework layer for the administration of the Asp.Net Core Identity and IdentityServer4</Description>
+		<PackageDescription>Entity Framework layer for the administration of the Asp.Net Core Identity and IdentityServer4</PackageDescription>
 		<PackageTags>IdentityServer4 Admin OpenIDConnect OAuth2 Identity</PackageTags>
 		<PackageLicenseUrl>https://github.com/skoruba/IdentityServer4.Admin/blob/master/LICENSE.md</PackageLicenseUrl>
 		<PackageProjectUrl>https://github.com/skoruba/IdentityServer4.Admin</PackageProjectUrl>
 		<PackageIconUrl>https://raw.githubusercontent.com/skoruba/IdentityServer4.Admin/master/docs/Images/Skoruba.IdentityServer4.Admin-Logo-Nuget.png</PackageIconUrl>
+		<RepositoryUrl>https://github.com/LobsterInk/IAM.IdentityServer4.Admin</RepositoryUrl>
 	</PropertyGroup>
 
 	<ItemGroup>

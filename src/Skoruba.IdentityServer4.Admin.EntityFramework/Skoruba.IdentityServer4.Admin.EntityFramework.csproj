@@ -6,9 +6,11 @@
 	  <Authors>Jan Škoruba</Authors>
 	  <PackageTags>IdentityServer4 Admin OpenIDConnect OAuth2 Identity</PackageTags>
 	  <Description>Entity Framework layer for the administration of the IdentityServer4</Description>
+	  <PackageDescription>Entity Framework layer for the administration of the IdentityServer4</PackageDescription>
 	  <PackageLicenseUrl>https://github.com/skoruba/IdentityServer4.Admin/blob/master/LICENSE.md</PackageLicenseUrl>
 	  <PackageProjectUrl>https://github.com/skoruba/IdentityServer4.Admin</PackageProjectUrl>
 	  <PackageIconUrl>https://raw.githubusercontent.com/skoruba/IdentityServer4.Admin/master/docs/Images/Skoruba.IdentityServer4.Admin-Logo-Nuget.png</PackageIconUrl>
+	  <RepositoryUrl>https://github.com/LobsterInk/IAM.IdentityServer4.Admin</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
