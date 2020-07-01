@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "bootstrap": "4.3.1",
+        "bootstrap-datepicker": "1.9.0",
         "font-awesome": "4.7.0",
         "holderjs": "2.9.6",
         "jquery": "3.5.0",
@@ -18,13 +19,12 @@
         "knockout": "3.5.0",
         "moment": "2.24.0",
         "moment-timezone": "0.5.25",
-        "node-sass": "4.12.0",
+        "node-sass": "^4.14.1",
         "open-iconic": "1.1.1",
         "popper.js": "1.9.0",
         "tempusdominus-bootstrap-4": "5.1.2",
         "tempusdominus-core": "5.0.3",
-        "toastr": "2.1.4",
-        "bootstrap-datepicker": "1.9.0"
+        "toastr": "2.1.4"
     },
     "devDependencies": {
         "gulp": "4.0.2",
