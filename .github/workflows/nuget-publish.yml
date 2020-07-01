@@ -60,6 +60,9 @@ jobs:
           version=$(echo $nugetFileName | grep -oP '(?<=Skoruba.IdentityServer4.Admin.EntityFramework.Identity.)\S+(?=.nupkg)')
           echo "::set-env name=NUGET_VERSION::$version"
       
+      - name: dotnet show nuget command version
+        run: dotnet nuget --version
+        
       - name: publish nuget to github packages
         run: dotnet nuget push *.nupkg
 
