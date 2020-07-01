@@ -19,8 +19,9 @@ jobs:
           dotnet-version: 3.1.100
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - name: show git token (workaround)
-        run:  echo $secrets.GITHUB_TOKEN
+        
+      - name: Setup nuget config
+        run: dotnet nuget add source -name "lobster" -Source https://nuget.pkg.github.com/lobsterink/index.json -n lobster -u lobsterink -p ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text
         
       - name: run tests
         run: | 
@@ -43,8 +44,6 @@ jobs:
             dotnet pack src/Skoruba.IdentityServer4.Admin.EntityFramework/Skoruba.IdentityServer4.Admin.EntityFramework.csproj -c Release -o . --version-suffix preview.$utcnow
             dotnet pack src/Skoruba.IdentityServer4.Admin.EntityFramework.Identity/Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj -c Release -o . --version-suffix preview.$utcnow
           fi
-      - name: Setup nuget config
-        run: nuget sources add -name "lobster" -Source https://nuget.pkg.github.com/lobsterink/index.json -Username lobsterink -Password ${{ secrets.GITHUB_TOKEN }} 
       
       - name: get version and push 1
         run: |
