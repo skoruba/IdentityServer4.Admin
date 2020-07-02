@@ -16,6 +16,11 @@ namespace IdentityServer4.Admin.MultiTenancy.Extensions
             services.AddSingleton<ICurrentTenantAccessor, AsyncLocalCurrentTenantAccessor>();
             services.AddTransient<ITenantResolver, TenantResolver>();
 
+            services.AddTransient<ITenantResolveContributor, DomainTenantResolveContributor>();
+            services.AddTransient<ITenantResolveContributor, ClaimsTenantResolveContributor>();
+            services.AddTransient<ITenantResolveContributor, CookieTenantResolveContributor>();
+            services.AddTransient<ITenantResolveContributor, HeaderTenantResolveContributor>();
+
             return services;
         }
     }

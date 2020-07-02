@@ -21,7 +21,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Entities
 
         }
 
-        protected internal Tenant(Guid id, string name)
+        public Tenant(Guid id, string name)
         {
             Id = id;
             SetName(name);
@@ -29,7 +29,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Entities
             ConnectionStrings = new List<TenantConnectionString>();
         }
 
-        protected internal virtual void SetName(string name)
+        public virtual void SetName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {

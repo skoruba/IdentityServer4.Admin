@@ -42,6 +42,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddTransient<IIdentityResourceService, IdentityResourceService>();
             services.AddTransient<IPersistedGrantService, PersistedGrantService>();
             services.AddTransient<ILogService, LogService>();
+            services.AddTransient<ITenantService, TenantService>();
 
             //Resources
             services.AddScoped<IApiResourceServiceResources, ApiResourceServiceResources>();
