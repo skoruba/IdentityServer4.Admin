@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.Tenants.TenantDto
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.Tenants.EditionDto
 @inject IViewLocalizer Localizer
 
 @{
@@ -11,7 +11,7 @@
     <div class="col-12">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a asp-controller="Tenant" asp-action="Index">@Localizer["NavigationTenants"]</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Edition" asp-action="Index">@Localizer["NavigationEditions"]</a></li>
                 <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
             </ol>
         </nav>
@@ -23,7 +23,7 @@
 </div>
 
 
-<form id="client-form" asp-controller="Tenant" asp-action="Update" Method="post">
+<form id="client-form" asp-controller="Edition" asp-action="Update" Method="post">
 
     <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -36,20 +36,11 @@
             <!--Input - text -->
             <div class="form-group row">
                 <label asp-for="Name" class="col-sm-3 col-form-label">
-                    @Localizer["Tenant_Lable"]
+                    @Localizer["Edition_Lable"]
                 </label>
                 <div class="col-sm-9">
                     <input type="text" required class="form-control" asp-for="Name">
                     <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label asp-for="Edition.Id" class="col-sm-3 col-form-label">
-                    @Localizer["Edition_Lable"]
-                </label>
-                <div class="col-sm-9">
-                    <select asp-for="Edition.Id" asp-items="@(new SelectList(Model.Editions,"Id","Text"))" class="form-control single-select"></select>
                 </div>
             </div>
 
@@ -58,7 +49,7 @@
                 <label class="col-sm-3 col-form-label">
                 </label>
                 <div class="col-sm-9">
-                    <button type="submit" class="btn btn-primary">@Localizer["ActionSaveTenant"]</button>
+                    <button type="submit" class="btn btn-primary">@Localizer["ActionSaveEdition"]</button>
                 </div>
             </div>
         </div>

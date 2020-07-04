@@ -120,6 +120,9 @@
   <data name="ButtonAddTenant" xml:space="preserve">
     <value>Add Tenant</value>
   </data>
+  <data name="EditionName" xml:space="preserve">
+    <value>Edition</value>
+  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Tenants</value>
   </data>

@@ -8,5 +8,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces
         DbSet<Tenant> Tenants { get; set; }
 
         DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
+
+        DbSet<Edition> Editions { get; set; }
     }
 }

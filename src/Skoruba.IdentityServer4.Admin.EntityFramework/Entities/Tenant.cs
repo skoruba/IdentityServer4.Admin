@@ -14,6 +14,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Entities
 
         public virtual DateTime LastUpdatedTime { get; set; }
 
+        public virtual Edition Edition { get; protected set; }
+
         public virtual List<TenantConnectionString> ConnectionStrings { get; protected set; }
 
         protected Tenant()
@@ -21,12 +23,13 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Entities
 
         }
 
-        public Tenant(Guid id, string name)
+        public Tenant(Guid id, string name, Edition edition)
         {
             Id = id;
             SetName(name);
             CreatedTime = DateTime.UtcNow;
             ConnectionStrings = new List<TenantConnectionString>();
+            Edition = edition;
         }
 
         public virtual void SetName(string name)
@@ -36,6 +39,15 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Entities
                 throw new ArgumentException(nameof(name));
             }
             Name = name;
+        }
+
+        public virtual void SetEdition(Edition edition)
+        {
+            if (edition == null)
+            {
+                throw new ArgumentException(nameof(edition));
+            }
+            Edition = edition;
         }
 
         public virtual string FindConnectionString(string name)

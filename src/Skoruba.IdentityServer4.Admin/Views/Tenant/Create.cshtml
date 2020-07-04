@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.Tenants.TenantDto
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.Tenants.CreateTenantDto
 @inject IViewLocalizer Localizer
 
 @{
@@ -39,6 +39,15 @@
                 <div class="col-sm-9">
                     <input type="text" required class="form-control" asp-for="Name">
                     <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="EditionId" class="col-sm-3 col-form-label">
+                    @Localizer["Edition_Lable"]
+                </label>
+                <div class="col-sm-9">
+                    <select asp-for="EditionId" asp-items="@(new SelectList(Model.Editions,"Id","Text"))" class="form-control single-select"></select>
                 </div>
             </div>
 

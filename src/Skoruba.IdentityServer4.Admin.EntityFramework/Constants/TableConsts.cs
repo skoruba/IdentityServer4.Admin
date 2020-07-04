@@ -5,6 +5,7 @@
         public const string Logging = "Log";
         public const string Tenant = "Tenants";
         public const string TenantConnectionString = "TenantConnectionStrings";
+        public const string Edition = "Edition";
     }
 
     public static class TenantConsts

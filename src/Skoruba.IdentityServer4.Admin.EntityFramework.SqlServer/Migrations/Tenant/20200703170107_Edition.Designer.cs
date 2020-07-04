@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Tenant
 {
     [DbContext(typeof(MultiTenantDbContext))]
-    partial class MultiTenantDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200703170107_Edition")]
+    partial class Edition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,7 +89,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ten
 
             modelBuilder.Entity("Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Tenant", b =>
                 {
-                    b.HasOne("Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Edition", "Edition")
+                    b.HasOne("Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Edition", null)
                         .WithMany("Tenants")
                         .HasForeignKey("EditionId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
-@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.Tenants.TenantsDto
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.Tenants.EditionsDto
 @inject IViewLocalizer Localizer
 
 @{
@@ -10,11 +10,11 @@
 
 <h2>@Localizer["PageTitle"]</h2>
 
-<a asp-action="Create" class="btn btn-outline-primary mb-3 mt-3"><span class="oi oi-plus"></span> @Localizer["ButtonAddTenant"]</a>
+<a asp-action="Create" class="btn btn-outline-primary mb-3 mt-3"><span class="oi oi-plus"></span> @Localizer["ButtonAddEdition"]</a>
 
 <div class="row">
 	<div class="col-12">
-		@await Html.PartialAsync("Common/Search", new Search { Action = "Index", Controller = "Tenant" })
+		@await Html.PartialAsync("Common/Search", new Search { Action = "Index", Controller = "Edition" })
 	</div>
 </div>
 
@@ -26,22 +26,19 @@
 					<tr>
 						<th></th>
 						<th>@Localizer["TableName"]</th>
-						<th>@Localizer["EditionName"]</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					@foreach (var tenant in Model.Tenants)
+					@foreach (var edition in Model.Editions)
 					{
 						<tr>
 						    <th>
-						        <a class="btn btn-primary" asp-action="Update" asp-route-id="@tenant.Id">@Localizer["TableButtonEdit"]</a>
-						        @*<a class="btn btn-primary" asp-action="RoleUsers" asp-route-id="@tenant.Id">@Localizer["TableButtonUsers"]</a>*@
+						        <a class="btn btn-primary" asp-action="Update" asp-route-id="@edition.Id">@Localizer["TableButtonEdit"]</a>
 						    </th>
-							<td>@tenant.Name</td>
-							<td>@tenant.Edition.Name</td>
+							<td>@edition.Name</td>
 							<td>
-								<a class="btn btn-danger" asp-action="Delete" asp-route-id="@tenant.Id"><span class="oi oi-x"></span></a>
+								<a class="btn btn-danger" asp-action="Delete" asp-route-id="@edition.Id"><span class="oi oi-x"></span></a>
 							</td>
 						</tr>
 					}

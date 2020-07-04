@@ -17,5 +17,13 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
         Task DeleteAsync(Tenant entity);
         Task<Tenant> AddAsync(Tenant entity);
         Task<Tenant> UpdateAsync(Tenant entity);
+
+        Task DeleteEditionAsync(Edition entity);
+        Task<Edition> FindEditionByIdAsync(Guid id);
+        Task<Edition> FindEditionByNameAsync(string name);
+        Task<Edition> AddEditionAsync(Edition entity);
+        Task<Edition> UpdateEditionAsync(Edition entity);
+        Task<PagedList<Edition>> GetEditionListAsync(string search, int page = 1, int pageSize = 10);
+        Task<List<Edition>> GetEditionListAsync();
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Tenant
 {
     [DbContext(typeof(MultiTenantDbContext))]
-    partial class MultiTenantDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200704124006_EditionTenantUpdate")]
+    partial class EditionTenantUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

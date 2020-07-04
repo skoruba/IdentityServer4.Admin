@@ -1,16 +1,11 @@
-﻿using AutoMapper;
-using Skoruba.AuditLogging.EntityFramework.Helpers.Common;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.Tenants;
+﻿using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.Tenants;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 {
@@ -48,8 +43,17 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             {
                 throw new ArgumentException(nameof(input.Name));
             }
+
             await ValidateNameAsync(input.Name);
-            var tenant = new Tenant(Guid.NewGuid(), input.Name);
+
+            Guid.TryParse(input.EditionId, out Guid result);
+            if(result == null)
+            {
+                throw new ArgumentException(nameof(input.EditionId));
+            }
+            var edition = await TenantRepository.FindEditionByIdAsync(result);
+
+            var tenant = new Tenant(Guid.NewGuid(), input.Name, edition);
             var entity = await TenantRepository.AddAsync(tenant);
             return entity.ToModel();
         }
@@ -62,6 +66,10 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             }
             var tenant = await TenantRepository.FindByIdAsync(input.Id);
             tenant.SetName(input.Name);
+
+            var edition = await TenantRepository.FindEditionByIdAsync(input.Edition.Id);
+            tenant.SetEdition(edition);
+
             var entity = await TenantRepository.UpdateAsync(tenant);
             return entity.ToModel();
         }

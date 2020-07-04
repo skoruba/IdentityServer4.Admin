@@ -30,7 +30,15 @@
         <h3 class="menu-logo my-0 mr-md-auto font-weight-normal"><a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@RootConfiguration.AdminConfiguration.PageTitle</a></h3>
 
         <!--Menu item -->
-        <a class="menu-item my-2 btn btn-outline-primary mr-md-3" asp-controller="Tenant" asp-action="Index">@Localizer["LinkTenant"]</a>
+        <div class="menu-item my-2 my-md-0 mr-md-3 dropdown">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                @Localizer["TitleTenant"]
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" asp-area="" asp-controller="Tenant" asp-action="Index">@Localizer["LinkTenant"]</a>
+                <a class="dropdown-item" asp-area="" asp-controller="Edition" asp-action="Index">@Localizer["LinkEdition"]</a>
+            </div>
+        </div>
 
         <!--Menu item -->
         <vc:identity-server-link></vc:identity-server-link>
