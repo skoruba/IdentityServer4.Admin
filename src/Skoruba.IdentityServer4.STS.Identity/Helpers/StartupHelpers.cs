@@ -146,7 +146,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
         {
             var databaseProvider = configuration.GetSection(nameof(DatabaseProviderConfiguration)).Get<DatabaseProviderConfiguration>();
-            
+
             var identityConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
             var configurationConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
             var persistedGrantsConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);
@@ -314,7 +314,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     options.Events.RaiseSuccessEvents = true;
 
                     if (!string.IsNullOrEmpty(advancedConfiguration.PublicOrigin))
+                    {
                         options.PublicOrigin = advancedConfiguration.PublicOrigin;
+                    }
+
+                    if (!string.IsNullOrEmpty(advancedConfiguration.IssuerUri))
+                    {
+                        options.IssuerUri = advancedConfiguration.IssuerUri;
+                    }
                 })
                 .AddConfigurationStore<TConfigurationDbContext>()
                 .AddOperationalStore<TPersistedGrantDbContext>()
@@ -379,7 +386,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
         {
             var configurationDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
-            var persistedGrantsDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);            
+            var persistedGrantsDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);
             var identityDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
             var dataProtectionDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.DataProtectionDbConnectionStringKey);
 

@@ -9,6 +9,8 @@ using Serilog;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.Helpers;
+using Skoruba.IdentityServer4.Shared.Configuration.Common;
+using Skoruba.IdentityServer4.Shared.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin
 {
@@ -26,6 +28,8 @@ namespace Skoruba.IdentityServer4.Admin
 
             try
             {
+                DockerHelpers.ApplyDockerConfiguration(configuration);
+
                 var seed = args.Any(x => x == SeedArgs);
                 if (seed) args = args.Except(new[] { SeedArgs }).ToArray();
 
@@ -52,7 +56,7 @@ namespace Skoruba.IdentityServer4.Admin
                 Log.CloseAndFlush();
             }
         }
-        
+
         private static IConfiguration GetConfiguration(string[] args)
         {
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
