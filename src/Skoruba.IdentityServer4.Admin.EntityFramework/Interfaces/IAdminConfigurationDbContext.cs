@@ -1,6 +1,7 @@
 ﻿using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces
 {
@@ -37,5 +38,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces
         DbSet<IdentityResourceProperty> IdentityResourceProperties { get; set; }
 
         DbSet<ApiResourceProperty> ApiResourceProperties { get; set; }
+
+        DbSet<StandardClaim> StandardClaims { get; set; }
     }
 }

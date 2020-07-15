@@ -12,6 +12,7 @@ using Skoruba.AuditLogging.EntityFramework.DbContexts;
 using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.Configuration;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
@@ -28,7 +29,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
-            where TAuditLogDbContext: DbContext, IAuditLoggingDbContext<AuditLog>
+            where TAuditLogDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
             where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
             where TUser : IdentityUser, new()
             where TRole : IdentityRole, new()
@@ -46,7 +47,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             where TPersistedGrantDbContext : DbContext
             where TConfigurationDbContext : DbContext
             where TLogDbContext : DbContext
-            where TAuditLogDbContext: DbContext
+            where TAuditLogDbContext : DbContext
             where TDataProtectionDbContext : DbContext
         {
             using (var scope = services.GetRequiredService<IServiceScopeFactory>().CreateScope())
@@ -213,6 +214,15 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
                     await context.Clients.AddAsync(client.ToEntity());
                 }
+
+                await context.SaveChangesAsync();
+            }
+
+            if (!context.StandardClaims.Any())
+            {
+                var standardClaims = identityServerDataConfiguration.StandardClaims.Select(c => new StandardClaim { ClaimType = c });
+
+                await context.StandardClaims.AddRangeAsync(standardClaims);
 
                 await context.SaveChangesAsync();
             }

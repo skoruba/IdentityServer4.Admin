@@ -14,7 +14,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.0.0")
+                .HasAnnotation("ProductVersion", "3.1.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiResource", b =>
@@ -661,6 +661,29 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
                     b.HasIndex("IdentityResourceId");
 
                     b.ToTable("IdentityProperties");
+                });
+
+            modelBuilder.Entity("Skoruba.IdentityServer4.Admin.EntityFramework.Entities.StandardClaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<DateTimeOffset?>("LastUsedTimestamp")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long>("UseCount")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClaimType")
+                        .IsUnique();
+
+                    b.ToTable("StandardClaims");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiResourceClaim", b =>
