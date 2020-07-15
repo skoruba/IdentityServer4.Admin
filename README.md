@@ -344,7 +344,7 @@ or using `Email`:
  
 ### Azure AD
 - Great article how to set up Azure AD:
-  - https://azure.microsoft.com/cs-cz/resources/samples/active-directory-dotnet-webapp-openidconnect-aspnetcore/
+  - https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-v2-aspnet-core-webapp
 
 ## Email service
 
