@@ -153,6 +153,9 @@
   <data name="UserClaimsDeleteFailed" xml:space="preserve">
     <value>User Claims deleting failed</value>
   </data>
+  <data name="UserClaimsUpdateFailed" xml:space="preserve">
+    <value>User Claims updating failed</value>
+  </data>
   <data name="UserCreateFailed" xml:space="preserve">
     <value>User creating failed</value>
   </data>

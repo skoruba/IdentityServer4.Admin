@@ -14,6 +14,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources
         ResourceMessage RoleUpdateFailed();
         ResourceMessage UserClaimDoesNotExist();
         ResourceMessage UserClaimsCreateFailed();
+        ResourceMessage UserClaimsUpdateFailed();
         ResourceMessage UserClaimsDeleteFailed();
         ResourceMessage UserCreateFailed();
         ResourceMessage UserDeleteFailed();

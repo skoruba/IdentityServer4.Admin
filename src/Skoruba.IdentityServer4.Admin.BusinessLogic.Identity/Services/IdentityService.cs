@@ -331,6 +331,16 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             return HandleIdentityError(identityResult, IdentityServiceResources.UserClaimsCreateFailed().Description, IdentityServiceResources.IdentityErrorKey().Description, claimsDto);
         }
 
+        public virtual async Task<IdentityResult> UpdateUserClaimsAsync(TUserClaimsDto claimsDto)
+        {
+            var userIdentityUserClaim = Mapper.Map<TUserClaim>(claimsDto);
+            var identityResult = await IdentityRepository.UpdateUserClaimsAsync(userIdentityUserClaim);
+
+            await AuditEventLogger.LogEventAsync(new UserClaimsSavedEvent<TUserClaimsDto>(claimsDto));
+
+            return HandleIdentityError(identityResult, IdentityServiceResources.UserClaimsUpdateFailed().Description, IdentityServiceResources.IdentityErrorKey().Description, claimsDto);
+        }
+
         public virtual async Task<IdentityResult> DeleteUserClaimAsync(TUserClaimsDto claim)
         {
             var deleted = await IdentityRepository.DeleteUserClaimAsync(claim.UserId.ToString(), claim.ClaimId);

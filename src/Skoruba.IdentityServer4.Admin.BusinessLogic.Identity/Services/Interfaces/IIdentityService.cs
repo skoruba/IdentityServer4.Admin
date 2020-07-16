@@ -72,6 +72,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfac
 
         Task<IdentityResult> CreateUserClaimsAsync(TUserClaimsDto claimsDto);
 
+        Task<IdentityResult> UpdateUserClaimsAsync(TUserClaimsDto claimsDto);
+
         Task<IdentityResult> DeleteUserClaimAsync(TUserClaimsDto claim);
 
         Task<TUserProvidersDto> GetUserProvidersAsync(string userId);
