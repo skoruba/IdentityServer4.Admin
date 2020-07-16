@@ -88,6 +88,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfac
 
         Task<IdentityResult> CreateRoleClaimsAsync(TRoleClaimsDto claimsDto);
 
+        Task<IdentityResult> UpdateRoleClaimsAsync(TRoleClaimsDto claimsDto);
+
         Task<TRoleClaimsDto> GetRoleClaimsAsync(string roleId, int page = 1, int pageSize = 10);
 
         Task<TRoleClaimsDto> GetUserRoleClaimsAsync(string userId, string claimSearchText, int page = 1, int pageSize = 10);

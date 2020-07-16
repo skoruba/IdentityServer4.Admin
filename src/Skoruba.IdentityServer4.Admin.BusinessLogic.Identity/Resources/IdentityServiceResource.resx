@@ -129,6 +129,9 @@
   <data name="RoleClaimsDeleteFailed" xml:space="preserve">
     <value>Role Claims deleting failed</value>
   </data>
+  <data name="RoleClaimsUpdateFailed" xml:space="preserve">
+    <value>Role Claims updating failed</value>
+  </data>
   <data name="RoleCreateFailed" xml:space="preserve">
     <value>Role creating failed</value>
   </data>

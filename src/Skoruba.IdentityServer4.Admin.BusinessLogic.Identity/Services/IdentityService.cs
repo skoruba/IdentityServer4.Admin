@@ -424,6 +424,16 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             return HandleIdentityError(identityResult, IdentityServiceResources.RoleClaimsCreateFailed().Description, IdentityServiceResources.IdentityErrorKey().Description, claimsDto);
         }
 
+        public virtual async Task<IdentityResult> UpdateRoleClaimsAsync(TRoleClaimsDto claimsDto)
+        {
+            var identityRoleClaim = Mapper.Map<TRoleClaim>(claimsDto);
+            var identityResult = await IdentityRepository.UpdateRoleClaimsAsync(identityRoleClaim);
+
+            await AuditEventLogger.LogEventAsync(new RoleClaimsSavedEvent<TRoleClaimsDto>(claimsDto));
+
+            return HandleIdentityError(identityResult, IdentityServiceResources.RoleClaimsUpdateFailed().Description, IdentityServiceResources.IdentityErrorKey().Description, claimsDto);
+        }
+
         public virtual async Task<TRoleClaimsDto> GetRoleClaimsAsync(string roleId, int page = 1, int pageSize = 10)
         {
             var roleExists = await IdentityRepository.ExistsRoleAsync(roleId);
