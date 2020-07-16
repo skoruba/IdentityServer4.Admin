@@ -290,6 +290,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
                 .SingleOrDefaultAsync();
         }
 
+       
+
         public virtual Task<TRoleClaim> GetRoleClaimAsync(string roleId, int claimId)
         {
             var roleIdConverted = ConvertKeyFromString(roleId);
@@ -298,9 +300,21 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
                 .SingleOrDefaultAsync();
         }
 
+
+
         public virtual async Task<IdentityResult> CreateUserClaimsAsync(TUserClaim claims)
         {
             var user = await UserManager.FindByIdAsync(claims.UserId.ToString());
+            return await UserManager.AddClaimAsync(user, new Claim(claims.ClaimType, claims.ClaimValue));
+        }
+       
+        public virtual async Task<IdentityResult> UpdateUserClaimsAsync(TUserClaim claims)
+        {
+            var user = await UserManager.FindByIdAsync(claims.UserId.ToString());
+            var userClaim = await DbContext.Set<TUserClaim>().Where(x => x.Id == claims.Id).SingleOrDefaultAsync();
+
+            await UserManager.RemoveClaimAsync(user, new Claim(userClaim.ClaimType, userClaim.ClaimValue));
+
             return await UserManager.AddClaimAsync(user, new Claim(claims.ClaimType, claims.ClaimValue));
         }
 
@@ -309,6 +323,17 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             var role = await RoleManager.FindByIdAsync(claims.RoleId.ToString());
             return await RoleManager.AddClaimAsync(role, new Claim(claims.ClaimType, claims.ClaimValue));
         }
+
+        public virtual async Task<IdentityResult> UpdateRoleClaimsAsync(TRoleClaim claims)
+        {
+            var role = await RoleManager.FindByIdAsync(claims.RoleId.ToString());
+            var userClaim = await DbContext.Set<TUserClaim>().Where(x => x.Id == claims.Id).SingleOrDefaultAsync();
+
+            await RoleManager.RemoveClaimAsync(role, new Claim(userClaim.ClaimType, userClaim.ClaimValue));
+
+            return await RoleManager.AddClaimAsync(role, new Claim(claims.ClaimType, claims.ClaimValue));
+        }
+
 
         public virtual async Task<IdentityResult> DeleteUserClaimAsync(string userId, int claimId)
         {
