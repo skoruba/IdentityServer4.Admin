@@ -153,7 +153,7 @@ The following Gulp commands are available:
     - --migrationProviderName (provider type - available choices: All, SqlServer, MySql, PostgreSQL)
 
 - For example: 
-`.\add-migration.ps1 -migration DbInit -migrationProviderName SqlServer`
+`.\add-migrations.ps1 -migration DbInit -migrationProviderName SqlServer`
 
 ### Available database providers:
 - SqlServer
@@ -344,7 +344,7 @@ or using `Email`:
  
 ### Azure AD
 - Great article how to set up Azure AD:
-  - https://azure.microsoft.com/cs-cz/resources/samples/active-directory-dotnet-webapp-openidconnect-aspnetcore/
+  - https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-v2-aspnet-core-webapp
 
 ## Email service
 
@@ -558,6 +558,10 @@ It is possible to define the configuration according the client type - by defaul
 
 - [ ] Create a project template using dotnet CLI - `dotnet new template`
   - [ ] Second template: The administration of the IdentityServer4 (without Asp.Net Core Identity) ([#79](https://github.com/skoruba/IdentityServer4.Admin/issues/79))
+- [ ] Simplify Admin Identity middleware (#430)
+- [ ] Connect Admin Api to the Admin UI (#478)
+- [ ] Add windows authentication (#479)
+
 
 ### Future:
 

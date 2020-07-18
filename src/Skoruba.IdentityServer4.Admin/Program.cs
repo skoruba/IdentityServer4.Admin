@@ -18,8 +18,10 @@ namespace Skoruba.IdentityServer4.Admin
 
         public static async Task Main(string[] args)
         {
+            var configuration = GetConfiguration(args);
+
             Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(Configuration)
+                .ReadFrom.Configuration(configuration)
                 .CreateLogger();
 
             try
@@ -30,13 +32,13 @@ namespace Skoruba.IdentityServer4.Admin
                 var host = CreateHostBuilder(args).Build();
 
                 // Uncomment this to seed upon startup, alternatively pass in `dotnet run /seed` to seed using CLI
-                // await DbMigrationHelpers.EnsureSeedData<IdentityServerConfigurationDbContext, AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, UserIdentity, UserIdentityRole>(host);
+                // await DbMigrationHelpers.EnsureSeedData<IdentityServerConfigurationDbContext, AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext, UserIdentity, UserIdentityRole>(host);
                 if (seed)
                 {
                     await DbMigrationHelpers
                         .EnsureSeedData<IdentityServerConfigurationDbContext, AdminIdentityDbContext,
                             IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext,
-                            UserIdentity, UserIdentityRole>(host);
+                            IdentityServerDataProtectionDbContext, UserIdentity, UserIdentityRole>(host);
                 }
 
                 host.Run();
@@ -50,13 +52,29 @@ namespace Skoruba.IdentityServer4.Admin
                 Log.CloseAndFlush();
             }
         }
+        
+        private static IConfiguration GetConfiguration(string[] args)
+        {
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var isDevelopment = environment == Environments.Development;
 
-        public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-            .AddJsonFile("serilog.json", optional: true, reloadOnChange: true)
-            .AddEnvironmentVariables()
-            .Build();
+            var configurationBuilder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("serilog.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"serilog.{environment}.json", optional: true, reloadOnChange: true);
+
+            if (isDevelopment)
+            {
+                configurationBuilder.AddUserSecrets<Startup>();
+            }
+
+            configurationBuilder.AddCommandLine(args);
+            configurationBuilder.AddEnvironmentVariables();
+
+            return configurationBuilder.Build();
+        }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
@@ -66,7 +84,13 @@ namespace Skoruba.IdentityServer4.Admin
                      configApp.AddJsonFile("identitydata.json", optional: true, reloadOnChange: true);
                      configApp.AddJsonFile("identityserverdata.json", optional: true, reloadOnChange: true);
 
-                     if (hostContext.HostingEnvironment.IsDevelopment())
+                     var env = hostContext.HostingEnvironment;
+
+                     configApp.AddJsonFile($"serilog.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                     configApp.AddJsonFile($"identitydata.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                     configApp.AddJsonFile($"identityserverdata.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
+                     if (env.IsDevelopment())
                      {
                          configApp.AddUserSecrets<Startup>();
                      }

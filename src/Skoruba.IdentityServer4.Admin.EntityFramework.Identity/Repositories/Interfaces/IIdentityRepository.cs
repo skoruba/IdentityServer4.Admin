@@ -6,7 +6,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.Interfaces
 {
-	public interface IIdentityRepository<TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>	    
+	public interface IIdentityRepository<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
 	    where TUser : IdentityUser<TKey>
 	    where TRole : IdentityRole<TKey>
 	    where TKey : IEquatable<TKey>
@@ -23,6 +23,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.In
         Task<PagedList<TUser>> GetUsersAsync(string search, int page = 1, int pageSize = 10);
 
         Task<PagedList<TUser>> GetRoleUsersAsync(string roleId, string search, int page = 1, int pageSize = 10);
+
+        Task<PagedList<TUser>> GetClaimUsersAsync(string claimType, string claimValue, int page = 1, int pageSize = 10);
 
         Task<PagedList<TRole>> GetRolesAsync(string search, int page = 1, int pageSize = 10);
 
@@ -54,7 +56,9 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.In
 
         Task<IdentityResult> CreateUserClaimsAsync(TUserClaim claims);
 
-        Task<int> DeleteUserClaimsAsync(string userId, int claimId);
+        Task<IdentityResult> UpdateUserClaimsAsync(TUserClaim claims);
+
+        Task<IdentityResult> DeleteUserClaimAsync(string userId, int claimId);
 
         Task<List<UserLoginInfo>> GetUserProvidersAsync(string userId);
 
@@ -66,15 +70,20 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.In
 
         Task<IdentityResult> CreateRoleClaimsAsync(TRoleClaim claims);
 
+        Task<IdentityResult> UpdateRoleClaimsAsync(TRoleClaim claims);
+
         Task<PagedList<TRoleClaim>> GetRoleClaimsAsync(string roleId, int page = 1, int pageSize = 10);
 
 		Task<PagedList<TRoleClaim>> GetUserRoleClaimsAsync(string userId, string claimSearchText, int page = 1, int pageSize = 10);
 
-
 		Task<TRoleClaim> GetRoleClaimAsync(string roleId, int claimId);
 
-        Task<int> DeleteRoleClaimsAsync(string roleId, int claimId);
+        Task<IdentityResult> DeleteRoleClaimAsync(string roleId, int claimId);
 
         Task<IdentityResult> DeleteRoleAsync(TRole role);
+
+        bool AutoSaveChanges { get; set; }
+
+        Task<int> SaveAllChangesAsync();
     }
 }

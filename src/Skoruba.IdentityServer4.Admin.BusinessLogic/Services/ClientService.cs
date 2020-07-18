@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,11 +36,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
         {
             if (clientSecret.Type != SharedSecret) return;
 
-            if (clientSecret.HashType == ((int)HashType.Sha256).ToString())
+            if (clientSecret.HashTypeEnum == HashType.Sha256)
             {
                 clientSecret.Value = clientSecret.Value.Sha256();
             }
-            else if (clientSecret.HashType == ((int)HashType.Sha512).ToString())
+            else if (clientSecret.HashTypeEnum == HashType.Sha512)
             {
                 clientSecret.Value = clientSecret.Value.Sha512();
             }

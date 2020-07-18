@@ -11,8 +11,10 @@ namespace Skoruba.IdentityServer4.STS.Identity
     {
         public static void Main(string[] args)
         {
+            var configuration = GetConfiguration(args);
+
             Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(Configuration)
+                .ReadFrom.Configuration(configuration)
                 .CreateLogger();
             try
             {
@@ -28,12 +30,28 @@ namespace Skoruba.IdentityServer4.STS.Identity
             }
         }
 
-        public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-            .AddJsonFile("serilog.json", optional: true, reloadOnChange: true)
-            .AddEnvironmentVariables()
-            .Build();
+        private static IConfiguration GetConfiguration(string[] args)
+        {
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var isDevelopment = environment == Environments.Development;
+
+            var configurationBuilder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("serilog.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"serilog.{environment}.json", optional: true, reloadOnChange: true);
+
+            if (isDevelopment)
+            {
+                configurationBuilder.AddUserSecrets<Startup>();
+            }
+
+            configurationBuilder.AddCommandLine(args);
+            configurationBuilder.AddEnvironmentVariables();
+
+            return configurationBuilder.Build();
+        }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
@@ -41,7 +59,11 @@ namespace Skoruba.IdentityServer4.STS.Identity
                  {
                      configApp.AddJsonFile("serilog.json", optional: true, reloadOnChange: true);
 
-                     if (hostContext.HostingEnvironment.IsDevelopment())
+                     var env = hostContext.HostingEnvironment;
+
+                     configApp.AddJsonFile($"serilog.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
+                     if (env.IsDevelopment())
                      {
                          configApp.AddUserSecrets<Startup>();
                      }

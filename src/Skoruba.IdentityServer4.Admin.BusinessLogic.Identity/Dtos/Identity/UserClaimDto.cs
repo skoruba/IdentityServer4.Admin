@@ -4,7 +4,7 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Interfa
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
 {
-    public class UserClaimDto<TUserDtoKey> : BaseUserClaimDto<TUserDtoKey>, IUserClaimDto
+    public class UserClaimDto<TKey> : BaseUserClaimDto<TKey>, IUserClaimDto
     {
         [Required]
         public string ClaimType { get; set; }

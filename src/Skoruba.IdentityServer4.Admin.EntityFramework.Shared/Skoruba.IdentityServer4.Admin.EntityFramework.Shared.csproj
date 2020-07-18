@@ -12,7 +12,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Skoruba.AuditLogging.EntityFramework" Version="1.0.0-beta7" />
+      <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="3.1.0" />
+      <PackageReference Include="Skoruba.AuditLogging.EntityFramework" Version="1.0.0-beta8" />
     </ItemGroup>
 
     <ItemGroup>

@@ -63,9 +63,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             return role;
         }
 
-        public static Faker<UserClaimsDto<TKey>> GetUserClaimsFaker(int id, TKey userId)
+        public static Faker<UserClaimsDto<UserClaimDto<TKey>, TKey>> GetUserClaimsFaker(int id, TKey userId)
         {
-            var userClaimFaker = new Faker<UserClaimsDto<TKey>>()
+            var userClaimFaker = new Faker<UserClaimsDto<UserClaimDto<TKey>, TKey>>()
                 .RuleFor(o => o.ClaimId, id)
                 .RuleFor(o => o.ClaimType, f => Guid.NewGuid().ToString())
                 .RuleFor(o => o.ClaimValue, f => Guid.NewGuid().ToString())
@@ -74,24 +74,24 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             return userClaimFaker;
         }
 
-        public static UserClaimsDto<TKey> GenerateRandomUserClaim(int id, TKey userId = default(TKey))
+        public static UserClaimsDto<UserClaimDto<TKey>, TKey> GenerateRandomUserClaim(int id, TKey userId = default(TKey))
         {
             var userClaim = GetUserClaimsFaker(id, userId).Generate();
 
             return userClaim;
         }
 
-        public static Faker<UserRolesDto<TRoleDto, TKey, TKey>> GetUserRoleFaker<TRoleDto>(TKey id, TKey userId)
+        public static Faker<UserRolesDto<TRoleDto, TKey>> GetUserRoleFaker<TRoleDto>(TKey id, TKey userId)
             where TRoleDto : RoleDto<TKey>
         {
-            var userRoleFaker = new Faker<UserRolesDto<TRoleDto, TKey, TKey>>()
+            var userRoleFaker = new Faker<UserRolesDto<TRoleDto, TKey>>()
                 .RuleFor(o => o.RoleId, id)
                 .RuleFor(o => o.UserId, userId);
 
             return userRoleFaker;
         }
 
-        public static UserRolesDto<TRoleDto, TKey, TKey> GenerateRandomUserRole<TRoleDto>(TKey id, TKey userId)
+        public static UserRolesDto<TRoleDto, TKey> GenerateRandomUserRole<TRoleDto>(TKey id, TKey userId)
             where TRoleDto : RoleDto<TKey>
         {
             var userRole = GetUserRoleFaker<TRoleDto>(id, userId).Generate();
