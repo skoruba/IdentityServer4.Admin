@@ -124,10 +124,10 @@
     <value>Основные сведения</value>
   </data>
   <data name="NavConsent" xml:space="preserve">
-    <value>Экран Подтверждения </value>
+    <value>Экран подтверждения </value>
   </data>
   <data name="NavDeviceFlow" xml:space="preserve">
-    <value>Поток Устройства</value>
+    <value>Поток устройства</value>
   </data>
   <data name="NavName" xml:space="preserve">
     <value>Имя</value>
