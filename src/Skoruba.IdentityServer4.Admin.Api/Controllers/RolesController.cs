@@ -151,6 +151,21 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
             return Ok();
         }
 
+        [HttpPut("Claims")]
+        public async Task<IActionResult> PutRoleClaims([FromBody]RoleClaimApiDto<TKey> roleClaims)
+        {
+            var roleClaimsDto = _mapper.Map<TRoleClaimsDto>(roleClaims);
+
+            if (!roleClaimsDto.ClaimId.Equals(default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
+
+            await _identityService.UpdateRoleClaimsAsync(roleClaimsDto);
+
+            return Ok();
+        }
+
         [HttpDelete("{id}/Claims")]
         public async Task<IActionResult> DeleteRoleClaims(TKey id, int claimId)
         {

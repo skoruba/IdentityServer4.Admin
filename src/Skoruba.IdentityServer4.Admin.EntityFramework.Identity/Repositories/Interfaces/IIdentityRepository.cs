@@ -56,6 +56,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.In
 
         Task<IdentityResult> CreateUserClaimsAsync(TUserClaim claims);
 
+        Task<IdentityResult> UpdateUserClaimsAsync(TUserClaim claims);
+
         Task<IdentityResult> DeleteUserClaimAsync(string userId, int claimId);
 
         Task<List<UserLoginInfo>> GetUserProvidersAsync(string userId);
@@ -67,6 +69,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.In
         Task<IdentityResult> UserChangePasswordAsync(string userId, string password);
 
         Task<IdentityResult> CreateRoleClaimsAsync(TRoleClaim claims);
+
+        Task<IdentityResult> UpdateRoleClaimsAsync(TRoleClaim claims);
 
         Task<PagedList<TRoleClaim>> GetRoleClaimsAsync(string roleId, int page = 1, int pageSize = 10);
 

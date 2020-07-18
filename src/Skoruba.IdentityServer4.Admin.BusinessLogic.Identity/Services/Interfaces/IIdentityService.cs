@@ -72,6 +72,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfac
 
         Task<IdentityResult> CreateUserClaimsAsync(TUserClaimsDto claimsDto);
 
+        Task<IdentityResult> UpdateUserClaimsAsync(TUserClaimsDto claimsDto);
+
         Task<IdentityResult> DeleteUserClaimAsync(TUserClaimsDto claim);
 
         Task<TUserProvidersDto> GetUserProvidersAsync(string userId);
@@ -85,6 +87,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfac
         Task<IdentityResult> UserChangePasswordAsync(TUserChangePasswordDto userPassword);
 
         Task<IdentityResult> CreateRoleClaimsAsync(TRoleClaimsDto claimsDto);
+
+        Task<IdentityResult> UpdateRoleClaimsAsync(TRoleClaimsDto claimsDto);
 
         Task<TRoleClaimsDto> GetRoleClaimsAsync(string roleId, int page = 1, int pageSize = 10);
 
