@@ -127,7 +127,7 @@
     <value>Экран подтверждения </value>
   </data>
   <data name="NavDeviceFlow" xml:space="preserve">
-    <value>Поток устройства</value>
+    <value>Device Flow</value>
   </data>
   <data name="NavName" xml:space="preserve">
     <value>Имя</value>
