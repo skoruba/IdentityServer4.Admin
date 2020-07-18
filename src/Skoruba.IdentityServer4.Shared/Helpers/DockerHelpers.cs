@@ -14,7 +14,7 @@ namespace Skoruba.IdentityServer4.Shared.Helpers
         {
             var dockerConfiguration = configuration.GetSection(nameof(DockerConfiguration)).Get<DockerConfiguration>();
 
-            if (dockerConfiguration.UpdateCaCertificate)
+            if (dockerConfiguration != null && dockerConfiguration.UpdateCaCertificate)
             {
                 UpdateCaCertificates();
             }
