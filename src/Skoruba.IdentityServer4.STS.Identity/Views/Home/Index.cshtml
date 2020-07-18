@@ -4,7 +4,7 @@
 @inject IViewLocalizer Localizer
 @inject IRootConfiguration RootConfiguration
 <div class="welcome-block px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4"><img class="icon" alt="Logo" src="@RootConfiguration.AdminConfiguration.HomePageLogoUri"><br />@RootConfiguration.AdminConfiguration.PageTitle</h1>
+    <h1 class="display-4"><img class="icon" alt="Logo" src="@UrlHelper.Content(RootConfiguration.AdminConfiguration.HomePageLogoUri)"><br />@RootConfiguration.AdminConfiguration.PageTitle</h1>
     <p class="lead">@Localizer["SubTitle", RootConfiguration.AdminConfiguration.PageTitle]</p>
 </div>
 
