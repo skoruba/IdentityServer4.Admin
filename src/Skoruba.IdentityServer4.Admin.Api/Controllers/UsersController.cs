@@ -192,6 +192,21 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
             return Ok();
         }
 
+        [HttpPut("Claims")]
+        public async Task<IActionResult> PutUserClaims([FromBody]UserClaimApiDto<TKey> claim)
+        {
+            var userClaimDto = _mapper.Map<TUserClaimsDto>(claim);
+
+            if (!userClaimDto.ClaimId.Equals(default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
+
+            await _identityService.UpdateUserClaimsAsync(userClaimDto);
+
+            return Ok();
+        }
+
         [HttpDelete("{id}/Claims")]
         public async Task<IActionResult> DeleteUserClaims([FromRoute]TKey id, int claimId)
         {
