@@ -124,7 +124,7 @@
     <value>Приложение аутентификатора проверено.</value>
   </data>
   <data name="ConfirmEmailBody" xml:space="preserve">
-    <value>Пожалуйста, подтвердите вашу учетную запись &lt;a href='{0}'&gt;нажатием&lt;/a&gt;</value>
+    <value>Пожалуйста, подтвердите вашу учетную запись нажатием &lt;a href='{0}'&gt;на ссылку&lt;/a&gt;.</value>
   </data>
   <data name="ConfirmEmailTitle" xml:space="preserve">
     <value>Подтвердите ваш адрес электронной почты</value>
@@ -133,7 +133,7 @@
     <value>Пользователь с ID '{0}' удалился.</value>
   </data>
   <data name="Error2FANotEnabled" xml:space="preserve">
-    <value>Не удается создать коды восстановления для пользователя с ID {0} потому что у них активирована двухвакторная аутентификация.</value>
+    <value>Не удается создать коды восстановления для пользователя с ID {0} потому что у них активирована двухфакторная аутентификация.</value>
   </data>
   <data name="ErrorCode" xml:space="preserve">
     <value>Код</value>
@@ -148,7 +148,7 @@
     <value>Не удается создать коды восстановления для пользователя потому что двухфакторная аутентификация отключена.</value>
   </data>
   <data name="ErrorLoadingExternalLogin" xml:space="preserve">
-    <value>Непредвиденная ошибка при загрузке внешний данных для входа пользователя с ID {0}.</value>
+    <value>Непредвиденная ошибка при загрузке внешних данных для входа пользователя с ID {0}.</value>
   </data>
   <data name="ErrorRemovingExternalLogin" xml:space="preserve">
     <value>Непредвиденная ошибка при удалении внешнего входа для пользователя с ID {0}.</value>
