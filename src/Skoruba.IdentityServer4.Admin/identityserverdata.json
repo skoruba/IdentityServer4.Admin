@@ -114,6 +114,7 @@
                 "AllowedGrantTypes": [
                     "authorization_code"
                 ],
+                "RequireClientSecret": false,
                 "RequirePkce": true,
                 "RedirectUris": [
                     "https://localhost:44302/swagger/oauth2-redirect.html"
