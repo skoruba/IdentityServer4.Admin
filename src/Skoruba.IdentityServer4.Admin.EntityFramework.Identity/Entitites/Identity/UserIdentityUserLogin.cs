@@ -4,7 +4,12 @@ using System;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entitites.Identity
 {
-    public class UserIdentityUserLogin : IdentityUserLogin<string>, IMultiTenant
+    public class UserIdentityUserLogin : UserIdentityUserLogin<string>, IMultiTenant
+    {
+    }
+
+    public class UserIdentityUserLogin<TKey> : IdentityUserLogin<TKey>, IMultiTenant
+        where TKey : IEquatable<TKey>
     {
         public Guid? TenantId { get; protected set; }
     }
