@@ -96,10 +96,15 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <param name="app"></param>
         public static void UseSecurityHeaders(this IApplicationBuilder app)
         {
-            app.UseForwardedHeaders(new ForwardedHeadersOptions()
+            var forwardingOptions = new ForwardedHeadersOptions()
             {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
+                ForwardedHeaders = ForwardedHeaders.All
+            };
+
+            forwardingOptions.KnownNetworks.Clear();
+            forwardingOptions.KnownProxies.Clear();
+
+            app.UseForwardedHeaders(forwardingOptions);
 
             app.UseReferrerPolicy(options => options.NoReferrer());
         }

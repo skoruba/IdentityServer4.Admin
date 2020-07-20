@@ -4,6 +4,7 @@ using IdentityServer4.AccessTokenValidation;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -130,6 +131,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
         /// <typeparam name="TLogDbContext"></typeparam>
         /// <typeparam name="TIdentityDbContext"></typeparam>
         /// <typeparam name="TAuditLoggingDbContext"></typeparam>
+        /// <typeparam name="TDataProtectionDbContext"></typeparam>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
         public static void AddDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext,
@@ -342,6 +344,19 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                         throw new NotImplementedException($"Health checks not defined for database provider {databaseProvider.ProviderType}");
                 }
             }
+        }
+
+        public static void AddForwardHeaders(this IApplicationBuilder app)
+        {
+            var forwardingOptions = new ForwardedHeadersOptions()
+            {
+                ForwardedHeaders = ForwardedHeaders.All
+            };
+
+            forwardingOptions.KnownNetworks.Clear();
+            forwardingOptions.KnownProxies.Clear();
+
+            app.UseForwardedHeaders(forwardingOptions);
         }
     }
 }
