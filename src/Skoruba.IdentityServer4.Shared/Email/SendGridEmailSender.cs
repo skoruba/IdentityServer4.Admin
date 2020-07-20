@@ -21,7 +21,7 @@ namespace Skoruba.IdentityServer4.Shared.Email
 
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            var msg = SendGrid.Helpers.Mail.MailHelper.CreateSingleEmail(
+            var message = SendGrid.Helpers.Mail.MailHelper.CreateSingleEmail(
                  new SendGrid.Helpers.Mail.EmailAddress(_configuration.SourceEmail, _configuration.SourceName),
                  new SendGrid.Helpers.Mail.EmailAddress(email),
                   subject,
@@ -29,18 +29,24 @@ namespace Skoruba.IdentityServer4.Shared.Email
                   htmlMessage
              );
 
-            var response = await _client.SendEmailAsync(msg);
+            // More information about click tracking: https://sendgrid.com/docs/ui/account-and-settings/tracking/
+            message.SetClickTracking(_configuration.EnableClickTracking, _configuration.EnableClickTracking);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK
-                || response.StatusCode == System.Net.HttpStatusCode.Created
-                || response.StatusCode == System.Net.HttpStatusCode.Accepted)
+            var response = await _client.SendEmailAsync(message);
+
+            switch (response.StatusCode)
             {
-                _logger.LogInformation($"Email: {email}, subject: {subject}, message: {htmlMessage} successfully sent");
-            }
-            else
-            {
-                var errorMessage = response.Body.ReadAsStringAsync();
-                _logger.LogError($"Response with code {response.StatusCode} and body {errorMessage} after sending email: {email}, subject: {subject}");
+                case System.Net.HttpStatusCode.OK:
+                case System.Net.HttpStatusCode.Created:
+                case System.Net.HttpStatusCode.Accepted:
+                    _logger.LogInformation($"Email: {email}, subject: {subject}, message: {htmlMessage} successfully sent");
+                    break;
+                default:
+                {
+                    var errorMessage = response.Body.ReadAsStringAsync();
+                    _logger.LogError($"Response with code {response.StatusCode} and body {errorMessage} after sending email: {email}, subject: {subject}");
+                    break;
+                }
             }
         }
     }
