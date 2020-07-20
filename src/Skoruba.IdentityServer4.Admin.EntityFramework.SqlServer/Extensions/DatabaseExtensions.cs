@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Skoruba.AuditLogging.EntityFramework.DbContexts;
 using Skoruba.AuditLogging.EntityFramework.Entities;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entitites;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions
 {

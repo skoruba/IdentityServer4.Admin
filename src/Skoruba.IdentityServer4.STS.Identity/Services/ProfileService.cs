@@ -4,7 +4,7 @@ using IdentityServer4.Models;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entitites.Identity;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using System;
 using System.Collections.Generic;

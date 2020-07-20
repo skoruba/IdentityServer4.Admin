@@ -42,7 +42,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entitites;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {

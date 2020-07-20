@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entitites.Identity;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Stores;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
@@ -35,7 +35,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
         {
             var rootConfiguration = CreateRootConfiguration();
             services.AddSingleton(rootConfiguration);
-
+            services.AddCors();
             services.AddMultiTenantDependencies();
             services.AddTransient<ITenantStore, TenantStore>();
             services.AddTransient<ITenantRepository, TenantRepository<MultiTenantDbContext>>();
@@ -48,7 +48,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
             // Add services for authentication, including Identity model and external providers
             RegisterAuthentication(services);
-            
+
             // Add all dependencies for Asp.Net Core Identity in MVC - these dependencies are injected into generic Controllers
             // Including settings for MVC and Localization
             // If you want to change primary keys or use another db model for Asp.Net Core Identity:
@@ -66,7 +66,13 @@ namespace Skoruba.IdentityServer4.STS.Identity
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors(
+                options => options
+                .WithOrigins("http://localhost:3000")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials()
+            );
             // Add custom security headers
             app.UseSecurityHeaders();
 
@@ -77,8 +83,8 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
             app.UseRouting();
             app.UseAuthorization();
-            app.UseEndpoints(endpoint => 
-            { 
+            app.UseEndpoints(endpoint =>
+            {
                 endpoint.MapDefaultControllerRoute();
                 endpoint.MapHealthChecks("/health", new HealthCheckOptions
                 {

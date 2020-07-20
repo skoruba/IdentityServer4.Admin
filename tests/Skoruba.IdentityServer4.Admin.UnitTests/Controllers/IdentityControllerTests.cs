@@ -24,13 +24,13 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.Controllers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Skoruba.IdentityServer4.Admin.Helpers;
 using Skoruba.IdentityServer4.Admin.Helpers.Localization;
 using Xunit;
 using System.Security.Claims;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entitites;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entitites.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 {

@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using System;
 
-namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity
+namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entitites.Identity
 {
-    public class UserIdentityRoleClaim : IdentityRoleClaim<string>, IMultiTenant
+    public class UserIdentityUserToken : IdentityUserToken<string>, IMultiTenant
     {
         public Guid? TenantId { get; protected set; }
     }

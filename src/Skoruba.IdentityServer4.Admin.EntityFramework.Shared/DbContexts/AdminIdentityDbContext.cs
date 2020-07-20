@@ -1,8 +1,8 @@
 ﻿using IdentityServer4.Admin.MultiTenancy.Infrastructure;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entitites.Identity;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Constants;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using System;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts

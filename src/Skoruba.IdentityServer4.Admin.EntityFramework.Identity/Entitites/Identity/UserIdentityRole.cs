@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using System;
 
-namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity
+namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entitites.Identity
 {
 	public class UserIdentityRole : IdentityRole, IMultiTenant
 	{

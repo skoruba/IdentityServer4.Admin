@@ -2,7 +2,7 @@
 using Skoruba.AuditLogging.EntityFramework.Entities;
 using System;
 
-namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities
+namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entitites
 {
     public class AppAuditLog : AuditLog, IMultiTenant
     {

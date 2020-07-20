@@ -20,11 +20,11 @@ using Skoruba.IdentityServer4.Admin.Api.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.Api.Helpers.Localization;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entitites;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
 
 namespace Skoruba.IdentityServer4.Admin.Api.Helpers

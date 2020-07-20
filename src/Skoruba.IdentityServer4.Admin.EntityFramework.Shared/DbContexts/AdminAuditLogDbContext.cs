@@ -3,9 +3,8 @@ using System.Threading.Tasks;
 using IdentityServer4.Admin.MultiTenancy.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Skoruba.AuditLogging.EntityFramework.DbContexts;
-using Skoruba.AuditLogging.EntityFramework.Entities;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entitites;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Constants;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts
 {

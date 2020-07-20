@@ -11,13 +11,13 @@ using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.Helpers;
 using Skoruba.IdentityServer4.Admin.Configuration;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities;
 using IdentityServer4.Admin.MultiTenancy.Implemantation.AspNetCore;
 using IdentityServer4.Admin.MultiTenancy.Extensions;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entitites;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entitites.Identity;
 
 namespace Skoruba.IdentityServer4.Admin
 {
