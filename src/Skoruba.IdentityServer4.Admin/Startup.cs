@@ -134,7 +134,7 @@ namespace Skoruba.IdentityServer4.Admin
         public virtual void RegisterAuthentication(IServiceCollection services)
         {
             var rootConfiguration = CreateRootConfiguration();
-            services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(rootConfiguration.AdminConfiguration);
+            services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Configuration);
         }
 
         public virtual void RegisterAuthorization(IServiceCollection services)

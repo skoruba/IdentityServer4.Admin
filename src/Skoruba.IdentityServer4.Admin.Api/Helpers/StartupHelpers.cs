@@ -26,6 +26,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
+using Skoruba.IdentityServer4.Shared.Configuration.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.Api.Helpers
 {
@@ -172,14 +173,22 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
         /// <typeparam name="TUser">Entity with User</typeparam>
         /// <typeparam name="TRole">Entity with Role</typeparam>
         /// <param name="services"></param>
-        /// <param name="adminApiConfiguration"></param>
+        /// <param name="configuration"></param>
         public static void AddApiAuthentication<TIdentityDbContext, TUser, TRole>(this IServiceCollection services,
-            AdminApiConfiguration adminApiConfiguration)
+            IConfiguration configuration)
             where TIdentityDbContext : DbContext
             where TRole : class
             where TUser : class
         {
-            services.AddIdentity<TUser, TRole>(options => { options.User.RequireUniqueEmail = true; })
+            var adminApiConfiguration = configuration.GetSection(nameof(AdminApiConfiguration)).Get<AdminApiConfiguration>();
+            var loginConfiguration = configuration.GetSection(nameof(LoginConfiguration)).Get<LoginConfiguration>();
+            var registerConfiguration = configuration.GetSection(nameof(RegisterConfiguration)).Get<RegisterConfiguration>();
+
+            services.AddIdentity<TUser, TRole>(options =>
+                {
+                    options.User.RequireUniqueEmail = loginConfiguration.RequireUniqueEmail;
+                    options.SignIn.RequireConfirmedAccount = registerConfiguration.RequireConfirmedAccount;
+                })
                 .AddEntityFrameworkStores<TIdentityDbContext>()
                 .AddDefaultTokenProviders();
 

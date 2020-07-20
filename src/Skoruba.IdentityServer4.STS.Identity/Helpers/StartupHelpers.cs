@@ -31,6 +31,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Skoruba.IdentityServer4.Shared.Authentication;
+using Skoruba.IdentityServer4.Shared.Configuration.Identity;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
@@ -227,7 +228,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 .AddScoped<UserResolver<TUserIdentity>>()
                 .AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
                 {
-                    options.User.RequireUniqueEmail = true;
+                    options.User.RequireUniqueEmail = loginConfiguration.RequireUniqueEmail;
+                    options.SignIn.RequireConfirmedEmail = registrationConfiguration.RequireConfirmedAccount;
                 })
                 .AddEntityFrameworkStores<TIdentityDbContext>()
                 .AddDefaultTokenProviders();

@@ -53,4 +53,10 @@
         <ProjectReference Include="..\Skoruba.IdentityServer4.Shared\Skoruba.IdentityServer4.Shared.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <EmbeddedResource Update="Resources\Views\Account\RegisterConfirmation.en.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+      </EmbeddedResource>
+    </ItemGroup>
+
 </Project>

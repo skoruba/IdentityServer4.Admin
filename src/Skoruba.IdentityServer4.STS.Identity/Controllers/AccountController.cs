@@ -7,6 +7,7 @@
 using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using IdentityModel;
@@ -21,7 +22,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Skoruba.IdentityServer4.Shared.Configuration.Identity;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
@@ -255,6 +258,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             {
                 return View("Error");
             }
+
+            code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+
             var result = await _userManager.ConfirmEmailAsync(user, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
@@ -292,7 +298,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                         user = await _userManager.FindByNameAsync(model.Username);
                         break;
                 }
-                
+
                 if (user == null || !await _userManager.IsEmailConfirmedAsync(user))
                 {
                     // Don't reveal that the user does not exist
@@ -300,6 +306,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 }
 
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, HttpContext.Request.Scheme);
 
                 await _emailSender.SendEmailAsync(user.Email, _localizer["ResetPasswordTitle"], _localizer["ResetPasswordBody", HtmlEncoder.Default.Encode(callbackUrl)]);
@@ -314,7 +321,12 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         [AllowAnonymous]
         public IActionResult ResetPassword(string code = null)
         {
-            return code == null ? View("Error") : View();
+            var model = new ResetPasswordViewModel()
+            {
+                Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code))
+            };
+
+            return code == null ? View("Error") : View(model);
         }
 
         [HttpPost]
@@ -601,12 +613,20 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             if (result.Succeeded)
             {
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, HttpContext.Request.Scheme);
 
                 await _emailSender.SendEmailAsync(model.Email, _localizer["ConfirmEmailTitle"], _localizer["ConfirmEmailBody", HtmlEncoder.Default.Encode(callbackUrl)]);
-                await _signInManager.SignInAsync(user, isPersistent: false);
 
-                return RedirectToLocal(returnUrl);
+                if (_registerConfiguration.RequireConfirmedAccount)
+                {
+                    return RedirectToPage("RegisterConfirmation");
+                }
+                else
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return LocalRedirect(returnUrl);
+                }
             }
 
             AddErrors(result);
@@ -630,7 +650,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             return await Register(registerModel, returnUrl);
         }
-        
+
 
         /*****************************************/
         /* helper APIs for the AccountController */

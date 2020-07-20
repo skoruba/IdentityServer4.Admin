@@ -144,8 +144,7 @@ namespace Skoruba.IdentityServer4.Admin.Api
 
         public virtual void RegisterAuthentication(IServiceCollection services)
         {
-            var adminApiConfiguration = Configuration.GetSection(nameof(AdminApiConfiguration)).Get<AdminApiConfiguration>();
-            services.AddApiAuthentication<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(adminApiConfiguration);
+            services.AddApiAuthentication<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Configuration);
         }
 
         public virtual void RegisterAuthorization(IServiceCollection services)

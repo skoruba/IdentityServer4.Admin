@@ -44,6 +44,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Shared.Authentication;
+using Skoruba.IdentityServer4.Shared.Configuration.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -351,10 +352,14 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <typeparam name="TUserIdentity"></typeparam>
         /// <typeparam name="TUserIdentityRole"></typeparam>
         /// <param name="services"></param>
-        /// <param name="adminConfiguration"></param>
-        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, AdminConfiguration adminConfiguration)
+        /// <param name="configuration"></param>
+        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IConfiguration configuration)
             where TContext : DbContext where TUserIdentity : class where TUserIdentityRole : class
         {
+            var adminConfiguration = configuration.GetSection(nameof(AdminConfiguration)).Get<AdminConfiguration>();
+            var loginConfiguration = configuration.GetSection(nameof(LoginConfiguration)).Get<LoginConfiguration>();
+            var registerConfiguration = configuration.GetSection(nameof(RegisterConfiguration)).Get<RegisterConfiguration>();
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
@@ -367,7 +372,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 
             services.AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
                 {
-                    options.User.RequireUniqueEmail = true;
+                    options.User.RequireUniqueEmail = loginConfiguration.RequireUniqueEmail;
+                    options.SignIn.RequireConfirmedAccount = registerConfiguration.RequireConfirmedAccount;
                 })
                 .AddEntityFrameworkStores<TContext>()
                 .AddDefaultTokenProviders();
