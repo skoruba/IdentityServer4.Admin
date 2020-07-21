@@ -65,10 +65,14 @@
             </button>
             <div class="dropdown-menu">
                 <a class="dropdown-item" asp-area="" asp-controller="Log" asp-action="AuditLog">@Localizer["Audit Logs"]</a>
-                <a class="dropdown-item" asp-area="" asp-controller="Log" asp-action="ErrorsLog">@Localizer["Error Logs"]</a>
+
+                @if (!RootConfiguration.AdminConfiguration.HideUIForMSSqlErrorLogging)
+                {
+                    <a class="dropdown-item" asp-area="" asp-controller="Log" asp-action="ErrorsLog">@Localizer["Error Logs"]</a>
+                }
             </div>
         </div>
-        
+
         <!--Menu item -->
         @if (User.Identity.IsAuthenticated)
         {
