@@ -13,7 +13,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="IdentityServer4.EntityFramework" Version="3.1.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.6" />
 	</ItemGroup>
 
 	<ItemGroup>
