@@ -13,6 +13,7 @@ using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using System;
 using Microsoft.AspNetCore.DataProtection;
+using Skoruba.IdentityServer4.STS.KeyVault;
 
 namespace Skoruba.IdentityServer4.STS.Identity
 {
@@ -38,6 +39,8 @@ namespace Skoruba.IdentityServer4.STS.Identity
             services.AddDataProtection()
                 .SetApplicationName("Skoruba.IdentityServer4")
                 .PersistKeysToDbContext<IdentityServerDataProtectionDbContext>();
+
+            RegisterKeyVaultSingingKeyFeature(services, Configuration);
 
             // Add email senders which is currently setup for SendGrid and SMTP
             services.AddEmailSenders(Configuration);
@@ -123,6 +126,16 @@ namespace Skoruba.IdentityServer4.STS.Identity
                 options.IncludeSubDomains = true;
                 options.MaxAge = TimeSpan.FromDays(365);
             });
+        }
+
+        public virtual void RegisterKeyVaultSingingKeyFeature(IServiceCollection services, IConfiguration configuration)
+        {
+            if (TokenSigningConfiguration.UseAzureKeyVault)
+            {
+                return;
+            }
+
+            services.AddKeyVaultSigningKeyFeature(configuration);
         }
 
         protected IRootConfiguration CreateRootConfiguration()
