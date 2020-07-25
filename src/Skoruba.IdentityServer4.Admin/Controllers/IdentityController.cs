@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityServer4.Admin.MultiTenancy.Infrastructure;
 using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -48,6 +49,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         private readonly IGenericControllerLocalizer<IdentityController<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
             TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> _localizer;
+        private readonly ICurrentTenant _currentTenant;
 
         public IdentityController(IIdentityService<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
@@ -55,10 +57,13 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             ILogger<ConfigurationController> logger,
             IGenericControllerLocalizer<IdentityController<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> localizer) : base(logger)
+                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> localizer
+            , ICurrentTenant currentTenant
+            ) : base(logger)
         {
             _identityService = identityService;
             _localizer = localizer;
+            _currentTenant = currentTenant;
         }
 
         [HttpGet]
@@ -95,7 +100,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             }
 
             TKey roleId;
-
+            role.TenantId = _currentTenant.Id;
             if (EqualityComparer<TRoleDtoKey>.Default.Equals(role.Id, default))
             {
                 var roleData = await _identityService.CreateRoleAsync(role);
@@ -144,6 +149,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
             TKey userId;
 
+            user.TenantId = _currentTenant.Id;
             if (EqualityComparer<TUserDtoKey>.Default.Equals(user.Id, default))
             {
                 var userData = await _identityService.CreateUserAsync(user);
