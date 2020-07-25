@@ -12,7 +12,7 @@
 
 The application is written in the **Asp.Net Core MVC - using .NET Core 3.1**
 
-**NOTE:** Works only with **IdentityServer4 version 3.0.0 and higher** 🚀
+**NOTE:** Works only with **IdentityServer4 version 3** 🚀
 
 ## Requirements
 
@@ -23,7 +23,7 @@ The application is written in the **Asp.Net Core MVC - using .NET Core 3.1**
 - Install the dotnet new template:
 
 ```sh
-dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-rc1-update2
+dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-rc2
 ```
 
 - Create new project:
@@ -234,7 +234,7 @@ The following Gulp commands are available:
 
 ### We suggest to use seed data:
 
-- In `Program.cs` -> `Main`, uncomment `DbMigrationHelpers.EnsureSeedData(host)` or use dotnet CLI `dotnet run /seed`
+- In `Program.cs` -> `Main`, uncomment `DbMigrationHelpers.EnsureSeedData(host)` or use dotnet CLI `dotnet run /seed` or via `SeedConfiguration` in `appsettings.json`
 - The `Clients` and `Resources` files in `identityserverdata.json` (section called: IdentityServerData) - are the initial data, based on a sample from IdentityServer4
 - The `Users` file in `identitydata.json` (section called: IdentityData) contains the default admin username and password for the first login
 
@@ -349,7 +349,7 @@ or using `Email`:
 
 ```
   "LoginConfiguration": {
-    "ResolutionPolicy": "Email"
+    "ResolutionPolicy": "Email"    
   }
 ```
 
@@ -422,6 +422,7 @@ In STS project - in `appsettings.json`:
 
 ```
 "SmtpConfiguration": {
+        "From": "",
         "Host": "",
         "Login": "",
         "Password": ""
@@ -445,6 +446,7 @@ In STS project - in `appsettings.json`:
   - Spanish
   - French
   - Finish
+  - German
   
 #### Feel free to send a PR with your translation. :blush:
 
@@ -485,6 +487,8 @@ Integration tests use StartupTest class which is pre-configured with:
 
   - `Skoruba.IdentityServer4.Admin.BusinessLogic.Shared` - project that contains shared Dtos and ExceptionHandling for the Business Logic layer of the IdentityServer4 and Asp.Net Core Identity
 
+  - `Skoruba.IdentityServer4.Shared` - Shared common layer for Admin UI, Admin UI Api and STS
+
   - `Skoruba.IdentityServer4.Admin.EntityFramework` - EF Core data layer that contains Entities for the IdentityServer4
 
   - `Skoruba.IdentityServer4.Admin.EntityFramework.Identity` - EF Core data layer that contains Repositories for the Asp.Net Core Identity
@@ -521,10 +525,10 @@ Integration tests use StartupTest class which is pre-configured with:
 It is possible to define the configuration according the client type - by default the client types are used:
 
 - Empty
-- Web Application - Server side - Hybrid flow
+- Web Application - Server side - Authorization Code Flow with PKCE
 - Single Page Application - Javascript - Authorization Code Flow with PKCE
 - Native Application - Mobile/Desktop - Hybrid flow
-- Machine/Robot - Resource Owner Password and Client Credentials flow
+- Machine/Robot - Client Credentials flow
 - TV and Limited-Input Device Application - Device flow
 
 - Actions: Add, Update, Clone, Remove
@@ -610,12 +614,12 @@ It is possible to define the configuration according the client type - by defaul
 - [x] Docker support ([#121](https://github.com/skoruba/IdentityServer4.Admin/issues/121))
 - [x] Health Checks (Databases and IdentityServer)
 - [x] Support for multiple database providers (SqlServer, Mysql, PostgreSQL)
+- [x] Simplify Admin Identity middleware (#430)
 
 ### 2.0.0:
 
 - [ ] Create a project template using dotnet CLI - `dotnet new template`
   - [ ] Second template: The administration of the IdentityServer4 (without Asp.Net Core Identity) ([#79](https://github.com/skoruba/IdentityServer4.Admin/issues/79))
-- [ ] Simplify Admin Identity middleware (#430)
 - [ ] Connect Admin Api to the Admin UI (#478)
 - [ ] Add windows authentication (#479)
 
@@ -677,8 +681,8 @@ Any feedback is welcome - feel free to create an issue or send me an email - [ja
 
 If you like my work, you can support me by donation. 👍 
 
-### Patreon
-https://www.patreon.com/skoruba
-
 ### Paypal
 https://www.paypal.me/skoruba
+
+### Patreon
+https://www.patreon.com/skoruba
