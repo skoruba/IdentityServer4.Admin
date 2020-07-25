@@ -124,7 +124,7 @@
     <value>Изменить пароль</value>
   </data>
   <data name="Discovery" xml:space="preserve">
-    <value>Обнаружение документа</value>
+    <value>Описание сервера</value>
   </data>
   <data name="Grants" xml:space="preserve">
     <value>Постоянные права</value>

@@ -148,7 +148,7 @@
     <value>Клиенты/Ресурсы</value>
   </data>
   <data name="TitleLogs" xml:space="preserve">
-    <value>Журналы событий</value>
+    <value>Журнал событий</value>
   </data>
   <data name="TitleUsermanagement" xml:space="preserve">
     <value>Пользователи/Роли</value>

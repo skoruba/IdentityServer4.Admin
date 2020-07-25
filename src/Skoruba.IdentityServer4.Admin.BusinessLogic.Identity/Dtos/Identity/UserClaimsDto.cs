@@ -1,19 +1,21 @@
 ﻿using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using IdentityServer4.EntityFramework.Entities;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
 {
-    public class UserClaimsDto<TUserDtoKey> : UserClaimDto<TUserDtoKey>, IUserClaimsDto
+    public class UserClaimsDto<TUserClaimDto, TKey> : UserClaimDto<TKey>, IUserClaimsDto
+       where TUserClaimDto : UserClaimDto<TKey>
     {
         public UserClaimsDto()
         {
-            Claims = new List<UserClaimDto<TUserDtoKey>>();
+            Claims = new List<TUserClaimDto>();
         }
 
         public string UserName { get; set; }
 
-        public List<UserClaimDto<TUserDtoKey>> Claims { get; set; }
+        public List<TUserClaimDto> Claims { get; set; }
 
         public int TotalCount { get; set; }
 

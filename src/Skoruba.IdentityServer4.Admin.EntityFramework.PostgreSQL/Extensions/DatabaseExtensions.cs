@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using IdentityServer4.EntityFramework.Storage;
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Skoruba.AuditLogging.EntityFramework.DbContexts;
@@ -28,16 +29,17 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions
         /// <param name="errorLoggingConnectionString"></param>
         /// <param name="auditLoggingConnectionString"></param>
         public static void RegisterNpgSqlDbContexts<TIdentityDbContext, TConfigurationDbContext,
-            TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TMultiTenantDbContext>(this IServiceCollection services,
+            TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TMultiTenantDbContext, TDataProtectionDbContext>(this IServiceCollection services,
             string identityConnectionString, string configurationConnectionString,
             string persistedGrantConnectionString, string errorLoggingConnectionString,
-            string auditLoggingConnectionString)
+            string auditLoggingConnectionString, string dataProtectionConnectionString = null)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
             where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AppAuditLog>
             where TMultiTenantDbContext : DbContext, IMultiTenantDbContext
+            where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
         {
             var migrationsAssembly = typeof(DatabaseExtensions).GetTypeInfo().Assembly.GetName().Name;
 
@@ -65,6 +67,10 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions
             // Multi tenant
             services.AddDbContext<TMultiTenantDbContext>(options =>
                 options.UseNpgsql(identityConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
+
+            // DataProtectionKey DB from existing connection
+            if (!string.IsNullOrEmpty(dataProtectionConnectionString))
+                services.AddDbContext<TDataProtectionDbContext>(options => options.UseNpgsql(dataProtectionConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
         }
 
         /// <summary>
@@ -79,13 +85,15 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions
         /// <param name="configurationConnectionString"></param>
         /// <param name="persistedGrantConnectionString"></param>
         public static void RegisterNpgSqlDbContexts<TIdentityDbContext, TConfigurationDbContext,
-            TPersistedGrantDbContext, TMultiTenantDbContext>(this IServiceCollection services,
+            TPersistedGrantDbContext, TMultiTenantDbContext, TDataProtectionDbContext>(this IServiceCollection services,
+            TPersistedGrantDbContext, TDataProtectionDbContext>(this IServiceCollection services,
             string identityConnectionString, string configurationConnectionString,
-            string persistedGrantConnectionString)
+            string persistedGrantConnectionString, string dataProtectionConnectionString)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TMultiTenantDbContext : DbContext, IMultiTenantDbContext
+            where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
         {
             var migrationsAssembly = typeof(DatabaseExtensions).GetTypeInfo().Assembly.GetName().Name;
 
@@ -100,6 +108,9 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions
 
             // Multi tenant connection
             services.AddDbContext<TMultiTenantDbContext>(options => options.UseNpgsql(identityConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
+            
+            // DataProtectionKey DB from existing connection
+            services.AddDbContext<TDataProtectionDbContext>(options => options.UseNpgsql(dataProtectionConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
         }
     }
 }

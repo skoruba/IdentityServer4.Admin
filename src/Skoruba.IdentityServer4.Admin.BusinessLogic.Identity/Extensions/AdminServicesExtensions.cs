@@ -33,8 +33,8 @@ namespace Microsoft.Extensions.DependencyInjection
             return builder;
         }
 
-        public static IServiceCollection AddAdminAspNetIdentityServices<TAdminDbContext, TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey,
-            TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
+        public static IServiceCollection AddAdminAspNetIdentityServices<TAdminDbContext, TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey,
+            TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
             TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto,
             TUserClaimDto, TRoleClaimDto>(
@@ -42,107 +42,107 @@ namespace Microsoft.Extensions.DependencyInjection
             where TAdminDbContext :
             IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>,
             IAdminPersistedGrantDbContext
-            where TUserDto : UserDto<TUserDtoKey>
-            where TUser : UserIdentity<TKey>
-            where TRole : UserIdentityRole<TKey>
+            where TUserDto : UserDto<TKey>
+            where TUser : IdentityUser<TKey>
+            where TRole : IdentityRole<TKey>
             where TKey : IEquatable<TKey>
             where TUserClaim : IdentityUserClaim<TKey>
             where TUserRole : IdentityUserRole<TKey>
             where TUserLogin : IdentityUserLogin<TKey>
             where TRoleClaim : IdentityRoleClaim<TKey>
             where TUserToken : IdentityUserToken<TKey>
-            where TRoleDto : RoleDto<TRoleDtoKey>
-            where TUsersDto : UsersDto<TUserDto, TUserDtoKey>
-            where TRolesDto : RolesDto<TRoleDto, TRoleDtoKey>
-            where TUserRolesDto : UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey>
-            where TUserClaimsDto : UserClaimsDto<TUserDtoKey>
-            where TUserProviderDto : UserProviderDto<TUserDtoKey>
-            where TUserProvidersDto : UserProvidersDto<TUserDtoKey>
-            where TUserChangePasswordDto : UserChangePasswordDto<TUserDtoKey>
-            where TRoleClaimsDto : RoleClaimsDto<TRoleDtoKey>
-            where TUserClaimDto : UserClaimDto<TUserDtoKey>
-            where TRoleClaimDto : RoleClaimDto<TRoleDtoKey>
+            where TRoleDto : RoleDto<TKey>
+            where TUsersDto : UsersDto<TUserDto, TKey>
+            where TRolesDto : RolesDto<TRoleDto, TKey>
+            where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
+            where TUserClaimsDto : UserClaimsDto<TUserClaimDto, TKey>
+            where TUserProviderDto : UserProviderDto<TKey>
+            where TUserProvidersDto : UserProvidersDto<TKey>
+            where TUserChangePasswordDto : UserChangePasswordDto<TKey>
+            where TRoleClaimsDto : RoleClaimsDto<TKey>
+            where TUserClaimDto : UserClaimDto<TKey>
+            where TRoleClaimDto : RoleClaimDto<TKey>
         {
 
-            return services.AddAdminAspNetIdentityServices<TAdminDbContext, TAdminDbContext, TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey,
-                TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
+            return services.AddAdminAspNetIdentityServices<TAdminDbContext, TAdminDbContext, TUserDto, TRoleDto,
+                TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
                 TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>();
         }
 
-        public static IServiceCollection AddAdminAspNetIdentityServices<TIdentityDbContext, TPersistedGrantDbContext, TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
+        public static IServiceCollection AddAdminAspNetIdentityServices<TIdentityDbContext, TPersistedGrantDbContext, TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                     TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
                     TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>(
                         this IServiceCollection services)
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TIdentityDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
-            where TUserDto : UserDto<TUserDtoKey>
-            where TUser : UserIdentity<TKey>
-            where TRole : UserIdentityRole<TKey>
+            where TUserDto : UserDto<TKey>
+            where TUser : IdentityUser<TKey>
+            where TRole : IdentityRole<TKey>
             where TKey : IEquatable<TKey>
             where TUserClaim : IdentityUserClaim<TKey>
             where TUserRole : IdentityUserRole<TKey>
             where TUserLogin : IdentityUserLogin<TKey>
             where TRoleClaim : IdentityRoleClaim<TKey>
             where TUserToken : IdentityUserToken<TKey>
-            where TRoleDto : RoleDto<TRoleDtoKey>
-            where TUsersDto : UsersDto<TUserDto, TUserDtoKey>
-            where TRolesDto : RolesDto<TRoleDto, TRoleDtoKey>
-            where TUserRolesDto : UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey>
-            where TUserClaimsDto : UserClaimsDto<TUserDtoKey>
-            where TUserProviderDto : UserProviderDto<TUserDtoKey>
-            where TUserProvidersDto : UserProvidersDto<TUserDtoKey>
-            where TUserChangePasswordDto : UserChangePasswordDto<TUserDtoKey>
-            where TRoleClaimsDto : RoleClaimsDto<TRoleDtoKey>
-            where TUserClaimDto : UserClaimDto<TUserDtoKey>
-            where TRoleClaimDto : RoleClaimDto<TRoleDtoKey>
+            where TRoleDto : RoleDto<TKey>
+            where TUsersDto : UsersDto<TUserDto, TKey>
+            where TRolesDto : RolesDto<TRoleDto, TKey>
+            where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
+            where TUserClaimsDto : UserClaimsDto<TUserClaimDto, TKey>
+            where TUserProviderDto : UserProviderDto<TKey>
+            where TUserProvidersDto : UserProvidersDto<TKey>
+            where TUserChangePasswordDto : UserChangePasswordDto<TKey>
+            where TRoleClaimsDto : RoleClaimsDto<TKey>
+            where TUserClaimDto : UserClaimDto<TKey>
+            where TRoleClaimDto : RoleClaimDto<TKey>
         {
-            return AddAdminAspNetIdentityServices<TIdentityDbContext, TPersistedGrantDbContext, TUserDto, TUserDtoKey,
-                TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin,
+            return AddAdminAspNetIdentityServices<TIdentityDbContext, TPersistedGrantDbContext, TUserDto,
+                TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin,
                 TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
                 TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto,
                 TRoleClaimDto>(services, null);
         }
 
-        public static IServiceCollection AddAdminAspNetIdentityServices<TIdentityDbContext, TPersistedGrantDbContext, TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
+        public static IServiceCollection AddAdminAspNetIdentityServices<TIdentityDbContext, TPersistedGrantDbContext, TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                     TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
                     TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>(
                         this IServiceCollection services, HashSet<Type> profileTypes)
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TIdentityDbContext : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
-            where TUserDto : UserDto<TUserDtoKey>
-            where TUser : UserIdentity<TKey>
-            where TRole : UserIdentityRole<TKey>
+            where TUserDto : UserDto<TKey>
+            where TUser : IdentityUser<TKey>
+            where TRole : IdentityRole<TKey>
             where TKey : IEquatable<TKey>
             where TUserClaim : IdentityUserClaim<TKey>
             where TUserRole : IdentityUserRole<TKey>
             where TUserLogin : IdentityUserLogin<TKey>
             where TRoleClaim : IdentityRoleClaim<TKey>
             where TUserToken : IdentityUserToken<TKey>
-            where TRoleDto : RoleDto<TRoleDtoKey>
-            where TUsersDto : UsersDto<TUserDto, TUserDtoKey>
-            where TRolesDto : RolesDto<TRoleDto, TRoleDtoKey>
-            where TUserRolesDto : UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey>
-            where TUserClaimsDto : UserClaimsDto<TUserDtoKey>
-            where TUserProviderDto : UserProviderDto<TUserDtoKey>
-            where TUserProvidersDto : UserProvidersDto<TUserDtoKey>
-            where TUserChangePasswordDto : UserChangePasswordDto<TUserDtoKey>
-            where TRoleClaimsDto : RoleClaimsDto<TRoleDtoKey>
-            where TUserClaimDto : UserClaimDto<TUserDtoKey>
-            where TRoleClaimDto : RoleClaimDto<TRoleDtoKey>
+            where TRoleDto : RoleDto<TKey>
+            where TUsersDto : UsersDto<TUserDto, TKey>
+            where TRolesDto : RolesDto<TRoleDto, TKey>
+            where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
+            where TUserClaimsDto : UserClaimsDto<TUserClaimDto, TKey>
+            where TUserProviderDto : UserProviderDto<TKey>
+            where TUserProvidersDto : UserProvidersDto<TKey>
+            where TUserChangePasswordDto : UserChangePasswordDto<TKey>
+            where TRoleClaimsDto : RoleClaimsDto<TKey>
+            where TUserClaimDto : UserClaimDto<TKey>
+            where TRoleClaimDto : RoleClaimDto<TKey>
         {
             //Repositories
-            services.AddTransient<IIdentityRepository<TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>, IdentityRepository<TIdentityDbContext, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>>();
+            services.AddTransient<IIdentityRepository<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>, IdentityRepository<TIdentityDbContext, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>>();
             services.AddTransient<IPersistedGrantAspNetIdentityRepository, PersistedGrantAspNetIdentityRepository<TIdentityDbContext, TPersistedGrantDbContext, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>>();
           
             //Services
-            services.AddTransient<IIdentityService<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
+            services.AddTransient<IIdentityService<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>, 
-                IdentityService<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUserKey, TRoleKey, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
+                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto>, 
+                IdentityService<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                     TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                    TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>>();
+                    TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto>>();
             services.AddTransient<IPersistedGrantAspNetIdentityService, PersistedGrantAspNetIdentityService>();
             
             //Resources
@@ -151,7 +151,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             //Register mapping
             services.AddAdminAspNetIdentityMapping()
-                .UseIdentityMappingProfile<TUserDto, TUserDtoKey, TRoleDto, TRoleDtoKey, TUser, TRole, TKey, TUserClaim,
+                .UseIdentityMappingProfile<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim,
                     TUserRole, TUserLogin, TRoleClaim, TUserToken,
                     TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
                     TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto,

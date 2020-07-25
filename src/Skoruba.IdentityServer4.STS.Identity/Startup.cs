@@ -2,6 +2,7 @@
 using IdentityServer4.Admin.MultiTenancy.Extensions;
 using IdentityServer4.Admin.MultiTenancy.Implemantation.AspNetCore;
 using IdentityServer4.Admin.MultiTenancy.Infrastructure;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -17,6 +18,8 @@ using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
+using System;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace Skoruba.IdentityServer4.STS.Identity
 {
@@ -35,6 +38,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
         {
             var rootConfiguration = CreateRootConfiguration();
             services.AddSingleton(rootConfiguration);
+          
             services.AddCors();
             services.AddMultiTenantDependencies();
             services.AddTransient<ITenantStore, TenantStore>();
@@ -43,11 +47,19 @@ namespace Skoruba.IdentityServer4.STS.Identity
             // Register DbContexts for IdentityServer and Identity
             RegisterDbContexts(services);
 
+            // Save data protection keys to db, using a common application name shared between Admin and STS
+            services.AddDataProtection()
+                .SetApplicationName("Skoruba.IdentityServer4")
+                .PersistKeysToDbContext<IdentityServerDataProtectionDbContext>();
+
             // Add email senders which is currently setup for SendGrid and SMTP
             services.AddEmailSenders(Configuration);
 
             // Add services for authentication, including Identity model and external providers
             RegisterAuthentication(services);
+
+            // Add HSTS options
+            RegisterHstsOptions(services);
 
             // Add all dependencies for Asp.Net Core Identity in MVC - these dependencies are injected into generic Controllers
             // Including settings for MVC and Localization
@@ -57,15 +69,21 @@ namespace Skoruba.IdentityServer4.STS.Identity
             // Add authorization policies for MVC
             RegisterAuthorization(services);
 
-            services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext>(Configuration);
+            services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, IdentityServerDataProtectionDbContext>(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCookiePolicy();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }else
+            {
+                app.UseHsts();
             }
+          
             app.UseCors(
                 options => options
                 .WithOrigins("http://localhost:3000")
@@ -73,6 +91,9 @@ namespace Skoruba.IdentityServer4.STS.Identity
                 .AllowAnyHeader()
                 .AllowCredentials()
             );
+
+            app.UsePathBase(Configuration.GetValue<string>("BasePath"));
+
             // Add custom security headers
             app.UseSecurityHeaders();
 
@@ -95,7 +116,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
         public virtual void RegisterDbContexts(IServiceCollection services)
         {
-            services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, MultiTenantDbContext>(Configuration);
+            services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, MultiTenantDbContext, IdentityServerDataProtectionDbContext>(Configuration);
         }
 
         public virtual void RegisterAuthentication(IServiceCollection services)
@@ -113,6 +134,16 @@ namespace Skoruba.IdentityServer4.STS.Identity
         public virtual void UseAuthentication(IApplicationBuilder app)
         {
             app.UseIdentityServer();
+        }
+
+        public virtual void RegisterHstsOptions(IServiceCollection services)
+        {
+            services.AddHsts(options =>
+            {
+                options.Preload = true;
+                options.IncludeSubDomains = true;
+                options.MaxAge = TimeSpan.FromDays(365);
+            });
         }
 
         protected IRootConfiguration CreateRootConfiguration()

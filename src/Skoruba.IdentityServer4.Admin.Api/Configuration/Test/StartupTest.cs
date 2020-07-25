@@ -11,6 +11,8 @@ using Skoruba.IdentityServer4.Admin.Api.Middlewares;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entitites.Identity;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Stores;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
+using Skoruba.IdentityServer4.Shared.Configuration.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.Api.Configuration.Test
 {
@@ -22,12 +24,19 @@ namespace Skoruba.IdentityServer4.Admin.Api.Configuration.Test
 
         public override void RegisterDbContexts(IServiceCollection services)
         {
-            services.RegisterDbContextsStaging<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, MultiTenantDbContext>();
+            services.RegisterDbContextsStaging<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, MultiTenantDbContext, IdentityServerDataProtectionDbContext>();
         }
 
         public override void RegisterAuthentication(IServiceCollection services)
         {
-            services.AddIdentity<UserIdentity, UserIdentityRole>(options => { options.User.RequireUniqueEmail = true; })
+            var loginConfiguration = Configuration.GetSection(nameof(LoginConfiguration)).Get<LoginConfiguration>();
+            var registerConfiguration = Configuration.GetSection(nameof(RegisterConfiguration)).Get<RegisterConfiguration>();
+
+            services.AddIdentity<UserIdentity, UserIdentityRole>(options =>
+                {
+                    options.User.RequireUniqueEmail = loginConfiguration.RequireUniqueEmail;
+                    options.SignIn.RequireConfirmedAccount = registerConfiguration.RequireConfirmedAccount;
+                })
                 .AddEntityFrameworkStores<AdminIdentityDbContext>()
                 .AddDefaultTokenProviders();
 

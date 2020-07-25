@@ -91,6 +91,63 @@ git clone https://github.com/skoruba/IdentityServer4.Admin
 
 - It is possible to run Admin UI through the docker.
 
+### Docker setup
+
+### DNS
+
+We need some resolving capabilities in order for the project to work. The domain `skoruba.local` is used here to represent the domain this setup is hosted on. The domain-name needs to be FQDN (fully qualified domain name).
+
+Thus first, we need the domain `skoruba.local` to resolve to the docker-host machine. If you want this to work on your local machine only, use the first option.
+
+#### DNS on docker-host machine only
+
+Edit your hosts file:
+
+- On Linux: `\etc\hosts` 
+- On Windows: `C:\Windows\system32\drivers\etc\hosts` 
+
+ and add the following entries:
+
+```custom
+127.0.0.1 skoruba.local sts.skoruba.local admin.skoruba.local admin-api.skoruba.local
+```
+
+This way your host machine resolves `skoruba.local` and its subdomains to itself.
+
+### Certificates
+
+We also need certificates in order to serve on HTTPS. We'll make our own self-signed certificates with [mkcert](https://github.com/FiloSottile/mkcert). 
+
+> If the domain is publicly available through DNS, you can use [Let's Encypt](https://letsencrypt.org/). Nginx-proxy has support for that, which is left out in this setup.
+
+#### MkCert
+
+##### Create the root certificate
+
+Use [mkcert](https://github.com/FiloSottile/mkcert) to generate local self-signed certificates.
+
+On windows `mkcert -install` must be executed under elevated Administrator privileges. Then copy over the CA Root certificate over to the project as we want to mount this in later into the containers without using an environment variable.
+
+```bash
+cd shared/nginx/certs
+mkcert --install
+copy $env:LOCALAPPDATA\mkcert\rootCA.pem ./cacerts.pem
+copy $env:LOCALAPPDATA\mkcert\rootCA.pem ./cacerts.crt
+```
+##### Create the `skoruba.local` certificates
+
+Generate a certificate for `skoruba.local` with wildcards for the subdomains. The name of the certificate files need to match with actual domain-names in order for the nginx-proxy to pick them up correctly. We want both the crt-key and the pfx version.
+
+```bash
+cd shared/nginx/certs
+mkcert -cert-file skoruba.local.crt -key-file skoruba.local.key skoruba.local *.skoruba.local
+mkcert -pkcs12 skoruba.local.pfx skoruba.local *.skoruba.local
+```
+
+##### This docker setup is come from this [repository](https://github.com/bravecobra/identityserver-ui) - thanks to [bravecobra](https://github.com/bravecobra). 😊
+
+### Run docker-compose
+
 - Project contains the `docker-compose.vs.debug.yml` and `docker-compose.override.yml` to enable debugging with a seeded environment. 
 - The following possibility to get a running seeded and debug-able (in VS) environment:
 
@@ -109,7 +166,7 @@ docker-compose up -d
     - `skoruba/identityserver4-admin-api:rc1`
   - STS:
     - `skoruba/identityserver4-sts-identity:rc1`
-    
+       
 ### Publish Docker images to Docker hub
 - Check the script in `build/publish-docker-images.ps1` - change the profile name according to your requirements.
 
@@ -153,7 +210,7 @@ The following Gulp commands are available:
     - --migrationProviderName (provider type - available choices: All, SqlServer, MySql, PostgreSQL)
 
 - For example: 
-`.\add-migration.ps1 -migration DbInit -migrationProviderName SqlServer`
+`.\add-migrations.ps1 -migration DbInit -migrationProviderName SqlServer`
 
 ### Available database providers:
 - SqlServer
@@ -344,7 +401,7 @@ or using `Email`:
  
 ### Azure AD
 - Great article how to set up Azure AD:
-  - https://azure.microsoft.com/cs-cz/resources/samples/active-directory-dotnet-webapp-openidconnect-aspnetcore/
+  - https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-v2-aspnet-core-webapp
 
 ## Email service
 
@@ -558,6 +615,10 @@ It is possible to define the configuration according the client type - by defaul
 
 - [ ] Create a project template using dotnet CLI - `dotnet new template`
   - [ ] Second template: The administration of the IdentityServer4 (without Asp.Net Core Identity) ([#79](https://github.com/skoruba/IdentityServer4.Admin/issues/79))
+- [ ] Simplify Admin Identity middleware (#430)
+- [ ] Connect Admin Api to the Admin UI (#478)
+- [ ] Add windows authentication (#479)
+
 
 ### Future:
 
