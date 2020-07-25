@@ -30,11 +30,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
         where TUser : UserIdentity<TKey>
         where TRole : UserIdentityRole<TKey>
         where TKey : IEquatable<TKey>
-        where TUserClaim : UserIdentityUserClaim<TKey>
-        where TUserRole : UserIdentityUserRole<TKey>
-        where TUserLogin : UserIdentityUserLogin<TKey>
-        where TRoleClaim : UserIdentityRoleClaim<TKey>
-        where TUserToken : UserIdentityUserToken<TKey>
+        where TUserClaim : IdentityUserClaim<TKey>
+        where TUserRole : IdentityUserRole<TKey>
+        where TUserLogin : IdentityUserLogin<TKey>
+        where TRoleClaim : IdentityRoleClaim<TKey>
+        where TUserToken : IdentityUserToken<TKey>
         where TUsersDto : UsersDto<TUserDto, TUserDtoKey>
         where TRolesDto : RolesDto<TRoleDto, TRoleDtoKey>
         where TUserRolesDto : UserRolesDto<TRoleDto, TUserDtoKey, TRoleDtoKey>

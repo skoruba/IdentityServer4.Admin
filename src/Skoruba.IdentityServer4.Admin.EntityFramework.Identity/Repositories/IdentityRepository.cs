@@ -23,11 +23,11 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
         where TUser : UserIdentity<TKey>
         where TRole : UserIdentityRole<TKey>
         where TKey : IEquatable<TKey>
-        where TUserClaim : UserIdentityUserClaim<TKey>
-        where TUserRole : UserIdentityUserRole<TKey>
-        where TUserLogin : UserIdentityUserLogin<TKey>
-        where TRoleClaim : UserIdentityRoleClaim<TKey>
-        where TUserToken : UserIdentityUserToken<TKey>
+        where TUserClaim : IdentityUserClaim<TKey>
+        where TUserRole : IdentityUserRole<TKey>
+        where TUserLogin : IdentityUserLogin<TKey>
+        where TRoleClaim : IdentityRoleClaim<TKey>
+        where TUserToken : IdentityUserToken<TKey>
     {
         protected readonly TIdentityDbContext DbContext;
         protected readonly UserManager<TUser> UserManager;

@@ -26,14 +26,20 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts
 
         private void ConfigureIdentityContext(ModelBuilder builder)
         {
-            builder.Entity<UserIdentityRole>().ToTable(TableConsts.IdentityRoles).HasQueryFilter(r => r.TenantId == CurrentTenantId);
-            builder.Entity<UserIdentityRoleClaim>().ToTable(TableConsts.IdentityRoleClaims).HasQueryFilter(r => r.TenantId == CurrentTenantId);
-            builder.Entity<UserIdentityUserRole>().ToTable(TableConsts.IdentityUserRoles).HasQueryFilter(r => r.TenantId == CurrentTenantId);
+            builder.Entity<UserIdentityRole>().ToTable(TableConsts.IdentityRoles)
+                .HasQueryFilter(r => r.TenantId == CurrentTenantId)
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
+            builder.Entity<UserIdentityRoleClaim>().ToTable(TableConsts.IdentityRoleClaims);
+            builder.Entity<UserIdentityUserRole>().ToTable(TableConsts.IdentityUserRoles);
 
-            builder.Entity<UserIdentity>().ToTable(TableConsts.IdentityUsers).HasQueryFilter(r => r.TenantId == CurrentTenantId);
-            builder.Entity<UserIdentityUserLogin>().ToTable(TableConsts.IdentityUserLogins).HasQueryFilter(r => r.TenantId == CurrentTenantId);
-            builder.Entity<UserIdentityUserClaim>().ToTable(TableConsts.IdentityUserClaims).HasQueryFilter(r => r.TenantId == CurrentTenantId);
-            builder.Entity<UserIdentityUserToken>().ToTable(TableConsts.IdentityUserTokens).HasQueryFilter(r => r.TenantId == CurrentTenantId);
+            builder.Entity<UserIdentity>().ToTable(TableConsts.IdentityUsers)
+                .HasQueryFilter(r => r.TenantId == CurrentTenantId)
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd(); ;
+            builder.Entity<UserIdentityUserLogin>().ToTable(TableConsts.IdentityUserLogins);
+            builder.Entity<UserIdentityUserClaim>().ToTable(TableConsts.IdentityUserClaims);
+            builder.Entity<UserIdentityUserToken>().ToTable(TableConsts.IdentityUserTokens);
         }
     }
 }
