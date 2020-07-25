@@ -31,6 +31,8 @@ using Xunit;
 using System.Security.Claims;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entitites;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entitites.Identity;
+using IdentityServer4.Admin.MultiTenancy.Infrastructure;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Stores;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 {
@@ -568,13 +570,15 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var tempDataDictionaryFactory = serviceProvider.GetRequiredService<ITempDataDictionaryFactory>();
             var identityService = GetIdentityService(serviceProvider);
 
+            var currentTenant = serviceProvider.GetRequiredService<ICurrentTenant>();
+
             //Get Controller
             var controller = new IdentityController<UserDto<string>, string, RoleDto<string>, string, string, string,
                 UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
                 UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
                 UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
                 UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-                RoleClaimsDto<string>>(identityService, logger, localizer);
+                RoleClaimsDto<string>>(identityService, logger, localizer, currentTenant);
 
             //Setup TempData for notofication in basecontroller
             var httpContext = serviceProvider.GetRequiredService<IHttpContextAccessor>().HttpContext;
@@ -610,6 +614,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
                 .AddAuditSinks<DatabaseAuditEventLoggerSink<AppAuditLog>>();
             services.AddTransient<IAuditLoggingRepository<AppAuditLog>, AuditLoggingRepository<AdminAuditLogDbContext, AppAuditLog>>();
 
+            services.AddTransient<ICurrentTenant, CurrentTenant>();
+            services.AddSingleton<ICurrentTenantAccessor, AsyncLocalCurrentTenantAccessor>();
+            services.AddTransient<ITenantStore, TenantStore>();
 
             //Add Admin services
             services.AddMvcExceptionFilters();

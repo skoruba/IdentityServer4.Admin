@@ -173,17 +173,19 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <typeparam name="TPersistedGrantDbContext"></typeparam>
         /// <typeparam name="TIdentityDbContext"></typeparam>
         /// <param name="services"></param>
-        public static void RegisterDbContextsStaging<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext>(
+        public static void RegisterDbContextsStaging<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TMultiTenantDbContext>(
             this IServiceCollection services)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
+             where TMultiTenantDbContext : DbContext, IMultiTenantDbContext
         {
             var identityDatabaseName = Guid.NewGuid().ToString();
             services.AddDbContext<TIdentityDbContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(identityDatabaseName));
 
             var configurationDatabaseName = Guid.NewGuid().ToString();
             var operationalDatabaseName = Guid.NewGuid().ToString();
+            var tenantDatabaseName = Guid.NewGuid().ToString();
 
             services.AddConfigurationDbContext<TConfigurationDbContext>(options =>
             {
@@ -194,6 +196,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             {
                 options.ConfigureDbContext = b => b.UseInMemoryDatabase(operationalDatabaseName);
             });
+            services.AddDbContext<TMultiTenantDbContext>(optionsBuilder => optionsBuilder.UseInMemoryDatabase(tenantDatabaseName));
         }
 
         /// <summary>
