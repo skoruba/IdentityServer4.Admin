@@ -7,6 +7,7 @@
 using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using IdentityModel;
@@ -21,6 +22,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Logging;
+using SkorubaIdentityServer4Admin.Shared.Configuration.Identity;
 using SkorubaIdentityServer4Admin.STS.Identity.Configuration;
 using SkorubaIdentityServer4Admin.STS.Identity.Helpers;
 using SkorubaIdentityServer4Admin.STS.Identity.Helpers.Localization;
@@ -45,6 +49,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
         private readonly IGenericControllerLocalizer<AccountController<TUser, TKey>> _localizer;
         private readonly LoginConfiguration _loginConfiguration;
         private readonly RegisterConfiguration _registerConfiguration;
+        private readonly ILogger<AccountController<TUser, TKey>> _logger;
 
         public AccountController(
             UserResolver<TUser> userResolver,
@@ -57,7 +62,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
             IEmailSender emailSender,
             IGenericControllerLocalizer<AccountController<TUser, TKey>> localizer,
             LoginConfiguration loginConfiguration,
-            RegisterConfiguration registerConfiguration)
+            RegisterConfiguration registerConfiguration,
+            ILogger<AccountController<TUser, TKey>> logger)
         {
             _userResolver = userResolver;
             _userManager = userManager;
@@ -70,6 +76,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
             _localizer = localizer;
             _loginConfiguration = loginConfiguration;
             _registerConfiguration = registerConfiguration;
+            _logger = logger;
         }
 
         /// <summary>
@@ -251,6 +258,9 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
             {
                 return View("Error");
             }
+
+            code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+
             var result = await _userManager.ConfirmEmailAsync(user, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
@@ -259,7 +269,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
-            return View();
+            return View(new ForgotPasswordViewModel());
         }
 
         [HttpPost]
@@ -269,20 +279,37 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
+                TUser user = null;
+                switch (model.Policy)
+                {
+                    case LoginResolutionPolicy.Email:
+                        try
+                        {
+                            user = await _userManager.FindByEmailAsync(model.Email);
+                        }
+                        catch (Exception ex)
+                        {
+                            // in case of multiple users with the same email this method would throw and reveal that the email is registered
+                            _logger.LogError("Error retrieving user by email ({0}) for forgot password functionality: {1}", model.Email, ex.Message);
+                            user = null;
+                        }
+                        break;
+                    case LoginResolutionPolicy.Username:
+                        user = await _userManager.FindByNameAsync(model.Username);
+                        break;
+                }
 
                 if (user == null || !await _userManager.IsEmailConfirmedAsync(user))
                 {
-                    ModelState.AddModelError(string.Empty, _localizer["EmailNotFound"]);
-
-                    return View(model);
+                    // Don't reveal that the user does not exist
+                    return View("ForgotPasswordConfirmation");
                 }
 
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, HttpContext.Request.Scheme);
 
-                await _emailSender.SendEmailAsync(model.Email, _localizer["ResetPasswordTitle"], _localizer["ResetPasswordBody", HtmlEncoder.Default.Encode(callbackUrl)]);
-
+                await _emailSender.SendEmailAsync(user.Email, _localizer["ResetPasswordTitle"], _localizer["ResetPasswordBody", HtmlEncoder.Default.Encode(callbackUrl)]);
 
                 return View("ForgotPasswordConfirmation");
             }
@@ -294,7 +321,12 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
         [AllowAnonymous]
         public IActionResult ResetPassword(string code = null)
         {
-            return code == null ? View("Error") : View();
+            var model = new ResetPasswordViewModel()
+            {
+                Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code))
+            };
+
+            return code == null ? View("Error") : View(model);
         }
 
         [HttpPost]
@@ -372,8 +404,9 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             ViewData["LoginProvider"] = info.LoginProvider;
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            var userName = info.Principal.Identity.Name;
 
-            return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
+            return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email, UserName = userName });
         }
 
         [HttpPost]
@@ -580,12 +613,20 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
             if (result.Succeeded)
             {
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, HttpContext.Request.Scheme);
 
                 await _emailSender.SendEmailAsync(model.Email, _localizer["ConfirmEmailTitle"], _localizer["ConfirmEmailBody", HtmlEncoder.Default.Encode(callbackUrl)]);
-                await _signInManager.SignInAsync(user, isPersistent: false);
 
-                return RedirectToLocal(returnUrl);
+                if (_registerConfiguration.RequireConfirmedAccount)
+                {
+                    return RedirectToPage("RegisterConfirmation");
+                }
+                else
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return LocalRedirect(returnUrl);
+                }
             }
 
             AddErrors(result);
@@ -609,7 +650,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
 
             return await Register(registerModel, returnUrl);
         }
-        
+
 
         /*****************************************/
         /* helper APIs for the AccountController */

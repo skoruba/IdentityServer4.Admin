@@ -11,6 +11,8 @@ using SkorubaIdentityServer4Admin.STS.Identity.Configuration;
 using SkorubaIdentityServer4Admin.STS.Identity.Configuration.Constants;
 using SkorubaIdentityServer4Admin.STS.Identity.Configuration.Interfaces;
 using SkorubaIdentityServer4Admin.STS.Identity.Helpers;
+using System;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace SkorubaIdentityServer4Admin.STS.Identity
 {
@@ -29,16 +31,23 @@ namespace SkorubaIdentityServer4Admin.STS.Identity
         {
             var rootConfiguration = CreateRootConfiguration();
             services.AddSingleton(rootConfiguration);
-
             // Register DbContexts for IdentityServer and Identity
             RegisterDbContexts(services);
+
+            // Save data protection keys to db, using a common application name shared between Admin and STS
+            services.AddDataProtection()
+                .SetApplicationName("SkorubaIdentityServer4Admin")
+                .PersistKeysToDbContext<IdentityServerDataProtectionDbContext>();
 
             // Add email senders which is currently setup for SendGrid and SMTP
             services.AddEmailSenders(Configuration);
 
             // Add services for authentication, including Identity model and external providers
             RegisterAuthentication(services);
-            
+
+            // Add HSTS options
+            RegisterHstsOptions(services);
+
             // Add all dependencies for Asp.Net Core Identity in MVC - these dependencies are injected into generic Controllers
             // Including settings for MVC and Localization
             // If you want to change primary keys or use another db model for Asp.Net Core Identity:
@@ -47,15 +56,23 @@ namespace SkorubaIdentityServer4Admin.STS.Identity
             // Add authorization policies for MVC
             RegisterAuthorization(services);
 
-            services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext>(Configuration);
+            services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, IdentityServerDataProtectionDbContext>(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCookiePolicy();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts();
+            }
+
+            app.UsePathBase(Configuration.GetValue<string>("BasePath"));
 
             // Add custom security headers
             app.UseSecurityHeaders();
@@ -66,8 +83,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity
 
             app.UseRouting();
             app.UseAuthorization();
-            app.UseEndpoints(endpoint => 
-            { 
+            app.UseEndpoints(endpoint =>
+            {
                 endpoint.MapDefaultControllerRoute();
                 endpoint.MapHealthChecks("/health", new HealthCheckOptions
                 {
@@ -78,7 +95,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity
 
         public virtual void RegisterDbContexts(IServiceCollection services)
         {
-            services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext>(Configuration);
+            services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, IdentityServerDataProtectionDbContext>(Configuration);
         }
 
         public virtual void RegisterAuthentication(IServiceCollection services)
@@ -96,6 +113,16 @@ namespace SkorubaIdentityServer4Admin.STS.Identity
         public virtual void UseAuthentication(IApplicationBuilder app)
         {
             app.UseIdentityServer();
+        }
+
+        public virtual void RegisterHstsOptions(IServiceCollection services)
+        {
+            services.AddHsts(options =>
+            {
+                options.Preload = true;
+                options.IncludeSubDomains = true;
+                options.MaxAge = TimeSpan.FromDays(365);
+            });
         }
 
         protected IRootConfiguration CreateRootConfiguration()

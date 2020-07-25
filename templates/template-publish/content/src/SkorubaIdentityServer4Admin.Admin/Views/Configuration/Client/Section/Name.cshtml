@@ -56,10 +56,10 @@
 				<div class="card mt-4 mb-4 box-shadow">
 					<div class="card-body">
 						<label class="radio-img">
-							<input type="radio" asp-for="ClientType" value="@((int)ClientType.WebHybrid)" />
+							<input type="radio" asp-for="ClientType" value="@((int)ClientType.Web)" />
 							<img src="~/images/icons/web-client.png" alt="Web Hybrid" />
 							<h3>@Localizer["TitleWebHybrid"]</h3>
-							<h4>@Localizer["TitleHybrid"]</h4>
+                            <h4>@Localizer["TitleCode"]</h4>
 						</label>
 					</div>
 				</div>
@@ -83,7 +83,7 @@
 							<input type="radio" asp-for="ClientType" value="@((int) ClientType.Native)" />
 							<img src="~/images/icons/native-client.png" alt="Native" />
 							<h3>@Localizer["TitleNative"]</h3>
-							<h4>@Localizer["TitleHybrid"]</h4>
+                            <h4>@Localizer["TitleCode"]</h4>
 						</label>
 					</div>
 				</div>

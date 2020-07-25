@@ -16,6 +16,7 @@ namespace SkorubaIdentityServer4Admin.Admin.Configuration
         public string ClientId { get; set; } 
         public string ClientSecret { get; set; }
         public string OidcResponseType { get; set; }
+        public bool HideUIForMSSqlErrorLogging { get; set; }
     }
 }
 

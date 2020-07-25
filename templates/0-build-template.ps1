@@ -10,7 +10,7 @@ $templateSrc = "template-build/content/src"
 $templateRoot = "template-build/content"
 $templateTests = "template-build/content/tests"
 $templateAdminProject = "template-build/content/src/Skoruba.IdentityServer4.Admin"
-$packagesVersions = "1.0.0-rc1"
+$packagesVersions = "1.0.0-rc2"
 
 function CleanBinObjFolders { 
 
@@ -82,6 +82,8 @@ dotnet.exe remove ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.P
 dotnet.exe remove ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.csproj reference ..\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.IdentityServer4.Admin.EntityFramework.csproj
 dotnet.exe remove ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.csproj reference ..\Skoruba.IdentityServer4.Admin.EntityFramework.Identity\Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj
 
+# Shared
+dotnet.exe remove ./$templateSrc/Skoruba.IdentityServer4.Shared/Skoruba.IdentityServer4.Shared.csproj reference ..\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.csproj
 
 # Add nuget packages
 # Admin
@@ -104,11 +106,12 @@ dotnet.exe add ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.MySq
 dotnet.exe add ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL/Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.csproj package Skoruba.IdentityServer4.Admin.EntityFramework -v $packagesVersions
 dotnet.exe add ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL/Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.csproj package Skoruba.IdentityServer4.Admin.EntityFramework.Identity -v $packagesVersions
 
-
 # EF SqlServer
 dotnet.exe add ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.csproj package Skoruba.IdentityServer4.Admin.EntityFramework -v $packagesVersions
 dotnet.exe add ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.csproj package Skoruba.IdentityServer4.Admin.EntityFramework.Identity -v $packagesVersions
 
+# Shared
+dotnet.exe add ./$templateSrc/Skoruba.IdentityServer4.Shared/Skoruba.IdentityServer4.Shared.csproj package Skoruba.IdentityServer4.Admin.BusinessLogic.Identity -v $packagesVersions
 
 # Clean solution and folders bin, obj
 CleanBinObjFolders
@@ -129,7 +132,7 @@ nuget pack $templateNuspecPath
 
 ######################################
 # Step 3
-$templateLocalName = "Skoruba.IdentityServer4.Admin.Templates.1.0.0-rc1.nupkg"
+$templateLocalName = "Skoruba.IdentityServer4.Admin.Templates.1.0.0-rc2.nupkg"
 dotnet.exe new -i $templateLocalName
 
 ######################################

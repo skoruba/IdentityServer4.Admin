@@ -118,22 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddAuthenticator" xml:space="preserve">
-    <value>Tilføj Authentication App</value>
+    <value>Tilføj totrinsbekræftelse app</value>
   </data>
   <data name="AuthenticatorApp" xml:space="preserve">
-    <value>Authentication App</value>
+    <value>Totrinsbekræftelse app</value>
   </data>
   <data name="BeforeLogin" xml:space="preserve">
     <value>før du kan logge ind med en gendannelseskode</value>
   </data>
   <data name="Disable2FA" xml:space="preserve">
-    <value>Deaktiver 2FA</value>
+    <value>Deaktiver totrinsbekræftelse</value>
   </data>
   <data name="ForgetBrowser" xml:space="preserve">
-    <value>Glem din browser</value>
+    <value>Glem denne browser</value>
   </data>
   <data name="GenerateNewCodes" xml:space="preserve">
-    <value>generere et nyt sæt gendannelseskoder</value>
+    <value>generer et nyt sæt gendannelseskoder</value>
   </data>
   <data name="NoCodes" xml:space="preserve">
     <value>Du har ingen gendannelseskoder tilbage</value>
@@ -145,16 +145,16 @@
     <value>gendannelseskoder tilbage</value>
   </data>
   <data name="ResetAuthenticator" xml:space="preserve">
-    <value>Nulstil Authentication App</value>
+    <value>Nulstil totrinsbekræftelse app</value>
   </data>
   <data name="ResetCodes" xml:space="preserve">
     <value>Nulstil gendannelseskoder</value>
   </data>
   <data name="SetupAuthenticator" xml:space="preserve">
-    <value>Konfigurer Authentication App</value>
+    <value>Konfigurer totrinsbekræftelse app</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Two-Factor Authentication (2FA)</value>
+    <value>Totrinsbekræftelse</value>
   </data>
   <data name="YouCanGenerateCodes" xml:space="preserve">
     <value>Du kan generere et nyt sæt gendannelseskoder</value>

@@ -1,3 +1,4 @@
+using SkorubaIdentityServer4Admin.Shared.Configuration.Identity;
 using SkorubaIdentityServer4Admin.STS.Identity.Configuration.Interfaces;
 
 namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration

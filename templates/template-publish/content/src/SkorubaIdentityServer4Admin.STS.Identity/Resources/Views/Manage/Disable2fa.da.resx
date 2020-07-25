@@ -118,18 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Disable2FA" xml:space="preserve">
-    <value>Deaktiver 2FA</value>
+    <value>Deaktiver totrinsbekræftelse</value>
   </data>
   <data name="Info" xml:space="preserve">
-    <value>Deaktivering af 2FA ændrer ikke nøglerne, der bruges i Authenticator App'en. Hvis du ønsker at ændre den nøgle, der bruges i en Authenticator App, skal du gøre det</value>
+    <value>Deaktivering af totrinsbekræftelse ændrer ikke nøglerne, der bruges i Authenticator App'en. Hvis du ønsker at ændre den nøgle, der bruges i en Authenticator App, skal du gøre det</value>
   </data>
   <data name="ResetLink" xml:space="preserve">
     <value>nulstil dine Authenticator nøgler</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
-    <value>Denne handling deaktiverer kun 2FA.</value>
+    <value>Denne handling deaktiverer kun totrinsbekræftelse.</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Deaktiver Two-Factor Authentication (2FA)</value>
+    <value>Deaktiver totrinsbekræftelse</value>
   </data>
 </root>

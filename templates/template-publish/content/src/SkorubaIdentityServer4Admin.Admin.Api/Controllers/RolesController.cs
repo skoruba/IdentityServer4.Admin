@@ -23,7 +23,7 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Controllers
     [Authorize(Policy = AuthorizationConsts.AdministrationPolicy)]
     public class RolesController<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto> : ControllerBase
+            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto> : ControllerBase
         where TUserDto : UserDto<TKey>, new()
         where TRoleDto : RoleDto<TKey>, new()
         where TUser : IdentityUser<TKey>
@@ -34,33 +34,32 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Controllers
         where TUserLogin : IdentityUserLogin<TKey>
         where TRoleClaim : IdentityRoleClaim<TKey>
         where TUserToken : IdentityUserToken<TKey>
-
-
         where TUsersDto : UsersDto<TUserDto, TKey>
         where TRolesDto : RolesDto<TRoleDto, TKey>
         where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
-        where TUserClaimsDto : UserClaimsDto<TKey>, new()
+        where TUserClaimsDto : UserClaimsDto<TUserClaimDto, TKey>, new()
         where TUserProviderDto : UserProviderDto<TKey>
         where TUserProvidersDto : UserProvidersDto<TKey>
         where TUserChangePasswordDto : UserChangePasswordDto<TKey>
         where TRoleClaimsDto : RoleClaimsDto<TKey>, new()
+        where TUserClaimDto : UserClaimDto<TKey>
     {
         private readonly IIdentityService<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto> _identityService;
+            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto> _identityService;
         private readonly IGenericControllerLocalizer<UsersController<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> _localizer;
+            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto>> _localizer;
 
         private readonly IMapper _mapper;
         private readonly IApiErrorResources _errorResources;
 
         public RolesController(IIdentityService<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto> identityService,
+                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto> identityService,
             IGenericControllerLocalizer<UsersController<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>> localizer, IMapper mapper, IApiErrorResources errorResources)
+                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto>> localizer, IMapper mapper, IApiErrorResources errorResources)
         {
             _identityService = identityService;
             _localizer = localizer;
@@ -89,7 +88,7 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Controllers
         [ProducesResponseType(400)]
         public async Task<ActionResult<TRoleDto>> Post([FromBody]TRoleDto role)
         {
-            if (!EqualityComparer<TRoleDtoKey>.Default.Equals(role.Id, default))
+            if (!EqualityComparer<TKey>.Default.Equals(role.Id, default))
             {
                 return BadRequest(_errorResources.CannotSetId());
             }
@@ -152,13 +151,28 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Controllers
             return Ok();
         }
 
+        [HttpPut("Claims")]
+        public async Task<IActionResult> PutRoleClaims([FromBody]RoleClaimApiDto<TKey> roleClaims)
+        {
+            var roleClaimsDto = _mapper.Map<TRoleClaimsDto>(roleClaims);
+
+            if (!roleClaimsDto.ClaimId.Equals(default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
+
+            await _identityService.UpdateRoleClaimsAsync(roleClaimsDto);
+
+            return Ok();
+        }
+
         [HttpDelete("{id}/Claims")]
         public async Task<IActionResult> DeleteRoleClaims(TKey id, int claimId)
         {
             var roleDto = new TRoleClaimsDto { ClaimId = claimId, RoleId = id };
 
             await _identityService.GetRoleClaimAsync(roleDto.RoleId.ToString(), roleDto.ClaimId);
-            await _identityService.DeleteRoleClaimsAsync(roleDto);
+            await _identityService.DeleteRoleClaimAsync(roleDto);
 
             return Ok();
         }

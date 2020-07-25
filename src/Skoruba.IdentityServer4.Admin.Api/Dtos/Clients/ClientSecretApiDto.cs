@@ -29,7 +29,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Dtos.Clients
                     return result;
                 }
 
-                return EntityFramework.Helpers.HashType.Sha256;
+                return Skoruba.IdentityServer4.Admin.EntityFramework.Helpers.HashType.Sha256;
             }
         }
 
