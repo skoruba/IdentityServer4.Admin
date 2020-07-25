@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using HealthChecks.UI.Client;
+using IdentityServer4.Admin.MultiTenancy.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -44,6 +45,9 @@ namespace Skoruba.IdentityServer4.Admin.Api
 
             services.AddScoped<ControllerExceptionFilterAttribute>();
             services.AddScoped<IApiErrorResources, ApiErrorResources>();
+
+            // Multi tenant dependencies
+            services.AddMultiTenantDependencies();
 
             // Add authentication services
             RegisterAuthentication(services);

@@ -1,4 +1,5 @@
 ﻿using IdentityServer4.AccessTokenValidation;
+using IdentityServer4.Admin.MultiTenancy.Infrastructure;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +10,7 @@ using Skoruba.IdentityServer4.Admin.Api.Helpers;
 using Skoruba.IdentityServer4.Admin.Api.Middlewares;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Entitites.Identity;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Stores;
 
 namespace Skoruba.IdentityServer4.Admin.Api.Configuration.Test
 {
@@ -20,7 +22,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Configuration.Test
 
         public override void RegisterDbContexts(IServiceCollection services)
         {
-            services.RegisterDbContextsStaging<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext>();
+            services.RegisterDbContextsStaging<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, MultiTenantDbContext>();
         }
 
         public override void RegisterAuthentication(IServiceCollection services)
