@@ -357,8 +357,6 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             where TContext : DbContext where TUserIdentity : class where TUserIdentityRole : class
         {
             var adminConfiguration = configuration.GetSection(nameof(AdminConfiguration)).Get<AdminConfiguration>();
-            var loginConfiguration = configuration.GetSection(nameof(LoginConfiguration)).Get<LoginConfiguration>();
-            var registerConfiguration = configuration.GetSection(nameof(RegisterConfiguration)).Get<RegisterConfiguration>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -370,11 +368,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                     AuthenticationHelpers.CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
             });
 
-            services.AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
-                {
-                    options.User.RequireUniqueEmail = loginConfiguration.RequireUniqueEmail;
-                    options.SignIn.RequireConfirmedAccount = registerConfiguration.RequireConfirmedAccount;
-                })
+            services
+                .AddIdentity<TUserIdentity, TUserIdentityRole>(options => configuration.GetSection(nameof(IdentityOptions)).Bind(options))
                 .AddEntityFrameworkStores<TContext>()
                 .AddDefaultTokenProviders();
 

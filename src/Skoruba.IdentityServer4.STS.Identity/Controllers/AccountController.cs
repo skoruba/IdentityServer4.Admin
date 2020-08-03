@@ -49,6 +49,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         private readonly IGenericControllerLocalizer<AccountController<TUser, TKey>> _localizer;
         private readonly LoginConfiguration _loginConfiguration;
         private readonly RegisterConfiguration _registerConfiguration;
+        private readonly IdentityOptions _identityOptions;
         private readonly ILogger<AccountController<TUser, TKey>> _logger;
 
         public AccountController(
@@ -63,6 +64,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             IGenericControllerLocalizer<AccountController<TUser, TKey>> localizer,
             LoginConfiguration loginConfiguration,
             RegisterConfiguration registerConfiguration,
+            IdentityOptions identityOptions,
             ILogger<AccountController<TUser, TKey>> logger)
         {
             _userResolver = userResolver;
@@ -76,6 +78,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             _localizer = localizer;
             _loginConfiguration = loginConfiguration;
             _registerConfiguration = registerConfiguration;
+            _identityOptions = identityOptions;
             _logger = logger;
         }
 
@@ -618,9 +621,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
                 await _emailSender.SendEmailAsync(model.Email, _localizer["ConfirmEmailTitle"], _localizer["ConfirmEmailBody", HtmlEncoder.Default.Encode(callbackUrl)]);
 
-                if (_registerConfiguration.RequireConfirmedAccount)
+                if (_identityOptions.SignIn.RequireConfirmedAccount)
                 {
-                    return RedirectToPage("RegisterConfirmation");
+                    return View("RegisterConfirmation");
                 }
                 else
                 {
