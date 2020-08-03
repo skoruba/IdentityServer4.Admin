@@ -3,7 +3,5 @@
     public class LoginConfiguration
     {
         public LoginResolutionPolicy ResolutionPolicy { get; set; } = LoginResolutionPolicy.Username;
-
-        public bool RequireUniqueEmail { get; set; } = true;
     }
 }
