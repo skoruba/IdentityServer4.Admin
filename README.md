@@ -12,7 +12,7 @@
 
 The application is written in the **Asp.Net Core MVC - using .NET Core 3.1**
 
-**NOTE:** Works only with **IdentityServer4 version 3** 🚀
+**NOTE:** Currently works only with **IdentityServer4 version 3** 🚀
 
 ## Requirements
 
@@ -616,7 +616,10 @@ It is possible to define the configuration according the client type - by defaul
 - [x] Support for multiple database providers (SqlServer, Mysql, PostgreSQL)
 - [x] Simplify Admin Identity middleware (#430)
 
-### 2.0.0:
+### 2.0.0
+- [ ] Update to IdentityServer4 version 4 (#633)
+
+### 3.0.0:
 
 - [ ] Create a project template using dotnet CLI - `dotnet new template`
   - [ ] Second template: The administration of the IdentityServer4 (without Asp.Net Core Identity) ([#79](https://github.com/skoruba/IdentityServer4.Admin/issues/79))
