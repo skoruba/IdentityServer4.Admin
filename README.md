@@ -365,7 +365,7 @@ or using `Email`:
 
 ## How to configure API & Swagger
 
-- For development is running on url - `http://localhost:5001` and swagger UI is available on url - `http://localhost:5001/swagger`
+- For development is running on url - `https://localhost:44302` and swagger UI is available on url - `https://localhost:44302/swagger`
 - For swagger UI is configured a client and an API in STS:
 
 ```
