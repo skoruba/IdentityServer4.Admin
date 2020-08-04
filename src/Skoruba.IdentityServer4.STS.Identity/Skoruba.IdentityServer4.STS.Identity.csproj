@@ -32,7 +32,6 @@
         <PackageReference Include="IdentityServer4.AspNetIdentity" Version="3.1.1" />
         <PackageReference Include="IdentityServer4.EntityFramework" Version="3.1.1" />
         <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
-        <PackageReference Include="Sendgrid" Version="9.18.0" />
         <PackageReference Include="Serilog" Version="2.9.0" />
         <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
         <PackageReference Include="Serilog.Extensions.Hosting" Version="3.1.0" />

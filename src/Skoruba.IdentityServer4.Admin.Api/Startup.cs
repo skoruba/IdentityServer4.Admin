@@ -21,6 +21,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Shared.Dtos;
 using Skoruba.IdentityServer4.Shared.Dtos.Identity;
+using Skoruba.IdentityServer4.Shared.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin.Api
 {
@@ -47,6 +48,9 @@ namespace Skoruba.IdentityServer4.Admin.Api
             services.AddDataProtection()
                 .SetApplicationName("Skoruba.IdentityServer4")
                 .PersistKeysToDbContext<IdentityServerDataProtectionDbContext>();
+
+            // Add email senders which is currently setup for SendGrid and SMTP
+            services.AddEmailSenders(Configuration);
 
             services.AddScoped<ControllerExceptionFilterAttribute>();
             services.AddScoped<IApiErrorResources, ApiErrorResources>();
