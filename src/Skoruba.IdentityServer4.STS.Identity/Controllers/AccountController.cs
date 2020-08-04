@@ -324,12 +324,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         [AllowAnonymous]
         public IActionResult ResetPassword(string code = null)
         {
-            var model = new ResetPasswordViewModel()
-            {
-                Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code))
-            };
-
-            return code == null ? View("Error") : View(model);
+            return code == null ? View("Error") : View();
         }
 
         [HttpPost]
@@ -347,7 +342,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 // Don't reveal that the user does not exist
                 return RedirectToAction(nameof(ResetPasswordConfirmation), "Account");
             }
-            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+
+            var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(model.Code));
+            var result = await _userManager.ResetPasswordAsync(user, code, model.Password); 
+
             if (result.Succeeded)
             {
                 return RedirectToAction(nameof(ResetPasswordConfirmation), "Account");
