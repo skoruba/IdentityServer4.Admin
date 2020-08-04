@@ -110,33 +110,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         }
 
         /// <summary>
-        /// Add email senders - configuration of sendgrid, smtp senders
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        public static void AddEmailSenders(this IServiceCollection services, IConfiguration configuration)
-        {
-            var smtpConfiguration = configuration.GetSection(nameof(SmtpConfiguration)).Get<SmtpConfiguration>();
-            var sendGridConfiguration = configuration.GetSection(nameof(SendGridConfiguration)).Get<SendGridConfiguration>();
-
-            if (sendGridConfiguration != null && !string.IsNullOrWhiteSpace(sendGridConfiguration.ApiKey))
-            {
-                services.AddSingleton<ISendGridClient>(_ => new SendGridClient(sendGridConfiguration.ApiKey));
-                services.AddSingleton(sendGridConfiguration);
-                services.AddTransient<IEmailSender, SendGridEmailSender>();
-            }
-            else if (smtpConfiguration != null && !string.IsNullOrWhiteSpace(smtpConfiguration.Host))
-            {
-                services.AddSingleton(smtpConfiguration);
-                services.AddTransient<IEmailSender, SmtpEmailSender>();
-            }
-            else
-            {
-                services.AddSingleton<IEmailSender, LogEmailSender>();
-            }
-        }
-
-        /// <summary>
         /// Register DbContexts for IdentityServer ConfigurationStore, PersistedGrants, Identity and DataProtection
         /// Configure the connection strings in AppSettings.json
         /// </summary>
