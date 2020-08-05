@@ -99,5 +99,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfac
         Task<IdentityResult> DeleteRoleClaimAsync(TRoleClaimsDto role);
 
         Task<IdentityResult> DeleteRoleAsync(TRoleDto role);
+
+        Task<string> GeneratePasswordResetTokenAsync(TUserDto user);
     }
 }
