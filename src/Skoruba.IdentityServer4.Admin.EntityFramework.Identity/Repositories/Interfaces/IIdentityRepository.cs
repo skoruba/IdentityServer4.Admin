@@ -6,15 +6,15 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.Interfaces
 {
-	public interface IIdentityRepository<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
-	    where TUser : IdentityUser<TKey>
-	    where TRole : IdentityRole<TKey>
-	    where TKey : IEquatable<TKey>
-	    where TUserClaim : IdentityUserClaim<TKey>
-	    where TUserRole : IdentityUserRole<TKey>
-	    where TUserLogin : IdentityUserLogin<TKey>
-	    where TRoleClaim : IdentityRoleClaim<TKey>
-	    where TUserToken : IdentityUserToken<TKey>
+    public interface IIdentityRepository<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
+        where TUser : IdentityUser<TKey>
+        where TRole : IdentityRole<TKey>
+        where TKey : IEquatable<TKey>
+        where TUserClaim : IdentityUserClaim<TKey>
+        where TUserRole : IdentityUserRole<TKey>
+        where TUserLogin : IdentityUserLogin<TKey>
+        where TRoleClaim : IdentityRoleClaim<TKey>
+        where TUserToken : IdentityUserToken<TKey>
     {
         Task<bool> ExistsUserAsync(string userId);
 
@@ -74,13 +74,15 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.In
 
         Task<PagedList<TRoleClaim>> GetRoleClaimsAsync(string roleId, int page = 1, int pageSize = 10);
 
-		Task<PagedList<TRoleClaim>> GetUserRoleClaimsAsync(string userId, string claimSearchText, int page = 1, int pageSize = 10);
+        Task<PagedList<TRoleClaim>> GetUserRoleClaimsAsync(string userId, string claimSearchText, int page = 1, int pageSize = 10);
 
-		Task<TRoleClaim> GetRoleClaimAsync(string roleId, int claimId);
+        Task<TRoleClaim> GetRoleClaimAsync(string roleId, int claimId);
 
         Task<IdentityResult> DeleteRoleClaimAsync(string roleId, int claimId);
 
         Task<IdentityResult> DeleteRoleAsync(TRole role);
+
+        Task<string> GeneratePasswordResetTokenAsync(TUser user);
 
         bool AutoSaveChanges { get; set; }
 
