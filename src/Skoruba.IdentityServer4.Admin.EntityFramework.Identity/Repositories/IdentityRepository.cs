@@ -391,11 +391,6 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             return await UserManager.DeleteAsync(userIdentity);
         }
 
-        public async Task<string> GeneratePasswordResetTokenAsync(TUser user)
-        {
-            return await UserManager.GeneratePasswordResetTokenAsync(user);
-        }
-
         private async Task<int> AutoSaveChangesAsync()
         {
             return AutoSaveChanges ? await DbContext.SaveChangesAsync() : (int)SavedStatus.WillBeSavedExplicitly;

@@ -494,12 +494,5 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
 
             return HandleIdentityError(identityResult, IdentityServiceResources.RoleDeleteFailed().Description, IdentityServiceResources.IdentityErrorKey().Description, role);
         }
-
-        public async Task<string> GeneratePasswordResetTokenAsync(TUserDto userDto)
-        {
-            var user = Mapper.Map<TUser>(userDto);
-
-            return await IdentityRepository.GeneratePasswordResetTokenAsync(user);
-        }
     }
 }

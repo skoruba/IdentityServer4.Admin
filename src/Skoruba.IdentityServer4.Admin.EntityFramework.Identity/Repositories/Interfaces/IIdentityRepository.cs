@@ -82,8 +82,6 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.In
 
         Task<IdentityResult> DeleteRoleAsync(TRole role);
 
-        Task<string> GeneratePasswordResetTokenAsync(TUser user);
-
         bool AutoSaveChanges { get; set; }
 
         Task<int> SaveAllChangesAsync();
