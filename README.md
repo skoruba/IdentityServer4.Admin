@@ -23,7 +23,7 @@ The application is written in the **Asp.Net Core MVC - using .NET Core 3.1**
 - Install the dotnet new template:
 
 ```sh
-dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-rc2
+dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-rc2-update1
 ```
 
 - Create new project:
@@ -161,11 +161,11 @@ docker-compose up -d
 ### Docker images
 - Docker images will be available also in [docker hub](https://hub.docker.com/u/skoruba)
   - AdminUI:
-    - `skoruba/identityserver4-admin:rc1`
+    - `skoruba/identityserver4-admin:rc2`
   - Admin Api:
-    - `skoruba/identityserver4-admin-api:rc1`
+    - `skoruba/identityserver4-admin-api:rc2`
   - STS:
-    - `skoruba/identityserver4-sts-identity:rc1`
+    - `skoruba/identityserver4-sts-identity:rc2`
        
 ### Publish Docker images to Docker hub
 - Check the script in `build/publish-docker-images.ps1` - change the profile name according to your requirements.
@@ -199,6 +199,7 @@ The following Gulp commands are available:
   - `IdentityServerConfigurationDbContext`: for IdentityServer configuration store
   - `IdentityServerPersistedGrantDbContext`: for IdentityServer operational store
   - `AuditLoggingDbContext`: for Audit Logging
+  - `IdentityServerDataProtectionDbContext`: for dataprotection
 
 ### Run entity framework migrations:
 
@@ -252,6 +253,7 @@ The following Gulp commands are available:
   - Console
   - File
   - MSSqlServer
+  - Seq
   
 ```json
 {
@@ -370,7 +372,7 @@ or using `Email`:
 
 ```
 "AdminApiConfiguration": {
-  "IdentityServerBaseUrl": "http://localhost:5000",
+  "IdentityServerBaseUrl": "https://localhost:44310",
   "OidcSwaggerUIClientId": "skoruba_identity_admin_api_swaggerui",
   "OidcApiName": "skoruba_identity_admin_api"
 }
@@ -614,17 +616,19 @@ It is possible to define the configuration according the client type - by defaul
 - [x] Docker support ([#121](https://github.com/skoruba/IdentityServer4.Admin/issues/121))
 - [x] Health Checks (Databases and IdentityServer)
 - [x] Support for multiple database providers (SqlServer, Mysql, PostgreSQL)
-- [x] Simplify Admin Identity middleware (#430)
+- [x] Simplify Admin Identity middleware ([#430](https://github.com/skoruba/IdentityServer4.Admin/issues/430))
+- [ ] Add support for loading signing key from Azure Key Vault ([#533](https://github.com/skoruba/IdentityServer4.Admin/issues/533))
+- [ ] Protect keys for dataprotection from Azure Key Vault
 
 ### 2.0.0
-- [ ] Update to IdentityServer4 version 4 (#633)
+- [ ] Update to IdentityServer4 version 4 ([#633](https://github.com/skoruba/IdentityServer4.Admin/issues/633))
 
 ### 3.0.0:
 
 - [ ] Create a project template using dotnet CLI - `dotnet new template`
   - [ ] Second template: The administration of the IdentityServer4 (without Asp.Net Core Identity) ([#79](https://github.com/skoruba/IdentityServer4.Admin/issues/79))
-- [ ] Connect Admin Api to the Admin UI (#478)
-- [ ] Add windows authentication (#479)
+- [ ] Connect Admin Api to the Admin UI ([#478](https://github.com/skoruba/IdentityServer4.Admin/issues/478))
+- [ ] Add windows authentication ([#479](https://github.com/skoruba/IdentityServer4.Admin/issues/479))
 
 
 ### Future:
