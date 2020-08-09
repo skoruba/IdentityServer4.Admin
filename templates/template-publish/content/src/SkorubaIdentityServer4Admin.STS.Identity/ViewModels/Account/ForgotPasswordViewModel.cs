@@ -1,4 +1,4 @@
-using SkorubaIdentityServer4Admin.STS.Identity.Configuration;
+﻿using SkorubaIdentityServer4Admin.STS.Identity.Configuration;
 using System.ComponentModel.DataAnnotations;
 using SkorubaIdentityServer4Admin.Shared.Configuration.Identity;
 

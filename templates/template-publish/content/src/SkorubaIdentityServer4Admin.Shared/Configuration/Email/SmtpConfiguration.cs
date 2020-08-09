@@ -1,4 +1,4 @@
-namespace SkorubaIdentityServer4Admin.Shared.Configuration.Email
+﻿namespace SkorubaIdentityServer4Admin.Shared.Configuration.Email
 {
     public class SmtpConfiguration
     {

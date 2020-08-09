@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -43,8 +43,8 @@
         <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
         <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.5.0" />
         <PackageReference Include="Serilog.Sinks.Seq" Version="4.0.0" />
-        <PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic" Version="1.0.0-rc2" />
-        <PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic.Identity" Version="1.0.0-rc2" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic" Version="1.0.0-rc2-update1" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic.Identity" Version="1.0.0-rc2-update1" />
     </ItemGroup>
 
     <ItemGroup>
@@ -129,6 +129,7 @@
     </ItemGroup>
 
 </Project>
+
 
 
 

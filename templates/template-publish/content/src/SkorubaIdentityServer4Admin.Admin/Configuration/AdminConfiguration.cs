@@ -1,4 +1,4 @@
-namespace SkorubaIdentityServer4Admin.Admin.Configuration
+﻿namespace SkorubaIdentityServer4Admin.Admin.Configuration
 {
     public class AdminConfiguration
     {

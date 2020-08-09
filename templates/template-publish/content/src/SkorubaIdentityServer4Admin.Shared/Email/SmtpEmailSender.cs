@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Logging;
 using SkorubaIdentityServer4Admin.Shared.Configuration.Email;
 using System;

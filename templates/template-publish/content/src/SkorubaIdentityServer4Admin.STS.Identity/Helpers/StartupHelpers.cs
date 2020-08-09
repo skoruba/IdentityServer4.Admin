@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Globalization;
 using IdentityServer4.EntityFramework.Storage;
 using Microsoft.AspNetCore.Authentication;
@@ -110,33 +110,6 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
         }
 
         /// <summary>
-        /// Add email senders - configuration of sendgrid, smtp senders
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        public static void AddEmailSenders(this IServiceCollection services, IConfiguration configuration)
-        {
-            var smtpConfiguration = configuration.GetSection(nameof(SmtpConfiguration)).Get<SmtpConfiguration>();
-            var sendGridConfiguration = configuration.GetSection(nameof(SendGridConfiguration)).Get<SendGridConfiguration>();
-
-            if (sendGridConfiguration != null && !string.IsNullOrWhiteSpace(sendGridConfiguration.ApiKey))
-            {
-                services.AddSingleton<ISendGridClient>(_ => new SendGridClient(sendGridConfiguration.ApiKey));
-                services.AddSingleton(sendGridConfiguration);
-                services.AddTransient<IEmailSender, SendGridEmailSender>();
-            }
-            else if (smtpConfiguration != null && !string.IsNullOrWhiteSpace(smtpConfiguration.Host))
-            {
-                services.AddSingleton(smtpConfiguration);
-                services.AddTransient<IEmailSender, SmtpEmailSender>();
-            }
-            else
-            {
-                services.AddSingleton<IEmailSender, LogEmailSender>();
-            }
-        }
-
-        /// <summary>
         /// Register DbContexts for IdentityServer ConfigurationStore, PersistedGrants, Identity and DataProtection
         /// Configure the connection strings in AppSettings.json
         /// </summary>
@@ -226,16 +199,14 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
         {
             var loginConfiguration = GetLoginConfiguration(configuration);
             var registrationConfiguration = GetRegistrationConfiguration(configuration);
+            var identityOptions = configuration.GetSection(nameof(IdentityOptions)).Get<IdentityOptions>();
 
             services
                 .AddSingleton(registrationConfiguration)
                 .AddSingleton(loginConfiguration)
+                .AddSingleton(identityOptions)
                 .AddScoped<UserResolver<TUserIdentity>>()
-                .AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
-                {
-                    options.User.RequireUniqueEmail = loginConfiguration.RequireUniqueEmail;
-                    options.SignIn.RequireConfirmedEmail = registrationConfiguration.RequireConfirmedAccount;
-                })
+                .AddIdentity<TUserIdentity, TUserIdentityRole>(options => configuration.GetSection(nameof(IdentityOptions)).Bind(options))
                 .AddEntityFrameworkStores<TIdentityDbContext>()
                 .AddDefaultTokenProviders();
 

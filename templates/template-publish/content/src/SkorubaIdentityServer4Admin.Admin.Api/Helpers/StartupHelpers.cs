@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using IdentityModel;
 using IdentityServer4.AccessTokenValidation;
 using IdentityServer4.EntityFramework.Options;
@@ -183,14 +183,9 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Helpers
             where TUser : class
         {
             var adminApiConfiguration = configuration.GetSection(nameof(AdminApiConfiguration)).Get<AdminApiConfiguration>();
-            var loginConfiguration = configuration.GetSection(nameof(LoginConfiguration)).Get<LoginConfiguration>();
-            var registerConfiguration = configuration.GetSection(nameof(RegisterConfiguration)).Get<RegisterConfiguration>();
 
-            services.AddIdentity<TUser, TRole>(options =>
-                {
-                    options.User.RequireUniqueEmail = loginConfiguration.RequireUniqueEmail;
-                    options.SignIn.RequireConfirmedAccount = registerConfiguration.RequireConfirmedAccount;
-                })
+            services
+                .AddIdentity<TUser, TRole>(options => configuration.GetSection(nameof(IdentityOptions)).Bind(options))
                 .AddEntityFrameworkStores<TIdentityDbContext>()
                 .AddDefaultTokenProviders();
 

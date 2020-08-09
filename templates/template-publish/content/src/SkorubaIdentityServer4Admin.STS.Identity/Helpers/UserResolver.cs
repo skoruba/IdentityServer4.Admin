@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using SkorubaIdentityServer4Admin.STS.Identity.Configuration;
 using System.Threading.Tasks;
 using SkorubaIdentityServer4Admin.Shared.Configuration.Identity;

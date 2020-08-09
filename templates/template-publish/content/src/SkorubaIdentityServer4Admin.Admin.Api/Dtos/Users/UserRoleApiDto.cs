@@ -1,4 +1,4 @@
-namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Users
+﻿namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Users
 {
     public class UserRoleApiDto<TKey>
     {

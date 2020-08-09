@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using SkorubaIdentityServer4Admin.Shared.Configuration.Common;
 
 namespace SkorubaIdentityServer4Admin.Shared.Helpers

@@ -1,4 +1,4 @@
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -19,6 +19,7 @@ using System;
 using Microsoft.AspNetCore.DataProtection;
 using SkorubaIdentityServer4Admin.Shared.Dtos;
 using SkorubaIdentityServer4Admin.Shared.Dtos.Identity;
+using SkorubaIdentityServer4Admin.Shared.Helpers;
 
 namespace SkorubaIdentityServer4Admin.Admin
 {
@@ -47,6 +48,9 @@ namespace SkorubaIdentityServer4Admin.Admin
             services.AddDataProtection()
                 .SetApplicationName("SkorubaIdentityServer4Admin")
                 .PersistKeysToDbContext<IdentityServerDataProtectionDbContext>();
+
+            // Add email senders which is currently setup for SendGrid and SMTP
+            services.AddEmailSenders(Configuration);
 
             // Add Asp.Net Core Identity Configuration and OpenIdConnect auth as well
             RegisterAuthentication(services);

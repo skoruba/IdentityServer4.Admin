@@ -1,4 +1,4 @@
-namespace SkorubaIdentityServer4Admin.Shared.Configuration.Common
+﻿namespace SkorubaIdentityServer4Admin.Shared.Configuration.Common
 {
     public class DockerConfiguration
     {

@@ -1,4 +1,4 @@
-using HealthChecks.UI.Client;
+﻿using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +13,7 @@ using SkorubaIdentityServer4Admin.STS.Identity.Configuration.Interfaces;
 using SkorubaIdentityServer4Admin.STS.Identity.Helpers;
 using System;
 using Microsoft.AspNetCore.DataProtection;
+using SkorubaIdentityServer4Admin.Shared.Helpers;
 
 namespace SkorubaIdentityServer4Admin.STS.Identity
 {

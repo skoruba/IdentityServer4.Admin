@@ -1,4 +1,4 @@
-namespace SkorubaIdentityServer4Admin.Admin.Helpers
+﻿namespace SkorubaIdentityServer4Admin.Admin.Helpers
 {
     public class NotificationHelpers
     {

@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 
 namespace SkorubaIdentityServer4Admin.Shared.Helpers

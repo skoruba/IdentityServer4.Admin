@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
@@ -21,6 +21,7 @@ using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.DbContexts;
 using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Entities.Identity;
 using SkorubaIdentityServer4Admin.Shared.Dtos;
 using SkorubaIdentityServer4Admin.Shared.Dtos.Identity;
+using SkorubaIdentityServer4Admin.Shared.Helpers;
 
 namespace SkorubaIdentityServer4Admin.Admin.Api
 {
@@ -47,6 +48,9 @@ namespace SkorubaIdentityServer4Admin.Admin.Api
             services.AddDataProtection()
                 .SetApplicationName("SkorubaIdentityServer4Admin")
                 .PersistKeysToDbContext<IdentityServerDataProtectionDbContext>();
+
+            // Add email senders which is currently setup for SendGrid and SMTP
+            services.AddEmailSenders(Configuration);
 
             services.AddScoped<ControllerExceptionFilterAttribute>();
             services.AddScoped<IApiErrorResources, ApiErrorResources>();

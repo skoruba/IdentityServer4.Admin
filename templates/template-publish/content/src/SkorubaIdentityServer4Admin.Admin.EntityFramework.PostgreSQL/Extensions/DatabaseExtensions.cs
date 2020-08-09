@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Reflection;
 using IdentityServer4.EntityFramework.Storage;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;

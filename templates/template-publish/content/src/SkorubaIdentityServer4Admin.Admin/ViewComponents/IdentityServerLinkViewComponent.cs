@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SkorubaIdentityServer4Admin.Admin.Configuration.Interfaces;
 
 namespace SkorubaIdentityServer4Admin.Admin.ViewComponents

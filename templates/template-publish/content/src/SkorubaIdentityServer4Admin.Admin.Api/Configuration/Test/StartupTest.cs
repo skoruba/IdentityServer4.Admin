@@ -1,4 +1,4 @@
-using IdentityServer4.AccessTokenValidation;
+﻿using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -25,14 +25,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Configuration.Test
 
         public override void RegisterAuthentication(IServiceCollection services)
         {
-            var loginConfiguration = Configuration.GetSection(nameof(LoginConfiguration)).Get<LoginConfiguration>();
-            var registerConfiguration = Configuration.GetSection(nameof(RegisterConfiguration)).Get<RegisterConfiguration>();
-
-            services.AddIdentity<UserIdentity, UserIdentityRole>(options =>
-                {
-                    options.User.RequireUniqueEmail = loginConfiguration.RequireUniqueEmail;
-                    options.SignIn.RequireConfirmedAccount = registerConfiguration.RequireConfirmedAccount;
-                })
+            services
+                .AddIdentity<UserIdentity, UserIdentityRole>(options => Configuration.GetSection(nameof(IdentityOptions)).Bind(options))
                 .AddEntityFrameworkStores<AdminIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
