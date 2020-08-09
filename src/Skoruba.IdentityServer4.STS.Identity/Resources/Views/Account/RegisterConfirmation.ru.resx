@@ -118,9 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ConfirmEmailTitle" xml:space="preserve">
-    <value>Confirm your email</value>
+    <value>Подтвердите ваш адрес электронной почты</value>
   </data>
   <data name="VerificationSent" xml:space="preserve">
-    <value>Verification email sent. Please check your email.</value>
+    <value>Подтверждение по электронной почте отправлено. Пожалуйста,проверьте электронную почту.</value>
   </data>
 </root>
