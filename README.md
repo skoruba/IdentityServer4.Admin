@@ -591,6 +591,7 @@ It is possible to define the configuration according the client type - by defaul
 - [x] Add logging into
   - [x] Database
   - [x] File
+  - [x] Seq
 - [x] Add localization for other languages
   - [x] English
   - [x] Chinese
