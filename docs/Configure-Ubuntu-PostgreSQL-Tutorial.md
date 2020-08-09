@@ -55,7 +55,7 @@ First change connection strings in `src/Skoruba.IdentityServer4.Admin/appsetting
 Server=localhost; User Id=postgres; Database=is4admin; Port=5432; Password=postgres; SSL Mode=Prefer; Trust Server Certificate=true
 ```
 
-## Swith to PostgreSQL
+## Switch to PostgreSQL
 
 It is possible to change database provider in `appsettings.json` in following projects:
  - Skoruba.IdentityServer4.Admin

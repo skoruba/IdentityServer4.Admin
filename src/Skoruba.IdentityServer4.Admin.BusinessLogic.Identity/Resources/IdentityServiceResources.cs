@@ -103,6 +103,15 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources
             };
         }
 
+        public virtual ResourceMessage UserClaimsUpdateFailed()
+        {
+            return new ResourceMessage()
+            {
+                Code = nameof(UserClaimsCreateFailed),
+                Description = IdentityServiceResource.UserClaimsUpdateFailed
+            };
+        }
+
         public virtual ResourceMessage UserClaimDoesNotExist()
         {
             return new ResourceMessage()
@@ -163,6 +172,15 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources
             {
                 Code = nameof(RoleClaimsCreateFailed),
                 Description = IdentityServiceResource.RoleClaimsCreateFailed
+            };
+        }
+
+        public virtual ResourceMessage RoleClaimsUpdateFailed()
+        {
+            return new ResourceMessage()
+            {
+                Code = nameof(RoleClaimsCreateFailed),
+                Description = IdentityServiceResource.RoleClaimsUpdateFailed
             };
         }
 

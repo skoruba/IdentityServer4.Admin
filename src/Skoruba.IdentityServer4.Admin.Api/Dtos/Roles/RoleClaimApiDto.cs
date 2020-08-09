@@ -2,11 +2,11 @@
 
 namespace Skoruba.IdentityServer4.Admin.Api.Dtos.Roles
 {
-    public class RoleClaimApiDto<TRoleDtoKey>
+    public class RoleClaimApiDto<TKey>
     {
         public int ClaimId { get; set; }
 
-        public TRoleDtoKey RoleId { get; set; }
+        public TKey RoleId { get; set; }
 
         [Required]
         public string ClaimType { get; set; }

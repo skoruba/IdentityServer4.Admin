@@ -31,5 +31,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
         Task<int> DeleteIdentityResourcePropertyAsync(IdentityResourceProperty identityResourceProperty);
 
         Task<int> SaveAllChangesAsync();
+
+        bool AutoSaveChanges { get; set; }
     }
 }

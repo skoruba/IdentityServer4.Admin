@@ -1,4 +1,4 @@
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
 namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers

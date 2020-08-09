@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Migrations.IdentityServerGrants
