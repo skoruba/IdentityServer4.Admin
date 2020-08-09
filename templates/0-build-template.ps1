@@ -1,16 +1,16 @@
+param([string] $packagesVersions, [string]$gitBranchName = 'dev')
+
 # This script contains following steps:
 # - Download latest version of Skoruba.IdentityServer4.Admin from git repository
 # - Use folders src and tests for project template
 # - Create db migrations for seed data
 
 $gitProject = "https://github.com/skoruba/IdentityServer4.Admin"
-$gitBranchName = "dev"
 $gitProjectFolder = "Skoruba.IdentityServer4.Admin"
 $templateSrc = "template-build/content/src"
 $templateRoot = "template-build/content"
 $templateTests = "template-build/content/tests"
 $templateAdminProject = "template-build/content/src/Skoruba.IdentityServer4.Admin"
-$packagesVersions = "1.0.0-rc2"
 
 function CleanBinObjFolders { 
 
@@ -132,7 +132,7 @@ nuget pack $templateNuspecPath
 
 ######################################
 # Step 3
-$templateLocalName = "Skoruba.IdentityServer4.Admin.Templates.1.0.0-rc2.nupkg"
+$templateLocalName = "Skoruba.IdentityServer4.Admin.Templates.$packagesVersions.nupkg"
 dotnet.exe new -i $templateLocalName
 
 ######################################
