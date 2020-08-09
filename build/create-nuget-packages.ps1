@@ -8,5 +8,3 @@ dotnet pack .\..\src\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.Ident
 dotnet pack .\..\src\Skoruba.IdentityServer4.Admin.EntityFramework.Extensions\Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.csproj -c Release -o $packagesOutput
 dotnet pack .\..\src\Skoruba.IdentityServer4.Admin.EntityFramework.Identity\Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj -c Release -o $packagesOutput
 dotnet pack .\..\src\Skoruba.IdentityServer4.Admin.EntityFramework.Shared\Skoruba.IdentityServer4.Admin.EntityFramework.Shared.csproj -c Release -o $packagesOutput
-
-dotnet pack .\..\src\Skoruba.IdentityServer4.Shared\Skoruba.IdentityServer4.Shared.csproj -c Release -o $packagesOutput
