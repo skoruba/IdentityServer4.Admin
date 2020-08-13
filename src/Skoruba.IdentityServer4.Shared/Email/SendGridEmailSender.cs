@@ -43,7 +43,7 @@ namespace Skoruba.IdentityServer4.Shared.Email
                     break;
                 default:
                 {
-                    var errorMessage = response.Body.ReadAsStringAsync();
+                    var errorMessage = await response.Body.ReadAsStringAsync();
                     _logger.LogError($"Response with code {response.StatusCode} and body {errorMessage} after sending email: {email}, subject: {subject}");
                     break;
                 }
