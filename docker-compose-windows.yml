@@ -2,14 +2,14 @@ version: '3.4'
 
 services:
   skoruba.identityserver4.admin:
-    image: ${DOCKER_REGISTRY-}skoruba-identityserver4-admin:rc1
+    image: ${DOCKER_REGISTRY-}identityserver4-admin:rc1
     expose:
       - 80 
     ports:
       - ${ADMIN_URL_PORT}:80
     build:
       context: .
-      dockerfile: src/Skoruba.IdentityServer4.Admin/Dockerfile
+      dockerfile: src/Skoruba.IdentityServer4.Admin/Dockerfile-windows
     container_name: skoruba-identityserver4-admin
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -33,16 +33,16 @@ services:
     depends_on:
       - db
       - skoruba.identityserver4.sts.identity
-    volumes:
-      - "./shared/serilog.json:/app/serilog.json"
-      - "./shared/identitydata.json:/app/identitydata.json"
-      - "./shared/identityserverdata.json:/app/identityserverdata.json"
+    # volumes:
+    #   - "./shared/serilog.json:C:/app/serilog.json"
+    #   - "./shared/identitydata.json:C:/app/identitydata.json"
+    #   - "./shared/identityserverdata.json:C:/app/identityserverdata.json"
 
   skoruba.identityserver4.admin.api:
-    image: ${DOCKER_REGISTRY-}skoruba-identityserver4-admin-api:rc1
+    image: ${DOCKER_REGISTRY-}identityserver4-admin-api:rc1
     build:
       context: .
-      dockerfile: src/Skoruba.IdentityServer4.Admin.Api/Dockerfile
+      dockerfile: src/Skoruba.IdentityServer4.Admin.Api/Dockerfile-windows
     expose:
       - 80 
     ports:
@@ -57,18 +57,18 @@ services:
       - "ConnectionStrings__AdminLogDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
       - "ConnectionStrings__AdminAuditLogDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
     container_name: skoruba-identityserver4-admin-api
-    volumes:
-      - "./shared/serilog.json:/app/serilog.json"
+    # volumes:
+    #   - "./shared/serilog.json:/app/serilog.json"
 
   skoruba.identityserver4.sts.identity:
-    image: ${DOCKER_REGISTRY-}skoruba-identityserver4-sts-identity:rc1
+    image: ${DOCKER_REGISTRY-}identityserver4-sts-identity:rc1
     expose:
       - 80 
     ports:
       - ${BASE_URL_PORT}:80
     build:
       context: .
-      dockerfile: src/Skoruba.IdentityServer4.STS.Identity/Dockerfile
+      dockerfile: src/Skoruba.IdentityServer4.STS.Identity/Dockerfile-windows
     container_name: skoruba-identityserver4-sts-identity
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -78,14 +78,14 @@ services:
       - "AdminConfiguration__IdentityAdminBaseUrl=${ADMIN_URL}"
     depends_on:
       - db
-    volumes:
-      - "./shared/serilog.json:/app/serilog.json"
+    # volumes:
+    #   - "./shared/serilog.json:C:/app/serilog.json"
     networks:
       default:
         aliases:
           - 127.0.0.1.xip.io
   db:
-    image: mcr.microsoft.com/mssql/server
+    image: microsoft/mssql-server-windows-express
     expose:
       - 1433
     # ports:
@@ -95,7 +95,7 @@ services:
       SA_PASSWORD: "${DB_PASSWORD:-Password_123}"
       ACCEPT_EULA: "Y"
     volumes:
-      - dbdata:/var/opt/mssql
+      - dbdata:C:/Data
 
 volumes:
   dbdata:
