@@ -47,6 +47,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Adm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.Api.IntegrationTests", "tests\Skoruba.IdentityServer4.Admin.Api.IntegrationTests\Skoruba.IdentityServer4.Admin.Api.IntegrationTests.csproj", "{4D123ACB-ACBD-4E40-AE6B-1B0F79D703B0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FB36F398-4390-4ED4-9283-A2BB36E146AC}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines.yml = azure-pipelines.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
