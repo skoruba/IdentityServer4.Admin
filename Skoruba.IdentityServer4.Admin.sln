@@ -35,8 +35,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Adm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.EntityFramework.Extensions", "src\Skoruba.IdentityServer4.Admin.EntityFramework.Extensions\Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.csproj", "{2DD3CB7D-462E-4039-B684-81B1E88C7C6A}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F817047F-018D-4F93-BDA5-58602073B634}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer", "src\Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer\Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.csproj", "{8230366D-81F9-4FA5-8F5D-8546B527F54F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL", "src\Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL\Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.csproj", "{3ECDC91E-0D3E-4E4D-A34E-D33BB714578D}"
@@ -47,7 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "business", "business", "{EE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.EntityFramework.MySql", "src\Skoruba.IdentityServer4.Admin.EntityFramework.MySql\Skoruba.IdentityServer4.Admin.EntityFramework.MySql.csproj", "{0A8A0DB7-0509-4DFB-9201-74398511B481}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skoruba.IdentityServer4.Admin.Api.IntegrationTests", "tests\Skoruba.IdentityServer4.Admin.Api.IntegrationTests\Skoruba.IdentityServer4.Admin.Api.IntegrationTests.csproj", "{4D123ACB-ACBD-4E40-AE6B-1B0F79D703B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Admin.Api.IntegrationTests", "tests\Skoruba.IdentityServer4.Admin.Api.IntegrationTests\Skoruba.IdentityServer4.Admin.Api.IntegrationTests.csproj", "{4D123ACB-ACBD-4E40-AE6B-1B0F79D703B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -107,10 +105,6 @@ Global
 		{2DD3CB7D-462E-4039-B684-81B1E88C7C6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DD3CB7D-462E-4039-B684-81B1E88C7C6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DD3CB7D-462E-4039-B684-81B1E88C7C6A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F817047F-018D-4F93-BDA5-58602073B634}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F817047F-018D-4F93-BDA5-58602073B634}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F817047F-018D-4F93-BDA5-58602073B634}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F817047F-018D-4F93-BDA5-58602073B634}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8230366D-81F9-4FA5-8F5D-8546B527F54F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8230366D-81F9-4FA5-8F5D-8546B527F54F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8230366D-81F9-4FA5-8F5D-8546B527F54F}.Release|Any CPU.ActiveCfg = Release|Any CPU
