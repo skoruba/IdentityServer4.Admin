@@ -1,4 +1,4 @@
-using SkorubaIdentityServer4Admin.Admin.Configuration.Interfaces;
+﻿using SkorubaIdentityServer4Admin.Admin.Configuration.Interfaces;
 
 namespace SkorubaIdentityServer4Admin.Admin.Configuration
 {

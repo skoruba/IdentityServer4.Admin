@@ -31,6 +31,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Skoruba.IdentityServer4.Shared.Authentication;
+using Skoruba.IdentityServer4.Shared.Configuration.Identity;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
@@ -95,39 +96,17 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <param name="app"></param>
         public static void UseSecurityHeaders(this IApplicationBuilder app)
         {
-            app.UseForwardedHeaders(new ForwardedHeadersOptions()
+            var forwardingOptions = new ForwardedHeadersOptions()
             {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
+                ForwardedHeaders = ForwardedHeaders.All
+            };
+
+            forwardingOptions.KnownNetworks.Clear();
+            forwardingOptions.KnownProxies.Clear();
+
+            app.UseForwardedHeaders(forwardingOptions);
 
             app.UseReferrerPolicy(options => options.NoReferrer());
-        }
-
-        /// <summary>
-        /// Add email senders - configuration of sendgrid, smtp senders
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        public static void AddEmailSenders(this IServiceCollection services, IConfiguration configuration)
-        {
-            var smtpConfiguration = configuration.GetSection(nameof(SmtpConfiguration)).Get<SmtpConfiguration>();
-            var sendGridConfiguration = configuration.GetSection(nameof(SendGridConfiguration)).Get<SendGridConfiguration>();
-
-            if (sendGridConfiguration != null && !string.IsNullOrWhiteSpace(sendGridConfiguration.ApiKey))
-            {
-                services.AddSingleton<ISendGridClient>(_ => new SendGridClient(sendGridConfiguration.ApiKey));
-                services.AddSingleton(sendGridConfiguration);
-                services.AddTransient<IEmailSender, SendGridEmailSender>();
-            }
-            else if (smtpConfiguration != null && !string.IsNullOrWhiteSpace(smtpConfiguration.Host))
-            {
-                services.AddSingleton(smtpConfiguration);
-                services.AddTransient<IEmailSender, SmtpEmailSender>();
-            }
-            else
-            {
-                services.AddSingleton<IEmailSender, LogEmailSender>();
-            }
         }
 
         /// <summary>
@@ -146,7 +125,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
         {
             var databaseProvider = configuration.GetSection(nameof(DatabaseProviderConfiguration)).Get<DatabaseProviderConfiguration>();
-            
+
             var identityConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
             var configurationConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
             var persistedGrantsConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);
@@ -220,15 +199,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         {
             var loginConfiguration = GetLoginConfiguration(configuration);
             var registrationConfiguration = GetRegistrationConfiguration(configuration);
+            var identityOptions = configuration.GetSection(nameof(IdentityOptions)).Get<IdentityOptions>();
 
             services
                 .AddSingleton(registrationConfiguration)
                 .AddSingleton(loginConfiguration)
+                .AddSingleton(identityOptions)
                 .AddScoped<UserResolver<TUserIdentity>>()
-                .AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
-                {
-                    options.User.RequireUniqueEmail = true;
-                })
+                .AddIdentity<TUserIdentity, TUserIdentityRole>(options => configuration.GetSection(nameof(IdentityOptions)).Bind(options))
                 .AddEntityFrameworkStores<TIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -314,7 +292,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     options.Events.RaiseSuccessEvents = true;
 
                     if (!string.IsNullOrEmpty(advancedConfiguration.PublicOrigin))
+                    {
                         options.PublicOrigin = advancedConfiguration.PublicOrigin;
+                    }
+
+                    if (!string.IsNullOrEmpty(advancedConfiguration.IssuerUri))
+                    {
+                        options.IssuerUri = advancedConfiguration.IssuerUri;
+                    }
                 })
                 .AddConfigurationStore<TConfigurationDbContext>()
                 .AddOperationalStore<TPersistedGrantDbContext>()
@@ -379,7 +364,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
         {
             var configurationDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
-            var persistedGrantsDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);            
+            var persistedGrantsDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);
             var identityDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
             var dataProtectionDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.DataProtectionDbConnectionStringKey);
 

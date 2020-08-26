@@ -1,4 +1,4 @@
-using SkorubaIdentityServer4Admin.Admin.Configuration.Identity;
+﻿using SkorubaIdentityServer4Admin.Admin.Configuration.Identity;
 using System.Collections.Generic;
 
 namespace SkorubaIdentityServer4Admin.Admin.Configuration

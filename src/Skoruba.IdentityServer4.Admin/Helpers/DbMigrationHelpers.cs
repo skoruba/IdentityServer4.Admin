@@ -22,13 +22,19 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// Generate migrations before running this method, you can use these steps bellow:
         /// https://github.com/skoruba/IdentityServer4.Admin#ef-core--data-access
         /// </summary>
-        /// <param name="host"></param>      
-        public static async Task EnsureSeedData<TIdentityServerDbContext, TIdentityDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLogDbContext, TDataProtectionDbContext, TUser, TRole>(IHost host)
+        /// <param name="host"></param>
+        /// <param name="applyDbMigrationWithDataSeedFromProgramArguments"></param>
+        /// <param name="seedConfiguration"></param>
+        /// <param name="databaseMigrationsConfiguration"></param>
+        public static async Task ApplyDbMigrationsWithDataSeedAsync<TIdentityServerDbContext, TIdentityDbContext,
+            TPersistedGrantDbContext, TLogDbContext, TAuditLogDbContext, TDataProtectionDbContext, TUser, TRole>(
+            IHost host, bool applyDbMigrationWithDataSeedFromProgramArguments, SeedConfiguration seedConfiguration,
+            DatabaseMigrationsConfiguration databaseMigrationsConfiguration)
             where TIdentityServerDbContext : DbContext, IAdminConfigurationDbContext
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
-            where TAuditLogDbContext: DbContext, IAuditLoggingDbContext<AuditLog>
+            where TAuditLogDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
             where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
             where TUser : IdentityUser, new()
             where TRole : IdentityRole, new()
@@ -36,17 +42,27 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             using (var serviceScope = host.Services.CreateScope())
             {
                 var services = serviceScope.ServiceProvider;
-                await EnsureDatabasesMigrated<TIdentityDbContext, TIdentityServerDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLogDbContext, TDataProtectionDbContext>(services);
-                await EnsureSeedData<TIdentityServerDbContext, TUser, TRole>(services);
+                
+                if ((databaseMigrationsConfiguration != null && databaseMigrationsConfiguration.ApplyDatabaseMigrations) 
+                    || (applyDbMigrationWithDataSeedFromProgramArguments))
+                {
+                    await EnsureDatabasesMigratedAsync<TIdentityDbContext, TIdentityServerDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLogDbContext, TDataProtectionDbContext>(services);
+                }
+
+                if ((seedConfiguration != null && seedConfiguration.ApplySeed) 
+                    || (applyDbMigrationWithDataSeedFromProgramArguments))
+                {
+                    await EnsureSeedDataAsync<TIdentityServerDbContext, TUser, TRole>(services);
+                }
             }
         }
 
-        public static async Task EnsureDatabasesMigrated<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLogDbContext, TDataProtectionDbContext>(IServiceProvider services)
+        public static async Task EnsureDatabasesMigratedAsync<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLogDbContext, TDataProtectionDbContext>(IServiceProvider services)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext
             where TConfigurationDbContext : DbContext
             where TLogDbContext : DbContext
-            where TAuditLogDbContext: DbContext
+            where TAuditLogDbContext : DbContext
             where TDataProtectionDbContext : DbContext
         {
             using (var scope = services.GetRequiredService<IServiceScopeFactory>().CreateScope())
@@ -83,7 +99,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             }
         }
 
-        public static async Task EnsureSeedData<TIdentityServerDbContext, TUser, TRole>(IServiceProvider serviceProvider)
+        public static async Task EnsureSeedDataAsync<TIdentityServerDbContext, TUser, TRole>(IServiceProvider serviceProvider)
         where TIdentityServerDbContext : DbContext, IAdminConfigurationDbContext
         where TUser : IdentityUser, new()
         where TRole : IdentityRole, new()

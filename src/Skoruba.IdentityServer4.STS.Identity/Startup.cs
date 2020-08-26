@@ -1,4 +1,4 @@
-﻿using HealthChecks.UI.Client;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +13,7 @@ using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using System;
 using Microsoft.AspNetCore.DataProtection;
+using Skoruba.IdentityServer4.Shared.Helpers;
 
 namespace Skoruba.IdentityServer4.STS.Identity
 {
@@ -72,6 +73,8 @@ namespace Skoruba.IdentityServer4.STS.Identity
                 app.UseHsts();
             }
 
+            app.UsePathBase(Configuration.GetValue<string>("BasePath"));
+
             // Add custom security headers
             app.UseSecurityHeaders();
 
@@ -81,8 +84,8 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
             app.UseRouting();
             app.UseAuthorization();
-            app.UseEndpoints(endpoint => 
-            { 
+            app.UseEndpoints(endpoint =>
+            {
                 endpoint.MapDefaultControllerRoute();
                 endpoint.MapHealthChecks("/health", new HealthCheckOptions
                 {

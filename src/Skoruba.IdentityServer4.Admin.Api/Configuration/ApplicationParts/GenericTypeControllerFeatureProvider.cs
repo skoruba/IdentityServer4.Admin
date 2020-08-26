@@ -12,7 +12,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Configuration.ApplicationParts
 {
     public class GenericTypeControllerFeatureProvider<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
         TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto> : IApplicationFeatureProvider<ControllerFeature>
+        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto> : IApplicationFeatureProvider<ControllerFeature>
         where TUserDto : UserDto<TKey>, new()
         where TRoleDto : RoleDto<TKey>, new()
         where TUser : IdentityUser<TKey>
@@ -28,17 +28,18 @@ namespace Skoruba.IdentityServer4.Admin.Api.Configuration.ApplicationParts
         where TUsersDto : UsersDto<TUserDto, TKey>
         where TRolesDto : RolesDto<TRoleDto, TKey>
         where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
-        where TUserClaimsDto : UserClaimsDto<TKey>
+        where TUserClaimsDto : UserClaimsDto<TUserClaimDto, TKey>
         where TUserProviderDto : UserProviderDto<TKey>
         where TUserProvidersDto : UserProvidersDto<TKey>
         where TUserChangePasswordDto : UserChangePasswordDto<TKey>
         where TRoleClaimsDto : RoleClaimsDto<TKey>
+        where TUserClaimDto : UserClaimDto<TKey>
     {
         public void PopulateFeature(IEnumerable<ApplicationPart> parts, ControllerFeature feature)
         {
             var currentAssembly = typeof(GenericTypeControllerFeatureProvider<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>).Assembly;
+                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto>).Assembly;
             var controllerTypes = currentAssembly.GetExportedTypes()
                                                  .Where(t => typeof(ControllerBase).IsAssignableFrom(t) && t.IsGenericTypeDefinition)
                                                  .Select(t => t.GetTypeInfo());

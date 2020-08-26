@@ -121,7 +121,7 @@
     <value>Отменить</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>Email</value>
+    <value>Адрес электронной почты</value>
   </data>
   <data name="ExternalLogin" xml:space="preserve">
     <value>Внешний вход</value>

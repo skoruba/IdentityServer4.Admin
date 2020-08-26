@@ -1,16 +1,16 @@
+param([string] $packagesVersions, [string]$gitBranchName = 'dev')
+
 # This script contains following steps:
 # - Download latest version of Skoruba.IdentityServer4.Admin from git repository
 # - Use folders src and tests for project template
 # - Create db migrations for seed data
 
 $gitProject = "https://github.com/skoruba/IdentityServer4.Admin"
-$gitBranchName = "dev"
 $gitProjectFolder = "Skoruba.IdentityServer4.Admin"
 $templateSrc = "template-build/content/src"
 $templateRoot = "template-build/content"
 $templateTests = "template-build/content/tests"
 $templateAdminProject = "template-build/content/src/Skoruba.IdentityServer4.Admin"
-$packagesVersions = "1.0.0-rc1"
 
 function CleanBinObjFolders { 
 
@@ -82,6 +82,8 @@ dotnet.exe remove ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.P
 dotnet.exe remove ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.csproj reference ..\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.IdentityServer4.Admin.EntityFramework.csproj
 dotnet.exe remove ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.csproj reference ..\Skoruba.IdentityServer4.Admin.EntityFramework.Identity\Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj
 
+# Shared
+dotnet.exe remove ./$templateSrc/Skoruba.IdentityServer4.Shared/Skoruba.IdentityServer4.Shared.csproj reference ..\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.csproj
 
 # Add nuget packages
 # Admin
@@ -104,11 +106,12 @@ dotnet.exe add ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.MySq
 dotnet.exe add ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL/Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.csproj package Skoruba.IdentityServer4.Admin.EntityFramework -v $packagesVersions
 dotnet.exe add ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL/Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.csproj package Skoruba.IdentityServer4.Admin.EntityFramework.Identity -v $packagesVersions
 
-
 # EF SqlServer
 dotnet.exe add ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.csproj package Skoruba.IdentityServer4.Admin.EntityFramework -v $packagesVersions
 dotnet.exe add ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.csproj package Skoruba.IdentityServer4.Admin.EntityFramework.Identity -v $packagesVersions
 
+# Shared
+dotnet.exe add ./$templateSrc/Skoruba.IdentityServer4.Shared/Skoruba.IdentityServer4.Shared.csproj package Skoruba.IdentityServer4.Admin.BusinessLogic.Identity -v $packagesVersions
 
 # Clean solution and folders bin, obj
 CleanBinObjFolders
@@ -129,7 +132,7 @@ nuget pack $templateNuspecPath
 
 ######################################
 # Step 3
-$templateLocalName = "Skoruba.IdentityServer4.Admin.Templates.1.0.0-rc1.nupkg"
+$templateLocalName = "Skoruba.IdentityServer4.Admin.Templates.$packagesVersions.nupkg"
 dotnet.exe new -i $templateLocalName
 
 ######################################
@@ -147,29 +150,29 @@ $templateFiles = Get-ChildItem .\SkorubaIdentityServer4Admin\src -include *.cs, 
 foreach ($file in $templateFiles) {
     Write-Host $file.PSPath
 
-    (Get-Content $file.PSPath -raw) |
+    (Get-Content $file.PSPath -raw -Encoding UTF8) |
     Foreach-Object { $_ -replace "SkorubaIdentityServer4Admin.Admin.BusinessLogic", "Skoruba.IdentityServer4.Admin.BusinessLogic" } |
-    Set-Content $file.PSPath
+    Set-Content $file.PSPath -Encoding UTF8
 
-    (Get-Content $file.PSPath -raw) |
+    (Get-Content $file.PSPath -raw -Encoding UTF8) |
     Foreach-Object { $_ -replace "SkorubaIdentityServer4Admin.Admin.EntityFramework", "Skoruba.IdentityServer4.Admin.EntityFramework" } |
-    Set-Content $file.PSPath
+    Set-Content $file.PSPath -Encoding UTF8
 
-    (Get-Content $file.PSPath -raw) |
+    (Get-Content $file.PSPath -raw -Encoding UTF8) |
     Foreach-Object { $_ -replace "Skoruba.IdentityServer4.Admin.EntityFramework.Shared", "SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared" } |
-    Set-Content $file.PSPath
+    Set-Content $file.PSPath -Encoding UTF8
 
-    (Get-Content $file.PSPath -raw) |
+    (Get-Content $file.PSPath -raw -Encoding UTF8) |
     Foreach-Object { $_ -replace "Skoruba.IdentityServer4.Admin.EntityFramework.MySql", "SkorubaIdentityServer4Admin.Admin.EntityFramework.MySql" } |
-    Set-Content $file.PSPath
+    Set-Content $file.PSPath -Encoding UTF8
 
-    (Get-Content $file.PSPath -raw) |
+    (Get-Content $file.PSPath -raw -Encoding UTF8) |
     Foreach-Object { $_ -replace "Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL", "SkorubaIdentityServer4Admin.Admin.EntityFramework.PostgreSQL" } |
-    Set-Content $file.PSPath
+    Set-Content $file.PSPath -Encoding UTF8
 
-    (Get-Content $file.PSPath -raw) |
+    (Get-Content $file.PSPath -raw -Encoding UTF8) |
     Foreach-Object { $_ -replace "Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer", "SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer" } |
-    Set-Content $file.PSPath
+    Set-Content $file.PSPath -Encoding UTF8
 }
 
 CleanBinObjFolders

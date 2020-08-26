@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="IdentityResourceExistsKey" xml:space="preserve">
-    <value>Ресур идентификации {0} уже существует</value>
+    <value>Ресурс идентификации {0} уже существует</value>
   </data>
   <data name="IdentityResourceExistsValue" xml:space="preserve">
-    <value>Ресур идентификации {0} уже существует</value>
+    <value>Ресурс идентификации {0} уже существует</value>
   </data>
   <data name="IdentityResourcePropertyDoesNotExist" xml:space="preserve">
     <value>Свойство ресурса идентификации с id {0} не существует</value>

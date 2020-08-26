@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using Skoruba.IdentityServer4.Shared.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin.Api
 {
@@ -18,6 +19,8 @@ namespace Skoruba.IdentityServer4.Admin.Api
                 .CreateLogger();
             try
             {
+                DockerHelpers.ApplyDockerConfiguration(configuration);
+
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)

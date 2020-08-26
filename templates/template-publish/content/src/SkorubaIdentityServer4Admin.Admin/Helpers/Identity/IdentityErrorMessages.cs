@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 
 namespace SkorubaIdentityServer4Admin.Admin.Helpers.Identity

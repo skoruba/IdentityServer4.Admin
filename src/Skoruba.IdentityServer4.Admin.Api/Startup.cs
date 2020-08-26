@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,11 +17,11 @@ using Skoruba.IdentityServer4.Admin.Api.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Api.Helpers;
 using Skoruba.IdentityServer4.Admin.Api.Mappers;
 using Skoruba.IdentityServer4.Admin.Api.Resources;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Shared.Dtos;
 using Skoruba.IdentityServer4.Shared.Dtos.Identity;
+using Skoruba.IdentityServer4.Shared.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin.Api
 {
@@ -47,6 +48,9 @@ namespace Skoruba.IdentityServer4.Admin.Api
             services.AddDataProtection()
                 .SetApplicationName("Skoruba.IdentityServer4")
                 .PersistKeysToDbContext<IdentityServerDataProtectionDbContext>();
+
+            // Add email senders which is currently setup for SendGrid and SMTP
+            services.AddEmailSenders(Configuration);
 
             services.AddScoped<ControllerExceptionFilterAttribute>();
             services.AddScoped<IApiErrorResources, ApiErrorResources>();
@@ -78,7 +82,7 @@ namespace Skoruba.IdentityServer4.Admin.Api
                 UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
                 IdentityUsersDto, IdentityRolesDto, IdentityUserRolesDto,
                 IdentityUserClaimsDto, IdentityUserProviderDto, IdentityUserProvidersDto, IdentityUserChangePasswordDto,
-                IdentityRoleClaimsDto>();
+                IdentityRoleClaimsDto, IdentityUserClaimDto>();
 
             services.AddSwaggerGen(options =>
             {
@@ -89,9 +93,10 @@ namespace Skoruba.IdentityServer4.Admin.Api
                     Type = SecuritySchemeType.OAuth2,
                     Flows = new OpenApiOAuthFlows
                     {
-                        Implicit = new OpenApiOAuthFlow
+                        AuthorizationCode = new OpenApiOAuthFlow
                         {
                             AuthorizationUrl = new Uri($"{adminApiConfiguration.IdentityServerBaseUrl}/connect/authorize"),
+                            TokenUrl = new Uri($"{adminApiConfiguration.IdentityServerBaseUrl}/connect/token"),
                             Scopes = new Dictionary<string, string> {
                                 { adminApiConfiguration.OidcApiName, adminApiConfiguration.ApiName }
                             }
@@ -103,11 +108,13 @@ namespace Skoruba.IdentityServer4.Admin.Api
 
             services.AddAuditEventLogging<AdminAuditLogDbContext, AuditLog>(Configuration);
 
-            services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, AdminLogDbContext, AdminAuditLogDbContext>(Configuration, adminApiConfiguration);
+            services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext>(Configuration, adminApiConfiguration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AdminApiConfiguration adminApiConfiguration)
         {
+            app.AddForwardHeaders();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -120,6 +127,7 @@ namespace Skoruba.IdentityServer4.Admin.Api
 
                 c.OAuthClientId(adminApiConfiguration.OidcSwaggerUIClientId);
                 c.OAuthAppName(adminApiConfiguration.ApiName);
+                c.OAuthUsePkce();
             });
 
             app.UseRouting();
@@ -143,8 +151,7 @@ namespace Skoruba.IdentityServer4.Admin.Api
 
         public virtual void RegisterAuthentication(IServiceCollection services)
         {
-            var adminApiConfiguration = Configuration.GetSection(nameof(AdminApiConfiguration)).Get<AdminApiConfiguration>();
-            services.AddApiAuthentication<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(adminApiConfiguration);
+            services.AddApiAuthentication<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Configuration);
         }
 
         public virtual void RegisterAuthorization(IServiceCollection services)

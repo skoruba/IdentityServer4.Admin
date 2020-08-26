@@ -145,7 +145,7 @@
     <value>Native Application - Mobile/Desktop</value>
   </data>
   <data name="TitlePasswordAndClient" xml:space="preserve">
-    <value>Resource Owner Password and Client Credentials flow</value>
+    <value>Client Credentials flow</value>
   </data>
   <data name="TitleSpa" xml:space="preserve">
     <value>Single Page Application - Javascript</value>
