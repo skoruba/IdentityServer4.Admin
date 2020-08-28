@@ -53,10 +53,10 @@ steps:
 
 - task: PublishBuildArtifacts@1
   inputs:
-    pathToPublish: '$(Build.ArtifactStagingDirectory)/Skoruba.IdentityServer4.STS.Identity' 
+    pathToPublish: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'IAM' 
 
 - task: PublishBuildArtifacts@1
   inputs:
-    pathToPublish: '$(Build.ArtifactStagingDirectory)/Skoruba.IdentityServer4.Admin' 
+    pathToPublish: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'Admin' 
