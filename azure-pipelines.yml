@@ -23,17 +23,19 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
-- task: VSBuild@1
+- task: DotNetCoreCLI@2
   inputs:
-    solution: '**/Skoruba.IdentityServer4.Admin.csproj'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=false /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)/IAM.Admin.zip" /p:DeployIisAppPath="Default Web Site"'
+    command: build
+    projects: '**/Skoruba.IdentityServer4.Admin.csproj'
+    arguments: '--no-restore'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: VSBuild@1
+- task: DotNetCoreCLI@2
   inputs:
-    solution: '**/Skoruba.IdentityServer4.STS.Identity.csproj'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=false /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)/IAM.zip" /p:DeployIisAppPath="Default Web Site"'
+    command: build
+    projects: '**/Skoruba.IdentityServer4.STS.Identity.csproj'
+    arguments: '--no-restore'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
