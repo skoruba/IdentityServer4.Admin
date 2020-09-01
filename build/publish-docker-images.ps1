@@ -2,11 +2,11 @@
 docker-compose build
 
 # rename images with following tag
-docker tag skoruba-identityserver4-admin skoruba/identityserver4-admin:rc1
-docker tag skoruba-identityserver4-sts-identity skoruba/identityserver4-sts-identity:rc1
-docker tag skoruba-identityserver4-admin-api skoruba/identityserver4-admin-api:rc1
+docker tag skoruba-identityserver4-admin mindfiretech/identityserver4-admin:latest
+docker tag skoruba-identityserver4-sts-identity mindfiretech/identityserver4-sts-identity:latest
+docker tag skoruba-identityserver4-admin-api mindfiretech/identityserver4-admin-api:latest
 
 # push to docker hub
-docker push skoruba/identityserver4-admin:rc1
-docker push skoruba/identityserver4-admin-api:rc1
-docker push skoruba/identityserver4-sts-identity:rc1
+docker push mindfiretech/identityserver4-admin:latest
+docker push mindfiretech/identityserver4-admin-api:latest
+docker push mindfiretech/identityserver4-sts-identity:latest

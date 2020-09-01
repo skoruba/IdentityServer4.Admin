@@ -1,0 +1,319 @@
+{
+	"info": {
+		"_postman_id": "5435156e-63e3-47d8-9189-d7fb46fd071d",
+		"name": "mindfiretech/Identity4Admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CheckUserAvailable",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"admin\",\n\t\"email\": \"none@none.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1.xip.io/api/v1/AccountApi/CheckUserAvailable",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1",
+						"xip",
+						"io"
+					],
+					"path": [
+						"api",
+						"v1",
+						"AccountApi",
+						"CheckUserAvailable"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"admin\",\n\t\"email\": \"none@none.com\",\n\t\"password\": \"Vis-blink-2197\",\n\t\"confirmPassword\": \"Vis-blink-2197\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1.xip.io/api/v1/AccountApi/Register",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1",
+						"xip",
+						"io"
+					],
+					"path": [
+						"api",
+						"v1",
+						"AccountApi",
+						"Register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Confirm Email",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\": \"newuser\",\n\t\"code\": \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1.xip.io/api/v1/AccountApi/ConfirmEmail",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1",
+						"xip",
+						"io"
+					],
+					"path": [
+						"api",
+						"v1",
+						"AccountApi",
+						"ConfirmEmail"
+					]
+				},
+				"description": "A custom email will have been sent to the client. They will then click a link that will take them to your website again. The parameters should then be posted via JavaScript to the server using this endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Forgot Password",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"none@none.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1.xip.io/api/v1/AccountApi/ForgotPassword",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1",
+						"xip",
+						"io"
+					],
+					"path": [
+						"api",
+						"v1",
+						"AccountApi",
+						"ForgotPassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reset Password",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"none@none.com\",\n\t\"password\": \"Password123!\",\n\t\"confirmPassword\": \"Password123!\",\n\t\"code\": \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1.xip.io/api/v1/AccountApi/ResetPassword",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1",
+						"xip",
+						"io"
+					],
+					"path": [
+						"api",
+						"v1",
+						"AccountApi",
+						"ResetPassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "web-client",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Pa$$word123",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1.xip.io/connect/token",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1",
+						"xip",
+						"io"
+					],
+					"path": [
+						"connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UserInfo",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TokenValue}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1.xip.io/connect/userinfo",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1",
+						"xip",
+						"io"
+					],
+					"path": [
+						"connect",
+						"userinfo"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c33f5e66-e17f-4434-b5e9-66599e1e9a76",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "4c64fc48-583e-4c52-b8e4-1cb1421a66e4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "20ca30d6-584d-4aa9-9f43-347246e13031",
+			"key": "TokenValue",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
