@@ -43,6 +43,8 @@ services:
     build:
       context: .
       dockerfile: src/Skoruba.IdentityServer4.Admin.Api/Dockerfile-windows
+    depends_on:
+      - db
     expose:
       - 80 
     ports:
@@ -62,6 +64,7 @@ services:
 
   skoruba.identityserver4.sts.identity:
     image: ${DOCKER_REGISTRY-}identityserver4-sts-identity:rc1-windows
+    container_name: skoruba-identityserver4-sts-identity
     expose:
       - 80 
     ports:
@@ -69,15 +72,14 @@ services:
     build:
       context: .
       dockerfile: src/Skoruba.IdentityServer4.STS.Identity/Dockerfile-windows
-    container_name: skoruba-identityserver4-sts-identity
+    depends_on:
+      - db
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings__ConfigurationDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
       - "ConnectionStrings__PersistedGrantDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
       - "ConnectionStrings__IdentityDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
       - "AdminConfiguration__IdentityAdminBaseUrl=${ADMIN_URL}"
-    depends_on:
-      - db
     # volumes:
     #   - "./shared/serilog.json:C:/app/serilog.json"
     networks:
@@ -88,8 +90,8 @@ services:
     image: microsoft/mssql-server-windows-express
     expose:
       - 1433
-    # ports:
-    #   - 1433:1433
+    ports:
+      - 1433:1433
     container_name: skoruba-identityserver4-db
     environment:
       SA_PASSWORD: "${DB_PASSWORD:-Password_123}"

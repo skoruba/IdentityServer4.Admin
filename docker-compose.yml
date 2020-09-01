@@ -43,6 +43,8 @@ services:
     build:
       context: .
       dockerfile: src/Skoruba.IdentityServer4.Admin.Api/Dockerfile
+    depends_on:
+      - db
     expose:
       - 80 
     ports:
