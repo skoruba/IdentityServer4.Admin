@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   skoruba.identityserver4.admin:
-    image: ${DOCKER_REGISTRY-}identityserver4-admin:rc1
+    image: ${DOCKER_REGISTRY-}identityserver4-admin:rc1-windows
     expose:
       - 80 
     ports:
@@ -39,7 +39,7 @@ services:
     #   - "./shared/identityserverdata.json:C:/app/identityserverdata.json"
 
   skoruba.identityserver4.admin.api:
-    image: ${DOCKER_REGISTRY-}identityserver4-admin-api:rc1
+    image: ${DOCKER_REGISTRY-}identityserver4-admin-api:rc1-windows
     build:
       context: .
       dockerfile: src/Skoruba.IdentityServer4.Admin.Api/Dockerfile-windows
@@ -61,7 +61,7 @@ services:
     #   - "./shared/serilog.json:/app/serilog.json"
 
   skoruba.identityserver4.sts.identity:
-    image: ${DOCKER_REGISTRY-}identityserver4-sts-identity:rc1
+    image: ${DOCKER_REGISTRY-}identityserver4-sts-identity:rc1-windows
     expose:
       - 80 
     ports:
