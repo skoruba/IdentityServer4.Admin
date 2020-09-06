@@ -1,4 +1,4 @@
-namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration.Constants
+﻿namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration.Constants
 {
     public class ConfigurationConsts
     {
@@ -10,11 +10,15 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration.Constants
 
         public const string IdentityDbConnectionStringKey = "IdentityDbConnection";
 
+        public const string DataProtectionDbConnectionStringKey = "DataProtectionDbConnection";
+
         public const string ResourcesPath = "Resources";
 
         public const string AdminConfigurationKey = "AdminConfiguration";
 
         public const string RegisterConfigurationKey = "RegisterConfiguration";
+
+        public const string AdvancedConfigurationKey = "AdvancedConfiguration";
     }
 }
 

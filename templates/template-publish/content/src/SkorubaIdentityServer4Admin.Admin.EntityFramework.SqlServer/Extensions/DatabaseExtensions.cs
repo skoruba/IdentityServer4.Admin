@@ -1,5 +1,6 @@
-using System.Reflection;
+﻿using System.Reflection;
 using IdentityServer4.EntityFramework.Storage;
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Skoruba.AuditLogging.EntityFramework.DbContexts;
@@ -25,12 +26,13 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Extensions
         /// <param name="persistedGrantConnectionString"></param>
         /// <param name="errorLoggingConnectionString"></param>
         /// <param name="auditLoggingConnectionString"></param>
-        public static void RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext>(this IServiceCollection services, string identityConnectionString, string configurationConnectionString, string persistedGrantConnectionString, string errorLoggingConnectionString, string auditLoggingConnectionString)
+        public static void RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(this IServiceCollection services, string identityConnectionString, string configurationConnectionString, string persistedGrantConnectionString, string errorLoggingConnectionString, string auditLoggingConnectionString, string dataProtectionConnectionString = null)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
             where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
+            where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
         {
             var migrationsAssembly = typeof(DatabaseExtensions).GetTypeInfo().Assembly.GetName().Name;
 
@@ -48,6 +50,10 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Extensions
 
             // Audit logging connection
             services.AddDbContext<TAuditLoggingDbContext>(options => options.UseSqlServer(auditLoggingConnectionString, optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
+
+            // DataProtectionKey DB from existing connection
+            if(!string.IsNullOrEmpty(dataProtectionConnectionString))
+                services.AddDbContext<TDataProtectionDbContext>(options => options.UseSqlServer(dataProtectionConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
         }
 
         /// <summary>
@@ -62,12 +68,13 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Extensions
         /// <param name="configurationConnectionString"></param>
         /// <param name="persistedGrantConnectionString"></param>
         public static void RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext,
-            TPersistedGrantDbContext>(this IServiceCollection services,
+            TPersistedGrantDbContext, TDataProtectionDbContext>(this IServiceCollection services,
             string identityConnectionString, string configurationConnectionString,
-            string persistedGrantConnectionString)
+            string persistedGrantConnectionString, string dataProtectionConnectionString)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
+            where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
         {
             var migrationsAssembly = typeof(DatabaseExtensions).GetTypeInfo().Assembly.GetName().Name;
 
@@ -79,6 +86,9 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Extensions
 
             // Operational DB from existing connection
             services.AddOperationalDbContext<TPersistedGrantDbContext>(options => options.ConfigureDbContext = b => b.UseSqlServer(persistedGrantConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
+
+            // DataProtectionKey DB from existing connection
+            services.AddDbContext<TDataProtectionDbContext>(options => options.UseSqlServer(dataProtectionConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
         }
     }
 }

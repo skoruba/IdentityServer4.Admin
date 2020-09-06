@@ -2,13 +2,13 @@
 
 namespace Skoruba.IdentityServer4.Admin.Api.Dtos.Users
 {
-    public class UserProvidersApiDto<TUserDtoKey>
+    public class UserProvidersApiDto<TKey>
     {
         public UserProvidersApiDto()
         {
-            Providers = new List<UserProviderApiDto<TUserDtoKey>>();
+            Providers = new List<UserProviderApiDto<TKey>>();
         }
 
-        public List<UserProviderApiDto<TUserDtoKey>> Providers { get; set; }
+        public List<UserProviderApiDto<TKey>> Providers { get; set; }
     }
 }

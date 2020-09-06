@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
 {
@@ -29,6 +30,21 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
         public string Value { get; set; }
 
 		public string HashType { get; set; }
+
+        public HashType HashTypeEnum
+        {
+            get
+            {
+                HashType result;
+
+                if (Enum.TryParse(HashType, true, out result))
+                {
+                    return result;
+                }
+
+                return EntityFramework.Helpers.HashType.Sha256;
+            }
+        }
 
 		public List<SelectItemDto> HashTypes { get; set; }
 

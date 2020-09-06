@@ -127,7 +127,7 @@
     <value>Api область {0} успешно сохранена!</value>
   </data>
   <data name="SuccessAddApiSecret" xml:space="preserve">
-    <value>Api Секрет успешно создан!</value>
+    <value>Api секрет успешно создан!</value>
   </data>
   <data name="SuccessAddClient" xml:space="preserve">
     <value>Клиент {0} успешно создан!</value>

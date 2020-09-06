@@ -1,4 +1,4 @@
-@using IdentityServer4.Extensions
+﻿@using IdentityServer4.Extensions
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.Localization
 @using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Entities.Identity
@@ -24,8 +24,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@RootConfiguration.AdminConfiguration.PageTitle</title>
-    <link rel="icon" type="image/x-icon" href="@RootConfiguration.AdminConfiguration.FaviconUri" />
-    <link rel="shortcut icon" type="image/x-icon" href="@RootConfiguration.AdminConfiguration.FaviconUri" />
+    <link rel="icon" type="image/x-icon" href="@UrlHelper.Content(RootConfiguration.AdminConfiguration.FaviconUri)" />
+    <link rel="shortcut icon" type="image/x-icon" href="@UrlHelper.Content(@RootConfiguration.AdminConfiguration.FaviconUri)" />
 
     <environment include="Development">
         <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />

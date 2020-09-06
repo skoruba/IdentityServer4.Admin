@@ -121,13 +121,13 @@
     <value>Registrer</value>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
-    <value>Bekræft Password</value>
+    <value>Bekræft adgangskode</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Password</value>
+    <value>Adgangskode</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
     <value>Opret en ny konto.</value>
