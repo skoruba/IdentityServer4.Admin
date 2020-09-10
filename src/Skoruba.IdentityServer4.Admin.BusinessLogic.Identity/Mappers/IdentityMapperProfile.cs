@@ -46,6 +46,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers
 
             CreateMap<UserLoginInfo, TUserProviderDto>(MemberList.Destination);
 
+            CreateMap<UserLoginInfo, UserProviderDto<TKey>>(MemberList.Destination);
+
             CreateMap<IdentityError, ViewErrorMessage>(MemberList.Destination)
                 .ForMember(x => x.ErrorKey, opt => opt.MapFrom(src => src.Code))
                 .ForMember(x => x.ErrorMessage, opt => opt.MapFrom(src => src.Description));
