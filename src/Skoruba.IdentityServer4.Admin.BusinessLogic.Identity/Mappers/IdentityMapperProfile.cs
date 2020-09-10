@@ -79,7 +79,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers
             CreateMap<PagedList<TUserClaim>, TUserClaimsDto>(MemberList.Destination)
                 .ForMember(x => x.Claims,
                     opt => opt.MapFrom(src => src.Data));
-            
+
             CreateMap<PagedList<TRoleClaim>, TRoleClaimsDto>(MemberList.Destination)
                 .ForMember(x => x.Claims,
                     opt => opt.MapFrom(src => src.Data));
@@ -88,6 +88,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers
                 .ForMember(x => x.Providers, opt => opt.MapFrom(src => src));
 
             CreateMap<TRoleClaim, TRoleClaimDto>(MemberList.Destination)
+                .ForMember(x => x.ClaimId, opt => opt.MapFrom(src => src.Id));
+
+            CreateMap<TRoleClaim, RoleClaimDto<TKey>>(MemberList.Destination)
                 .ForMember(x => x.ClaimId, opt => opt.MapFrom(src => src.Id));
 
             CreateMap<TRoleClaim, TRoleClaimsDto>(MemberList.Destination)
