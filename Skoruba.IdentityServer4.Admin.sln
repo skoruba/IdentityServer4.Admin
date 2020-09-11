@@ -50,6 +50,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FB36F398-4390-4ED4-9283-A2BB36E146AC}"
 	ProjectSection(SolutionItems) = preProject
 		azure-pipelines.yml = azure-pipelines.yml
+		docs\Configure-Azure-Deploy.md = docs\Configure-Azure-Deploy.md
 		LICENSE.md = LICENSE.md
 		README.md = README.md
 	EndProjectSection
