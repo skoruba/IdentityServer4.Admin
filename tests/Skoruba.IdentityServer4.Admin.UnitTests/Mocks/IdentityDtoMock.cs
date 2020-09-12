@@ -99,9 +99,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             return userRole;
         }
 
-        public static Faker<UserProvidersDto<TKey>> GetUserProvidersFaker(string key, string loginProvider, TKey userId)
+        public static Faker<UserProvidersDto<UserProviderDto<TKey>,TKey>> GetUserProvidersFaker(string key, string loginProvider, TKey userId)
         {
-            var userProvidersFaker = new Faker<UserProvidersDto<TKey>>()
+            var userProvidersFaker = new Faker<UserProvidersDto<UserProviderDto<TKey>, TKey>>()
                 .RuleFor(o => o.LoginProvider, f => loginProvider)
                 .RuleFor(o => o.ProviderKey, f => key)
                 .RuleFor(o => o.ProviderDisplayName, f => Guid.NewGuid().ToString())
@@ -110,7 +110,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             return userProvidersFaker;
         }
 
-        public static UserProvidersDto<TKey> GenerateRandomUserProviders(string key, string loginProvider, TKey userId)
+        public static UserProvidersDto<UserProviderDto<TKey>, TKey> GenerateRandomUserProviders(string key, string loginProvider, TKey userId)
         {
             var provider = GetUserProvidersFaker(key, loginProvider, userId).Generate();
 

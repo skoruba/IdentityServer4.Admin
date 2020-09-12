@@ -39,7 +39,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
         where TUserClaimsDto : UserClaimsDto<TUserClaimDto, TKey>, new()
         where TUserProviderDto : UserProviderDto<TKey>
-        where TUserProvidersDto : UserProvidersDto<TKey>
+        where TUserProvidersDto : UserProvidersDto<TUserProviderDto, TKey>
         where TUserChangePasswordDto : UserChangePasswordDto<TKey>
         where TRoleClaimsDto : RoleClaimsDto<TRoleClaimDto, TKey>, new()
         where TUserClaimDto : UserClaimDto<TKey>

@@ -39,7 +39,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
         where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
         where TUserClaimsDto : UserClaimsDto<TUserClaimDto, TKey>
         where TUserProviderDto : UserProviderDto<TKey>
-        where TUserProvidersDto : UserProvidersDto<TKey>
+        where TUserProvidersDto : UserProvidersDto<TUserProviderDto, TKey>
         where TUserChangePasswordDto : UserChangePasswordDto<TKey>
         where TRoleClaimsDto : RoleClaimsDto<TRoleClaimDto, TKey>
         where TUserClaimDto : UserClaimDto<TKey>

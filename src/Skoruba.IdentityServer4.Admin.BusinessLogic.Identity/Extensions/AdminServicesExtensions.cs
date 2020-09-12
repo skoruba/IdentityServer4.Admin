@@ -41,7 +41,7 @@ namespace Microsoft.Extensions.DependencyInjection
             return services.AddAdminAspNetIdentityServices<TIdentityDbContext, TPersistedGrantDbContext, UserDto<string>, RoleDto<string>,
                 TUser, IdentityRole, string, IdentityUserClaim<string>, IdentityUserRole<string>, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>,
                 UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string>,
-                UserClaimsDto<UserClaimDto<string>, string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
+                UserClaimsDto<UserClaimDto<string>, string>, UserProviderDto<string>, UserProvidersDto<UserProviderDto<string>, string>, UserChangePasswordDto<string>,
                 RoleClaimsDto<RoleClaimDto<string>, string>, UserClaimDto<string>, RoleClaimDto<string>>();
         }
 
@@ -69,7 +69,7 @@ namespace Microsoft.Extensions.DependencyInjection
             where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
             where TUserClaimsDto : UserClaimsDto<TUserClaimDto, TKey>
             where TUserProviderDto : UserProviderDto<TKey>
-            where TUserProvidersDto : UserProvidersDto<TKey>
+            where TUserProvidersDto : UserProvidersDto<TUserProviderDto, TKey>
             where TUserChangePasswordDto : UserChangePasswordDto<TKey>
             where TRoleClaimsDto : RoleClaimsDto<TRoleClaimDto, TKey>
             where TUserClaimDto : UserClaimDto<TKey>
@@ -103,7 +103,7 @@ namespace Microsoft.Extensions.DependencyInjection
             where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
             where TUserClaimsDto : UserClaimsDto<TUserClaimDto, TKey>
             where TUserProviderDto : UserProviderDto<TKey>
-            where TUserProvidersDto : UserProvidersDto<TKey>
+            where TUserProvidersDto : UserProvidersDto<TUserProviderDto, TKey>
             where TUserChangePasswordDto : UserChangePasswordDto<TKey>
             where TRoleClaimsDto : RoleClaimsDto<TRoleClaimDto, TKey>
             where TUserClaimDto : UserClaimDto<TKey>
@@ -138,7 +138,7 @@ namespace Microsoft.Extensions.DependencyInjection
             where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
             where TUserClaimsDto : UserClaimsDto<TUserClaimDto, TKey>
             where TUserProviderDto : UserProviderDto<TKey>
-            where TUserProvidersDto : UserProvidersDto<TKey>
+            where TUserProvidersDto : UserProvidersDto<TUserProviderDto, TKey>
             where TUserChangePasswordDto : UserChangePasswordDto<TKey>
             where TRoleClaimsDto : RoleClaimsDto<TRoleClaimDto, TKey>
             where TUserClaimDto : UserClaimDto<TKey>
