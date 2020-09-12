@@ -596,7 +596,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null, bool IsCalledFromRegisterWithoutUsername = false)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
 
@@ -633,7 +633,21 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
             AddErrors(result);
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            if (IsCalledFromRegisterWithoutUsername)
+            {
+                var registerWithoutUsernameModel = new RegisterWithoutUsernameViewModel
+                {
+                    Email = model.Email,
+                    Password = model.Password,
+                    ConfirmPassword = model.ConfirmPassword
+                };
+
+                return View("RegisterWithoutUsername", registerWithoutUsernameModel);
+            }
+            else
+            {
+                return View(model);
+            }
         }
 
         [HttpPost]
@@ -649,9 +663,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
                 ConfirmPassword = model.ConfirmPassword
             };
 
-            return await Register(registerModel, returnUrl);
+            return await Register(registerModel, returnUrl, true);
         }
-
 
         /*****************************************/
         /* helper APIs for the AccountController */
@@ -799,6 +812,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
         }
     }
 }
+
 
 
 

@@ -58,8 +58,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim,
             UserIdentityUserToken,
             UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string>,
-            UserClaimsDto<UserClaimDto<string>, string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-            RoleClaimsDto<string>, UserClaimDto<string>> GetIdentityService(IIdentityRepository<UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> identityRepository,
+            UserClaimsDto<UserClaimDto<string>, string>, UserProviderDto<string>, UserProvidersDto<UserProviderDto<string>, string>, UserChangePasswordDto<string>,
+            RoleClaimsDto<RoleClaimDto<string>, string>, UserClaimDto<string>, RoleClaimDto<string>> GetIdentityService(IIdentityRepository<UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken> identityRepository,
             IIdentityServiceResources identityServiceResources,
             IMapper mapper, IAuditEventLogger auditEventLogger)
         {
@@ -68,8 +68,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim,
                 UserIdentityUserToken,
                 UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string>,
-                UserClaimsDto<UserClaimDto<string>, string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-                RoleClaimsDto<string>, UserClaimDto<string>>(identityRepository, identityServiceResources, mapper, auditEventLogger);
+                UserClaimsDto<UserClaimDto<string>, string>, UserProviderDto<string>, UserProvidersDto<UserProviderDto<string>, string>, UserChangePasswordDto<string>,
+                RoleClaimsDto<RoleClaimDto<string>, string>, UserClaimDto<string>, RoleClaimDto<string>>(identityRepository, identityServiceResources, mapper, auditEventLogger);
         }
 
         private IMapper GetMapper()
@@ -78,9 +78,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                         UserIdentityUserClaim, UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim,
                         UserIdentityUserToken,
                         UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string>,
-                        UserClaimsDto<UserClaimDto<string>, string >, UserProviderDto<string>, UserProvidersDto<string>,
-                        RoleClaimsDto<string>, UserClaimDto<string>, RoleClaimDto<string>>
-                >())
+                        UserClaimsDto<UserClaimDto<string>, string>, UserProviderDto<string>, UserProvidersDto<UserProviderDto<string>, string>,
+                        RoleClaimsDto<RoleClaimDto<string>, string>, UserClaimDto<string>, RoleClaimDto<string>>>())
                 .CreateMapper();
         }
 
@@ -104,8 +103,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             UserIdentityUserToken,
             UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>,
             UserRolesDto<RoleDto<string>, string>,
-            UserClaimsDto<UserClaimDto<string>, string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-            RoleClaimsDto<string>, UserClaimDto<string>> GetIdentityService(AdminIdentityDbContext context)
+            UserClaimsDto<UserClaimDto<string>, string>, UserProviderDto<string>, UserProvidersDto<UserProviderDto<string>, string>, UserChangePasswordDto<string>,
+            RoleClaimsDto<RoleClaimDto<string>, string>, UserClaimDto<string>, RoleClaimDto<string>> GetIdentityService(AdminIdentityDbContext context)
         {
             var testUserManager = GetTestUserManager(context);
             var testRoleManager = GetTestRoleManager(context);

@@ -391,7 +391,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             return await UserManager.DeleteAsync(userIdentity);
         }
 
-        private async Task<int> AutoSaveChangesAsync()
+        protected virtual async Task<int> AutoSaveChangesAsync()
         {
             return AutoSaveChanges ? await DbContext.SaveChangesAsync() : (int)SavedStatus.WillBeSavedExplicitly;
         }
