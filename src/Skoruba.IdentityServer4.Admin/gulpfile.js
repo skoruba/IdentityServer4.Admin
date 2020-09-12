@@ -32,6 +32,7 @@ function processScripts() {
             './node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.ru.min.js',
             './node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.sv.min.js',
             './node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js',
+            './node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js',
             './Scripts/App/components/Menu.js',
             './Scripts/App/components/Picker.es5.js',
             './Scripts/App/components/Theme.js',
