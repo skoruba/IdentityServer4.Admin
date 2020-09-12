@@ -161,11 +161,11 @@ docker-compose up -d
 ### Docker images
 - Docker images will be available also in [docker hub](https://hub.docker.com/u/skoruba)
   - AdminUI:
-    - `skoruba/identityserver4-admin:rc2`
+    - `skoruba/identityserver4-admin:rc3`
   - Admin Api:
-    - `skoruba/identityserver4-admin-api:rc2`
+    - `skoruba/identityserver4-admin-api:rc3`
   - STS:
-    - `skoruba/identityserver4-sts-identity:rc2`
+    - `skoruba/identityserver4-sts-identity:rc3`
        
 ### Publish Docker images to Docker hub
 - Check the script in `build/publish-docker-images.ps1` - change the profile name according to your requirements.
