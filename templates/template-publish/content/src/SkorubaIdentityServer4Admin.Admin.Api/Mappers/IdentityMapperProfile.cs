@@ -11,9 +11,9 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Mappers
         where TRoleDto : RoleDto<TKey>
         where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
         where TUserProviderDto : UserProviderDto<TKey>
-        where TUserProvidersDto : UserProvidersDto<TKey>
+        where TUserProvidersDto : UserProvidersDto<TUserProviderDto,TKey>
         where TUserChangePasswordDto : UserChangePasswordDto<TKey>
-        where TRoleClaimsDto : RoleClaimsDto<TKey>
+        where TRoleClaimsDto : RoleClaimsDto<TRoleClaimDto, TKey>
         where TRoleClaimDto : RoleClaimDto<TKey>
     {
         public IdentityMapperProfile()

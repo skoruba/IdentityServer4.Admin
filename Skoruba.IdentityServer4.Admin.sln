@@ -51,6 +51,28 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Adm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.IdentityServer4.Shared", "src\Skoruba.IdentityServer4.Shared\Skoruba.IdentityServer4.Shared.csproj", "{61B285F0-EE06-4AEE-AAF3-71492CBD11C5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{C77C772A-917E-48F4-AF0C-A6425C2C5712}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SkorubaIdentityServer4Admin", "SkorubaIdentityServer4Admin", "{7B16E486-9BDA-444D-AB7A-A6A0998FFF51}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E1C65774-842A-4C0B-8955-1A8CEF6D0D7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkorubaIdentityServer4Admin.Admin", "templates\SkorubaIdentityServer4Admin\src\SkorubaIdentityServer4Admin.Admin\SkorubaIdentityServer4Admin.Admin.csproj", "{E5C01B20-6CD6-4133-83D5-C2C4A72B033C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkorubaIdentityServer4Admin.STS.Identity", "templates\SkorubaIdentityServer4Admin\src\SkorubaIdentityServer4Admin.STS.Identity\SkorubaIdentityServer4Admin.STS.Identity.csproj", "{2B1BAC93-28E2-4AF2-A582-23AA0E8FBF7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkorubaIdentityServer4Admin.Admin.Api", "templates\SkorubaIdentityServer4Admin\src\SkorubaIdentityServer4Admin.Admin.Api\SkorubaIdentityServer4Admin.Admin.Api.csproj", "{E094BC95-990E-46FC-BAB8-5C695A5E22FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared", "templates\SkorubaIdentityServer4Admin\src\SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared\SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.csproj", "{37872274-A870-4AF6-B826-7D1AB9F76040}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkorubaIdentityServer4Admin.Admin.EntityFramework.MySql", "templates\SkorubaIdentityServer4Admin\src\SkorubaIdentityServer4Admin.Admin.EntityFramework.MySql\SkorubaIdentityServer4Admin.Admin.EntityFramework.MySql.csproj", "{C6A752E1-0B08-4853-B2A6-96CCAEE4D919}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkorubaIdentityServer4Admin.Admin.EntityFramework.PostgreSQL", "templates\SkorubaIdentityServer4Admin\src\SkorubaIdentityServer4Admin.Admin.EntityFramework.PostgreSQL\SkorubaIdentityServer4Admin.Admin.EntityFramework.PostgreSQL.csproj", "{2BB6A56E-581C-4B75-A8BC-C9DB336B86E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer", "templates\SkorubaIdentityServer4Admin\src\SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer\SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.csproj", "{43AA03DF-2B26-4791-95E5-614D4BE0ACC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkorubaIdentityServer4Admin.Shared", "templates\SkorubaIdentityServer4Admin\src\SkorubaIdentityServer4Admin.Shared\SkorubaIdentityServer4Admin.Shared.csproj", "{C8CA1A38-F471-4795-BDCC-9F3F51FB19F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -133,6 +155,38 @@ Global
 		{61B285F0-EE06-4AEE-AAF3-71492CBD11C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61B285F0-EE06-4AEE-AAF3-71492CBD11C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61B285F0-EE06-4AEE-AAF3-71492CBD11C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5C01B20-6CD6-4133-83D5-C2C4A72B033C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5C01B20-6CD6-4133-83D5-C2C4A72B033C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5C01B20-6CD6-4133-83D5-C2C4A72B033C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5C01B20-6CD6-4133-83D5-C2C4A72B033C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B1BAC93-28E2-4AF2-A582-23AA0E8FBF7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B1BAC93-28E2-4AF2-A582-23AA0E8FBF7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B1BAC93-28E2-4AF2-A582-23AA0E8FBF7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B1BAC93-28E2-4AF2-A582-23AA0E8FBF7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E094BC95-990E-46FC-BAB8-5C695A5E22FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E094BC95-990E-46FC-BAB8-5C695A5E22FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E094BC95-990E-46FC-BAB8-5C695A5E22FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E094BC95-990E-46FC-BAB8-5C695A5E22FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37872274-A870-4AF6-B826-7D1AB9F76040}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37872274-A870-4AF6-B826-7D1AB9F76040}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37872274-A870-4AF6-B826-7D1AB9F76040}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37872274-A870-4AF6-B826-7D1AB9F76040}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6A752E1-0B08-4853-B2A6-96CCAEE4D919}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6A752E1-0B08-4853-B2A6-96CCAEE4D919}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6A752E1-0B08-4853-B2A6-96CCAEE4D919}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6A752E1-0B08-4853-B2A6-96CCAEE4D919}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BB6A56E-581C-4B75-A8BC-C9DB336B86E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BB6A56E-581C-4B75-A8BC-C9DB336B86E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BB6A56E-581C-4B75-A8BC-C9DB336B86E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BB6A56E-581C-4B75-A8BC-C9DB336B86E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43AA03DF-2B26-4791-95E5-614D4BE0ACC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43AA03DF-2B26-4791-95E5-614D4BE0ACC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43AA03DF-2B26-4791-95E5-614D4BE0ACC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43AA03DF-2B26-4791-95E5-614D4BE0ACC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8CA1A38-F471-4795-BDCC-9F3F51FB19F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8CA1A38-F471-4795-BDCC-9F3F51FB19F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8CA1A38-F471-4795-BDCC-9F3F51FB19F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8CA1A38-F471-4795-BDCC-9F3F51FB19F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -156,6 +210,16 @@ Global
 		{0A8A0DB7-0509-4DFB-9201-74398511B481} = {2A514C8F-6A53-41CA-AB41-B644E7BC92A7}
 		{4D123ACB-ACBD-4E40-AE6B-1B0F79D703B0} = {0BC0CC4E-A0F1-45E8-B41A-AE0FA76BF3E5}
 		{61B285F0-EE06-4AEE-AAF3-71492CBD11C5} = {EE588CE5-51D0-4E98-A2B3-40EC8E655931}
+		{7B16E486-9BDA-444D-AB7A-A6A0998FFF51} = {C77C772A-917E-48F4-AF0C-A6425C2C5712}
+		{E1C65774-842A-4C0B-8955-1A8CEF6D0D7C} = {7B16E486-9BDA-444D-AB7A-A6A0998FFF51}
+		{E5C01B20-6CD6-4133-83D5-C2C4A72B033C} = {E1C65774-842A-4C0B-8955-1A8CEF6D0D7C}
+		{2B1BAC93-28E2-4AF2-A582-23AA0E8FBF7D} = {E1C65774-842A-4C0B-8955-1A8CEF6D0D7C}
+		{E094BC95-990E-46FC-BAB8-5C695A5E22FA} = {E1C65774-842A-4C0B-8955-1A8CEF6D0D7C}
+		{37872274-A870-4AF6-B826-7D1AB9F76040} = {E1C65774-842A-4C0B-8955-1A8CEF6D0D7C}
+		{C6A752E1-0B08-4853-B2A6-96CCAEE4D919} = {E1C65774-842A-4C0B-8955-1A8CEF6D0D7C}
+		{2BB6A56E-581C-4B75-A8BC-C9DB336B86E8} = {E1C65774-842A-4C0B-8955-1A8CEF6D0D7C}
+		{43AA03DF-2B26-4791-95E5-614D4BE0ACC8} = {E1C65774-842A-4C0B-8955-1A8CEF6D0D7C}
+		{C8CA1A38-F471-4795-BDCC-9F3F51FB19F2} = {E1C65774-842A-4C0B-8955-1A8CEF6D0D7C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B3166EDE-037B-4C68-BEBA-5DE9C5E3DB82}
