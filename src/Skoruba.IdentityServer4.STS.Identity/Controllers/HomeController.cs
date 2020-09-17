@@ -6,6 +6,7 @@
 
 using System;
 using System.Threading.Tasks;
+using IdentityServer4.Extensions;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
@@ -27,7 +28,15 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            if(User.IsAuthenticated())
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            
         }
 
         [HttpPost]

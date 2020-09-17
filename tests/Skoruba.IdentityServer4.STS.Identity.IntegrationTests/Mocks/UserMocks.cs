@@ -15,18 +15,17 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Mocks
         {
             return new Dictionary<string, string>
             {
-                { "UserName", Guid.NewGuid().ToString()},
                 { "Password", UserPassword },
                 { "ConfirmPassword", UserPassword},
                 { "Email", $"{Guid.NewGuid().ToString()}@{Guid.NewGuid().ToString()}.com"}
             };
         }
 
-        public static Dictionary<string, string> GenerateLoginData(string userName, string password, string antiForgeryToken)
+        public static Dictionary<string, string> GenerateLoginData(string email, string password, string antiForgeryToken)
         {
             var loginDataForm = new Dictionary<string, string>
             {
-                {"Username", userName},
+                {"Email", email},
                 {"Password", password},
                 {"button", "login"},
                 {AntiForgeryTokenKey, antiForgeryToken}

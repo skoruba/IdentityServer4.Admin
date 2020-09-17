@@ -5,44 +5,88 @@
     ViewData["Title"] = Localizer["Title"];
 }
 
-<h2>@ViewData["Title"].</h2>
-
 @await Html.PartialAsync("_ValidationSummary")
 
-<form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-    <h4>@Localizer["SubTitle"]</h4>
-    <hr />
-    <div class="form-group">
-        <label asp-for="UserName" class="col-md-2 control-label">@Localizer["UserName"]</label>
-        <div class="col-md-10">
-            <input asp-for="UserName" class="form-control" />
-            <span asp-validation-for="UserName" class="text-danger"></span>
+<div class="register-page">
+    <div class="col-sm-12 col-md-6 register-left">
+
+    </div>
+    <div class="col-sm-12 col-md-6">
+        <div class="mt-3">
+            <h5>@Localizer["Register"]</h5>
+            <div class="row">
+                <ul class="list-inline">
+                    @if (Model.VisibleExternalProviders.Any())
+                    {
+                        @foreach (var provider in Model.VisibleExternalProviders)
+                        {
+                    @*<button class="mdl-button mdl-js-button mdl-js-ripple-effect"
+                            asp-action="ExternalLogin" 
+                            asp-route-provider="@provider.AuthenticationScheme"
+                            asp-route-returnUrl="@Model.ReturnUrl">@provider.DisplayName.ToLower()</button>*@
+                           <li class="list-inline-item">
+                                <div class="external-btn">
+                                    <img class="external-ico" src='~/images/@provider.DisplayName.ToLower()-ico.svg' />
+                                    <a asp-action="ExternalLogin"
+                                       asp-route-provider="@provider.AuthenticationScheme"
+                                       asp-route-returnUrl="@Model.ReturnUrl">
+                                        @provider.DisplayName
+                                    </a>
+                                </div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="mt-3">
+            <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+                <h8>Or use your email:</h8>
+                <hr />
+                <div class="form-group">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" asp-for="FirstName">
+                        <label class="mdl-textfield__label" asp-for="FirstName">@Localizer["FirstName"]</label>
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" asp-for="LastName">
+                        <label class="mdl-textfield__label" asp-for="LastName">@Localizer["LastName"]</label>
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" asp-for="Email">
+                        <label class="mdl-textfield__label" asp-for="Email">@Localizer["Email"]</label>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group col-sm-12">
+                    <div class="form-input">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" asp-for="Password">
+                            <label class="mdl-textfield__label" asp-for="Password">@Localizer["Password"]</label>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-input">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" asp-for="ConfirmPassword">
+                            <label class="mdl-textfield__label" asp-for="ConfirmPassword">@Localizer["ConfirmPassword"]</label>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-sm-12">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-primary">@Localizer["Register"]</button>
+                        <a asp-action="Login" asp-controller="Account" class="btn btn-dark" value="forgot">@Localizer["Login"]</a>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-    <div class="form-group">
-        <label asp-for="Email" class="col-md-2 control-label">@Localizer["Email"]</label>
-        <div class="col-md-10">
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label asp-for="Password" class="col-md-2 control-label">@Localizer["Password"]</label>
-        <div class="col-md-10">
-            <input asp-for="Password" class="form-control" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label asp-for="ConfirmPassword" class="col-md-2 control-label">@Localizer["ConfirmPassword"]</label>
-        <div class="col-md-10">
-            <input asp-for="ConfirmPassword" class="form-control" />
-            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button type="submit" class="btn btn-primary">@Localizer["Button"]</button>
-        </div>
-    </div>
-</form>
+</div>

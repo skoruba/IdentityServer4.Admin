@@ -12,7 +12,7 @@
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="Users">@Localizer["NavigationUsers"]</a></li>
-				<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="UserProfile" asp-route-id="@Model.Id">@Model.UserName</a></li>
+				<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="UserProfile" asp-route-id="@Model.Id">@Model.Email</a></li>
 				<li class="breadcrumb-item active" aria-current="page">@Localizer["PageTitle"]</li>
 			</ol>
 		</nav>
@@ -31,11 +31,11 @@
 
 			<!--Input - text -->
 			<div class="form-group row">
-				<label asp-for="UserName" class="col-sm-3 col-form-label">
+				<label asp-for="Email" class="col-sm-3 col-form-label">
 					@await Html.PartialAsync("User/Section/Label", "UserUserName")
 				</label>
 				<div class="col-sm-9">
-					<input type="text" class="form-control" disabled="disabled" asp-for="UserName">
+					<input type="text" class="form-control" disabled="disabled" asp-for="Email">
 				</div>
 			</div>
 

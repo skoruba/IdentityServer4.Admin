@@ -135,7 +135,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 await identityService.CreateUserAsync(userDto);
 
                 //Get new user
-                var user = await context.Users.Where(x => x.UserName == userDto.UserName).SingleOrDefaultAsync();
+                var user = await context.Users.Where(x => x.Email == userDto.Email).SingleOrDefaultAsync();
                 userDto.Id = user.Id;
 
                 var newUserDto = await identityService.GetUserAsync(userDto.Id.ToString());
@@ -158,7 +158,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 await identityService.CreateUserAsync(userDto);
 
                 //Get new user
-                var user = await context.Users.Where(x => x.UserName == userDto.UserName).SingleOrDefaultAsync();
+                var user = await context.Users.Where(x => x.Email == userDto.Email).SingleOrDefaultAsync();
                 userDto.Id = user.Id;
 
                 var newUserDto = await identityService.GetUserAsync(userDto.Id.ToString());
@@ -201,7 +201,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 await identityService.CreateUserAsync(userDto);
 
                 //Get new user
-                var user = await context.Users.Where(x => x.UserName == userDto.UserName).SingleOrDefaultAsync();
+                var user = await context.Users.Where(x => x.Email == userDto.Email).SingleOrDefaultAsync();
                 userDto.Id = user.Id;
 
                 var newUserDto = await identityService.GetUserAsync(userDto.Id.ToString());
@@ -247,7 +247,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 await identityService.CreateUserAsync(userDto);
 
                 //Get new user
-                var user = await context.Users.Where(x => x.UserName == userDto.UserName).SingleOrDefaultAsync();
+                var user = await context.Users.Where(x => x.Email == userDto.Email).SingleOrDefaultAsync();
                 userDto.Id = user.Id;
 
                 var newUserDto = await identityService.GetUserAsync(userDto.Id.ToString());
@@ -298,7 +298,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 await identityService.CreateUserAsync(userDto);
 
                 //Get new user
-                var user = await context.Users.Where(x => x.UserName == userDto.UserName).SingleOrDefaultAsync();
+                var user = await context.Users.Where(x => x.Email == userDto.Email).SingleOrDefaultAsync();
                 userDto.Id = user.Id;
 
                 var newUserDto = await identityService.GetUserAsync(userDto.Id.ToString());
@@ -335,7 +335,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 await identityService.CreateUserAsync(userDto);
 
                 //Get new user
-                var user = await context.Users.Where(x => x.UserName == userDto.UserName).SingleOrDefaultAsync();
+                var user = await context.Users.Where(x => x.Email == userDto.Email).SingleOrDefaultAsync();
                 userDto.Id = user.Id;
 
                 var newUserDto = await identityService.GetUserAsync(userDto.Id.ToString());
@@ -378,7 +378,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 await identityService.CreateUserAsync(userDto);
 
                 //Get new user
-                var user = await context.Users.Where(x => x.UserName == userDto.UserName).SingleOrDefaultAsync();
+                var user = await context.Users.Where(x => x.Email == userDto.Email).SingleOrDefaultAsync();
                 userDto.Id = user.Id;
 
                 var newUserDto = await identityService.GetUserAsync(userDto.Id.ToString());
@@ -414,8 +414,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 
                 await identityService.CreateUserAsync(userDto);
 
-                //Get new user
-                var user = await context.Users.Where(x => x.UserName == userDto.UserName).SingleOrDefaultAsync();
+                //Get new usere
+                var user = await context.Users.Where(x => x.Email == userDto.Email).SingleOrDefaultAsync();
                 userDto.Id = user.Id;
 
                 var newUserDto = await identityService.GetUserAsync(userDto.Id.ToString());

@@ -628,7 +628,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             var model = new IndexViewModel
             {
-                Username = user.UserName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 IsEmailConfirmed = user.EmailConfirmed,

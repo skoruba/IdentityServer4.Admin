@@ -12,7 +12,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-controller="Identity" asp-action="Users">@Localizer["NavigationUsers"]</a></li>
-                <li class="breadcrumb-item active" aria-current="page">@Model.UserName</li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.Email</li>
             </ol>
         </nav>
     </div>
@@ -53,16 +53,6 @@
                     <img-gravatar email="@Model.Email" class="img-thumbnail" size="150" />
                 </div>
                 <div class="col-sm-10">
-                    <!--Input - text -->
-                    <div class="form-group row">
-                        <label asp-for="UserName" class="col-sm-3 col-form-label">
-                            @await Html.PartialAsync("User/Section/Label", "UserUserName")
-                        </label>
-                        <div class="col-sm-9">
-                            <input type="text" required class="form-control" asp-for="UserName">
-                            <span asp-validation-for="UserName" class="text-danger"></span>
-                        </div>
-                    </div>
 
                     <!--Input - text -->
                     <div class="form-group row">

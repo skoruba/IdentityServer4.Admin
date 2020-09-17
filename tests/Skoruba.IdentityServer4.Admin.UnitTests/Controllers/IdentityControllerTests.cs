@@ -68,7 +68,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("UserProfile");
 
-            var user = await dbContext.Users.Where(x => x.UserName == userDto.UserName).SingleOrDefaultAsync();
+            var user = await dbContext.Users.Where(x => x.Email == userDto.Email).SingleOrDefaultAsync();
             userDto.Id = user.Id;
 
             var addedUser = await identityService.GetUserAsync(userDto.Id);
@@ -90,7 +90,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             await identityService.CreateUserAsync(userDto);
 
-            var userId = await dbContext.Users.Where(x => x.UserName == userDto.UserName).Select(x => x.Id).SingleOrDefaultAsync();
+            var userId = await dbContext.Users.Where(x => x.Email == userDto.Email).Select(x => x.Id).SingleOrDefaultAsync();
             userDto.Id = userId;
 
             // A user cannot delete own account
@@ -132,7 +132,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             await identityService.CreateUserAsync(userDto);
 
             //Get inserted userid
-            var userId = await dbContext.Users.Where(x => x.UserName == userDto.UserName).Select(x => x.Id).SingleOrDefaultAsync();
+            var userId = await dbContext.Users.Where(x => x.Email == userDto.Email).Select(x => x.Id).SingleOrDefaultAsync();
 
             var updatedUserDto = IdentityDtoMock<string>.GenerateRandomUser(userId);
 
@@ -163,7 +163,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             await identityService.CreateUserAsync(userDto);
 
             //Get inserted userid
-            var userId = await dbContext.Users.Where(x => x.UserName == userDto.UserName).Select(x => x.Id).SingleOrDefaultAsync();
+            var userId = await dbContext.Users.Where(x => x.Email == userDto.Email).Select(x => x.Id).SingleOrDefaultAsync();
 
             //Try call controller action
             var result = await controller.UserProfile(userId);
@@ -301,7 +301,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var userDto = IdentityDtoMock<string>.GenerateRandomUser();
             await identityService.CreateUserAsync(userDto);
 
-            var user = await dbContext.Users.Where(x => x.UserName == userDto.UserName).SingleOrDefaultAsync();
+            var user = await dbContext.Users.Where(x => x.Email == userDto.Email).SingleOrDefaultAsync();
             userDto.Id = user.Id;
 
             var userClaimsDto = IdentityDtoMock<string>.GenerateRandomUserClaim(0, user.Id);
@@ -334,7 +334,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var roleDto = IdentityDtoMock<string>.GenerateRandomRole();
             await identityService.CreateRoleAsync(roleDto);
 
-            var user = await dbContext.Users.Where(x => x.UserName == userDto.UserName).SingleOrDefaultAsync();
+            var user = await dbContext.Users.Where(x => x.Email == userDto.Email).SingleOrDefaultAsync();
             userDto.Id = user.Id;
 
             var role = await dbContext.Roles.Where(x => x.Name == roleDto.Name).SingleOrDefaultAsync();
@@ -353,7 +353,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
                                                                    .Excluding(x => x.RolesList)
                                                                    .Excluding(x => x.PageSize)
                                                                    .Excluding(x => x.TotalCount)
-                                                                   .Excluding(x => x.UserName));
+                                                                   .Excluding(x => x.Email));
         }
 
         [Fact]
@@ -372,7 +372,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var roleDto = IdentityDtoMock<string>.GenerateRandomRole();
             await identityService.CreateRoleAsync(roleDto);
 
-            var user = await dbContext.Users.Where(x => x.UserName == userDto.UserName).SingleOrDefaultAsync();
+            var user = await dbContext.Users.Where(x => x.Email == userDto.Email).SingleOrDefaultAsync();
             userDto.Id = user.Id;
 
             var role = await dbContext.Roles.Where(x => x.Name == roleDto.Name).SingleOrDefaultAsync();
@@ -406,7 +406,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var userDto = IdentityDtoMock<string>.GenerateRandomUser();
             await identityService.CreateUserAsync(userDto);
 
-            var user = await dbContext.Users.Where(x => x.UserName == userDto.UserName).SingleOrDefaultAsync();
+            var user = await dbContext.Users.Where(x => x.Email == userDto.Email).SingleOrDefaultAsync();
             userDto.Id = user.Id;
 
             var userClaimsDto = IdentityDtoMock<string>.GenerateRandomUserClaim(0, user.Id);
@@ -502,7 +502,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             await identityService.CreateUserAsync(userDto);
 
-            var userId = await dbContext.Users.Where(x => x.UserName == userDto.UserName).Select(x => x.Id).SingleOrDefaultAsync();
+            var userId = await dbContext.Users.Where(x => x.Email == userDto.Email).Select(x => x.Id).SingleOrDefaultAsync();
 
             var changePassword = IdentityDtoMock<string>.GenerateRandomUserChangePassword(userId, "IdentityServer4!");
 
@@ -512,7 +512,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("UserProfile");
 
-            var user = await dbContext.Users.Where(x => x.UserName == userDto.UserName).SingleOrDefaultAsync();
+            var user = await dbContext.Users.Where(x => x.Email == userDto.Email).SingleOrDefaultAsync();
             user.PasswordHash.Should().NotBeNull();
         }
 
@@ -529,7 +529,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var userDto = IdentityDtoMock<string>.GenerateRandomUser();
             await identityService.CreateUserAsync(userDto);
 
-            var userId = await dbContext.Users.Where(x => x.UserName == userDto.UserName).Select(x => x.Id).SingleOrDefaultAsync();
+            var userId = await dbContext.Users.Where(x => x.Email == userDto.Email).Select(x => x.Id).SingleOrDefaultAsync();
             var randomProviderKey = Guid.NewGuid().ToString();
             var randomProviderLogin = Guid.NewGuid().ToString();
 

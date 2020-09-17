@@ -1,35 +1,40 @@
 ﻿@media (max-width: 767px) {
-	.menu {
-		text-align: center;
+    .menu {
+        text-align: center;
 
-		&-logo{
-			font-size: 1.2em;
-		}
-	}
+        &-logo {
+            font-size: 1.2em;
+        }
+    }
 
-	.menu-item {
-		display: none;
-	}
+    .menu-item {
+        display: none;
+    }
 
-	.menu-button {
-		display: block;
-	}
+    .menu-button {
+        display: block;
+    }
 
-	.welcome-block{
-		h1{
-			font-size: 2em;
-		}
-	}
+    .welcome-block {
+        h1 {
+            font-size: 2em;
+
+            .icon {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    }
 }
 
 @media (min-width: 768px) {
-	.menu-item {
-		display: block;
-	}
+    .menu-item {
+        display: block;
+    }
 
-	.menu-button {
-		display: none;
-	}
+    .menu-button {
+        display: none;
+    }
 }
 
 .gravatar-image {
@@ -37,22 +42,22 @@
 }
 
 .border-top {
-	border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
 
 .border-bottom {
-	border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-	box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
 }
 
 .welcome-block {
-	max-width: 700px;
+    max-width: 700px;
 }
 
 .logo, .logo:hover {
-	color: black;
-	text-decoration: none;
+    color: black;
+    text-decoration: none;
 }

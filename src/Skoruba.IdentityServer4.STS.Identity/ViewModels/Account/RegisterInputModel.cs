@@ -2,8 +2,12 @@
 
 namespace Skoruba.IdentityServer4.STS.Identity.ViewModels.Account
 {
-    public class RegisterWithoutUsernameViewModel
+    public class RegisterInputModel
     {
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
         [Required]
         [EmailAddress]
         public string Email { get; set; }
@@ -16,5 +20,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.ViewModels.Account
         [DataType(DataType.Password)]
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
+
+        public string ReturnUrl { get; set; }
     }
 }

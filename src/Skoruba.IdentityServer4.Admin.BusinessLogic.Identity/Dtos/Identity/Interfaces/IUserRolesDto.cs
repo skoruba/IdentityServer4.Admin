@@ -5,7 +5,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Int
 {
     public interface IUserRolesDto : IBaseUserRolesDto
     {
-        string UserName { get; set; }
+        string Email { get; set; }
         List<SelectItemDto> RolesList { get; set; }
         List<IRoleDto> Roles { get; }
         int PageSize { get; set; }

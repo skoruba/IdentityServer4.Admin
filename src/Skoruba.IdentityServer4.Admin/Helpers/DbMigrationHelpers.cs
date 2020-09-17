@@ -132,7 +132,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 {
                     var identityUser = new TUser
                     {
-                        UserName = user.Username,
+                        UserName = user.Email,
                         Email = user.Email,
                         EmailConfirmed = true
                     };

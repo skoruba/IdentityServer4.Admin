@@ -264,7 +264,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             var roleDtos = Mapper.Map<TUserRolesDto>(userIdentityRoles);
 
             var user = await IdentityRepository.GetUserAsync(userId);
-            roleDtos.UserName = user.UserName;
+            roleDtos.Email = user.Email;
 
             await AuditEventLogger.LogEventAsync(new UserRolesRequestedEvent<TUserRolesDto>(roleDtos));
 
@@ -289,7 +289,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             var claimDtos = Mapper.Map<TUserClaimsDto>(identityUserClaims);
 
             var user = await IdentityRepository.GetUserAsync(userId);
-            claimDtos.UserName = user.UserName;
+            claimDtos.Email = user.Email;
 
             await AuditEventLogger.LogEventAsync(new UserClaimsRequestedEvent<TUserClaimsDto>(claimDtos));
 
@@ -358,7 +358,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             providersDto.UserId = ConvertUserDtoKeyFromString(userId);
 
             var user = await IdentityRepository.GetUserAsync(userId);
-            providersDto.UserName = user.UserName;
+            providersDto.Email = user.Email;
 
             await AuditEventLogger.LogEventAsync(new UserProvidersRequestedEvent<TUserProvidersDto>(providersDto));
 
@@ -384,7 +384,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
 
             var userProviderDto = Mapper.Map<TUserProviderDto>(identityUserLogin);
             var user = await GetUserAsync(userId);
-            userProviderDto.UserName = user.UserName;
+            userProviderDto.Email = user.Email;
 
             await AuditEventLogger.LogEventAsync(new UserProviderRequestedEvent<TUserProviderDto>(userProviderDto));
 
@@ -398,7 +398,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
 
             var identityResult = await IdentityRepository.UserChangePasswordAsync(userPassword.UserId.ToString(), userPassword.Password);
 
-            await AuditEventLogger.LogEventAsync(new UserPasswordChangedEvent(userPassword.UserName));
+            await AuditEventLogger.LogEventAsync(new UserPasswordChangedEvent(userPassword.Email));
 
             return HandleIdentityError(identityResult, IdentityServiceResources.UserChangePasswordFailed().Description, IdentityServiceResources.IdentityErrorKey().Description, userPassword);
         }

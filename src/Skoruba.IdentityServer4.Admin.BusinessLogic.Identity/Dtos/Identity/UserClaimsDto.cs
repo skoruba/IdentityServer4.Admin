@@ -11,7 +11,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
             Claims = new List<UserClaimDto<TUserDtoKey>>();
         }
 
-        public string UserName { get; set; }
+        public string Email { get; set; }
 
         public List<UserClaimDto<TUserDtoKey>> Claims { get; set; }
 

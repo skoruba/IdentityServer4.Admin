@@ -103,7 +103,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
             var loginResponse = await Client.GetAsync(accountLoginAction);
             var antiForgeryToken = await loginResponse.ExtractAntiForgeryToken();
 
-            var loginDataForm = UserMocks.GenerateLoginData(registerFormData["UserName"], registerFormData["Password"],
+            var loginDataForm = UserMocks.GenerateLoginData(registerFormData["Email"], registerFormData["Password"],
                 antiForgeryToken);
 
             // Login
@@ -143,7 +143,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
             var antiForgeryToken = await loginResponse.ExtractAntiForgeryToken();
 
             // User Guid like fake password
-            var loginDataForm = UserMocks.GenerateLoginData(registerFormData["UserName"], Guid.NewGuid().ToString(), antiForgeryToken);
+            var loginDataForm = UserMocks.GenerateLoginData(registerFormData["Email"], Guid.NewGuid().ToString(), antiForgeryToken);
 
             // Login
             var requestMessage = RequestHelper.CreatePostRequestWithCookies(accountLoginAction, loginDataForm, loginResponse);
@@ -168,7 +168,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
             // Build expected error messages
             var expectedErrorMessages = new List<string>
             {
-                "Invalid username or password"
+                "Invalid email or password"
             };
 
             // Assert

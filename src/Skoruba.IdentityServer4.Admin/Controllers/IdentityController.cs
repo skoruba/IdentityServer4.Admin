@@ -155,7 +155,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
                 userId = userData.userId;
             }
 
-            SuccessNotification(string.Format(_localizer["SuccessCreateUser"], user.UserName), _localizer["SuccessTitle"]);
+            SuccessNotification(string.Format(_localizer["SuccessCreateUser"], user.Email), _localizer["SuccessTitle"]);
 
             return RedirectToAction(nameof(UserProfile), new { Id = userId });
         }
@@ -212,7 +212,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
                 UserId = id,
                 RolesList = roles.Select(x => new SelectItemDto(x.Id.ToString(), x.Name)).ToList(),
                 RoleId = roleId,
-                UserName = userDto.UserName
+                Email = userDto.Email
             };
 
             return View(rolesDto);
@@ -264,7 +264,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             if (claim == null) return NotFound();
 
             var userDto = await _identityService.GetUserAsync(id.ToString());
-            claim.UserName = userDto.UserName;
+            claim.Email = userDto.Email;
 
             return View(claim);
         }
@@ -316,7 +316,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             if (EqualityComparer<TUserDtoKey>.Default.Equals(id, default)) return NotFound();
 
             var user = await _identityService.GetUserAsync(id.ToString());
-            var userDto = new UserChangePasswordDto<TUserDtoKey> { UserId = id, UserName = user.UserName };
+            var userDto = new UserChangePasswordDto<TUserDtoKey> { UserId = id, Email = user.Email };
 
             return View(userDto);
         }

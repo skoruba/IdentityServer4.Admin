@@ -6,10 +6,7 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Interfa
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
 {
     public class UserDto<TKey> : BaseUserDto<TKey>, IUserDto
-    {        
-        [Required]
-        [RegularExpression(@"^[a-zA-Z0-9_@\-\.\+]+$")]
-        public string UserName { get; set; }
+    {
 
         [Required]
         [EmailAddress]

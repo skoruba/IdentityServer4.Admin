@@ -129,7 +129,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = await _userResolver.GetUserAsync(model.Username);
+                var user = await _userResolver.GetUserAsync(model.Email);
                 if (user != default(TUser))
                 {
                     var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberLogin, lockoutOnFailure: true);
@@ -175,7 +175,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                         return View("Lockout");
                     }
                 }
-                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials"));
+                await _events.RaiseAsync(new UserLoginFailureEvent(model.Email, "invalid credentials"));
                 ModelState.AddModelError(string.Empty, AccountOptions.InvalidCredentialsErrorMessage);
             }
 
@@ -406,7 +406,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             {
                 var user = new TUser
                 {
-                    UserName = model.UserName,
+                    UserName = model.Email,
                     Email = model.Email
                 };
 
@@ -542,21 +542,13 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Register(string returnUrl = null)
+        public async Task<IActionResult> Register(string returnUrl = null)
         {
+            var vm = await BuildRegisterViewModelAsync(returnUrl);
             if (!_registerConfiguration.Enabled) return View("RegisterFailure");
 
             ViewData["ReturnUrl"] = returnUrl;
-
-            switch (_loginConfiguration.ResolutionPolicy)
-            {
-                case LoginResolutionPolicy.Username:
-                    return View();
-                case LoginResolutionPolicy.Email:
-                    return View("RegisterWithoutUsername");
-                default:
-                    return View("RegisterFailure");
-            }
+            return View(vm);
         }
 
         [HttpPost]
@@ -572,7 +564,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             var user = new TUser
             {
-                UserName = model.UserName,
+                UserName = model.Email,
                 Email = model.Email
             };
 
@@ -592,22 +584,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RegisterWithoutUsername(RegisterWithoutUsernameViewModel model, string returnUrl = null)
-        {
-            var registerModel = new RegisterViewModel
-            {
-                UserName = model.Email,
-                Email = model.Email,
-                Password = model.Password,
-                ConfirmPassword = model.ConfirmPassword
-            };
-
-            return await Register(registerModel, returnUrl);
         }
         
 
@@ -642,7 +618,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 {
                     EnableLocalLogin = false,
                     ReturnUrl = returnUrl,
-                    Username = context?.LoginHint,
+                    Email = context?.LoginHint,
                     LoginResolutionPolicy = _loginConfiguration.ResolutionPolicy,
                     ExternalProviders = new ExternalProvider[] { new ExternalProvider { AuthenticationScheme = context.IdP } }
                 };
@@ -680,7 +656,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 AllowRememberLogin = AccountOptions.AllowRememberLogin,
                 EnableLocalLogin = allowLocal && AccountOptions.AllowLocalLogin,
                 ReturnUrl = returnUrl,
-                Username = context?.LoginHint,
+                Email = context?.LoginHint,
                 LoginResolutionPolicy = _loginConfiguration.ResolutionPolicy,
                 ExternalProviders = providers.ToArray()
             };
@@ -689,7 +665,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         private async Task<LoginViewModel> BuildLoginViewModelAsync(LoginInputModel model)
         {
             var vm = await BuildLoginViewModelAsync(model.ReturnUrl);
-            vm.Username = model.Username;
+            vm.Email = model.Email;
             vm.RememberLogin = model.RememberLogin;
             return vm;
         }
@@ -716,6 +692,53 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             // show the logout prompt. this prevents attacks where the user
             // is automatically signed out by another malicious web page.
             return vm;
+        }
+
+        private async Task<RegisterViewModel> BuildRegisterViewModelAsync(string returnUrl)
+        {
+            var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
+            if (context?.IdP != null)
+            {
+                // this is meant to short circuit the UI and only trigger the one external IdP
+                return new RegisterViewModel
+                {
+                    ReturnUrl = returnUrl,
+                    ExternalProviders = new ExternalProvider[] { new ExternalProvider { AuthenticationScheme = context.IdP } }
+                };
+            }
+
+            var schemes = await _schemeProvider.GetAllSchemesAsync();
+
+            var providers = schemes
+                .Where(x => x.DisplayName != null ||
+                            (x.Name.Equals(AccountOptions.WindowsAuthenticationSchemeName, StringComparison.OrdinalIgnoreCase))
+                )
+                .Select(x => new ExternalProvider
+                {
+                    DisplayName = x.DisplayName,
+                    AuthenticationScheme = x.Name
+                }).ToList();
+
+            var allowLocal = true;
+            if (context?.ClientId != null)
+            {
+                var client = await _clientStore.FindEnabledClientByIdAsync(context.ClientId);
+                if (client != null)
+                {
+                    allowLocal = client.EnableLocalLogin;
+
+                    if (client.IdentityProviderRestrictions != null && client.IdentityProviderRestrictions.Any())
+                    {
+                        providers = providers.Where(provider => client.IdentityProviderRestrictions.Contains(provider.AuthenticationScheme)).ToList();
+                    }
+                }
+            }
+
+            return new RegisterViewModel
+            {
+                ReturnUrl = returnUrl,
+                ExternalProviders = providers.ToArray()
+            };
         }
 
         private async Task<LoggedOutViewModel> BuildLoggedOutViewModelAsync(string logoutId)

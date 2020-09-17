@@ -55,7 +55,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 .ConfigureApplicationPartManager(m =>
                 {
                     m.FeatureProviders.Add(new GenericTypeControllerFeatureProvider<TUser, TKey>());
-                });
+                })
+                .AddRazorRuntimeCompilation();
 
             var cultureConfiguration = configuration.GetSection(nameof(CultureConfiguration)).Get<CultureConfiguration>();
             services.Configure<RequestLocalizationOptions>(
@@ -309,13 +310,39 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         {
             var externalProviderConfiguration = configuration.GetSection(nameof(ExternalProvidersConfiguration)).Get<ExternalProvidersConfiguration>();
 
-            if (externalProviderConfiguration.UseGitHubProvider)
+            if (externalProviderConfiguration.UseFacebookProvider)
             {
-                authenticationBuilder.AddGitHub(options =>
+                authenticationBuilder.AddFacebook(options =>
                 {
-                    options.ClientId = externalProviderConfiguration.GitHubClientId;
-                    options.ClientSecret = externalProviderConfiguration.GitHubClientSecret;
-                    options.Scope.Add("user:email");
+                    options.ClientId = externalProviderConfiguration.FacebookClientId;
+                    options.ClientSecret = externalProviderConfiguration.FacebookClientSecret;
+                });
+            }
+            
+            if (externalProviderConfiguration.UseGoogleProvider)
+            {
+                authenticationBuilder.AddGoogle(options =>
+                {
+                    options.ClientId = externalProviderConfiguration.GoogleClientId;
+                    options.ClientSecret = externalProviderConfiguration.GoogleClientSecret;
+                });
+            }
+            
+            if (externalProviderConfiguration.UseMicrosoftProvider)
+            {
+                authenticationBuilder.AddMicrosoftAccount(options =>
+                {
+                    options.ClientId = externalProviderConfiguration.MicrosoftClientId;
+                    options.ClientSecret = externalProviderConfiguration.MicrosoftClientSecret;
+                });
+            }
+            
+            if (externalProviderConfiguration.UseAppleProvider)
+            {
+                authenticationBuilder.AddApple(options =>
+                {
+                    options.ClientId = externalProviderConfiguration.AppleClientId;
+                    options.ClientSecret = externalProviderConfiguration.AppleClientSecret;
                 });
             }
         }
