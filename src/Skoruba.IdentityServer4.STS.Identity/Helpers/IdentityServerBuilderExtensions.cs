@@ -56,13 +56,32 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 var certStore = new X509Store(StoreName.My, storeLocation);
                 certStore.Open(OpenFlags.ReadOnly);
 
+                X509Certificate2 certificate;
                 var certCollection = certStore.Certificates.Find(X509FindType.FindByThumbprint, certificateConfiguration.SigningCertificateThumbprint, validOnly);
                 if (certCollection.Count == 0)
                 {
-                    throw new Exception(CertificateNotFound);
-                }
+                    string certPath = "/var/ssl/private/";
+                    if (Directory.Exists(certPath))
+                    {
+                        var bytes = System.IO.File.ReadAllBytes($"{certPath}{certificateConfiguration.SigningCertificateThumbprint}.p12");
 
-                var certificate = certCollection[0];
+                        if (bytes == null)
+                        {
+                            throw new Exception(CertificateNotFound + " " + certificateConfiguration.SigningCertificateThumbprint);
+                        }
+                        var cert = new X509Certificate2(bytes);
+
+                        certificate = cert;
+                    }
+                    else
+                    {
+                        throw new Exception(CertificateNotFound + " " + certificateConfiguration.SigningCertificateThumbprint);
+                    }
+                }
+                else
+                {
+                    certificate = certCollection[0];
+                }
 
                 builder.AddSigningCredential(certificate);
             }
