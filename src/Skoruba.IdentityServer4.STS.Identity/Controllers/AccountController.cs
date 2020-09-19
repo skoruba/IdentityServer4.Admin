@@ -199,6 +199,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         /// Show logout page
         /// </summary>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Logout(string logoutId)
         {
             // build a model so the logout page knows what to display
