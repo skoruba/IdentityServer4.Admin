@@ -29,31 +29,31 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             _contextAccessor = contextAccessor;
         }
 
-        public override async Task SignInAsync(TUser user, AuthenticationProperties authenticationProperties, string authenticationMethod = null)
+        public override async Task SignInWithClaimsAsync(TUser user, AuthenticationProperties authenticationProperties, IEnumerable<Claim> additionalClaims)
         {
-            var userPrincipal = await ClaimsFactory.CreateAsync(user);
+            var userPrincipal = await CreateUserPrincipalAsync(user);
 
-            if (authenticationMethod != null)
+            foreach (var claim in additionalClaims)
             {
-                userPrincipal.Identities.First().AddClaim(new Claim(ClaimTypes.AuthenticationMethod, authenticationMethod));
+                userPrincipal.Identities.First().AddClaim(claim);
+            }
 
-                var externalResult = await _contextAccessor.HttpContext.AuthenticateAsync(IdentityConstants.ExternalScheme);
-                if (externalResult != null)
+            var externalResult = await _contextAccessor.HttpContext.AuthenticateAsync(IdentityConstants.ExternalScheme);
+            if (externalResult != null && externalResult.Succeeded)
+            {              
+                var sid = externalResult.Principal.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.SessionId);
+                if (sid != null)
                 {
-                    var sid = externalResult.Principal.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.SessionId);
-                    if (sid != null)
-                    {
-                        userPrincipal.Identities.First().AddClaim(new Claim(JwtClaimTypes.SessionId, sid.Value));
-                    }
+                    userPrincipal.Identities.First().AddClaim(new Claim(JwtClaimTypes.SessionId, sid.Value));
+                }
 
-                    if (authenticationProperties != null)
+                if (authenticationProperties != null)
+                {
+                    // if the external provider issued an id_token, we'll keep it for signout
+                    var idToken = externalResult.Properties.GetTokenValue("id_token");
+                    if (idToken != null)
                     {
-                        // if the external provider issued an id_token, we'll keep it for signout
-                        var idToken = externalResult.Properties.GetTokenValue("id_token");
-                        if (idToken != null)
-                        {
-                            authenticationProperties.StoreTokens(new[] { new AuthenticationToken { Name = "id_token", Value = idToken } });
-                        }
+                        authenticationProperties.StoreTokens(new[] { new AuthenticationToken { Name = "id_token", Value = idToken } });
                     }
                 }
             }
