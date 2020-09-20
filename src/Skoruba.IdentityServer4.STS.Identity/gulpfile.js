@@ -22,7 +22,7 @@ function processScripts() {
 			'./node_modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js',
 			'./node_modules/popper.js/dist/umd/popper.js',
             './node_modules/bootstrap/dist/js/bootstrap.js',
-            './node_modules/cookieconsent/src/cookieconsent.js',
+			'./node_modules/cookieconsent/src/cookieconsent.js',
 			'./node_modules/holderjs/holder.js',
 			'./Scripts/App/components/Menu.js',
 			'./Scripts/App/components/Language.js',
@@ -63,7 +63,7 @@ function processStyles() {
 		.src([
 			'./node_modules/bootstrap/dist/css/bootstrap.css',
 			'./node_modules/open-iconic/font/css/open-iconic-bootstrap.css',
-            './node_modules/font-awesome/css/font-awesome.css',
+			'./node_modules/font-awesome/css/font-awesome.css',
             './node_modules/cookieconsent/build/cookieconsent.min.css'
 		])
 		.pipe(minifyCSS())

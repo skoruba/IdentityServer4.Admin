@@ -9,10 +9,7 @@
   .menu-button {
     display: block; }
   .welcome-block h1 {
-    font-size: 2em; }
-    .welcome-block h1 img {
-      width: 100px;
-      height: 100px; } }
+    font-size: 2em; } }
 
 @media (min-width: 768px) {
   .menu-item {

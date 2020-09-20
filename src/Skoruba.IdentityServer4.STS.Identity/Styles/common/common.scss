@@ -61,3 +61,247 @@
     color: black;
     text-decoration: none;
 }
+body {
+    font-size: $size-body2;
+    font-family: $regularFont;
+    line-height: $size-body2 + 8px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0.25px;
+    color: $onSurface;
+}
+
+a {
+    text-decoration: none;
+    color: $primary;
+    transition: 0.3s all;
+    font-size: inherit;
+    line-height: inherit;
+
+    &:hover, &:active, &:focus {
+        text-decoration: none;
+        color: $primary;
+        transition: 0.3s all;
+    }
+}
+
+button {
+    border: none;
+    outline: none;
+
+    &:hover, &:focus {
+        outline: none;
+    }
+}
+
+.regTitle {
+    margin-bottom: 38px;
+}
+
+.group {
+    position: relative;
+    margin-bottom: 32px;
+    width: 100%;
+    color: $onSurface2;
+    ;
+}
+
+.validation-text {
+    font-size: 8px;
+    line-height: 16px;
+    letter-spacing: 0.4px;
+    padding-left: 5px;
+}
+
+.common-input {
+    font-size: $size-body2;
+    padding: 8px 5px;
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid $onSurface2;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.password-input {
+    padding-right: 40px;
+}
+
+.input-icon {
+    position: absolute;
+    display: inline-block;
+    top: 10px;
+    left: -24px;
+
+    &__password {
+        position: absolute;
+        top: 10px;
+        left: auto;
+        right: 5px;
+        cursor: pointer;
+    }
+}
+
+.common-label {
+    color: $onSurface2;
+    font-size: $size-body2;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 11px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+}
+
+/* active state */
+.common-input:focus ~ label, .common-input:valid ~ label {
+    top: -15px;
+    font-size: 9px;
+    color: $primary;
+}
+
+
+/* BOTTOM BARS ================================= */
+.bar {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.bar:before, .bar:after {
+    content: "";
+    height: 2px;
+    width: 0;
+    bottom: 0;
+    position: absolute;
+    background: $primary;
+    transition: 0.3s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+}
+
+.bar:before {
+    left: 50%;
+}
+
+.bar:after {
+    right: 50%;
+}
+
+/* active state */
+.common-input:focus ~ .bar:before,
+.common-input:focus ~ .bar:after {
+    width: 50%;
+}
+
+h5 {
+    font-size: $size-medium3;
+    line-height: $size-medium3 + 5px;
+    padding: 22px 0;
+}
+
+.common-button {
+    min-width: 216px;
+    height: 42px;
+    font-weight: 500;
+    font-size: $size-body;
+    line-height: $size-body + 2px;
+    letter-spacing: 1px;
+    color: $surface;
+    border-radius: 6px;
+    background-color: $primary;
+    float: right;
+
+    &.disabled {
+        background-color: $onSurface3;
+    }
+}
+
+.common-link {
+    font-size: $size-body;
+}
+
+main {
+    width: 100%;
+}
+
+.fixed-wrap {
+    width: 722px;
+    min-height: 100vh;
+    flex: 0 0 722px;
+    background-color: $background;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.stretch-wrap {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex: 100%;
+    padding: 65px 49px 35px 63px;
+}
+
+.logo {
+    margin: 0 auto;
+    width: 136px;
+
+    img {
+        max-width: 100%;
+    }
+
+    &__mr_bottom {
+        margin-bottom: 58px;
+    }
+}
+
+.social-access {
+    flex-wrap: wrap;
+    &__button {
+        display: inline-block;
+        border: 1px solid $onSurface;
+        color: $onSurface;
+        font-size: $size-body;
+        border-radius: 6px;
+        padding: 12px 20px;
+        height: 42px;
+        vertical-align: middle;
+        background-color: $surface;
+        width: 48%;
+        text-align: center;
+        margin: 5px;
+
+        &:hover {
+            color: $surface;
+            background-color: $primary;
+            border: none;
+        }
+    }
+
+    &__icon {
+        display: inline-block;
+        margin-right: 8px;
+    }
+
+    &__mr_bottom {
+        margin-bottom: 64px;
+    }
+}
+
+.footer-small {
+    border-top: 1px solid $onSurface3;
+    padding-top: 14px;
+    margin-top: 94px;
+}
+
+.row {
+    &__my {
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+}

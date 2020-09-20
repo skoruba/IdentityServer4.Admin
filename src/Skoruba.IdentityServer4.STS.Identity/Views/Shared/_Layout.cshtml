@@ -27,19 +27,13 @@
     <link rel="icon" type="image/x-icon" href="@RootConfiguration.AdminConfiguration.FaviconUri" />
     <link rel="shortcut icon" type="image/x-icon" href="@RootConfiguration.AdminConfiguration.FaviconUri" />
 
-
-    <link rel="stylesheet" href="~/material-ui/material.min.css">
-    <script src="~/material-ui/material.min.js"></script>
-
     <environment include="Development">
         <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
         <link href="~/dist/css/web.css" asp-append-version="true" rel="stylesheet" />
-        <link href="~/dist/css/style.css" rel="stylesheet" media="screen" runat="server" />
     </environment>
     <environment exclude="Development">
         <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
         <link href="~/dist/css/web.min.css" asp-append-version="true" rel="stylesheet" />
-        <link href="~/dist/css/style.css" rel="stylesheet" media="screen" runat="server" />
     </environment>
     @RenderSection("styles", required: false)
 </head>
