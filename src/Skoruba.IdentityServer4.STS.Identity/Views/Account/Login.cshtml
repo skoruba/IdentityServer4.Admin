@@ -32,6 +32,7 @@
         </div>
         <p class="text-center regTitle">Or use your email:</p>
         <form asp-route="Login" method="post">
+            <input type="hidden" asp-for="ReturnUrl" />
             <div class="row mx-0 align-items-center">
                 <div class="col-12 px-0">
                     <div class="group">
@@ -63,6 +64,13 @@
                         <label class="common-label" asp-for="Password">@Localizer["Password"]</label>
                         <span class="validation-text" asp-validation-for="Password"></span>
                     </div><!---/.group-->
+                </div>
+            </div>
+            <div class="row row__my mx-0 align-items-center">
+                <div class="col-12 col-sm-6 px-0 pr-sm-2">
+                </div>
+                <div class="col-12 col-sm-6 px-0 pt-3 pt-sm-0 pl-sm-2">
+                    <a asp-action="ForgotPassword" asp-controller="Account">Forgot your password?</a>
                 </div>
             </div>
             <div class="row row__my mx-0 align-items-center">
