@@ -11,6 +11,7 @@
         <div class="logo logo__mr_bottom">
             <img src="../dist/img/UpKeepr_Wordmark.svg" alt="">
         </div>
+        <div>@await Html.PartialAsync("_ValidationSummary")</div>
         <h5 class="text-center">Registration</h5>
         <div class="social-access social-access__mr_bottom d-flex justify-content-between align-items-stretch">
             @if (Model.VisibleExternalProviders.Any())
@@ -29,7 +30,7 @@
             }
         </div>
         <p class="text-center regTitle">Or use your email:</p>
-        <form  asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData[" ReturnUrl"]" method="post">
+        <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData[" ReturnUrl"]" method="post">
             <div class="row mx-0 align-items-center">
                 <div class="col-12 col-sm-6 px-0 pr-sm-2">
                     <div class="group">
@@ -38,7 +39,7 @@
                                 <path d="M8.00081 8.50033C9.47415 8.50033 10.6675 7.30699 10.6675 5.83366C10.6675 4.36033 9.47415 3.16699 8.00081 3.16699C6.52748 3.16699 5.33415 4.36033 5.33415 5.83366C5.33415 7.30699 6.52748 8.50033 8.00081 8.50033ZM8.00081 9.83366C6.22081 9.83366 2.66748 10.727 2.66748 12.5003V13.8337H13.3341V12.5003C13.3341 10.727 9.78081 9.83366 8.00081 9.83366Z" fill="#81CC35" />
                             </svg>
                         </span>
-                        <input class="common-input" type="text" asp-for="FirstName"  placeholder="Enter search terms...">
+                        <input class="common-input" type="text" asp-for="FirstName">
                         <span class="bar"></span>
                         <label class="common-label" asp-for="FirstName">@Localizer["FirstName"]</label>
                         <span class="validation-text" asp-validation-for="FirstName"></span>
@@ -72,7 +73,7 @@
                                 <path d="M8.43341 7.16569C7.88675 5.61236 6.40675 4.49902 4.66675 4.49902C2.46008 4.49902 0.666748 6.29236 0.666748 8.49902C0.666748 10.7057 2.46008 12.499 4.66675 12.499C6.40675 12.499 7.88675 11.3857 8.43341 9.83236H11.3334V12.499H14.0001V9.83236H15.3334V7.16569H8.43341ZM4.66675 9.83236C3.93341 9.83236 3.33341 9.23236 3.33341 8.49902C3.33341 7.76569 3.93341 7.16569 4.66675 7.16569C5.40008 7.16569 6.00008 7.76569 6.00008 8.49902C6.00008 9.23236 5.40008 9.83236 4.66675 9.83236Z" fill="#81CC35" />
                             </svg>
                         </span>
-                        <span class="input-icon input-icon__password" onclick="seePass("")">
+                        <span class="input-icon input-icon__password" onclick="seePass(" ")">
                             <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M8.00008 5.6276C9.84008 5.6276 11.3334 7.12094 11.3334 8.96094C11.3334 9.39427 11.2467 9.80094 11.0934 10.1809L13.0401 12.1276C14.0467 11.2876 14.8401 10.2009 15.3267 8.96094C14.1734 6.03427 11.3267 3.96094 7.99341 3.96094C7.06008 3.96094 6.16675 4.1276 5.34008 4.4276L6.78008 5.8676C7.16008 5.71427 7.56675 5.6276 8.00008 5.6276ZM1.33341 3.8076L2.85342 5.3276L3.16008 5.63427C2.05341 6.49427 1.18675 7.64094 0.666748 8.96094C1.82008 11.8876 4.66675 13.9609 8.00008 13.9609C9.03341 13.9609 10.0201 13.7609 10.9201 13.4009L11.2001 13.6809L13.1534 15.6276L14.0001 14.7809L2.18008 2.96094L1.33341 3.8076ZM5.02008 7.49427L6.05341 8.5276C6.02008 8.6676 6.00008 8.81427 6.00008 8.96094C6.00008 10.0676 6.89341 10.9609 8.00008 10.9609C8.14675 10.9609 8.29341 10.9409 8.43341 10.9076L9.46675 11.9409C9.02008 12.1609 8.52675 12.2943 8.00008 12.2943C6.16008 12.2943 4.66675 10.8009 4.66675 8.96094C4.66675 8.43427 4.80008 7.94094 5.02008 7.49427ZM7.89341 6.97427L9.99341 9.07427L10.0067 8.9676C10.0067 7.86094 9.11341 6.9676 8.00675 6.9676L7.89341 6.97427Z" fill="#98979B" />
                             </svg>
