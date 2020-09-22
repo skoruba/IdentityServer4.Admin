@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Configuration
@@ -32,5 +33,18 @@ namespace Skoruba.IdentityServer4.STS.Identity.Configuration
         public string DomainUserPassword { get; set; } = null;
 
         public bool GetPhotoThumbnailFromAD { get; set; } = false;
+
+        // Subnets specified here will always be considered external
+        // (useful for testing purposes and for intranet machines not joined to the domain)
+        public List<Subnet> ExcludedLocalSubnets { get; set; } = new List<Subnet>();
+    }
+
+    public class Subnet
+    {
+        public string SubnetAddress { get; set; }
+        public string SubnetMask { get; set; }
+
+        public IPAddress SubnetIPAddress => IPAddress.Parse(SubnetAddress);
+        public IPAddress SubnetIPMask => IPAddress.Parse(SubnetMask);
     }
 }

@@ -97,7 +97,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl, bool forceLoginScreen = false)
         {
-            if (_windowsAuthConfiguration.AutomaticWindowsLogin && !forceLoginScreen && Request.IsFromLocalSubnet())
+            if (_windowsAuthConfiguration.AutomaticWindowsLogin && !forceLoginScreen && Request.IsFromLocalSubnet(_windowsAuthConfiguration.ExcludedLocalSubnets, _logger))
             {
                 return RedirectToAction("ExternalLogin", new { provider = AccountOptions.WindowsAuthenticationSchemeName, returnUrl });
             }
@@ -1014,7 +1014,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             {
                 return await IssueExternalCookie(returnUrl, wp.Identity);
             }
-            else if (Request.IsFromLocalSubnet())
+            else if (Request.IsFromLocalSubnet(_windowsAuthConfiguration.ExcludedLocalSubnets, _logger))
             {
                 // trigger windows auth
                 // since windows auth don't support the redirect uri,
