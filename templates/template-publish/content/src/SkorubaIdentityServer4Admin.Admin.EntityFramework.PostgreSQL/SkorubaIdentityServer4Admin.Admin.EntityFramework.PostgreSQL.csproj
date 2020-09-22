@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <Version>1.0.0-rc1</Version>
+        <Authors>Jan Škoruba</Authors>
+        <PackageTags>IdentityServer4 Admin OpenIDConnect OAuth2 Identity</PackageTags>
+        <Description>Entity Framework layer for the administration of the IdentityServer4 and Asp.Net Core Identity with PostrgreSQL support</Description>
+        <PackageLicenseUrl>https://github.com/skoruba/IdentityServer4.Admin/blob/master/LICENSE.md</PackageLicenseUrl>
+        <PackageProjectUrl>https://github.com/skoruba/IdentityServer4.Admin</PackageProjectUrl>
+        <PackageIconUrl>https://raw.githubusercontent.com/skoruba/IdentityServer4.Admin/master/docs/Images/SkorubaIdentityServer4Admin.Admin-Logo-Nuget.png</PackageIconUrl>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.0" />
+        <PackageReference Include="IdentityServer4.EntityFramework.Storage" Version="3.1.0" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework" Version="1.0.0-rc1" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework.Identity" Version="1.0.0-rc1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared\SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.csproj" />
+    </ItemGroup>
+
+</Project>
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-﻿namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration
+namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration
 {
     public class SendgridConfiguration
     {
@@ -7,3 +7,9 @@
         public string ApiKey { get; set; }
     }
 }
+
+
+
+
+
+

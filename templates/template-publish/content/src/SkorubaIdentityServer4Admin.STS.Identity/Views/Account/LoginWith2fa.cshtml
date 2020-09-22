@@ -1,4 +1,4 @@
-﻿@inject IViewLocalizer Localizer
+@inject IViewLocalizer Localizer
 @using Microsoft.AspNetCore.Mvc.Localization
 @model SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Account.LoginWith2faViewModel
 @{
@@ -40,3 +40,8 @@
     @Localizer["NoAuthenticatorDevice"]
     <a asp-action="LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl">@Localizer["LoginWithRecoveryCode"]</a>
 </p>
+
+
+
+
+

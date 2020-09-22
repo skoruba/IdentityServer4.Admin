@@ -1,4 +1,4 @@
-﻿using IdentityServer4.EntityFramework.DbContexts;
+using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
@@ -46,3 +46,8 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ClientProperty> ClientProperties { get; set; }
     }
 }
+
+
+
+
+

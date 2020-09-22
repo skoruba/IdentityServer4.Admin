@@ -1,0 +1,98 @@
+version: '3.4'
+
+services:
+  skorubaidentityserver4admin.admin:
+    image: ${DOCKER_REGISTRY-}skoruba-identityserver4-admin
+    ports:
+      - 9000:80
+    build:
+      context: .
+      dockerfile: src/SkorubaIdentityServer4Admin.Admin/Dockerfile
+    container_name: skoruba-identityserver4-admin
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings__ConfigurationDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+      - "ConnectionStrings__PersistedGrantDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+      - "ConnectionStrings__IdentityDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+      - "ConnectionStrings__AdminLogDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+      - "ConnectionStrings__AdminAuditLogDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+      - "AdminConfiguration__IdentityAdminBaseUrl=http://127.0.0.1.xip.io:9000"
+      - "AdminConfiguration__IdentityAdminRedirectUri=http://127.0.0.1.xip.io:9000/signin-oidc"
+      - "AdminConfiguration__IdentityServerBaseUrl=http://127.0.0.1.xip.io"
+      - "AdminConfiguration__RequireHttpsMetadata=false"
+      - "IdentityServerData__Clients__0__ClientUri=http://127.0.0.1.xip.io:9000"
+      - "IdentityServerData__Clients__0__RedirectUris__0=http://127.0.0.1.xip.io:9000/signin-oidc"
+      - "IdentityServerData__Clients__0__FrontChannelLogoutUri=http://127.0.0.1.xip.io:9000/signin-oidc"
+      - "IdentityServerData__Clients__0__PostLogoutRedirectUris__0=http://127.0.0.1.xip.io:9000/signout-callback-oidc"
+      - "IdentityServerData__Clients__0__AllowedCorsOrigins__0=http://127.0.0.1.xip.io:9000"
+      - "IdentityServerData__Clients__1__RedirectUris__0=http://127.0.0.1.xip.io:5000/swagger/oauth2-redirect.html"
+      - "Serilog__WriteTo__1__Args__connectionString=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+    command: dotnet SkorubaIdentityServer4Admin.Admin.dll /seed
+    depends_on:
+      - db
+      - skorubaidentityserver4admin.sts.identity
+    volumes:
+      - "./shared/serilog.json:/app/serilog.json"
+      - "./shared/identitydata.json:/app/identitydata.json"
+      - "./shared/identityserverdata.json:/app/identityserverdata.json"
+
+  skorubaidentityserver4admin.admin.api:
+    image: ${DOCKER_REGISTRY-}skoruba-identityserver4-admin-api
+    build:
+      context: .
+      dockerfile: src/SkorubaIdentityServer4Admin.Admin.Api/Dockerfile
+    ports:
+      - 5000:80
+    environment:
+      - "AdminApiConfiguration__RequireHttpsMetadata=false"
+      - "AdminApiConfiguration__ApiBaseUrl=http://127.0.0.1.xip.io:5000"
+      - "AdminApiConfiguration__IdentityServerBaseUrl=http://127.0.0.1.xip.io"
+      - "ConnectionStrings__ConfigurationDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+      - "ConnectionStrings__PersistedGrantDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+      - "ConnectionStrings__IdentityDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+      - "ConnectionStrings__AdminLogDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+      - "ConnectionStrings__AdminAuditLogDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+    container_name: skoruba-identityserver4-admin-api
+    volumes:
+      - "./shared/serilog.json:/app/serilog.json"
+
+  skorubaidentityserver4admin.sts.identity:
+    image: ${DOCKER_REGISTRY-}skoruba-identityserver4-sts-identity
+    ports:
+      - 80:80
+    build:
+      context: .
+      dockerfile: src/SkorubaIdentityServer4Admin.STS.Identity/Dockerfile
+    container_name: skoruba-identityserver4-sts-identity
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings__ConfigurationDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+      - "ConnectionStrings__PersistedGrantDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+      - "ConnectionStrings__IdentityDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true"
+      - "AdminConfiguration__IdentityAdminBaseUrl=http://127.0.0.1.xip.io:9000"
+    depends_on:
+      - db
+    volumes:
+      - "./shared/serilog.json:/app/serilog.json"
+    networks:
+      default:
+        aliases:
+          - 127.0.0.1.xip.io
+  db:
+    image: "mcr.microsoft.com/mssql/server"
+    ports:
+      - 1433:1433
+    container_name: skoruba-identityserver4-db
+    environment:
+      SA_PASSWORD: "${DB_PASSWORD:-Password_123}"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - dbdata:/var/opt/mssql
+
+volumes:
+  dbdata:
+    driver: local
+
+networks:
+  default:
+    driver: bridge

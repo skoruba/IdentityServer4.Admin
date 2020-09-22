@@ -1,4 +1,8 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace SkorubaIdentityServer4Admin.Admin.Helpers
 {
@@ -6,7 +10,7 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers
     {
         public static int GetTotalPages(int pageSize, int totalCount)
         {
-            return (int)Math.Ceiling((double)totalCount / pageSize);
+            return (int) Math.Ceiling((double) totalCount / pageSize);
         }
 
         public static bool IsActivePage(int currentPage, int currentIteration)
@@ -34,7 +38,7 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers
             var currentMaxPages = GetMaxPageToRender(maxPages, totalPages, currentPage);
 
             if (currentMaxPages == defaultPageNumber) return currentMaxPages;
-            
+
             if (currentMaxPages == totalPages)
             {
                 currentMaxPages = GetMaxPage(maxPages, totalPages, currentPage);
@@ -47,7 +51,7 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers
 
         public static int GetMaxPage(int maxPages, int totalPages, int currentPage)
         {
-            var result = (int)Math.Ceiling((double)currentPage / maxPages);
+            var result = (int) Math.Ceiling((double) currentPage / maxPages);
             return result * maxPages;
         }
 
@@ -73,5 +77,36 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers
                 return 1;
             }
         }
+
+        public static QueryString GetQueryString(HttpContext context, int page)
+        {
+            const string pageKey = "page";
+
+            var queryString = context.Request.QueryString.Value;
+            var queryDictionary = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(queryString);
+            var items = queryDictionary.SelectMany(x => x.Value, (col, value) => new KeyValuePair<string, string>(col.Key, value)).ToList();
+            
+            // Remove existing page key
+            items.RemoveAll(x => x.Key == pageKey);
+
+            // Setup new page key
+            var queryBuilder = new QueryBuilder(items)
+            {
+                { pageKey, page.ToString() }
+            };
+
+            return queryBuilder.ToQueryString();
+        }
+
+        public static string GetUrl(string baseUrl, QueryString queryString)
+        {
+            return $"{baseUrl}{queryString}";
+        }
     }
 }
+
+
+
+
+
+
