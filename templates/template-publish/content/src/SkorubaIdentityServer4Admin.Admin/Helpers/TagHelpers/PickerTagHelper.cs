@@ -90,7 +90,7 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers.TagHelpers
                 }
             };
 
-            var rawPickerHtml = new HtmlString($"<div data-bind='component: {JsonConvert.SerializeObject(component)}'></div>");
+            var rawPickerHtml = new HtmlString($"<div data-bind='component: {JsonConvert.SerializeObject(component, new JsonSerializerSettings() { StringEscapeHandling = StringEscapeHandling.EscapeHtml })}'></div>");
 
             output.Content.AppendHtml(rawPickerHtml);
         }
@@ -149,3 +149,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers.TagHelpers
         }
     }
 }
+
+
+
+
+

@@ -4,14 +4,15 @@ using System.Linq;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
 {
-    public class UserProvidersDto<TUserDtoKey> : UserProviderDto<TUserDtoKey>, IUserProvidersDto
+    public class UserProvidersDto<TUserProviderDto, TKey> : UserProviderDto<TKey>, IUserProvidersDto
+        where TUserProviderDto : UserProviderDto<TKey>
     {
         public UserProvidersDto()
         {
-            Providers = new List<UserProviderDto<TUserDtoKey>>();
+            Providers = new List<TUserProviderDto>();
         }
 
-        public List<UserProviderDto<TUserDtoKey>> Providers { get; set; }
+        public List<TUserProviderDto> Providers { get; set; }
 
         List<IUserProviderDto> IUserProvidersDto.Providers => Providers.Cast<IUserProviderDto>().ToList();
     }

@@ -13,3 +13,9 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Account
         public string Email { get; set; }
     }
 }
+
+
+
+
+
+

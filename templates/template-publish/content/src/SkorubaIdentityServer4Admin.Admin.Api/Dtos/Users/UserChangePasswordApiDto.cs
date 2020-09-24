@@ -2,9 +2,9 @@
 
 namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Users
 {
-    public class UserChangePasswordApiDto<TUserDtoKey>
+    public class UserChangePasswordApiDto<TKey>
     {
-        public TUserDtoKey UserId { get; set; }
+        public TKey UserId { get; set; }
 
         [Required]
         public string Password { get; set; }
@@ -14,3 +14,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Users
         public string ConfirmPassword { get; set; }
     }
 }
+
+
+
+
+

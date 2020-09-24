@@ -25,3 +25,9 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration
         public static string InvalidCredentialsErrorMessage = "Invalid username or password";
     }
 }
+
+
+
+
+
+

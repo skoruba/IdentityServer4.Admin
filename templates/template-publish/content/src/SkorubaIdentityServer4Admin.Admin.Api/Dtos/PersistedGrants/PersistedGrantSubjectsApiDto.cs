@@ -16,3 +16,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.PersistedGrants
         public List<PersistedGrantSubjectApiDto> PersistedGrants { get; set; }
     }
 }
+
+
+
+
+

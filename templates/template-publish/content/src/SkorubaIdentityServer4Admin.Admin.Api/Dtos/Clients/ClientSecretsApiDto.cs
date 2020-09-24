@@ -16,3 +16,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Clients
         public List<ClientSecretApiDto> ClientSecrets { get; set; }
     }
 }
+
+
+
+
+

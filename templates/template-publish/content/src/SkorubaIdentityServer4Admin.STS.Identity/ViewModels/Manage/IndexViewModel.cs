@@ -50,3 +50,9 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Manage
         public string Country { get; set; }
     }
 }
+
+
+
+
+
+

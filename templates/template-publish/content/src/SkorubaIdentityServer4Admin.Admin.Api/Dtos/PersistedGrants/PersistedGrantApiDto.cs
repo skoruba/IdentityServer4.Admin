@@ -14,3 +14,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.PersistedGrants
         public string Data { get; set; }
     }
 }
+
+
+
+
+

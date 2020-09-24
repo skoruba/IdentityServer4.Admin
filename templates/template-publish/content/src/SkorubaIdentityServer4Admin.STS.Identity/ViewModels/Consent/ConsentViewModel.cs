@@ -19,3 +19,9 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Consent
         public IEnumerable<ScopeViewModel> ResourceScopes { get; set; }
     }
 }
+
+
+
+
+
+

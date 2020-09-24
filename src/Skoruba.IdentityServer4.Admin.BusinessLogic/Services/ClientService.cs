@@ -1,9 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4.Models;
+using Skoruba.AuditLogging.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Enums;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Events.Client;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
@@ -19,23 +22,25 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
     {
         protected readonly IClientRepository ClientRepository;
         protected readonly IClientServiceResources ClientServiceResources;
+        protected readonly IAuditEventLogger AuditEventLogger;
         private const string SharedSecret = "SharedSecret";
 
-        public ClientService(IClientRepository clientRepository, IClientServiceResources clientServiceResources)
+        public ClientService(IClientRepository clientRepository, IClientServiceResources clientServiceResources, IAuditEventLogger auditEventLogger)
         {
             ClientRepository = clientRepository;
             ClientServiceResources = clientServiceResources;
+            AuditEventLogger = auditEventLogger;
         }
 
         private void HashClientSharedSecret(ClientSecretsDto clientSecret)
         {
             if (clientSecret.Type != SharedSecret) return;
 
-            if (clientSecret.HashType == ((int)HashType.Sha256).ToString())
+            if (clientSecret.HashTypeEnum == HashType.Sha256)
             {
                 clientSecret.Value = clientSecret.Value.Sha256();
             }
-            else if (clientSecret.HashType == ((int)HashType.Sha512).ToString())
+            else if (clientSecret.HashTypeEnum == HashType.Sha512)
             {
                 clientSecret.Value = clientSecret.Value.Sha512();
             }
@@ -47,19 +52,23 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             {
                 case ClientType.Empty:
                     break;
-                case ClientType.WebHybrid:
-                    client.AllowedGrantTypes.AddRange(GrantTypes.Hybrid);
+                case ClientType.Web:
+                    client.AllowedGrantTypes.AddRange(GrantTypes.Code);
+                    client.RequirePkce = true;
+                    client.RequireClientSecret = true;
                     break;
                 case ClientType.Spa:
-                    client.AllowedGrantTypes.AddRange(GrantTypes.Code);                    
+                    client.AllowedGrantTypes.AddRange(GrantTypes.Code);
                     client.RequirePkce = true;
                     client.RequireClientSecret = false;
                     break;
                 case ClientType.Native:
-                    client.AllowedGrantTypes.AddRange(GrantTypes.Hybrid);
+                    client.AllowedGrantTypes.AddRange(GrantTypes.Code);
+                    client.RequirePkce = true;
+                    client.RequireClientSecret = false;
                     break;
                 case ClientType.Machine:
-                    client.AllowedGrantTypes.AddRange(GrantTypes.ResourceOwnerPasswordAndClientCredentials);
+                    client.AllowedGrantTypes.AddRange(GrantTypes.ClientCredentials);
                     break;
                 case ClientType.Device:
                     client.AllowedGrantTypes.AddRange(GrantTypes.DeviceFlow);
@@ -151,7 +160,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             PrepareClientTypeForNewClient(client);
             var clientEntity = client.ToEntity();
 
-            return await ClientRepository.AddClientAsync(clientEntity);
+            var added = await ClientRepository.AddClientAsync(clientEntity);
+
+            await AuditEventLogger.LogEventAsync(new ClientAddedEvent(client));
+
+            return added;
         }
 
         public virtual async Task<int> UpdateClientAsync(ClientDto client)
@@ -164,14 +177,24 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var clientEntity = client.ToEntity();
 
-            return await ClientRepository.UpdateClientAsync(clientEntity);
+            var originalClient = await GetClientAsync(client.Id);
+
+            var updated = await ClientRepository.UpdateClientAsync(clientEntity);
+
+            await AuditEventLogger.LogEventAsync(new ClientUpdatedEvent(originalClient, client));
+
+            return updated;
         }
 
         public virtual async Task<int> RemoveClientAsync(ClientDto client)
         {
             var clientEntity = client.ToEntity();
 
-            return await ClientRepository.RemoveClientAsync(clientEntity);
+            var deleted = await ClientRepository.RemoveClientAsync(clientEntity);
+
+            await AuditEventLogger.LogEventAsync(new ClientDeletedEvent(client));
+
+            return deleted;
         }
 
         public virtual async Task<int> CloneClientAsync(ClientCloneDto client)
@@ -194,6 +217,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
                 client.CloneClientPostLogoutRedirectUris,
                 client.CloneClientScopes, client.CloneClientRedirectUris, client.CloneClientClaims, client.CloneClientProperties);
 
+            await AuditEventLogger.LogEventAsync(new ClientClonedEvent(client));
+
             return clonedClientId;
         }
 
@@ -212,6 +237,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var clientDto = client.ToModel();
 
+            await AuditEventLogger.LogEventAsync(new ClientRequestedEvent(clientDto));
+
             return clientDto;
         }
 
@@ -219,6 +246,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
         {
             var pagedList = await ClientRepository.GetClientsAsync(search, page, pageSize);
             var clientsDto = pagedList.ToModel();
+
+            await AuditEventLogger.LogEventAsync(new ClientsRequestedEvent(clientsDto));
 
             return clientsDto;
         }
@@ -291,14 +320,22 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             HashClientSharedSecret(clientSecret);
 
             var clientSecretEntity = clientSecret.ToEntity();
-            return await ClientRepository.AddClientSecretAsync(clientSecret.ClientId, clientSecretEntity);
+            var added = await ClientRepository.AddClientSecretAsync(clientSecret.ClientId, clientSecretEntity);
+
+            await AuditEventLogger.LogEventAsync(new ClientSecretAddedEvent(clientSecret.ClientId, clientSecret.Type, clientSecret.Expiration));
+
+            return added;
         }
 
         public virtual async Task<int> DeleteClientSecretAsync(ClientSecretsDto clientSecret)
         {
             var clientSecretEntity = clientSecret.ToEntity();
 
-            return await ClientRepository.DeleteClientSecretAsync(clientSecretEntity);
+            var deleted = await ClientRepository.DeleteClientSecretAsync(clientSecretEntity);
+
+            await AuditEventLogger.LogEventAsync(new ClientSecretDeletedEvent(clientSecret.ClientId, clientSecret.ClientSecretId));
+
+            return deleted;
         }
 
         public virtual async Task<ClientSecretsDto> GetClientSecretsAsync(int clientId, int page = 1, int pageSize = 10)
@@ -310,6 +347,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             var clientSecretsDto = pagedList.ToModel();
             clientSecretsDto.ClientId = clientId;
             clientSecretsDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
+
+            await AuditEventLogger.LogEventAsync(new ClientSecretsRequestedEvent(clientSecretsDto.ClientId, clientSecretsDto.ClientSecrets.Select(x => (x.Id, x.Type, x.Expiration)).ToList()));
 
             return clientSecretsDto;
         }
@@ -326,6 +365,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             clientSecretsDto.ClientId = clientSecret.Client.Id;
             clientSecretsDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
 
+            await AuditEventLogger.LogEventAsync(new ClientSecretRequestedEvent(clientSecretsDto.ClientId, clientSecretsDto.ClientSecretId, clientSecretsDto.Type, clientSecretsDto.Expiration));
+
             return clientSecretsDto;
         }
 
@@ -339,6 +380,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             clientClaimsDto.ClientId = clientId;
             clientClaimsDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
 
+            await AuditEventLogger.LogEventAsync(new ClientClaimsRequestedEvent(clientClaimsDto));
+
             return clientClaimsDto;
         }
 
@@ -351,6 +394,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             var clientPropertiesDto = pagedList.ToModel();
             clientPropertiesDto.ClientId = clientId;
             clientPropertiesDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
+
+            await AuditEventLogger.LogEventAsync(new ClientPropertiesRequestedEvent(clientPropertiesDto));
 
             return clientPropertiesDto;
         }
@@ -367,6 +412,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             clientClaimsDto.ClientId = clientClaim.Client.Id;
             clientClaimsDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
 
+            await AuditEventLogger.LogEventAsync(new ClientClaimRequestedEvent(clientClaimsDto));
+
             return clientClaimsDto;
         }
 
@@ -382,6 +429,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             clientPropertiesDto.ClientId = clientProperty.Client.Id;
             clientPropertiesDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
 
+            await AuditEventLogger.LogEventAsync(new ClientPropertyRequestedEvent(clientPropertiesDto));
+
             return clientPropertiesDto;
         }
 
@@ -389,28 +438,44 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
         {
             var clientClaimEntity = clientClaim.ToEntity();
 
-            return await ClientRepository.AddClientClaimAsync(clientClaim.ClientId, clientClaimEntity);
+            var saved = await ClientRepository.AddClientClaimAsync(clientClaim.ClientId, clientClaimEntity);
+
+            await AuditEventLogger.LogEventAsync(new ClientClaimAddedEvent(clientClaim));
+
+            return saved;
         }
 
         public virtual async Task<int> AddClientPropertyAsync(ClientPropertiesDto clientProperties)
         {
             var clientProperty = clientProperties.ToEntity();
 
-            return await ClientRepository.AddClientPropertyAsync(clientProperties.ClientId, clientProperty);
+            var saved = await ClientRepository.AddClientPropertyAsync(clientProperties.ClientId, clientProperty);
+
+            await AuditEventLogger.LogEventAsync(new ClientPropertyAddedEvent(clientProperties));
+
+            return saved;
         }
 
         public virtual async Task<int> DeleteClientClaimAsync(ClientClaimsDto clientClaim)
         {
             var clientClaimEntity = clientClaim.ToEntity();
 
-            return await ClientRepository.DeleteClientClaimAsync(clientClaimEntity);
+            var deleted = await ClientRepository.DeleteClientClaimAsync(clientClaimEntity);
+
+            await AuditEventLogger.LogEventAsync(new ClientClaimDeletedEvent(clientClaim));
+
+            return deleted;
         }
 
         public virtual async Task<int> DeleteClientPropertyAsync(ClientPropertiesDto clientProperty)
         {
             var clientPropertyEntity = clientProperty.ToEntity();
 
-            return await ClientRepository.DeleteClientPropertyAsync(clientPropertyEntity);
+            var deleted = await ClientRepository.DeleteClientPropertyAsync(clientPropertyEntity);
+
+            await AuditEventLogger.LogEventAsync(new ClientPropertyDeletedEvent(clientProperty));
+
+            return deleted;
         }
     }
 }

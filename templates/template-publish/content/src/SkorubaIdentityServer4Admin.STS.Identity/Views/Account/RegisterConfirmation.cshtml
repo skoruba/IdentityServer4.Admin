@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Account.RegisterConfirmationViewModel
+@{
+    ViewData["Title"] = Localizer["ConfirmEmailTitle"];
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    @Localizer["VerificationSent"]
+</p>
+
+
+
+
+

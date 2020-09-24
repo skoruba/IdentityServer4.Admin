@@ -46,3 +46,8 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ClientProperty> ClientProperties { get; set; }
     }
 }
+
+
+
+
+

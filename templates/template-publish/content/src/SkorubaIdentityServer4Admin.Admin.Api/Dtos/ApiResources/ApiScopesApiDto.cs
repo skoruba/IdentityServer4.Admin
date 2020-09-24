@@ -16,3 +16,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.ApiResources
         public List<ApiScopeApiDto> Scopes { get; set; }
     }
 }
+
+
+
+
+

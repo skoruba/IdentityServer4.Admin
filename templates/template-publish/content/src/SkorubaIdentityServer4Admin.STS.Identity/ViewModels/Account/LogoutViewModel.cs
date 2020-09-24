@@ -11,3 +11,9 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Account
         public bool ShowLogoutPrompt { get; set; } = true;
     }
 }
+
+
+
+
+
+

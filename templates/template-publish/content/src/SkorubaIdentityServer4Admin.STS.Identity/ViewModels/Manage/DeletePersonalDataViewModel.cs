@@ -11,3 +11,9 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Manage
         public string Password { get; set; }
     }
 }
+
+
+
+
+
+

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Security.Principal;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -24,7 +25,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Skoruba.IdentityServer4.Shared.Configuration.Identity;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
@@ -51,9 +54,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         private readonly IGenericControllerLocalizer<AccountController<TUser, TKey>> _localizer;
         private readonly LoginConfiguration _loginConfiguration;
         private readonly RegisterConfiguration _registerConfiguration;
+        private readonly IdentityOptions _identityOptions;
+        private readonly ILogger<AccountController<TUser, TKey>> _logger;
         private readonly WindowsAuthConfiguration _windowsAuthConfiguration;
         private readonly IADUtilities _ADUtilities;
-        private readonly ILogger<AccountController<TUser, TKey>> _logger;
+
 
         public AccountController(
             UserResolver<TUser> userResolver,
@@ -66,9 +71,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             IEmailSender emailSender,
             IGenericControllerLocalizer<AccountController<TUser, TKey>> localizer,
             LoginConfiguration loginConfiguration,
-            RegisterConfiguration registerConfiguration,
             WindowsAuthConfiguration windowsAuthConfiguration,
             IADUtilities adUtilities,
+            RegisterConfiguration registerConfiguration,
+            IdentityOptions identityOptions,
             ILogger<AccountController<TUser, TKey>> logger)
         {
             _userResolver = userResolver;
@@ -81,9 +87,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             _emailSender = emailSender;
             _localizer = localizer;
             _loginConfiguration = loginConfiguration;
-            _registerConfiguration = registerConfiguration;
             _windowsAuthConfiguration = windowsAuthConfiguration;
             _ADUtilities = adUtilities;
+            _registerConfiguration = registerConfiguration;
+            _identityOptions = identityOptions;
             _logger = logger;
         }
 
@@ -339,6 +346,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             {
                 return View("Error");
             }
+
+            code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+
             var result = await _userManager.ConfirmEmailAsync(user, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
@@ -347,7 +357,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
-            return View();
+            return View(new ForgotPasswordViewModel());
         }
 
         [HttpPost]
@@ -357,20 +367,37 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
+                TUser user = null;
+                switch (model.Policy)
+                {
+                    case LoginResolutionPolicy.Email:
+                        try
+                        {
+                            user = await _userManager.FindByEmailAsync(model.Email);
+                        }
+                        catch (Exception ex)
+                        {
+                            // in case of multiple users with the same email this method would throw and reveal that the email is registered
+                            _logger.LogError("Error retrieving user by email ({0}) for forgot password functionality: {1}", model.Email, ex.Message);
+                            user = null;
+                        }
+                        break;
+                    case LoginResolutionPolicy.Username:
+                        user = await _userManager.FindByNameAsync(model.Username);
+                        break;
+                }
 
                 if (user == null || !await _userManager.IsEmailConfirmedAsync(user))
                 {
-                    ModelState.AddModelError(string.Empty, _localizer["EmailNotFound"]);
-
-                    return View(model);
+                    // Don't reveal that the user does not exist
+                    return View("ForgotPasswordConfirmation");
                 }
 
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, HttpContext.Request.Scheme);
 
-                await _emailSender.SendEmailAsync(model.Email, _localizer["ResetPasswordTitle"], _localizer["ResetPasswordBody", HtmlEncoder.Default.Encode(callbackUrl)]);
-
+                await _emailSender.SendEmailAsync(user.Email, _localizer["ResetPasswordTitle"], _localizer["ResetPasswordBody", HtmlEncoder.Default.Encode(callbackUrl)]);
 
                 return View("ForgotPasswordConfirmation");
             }
@@ -400,7 +427,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 // Don't reveal that the user does not exist
                 return RedirectToAction(nameof(ResetPasswordConfirmation), "Account");
             }
-            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+
+            var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(model.Code));
+            var result = await _userManager.ResetPasswordAsync(user, code, model.Password); 
+
             if (result.Succeeded)
             {
                 return RedirectToAction(nameof(ResetPasswordConfirmation), "Account");
@@ -462,6 +492,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                     await SyncUserProfileWithAD(info);
                 }
                 return RedirectToLocal(returnUrl);
+            }
+            if (result.RequiresTwoFactor)
+            {
+                return RedirectToAction(nameof(LoginWith2fa), new { ReturnUrl = returnUrl });
+            }
+            if (result.IsLockedOut)
+            {
+                return View("Lockout");
             }
 
             // If we already collected username and email of the user, auto-provision the user
@@ -773,7 +811,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null, bool IsCalledFromRegisterWithoutUsername = false)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
 
@@ -791,18 +829,40 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             if (result.Succeeded)
             {
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, HttpContext.Request.Scheme);
 
                 await _emailSender.SendEmailAsync(model.Email, _localizer["ConfirmEmailTitle"], _localizer["ConfirmEmailBody", HtmlEncoder.Default.Encode(callbackUrl)]);
-                await _signInManager.SignInAsync(user, isPersistent: false);
 
-                return RedirectToLocal(returnUrl);
+                if (_identityOptions.SignIn.RequireConfirmedAccount)
+                {
+                    return View("RegisterConfirmation");
+                }
+                else
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return LocalRedirect(returnUrl);
+                }
             }
 
             AddErrors(result);
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            if (IsCalledFromRegisterWithoutUsername)
+            {
+                var registerWithoutUsernameModel = new RegisterWithoutUsernameViewModel
+                {
+                    Email = model.Email,
+                    Password = model.Password,
+                    ConfirmPassword = model.ConfirmPassword
+                };
+
+                return View("RegisterWithoutUsername", registerWithoutUsernameModel);
+            }
+            else
+            {
+                return View(model);
+            }
         }
 
         [HttpPost]
@@ -818,7 +878,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                 ConfirmPassword = model.ConfirmPassword
             };
 
-            return await Register(registerModel, returnUrl);
+            return await Register(registerModel, returnUrl, true);
         }
 
         [HttpGet]

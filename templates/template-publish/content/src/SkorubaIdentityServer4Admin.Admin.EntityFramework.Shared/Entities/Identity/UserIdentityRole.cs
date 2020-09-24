@@ -7,3 +7,8 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Entities.Iden
 		
 	}
 }
+
+
+
+
+

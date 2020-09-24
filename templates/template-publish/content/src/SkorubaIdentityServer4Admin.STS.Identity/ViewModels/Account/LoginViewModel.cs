@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SkorubaIdentityServer4Admin.Shared.Configuration.Identity;
 using SkorubaIdentityServer4Admin.STS.Identity.Configuration;
 
 namespace SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Account
@@ -24,3 +25,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Account
         public string ExternalLoginScheme => IsExternalLoginOnly ? ExternalProviders?.SingleOrDefault()?.AuthenticationScheme : null;
     }
 }
+
+
+
+
+

@@ -131,7 +131,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             return await AutoSaveChangesAsync();
         }
 
-        private async Task<int> AutoSaveChangesAsync()
+        protected virtual async Task<int> AutoSaveChangesAsync()
         {
             return AutoSaveChanges ? await PersistedGrantDbContext.SaveChangesAsync() : (int)SavedStatus.WillBeSavedExplicitly;
         }

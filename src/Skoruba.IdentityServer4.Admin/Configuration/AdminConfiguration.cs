@@ -1,9 +1,9 @@
-﻿using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
-
-namespace Skoruba.IdentityServer4.Admin.Configuration
+﻿namespace Skoruba.IdentityServer4.Admin.Configuration
 {
-    public class AdminConfiguration : IAdminConfiguration
+    public class AdminConfiguration
     {
+        public string PageTitle { get; set; }
+        public string FaviconUri { get; set; }
         public string IdentityAdminRedirectUri { get; set; }
         public string[] Scopes { get; set; }
         public string AdministrationRole { get; set; }
@@ -16,5 +16,6 @@ namespace Skoruba.IdentityServer4.Admin.Configuration
         public string ClientId { get; set; } 
         public string ClientSecret { get; set; }
         public string OidcResponseType { get; set; }
+        public bool HideUIForMSSqlErrorLogging { get; set; }
     }
 }

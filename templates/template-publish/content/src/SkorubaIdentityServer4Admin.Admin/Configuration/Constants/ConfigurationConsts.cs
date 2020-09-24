@@ -15,5 +15,18 @@
         public const string ResourcesPath = "Resources";
 
         public const string AdminConfigurationKey = "AdminConfiguration";
+
+        public const string IdentityServerDataConfigurationKey = "IdentityServerData";
+
+        public const string IdentityDataConfigurationKey = "IdentityData";
+
+        public const string AdminAuditLogDbConnectionStringKey = "AdminAuditLogDbConnection";
+
+        public const string DataProtectionDbConnectionStringKey = "DataProtectionDbConnection";
     }
 }
+
+
+
+
+

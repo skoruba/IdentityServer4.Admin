@@ -26,3 +26,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Grants
         public IEnumerable<string> ApiGrantNames { get; set; }
     }
 }
+
+
+
+
+
