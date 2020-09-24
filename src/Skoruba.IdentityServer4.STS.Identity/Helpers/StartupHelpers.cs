@@ -19,7 +19,6 @@ using Skoruba.IdentityServer4.Shared.Email;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.ApplicationParts;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
-using Skoruba.IdentityServer4.STS.Identity.Configuration.Intefaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.ADUtilities;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 using System.Linq;
@@ -33,6 +32,7 @@ using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Skoruba.IdentityServer4.Shared.Authentication;
 using Skoruba.IdentityServer4.Shared.Configuration.Identity;
+using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
@@ -207,7 +207,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 .AddSingleton(registrationConfiguration)
                 .AddSingleton(loginConfiguration)
                 .AddSingleton(windowsAuthConfiguration)
-                .AddSingleton<IADUtilities, ADUtilities.ADUtilities>(
+                .AddSingleton<IADUtilities, ADUtilities.ADUtilities>()
                 .AddSingleton(identityOptions)
                 .AddScoped<UserResolver<TUserIdentity>>()
                 .AddIdentity<TUserIdentity, TUserIdentityRole>(options => configuration.GetSection(nameof(IdentityOptions)).Bind(options))

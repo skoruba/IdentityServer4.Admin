@@ -284,7 +284,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
 
         public virtual Task<List<TUserClaim>> GetUserClaimByType(string userId, string claimType)
         {
-            var userIdConverted = ConvertUserKeyFromString(userId);
+            var userIdConverted = ConvertKeyFromString(userId);
 
             return DbContext.Set<TUserClaim>().Where(x => x.UserId.Equals(userIdConverted) && x.ClaimType == claimType)
                 .ToListAsync();
