@@ -31,20 +31,19 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 
         public override async Task SignInWithClaimsAsync(TUser user, AuthenticationProperties authenticationProperties, IEnumerable<Claim> additionalClaims)
         {
-            var userPrincipal = await CreateUserPrincipalAsync(user);
-
+            List<Claim> claims = new List<Claim>();
             foreach (var claim in additionalClaims)
             {
-                userPrincipal.Identities.First().AddClaim(claim);
+                claims.Add(claim);
             }
 
             var externalResult = await _contextAccessor.HttpContext.AuthenticateAsync(IdentityConstants.ExternalScheme);
             if (externalResult != null && externalResult.Succeeded)
-            {              
+            {
                 var sid = externalResult.Principal.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.SessionId);
                 if (sid != null)
                 {
-                    userPrincipal.Identities.First().AddClaim(new Claim(JwtClaimTypes.SessionId, sid.Value));
+                    claims.Add(new Claim(JwtClaimTypes.SessionId, sid.Value));
                 }
 
                 if (authenticationProperties != null)
@@ -58,9 +57,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 }
             }
 
-            await Context.SignInAsync(IdentityConstants.ApplicationScheme,
-                userPrincipal,
-                authenticationProperties ?? new AuthenticationProperties());
+            await base.SignInWithClaimsAsync(user, authenticationProperties, claims);
         }
     }
 }
