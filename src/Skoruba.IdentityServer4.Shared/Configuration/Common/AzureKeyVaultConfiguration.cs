@@ -15,5 +15,7 @@ namespace Skoruba.IdentityServer4.Shared.Configuration.Common
         public string IdentityServerCertificateName { get; set; }
 
         public string DataProtectionKeyIdentifier { get; set; }
+
+        public bool ReadConfigurationFromKeyVault { get; set; }
     }
 }
