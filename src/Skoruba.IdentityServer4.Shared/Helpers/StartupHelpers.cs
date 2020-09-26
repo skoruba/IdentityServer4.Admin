@@ -1,7 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Azure.KeyVault;
+using Microsoft.Azure.Services.AppAuthentication;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SendGrid;
+using Skoruba.IdentityServer4.Shared.Configuration.Common;
 using Skoruba.IdentityServer4.Shared.Configuration.Email;
 using Skoruba.IdentityServer4.Shared.Email;
 
@@ -33,6 +39,32 @@ namespace Skoruba.IdentityServer4.Shared.Helpers
             else
             {
                 services.AddSingleton<IEmailSender, LogEmailSender>();
+            }
+        }
+
+        public static void AddDataProtection<TDbContext>(this IServiceCollection services, IConfiguration configuration)
+            where TDbContext : DbContext, IDataProtectionKeyContext
+        {
+            var dataProtectionConfiguration = configuration.GetSection(nameof(DataProtectionConfiguration)).Get<DataProtectionConfiguration>();
+            var azureKeyVaultConfiguration = configuration.GetSection(nameof(AzureKeyVaultConfiguration)).Get<AzureKeyVaultConfiguration>();
+
+            var dataProtectionBuilder = services.AddDataProtection()
+                .SetApplicationName("Skoruba.IdentityServer4")
+                .PersistKeysToDbContext<TDbContext>();
+
+            if (dataProtectionConfiguration.ProtectKeysWithAzureKeyVault)
+            {
+                if (azureKeyVaultConfiguration.UseClientCredentials)
+                {
+                    dataProtectionBuilder.ProtectKeysWithAzureKeyVault(azureKeyVaultConfiguration.DataProtectionKeyIdentifier, azureKeyVaultConfiguration.ClientId, azureKeyVaultConfiguration.ClientSecret);
+                }
+                else
+                {
+                    var azureServiceTokenProvider = new AzureServiceTokenProvider();
+                    var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
+
+                    dataProtectionBuilder.ProtectKeysWithAzureKeyVault(keyVaultClient, azureKeyVaultConfiguration.DataProtectionKeyIdentifier);
+                }
             }
         }
     }
