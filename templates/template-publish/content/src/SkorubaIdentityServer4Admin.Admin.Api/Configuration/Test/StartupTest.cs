@@ -1,5 +1,4 @@
-using IdentityServer4.AccessTokenValidation;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +8,7 @@ using SkorubaIdentityServer4Admin.Admin.Api.Helpers;
 using SkorubaIdentityServer4Admin.Admin.Api.Middlewares;
 using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.DbContexts;
 using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Entities.Identity;
+using SkorubaIdentityServer4Admin.Shared.Configuration.Identity;
 
 namespace SkorubaIdentityServer4Admin.Admin.Api.Configuration.Test
 {
@@ -20,12 +20,13 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Configuration.Test
 
         public override void RegisterDbContexts(IServiceCollection services)
         {
-            services.RegisterDbContextsStaging<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext>();
+            services.RegisterDbContextsStaging<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext>();
         }
 
         public override void RegisterAuthentication(IServiceCollection services)
         {
-            services.AddIdentity<UserIdentity, UserIdentityRole>(options => { options.User.RequireUniqueEmail = true; })
+            services
+                .AddIdentity<UserIdentity, UserIdentityRole>(options => Configuration.GetSection(nameof(IdentityOptions)).Bind(options))
                 .AddEntityFrameworkStores<AdminIdentityDbContext>()
                 .AddDefaultTokenProviders();
 

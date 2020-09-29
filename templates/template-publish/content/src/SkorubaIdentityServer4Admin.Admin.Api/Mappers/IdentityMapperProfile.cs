@@ -1,19 +1,19 @@
-using AutoMapper;
+﻿using AutoMapper;
 using SkorubaIdentityServer4Admin.Admin.Api.Dtos.Roles;
 using SkorubaIdentityServer4Admin.Admin.Api.Dtos.Users;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 
 namespace SkorubaIdentityServer4Admin.Admin.Api.Mappers
 {
-    public class IdentityMapperProfile<TRoleDto, TRoleDtoKey, TUserRolesDto, TUserDtoKey, TUserClaimsDto, TUserClaimDto, TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimDto, TRoleClaimsDto> : Profile
-        where TUserClaimsDto : UserClaimsDto<TKey>
+    public class IdentityMapperProfile<TRoleDto, TUserRolesDto, TKey, TUserClaimsDto, TUserClaimDto, TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimDto, TRoleClaimsDto> : Profile
+        where TUserClaimsDto : UserClaimsDto<TUserClaimDto, TKey>
         where TUserClaimDto : UserClaimDto<TKey>
         where TRoleDto : RoleDto<TKey>
         where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
         where TUserProviderDto : UserProviderDto<TKey>
-        where TUserProvidersDto : UserProvidersDto<TKey>
+        where TUserProvidersDto : UserProvidersDto<TUserProviderDto,TKey>
         where TUserChangePasswordDto : UserChangePasswordDto<TKey>
-        where TRoleClaimsDto : RoleClaimsDto<TKey>
+        where TRoleClaimsDto : RoleClaimsDto<TRoleClaimDto, TKey>
         where TRoleClaimDto : RoleClaimDto<TKey>
     {
         public IdentityMapperProfile()
@@ -37,6 +37,10 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Mappers
             CreateMap<RoleClaimsApiDto<TKey>, TRoleClaimsDto>(MemberList.Source);
             CreateMap<RoleClaimApiDto<TKey>, TRoleClaimDto>(MemberList.Destination);
             CreateMap<RoleClaimApiDto<TKey>, TRoleClaimsDto>(MemberList.Destination);
+
+            CreateMap<TRoleClaimsDto, RoleClaimsApiDto<TKey>>(MemberList.Source);
+            CreateMap<TRoleClaimDto, RoleClaimApiDto<TKey>>(MemberList.Destination);
+            CreateMap<TRoleClaimsDto, RoleClaimApiDto<TKey>>(MemberList.Destination);
         }
     }
 }

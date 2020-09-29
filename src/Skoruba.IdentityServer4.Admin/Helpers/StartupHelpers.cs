@@ -44,6 +44,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Shared.Authentication;
+using Skoruba.IdentityServer4.Shared.Configuration.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -166,10 +167,15 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <param name="app"></param>
         public static void UseSecurityHeaders(this IApplicationBuilder app)
         {
-            app.UseForwardedHeaders(new ForwardedHeadersOptions()
+            var forwardingOptions = new ForwardedHeadersOptions()
             {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
+                ForwardedHeaders = ForwardedHeaders.All
+            };
+
+            forwardingOptions.KnownNetworks.Clear();
+            forwardingOptions.KnownProxies.Clear();
+
+            app.UseForwardedHeaders(forwardingOptions);
 
             app.UseXXssProtection(options => options.EnabledWithBlockMode());
             app.UseXContentTypeOptions();
@@ -245,7 +251,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <param name="services"></param>
         public static void AddMvcWithLocalization<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>(this IServiceCollection services, IConfiguration configuration)
+            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>(this IServiceCollection services, IConfiguration configuration)
             where TUserDto : UserDto<TKey>, new()
             where TRoleDto : RoleDto<TKey>, new()
             where TUser : IdentityUser<TKey>
@@ -256,16 +262,16 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             where TUserLogin : IdentityUserLogin<TKey>
             where TRoleClaim : IdentityRoleClaim<TKey>
             where TUserToken : IdentityUserToken<TKey>
-
-
             where TUsersDto : UsersDto<TUserDto, TKey>
             where TRolesDto : RolesDto<TRoleDto, TKey>
             where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
-            where TUserClaimsDto : UserClaimsDto<TKey>
+            where TUserClaimsDto : UserClaimsDto<TUserClaimDto, TKey>
             where TUserProviderDto : UserProviderDto<TKey>
-            where TUserProvidersDto : UserProvidersDto<TKey>
+            where TUserProvidersDto : UserProvidersDto<TUserProviderDto, TKey>
             where TUserChangePasswordDto : UserChangePasswordDto<TKey>
-            where TRoleClaimsDto : RoleClaimsDto<TKey>
+            where TRoleClaimsDto : RoleClaimsDto<TRoleClaimDto, TKey>
+            where TUserClaimDto : UserClaimDto<TKey>
+            where TRoleClaimDto: RoleClaimDto<TKey>
         {
             services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
 
@@ -285,7 +291,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 {
                     m.FeatureProviders.Add(new GenericTypeControllerFeatureProvider<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                         TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto>());
+                        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>());
                 });
 
             var cultureConfiguration = configuration.GetSection(nameof(CultureConfiguration)).Get<CultureConfiguration>();
@@ -347,10 +353,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <typeparam name="TUserIdentity"></typeparam>
         /// <typeparam name="TUserIdentityRole"></typeparam>
         /// <param name="services"></param>
-        /// <param name="adminConfiguration"></param>
-        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, AdminConfiguration adminConfiguration)
+        /// <param name="configuration"></param>
+        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IConfiguration configuration)
             where TContext : DbContext where TUserIdentity : class where TUserIdentityRole : class
         {
+            var adminConfiguration = configuration.GetSection(nameof(AdminConfiguration)).Get<AdminConfiguration>();
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
@@ -361,10 +369,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                     AuthenticationHelpers.CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
             });
 
-            services.AddIdentity<TUserIdentity, TUserIdentityRole>(options =>
-                {
-                    options.User.RequireUniqueEmail = true;
-                })
+            services
+                .AddIdentity<TUserIdentity, TUserIdentityRole>(options => configuration.GetSection(nameof(IdentityOptions)).Bind(options))
                 .AddEntityFrameworkStores<TContext>()
                 .AddDefaultTokenProviders();
 
@@ -382,9 +388,6 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         options =>
                         {
                             options.Cookie.Name = adminConfiguration.IdentityAdminCookieName;
-
-                            // Issue: https://github.com/aspnet/Announcements/issues/318
-                            options.Cookie.SameSite = SameSiteMode.None;
                         })
                     .AddOpenIdConnect(AuthenticationConsts.OidcAuthenticationScheme, options =>
                     {

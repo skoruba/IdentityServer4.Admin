@@ -1,4 +1,4 @@
-namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Configuration
+﻿namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Configuration
 {
     public class DatabaseProviderConfiguration
     {

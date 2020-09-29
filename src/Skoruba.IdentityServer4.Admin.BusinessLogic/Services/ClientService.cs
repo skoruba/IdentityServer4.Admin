@@ -36,13 +36,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
         {
             if (clientSecret.Type != SharedSecret) return;
 
-            if (clientSecret.HashType == ((int)HashType.Sha256).ToString() ||
-                clientSecret.HashType.Equals(HashType.Sha256.ToString(), StringComparison.InvariantCultureIgnoreCase))
+            if (clientSecret.HashTypeEnum == HashType.Sha256)
             {
                 clientSecret.Value = clientSecret.Value.Sha256();
             }
-            else if (clientSecret.HashType == ((int)HashType.Sha512).ToString() ||
-                clientSecret.HashType.Equals(HashType.Sha512.ToString(), StringComparison.InvariantCultureIgnoreCase))
+            else if (clientSecret.HashTypeEnum == HashType.Sha512)
             {
                 clientSecret.Value = clientSecret.Value.Sha512();
             }
@@ -54,8 +52,10 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             {
                 case ClientType.Empty:
                     break;
-                case ClientType.WebHybrid:
-                    client.AllowedGrantTypes.AddRange(GrantTypes.Hybrid);
+                case ClientType.Web:
+                    client.AllowedGrantTypes.AddRange(GrantTypes.Code);
+                    client.RequirePkce = true;
+                    client.RequireClientSecret = true;
                     break;
                 case ClientType.Spa:
                     client.AllowedGrantTypes.AddRange(GrantTypes.Code);
@@ -63,10 +63,12 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
                     client.RequireClientSecret = false;
                     break;
                 case ClientType.Native:
-                    client.AllowedGrantTypes.AddRange(GrantTypes.Hybrid);
+                    client.AllowedGrantTypes.AddRange(GrantTypes.Code);
+                    client.RequirePkce = true;
+                    client.RequireClientSecret = false;
                     break;
                 case ClientType.Machine:
-                    client.AllowedGrantTypes.AddRange(GrantTypes.ResourceOwnerPasswordAndClientCredentials);
+                    client.AllowedGrantTypes.AddRange(GrantTypes.ClientCredentials);
                     break;
                 case ClientType.Device:
                     client.AllowedGrantTypes.AddRange(GrantTypes.DeviceFlow);

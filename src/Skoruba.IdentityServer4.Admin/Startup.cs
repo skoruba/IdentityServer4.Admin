@@ -1,4 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+using System.IdentityModel.Tokens.Jwt;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -19,6 +19,7 @@ using System;
 using Microsoft.AspNetCore.DataProtection;
 using Skoruba.IdentityServer4.Shared.Dtos;
 using Skoruba.IdentityServer4.Shared.Dtos.Identity;
+using Skoruba.IdentityServer4.Shared.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin
 {
@@ -47,6 +48,9 @@ namespace Skoruba.IdentityServer4.Admin
             services.AddDataProtection()
                 .SetApplicationName("Skoruba.IdentityServer4")
                 .PersistKeysToDbContext<IdentityServerDataProtectionDbContext>();
+
+            // Add email senders which is currently setup for SendGrid and SMTP
+            services.AddEmailSenders(Configuration);
 
             // Add Asp.Net Core Identity Configuration and OpenIdConnect auth as well
             RegisterAuthentication(services);
@@ -77,7 +81,7 @@ namespace Skoruba.IdentityServer4.Admin
                 UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
                 IdentityUsersDto, IdentityRolesDto, IdentityUserRolesDto,
                 IdentityUserClaimsDto, IdentityUserProviderDto, IdentityUserProvidersDto, IdentityUserChangePasswordDto,
-                IdentityRoleClaimsDto>(Configuration);
+                IdentityRoleClaimsDto, IdentityUserClaimDto, IdentityRoleClaimDto>(Configuration);
 
             // Add authorization policies for MVC
             RegisterAuthorization(services);
@@ -101,6 +105,8 @@ namespace Skoruba.IdentityServer4.Admin
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            app.UsePathBase(Configuration.GetValue<string>("BasePath"));
 
             // Add custom security headers
             app.UseSecurityHeaders();
@@ -132,7 +138,7 @@ namespace Skoruba.IdentityServer4.Admin
         public virtual void RegisterAuthentication(IServiceCollection services)
         {
             var rootConfiguration = CreateRootConfiguration();
-            services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(rootConfiguration.AdminConfiguration);
+            services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Configuration);
         }
 
         public virtual void RegisterAuthorization(IServiceCollection services)
