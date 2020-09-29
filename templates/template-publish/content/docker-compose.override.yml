@@ -4,22 +4,17 @@ services:
   skorubaidentityserver4admin.admin:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "80"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+  
   skorubaidentityserver4admin.admin.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "80"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
 
   skorubaidentityserver4admin.sts.identity:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "80"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro

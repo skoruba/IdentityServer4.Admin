@@ -4,16 +4,17 @@ using System.Linq;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
 {
-    public class RoleClaimsDto<TRoleDtoKey> : RoleClaimDto<TRoleDtoKey>, IRoleClaimsDto
+    public class RoleClaimsDto<TRoleClaimDto, TKey> : RoleClaimDto<TKey>, IRoleClaimsDto
+        where TRoleClaimDto : RoleClaimDto<TKey>
     {
         public RoleClaimsDto()
         {
-            Claims = new List<RoleClaimDto<TRoleDtoKey>>();
+            Claims = new List<TRoleClaimDto>();
         }
 
         public string RoleName { get; set; }
 
-        public List<RoleClaimDto<TRoleDtoKey>> Claims { get; set; }
+        public List<TRoleClaimDto> Claims { get; set; }
 
         public int TotalCount { get; set; }
 

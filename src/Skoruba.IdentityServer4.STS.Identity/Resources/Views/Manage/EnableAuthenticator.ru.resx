@@ -121,19 +121,19 @@
     <value>Код подтверждения</value>
   </data>
   <data name="DownloadTitle" xml:space="preserve">
-    <value>Загрузите приложение двухфакторной аутентификации, например такое как Microsoft Authenticator, для</value>
+    <value>Загрузите приложение двухфакторной аутентификации, например Microsoft Authenticator, для</value>
   </data>
   <data name="GoogleAuthenticatorTitle" xml:space="preserve">
-    <value>Google Authenticator для</value>
+    <value>или Google Authenticator, для</value>
   </data>
   <data name="Info" xml:space="preserve">
-    <value>После того как Вы отсканировали QR-код или ввели ключи данные выше, Ваше приложение аутентификатор предоставит Вам уникальный код. Введите код в поле данном ниже для подтверждения.</value>
+    <value>После того как вы отсканировали QR-код или ввели ключи данные выше, ваше приложение аутентификатор предоставит Вам уникальный код. Введите код в поле данном ниже для подтверждения.</value>
   </data>
   <data name="ScanQR" xml:space="preserve">
     <value>Отсканируйте QR-код или введите ключ</value>
   </data>
   <data name="ScanQRSubTitle" xml:space="preserve">
-    <value>в ваше двухфакторное приложение аутентификатор. Пробелы и написание букв не имеет значения.</value>
+    <value>в ваше приложение-аутентификатор. Пробелы и написание букв не имеет значения.</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
     <value>Для того чтобы использовать приложение аутентификатор выполните следующие действия:</value>

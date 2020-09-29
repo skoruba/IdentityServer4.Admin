@@ -1,4 +1,4 @@
-namespace SkorubaIdentityServer4Admin.Admin.Configuration.Identity
+﻿namespace SkorubaIdentityServer4Admin.Admin.Configuration.Identity
 {
     public class Claim
     {
