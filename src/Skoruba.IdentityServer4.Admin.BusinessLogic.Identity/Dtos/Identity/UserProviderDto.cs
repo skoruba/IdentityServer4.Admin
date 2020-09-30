@@ -3,7 +3,7 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Interfa
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
 {
-    public class UserProviderDto<TUserDtoKey> : BaseUserProviderDto<TUserDtoKey>, IUserProviderDto
+    public class UserProviderDto<TKey> : BaseUserProviderDto<TKey>, IUserProviderDto
     {
         public string UserName { get; set; }
 

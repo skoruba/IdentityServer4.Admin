@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Email" xml:space="preserve">
-    <value>Email</value>
+    <value>Адрес электронной почты</value>
   </data>
   <data name="Info" xml:space="preserve">
     <value>Вы успешно прошли аутентификацию {0}.
@@ -128,12 +128,12 @@
     <value>Регистрация</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
-    <value>Связать Ваш {0} счёт.</value>
+    <value>Привязка вашей учетной записи {0}.</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Регистраиця</value>
+    <value>Регистрация</value>
   </data>
   <data name="UserName" xml:space="preserve">
-    <value>ИмяПользователя</value>
+    <value>Имя пользователя</value>
   </data>
 </root>
