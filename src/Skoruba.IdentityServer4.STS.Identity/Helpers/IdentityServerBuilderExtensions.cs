@@ -174,7 +174,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 }
                 else
                 {
-                    throw new Exception($"Validation key file: {certificateConfiguration.SigningCertificatePfxFilePath} not found");
+                    throw new Exception($"Validation key file: {certificateConfiguration.ValidationCertificatePfxFilePath} not found");
                 }
             }
 
