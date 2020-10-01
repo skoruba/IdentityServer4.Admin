@@ -307,6 +307,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 
             builder.AddCustomSigningCredential(configuration);
             builder.AddCustomValidationKey(configuration);
+            builder.AddExtensionGrantValidator<DelegationGrantValidator>();
 
             return builder;
         }
