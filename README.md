@@ -618,8 +618,8 @@ It is possible to define the configuration according the client type - by defaul
 - [x] Health Checks (Databases and IdentityServer)
 - [x] Support for multiple database providers (SqlServer, Mysql, PostgreSQL)
 - [x] Simplify Admin Identity middleware ([#430](https://github.com/skoruba/IdentityServer4.Admin/issues/430))
-- [ ] Add support for loading signing key from Azure Key Vault ([#533](https://github.com/skoruba/IdentityServer4.Admin/issues/533))
-- [ ] Protect keys for dataprotection from Azure Key Vault
+- [x] Add support for loading signing key from Azure Key Vault ([#533](https://github.com/skoruba/IdentityServer4.Admin/issues/533))
+- [x] Protect keys for dataprotection from Azure Key Vault ([#714](https://github.com/skoruba/IdentityServer4.Admin/issues/714))
 
 ### 2.0.0
 - [ ] Update to IdentityServer4 version 4 ([#633](https://github.com/skoruba/IdentityServer4.Admin/issues/633))
