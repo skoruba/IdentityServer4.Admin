@@ -22,6 +22,7 @@ using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 using System.Linq;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
@@ -331,6 +332,20 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     options.ClientSecret = externalProviderConfiguration.GitHubClientSecret;
                     options.Scope.Add("user:email");
                 });
+            }
+
+            if (externalProviderConfiguration.UseAzureAdProvider)
+            {
+                authenticationBuilder.AddAzureAD(AzureADDefaults.AuthenticationScheme, AzureADDefaults.OpenIdScheme, AzureADDefaults.CookieScheme, AzureADDefaults.DisplayName,options =>
+                    {
+                        options.ClientSecret = externalProviderConfiguration.AzureAdSecret;
+                        options.ClientId = externalProviderConfiguration.AzureAdClientId;
+                        options.TenantId = externalProviderConfiguration.AzureAdTenantId;
+                        options.Instance = externalProviderConfiguration.AzureInstance;
+                        options.Domain = externalProviderConfiguration.AzureDomain;
+                        options.CallbackPath = externalProviderConfiguration.AzureAdCallbackPath;
+                        options.CookieSchemeName = IdentityConstants.ExternalScheme;
+                    });
             }
         }
 
