@@ -205,6 +205,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 .AddSingleton(registrationConfiguration)
                 .AddSingleton(loginConfiguration)
                 .AddSingleton(identityOptions)
+                .AddScoped<CustomSignInManager<TUserIdentity>>()
                 .AddScoped<UserResolver<TUserIdentity>>()
                 .AddIdentity<TUserIdentity, TUserIdentityRole>(options => configuration.GetSection(nameof(IdentityOptions)).Bind(options))
                 .AddEntityFrameworkStores<TIdentityDbContext>()
