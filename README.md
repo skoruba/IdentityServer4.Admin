@@ -385,17 +385,27 @@ or using `Email`:
 
 ## How to configure an external provider in STS
 
-- In `Skoruba.IdentityServer4.STS.Identity/Helpers/StartupHelpers.cs` - is method called `AddExternalProviders` which contains the example with `GitHub` and in `appsettings.json`:
+- In `Skoruba.IdentityServer4.STS.Identity/Helpers/StartupHelpers.cs` - is method called `AddExternalProviders` which contains the example with `GitHub`, `AzureAD` configured in `appsettings.json`:
 
 ```
 "ExternalProvidersConfiguration": {
         "UseGitHubProvider": false,
         "GitHubClientId": "",
-        "GitHubClientSecret": ""
+        "GitHubClientSecret": "",
+        "UseAzureAdProvider": false,
+        "AzureAdClientId": "",
+        "AzureAdTenantId": "",
+        "AzureInstance": "",
+        "AzureAdSecret": "",
+        "AzureAdCallbackPath": "",
+        "AzureDomain": "" 
 }
 ```
 
 - It is possible to extend `ExternalProvidersConfiguration` with another configuration properties.
+- If you use DockerHub built image, you can use appsettings to configure these providers without changing the code
+  - GitHub
+  - AzureAD
 
 ### List of external providers for ASP.NET Core:
   - https://github.com/aspnet-contrib/AspNet.Security.OAuth.Providers
