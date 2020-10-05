@@ -111,16 +111,36 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 
             app.UseReferrerPolicy(options => options.NoReferrer());
 
-            var cspTrustedDomains = configuration.GetValue<List<string>>(ConfigurationConsts.CspTrustedDomainsKey);
+            // CSP Configuration to be able to use external resources
+            var cspTrustedDomains = new List<string>();
+            configuration.GetSection(ConfigurationConsts.CspTrustedDomainsKey).Bind(cspTrustedDomains);
             if (cspTrustedDomains.Any())
             {
                 app.UseCsp(csp =>
                 {
-                    csp.ImageSources(option =>
+                    csp.ImageSources(options =>
                     {
-                        option.SelfSrc = true;
-                        option.CustomSources = cspTrustedDomains;
-                        option.Enabled = true;
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                    });
+                    csp.FontSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                    });
+                    csp.ScriptSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                    });
+                    csp.DefaultSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
                     });
                 });
             }
