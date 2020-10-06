@@ -20,6 +20,5 @@
 
         public const string AdvancedConfigurationKey = "AdvancedConfiguration";
 
-        public const string UiTheme = "UiTheme";
     }
 }
