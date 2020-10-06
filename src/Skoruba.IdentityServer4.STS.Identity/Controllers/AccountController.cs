@@ -40,7 +40,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
     {
         private readonly UserResolver<TUser> _userResolver;
         private readonly UserManager<TUser> _userManager;
-        private readonly SignInManager<TUser> _signInManager;
+        private readonly CustomSignInManager<TUser> _signInManager;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
@@ -55,7 +55,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         public AccountController(
             UserResolver<TUser> userResolver,
             UserManager<TUser> userManager,
-            SignInManager<TUser> signInManager,
+            CustomSignInManager<TUser> signInManager,
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
@@ -199,6 +199,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         /// Show logout page
         /// </summary>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Logout(string logoutId)
         {
             // build a model so the logout page knows what to display
