@@ -107,7 +107,7 @@ namespace Skoruba.IdentityServer4.Admin
             app.UsePathBase(Configuration.GetValue<string>("BasePath"));
 
             // Add custom security headers
-            app.UseSecurityHeaders();
+            app.UseSecurityHeaders(Configuration);
 
             app.UseStaticFiles();
 
