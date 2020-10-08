@@ -23,8 +23,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         private const string LoginProviderKey = "LoginProvider";
         private const string XsrfKey = "XsrfId";
 
-        private IUserClaimsPrincipalFactory<TUser> _claimsFactory;
-
         public CustomSignInManager(UserManager<TUser> userManager,
             IHttpContextAccessor contextAccessor,
             IUserClaimsPrincipalFactory<TUser> claimsFactory,
@@ -35,7 +33,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 claimsFactory, optionsAccessor, logger, schemes, confirmation)
         {
             _contextAccessor = contextAccessor;
-            _claimsFactory = claimsFactory;
         }
 
         public override async Task SignInWithClaimsAsync(TUser user, AuthenticationProperties authenticationProperties, IEnumerable<Claim> additionalClaims)
