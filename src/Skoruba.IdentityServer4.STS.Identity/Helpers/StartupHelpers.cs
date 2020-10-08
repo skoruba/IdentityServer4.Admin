@@ -136,6 +136,13 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                         options.CustomSources = cspTrustedDomains;
                         options.Enabled = true;
                     });
+                    csp.StyleSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                        options.UnsafeInlineSrc = true;
+                    });
                     csp.DefaultSources(options =>
                     {
                         options.SelfSrc = true;

@@ -207,6 +207,15 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         options.SelfSrc = true;
                         options.CustomSources = cspTrustedDomains;
                         options.Enabled = true;
+                        options.UnsafeInlineSrc = true;
+                        options.UnsafeEvalSrc = true;
+                    });
+                    csp.StyleSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                        options.UnsafeInlineSrc = true;
                     });
                     csp.DefaultSources(options =>
                     {
