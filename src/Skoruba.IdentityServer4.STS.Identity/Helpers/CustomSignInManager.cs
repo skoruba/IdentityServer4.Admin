@@ -70,7 +70,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 var amr = claims.FirstOrDefault(c => c.Type == "amr");
                 if (amr != null && amr.Value == "mfa")
                 {
-                    // remove multifactor authentication claim to prevent signout issues with external providers
+                    // remove multifactor authentication claim to prevent signin issues with external providers
                     claims.Remove(amr);
                 }
 
