@@ -82,7 +82,7 @@ namespace SkorubaIdentityServer4Admin.Admin.Api
                 UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
                 IdentityUsersDto, IdentityRolesDto, IdentityUserRolesDto,
                 IdentityUserClaimsDto, IdentityUserProviderDto, IdentityUserProvidersDto, IdentityUserChangePasswordDto,
-                IdentityRoleClaimsDto, IdentityUserClaimDto>();
+                IdentityRoleClaimsDto, IdentityUserClaimDto, IdentityRoleClaimDto>();
 
             services.AddSwaggerGen(options =>
             {
