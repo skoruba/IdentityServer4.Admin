@@ -34,8 +34,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers
         where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
         where TUserClaimsDto : UserClaimsDto<TUserClaimDto, TKey>
         where TUserProviderDto : UserProviderDto<TKey>
-        where TUserProvidersDto : UserProvidersDto<TKey>
-        where TRoleClaimsDto : RoleClaimsDto<TKey>
+        where TUserProvidersDto : UserProvidersDto<TUserProviderDto, TKey>
+        where TRoleClaimsDto : RoleClaimsDto<TRoleClaimDto, TKey>
         where TUserClaimDto : UserClaimDto<TKey>
         where TRoleClaimDto : RoleClaimDto<TKey>
     {
@@ -86,6 +86,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers
 
             CreateMap<List<UserLoginInfo>, TUserProvidersDto>(MemberList.Destination)
                 .ForMember(x => x.Providers, opt => opt.MapFrom(src => src));
+
+            CreateMap<UserLoginInfo, TUserProviderDto>(MemberList.Destination);
 
             CreateMap<TRoleClaim, TRoleClaimDto>(MemberList.Destination)
                 .ForMember(x => x.ClaimId, opt => opt.MapFrom(src => src.Id));

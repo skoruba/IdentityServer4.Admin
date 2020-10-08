@@ -23,7 +23,7 @@ The application is written in the **Asp.Net Core MVC - using .NET Core 3.1**
 - Install the dotnet new template:
 
 ```sh
-dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-rc2-update1
+dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-rc3
 ```
 
 - Create new project:
@@ -161,11 +161,11 @@ docker-compose up -d
 ### Docker images
 - Docker images will be available also in [docker hub](https://hub.docker.com/u/skoruba)
   - AdminUI:
-    - `skoruba/identityserver4-admin:rc2`
+    - `skoruba/identityserver4-admin:rc3`
   - Admin Api:
-    - `skoruba/identityserver4-admin-api:rc2`
+    - `skoruba/identityserver4-admin-api:rc3`
   - STS:
-    - `skoruba/identityserver4-sts-identity:rc2`
+    - `skoruba/identityserver4-sts-identity:rc3`
        
 ### Publish Docker images to Docker hub
 - Check the script in `build/publish-docker-images.ps1` - change the profile name according to your requirements.
@@ -385,17 +385,27 @@ or using `Email`:
 
 ## How to configure an external provider in STS
 
-- In `Skoruba.IdentityServer4.STS.Identity/Helpers/StartupHelpers.cs` - is method called `AddExternalProviders` which contains the example with `GitHub` and in `appsettings.json`:
+- In `Skoruba.IdentityServer4.STS.Identity/Helpers/StartupHelpers.cs` - is method called `AddExternalProviders` which contains the example with `GitHub`, `AzureAD` configured in `appsettings.json`:
 
 ```
 "ExternalProvidersConfiguration": {
         "UseGitHubProvider": false,
         "GitHubClientId": "",
-        "GitHubClientSecret": ""
+        "GitHubClientSecret": "",
+        "UseAzureAdProvider": false,
+        "AzureAdClientId": "",
+        "AzureAdTenantId": "",
+        "AzureInstance": "",
+        "AzureAdSecret": "",
+        "AzureAdCallbackPath": "",
+        "AzureDomain": "" 
 }
 ```
 
 - It is possible to extend `ExternalProvidersConfiguration` with another configuration properties.
+- If you use DockerHub built image, you can use appsettings to configure these providers without changing the code
+  - GitHub
+  - AzureAD
 
 ### List of external providers for ASP.NET Core:
   - https://github.com/aspnet-contrib/AspNet.Security.OAuth.Providers
@@ -618,8 +628,8 @@ It is possible to define the configuration according the client type - by defaul
 - [x] Health Checks (Databases and IdentityServer)
 - [x] Support for multiple database providers (SqlServer, Mysql, PostgreSQL)
 - [x] Simplify Admin Identity middleware ([#430](https://github.com/skoruba/IdentityServer4.Admin/issues/430))
-- [ ] Add support for loading signing key from Azure Key Vault ([#533](https://github.com/skoruba/IdentityServer4.Admin/issues/533))
-- [ ] Protect keys for dataprotection from Azure Key Vault
+- [x] Add support for loading signing key from Azure Key Vault ([#533](https://github.com/skoruba/IdentityServer4.Admin/issues/533))
+- [x] Protect keys for dataprotection from Azure Key Vault ([#715](https://github.com/skoruba/IdentityServer4.Admin/pull/715))
 
 ### 2.0.0
 - [ ] Update to IdentityServer4 version 4 ([#633](https://github.com/skoruba/IdentityServer4.Admin/issues/633))

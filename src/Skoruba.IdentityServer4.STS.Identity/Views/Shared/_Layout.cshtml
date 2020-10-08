@@ -36,7 +36,7 @@
         <link href="~/dist/css/web.min.css" asp-append-version="true" rel="stylesheet" />
     </environment>
 
-    @RenderSection("styles", required: false)
+    @await RenderSectionAsync("styles", required: false)
 </head>
 <body>
 
@@ -83,7 +83,7 @@
             <div class="row">
                 <div class="col-6 col-md">
                     @RootConfiguration.AdminConfiguration.PageTitle
-                    <small class="d-block mb-3 text-muted">@Localizer["FooterCopyright"] @DateTime.Now.Year</small>
+                    <small class="d-block mb-3 text-muted">@Localizer["FooterCopyright"] @DateTime.Now.Year - @await Html.PartialAsync("Common/ApplicationVersion")</small>
                 </div>
                 <div class="col-md-6 text-right">
                     @await Html.PartialAsync("Common/SelectLanguage")
@@ -99,6 +99,6 @@
         <script src="~/dist/js/bundle.min.js" asp-append-version="true"></script>
     </environment>
 
-    @RenderSection("scripts", required: false)
+    @await RenderSectionAsync("scripts", required: false)
 </body>
 </html>

@@ -3,6 +3,7 @@
 @using SkorubaIdentityServer4Admin.Admin.Configuration.Interfaces
 @inject IViewLocalizer Localizer
 @inject IRootConfiguration RootConfiguration
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +22,7 @@
         <link href="~/dist/css/web.min.css" asp-append-version="true" rel="stylesheet" />
     </environment>
 
-    @RenderSection("styles", required: false)
+    @await RenderSectionAsync("styles", required: false)
 </head>
 <body>
 
@@ -92,7 +93,7 @@
             <div class="row">
                 <div class="col-6 col-md">
                     @RootConfiguration.AdminConfiguration.PageTitle
-                    <small class="d-block mb-3 text-muted">@Localizer["FooterCopyright"] @DateTime.Now.Year</small>
+                    <small class="d-block mb-3 text-muted">@Localizer["FooterCopyright"] @DateTime.Now.Year - @await Html.PartialAsync("Common/ApplicationVersion")</small>
                 </div>
                 <div class="col-md-6 text-right">
                     @await Html.PartialAsync("Common/SelectLanguage")
@@ -112,7 +113,7 @@
 
     @await Html.PartialAsync("Common/Notification")
 
-    @RenderSection("scripts", required: false)
+    @await RenderSectionAsync("scripts", required: false)
 </body>
 </html>
 

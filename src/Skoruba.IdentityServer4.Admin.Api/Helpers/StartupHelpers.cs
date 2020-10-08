@@ -84,7 +84,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
         public static void AddMvcServices<TUserDto, TRoleDto,
             TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto>(
+            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>(
             this IServiceCollection services)
             where TUserDto : UserDto<TKey>, new()
             where TRoleDto : RoleDto<TKey>, new()
@@ -101,10 +101,11 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
             where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
             where TUserClaimsDto : UserClaimsDto<TUserClaimDto, TKey>
             where TUserProviderDto : UserProviderDto<TKey>
-            where TUserProvidersDto : UserProvidersDto<TKey>
+            where TUserProvidersDto : UserProvidersDto<TUserProviderDto, TKey>
             where TUserChangePasswordDto : UserChangePasswordDto<TKey>
-            where TRoleClaimsDto : RoleClaimsDto<TKey>
+            where TRoleClaimsDto : RoleClaimsDto<TRoleClaimDto, TKey>
             where TUserClaimDto : UserClaimDto<TKey>
+            where TRoleClaimDto : RoleClaimDto<TKey>
         {
             services.AddLocalization(opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; });
 
@@ -118,7 +119,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                         new GenericTypeControllerFeatureProvider<TUserDto, TRoleDto,
                             TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto>());
+                            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>());
                 });
         }
 
