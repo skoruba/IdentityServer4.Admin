@@ -802,7 +802,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                     scheme = User.FindFirst(JwtClaimTypes.IdentityProvider)?.Value;
                 }
 
-                if (!string.IsNullOrEmpty(scheme))
+                if (!string.IsNullOrEmpty(scheme) &&
+                    scheme != IdentityServerConstants.LocalIdentityProvider)
                 {
                     var providerSupportsSignout = await HttpContext.GetSchemeSupportsSignOutAsync(scheme);
                     if (providerSupportsSignout)
