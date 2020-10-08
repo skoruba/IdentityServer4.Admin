@@ -32,6 +32,7 @@ using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Skoruba.IdentityServer4.Shared.Authentication;
 using Skoruba.IdentityServer4.Shared.Configuration.Identity;
+using IdentityServer4;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
@@ -326,6 +327,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             {
                 authenticationBuilder.AddGitHub(options =>
                 {
+                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
                     options.ClientId = externalProviderConfiguration.GitHubClientId;
                     options.ClientSecret = externalProviderConfiguration.GitHubClientSecret;
                     options.Scope.Add("user:email");
