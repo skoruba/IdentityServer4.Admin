@@ -790,22 +790,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             if (User?.Identity.IsAuthenticated == true)
             {
-                string scheme = null;
-
-                var authMethod = User.FindFirst(ClaimTypes.AuthenticationMethod);
-                if (authMethod != null)
+                var idp = User.FindFirst(JwtClaimTypes.IdentityProvider)?.Value;
+                if (idp != null && idp != IdentityServerConstants.LocalIdentityProvider)
                 {
-                    scheme = authMethod.Value;
-                }
-                else
-                {
-                    scheme = User.FindFirst(JwtClaimTypes.IdentityProvider)?.Value;
-                }
-
-                if (!string.IsNullOrEmpty(scheme) &&
-                    scheme != IdentityServerConstants.LocalIdentityProvider)
-                {
-                    var providerSupportsSignout = await HttpContext.GetSchemeSupportsSignOutAsync(scheme);
+                    var providerSupportsSignout = await HttpContext.GetSchemeSupportsSignOutAsync(idp);
                     if (providerSupportsSignout)
                     {
                         if (vm.LogoutId == null)
@@ -816,10 +804,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                             vm.LogoutId = await _interaction.CreateLogoutContextAsync();
                         }
 
-                        vm.ExternalAuthenticationScheme = scheme;
+                        vm.ExternalAuthenticationScheme = idp;
                     }
                 }
-            }
+            }            
 
             return vm;
         }
