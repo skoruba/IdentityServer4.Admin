@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using IdentityServer4.EntityFramework.Storage;
 using Microsoft.AspNetCore.Authentication;
@@ -225,6 +225,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             });
 
             services.Configure<IISOptions>(iis =>
+            {
+                iis.AuthenticationDisplayName = "Windows";
+                iis.AutomaticAuthentication = false;
+            });
+            services.Configure<IISServerOptions>(iis =>
             {
                 iis.AuthenticationDisplayName = "Windows";
                 iis.AutomaticAuthentication = false;
