@@ -23,7 +23,9 @@ using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 using System.Linq;
+using IdentityServer4;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
@@ -32,6 +34,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Tokens;
 using Skoruba.IdentityServer4.Shared.Authentication;
 using Skoruba.IdentityServer4.Shared.Configuration.Identity;
 
@@ -135,6 +138,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                         options.SelfSrc = true;
                         options.CustomSources = cspTrustedDomains;
                         options.Enabled = true;
+                        options.UnsafeInlineSrc = true;
                     });
                     csp.StyleSources(options =>
                     {
@@ -250,7 +254,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 .AddSingleton(registrationConfiguration)
                 .AddSingleton(loginConfiguration)
                 .AddSingleton(identityOptions)
-                .AddScoped<CustomSignInManager<TUserIdentity>>()
+                .AddScoped<ApplicationSignInManager<TUserIdentity>>()
                 .AddScoped<UserResolver<TUserIdentity>>()
                 .AddIdentity<TUserIdentity, TUserIdentityRole>(options => configuration.GetSection(nameof(IdentityOptions)).Bind(options))
                 .AddEntityFrameworkStores<TIdentityDbContext>()
