@@ -74,7 +74,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
             app.UsePathBase(Configuration.GetValue<string>("BasePath"));
 
             // Add custom security headers
-            app.UseSecurityHeaders();
+            app.UseSecurityHeaders(Configuration);
 
             app.UseStaticFiles();
             UseAuthentication(app);

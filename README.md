@@ -441,6 +441,17 @@ In STS project - in `appsettings.json`:
     }
 ```
 
+## CSP - Content Security Policy
+
+- If you want to use favicon or logo not included/hosted on the same place, you need to declare trusted domain where ressources are hosted in appsettings.json.
+
+```
+  "CspTrustedDomains": [
+    "google.com",
+    "mydomain.com"
+  ],
+```
+
 ## Health checks
 
 - AdminUI, AdminUI Api and STS contain endpoint `health`, which check databases and IdentityServer.
