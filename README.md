@@ -385,17 +385,27 @@ or using `Email`:
 
 ## How to configure an external provider in STS
 
-- In `Skoruba.IdentityServer4.STS.Identity/Helpers/StartupHelpers.cs` - is method called `AddExternalProviders` which contains the example with `GitHub` and in `appsettings.json`:
+- In `Skoruba.IdentityServer4.STS.Identity/Helpers/StartupHelpers.cs` - is method called `AddExternalProviders` which contains the example with `GitHub`, `AzureAD` configured in `appsettings.json`:
 
 ```
 "ExternalProvidersConfiguration": {
         "UseGitHubProvider": false,
         "GitHubClientId": "",
-        "GitHubClientSecret": ""
+        "GitHubClientSecret": "",
+        "UseAzureAdProvider": false,
+        "AzureAdClientId": "",
+        "AzureAdTenantId": "",
+        "AzureInstance": "",
+        "AzureAdSecret": "",
+        "AzureAdCallbackPath": "",
+        "AzureDomain": "" 
 }
 ```
 
 - It is possible to extend `ExternalProvidersConfiguration` with another configuration properties.
+- If you use DockerHub built image, you can use appsettings to configure these providers without changing the code
+  - GitHub
+  - AzureAD
 
 ### List of external providers for ASP.NET Core:
   - https://github.com/aspnet-contrib/AspNet.Security.OAuth.Providers
@@ -429,6 +439,17 @@ In STS project - in `appsettings.json`:
         "Login": "",
         "Password": ""
     }
+```
+
+## CSP - Content Security Policy
+
+- If you want to use favicon or logo not included/hosted on the same place, you need to declare trusted domain where ressources are hosted in appsettings.json.
+
+```
+  "CspTrustedDomains": [
+    "google.com",
+    "mydomain.com"
+  ],
 ```
 
 ## Health checks
@@ -618,8 +639,8 @@ It is possible to define the configuration according the client type - by defaul
 - [x] Health Checks (Databases and IdentityServer)
 - [x] Support for multiple database providers (SqlServer, Mysql, PostgreSQL)
 - [x] Simplify Admin Identity middleware ([#430](https://github.com/skoruba/IdentityServer4.Admin/issues/430))
-- [ ] Add support for loading signing key from Azure Key Vault ([#533](https://github.com/skoruba/IdentityServer4.Admin/issues/533))
-- [ ] Protect keys for dataprotection from Azure Key Vault
+- [x] Add support for loading signing key from Azure Key Vault ([#533](https://github.com/skoruba/IdentityServer4.Admin/issues/533))
+- [x] Protect keys for dataprotection from Azure Key Vault ([#715](https://github.com/skoruba/IdentityServer4.Admin/pull/715))
 
 ### 2.0.0
 - [ ] Update to IdentityServer4 version 4 ([#633](https://github.com/skoruba/IdentityServer4.Admin/issues/633))

@@ -165,7 +165,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// Using of Forwarded Headers, Hsts, XXssProtection and Csp
         /// </summary>
         /// <param name="app"></param>
-        public static void UseSecurityHeaders(this IApplicationBuilder app)
+        /// <param name="configuration"></param>
+        public static void UseSecurityHeaders(this IApplicationBuilder app, IConfiguration configuration)
         {
             var forwardingOptions = new ForwardedHeadersOptions()
             {
@@ -181,35 +182,49 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             app.UseXContentTypeOptions();
             app.UseXfo(options => options.SameOrigin());
             app.UseReferrerPolicy(options => options.NoReferrer());
-            var allowCspUrls = new List<string>
+           
+            // CSP Configuration to be able to use external resources
+            var cspTrustedDomains = new List<string>();
+            configuration.GetSection(ConfigurationConsts.CspTrustedDomainsKey).Bind(cspTrustedDomains);
+            if (cspTrustedDomains.Any())
             {
-                "https://fonts.googleapis.com/",
-                "https://fonts.gstatic.com/"
-            };
-
-            app.UseCsp(options =>
-            {
-                options.FontSources(configuration =>
+                app.UseCsp(csp =>
                 {
-                    configuration.SelfSrc = true;
-                    configuration.CustomSources = allowCspUrls;
+                    csp.ImageSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                    });
+                    csp.FontSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                    });
+                    csp.ScriptSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                        options.UnsafeInlineSrc = true;
+                        options.UnsafeEvalSrc = true;
+                    });
+                    csp.StyleSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                        options.UnsafeInlineSrc = true;
+                    });
+                    csp.DefaultSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                    });
                 });
-
-                //TODO: consider remove unsafe sources - currently using for toastr inline scripts in Notification.cshtml
-                options.ScriptSources(configuration =>
-                {
-                    configuration.SelfSrc = true;
-                    configuration.UnsafeInlineSrc = true;
-                    configuration.UnsafeEvalSrc = true;
-                });
-
-                options.StyleSources(configuration =>
-                {
-                    configuration.SelfSrc = true;
-                    configuration.CustomSources = allowCspUrls;
-                    configuration.UnsafeInlineSrc = true;
-                });
-            });
+            }
         }
 
         /// <summary>
