@@ -42,14 +42,14 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             using (var serviceScope = host.Services.CreateScope())
             {
                 var services = serviceScope.ServiceProvider;
-                
-                if ((databaseMigrationsConfiguration != null && databaseMigrationsConfiguration.ApplyDatabaseMigrations) 
+
+                if ((databaseMigrationsConfiguration != null && databaseMigrationsConfiguration.ApplyDatabaseMigrations)
                     || (applyDbMigrationWithDataSeedFromProgramArguments))
                 {
                     await EnsureDatabasesMigratedAsync<TIdentityDbContext, TIdentityServerDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLogDbContext, TDataProtectionDbContext>(services);
                 }
 
-                if ((seedConfiguration != null && seedConfiguration.ApplySeed) 
+                if ((seedConfiguration != null && seedConfiguration.ApplySeed)
                     || (applyDbMigrationWithDataSeedFromProgramArguments))
                 {
                     await EnsureSeedDataAsync<TIdentityServerDbContext, TUser, TRole>(services);
@@ -189,49 +189,48 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         private static async Task EnsureSeedIdentityServerData<TIdentityServerDbContext>(TIdentityServerDbContext context, IdentityServerDataConfiguration identityServerDataConfiguration)
             where TIdentityServerDbContext : DbContext, IAdminConfigurationDbContext
         {
-            if (!context.IdentityResources.Any())
+            foreach (var resource in identityServerDataConfiguration.IdentityResources)
             {
-                foreach (var resource in identityServerDataConfiguration.IdentityResources)
-                {
-                    await context.IdentityResources.AddAsync(resource.ToEntity());
-                }
+                var exits = await context.IdentityResources.AnyAsync(a => a.Name == resource.Name);
 
-                await context.SaveChangesAsync();
+                if (exits) continue;
+
+                await context.IdentityResources.AddAsync(resource.ToEntity());
             }
 
-            if (!context.ApiResources.Any())
+            foreach (var resource in identityServerDataConfiguration.ApiResources)
             {
-                foreach (var resource in identityServerDataConfiguration.ApiResources)
-                {
-                    foreach (var s in resource.ApiSecrets)
-                    {
-                        s.Value = s.Value.ToSha256();
-                    }
+                var exits = await context.ApiResources.AnyAsync(a => a.Name == resource.Name);
 
-                    await context.ApiResources.AddAsync(resource.ToEntity());
+                if (exits) continue;
+
+                foreach (var s in resource.ApiSecrets)
+                {
+                    s.Value = s.Value.ToSha256();
                 }
 
-                await context.SaveChangesAsync();
+                await context.ApiResources.AddAsync(resource.ToEntity());
             }
 
-            if (!context.Clients.Any())
+            foreach (var client in identityServerDataConfiguration.Clients)
             {
-                foreach (var client in identityServerDataConfiguration.Clients)
+                var exits = await context.Clients.AnyAsync(c => c.ClientId == client.ClientId);
+
+                if (exits) continue;
+
+                foreach (var secret in client.ClientSecrets)
                 {
-                    foreach (var secret in client.ClientSecrets)
-                    {
-                        secret.Value = secret.Value.ToSha256();
-                    }
-
-                    client.Claims = client.ClientClaims
-                        .Select(c => new System.Security.Claims.Claim(c.Type, c.Value))
-                        .ToList();
-
-                    await context.Clients.AddAsync(client.ToEntity());
+                    secret.Value = secret.Value.ToSha256();
                 }
 
-                await context.SaveChangesAsync();
+                client.Claims = client.ClientClaims
+                    .Select(c => new System.Security.Claims.Claim(c.Type, c.Value))
+                    .ToList();
+
+                await context.Clients.AddAsync(client.ToEntity());
             }
+
+            await context.SaveChangesAsync();
         }
     }
 }
