@@ -5,6 +5,7 @@
       "Default": "Debug",
       "Override": {
         "Microsoft": "Information",
+        "Microsoft.EntityFrameworkCore.Database.Command": "Warning",
         "System": "Error"
       }
     },
