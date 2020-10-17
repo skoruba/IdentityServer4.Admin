@@ -51,6 +51,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
 
         Task<int> SaveAllChangesAsync();
 
+        bool AutoSaveChanges { get; set; }
+
         Task<string> GetApiResourceNameAsync(int apiResourceId);
     }
 }

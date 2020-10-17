@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Description_Info" xml:space="preserve">
-    <value>Данное значение может быть использовано например на экране подтверждения.</value>
+    <value>Данное значение может быть использовано, например, на экране подтверждения.</value>
   </data>
   <data name="Description_Label" xml:space="preserve">
     <value>Описание</value>
   </data>
   <data name="DisplayName_Info" xml:space="preserve">
-    <value>Данное значение может быть использовано например на экране подтверждения.</value>
+    <value>Данное значение может быть использовано, например, на экране подтверждения.</value>
   </data>
   <data name="DisplayName_Label" xml:space="preserve">
-    <value>Отобразить Имя</value>
+    <value>Отобразить имя</value>
   </data>
   <data name="Enabled_Info" xml:space="preserve">
     <value>Указывает включён ли данный ресурс и может быть запрошен. По умолчанию значение равно true.</value>
@@ -142,7 +142,7 @@
     <value>Срок действия</value>
   </data>
   <data name="Name_Info" xml:space="preserve">
-    <value>Уникальное имя Приложения. Это значение используется для аутентификации с интроспекцией(самоанализом) и будет добавлено в аудиторию исходящего токена доступа.</value>
+    <value>Уникальное имя приложения. Это значение используется для аутентификации с интроспекцией (самоанализом) и будет добавлено в аудиторию исходящего токена доступа.</value>
   </data>
   <data name="Name_Label" xml:space="preserve">
     <value>Имя</value>
@@ -178,7 +178,7 @@
     <value>Описание</value>
   </data>
   <data name="Secrets_Info" xml:space="preserve">
-    <value>Секрет Приложения используется для конечной точки интроспекции(самоанализа). Приложение может аутентифицироваться с помощью  секрета и имени приложения.</value>
+    <value>Секрет приложения используется для конечной точки интроспекции (самоанализа). Приложение может аутентифицироваться с помощью секрета и имени приложения.</value>
   </data>
   <data name="Secrets_Label" xml:space="preserve">
     <value>Секреты</value>
@@ -187,6 +187,6 @@
     <value>Список связанных типов утверждения пользователя, которые должны быть включены в токен доступа.</value>
   </data>
   <data name="UserClaims_Label" xml:space="preserve">
-    <value>Утверждения Пользователя</value>
+    <value>Утверждения пользователя</value>
   </data>
 </root>

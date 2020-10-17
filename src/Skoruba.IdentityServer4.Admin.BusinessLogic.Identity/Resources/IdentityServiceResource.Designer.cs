@@ -9,6 +9,9 @@
 //------------------------------------------------------------------------------
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -16,10 +19,10 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class IdentityServiceResource {
+    public class IdentityServiceResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -33,10 +36,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources.IdentityServiceResource", typeof(IdentityServiceResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources.IdentityServiceRes" +
+                            "ource", typeof(IdentityServiceResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -48,7 +52,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -60,7 +64,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
-        internal static string IdentityErrorKey {
+        public static string IdentityErrorKey {
             get {
                 return ResourceManager.GetString("IdentityErrorKey", resourceCulture);
             }
@@ -69,7 +73,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Role claim with id {0} doesn&apos;t exist.
         /// </summary>
-        internal static string RoleClaimDoesNotExist {
+        public static string RoleClaimDoesNotExist {
             get {
                 return ResourceManager.GetString("RoleClaimDoesNotExist", resourceCulture);
             }
@@ -78,7 +82,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Role Claims creating failed.
         /// </summary>
-        internal static string RoleClaimsCreateFailed {
+        public static string RoleClaimsCreateFailed {
             get {
                 return ResourceManager.GetString("RoleClaimsCreateFailed", resourceCulture);
             }
@@ -87,16 +91,25 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Role Claims deleting failed.
         /// </summary>
-        internal static string RoleClaimsDeleteFailed {
+        public static string RoleClaimsDeleteFailed {
             get {
                 return ResourceManager.GetString("RoleClaimsDeleteFailed", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Role Claims updating failed.
+        /// </summary>
+        public static string RoleClaimsUpdateFailed {
+            get {
+                return ResourceManager.GetString("RoleClaimsUpdateFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Role creating failed.
         /// </summary>
-        internal static string RoleCreateFailed {
+        public static string RoleCreateFailed {
             get {
                 return ResourceManager.GetString("RoleCreateFailed", resourceCulture);
             }
@@ -105,7 +118,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Role deleting failed.
         /// </summary>
-        internal static string RoleDeleteFailed {
+        public static string RoleDeleteFailed {
             get {
                 return ResourceManager.GetString("RoleDeleteFailed", resourceCulture);
             }
@@ -114,7 +127,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Role with id {0} doesn&apos;t exist.
         /// </summary>
-        internal static string RoleDoesNotExist {
+        public static string RoleDoesNotExist {
             get {
                 return ResourceManager.GetString("RoleDoesNotExist", resourceCulture);
             }
@@ -123,7 +136,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Role updating failed.
         /// </summary>
-        internal static string RoleUpdateFailed {
+        public static string RoleUpdateFailed {
             get {
                 return ResourceManager.GetString("RoleUpdateFailed", resourceCulture);
             }
@@ -132,7 +145,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
         /// <summary>
         ///   Looks up a localized string similar to User Change Password failed.
         /// </summary>
-        internal static string UserChangePasswordFailed {
+        public static string UserChangePasswordFailed {
             get {
                 return ResourceManager.GetString("UserChangePasswordFailed", resourceCulture);
             }
@@ -141,7 +154,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
         /// <summary>
         ///   Looks up a localized string similar to User claim with id {0} doesn&apos;t exist.
         /// </summary>
-        internal static string UserClaimDoesNotExist {
+        public static string UserClaimDoesNotExist {
             get {
                 return ResourceManager.GetString("UserClaimDoesNotExist", resourceCulture);
             }
@@ -150,7 +163,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
         /// <summary>
         ///   Looks up a localized string similar to User Claims creating failed.
         /// </summary>
-        internal static string UserClaimsCreateFailed {
+        public static string UserClaimsCreateFailed {
             get {
                 return ResourceManager.GetString("UserClaimsCreateFailed", resourceCulture);
             }
@@ -159,16 +172,25 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
         /// <summary>
         ///   Looks up a localized string similar to User Claims deleting failed.
         /// </summary>
-        internal static string UserClaimsDeleteFailed {
+        public static string UserClaimsDeleteFailed {
             get {
                 return ResourceManager.GetString("UserClaimsDeleteFailed", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User Claims updating failed.
+        /// </summary>
+        public static string UserClaimsUpdateFailed {
+            get {
+                return ResourceManager.GetString("UserClaimsUpdateFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User creating failed.
         /// </summary>
-        internal static string UserCreateFailed {
+        public static string UserCreateFailed {
             get {
                 return ResourceManager.GetString("UserCreateFailed", resourceCulture);
             }
@@ -177,7 +199,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
         /// <summary>
         ///   Looks up a localized string similar to User deleting failed.
         /// </summary>
-        internal static string UserDeleteFailed {
+        public static string UserDeleteFailed {
             get {
                 return ResourceManager.GetString("UserDeleteFailed", resourceCulture);
             }
@@ -186,7 +208,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
         /// <summary>
         ///   Looks up a localized string similar to User with id {0} doesn&apos;t exist.
         /// </summary>
-        internal static string UserDoesNotExist {
+        public static string UserDoesNotExist {
             get {
                 return ResourceManager.GetString("UserDoesNotExist", resourceCulture);
             }
@@ -195,7 +217,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
         /// <summary>
         ///   Looks up a localized string similar to User Provider deleting failed.
         /// </summary>
-        internal static string UserProviderDeleteFailed {
+        public static string UserProviderDeleteFailed {
             get {
                 return ResourceManager.GetString("UserProviderDeleteFailed", resourceCulture);
             }
@@ -204,7 +226,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
         /// <summary>
         ///   Looks up a localized string similar to User provider with id {0} doesn&apos;t exist.
         /// </summary>
-        internal static string UserProviderDoesNotExist {
+        public static string UserProviderDoesNotExist {
             get {
                 return ResourceManager.GetString("UserProviderDoesNotExist", resourceCulture);
             }
@@ -213,7 +235,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
         /// <summary>
         ///   Looks up a localized string similar to User Role creating failed.
         /// </summary>
-        internal static string UserRoleCreateFailed {
+        public static string UserRoleCreateFailed {
             get {
                 return ResourceManager.GetString("UserRoleCreateFailed", resourceCulture);
             }
@@ -222,7 +244,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
         /// <summary>
         ///   Looks up a localized string similar to User Role deleting failed.
         /// </summary>
-        internal static string UserRoleDeleteFailed {
+        public static string UserRoleDeleteFailed {
             get {
                 return ResourceManager.GetString("UserRoleDeleteFailed", resourceCulture);
             }
@@ -231,7 +253,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
         /// <summary>
         ///   Looks up a localized string similar to User updating failed.
         /// </summary>
-        internal static string UserUpdateFailed {
+        public static string UserUpdateFailed {
             get {
                 return ResourceManager.GetString("UserUpdateFailed", resourceCulture);
             }
