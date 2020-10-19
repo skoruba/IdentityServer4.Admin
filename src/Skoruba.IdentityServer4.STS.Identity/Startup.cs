@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MindfireTechnology.SimpleEmailRenderer;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
@@ -38,6 +39,11 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
 			// Add services for authentication, including Identity model and external providers
 			RegisterAuthentication(services);
+
+			services.AddSingleton<SimpleEmailRenderer>(n => new SimpleEmailRenderer 
+			{
+				BaseDirectory = rootConfiguration.RegisterConfiguration.EmailTemplatesBaseDirectory
+			});
 			
 			// Add all dependencies for Asp.Net Core Identity in MVC - these dependencies are injected into generic Controllers
 			// Including settings for MVC and Localization

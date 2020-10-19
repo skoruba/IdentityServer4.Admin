@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using MindfireTechnology.SimpleEmailRenderer;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 using Skoruba.IdentityServer4.STS.Identity.ViewModels.Account;
@@ -27,6 +28,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.api.v1.Account
 		protected LoginConfiguration LoginConfiguration { get; }
 		protected RegisterConfiguration RegisterConfiguration { get; }
 		protected IGenericControllerLocalizer<AccountApiController<TUser, TKey>> Localizer { get; }
+		protected SimpleEmailRenderer EmailRenderer { get; }
 
 		public AccountApiController(
 			UserManager<TUser> userManager,
@@ -35,7 +37,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.api.v1.Account
 			IEmailSender emailSender,
 			RegisterConfiguration registerConfiguration,
 			LoginConfiguration loginConfiguration,
-			IGenericControllerLocalizer<AccountApiController<TUser, TKey>> localizer)
+			IGenericControllerLocalizer<AccountApiController<TUser, TKey>> localizer,
+			SimpleEmailRenderer emailRenderer)
 		{
 			UserManager = userManager;
 			SignInManager = signInManager;
@@ -44,6 +47,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.api.v1.Account
 			LoginConfiguration = loginConfiguration;
 			RegisterConfiguration = registerConfiguration;
 			Localizer = localizer;
+			EmailRenderer = emailRenderer;
 		}
 
 		// GET api/v1/<controller>/<action>
@@ -160,7 +164,16 @@ namespace Skoruba.IdentityServer4.STS.Identity.api.v1.Account
 				var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
 				var callbackUrl = $"{RegisterConfiguration.ApiConfirmationUrl}?userid={user.Id}&code={HttpUtility.UrlEncode(code)}";
 
-				await EmailSender.SendEmailAsync(model.Email, Localizer["ConfirmEmailTitle"], Localizer["ConfirmEmailBody", callbackUrl]);
+				var values = new MergeDictionary {
+					{ "Email", model.Email },
+					{ "UserName", model.UserName },
+					{ "ConfirmUserUrl", callbackUrl }
+				};
+
+				var message = await EmailRenderer.GenerateEmail("NewUser", model.Email, values);
+				await EmailSender.SendEmailAsync(message.ToEmail, message.Subject, message.BodyHtml ?? message.BodyPlainText);
+				//await EmailSender.SendEmailAsync(model.Email, Localizer["ConfirmEmailTitle"], Localizer["ConfirmEmailBody", callbackUrl]);
+				
 				await SignInManager.SignInAsync(user, isPersistent: false);
 
 				if (!string.IsNullOrWhiteSpace(RegisterConfiguration.NewUserDefaultRole) && UserManager.SupportsUserRole)

@@ -1,0 +1,9 @@
+﻿{First Name},
+
+Welcome to Academy at WGU.
+Thanks for enrolling! We're excited to be a part of your educational journey.
+
+Please confirm your email address by clicking this link ({{Url}}).
+
+Sincerely,
+The Academy at WGU Team
