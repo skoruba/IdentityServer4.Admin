@@ -1,7 +1,6 @@
 ﻿using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using IdentityServer4.EntityFramework.Entities;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
 {

@@ -52,7 +52,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Constants
                     "authorization_code",
                     "hybrid",
                     "password",
-                    "urn:ietf:params:oauth:grant-type:device_code"
+                    "urn:ietf:params:oauth:grant-type:device_code",
+                    "delegation"
                 };
 
             return allowedGrantypes;

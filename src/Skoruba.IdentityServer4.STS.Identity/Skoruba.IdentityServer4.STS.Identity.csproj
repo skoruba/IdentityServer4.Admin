@@ -2,6 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
+        <Version>1.0.0-rc3</Version>
+        <Authors>Jan Škoruba</Authors>
         <UserSecretsId>9c91d295-54c5-4d09-9bd6-fa56fb74011b</UserSecretsId>
         <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
@@ -14,6 +16,7 @@
         <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="3.1.1" />
         <PackageReference Include="AspNetCore.HealthChecks.UI" Version="3.1.1" />
         <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="3.1.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureAD.UI" Version="3.1.8" />
         <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="3.1.6" />
         <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="3.1.6" />
         <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="3.1.6" />
@@ -90,4 +93,5 @@
     </ItemGroup>
 
 </Project>
+
 

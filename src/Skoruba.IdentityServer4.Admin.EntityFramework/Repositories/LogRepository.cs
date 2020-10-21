@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Enums;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
@@ -28,7 +29,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             if(logsToDelete.Count == 0) return;
 
             DbContext.Logs.RemoveRange(logsToDelete);
-            await DbContext.SaveChangesAsync();
+
+            await AutoSaveChangesAsync();
         }
 
         public virtual async Task<PagedList<Log>> GetLogsAsync(string search, int page = 1, int pageSize = 10)
@@ -46,5 +48,17 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
 
             return pagedList;
         }
+
+        protected virtual async Task<int> AutoSaveChangesAsync()
+        {
+            return AutoSaveChanges ? await DbContext.SaveChangesAsync() : (int)SavedStatus.WillBeSavedExplicitly;
+        }
+
+        public virtual async Task<int> SaveAllChangesAsync()
+        {
+            return await DbContext.SaveChangesAsync();
+        }
+
+        public bool AutoSaveChanges { get; set; } = true;
     }
 }
