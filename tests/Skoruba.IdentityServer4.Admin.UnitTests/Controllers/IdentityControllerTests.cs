@@ -73,7 +73,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var addedUser = await identityService.GetUserAsync(userDto.Id);
 
-            userDto.ShouldBeEquivalentTo(addedUser, opts => opts.Excluding(x => x.Id));
+            userDto.Should().BeEquivalentTo(addedUser, opts => opts.Excluding(x => x.Id));
         }
 
         [Fact]
@@ -144,7 +144,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var updatedUser = await identityService.GetUserAsync(updatedUserDto.Id.ToString());
 
-            updatedUserDto.ShouldBeEquivalentTo(updatedUser, opts => opts.Excluding(x => x.Id));
+            updatedUserDto.Should().BeEquivalentTo(updatedUser, opts => opts.Excluding(x => x.Id));
         }
 
         [Fact]
@@ -177,7 +177,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             userDto.Id = userId;
             var addedUser = await identityService.GetUserAsync(userDto.Id.ToString());
 
-            viewModel.ShouldBeEquivalentTo(addedUser);
+            viewModel.Should().BeEquivalentTo(addedUser);
         }
 
         [Fact]
@@ -202,7 +202,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var addedRole = await identityService.GetRoleAsync(roleDto.Id.ToString());
 
-            roleDto.ShouldBeEquivalentTo(addedRole, opts => opts.Excluding(x => x.Id));
+            roleDto.Should().BeEquivalentTo(addedRole, opts => opts.Excluding(x => x.Id));
         }
 
         [Fact]
@@ -230,7 +230,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             roleDto.Id = roleId;
             var addedRole = await identityService.GetRoleAsync(roleDto.Id.ToString());
 
-            viewModel.ShouldBeEquivalentTo(addedRole);
+            viewModel.Should().BeEquivalentTo(addedRole);
         }
 
         [Fact]
@@ -285,7 +285,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var updatedRole = await identityService.GetRoleAsync(updatedRoleDto.Id.ToString());
 
-            updatedRoleDto.ShouldBeEquivalentTo(updatedRole, opts => opts.Excluding(x => x.Id));
+            updatedRoleDto.Should().BeEquivalentTo(updatedRole, opts => opts.Excluding(x => x.Id));
         }
 
         [Fact]
@@ -315,7 +315,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var addedUserClaim = await identityService.GetUserClaimAsync(user.Id.ToString(), userClaim.Id);
 
-            userClaimsDto.ShouldBeEquivalentTo(addedUserClaim, opts => opts.Excluding(x => x.ClaimId));
+            userClaimsDto.Should().BeEquivalentTo(addedUserClaim, opts => opts.Excluding(x => x.ClaimId));
         }
 
         [Fact]
@@ -334,26 +334,22 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var roleDto = IdentityDtoMock<string>.GenerateRandomRole();
             await identityService.CreateRoleAsync(roleDto);
 
-            var user = await dbContext.Users.Where(x => x.UserName == userDto.UserName).SingleOrDefaultAsync();
+            var user = await dbContext.Users.FirstOrDefaultAsync(x => x.UserName == userDto.UserName);
             userDto.Id = user.Id;
 
-            var role = await dbContext.Roles.Where(x => x.Name == roleDto.Name).SingleOrDefaultAsync();
+            var role = await dbContext.Roles.FirstOrDefaultAsync(x => x.Name == roleDto.Name);
             roleDto.Id = role.Id;
 
             var userRoleDto = IdentityDtoMock<string>.GenerateRandomUserRole<RoleDto<string>>(roleDto.Id, user.Id);
             var result = await controller.UserRoles(userRoleDto);
 
-            // Assert            
+            // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("UserRoles");
 
-            var userRole = await dbContext.UserRoles.Where(x => x.RoleId == roleDto.Id && x.UserId == userDto.Id).SingleOrDefaultAsync();
+            var userRole = await dbContext.UserRoles.FirstOrDefaultAsync(x => x.RoleId == roleDto.Id && x.UserId == userDto.Id);
 
-            userRoleDto.ShouldBeEquivalentTo(userRole, opts => opts.Excluding(x => x.Roles)
-                                                                   .Excluding(x => x.RolesList)
-                                                                   .Excluding(x => x.PageSize)
-                                                                   .Excluding(x => x.TotalCount)
-                                                                   .Excluding(x => x.UserName));
+            userRoleDto.Should().BeEquivalentTo(userRole);
         }
 
         [Fact]
@@ -452,7 +448,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var addedRoleClaim = await identityService.GetRoleClaimAsync(role.Id.ToString(), roleClaim.Id);
 
-            roleClaimsDto.ShouldBeEquivalentTo(addedRoleClaim, opts => opts.Excluding(x => x.ClaimId)
+            roleClaimsDto.Should().BeEquivalentTo(addedRoleClaim, opts => opts.Excluding(x => x.ClaimId)
                 .Excluding(x => x.RoleName));
         }
 

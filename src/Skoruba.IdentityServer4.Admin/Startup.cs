@@ -23,7 +23,7 @@ using Skoruba.IdentityServer4.Shared.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin
 {
-    public class Startup
+	public class Startup
     {
         public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {
@@ -92,17 +92,17 @@ namespace Skoruba.IdentityServer4.Admin
             services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext>(Configuration, rootConfiguration.AdminConfiguration);
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
-        {
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+		{
             app.UseCookiePolicy();
 
             if (env.IsDevelopment())
-            {
+			{
                 app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
+			}
+			else
+			{
+				app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
 

@@ -15,7 +15,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
                 .RuleFor(o => o.Id, id)
                 .RuleFor(o => o.Description, f => f.Random.Words(f.Random.Number(1, 5)))
                 .RuleFor(o => o.DisplayName, f => f.Random.Words(f.Random.Number(1, 5)))
-                .RuleFor(o => o.Enabled, f => f.Random.Bool())                
+                .RuleFor(o => o.Enabled, f => f.Random.Bool())
+                .RuleFor(o => o.Properties, f => new System.Collections.Generic.List<ApiResourcePropertyDto>())
+                .RuleFor(o => o.Scopes, f => new System.Collections.Generic.List<ApiResourceScopeDto>())
+                .RuleFor(o => o.Secrets, f => new System.Collections.Generic.List<ApiResourceSecretDto>())
                 .RuleFor(o => o.UserClaims, f => Enumerable.Range(1, f.Random.Int(1, 10)).Select(x => f.PickRandom(ClientConsts.GetStandardClaims())).ToList());
             
             return fakerApiResource;
@@ -42,19 +45,32 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 		    return apiResourcePropertyFaker;
 	    }
 
-		public static Faker<ApiSecretsDto> GetApiSecretFaker(int id, int resourceId)
+		public static Faker<ApiSecretDto> GetApiSecretFaker(int id, int resourceId)
         {
-            var fakerApiSecret = new Faker<ApiSecretsDto>()
+            var fakerApiSecret = new Faker<ApiSecretDto>()
                 .RuleFor(o => o.Type, f => Guid.NewGuid().ToString())
                 .RuleFor(o => o.Value, f => Guid.NewGuid().ToString())
-                .RuleFor(o => o.ApiSecretId, id)
+                .RuleFor(o => o.Id, id)
                 .RuleFor(o => o.ApiResourceId, resourceId)
                 .RuleFor(o => o.Description, f => f.Random.Words(f.Random.Number(1, 5)))
                 .RuleFor(o => o.Expiration, f => f.Date.Future());                
 
             return fakerApiSecret;
         }
-   
+
+        public static Faker<ApiResourceSecretsDto> GetApiResourceSecretFaker(int id, int resourceId)
+        {
+            var fakerApiSecret = new Faker<ApiResourceSecretsDto>()
+                .RuleFor(o => o.Type, f => Guid.NewGuid().ToString())
+                .RuleFor(o => o.Value, f => Guid.NewGuid().ToString())
+                .RuleFor(o => o.ApiSecretId, id)
+                .RuleFor(o => o.ApiResourceId, resourceId)
+                .RuleFor(o => o.Description, f => f.Random.Words(f.Random.Number(1, 5)))
+                .RuleFor(o => o.Expiration, f => f.Date.Future());
+
+            return fakerApiSecret;
+        }
+
         public static Faker<ApiScopesDto> GetApiScopeFaker(int id, int resourceId)
         {
             var fakerApiScope = new Faker<ApiScopesDto>()
@@ -87,9 +103,16 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             return apiScope;
         }
 
-        public static ApiSecretsDto GenerateRandomApiSecret(int id, int resourceId)
+        public static ApiSecretDto GenerateRandomApiSecret(int id, int resourceId)
         {
             var apiSecret = GetApiSecretFaker(id, resourceId).Generate();
+
+            return apiSecret;
+        }
+
+        public static ApiResourceSecretsDto GenerateRandomApiResourceSecret(int id, int resourceId)
+        {
+            var apiSecret = GetApiResourceSecretFaker(id, resourceId).Generate();
 
             return apiSecret;
         }

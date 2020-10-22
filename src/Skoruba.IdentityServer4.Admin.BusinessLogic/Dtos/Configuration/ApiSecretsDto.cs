@@ -12,10 +12,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
 		{
 			ApiSecrets = new List<ApiSecretDto>();
 		}
+		public int ApiSecretId { get; set; }
 
 		public int ApiResourceId { get; set; }
-
-		public int ApiSecretId { get; set; }
 
 	    public string ApiResourceName { get; set; }
 
@@ -47,6 +46,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
         }
 
 		public List<SelectItemDto> HashTypes { get; set; }
+
+		public DateTime Created { get; set; }
 
 		public DateTime? Expiration { get; set; }
 

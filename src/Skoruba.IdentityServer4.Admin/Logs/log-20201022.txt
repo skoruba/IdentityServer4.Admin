@@ -1,0 +1,434 @@
+[2020-10-22T19:36:49.2720157+00:00][INFO][1][Microsoft.EntityFrameworkCore.Infrastructure] Entity Framework Core "3.1.8" initialized '"IdentityServerPersistedGrantDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "MigrationsAssembly=Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer "
+[2020-10-22T19:36:50.4692180+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("62"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[2020-10-22T19:36:50.5672037+00:00][INFO][11][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("59"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+[2020-10-22T19:36:50.5859220+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[2020-10-22T19:36:50.6061101+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("12"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+[2020-10-22T19:36:50.6400925+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("7"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+[2020-10-22T19:36:50.7198801+00:00][INFO][4][Microsoft.EntityFrameworkCore.Migrations] No migrations were applied. The database is already up to date.
+[2020-10-22T19:36:50.7305173+00:00][INFO][4][Microsoft.EntityFrameworkCore.Infrastructure] Entity Framework Core "3.1.8" initialized '"AdminIdentityDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "MigrationsAssembly=Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer "
+[2020-10-22T19:36:50.7427750+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[2020-10-22T19:36:50.7501129+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+[2020-10-22T19:36:50.7746175+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[2020-10-22T19:36:50.7792327+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+[2020-10-22T19:36:50.7855872+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+[2020-10-22T19:36:50.7875594+00:00][INFO][4][Microsoft.EntityFrameworkCore.Migrations] No migrations were applied. The database is already up to date.
+[2020-10-22T19:36:50.7913614+00:00][INFO][4][Microsoft.EntityFrameworkCore.Infrastructure] Entity Framework Core "3.1.8" initialized '"IdentityServerConfigurationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "MigrationsAssembly=Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer "
+[2020-10-22T19:36:50.8096729+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[2020-10-22T19:36:50.8142634+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+[2020-10-22T19:36:50.8167673+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[2020-10-22T19:36:50.8220330+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+[2020-10-22T19:36:50.8294063+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+[2020-10-22T19:36:50.8425829+00:00][INFO][6][Microsoft.EntityFrameworkCore.Migrations] Applying migration '"20201022192812_MigrateToIdentityServer4_v4.0"'.
+[2020-10-22T19:36:51.1570822+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("21"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [ApiClaims] DROP CONSTRAINT [FK_ApiClaims_ApiResources_ApiResourceId];"
+[2020-10-22T19:36:51.1628631+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [ApiProperties] DROP CONSTRAINT [FK_ApiProperties_ApiResources_ApiResourceId];"
+[2020-10-22T19:36:51.1791611+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [ApiScopeClaims] DROP CONSTRAINT [FK_ApiScopeClaims_ApiScopes_ApiScopeId];"
+[2020-10-22T19:36:51.1830933+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [ApiScopes] DROP CONSTRAINT [FK_ApiScopes_ApiResources_ApiResourceId];"
+[2020-10-22T19:36:51.1888686+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [IdentityProperties] DROP CONSTRAINT [FK_IdentityProperties_IdentityResources_IdentityResourceId];"
+[2020-10-22T19:36:51.1984382+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("9"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DROP TABLE [ApiSecrets];"
+[2020-10-22T19:36:51.2038560+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DROP TABLE [IdentityClaims];"
+[2020-10-22T19:36:51.2067951+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DROP INDEX [IX_ApiScopes_ApiResourceId] ON [ApiScopes];"
+[2020-10-22T19:36:51.2104244+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DROP INDEX [IX_ApiScopeClaims_ApiScopeId] ON [ApiScopeClaims];"
+[2020-10-22T19:36:51.2192219+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("8"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [IdentityProperties] DROP CONSTRAINT [PK_IdentityProperties];"
+[2020-10-22T19:36:51.2252351+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [ApiProperties] DROP CONSTRAINT [PK_ApiProperties];"
+[2020-10-22T19:36:51.2313834+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [ApiClaims] DROP CONSTRAINT [PK_ApiClaims];"
+[2020-10-22T19:36:51.3300145+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("98"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @var0 sysname;
+SELECT @var0 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[ApiScopes]') AND [c].[name] = N'ApiResourceId');
+IF @var0 IS NOT NULL EXEC(N'ALTER TABLE [ApiScopes] DROP CONSTRAINT [' + @var0 + '];');
+ALTER TABLE [ApiScopes] DROP COLUMN [ApiResourceId];"
+[2020-10-22T19:36:51.3574261+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("27"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @var1 sysname;
+SELECT @var1 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[ApiScopeClaims]') AND [c].[name] = N'ApiScopeId');
+IF @var1 IS NOT NULL EXEC(N'ALTER TABLE [ApiScopeClaims] DROP CONSTRAINT [' + @var1 + '];');
+ALTER TABLE [ApiScopeClaims] DROP COLUMN [ApiScopeId];"
+[2020-10-22T19:36:51.7580621+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("400"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""EXEC sp_rename N'[IdentityProperties]', N'IdentityResourceProperties';"
+[2020-10-22T19:36:51.7702804+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("8"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""EXEC sp_rename N'[ApiProperties]', N'ApiResourceProperties';"
+[2020-10-22T19:36:51.7759607+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""EXEC sp_rename N'[ApiClaims]', N'ApiResourceClaims';"
+[2020-10-22T19:36:51.7817760+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""EXEC sp_rename N'[IdentityResourceProperties].[IX_IdentityProperties_IdentityResourceId]', N'IX_IdentityResourceProperties_IdentityResourceId', N'INDEX';"
+[2020-10-22T19:36:51.7880377+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""EXEC sp_rename N'[ApiResourceProperties].[IX_ApiProperties_ApiResourceId]', N'IX_ApiResourceProperties_ApiResourceId', N'INDEX';"
+[2020-10-22T19:36:51.7951558+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""EXEC sp_rename N'[ApiResourceClaims].[IX_ApiClaims_ApiResourceId]', N'IX_ApiResourceClaims_ApiResourceId', N'INDEX';"
+[2020-10-22T19:36:51.7988520+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Clients] ADD [AllowedIdentityTokenSigningAlgorithms] nvarchar(100) NULL;"
+[2020-10-22T19:36:51.8072174+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("8"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Clients] ADD [RequireRequestObject] bit NOT NULL DEFAULT CAST(0 AS bit);"
+[2020-10-22T19:36:51.8107533+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [ApiScopes] ADD [Enabled] bit NOT NULL DEFAULT CAST(0 AS bit);"
+[2020-10-22T19:36:51.8153929+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [ApiScopeClaims] ADD [ScopeId] int NOT NULL DEFAULT 0;"
+[2020-10-22T19:36:51.8190137+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [ApiResources] ADD [AllowedAccessTokenSigningAlgorithms] nvarchar(100) NULL;"
+[2020-10-22T19:36:51.8228619+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [ApiResources] ADD [ShowInDiscoveryDocument] bit NOT NULL DEFAULT CAST(0 AS bit);"
+[2020-10-22T19:36:51.8285180+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [IdentityResourceProperties] ADD CONSTRAINT [PK_IdentityResourceProperties] PRIMARY KEY ([Id]);"
+[2020-10-22T19:36:51.8339385+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [ApiResourceProperties] ADD CONSTRAINT [PK_ApiResourceProperties] PRIMARY KEY ([Id]);"
+[2020-10-22T19:36:51.8394777+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [ApiResourceClaims] ADD CONSTRAINT [PK_ApiResourceClaims] PRIMARY KEY ([Id]);"
+[2020-10-22T19:36:51.8439378+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [ApiResourceScopes] (
+    [Id] int NOT NULL IDENTITY,
+    [Scope] nvarchar(200) NOT NULL,
+    [ApiResourceId] int NOT NULL,
+    CONSTRAINT [PK_ApiResourceScopes] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_ApiResourceScopes_ApiResources_ApiResourceId] FOREIGN KEY ([ApiResourceId]) REFERENCES [ApiResources] ([Id]) ON DELETE CASCADE
+);"
+[2020-10-22T19:36:51.8501150+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [ApiResourceSecrets] (
+    [Id] int NOT NULL IDENTITY,
+    [Description] nvarchar(1000) NULL,
+    [Value] nvarchar(4000) NOT NULL,
+    [Expiration] datetime2 NULL,
+    [Type] nvarchar(250) NOT NULL,
+    [Created] datetime2 NOT NULL,
+    [ApiResourceId] int NOT NULL,
+    CONSTRAINT [PK_ApiResourceSecrets] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_ApiResourceSecrets_ApiResources_ApiResourceId] FOREIGN KEY ([ApiResourceId]) REFERENCES [ApiResources] ([Id]) ON DELETE CASCADE
+);"
+[2020-10-22T19:36:51.8626232+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("12"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [ApiScopeProperties] (
+    [Id] int NOT NULL IDENTITY,
+    [Key] nvarchar(250) NOT NULL,
+    [Value] nvarchar(2000) NOT NULL,
+    [ScopeId] int NOT NULL,
+    CONSTRAINT [PK_ApiScopeProperties] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_ApiScopeProperties_ApiScopes_ScopeId] FOREIGN KEY ([ScopeId]) REFERENCES [ApiScopes] ([Id]) ON DELETE CASCADE
+);"
+[2020-10-22T19:36:51.8761660+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("13"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [IdentityResourceClaims] (
+    [Id] int NOT NULL IDENTITY,
+    [Type] nvarchar(200) NOT NULL,
+    [IdentityResourceId] int NOT NULL,
+    CONSTRAINT [PK_IdentityResourceClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_IdentityResourceClaims_IdentityResources_IdentityResourceId] FOREIGN KEY ([IdentityResourceId]) REFERENCES [IdentityResources] ([Id]) ON DELETE CASCADE
+);"
+[2020-10-22T19:36:51.8825791+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX [IX_ApiScopeClaims_ScopeId] ON [ApiScopeClaims] ([ScopeId]);"
+[2020-10-22T19:36:51.8863337+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX [IX_ApiResourceScopes_ApiResourceId] ON [ApiResourceScopes] ([ApiResourceId]);"
+[2020-10-22T19:36:51.8895754+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX [IX_ApiResourceSecrets_ApiResourceId] ON [ApiResourceSecrets] ([ApiResourceId]);"
+[2020-10-22T19:36:51.8959562+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX [IX_ApiScopeProperties_ScopeId] ON [ApiScopeProperties] ([ScopeId]);"
+[2020-10-22T19:36:51.8990320+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX [IX_IdentityResourceClaims_IdentityResourceId] ON [IdentityResourceClaims] ([IdentityResourceId]);"
+[2020-10-22T19:36:51.9026750+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [ApiResourceClaims] ADD CONSTRAINT [FK_ApiResourceClaims_ApiResources_ApiResourceId] FOREIGN KEY ([ApiResourceId]) REFERENCES [ApiResources] ([Id]) ON DELETE CASCADE;"
+[2020-10-22T19:36:51.9152023+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("12"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [ApiResourceProperties] ADD CONSTRAINT [FK_ApiResourceProperties_ApiResources_ApiResourceId] FOREIGN KEY ([ApiResourceId]) REFERENCES [ApiResources] ([Id]) ON DELETE CASCADE;"
+[2020-10-22T19:36:51.9221667+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [ApiScopeClaims] ADD CONSTRAINT [FK_ApiScopeClaims_ApiScopes_ScopeId] FOREIGN KEY ([ScopeId]) REFERENCES [ApiScopes] ([Id]) ON DELETE CASCADE;"
+[2020-10-22T19:36:51.9256972+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [IdentityResourceProperties] ADD CONSTRAINT [FK_IdentityResourceProperties_IdentityResources_IdentityResourceId] FOREIGN KEY ([IdentityResourceId]) REFERENCES [IdentityResources] ([Id]) ON DELETE CASCADE;"
+[2020-10-22T19:36:51.9296642+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201022192812_MigrateToIdentityServer4_v4.0', N'3.1.8');"
+[2020-10-22T19:36:51.9538080+00:00][INFO][4][Microsoft.EntityFrameworkCore.Infrastructure] Entity Framework Core "3.1.8" initialized '"AdminLogDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "MigrationsAssembly=Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer "
+[2020-10-22T19:36:51.9776342+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("22"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[2020-10-22T19:36:52.0235727+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+[2020-10-22T19:36:52.0284970+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[2020-10-22T19:36:52.0333624+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+[2020-10-22T19:36:52.0442746+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+[2020-10-22T19:36:52.0458185+00:00][INFO][6][Microsoft.EntityFrameworkCore.Migrations] No migrations were applied. The database is already up to date.
+[2020-10-22T19:36:52.0469580+00:00][INFO][6][Microsoft.EntityFrameworkCore.Infrastructure] Entity Framework Core "3.1.8" initialized '"AdminAuditLogDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "MigrationsAssembly=Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer "
+[2020-10-22T19:36:52.0707820+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("23"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[2020-10-22T19:36:52.0732960+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+[2020-10-22T19:36:52.0762352+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[2020-10-22T19:36:52.0785949+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+[2020-10-22T19:36:52.0828294+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+[2020-10-22T19:36:52.0852215+00:00][INFO][6][Microsoft.EntityFrameworkCore.Migrations] No migrations were applied. The database is already up to date.
+[2020-10-22T19:36:52.0873395+00:00][INFO][6][Microsoft.EntityFrameworkCore.Infrastructure] Entity Framework Core "3.1.8" initialized '"IdentityServerDataProtectionDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "MigrationsAssembly=Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer "
+[2020-10-22T19:36:52.0924813+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[2020-10-22T19:36:52.0957498+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+[2020-10-22T19:36:52.0983580+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[2020-10-22T19:36:52.1634593+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("43"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+[2020-10-22T19:36:52.1686629+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+[2020-10-22T19:36:52.1697388+00:00][INFO][4][Microsoft.EntityFrameworkCore.Migrations] No migrations were applied. The database is already up to date.
+[2020-10-22T19:36:52.3698275+00:00][INFO][4][Microsoft.EntityFrameworkCore.Infrastructure] Entity Framework Core "3.1.8" initialized '"IdentityServerConfigurationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "MigrationsAssembly=Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer "
+[2020-10-22T19:36:52.6631790+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [IdentityResources] AS [i]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END"
+[2020-10-22T19:36:53.4776126+00:00][INFO][5][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("63"ms) [Parameters=["@p0='?' (DbType = DateTime2), @p1='?' (Size = 1000), @p2='?' (Size = 200), @p3='?' (DbType = Boolean), @p4='?' (DbType = Boolean), @p5='?' (Size = 200), @p6='?' (DbType = Boolean), @p7='?' (DbType = Boolean), @p8='?' (DbType = Boolean), @p9='?' (DbType = DateTime2), @p10='?' (DbType = DateTime2), @p11='?' (Size = 1000), @p12='?' (Size = 200), @p13='?' (DbType = Boolean), @p14='?' (DbType = Boolean), @p15='?' (Size = 200), @p16='?' (DbType = Boolean), @p17='?' (DbType = Boolean), @p18='?' (DbType = Boolean), @p19='?' (DbType = DateTime2), @p20='?' (DbType = DateTime2), @p21='?' (Size = 1000), @p22='?' (Size = 200), @p23='?' (DbType = Boolean), @p24='?' (DbType = Boolean), @p25='?' (Size = 200), @p26='?' (DbType = Boolean), @p27='?' (DbType = Boolean), @p28='?' (DbType = Boolean), @p29='?' (DbType = DateTime2), @p30='?' (DbType = DateTime2), @p31='?' (Size = 1000), @p32='?' (Size = 200), @p33='?' (DbType = Boolean), @p34='?' (DbType = Boolean), @p35='?' (Size = 200), @p36='?' (DbType = Boolean), @p37='?' (DbType = Boolean), @p38='?' (DbType = Boolean), @p39='?' (DbType = DateTime2), @p40='?' (DbType = DateTime2), @p41='?' (Size = 1000), @p42='?' (Size = 200), @p43='?' (DbType = Boolean), @p44='?' (DbType = Boolean), @p45='?' (Size = 200), @p46='?' (DbType = Boolean), @p47='?' (DbType = Boolean), @p48='?' (DbType = Boolean), @p49='?' (DbType = DateTime2)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+DECLARE @inserted0 TABLE ([Id] int, [_Position] [int]);
+MERGE [IdentityResources] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, 0),
+(@p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, 1),
+(@p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, 2),
+(@p30, @p31, @p32, @p33, @p34, @p35, @p36, @p37, @p38, @p39, 3),
+(@p40, @p41, @p42, @p43, @p44, @p45, @p46, @p47, @p48, @p49, 4)) AS i ([Created], [Description], [DisplayName], [Emphasize], [Enabled], [Name], [NonEditable], [Required], [ShowInDiscoveryDocument], [Updated], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Created], [Description], [DisplayName], [Emphasize], [Enabled], [Name], [NonEditable], [Required], [ShowInDiscoveryDocument], [Updated])
+VALUES (i.[Created], i.[Description], i.[DisplayName], i.[Emphasize], i.[Enabled], i.[Name], i.[NonEditable], i.[Required], i.[ShowInDiscoveryDocument], i.[Updated])
+OUTPUT INSERTED.[Id], i._Position
+INTO @inserted0;
+
+SELECT [t].[Id] FROM [IdentityResources] t
+INNER JOIN @inserted0 i ON ([t].[Id] = [i].[Id])
+ORDER BY [i].[_Position];"
+[2020-10-22T19:36:53.5374202+00:00][INFO][14][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("19"ms) [Parameters=["@p50='?' (DbType = Int32), @p51='?' (Size = 200), @p52='?' (DbType = Int32), @p53='?' (Size = 200), @p54='?' (DbType = Int32), @p55='?' (Size = 200), @p56='?' (DbType = Int32), @p57='?' (Size = 200), @p58='?' (DbType = Int32), @p59='?' (Size = 200), @p60='?' (DbType = Int32), @p61='?' (Size = 200), @p62='?' (DbType = Int32), @p63='?' (Size = 200), @p64='?' (DbType = Int32), @p65='?' (Size = 200), @p66='?' (DbType = Int32), @p67='?' (Size = 200), @p68='?' (DbType = Int32), @p69='?' (Size = 200), @p70='?' (DbType = Int32), @p71='?' (Size = 200), @p72='?' (DbType = Int32), @p73='?' (Size = 200), @p74='?' (DbType = Int32), @p75='?' (Size = 200), @p76='?' (DbType = Int32), @p77='?' (Size = 200), @p78='?' (DbType = Int32), @p79='?' (Size = 200), @p80='?' (DbType = Int32), @p81='?' (Size = 200), @p82='?' (DbType = Int32), @p83='?' (Size = 200), @p84='?' (DbType = Int32), @p85='?' (Size = 200), @p86='?' (DbType = Int32), @p87='?' (Size = 200)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+DECLARE @inserted0 TABLE ([Id] int, [_Position] [int]);
+MERGE [IdentityResourceClaims] USING (
+VALUES (@p50, @p51, 0),
+(@p52, @p53, 1),
+(@p54, @p55, 2),
+(@p56, @p57, 3),
+(@p58, @p59, 4),
+(@p60, @p61, 5),
+(@p62, @p63, 6),
+(@p64, @p65, 7),
+(@p66, @p67, 8),
+(@p68, @p69, 9),
+(@p70, @p71, 10),
+(@p72, @p73, 11),
+(@p74, @p75, 12),
+(@p76, @p77, 13),
+(@p78, @p79, 14),
+(@p80, @p81, 15),
+(@p82, @p83, 16),
+(@p84, @p85, 17),
+(@p86, @p87, 18)) AS i ([IdentityResourceId], [Type], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([IdentityResourceId], [Type])
+VALUES (i.[IdentityResourceId], i.[Type])
+OUTPUT INSERTED.[Id], i._Position
+INTO @inserted0;
+
+SELECT [t].[Id] FROM [IdentityResourceClaims] t
+INNER JOIN @inserted0 i ON ([t].[Id] = [i].[Id])
+ORDER BY [i].[_Position];"
+[2020-10-22T19:36:53.5640489+00:00][INFO][14][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [ApiResources] AS [a]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END"
+[2020-10-22T19:36:53.6851828+00:00][INFO][11][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("4"ms) [Parameters=["@p0='?' (Size = 100), @p1='?' (DbType = DateTime2), @p2='?' (Size = 1000), @p3='?' (Size = 200), @p4='?' (DbType = Boolean), @p5='?' (DbType = DateTime2), @p6='?' (Size = 200), @p7='?' (DbType = Boolean), @p8='?' (DbType = Boolean), @p9='?' (DbType = DateTime2)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+INSERT INTO [ApiResources] ([AllowedAccessTokenSigningAlgorithms], [Created], [Description], [DisplayName], [Enabled], [LastAccessed], [Name], [NonEditable], [ShowInDiscoveryDocument], [Updated])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+SELECT [Id]
+FROM [ApiResources]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();"
+[2020-10-22T19:36:53.7020685+00:00][INFO][11][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Clients] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END"
+[2020-10-22T19:36:54.0165205+00:00][INFO][12][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("6"ms) [Parameters=["@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = Int32), @p3='?' (DbType = Boolean), @p4='?' (DbType = Boolean), @p5='?' (DbType = Boolean), @p6='?' (DbType = Boolean), @p7='?' (Size = 100), @p8='?' (DbType = Boolean), @p9='?' (DbType = Boolean), @p10='?' (DbType = Int32), @p11='?' (DbType = Boolean), @p12='?' (Size = 2000), @p13='?' (Size = 200), @p14='?' (Size = 200), @p15='?' (Size = 200), @p16='?' (Size = 2000), @p17='?' (DbType = Int32), @p18='?' (DbType = DateTime2), @p19='?' (Size = 1000), @p20='?' (DbType = Int32), @p21='?' (DbType = Boolean), @p22='?' (DbType = Boolean), @p23='?' (DbType = Boolean), @p24='?' (Size = 2000), @p25='?' (DbType = Int32), @p26='?' (DbType = Boolean), @p27='?' (DbType = DateTime2), @p28='?' (Size = 2000), @p29='?' (DbType = Boolean), @p30='?' (Size = 200), @p31='?' (Size = 200), @p32='?' (DbType = Int32), @p33='?' (DbType = Int32), @p34='?' (DbType = Boolean), @p35='?' (DbType = Boolean), @p36='?' (DbType = Boolean), @p37='?' (DbType = Boolean), @p38='?' (DbType = Int32), @p39='?' (DbType = Boolean), @p40='?' (DbType = DateTime2), @p41='?' (Size = 100), @p42='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+INSERT INTO [Clients] ([AbsoluteRefreshTokenLifetime], [AccessTokenLifetime], [AccessTokenType], [AllowAccessTokensViaBrowser], [AllowOfflineAccess], [AllowPlainTextPkce], [AllowRememberConsent], [AllowedIdentityTokenSigningAlgorithms], [AlwaysIncludeUserClaimsInIdToken], [AlwaysSendClientClaims], [AuthorizationCodeLifetime], [BackChannelLogoutSessionRequired], [BackChannelLogoutUri], [ClientClaimsPrefix], [ClientId], [ClientName], [ClientUri], [ConsentLifetime], [Created], [Description], [DeviceCodeLifetime], [EnableLocalLogin], [Enabled], [FrontChannelLogoutSessionRequired], [FrontChannelLogoutUri], [IdentityTokenLifetime], [IncludeJwtId], [LastAccessed], [LogoUri], [NonEditable], [PairWiseSubjectSalt], [ProtocolType], [RefreshTokenExpiration], [RefreshTokenUsage], [RequireClientSecret], [RequireConsent], [RequirePkce], [RequireRequestObject], [SlidingRefreshTokenLifetime], [UpdateAccessTokenClaimsOnRefresh], [Updated], [UserCodeType], [UserSsoLifetime])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32, @p33, @p34, @p35, @p36, @p37, @p38, @p39, @p40, @p41, @p42);
+SELECT [Id]
+FROM [Clients]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();"
+[2020-10-22T19:36:54.0305951+00:00][INFO][12][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("1"ms) [Parameters=["@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = Int32), @p3='?' (DbType = Boolean), @p4='?' (DbType = Boolean), @p5='?' (DbType = Boolean), @p6='?' (DbType = Boolean), @p7='?' (Size = 100), @p8='?' (DbType = Boolean), @p9='?' (DbType = Boolean), @p10='?' (DbType = Int32), @p11='?' (DbType = Boolean), @p12='?' (Size = 2000), @p13='?' (Size = 200), @p14='?' (Size = 200), @p15='?' (Size = 200), @p16='?' (Size = 2000), @p17='?' (DbType = Int32), @p18='?' (DbType = DateTime2), @p19='?' (Size = 1000), @p20='?' (DbType = Int32), @p21='?' (DbType = Boolean), @p22='?' (DbType = Boolean), @p23='?' (DbType = Boolean), @p24='?' (Size = 2000), @p25='?' (DbType = Int32), @p26='?' (DbType = Boolean), @p27='?' (DbType = DateTime2), @p28='?' (Size = 2000), @p29='?' (DbType = Boolean), @p30='?' (Size = 200), @p31='?' (Size = 200), @p32='?' (DbType = Int32), @p33='?' (DbType = Int32), @p34='?' (DbType = Boolean), @p35='?' (DbType = Boolean), @p36='?' (DbType = Boolean), @p37='?' (DbType = Boolean), @p38='?' (DbType = Int32), @p39='?' (DbType = Boolean), @p40='?' (DbType = DateTime2), @p41='?' (Size = 100), @p42='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+INSERT INTO [Clients] ([AbsoluteRefreshTokenLifetime], [AccessTokenLifetime], [AccessTokenType], [AllowAccessTokensViaBrowser], [AllowOfflineAccess], [AllowPlainTextPkce], [AllowRememberConsent], [AllowedIdentityTokenSigningAlgorithms], [AlwaysIncludeUserClaimsInIdToken], [AlwaysSendClientClaims], [AuthorizationCodeLifetime], [BackChannelLogoutSessionRequired], [BackChannelLogoutUri], [ClientClaimsPrefix], [ClientId], [ClientName], [ClientUri], [ConsentLifetime], [Created], [Description], [DeviceCodeLifetime], [EnableLocalLogin], [Enabled], [FrontChannelLogoutSessionRequired], [FrontChannelLogoutUri], [IdentityTokenLifetime], [IncludeJwtId], [LastAccessed], [LogoUri], [NonEditable], [PairWiseSubjectSalt], [ProtocolType], [RefreshTokenExpiration], [RefreshTokenUsage], [RequireClientSecret], [RequireConsent], [RequirePkce], [RequireRequestObject], [SlidingRefreshTokenLifetime], [UpdateAccessTokenClaimsOnRefresh], [Updated], [UserCodeType], [UserSsoLifetime])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32, @p33, @p34, @p35, @p36, @p37, @p38, @p39, @p40, @p41, @p42);
+SELECT [Id]
+FROM [Clients]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();"
+[2020-10-22T19:36:54.0915838+00:00][INFO][4][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("54"ms) [Parameters=["@p43='?' (DbType = Int32), @p44='?' (Size = 150), @p45='?' (DbType = Int32), @p46='?' (Size = 150), @p47='?' (DbType = Int32), @p48='?' (Size = 250), @p49='?' (DbType = Int32), @p50='?' (Size = 250), @p51='?' (DbType = Int32), @p52='?' (Size = 2000), @p53='?' (DbType = Int32), @p54='?' (Size = 2000), @p55='?' (DbType = Int32), @p56='?' (Size = 2000), @p57='?' (DbType = Int32), @p58='?' (Size = 200), @p59='?' (DbType = Int32), @p60='?' (Size = 200), @p61='?' (DbType = Int32), @p62='?' (Size = 200), @p63='?' (DbType = Int32), @p64='?' (Size = 200), @p65='?' (DbType = Int32), @p66='?' (Size = 200), @p67='?' (DbType = Int32), @p68='?' (DbType = DateTime2), @p69='?' (Size = 2000), @p70='?' (DbType = DateTime2), @p71='?' (Size = 250), @p72='?' (Size = 4000)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+DECLARE @inserted0 TABLE ([Id] int, [_Position] [int]);
+MERGE [ClientCorsOrigins] USING (
+VALUES (@p43, @p44, 0),
+(@p45, @p46, 1)) AS i ([ClientId], [Origin], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([ClientId], [Origin])
+VALUES (i.[ClientId], i.[Origin])
+OUTPUT INSERTED.[Id], i._Position
+INTO @inserted0;
+
+SELECT [t].[Id] FROM [ClientCorsOrigins] t
+INNER JOIN @inserted0 i ON ([t].[Id] = [i].[Id])
+ORDER BY [i].[_Position];
+
+DECLARE @inserted2 TABLE ([Id] int, [_Position] [int]);
+MERGE [ClientGrantTypes] USING (
+VALUES (@p47, @p48, 0),
+(@p49, @p50, 1)) AS i ([ClientId], [GrantType], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([ClientId], [GrantType])
+VALUES (i.[ClientId], i.[GrantType])
+OUTPUT INSERTED.[Id], i._Position
+INTO @inserted2;
+
+SELECT [t].[Id] FROM [ClientGrantTypes] t
+INNER JOIN @inserted2 i ON ([t].[Id] = [i].[Id])
+ORDER BY [i].[_Position];
+
+INSERT INTO [ClientPostLogoutRedirectUris] ([ClientId], [PostLogoutRedirectUri])
+VALUES (@p51, @p52);
+SELECT [Id]
+FROM [ClientPostLogoutRedirectUris]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();
+
+DECLARE @inserted5 TABLE ([Id] int, [_Position] [int]);
+MERGE [ClientRedirectUris] USING (
+VALUES (@p53, @p54, 0),
+(@p55, @p56, 1)) AS i ([ClientId], [RedirectUri], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([ClientId], [RedirectUri])
+VALUES (i.[ClientId], i.[RedirectUri])
+OUTPUT INSERTED.[Id], i._Position
+INTO @inserted5;
+
+SELECT [t].[Id] FROM [ClientRedirectUris] t
+INNER JOIN @inserted5 i ON ([t].[Id] = [i].[Id])
+ORDER BY [i].[_Position];
+
+DECLARE @inserted7 TABLE ([Id] int, [_Position] [int]);
+MERGE [ClientScopes] USING (
+VALUES (@p57, @p58, 0),
+(@p59, @p60, 1),
+(@p61, @p62, 2),
+(@p63, @p64, 3),
+(@p65, @p66, 4)) AS i ([ClientId], [Scope], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([ClientId], [Scope])
+VALUES (i.[ClientId], i.[Scope])
+OUTPUT INSERTED.[Id], i._Position
+INTO @inserted7;
+
+SELECT [t].[Id] FROM [ClientScopes] t
+INNER JOIN @inserted7 i ON ([t].[Id] = [i].[Id])
+ORDER BY [i].[_Position];
+
+INSERT INTO [ClientSecrets] ([ClientId], [Created], [Description], [Expiration], [Type], [Value])
+VALUES (@p67, @p68, @p69, @p70, @p71, @p72);
+SELECT [Id]
+FROM [ClientSecrets]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();"
+[2020-10-22T19:36:54.1225230+00:00][INFO][4][Microsoft.EntityFrameworkCore.Infrastructure] Entity Framework Core "3.1.8" initialized '"AdminIdentityDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "MigrationsAssembly=Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer "
+[2020-10-22T19:36:54.1449533+00:00][INFO][14][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Roles] AS [r]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END"
+[2020-10-22T19:36:54.2270585+00:00][INFO][11][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("3"ms) [Parameters=["@__normalizedName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+FROM [Roles] AS [r]
+WHERE [r].[NormalizedName] = @__normalizedName_0"
+[2020-10-22T19:36:54.2884219+00:00][INFO][11][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("1"ms) [Parameters=["@__normalizedName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+FROM [Roles] AS [r]
+WHERE [r].[NormalizedName] = @__normalizedName_0"
+[2020-10-22T19:36:54.3258021+00:00][INFO][14][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("5"ms) [Parameters=["@p0='?' (Size = 450), @p1='?' (Size = 4000), @p2='?' (Size = 256), @p3='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+INSERT INTO [Roles] ([Id], [ConcurrencyStamp], [Name], [NormalizedName])
+VALUES (@p0, @p1, @p2, @p3);"
+[2020-10-22T19:36:54.3405994+00:00][INFO][5][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END"
+[2020-10-22T19:36:54.4097664+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("3"ms) [Parameters=["@__normalizedUserName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0"
+[2020-10-22T19:36:54.4294678+00:00][INFO][14][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("2"ms) [Parameters=["@__normalizedEmail_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedEmail] = @__normalizedEmail_0"
+[2020-10-22T19:36:54.4694924+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("3"ms) [Parameters=["@p0='?' (Size = 450), @p1='?' (DbType = Int32), @p2='?' (Size = 4000), @p3='?' (Size = 256), @p4='?' (DbType = Boolean), @p5='?' (DbType = Boolean), @p6='?' (DbType = DateTimeOffset), @p7='?' (Size = 256), @p8='?' (Size = 256), @p9='?' (Size = 4000), @p10='?' (Size = 4000), @p11='?' (DbType = Boolean), @p12='?' (Size = 4000), @p13='?' (DbType = Boolean), @p14='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+INSERT INTO [Users] ([Id], [AccessFailedCount], [ConcurrencyStamp], [Email], [EmailConfirmed], [LockoutEnabled], [LockoutEnd], [NormalizedEmail], [NormalizedUserName], [PasswordHash], [PhoneNumber], [PhoneNumberConfirmed], [SecurityStamp], [TwoFactorEnabled], [UserName])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14);"
+[2020-10-22T19:36:54.5047785+00:00][INFO][14][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("12"ms) [Parameters=["@__normalizedUserName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0"
+[2020-10-22T19:36:54.5231021+00:00][INFO][14][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("8"ms) [Parameters=["@__normalizedEmail_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedEmail] = @__normalizedEmail_0"
+[2020-10-22T19:36:54.5668558+00:00][INFO][6][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("5"ms) [Parameters=["@p0='?' (Size = 4000), @p1='?' (Size = 4000), @p2='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+INSERT INTO [UserClaims] ([ClaimType], [ClaimValue], [UserId])
+VALUES (@p0, @p1, @p2);
+SELECT [Id]
+FROM [UserClaims]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();"
+[2020-10-22T19:36:54.6003566+00:00][INFO][14][Microsoft.EntityFrameworkCore.Database.Command] Executed DbCommand ("5"ms) [Parameters=["@p14='?' (Size = 450), @p0='?' (DbType = Int32), @p1='?' (Size = 4000), @p15='?' (Size = 4000), @p2='?' (Size = 256), @p3='?' (DbType = Boolean), @p4='?' (DbType = Boolean), @p5='?' (DbType = DateTimeOffset), @p6='?' (Size = 256), @p7='?' (Size = 256), @p8='?' (Size = 4000), @p9='?' (Size = 4000), @p10='?' (DbType = Boolean), @p11='?' (Size = 4000), @p12='?' (DbType = Boolean), @p13='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+UPDATE [Users] SET 

@@ -125,8 +125,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
 
         private async Task RemoveIdentityResourceClaimsAsync(IdentityResource identityResource)
         {
-            var identityClaims = await DbContext.IdentityClaims.Where(x => x.IdentityResource.Id == identityResource.Id).ToListAsync();
-            DbContext.IdentityClaims.RemoveRange(identityClaims);
+            var identityClaims = await DbContext.IdentityResourceClaims.Where(x => x.IdentityResource.Id == identityResource.Id).ToListAsync();
+            DbContext.IdentityResourceClaims.RemoveRange(identityClaims);
         }
 
         public virtual async Task<int> DeleteIdentityResourceAsync(IdentityResource identityResource)

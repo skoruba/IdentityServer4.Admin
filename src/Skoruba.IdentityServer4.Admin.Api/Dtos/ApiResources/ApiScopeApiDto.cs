@@ -8,6 +8,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Dtos.ApiResources
         public ApiScopeApiDto()
         {
             UserClaims = new List<string>();
+			Properties = new Dictionary<string, string>();
         }
 
         public bool ShowInDiscoveryDocument { get; set; } = true;
@@ -26,5 +27,9 @@ namespace Skoruba.IdentityServer4.Admin.Api.Dtos.ApiResources
         public bool Emphasize { get; set; }
 
         public List<string> UserClaims { get; set; }
-    }
+
+		public bool Enable { get; set; }
+
+		public Dictionary<string, string> Properties { get; set; }
+	}
 }

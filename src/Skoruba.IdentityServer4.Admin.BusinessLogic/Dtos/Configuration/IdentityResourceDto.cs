@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
@@ -8,6 +9,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
 		public IdentityResourceDto()
 		{
 			UserClaims = new List<string>();
+			Properties = new List<IdentityResourcePropertyDto>();
 		}
 
 		public int Id { get; set; }
@@ -30,5 +32,13 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
 		public List<string> UserClaims { get; set; }
 
 		public string UserClaimsItems { get; set; }
+
+		public DateTime Created { get; set; }
+
+		public DateTime? Updated { get; set; }
+
+		public List<IdentityResourcePropertyDto> Properties { get; set; }
+
+		public bool NonEditable { get; set; }
 	}
 }

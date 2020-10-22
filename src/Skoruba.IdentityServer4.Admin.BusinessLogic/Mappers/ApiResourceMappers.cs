@@ -2,6 +2,7 @@
 using IdentityServer4.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
+using System.Collections.Generic;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
 {
@@ -14,6 +15,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
         }
 
         internal static IMapper Mapper { get; }
+
+        ///---------------------------------------------------------------------------
 
         public static ApiResourceDto ToModel(this ApiResource resource)
         {
@@ -35,24 +38,31 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
             return Mapper.Map<ApiResourcePropertiesDto>(apiResourceProperty);
         }
 
-        public static ApiSecretsDto ToModel(this PagedList<ApiSecret> secrets)
+        ///---------------------------------------------------------------------------
+        ///
+        public static ApiResourceSecretsDto ToModel(this PagedList<ApiResourceSecret> secrets)
         {
-            return secrets == null ? null : Mapper.Map<ApiSecretsDto>(secrets);
+            return secrets == null ? null : Mapper.Map<ApiResourceSecretsDto>(secrets);
         }
 
-        public static ApiScopesDto ToModel(this PagedList<ApiScope> scopes)
+        public static ApiResourceSecretsDto ToModel(this ApiResourceSecret resource)
         {
-            return scopes == null ? null : Mapper.Map<ApiScopesDto>(scopes);
+            return resource == null ? null : Mapper.Map<ApiResourceSecretsDto>(resource);
         }
 
-        public static ApiScopesDto ToModel(this ApiScope resource)
-        {
-            return resource == null ? null : Mapper.Map<ApiScopesDto>(resource);
-        }
+		public static ApiResourceScopesDto ToModel(this PagedList<ApiResourceScope> scopes)
+		{
+			return scopes == null ? null : Mapper.Map<ApiResourceScopesDto>(scopes);
+		}
 
-        public static ApiSecretsDto ToModel(this ApiSecret resource)
+		public static ApiResourceScopeDto ToModel(this ApiResourceScope resource)
+		{
+			return resource == null ? null : Mapper.Map<ApiResourceScopeDto>(resource);
+		}
+
+        public static ApiResourceScope ToEntity(this ApiResourceScopeDto resourceScope)
         {
-            return resource == null ? null : Mapper.Map<ApiSecretsDto>(resource);
+            return resourceScope == null ? null : Mapper.Map<ApiResourceScope>(resourceScope);
         }
 
         public static ApiResource ToEntity(this ApiResourceDto resource)
@@ -60,14 +70,24 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
             return resource == null ? null : Mapper.Map<ApiResource>(resource);
         }
 
-        public static ApiSecret ToEntity(this ApiSecretsDto resource)
+        public static ApiResourceClaim ToEntity(this ApiResourceClaimDto apiResourceClaim)
         {
-            return resource == null ? null : Mapper.Map<ApiSecret>(resource);
+            return apiResourceClaim == null ? null : Mapper.Map<ApiResourceClaim>(apiResourceClaim);
         }
 
-        public static ApiScope ToEntity(this ApiScopesDto resource)
+        public static ApiResourceSecret ToEntity(this ApiSecretsDto resource)
         {
-            return resource == null ? null : Mapper.Map<ApiScope>(resource);
+            return resource == null ? null : Mapper.Map<ApiResourceSecret>(resource);
+        }
+
+        public static ApiResourceSecret ToEntity(this ApiResourceSecretsDto resource)
+        {
+            return resource == null ? null : Mapper.Map<ApiResourceSecret>(resource);
+        }
+
+        public static ApiResourceProperty ToEntity(this ApiResourcePropertyDto apiResourceProperties)
+        {
+            return Mapper.Map<ApiResourceProperty>(apiResourceProperties);
         }
 
         public static ApiResourceProperty ToEntity(this ApiResourcePropertiesDto apiResourceProperties)

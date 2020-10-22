@@ -17,7 +17,7 @@ using Skoruba.IdentityServer4.Shared.Helpers;
 
 namespace Skoruba.IdentityServer4.STS.Identity
 {
-    public class Startup
+	public class Startup
     {
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment Environment { get; }
@@ -58,7 +58,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
             RegisterAuthorization(services);
 
             services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, IdentityServerDataProtectionDbContext>(Configuration);
-        }
+		}
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -66,7 +66,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
             }
             else
             {

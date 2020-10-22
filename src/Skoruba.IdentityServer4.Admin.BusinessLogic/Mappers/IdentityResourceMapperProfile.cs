@@ -36,7 +36,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
 
             // model to entity
             CreateMap<IdentityResourceDto, IdentityResource>(MemberList.Source)
-                .ForMember(x => x.UserClaims, opts => opts.MapFrom(src => src.UserClaims.Select(x => new IdentityClaim { Type = x })));
+                .ForMember(x => x.UserClaims, opts => opts.MapFrom(src => src.UserClaims.Select(x => new IdentityResourceClaim { Type = x })))
+                .ForMember(x => x.Properties, opts => opts.MapFrom(src => src.Properties.Select(x => new IdentityResourceProperty{ Id = x.Id, IdentityResourceId = x.IdentityResourceId, Key = x.Key, Value = x.Value })));
 
             CreateMap<IdentityResourcePropertiesDto, IdentityResourceProperty>(MemberList.Source)
                 .ForMember(x => x.IdentityResource, dto => dto.MapFrom(src => new IdentityResource() { Id = src.IdentityResourceId }))

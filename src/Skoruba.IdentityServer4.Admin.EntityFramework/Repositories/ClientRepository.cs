@@ -14,6 +14,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
 using Client = IdentityServer4.EntityFramework.Entities.Client;
+using ClientClaim = IdentityServer4.EntityFramework.Entities.ClientClaim;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
 {
@@ -65,10 +66,10 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
                 .TakeIf(x => x.Id, limit > 0, limit)
                 .Select(x => x.Name).ToListAsync();
 
-            var apiScopes = await DbContext.ApiScopes
-                .WhereIf(!string.IsNullOrEmpty(scope), x => x.Name.Contains(scope))
+            var apiScopes = await DbContext.ApiResourceScopes
+                .WhereIf(!string.IsNullOrEmpty(scope), x => x.Scope.Contains(scope))
                 .TakeIf(x => x.Id, limit > 0, limit)
-                .Select(x => x.Name).ToListAsync();
+                .Select(x => x.Scope).ToListAsync();
 
             var scopes = identityResources.Concat(apiScopes).TakeIf(x => x, limit > 0, limit).ToList();
 
@@ -165,12 +166,12 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             return await AutoSaveChangesAsync();
         }
 
-        public virtual async Task<int> AddClientPropertyAsync(int clientId, ClientProperty clientProperty)
+        public virtual async Task<int> AddClientPropertyAsync(int clientId, ClientProperty clientProperties)
         {
             var client = await DbContext.Clients.Where(x => x.Id == clientId).SingleOrDefaultAsync();
 
-            clientProperty.Client = client;
-            await DbContext.ClientProperties.AddAsync(clientProperty);
+            clientProperties.Client = client;
+            await DbContext.ClientProperties.AddAsync(clientProperties);
 
             return await AutoSaveChangesAsync();
         }
@@ -178,8 +179,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
         public virtual async Task<(string ClientId, string ClientName)> GetClientIdAsync(int clientId)
         {
             var client = await DbContext.Clients.Where(x => x.Id == clientId)
-                .Select(x => new { x.ClientId, x.ClientName })
-                .SingleOrDefaultAsync();
+                                                .Select(x => new { x.ClientId, x.ClientName })
+                                                .SingleOrDefaultAsync();
 
             return (client?.ClientId, client?.ClientName);
         }

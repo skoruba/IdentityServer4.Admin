@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -42,20 +43,22 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
         public virtual Task<ApiResource> GetApiResourceAsync(int apiResourceId)
         {
             return DbContext.ApiResources
-                .Include(x => x.UserClaims)
-                .Where(x => x.Id == apiResourceId)
-                .AsNoTracking()
-                .SingleOrDefaultAsync();
+							.Include(x => x.UserClaims)
+							.Where(x => x.Id == apiResourceId)
+							.AsNoTracking()
+							.SingleOrDefaultAsync();
         }
 
         public virtual async Task<PagedList<ApiResourceProperty>> GetApiResourcePropertiesAsync(int apiResourceId, int page = 1, int pageSize = 10)
         {
             var pagedList = new PagedList<ApiResourceProperty>();
 
-            var properties = await DbContext.ApiResourceProperties.Where(x => x.ApiResource.Id == apiResourceId).PageBy(x => x.Id, page, pageSize)
-                .ToListAsync();
+			var properties = await DbContext.ApiResourceProperties
+											.Where(x => x.ApiResource.Id == apiResourceId)
+											.PageBy(x => x.Id, page, pageSize)
+											.ToListAsync();
 
-            pagedList.Data.AddRange(properties);
+			pagedList.Data.AddRange(properties);
             pagedList.TotalCount = await DbContext.ApiResourceProperties.Where(x => x.ApiResource.Id == apiResourceId).CountAsync();
             pagedList.PageSize = pageSize;
 
@@ -65,14 +68,13 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
         public virtual Task<ApiResourceProperty> GetApiResourcePropertyAsync(int apiResourcePropertyId)
         {
             return DbContext.ApiResourceProperties
-                .Include(x => x.ApiResource)
-                .Where(x => x.Id == apiResourcePropertyId)
-                .SingleOrDefaultAsync();
+							.Include(x => x.ApiResource)
+							.SingleOrDefaultAsync(x => x.Id == apiResourcePropertyId);
         }
 
         public virtual async Task<int> AddApiResourcePropertyAsync(int apiResourceId, ApiResourceProperty apiResourceProperty)
         {
-            var apiResource = await DbContext.ApiResources.Where(x => x.Id == apiResourceId).SingleOrDefaultAsync();
+            var apiResource = await DbContext.ApiResources.SingleOrDefaultAsync(x => x.Id == apiResourceId);
 
             apiResourceProperty.ApiResource = apiResource;
             await DbContext.ApiResourceProperties.AddAsync(apiResourceProperty);
@@ -82,9 +84,17 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
 
         public virtual async Task<int> DeleteApiResourcePropertyAsync(ApiResourceProperty apiResourceProperty)
         {
-            var propertyToDelete = await DbContext.ApiResourceProperties.Where(x => x.Id == apiResourceProperty.Id).SingleOrDefaultAsync();
+            var propertyToDelete = await DbContext.ApiResourceProperties.SingleOrDefaultAsync(x => x.Id == apiResourceProperty.Id);
 
             DbContext.ApiResourceProperties.Remove(propertyToDelete);
+            return await AutoSaveChangesAsync();
+        }
+
+        public virtual async Task<int> DeleteApiResourceScopeAsync(ApiResourceScope apiResourceScope)
+        {
+            var resourceScopeToDelete = await DbContext.ApiResourceScopes.SingleOrDefaultAsync(x => x.Id == apiResourceScope.Id);
+
+            DbContext.ApiResourceScopes.Remove(resourceScopeToDelete);
             return await AutoSaveChangesAsync();
         }
 
@@ -92,33 +102,41 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
         {
             if (apiResource.Id == 0)
             {
-                var existsWithSameName = await DbContext.ApiResources.Where(x => x.Name == apiResource.Name).SingleOrDefaultAsync();
+                var existsWithSameName = await DbContext.ApiResources.SingleOrDefaultAsync(x => x.Name == apiResource.Name);
                 return existsWithSameName == null;
             }
             else
             {
-                var existsWithSameName = await DbContext.ApiResources.Where(x => x.Name == apiResource.Name && x.Id != apiResource.Id).SingleOrDefaultAsync();
+                var existsWithSameName = await DbContext.ApiResources.SingleOrDefaultAsync(x => x.Name == apiResource.Name && x.Id != apiResource.Id);
                 return existsWithSameName == null;
             }
         }
 
         public virtual async Task<bool> CanInsertApiResourcePropertyAsync(ApiResourceProperty apiResourceProperty)
         {
-            var existsWithSameName = await DbContext.ApiResourceProperties.Where(x => x.Key == apiResourceProperty.Key
-                                                                                       && x.ApiResource.Id == apiResourceProperty.ApiResourceId).SingleOrDefaultAsync();
+            var existsWithSameName = await DbContext.ApiResourceProperties
+                                                    .SingleOrDefaultAsync(x => x.Key == apiResourceProperty.Key && x.ApiResource.Id == apiResourceProperty.ApiResourceId);
+            return existsWithSameName == null;
+        }
+        public virtual async Task<bool> CanInsertApiResourceScopeAsync(ApiResourceScope apiResourceScope)
+        {
+            var existsWithSameName = await DbContext.ApiResourceScopes
+                                                    .SingleOrDefaultAsync(x => x.Scope.Equals(apiResourceScope.Scope) && x.ApiResource.Id == apiResourceScope.ApiResourceId);
             return existsWithSameName == null;
         }
 
-        public virtual async Task<bool> CanInsertApiScopeAsync(ApiScope apiScope)
+        public virtual async Task<bool> CanInsertApiResourceSecretAsync(ApiScope apiScope)
         {
             if (apiScope.Id == 0)
             {
-                var existsWithSameName = await DbContext.ApiScopes.Where(x => x.Name == apiScope.Name).SingleOrDefaultAsync();
+                var existsWithSameName = await DbContext.ApiScopes
+                                                        .SingleOrDefaultAsync(x => x.Name == apiScope.Name);
                 return existsWithSameName == null;
             }
             else
             {
-                var existsWithSameName = await DbContext.ApiScopes.Where(x => x.Name == apiScope.Name && x.Id != apiScope.Id).SingleOrDefaultAsync();
+                var existsWithSameName = await DbContext.ApiScopes
+                                                        .SingleOrDefaultAsync(x => x.Name == apiScope.Name && x.Id != apiScope.Id);
                 return existsWithSameName == null;
             }
         }
@@ -164,29 +182,49 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             return await AutoSaveChangesAsync();
         }
 
-        public virtual async Task<PagedList<ApiScope>> GetApiScopesAsync(int apiResourceId, int page = 1, int pageSize = 10)
-        {
-            var pagedList = new PagedList<ApiScope>();
+		public async Task<PagedList<ApiScope>> GetApiScopesAsync(int apiResourceId, int page = 1, int pageSize = 10)
+		{
+			// Se filtran los Scopes asociados al ApiResource, registrados en la tabla intermedia
+			var apiResourceScopes = await DbContext.ApiResourceScopes
+												   .Where(x => x.ApiResourceId == apiResourceId)
+												   .PageBy(x => x.Id, page, pageSize)
+												   .Select(x => x.Scope)
+												   .ToListAsync();
 
-            var apiScopes = await DbContext.ApiScopes
-                .Include(x => x.ApiResource)
-                .Where(x => x.ApiResource.Id == apiResourceId).PageBy(x => x.Name, page, pageSize).ToListAsync();
+            // Se obtienen todos los Scopes que estén registrados en la tabla intermedia
+			var apiScopes = await DbContext.ApiScopes
+                                           .Include(x => x.UserClaims)
+                                           .Include(x => x.Properties)
+                                           .Where(x => apiResourceScopes.Contains(x.Name))
+										   .PageBy(x => x.Id, page, pageSize)
+										   .ToListAsync();
 
-            pagedList.Data.AddRange(apiScopes);
-            pagedList.TotalCount = await DbContext.ApiScopes.Where(x => x.ApiResource.Id == apiResourceId).CountAsync();
-            pagedList.PageSize = pageSize;
+			var pagedList = new PagedList<ApiScope>();
+			pagedList.Data.AddRange(apiScopes);
+			pagedList.TotalCount = await DbContext.ApiResourceScopes.CountAsync(x => x.ApiResource.Id == apiResourceId);
+			pagedList.PageSize = pageSize;
 
-            return pagedList;
+			return pagedList;
+		}
+
+		public virtual Task<ApiScope> GetApiScopeAsync(int apiScopeId)
+		{
+            return DbContext.ApiScopes
+							.Include(x => x.UserClaims)
+                            .Include(x => x.Properties)
+                            .Where(x => x.Id == apiScopeId)
+							.AsNoTracking()
+							.SingleOrDefaultAsync();
         }
 
-        public virtual Task<ApiScope> GetApiScopeAsync(int apiResourceId, int apiScopeId)
+		public virtual Task<ApiScope> GetApiScopeAsync(string name)
         {
             return DbContext.ApiScopes
-                .Include(x => x.UserClaims)
-                .Include(x => x.ApiResource)
-                .Where(x => x.Id == apiScopeId && x.ApiResource.Id == apiResourceId)
-                .AsNoTracking()
-                .SingleOrDefaultAsync();
+							.Include(x => x.UserClaims)
+							.Include(x => x.Properties)
+							.Where(x => x.Name == name)
+							.AsNoTracking()
+							.SingleOrDefaultAsync();
         }
 
         /// <summary>
@@ -197,10 +235,34 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
         /// <returns>This method return new api scope id</returns>
         public virtual async Task<int> AddApiScopeAsync(int apiResourceId, ApiScope apiScope)
         {
-            var apiResource = await DbContext.ApiResources.Where(x => x.Id == apiResourceId).SingleOrDefaultAsync();
-            apiScope.ApiResource = apiResource;
+			DbContext.ApiScopes.Add(apiScope);
 
+			var apiResourceScope = new ApiResourceScope()
+			{
+                Id = apiScope.Id,
+				Scope = apiScope.Name,
+				ApiResourceId = apiResourceId
+			};
+
+			DbContext.ApiResourceScopes.Add(apiResourceScope);
+
+			await AutoSaveChangesAsync();
+
+            return apiScope.Id;
+        }
+
+        public virtual async Task<int> AddApiResourceScopeAsync(int apiResourceId, ApiScope apiScope)
+        {
             DbContext.ApiScopes.Add(apiScope);
+
+            var apiResourceScope = new ApiResourceScope()
+            {
+                Id = apiScope.Id,
+                Scope = apiScope.Name,
+                ApiResourceId = apiResourceId
+            };
+
+            DbContext.ApiResourceScopes.Add(apiResourceScope);
 
             await AutoSaveChangesAsync();
 
@@ -210,17 +272,16 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
         private async Task RemoveApiScopeClaimsAsync(ApiScope apiScope)
         {
             //Remove old api scope claims
-            var apiScopeClaims = await DbContext.ApiScopeClaims.Where(x => x.ApiScope.Id == apiScope.Id).ToListAsync();
+            var apiScopeClaims = await DbContext.ApiScopeClaims.Where(x => x.ScopeId == apiScope.Id).ToListAsync();
             DbContext.ApiScopeClaims.RemoveRange(apiScopeClaims);
         }
 
         public virtual async Task<int> UpdateApiScopeAsync(int apiResourceId, ApiScope apiScope)
         {
-            var apiResource = await DbContext.ApiResources.Where(x => x.Id == apiResourceId).SingleOrDefaultAsync();
-            apiScope.ApiResource = apiResource;
-
-            //Remove old relations
+            ////Remove old relations
             await RemoveApiScopeClaimsAsync(apiScope);
+
+            ///Remove properties
 
             //Update with new data
             DbContext.ApiScopes.Update(apiScope);
@@ -230,45 +291,49 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
 
         public virtual async Task<int> DeleteApiScopeAsync(ApiScope apiScope)
         {
-            var apiScopeToDelete = await DbContext.ApiScopes.Where(x => x.Id == apiScope.Id).SingleOrDefaultAsync();
+            var resourceScopeToDelete = await DbContext.ApiResourceScopes.SingleOrDefaultAsync(x => x.Scope.Equals(apiScope.Name));
+            DbContext.ApiResourceScopes.Remove(resourceScopeToDelete);
+
+            var apiScopeToDelete = await DbContext.ApiScopes.SingleOrDefaultAsync(x => x.Id == apiScope.Id);
             DbContext.ApiScopes.Remove(apiScopeToDelete);
 
-            return await AutoSaveChangesAsync();
+			return await AutoSaveChangesAsync();
         }
 
-        public virtual async Task<PagedList<ApiSecret>> GetApiSecretsAsync(int apiResourceId, int page = 1, int pageSize = 10)
+		public virtual async Task<PagedList<ApiResourceSecret>> GetApiResourceSecretsAsync(int apiResourceId, int page = 1, int pageSize = 10)
         {
-            var pagedList = new PagedList<ApiSecret>();
-            var apiSecrets = await DbContext.ApiSecrets.Where(x => x.ApiResource.Id == apiResourceId).PageBy(x => x.Id, page, pageSize).ToListAsync();
+            var pagedList = new PagedList<ApiResourceSecret>();
+            var ApiResourceSecret = await DbContext.ApiResourceSecrets.Where(x => x.ApiResource.Id == apiResourceId).PageBy(x => x.Id, page, pageSize).ToListAsync();
 
-            pagedList.Data.AddRange(apiSecrets);
-            pagedList.TotalCount = await DbContext.ApiSecrets.Where(x => x.ApiResource.Id == apiResourceId).CountAsync();
+            pagedList.Data.AddRange(ApiResourceSecret);
+            pagedList.TotalCount = await DbContext.ApiResourceSecrets.CountAsync(x => x.ApiResource.Id == apiResourceId);
             pagedList.PageSize = pageSize;
 
             return pagedList;
         }
 
-        public virtual Task<ApiSecret> GetApiSecretAsync(int apiSecretId)
+        public virtual Task<ApiResourceSecret> GetApiResourceSecretAsync(int apiSecretId)
         {
-            return DbContext.ApiSecrets
-                .Include(x => x.ApiResource)
-                .Where(x => x.Id == apiSecretId)
-                .AsNoTracking()
-                .SingleOrDefaultAsync();
+            return DbContext.ApiResourceSecrets
+							.Include(x => x.ApiResource)
+                            .Where(x => x.Id == apiSecretId)
+							.AsNoTracking()
+							.SingleOrDefaultAsync();
         }
 
-        public virtual async Task<int> AddApiSecretAsync(int apiResourceId, ApiSecret apiSecret)
+		public virtual async Task<int> AddApiResourceSecretAsync(int apiResourceId, ApiResourceSecret apiResourceSecret)
         {
-            apiSecret.ApiResource = await DbContext.ApiResources.Where(x => x.Id == apiResourceId).SingleOrDefaultAsync();
-            await DbContext.ApiSecrets.AddAsync(apiSecret);
+            apiResourceSecret.ApiResource = await DbContext.ApiResources.SingleOrDefaultAsync(x => x.Id == apiResourceId);
+
+            await DbContext.ApiResourceSecrets.AddAsync(apiResourceSecret);
 
             return await AutoSaveChangesAsync();
         }
 
-        public virtual async Task<int> DeleteApiSecretAsync(ApiSecret apiSecret)
+        public virtual async Task<int> DeleteApiResourceSecretAsync(ApiResourceSecret apiResourceSecret)
         {
-            var apiSecretToDelete = await DbContext.ApiSecrets.Where(x => x.Id == apiSecret.Id).SingleOrDefaultAsync();
-            DbContext.ApiSecrets.Remove(apiSecretToDelete);
+            var ApiResourceSecretToDelete = await DbContext.ApiResourceSecrets.Where(x => x.Id == apiResourceSecret.Id).SingleOrDefaultAsync();
+            DbContext.ApiResourceSecrets.Remove(ApiResourceSecretToDelete);
 
             return await AutoSaveChangesAsync();
         }
@@ -283,11 +348,11 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             return await DbContext.SaveChangesAsync();
         }
 
-        public virtual async Task<string> GetApiResourceNameAsync(int apiResourceId)
+        public virtual async Task<string> GetApiResourceSecretNameAsync(int apiResourceId)
         {
             var apiResourceName = await DbContext.ApiResources.Where(x => x.Id == apiResourceId).Select(x => x.Name).SingleOrDefaultAsync();
 
             return apiResourceName;
         }
-    }
+	}
 }

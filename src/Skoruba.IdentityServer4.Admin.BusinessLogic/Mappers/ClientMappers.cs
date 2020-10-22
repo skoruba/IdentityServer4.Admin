@@ -22,6 +22,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
             return Mapper.Map<ClientDto>(client);
         }
 
+        public static ClientsDto ToModel(this PagedList<Client> clients)
+        {
+            return Mapper.Map<ClientsDto>(clients);
+        }
+
         public static ClientSecretsDto ToModel(this PagedList<ClientSecret> clientSecret)
         {
             return Mapper.Map<ClientSecretsDto>(clientSecret);
@@ -32,52 +37,30 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
             return Mapper.Map<ClientClaimsDto>(clientClaims);
         }
 
-        public static ClientsDto ToModel(this PagedList<Client> clients)
-        {
-            return Mapper.Map<ClientsDto>(clients);
-        }
-
         public static ClientPropertiesDto ToModel(this PagedList<ClientProperty> clientProperties)
         {
             return Mapper.Map<ClientPropertiesDto>(clientProperties);
         }
-        
-		public static Client ToEntity(this ClientDto client)
-        {
-            return Mapper.Map<Client>(client);
-        }
+
+		//*****************************************************************************************
+
+		public static ClientClaimsDto ToModel(this ClientClaim clientClaim)
+		{
+			return Mapper.Map<ClientClaimsDto>(clientClaim);
+		}
 
 		public static ClientSecretsDto ToModel(this ClientSecret clientSecret)
 		{
 			return Mapper.Map<ClientSecretsDto>(clientSecret);
 		}
-        
-        public static ClientSecret ToEntity(this ClientSecretsDto clientSecret)
+
+		public static ClientPropertiesDto ToModel(this ClientProperty clientProperty)
 		{
-			return Mapper.Map<ClientSecret>(clientSecret);
+			return Mapper.Map<ClientPropertiesDto>(clientProperty);
 		}
 
-        public static ClientClaimsDto ToModel(this ClientClaim clientClaim)
-		{
-			return Mapper.Map<ClientClaimsDto>(clientClaim);
-		}
-
-        public static ClientPropertiesDto ToModel(this ClientProperty clientProperty)
-        {
-            return Mapper.Map<ClientPropertiesDto>(clientProperty);
-        }
-
-        public static ClientClaim ToEntity(this ClientClaimsDto clientClaim)
-		{
-			return Mapper.Map<ClientClaim>(clientClaim);
-		}
-
-        public static ClientProperty ToEntity(this ClientPropertiesDto clientProperties)
-        {
-            return Mapper.Map<ClientProperty>(clientProperties);
-        }
-
-        public static SelectItemDto ToModel(this SelectItem selectItem)
+		//*****************************************************************************************
+		public static SelectItemDto ToModel(this SelectItem selectItem)
         {
             return Mapper.Map<SelectItemDto>(selectItem);
         }
@@ -85,6 +68,42 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
         public static List<SelectItemDto> ToModel(this List<SelectItem> selectItem)
         {
             return Mapper.Map<List<SelectItemDto>>(selectItem);
+        }
+
+        //--------------------------------------------------------------------------------------
+        public static Client ToEntity(this ClientDto client)
+        {
+            return Mapper.Map<Client>(client);
+        }
+
+        public static ClientClaim ToEntity(this ClientClaimDto clientClaim)
+		{
+			return Mapper.Map<ClientClaim>(clientClaim);
+		}
+
+        public static ClientClaim ToEntity(this ClientClaimsDto clientClaim)
+        {
+            return Mapper.Map<ClientClaim>(clientClaim);
+        }
+
+        public static ClientSecret ToEntity(this ClientSecretDto clientSecret)
+		{
+			return Mapper.Map<ClientSecret>(clientSecret);
+		}
+
+        public static ClientSecret ToEntity(this ClientSecretsDto clientSecret)
+        {
+            return Mapper.Map<ClientSecret>(clientSecret);
+        }
+
+        public static ClientProperty ToEntity(this ClientPropertyDto clientProperties)
+        {
+            return Mapper.Map<ClientProperty>(clientProperties);
+        }
+
+        public static ClientProperty ToEntity(this ClientPropertiesDto clientProperties)
+        {
+            return Mapper.Map<ClientProperty>(clientProperties);
         }
     }
 }

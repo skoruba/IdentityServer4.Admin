@@ -1,25 +1,25 @@
 ﻿{
-  "IdentityData": {
-    "Roles": [
-      {
+	"IdentityData": {
+		"Roles": [
+			{
         "Name": "SkorubaIdentityAdminAdministrator"
-      }
-    ],
-    "Users": [
-      {
-        "Username": "admin",
-        "Password": "Pa$$word123",
-        "Email": "admin@skoruba.com",
-        "Roles": [
+			}
+		],
+		"Users": [
+			{
+				"Username": "admin",
+				"Password": "Pa$$word123",
+				"Email": "admin@skoruba.com",
+				"Roles": [
           "SkorubaIdentityAdminAdministrator"
-        ],
-        "Claims": [
-          {
-            "Type": "name",
-            "Value": "admin"
-          }
-        ]
-      }
-    ]
-  }
+				],
+				"Claims": [
+					{
+						"Type": "name",
+						"Value": "admin"
+					}
+				]
+			}
+		]
+	}
 }

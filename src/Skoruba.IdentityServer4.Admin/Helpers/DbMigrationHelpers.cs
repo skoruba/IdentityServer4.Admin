@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using IdentityModel;
 using IdentityServer4.EntityFramework.Mappers;
+using IdentityServer4.Models;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Skoruba.AuditLogging.EntityFramework.DbContexts;
 using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.Configuration;
+using Skoruba.IdentityServer4.Admin.Configuration.Identity;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
@@ -224,7 +226,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                     }
 
                     client.Claims = client.ClientClaims
-                        .Select(c => new System.Security.Claims.Claim(c.Type, c.Value))
+                        .Select(c => new ClientClaim(c.Type, c.Value ))
                         .ToList();
 
                     await context.Clients.AddAsync(client.ToEntity());

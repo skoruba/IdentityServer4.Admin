@@ -11,11 +11,10 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
 
         Task<ApiResource> GetApiResourceAsync(int apiResourceId);
 
-        Task<PagedList<ApiResourceProperty>> GetApiResourcePropertiesAsync(int apiResourceId, int page = 1, int pageSize = 10);
 
         Task<ApiResourceProperty> GetApiResourcePropertyAsync(int apiResourcePropertyId);
 
-        Task<int> AddApiResourcePropertyAsync(int apiResourceId, ApiResourceProperty apiResourceProperty);
+		Task<int> AddApiResourcePropertyAsync(int apiResourceId, ApiResourceProperty apiResourceProperty);
 
         Task<int> DeleteApiResourcePropertyAsync(ApiResourceProperty apiResourceProperty);
 
@@ -29,30 +28,35 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
 
         Task<bool> CanInsertApiResourceAsync(ApiResource apiResource);
 
+        Task<bool> CanInsertApiResourceScopeAsync(ApiResourceScope scope);
+
         Task<PagedList<ApiScope>> GetApiScopesAsync(int apiResourceId, int page = 1, int pageSize = 10);
 
-        Task<ApiScope> GetApiScopeAsync(int apiResourceId, int apiScopeId);
+        Task<ApiScope> GetApiScopeAsync(int apiScopeId);
 
-        Task<int> AddApiScopeAsync(int apiResourceId, ApiScope apiScope);
+		Task<int> AddApiScopeAsync(int apiResourceId, ApiScope apiScope);
 
         Task<int> UpdateApiScopeAsync(int apiResourceId, ApiScope apiScope);
 
         Task<int> DeleteApiScopeAsync(ApiScope apiScope);
 
-        Task<PagedList<ApiSecret>> GetApiSecretsAsync(int apiResourceId, int page = 1, int pageSize = 10);
+		Task<PagedList<ApiResourceProperty>> GetApiResourcePropertiesAsync(int apiResourceId, int page = 1, int pageSize = 10);
 
-        Task<int> AddApiSecretAsync(int apiResourceId, ApiSecret apiSecret);
+		Task<PagedList<ApiResourceSecret>> GetApiResourceSecretsAsync(int apiResourceId, int page = 1, int pageSize = 10);
 
-        Task<ApiSecret> GetApiSecretAsync(int apiSecretId);
+		Task<int> AddApiResourceSecretAsync(int apiResourceId, ApiResourceSecret apiResourceSecret);
 
-        Task<int> DeleteApiSecretAsync(ApiSecret apiSecret);
+		Task<ApiResourceSecret> GetApiResourceSecretAsync(int apiSecretId);
 
-        Task<bool> CanInsertApiScopeAsync(ApiScope apiScope);
+		Task<string> GetApiResourceSecretNameAsync(int apiResourceId);
 
+		Task<int> DeleteApiResourceSecretAsync(ApiResourceSecret apiResourceSecret);
+
+        Task<int> DeleteApiResourceScopeAsync(ApiResourceScope apiResourceScope);
+
+        Task<bool> CanInsertApiResourceSecretAsync(ApiScope apiScope);
         Task<int> SaveAllChangesAsync();
 
         bool AutoSaveChanges { get; set; }
-
-        Task<string> GetApiResourceNameAsync(int apiResourceId);
     }
 }

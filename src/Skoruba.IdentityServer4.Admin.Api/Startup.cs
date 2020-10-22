@@ -25,7 +25,7 @@ using Skoruba.IdentityServer4.Shared.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin.Api
 {
-    public class Startup
+	public class Startup
     {
         public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {

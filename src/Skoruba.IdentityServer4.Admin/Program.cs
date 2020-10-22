@@ -112,11 +112,11 @@ namespace Skoruba.IdentityServer4.Admin
                     webBuilder.ConfigureKestrel(options => options.AddServerHeader = false);
                     webBuilder.UseStartup<Startup>();
                 })
-                .UseSerilog((hostContext, loggerConfig) =>
-                {
+				.UseSerilog((hostContext, loggerConfig) =>
+				{
                     loggerConfig
                         .ReadFrom.Configuration(hostContext.Configuration)
-                        .Enrich.WithProperty("ApplicationName", hostContext.HostingEnvironment.ApplicationName);
-                });
-    }
+                                .Enrich.WithProperty("ApplicationName", hostContext.HostingEnvironment.ApplicationName);
+		        });
+	}
 }

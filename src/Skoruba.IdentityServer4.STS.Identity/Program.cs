@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Serilog;
 using Skoruba.IdentityServer4.Shared.Helpers;
 
@@ -79,11 +80,11 @@ namespace Skoruba.IdentityServer4.STS.Identity
                     webBuilder.ConfigureKestrel(options => options.AddServerHeader = false);
                     webBuilder.UseStartup<Startup>();
                 })
-                .UseSerilog((hostContext, loggerConfig) =>
-                {
-                    loggerConfig
-                        .ReadFrom.Configuration(hostContext.Configuration)
-                        .Enrich.WithProperty("ApplicationName", hostContext.HostingEnvironment.ApplicationName);
-                });
-    }
+				.UseSerilog((hostContext, loggerConfig) =>
+				{
+					loggerConfig
+						.ReadFrom.Configuration(hostContext.Configuration)
+						.Enrich.WithProperty("ApplicationName", hostContext.HostingEnvironment.ApplicationName);
+				});
+	}
 }

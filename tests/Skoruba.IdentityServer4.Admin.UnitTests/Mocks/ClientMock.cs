@@ -9,6 +9,17 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 {
 	public static class ClientMock
 	{
+		public static List<string> GetSigningAlgorithms()
+		{
+			var signingAlgorithms = new List<string>
+			{
+				"RS256",
+				"HS256"
+			};
+
+			return signingAlgorithms;
+		}
+
 		public static List<string> GetScopes()
 		{
 			var scopes = new List<string>
@@ -49,6 +60,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 				.RuleFor(o => o.AllowedCorsOrigins, f => GetClientCorsOriginFaker().Generate(f.Random.Number(10)))
 				.RuleFor(o => o.AllowedGrantTypes, f => ClientGrantTypesFaker().Generate(1))
 				.RuleFor(o => o.AllowedScopes, f => ClientScopesFaker().Generate(f.Random.Number(1, 3)))
+				.RuleFor(o => o.RequireRequestObject, f => f.Random.Bool())
+				.RuleFor(o => o.AllowedIdentityTokenSigningAlgorithms, f => f.PickRandom(GetSigningAlgorithms()))
 				.RuleFor(o => o.AlwaysIncludeUserClaimsInIdToken, f => f.Random.Bool())
 				.RuleFor(o => o.Enabled, f => f.Random.Bool())
 				.RuleFor(o => o.ProtocolType, f => f.PickRandom(ClientConsts.GetProtocolTypes().Select(x => x.Id)))
@@ -214,6 +227,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 				.RuleFor(o => o.Description, f => f.Random.Words(f.Random.Number(1, 7)))
 				.RuleFor(o => o.Type, f => f.PickRandom(ClientConsts.GetSecretTypes()))
 				.RuleFor(o => o.Expiration, f => f.Date.Future())
+				.RuleFor(o => o.Created, f => f.Date.Soon())
 				.RuleFor(o => o.Value, f => Guid.NewGuid().ToString());
 
 			return testClientSecret;

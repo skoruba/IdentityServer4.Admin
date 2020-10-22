@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using IdentityServer4.EntityFramework.Storage;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
@@ -13,29 +15,23 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
-using SendGrid;
-using Skoruba.IdentityServer4.Shared.Configuration.Email;
-using Skoruba.IdentityServer4.Shared.Email;
-using Skoruba.IdentityServer4.STS.Identity.Configuration;
-using Skoruba.IdentityServer4.STS.Identity.Configuration.ApplicationParts;
-using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
-using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
-using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
-using System.Linq;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
-using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
 using Skoruba.IdentityServer4.Shared.Authentication;
 using Skoruba.IdentityServer4.Shared.Configuration.Identity;
+using Skoruba.IdentityServer4.STS.Identity.Configuration;
+using Skoruba.IdentityServer4.STS.Identity.Configuration.ApplicationParts;
+using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
+using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
+using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
-    public static class StartupHelpers
+	public static class StartupHelpers
     {
         /// <summary>
         /// Register services for MVC and localization including available languages
@@ -293,7 +289,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 
                     if (!string.IsNullOrEmpty(advancedConfiguration.PublicOrigin))
                     {
-                        options.PublicOrigin = advancedConfiguration.PublicOrigin;
+                        //options.PublicOrigin = advancedConfiguration.PublicOrigin;
                     }
 
                     if (!string.IsNullOrEmpty(advancedConfiguration.IssuerUri))

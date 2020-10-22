@@ -48,7 +48,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
                 .ReverseMap();
 
             CreateMap<ClientClaim, ClientClaimDto>(MemberList.None)
-                .ConstructUsing(src => new ClientClaimDto() { Type = src.Type, Value = src.Value })
+                .ConstructUsing(src => new ClientClaimDto() { Id = src.Id, Type = src.Type, Value = src.Value })
                 .ReverseMap();
 
             CreateMap<ClientIdPRestriction, string>()
@@ -64,14 +64,14 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
             CreateMap<ClientProperty, ClientPropertyDto>(MemberList.Destination)
                 .ReverseMap();
 
-            CreateMap<ClientSecret, ClientSecretsDto>(MemberList.Destination)
-                .ForMember(dest => dest.Type, opt => opt.Condition(srs => srs != null))
-                .ForMember(x => x.ClientSecretId, opt => opt.MapFrom(x => x.Id))
-                .ForMember(x => x.ClientId, opt => opt.MapFrom(x => x.Client.Id));
-
             CreateMap<ClientClaim, ClientClaimsDto>(MemberList.Destination)
                 .ForMember(dest => dest.Type, opt => opt.Condition(srs => srs != null))
                 .ForMember(x => x.ClientClaimId, opt => opt.MapFrom(x => x.Id))
+                .ForMember(x => x.ClientId, opt => opt.MapFrom(x => x.Client.Id));
+
+            CreateMap<ClientSecret, ClientSecretsDto>(MemberList.Destination)
+                .ForMember(dest => dest.Type, opt => opt.Condition(srs => srs != null))
+                .ForMember(x => x.ClientSecretId, opt => opt.MapFrom(x => x.Id))
                 .ForMember(x => x.ClientId, opt => opt.MapFrom(x => x.Client.Id));
 
             CreateMap<ClientProperty, ClientPropertiesDto>(MemberList.Destination)
@@ -93,9 +93,13 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
                 .ForMember(x => x.Clients, opt => opt.MapFrom(src => src.Data));
 
             // model to entity
+            CreateMap<ClientDto, Client>(MemberList.Destination)
+                .ForMember(dest => dest.ProtocolType, opt => opt.Condition(srs => srs != null))
+                .ReverseMap();
+
             CreateMap<ClientSecretsDto, ClientSecret>(MemberList.Source)
-                        .ForMember(x => x.Client, dto => dto.MapFrom(src => new Client() { Id = src.ClientId }))
-                        .ForMember(x => x.Id, opt => opt.MapFrom(src => src.ClientSecretId));
+                 .ForMember(x => x.Client, dto => dto.MapFrom(src => new Client() { Id = src.ClientId }))
+                 .ForMember(x => x.Id, opt => opt.MapFrom(src => src.ClientSecretId));
 
             CreateMap<ClientClaimsDto, ClientClaim>(MemberList.Source)
                 .ForMember(x => x.Client, dto => dto.MapFrom(src => new Client() { Id = src.ClientId }))

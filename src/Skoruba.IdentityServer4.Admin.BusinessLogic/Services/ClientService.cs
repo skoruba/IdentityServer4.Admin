@@ -76,7 +76,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
                     client.AllowOfflineAccess = true;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException("client", $"{client.ClientType} no permitido.");
             }
         }
 

@@ -10,6 +10,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
     {
         public ClientDto()
         {
+            AccessTokenTypes = new List<SelectItemDto>();
             AllowedScopes = new List<string>();
             PostLogoutRedirectUris = new List<string>();
             RedirectUris = new List<string>();
@@ -29,6 +30,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
         public int? ConsentLifetime { get; set; }
 
         public int AccessTokenType { get; set; }
+
         public List<SelectItemDto> AccessTokenTypes { get; set; }
 
         public bool AllowAccessTokensViaBrowser { get; set; }
@@ -70,14 +72,17 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
         public List<SelectItemDto> ProtocolTypes { get; set; }
 
         public int RefreshTokenExpiration { get; set; } = 1;
+
         public List<SelectItemDto> RefreshTokenExpirations { get; set; }
 
         public int RefreshTokenUsage { get; set; } = 1;
+
         public List<SelectItemDto> RefreshTokenUsages { get; set; }
 
         public int SlidingRefreshTokenLifetime { get; set; } = 1296000;
 
         public bool RequireClientSecret { get; set; } = true;
+
         public bool RequireConsent { get; set; } = true;
         public bool RequirePkce { get; set; }
         public bool UpdateAccessTokenClaimsOnRefresh { get; set; }
@@ -89,20 +94,28 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
         public string IdentityProviderRestrictionsItems { get; set; }
 
         public List<string> RedirectUris { get; set; }
+
         public string RedirectUrisItems { get; set; }
 
         public List<string> AllowedCorsOrigins { get; set; }
+
         public string AllowedCorsOriginsItems { get; set; }
 
         public List<string> AllowedGrantTypes { get; set; }
+
         public string AllowedGrantTypesItems { get; set; }
 
         public List<string> AllowedScopes { get; set; }
+
         public string AllowedScopesItems { get; set; }
 
         public List<ClientClaimDto> Claims { get; set; }
+
         public List<ClientSecretDto> ClientSecrets { get; set; }
+
         public List<ClientPropertyDto> Properties { get; set; }
+
+        public DateTime Created { get; set; }
 
         public DateTime? Updated { get; set; }
         public DateTime? LastAccessed { get; set; }

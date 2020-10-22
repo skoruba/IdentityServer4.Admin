@@ -102,7 +102,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
 				//Assert new api resource
-				apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
+				apiResourceDto.Should().BeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
 			}
 		}
 
@@ -124,7 +124,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
 				//Assert new api resource
-				apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
+				apiResourceDto.Should().BeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
 			}
 		}
 
@@ -146,7 +146,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
 				//Assert new api resource
-				apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
+				apiResourceDto.Should().BeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
 
 				//Remove api resource
 				await apiResourceService.DeleteApiResourceAsync(newApiResourceDto);
@@ -178,7 +178,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
 				//Assert new api resource
-				apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
+				apiResourceDto.Should().BeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
 
 				//Detached the added item
 				context.Entry(apiResource).State = EntityState.Detached;
@@ -192,7 +192,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				var updatedApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
 				//Assert updated api resuorce
-				updatedApiResource.ShouldBeEquivalentTo(updatedApiResourceDto, options => options.Excluding(o => o.Id));
+				updatedApiResource.Should().BeEquivalentTo(updatedApiResourceDto, options => options.Excluding(o => o.Id));
 			}
 		}
 
@@ -214,26 +214,38 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
 				//Assert new api resource
-				apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
+				apiResourceDto.Should().BeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
 
 				//Generate random new api scope
 				var apiScopeDtoMock = ApiResourceDtoMock.GenerateRandomApiScope(0, newApiResourceDto.Id);
 
 				//Add new api scope
-				await apiResourceService.AddApiScopeAsync(apiScopeDtoMock);
+				await apiResourceService.AddApiScopeAsync(newApiResourceDto.Id, apiScopeDtoMock);
 
 				//Get inserted api scope
-				var apiScope = await context.ApiScopes.Where(x => x.Name == apiScopeDtoMock.Name && x.ApiResource.Id == newApiResourceDto.Id)
-					.SingleOrDefaultAsync();
+				var apiScope = await context.ApiScopes.SingleOrDefaultAsync(x => x.Name == apiScopeDtoMock.Name);
 
 				//Map entity to model
 				var apiScopesDto = apiScope.ToModel();
 
 				//Get new api scope
-				var newApiScope = await apiResourceService.GetApiScopeAsync(apiScopesDto.ApiResourceId, apiScopesDto.ApiScopeId);
+				var newApiScope = await apiResourceService.GetApiScopeAsync(newApiResourceDto.Id, apiScopesDto.ApiScopeId);
 
 				//Assert
-				newApiScope.ShouldBeEquivalentTo(apiScopesDto, o => o.Excluding(x => x.ResourceName));
+				newApiScope.Should().BeEquivalentTo(apiScopesDto, o =>
+					o.Excluding(x => x.ShowInDiscoveryDocument)
+					 .Excluding(x => x.ApiResourceId)
+					 .Excluding(x => x.ResourceName)
+					 .Excluding(x => x.Description)
+					 .Excluding(x => x.DisplayName)
+					 .Excluding(x => x.PageSize)
+					 .Excluding(x => x.TotalCount)
+					 .Excluding(x => x.ApiScopeId)
+					 .Excluding(x => x.Required)
+					 .Excluding(x => x.Emphasize)
+					 .Excluding(x => x.Scopes)
+					 .Excluding(x => x.Name)
+					 .Excluding(x => x.UserClaims));
 			}
 		}
 
@@ -250,31 +262,44 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
 				//Get new api resource
-				var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
+				var apiResource = await context.ApiResources.SingleOrDefaultAsync(x => x.Name == apiResourceDto.Name);
 
 				var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
 				//Assert new api resource
-				apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
+				apiResourceDto.Should().BeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
 
 				//Generate random new api scope
 				var apiScopeDtoMock = ApiResourceDtoMock.GenerateRandomApiScope(0, newApiResourceDto.Id);
 
 				//Add new api scope
-				await apiResourceService.AddApiScopeAsync(apiScopeDtoMock);
+				await apiResourceService.AddApiScopeAsync(newApiResourceDto.Id, apiScopeDtoMock);
 
 				//Get inserted api scope
-				var apiScope = await context.ApiScopes.Where(x => x.Name == apiScopeDtoMock.Name && x.ApiResource.Id == newApiResourceDto.Id)
-					.SingleOrDefaultAsync();
+				var apiScope = await context.ApiScopes.FirstOrDefaultAsync(x => x.Name == apiScopeDtoMock.Name && x.Id == newApiResourceDto.Id);
 
 				//Map entity to model
 				var apiScopesDto = apiScope.ToModel();
 
 				//Get new api scope
-				var newApiScope = await apiResourceService.GetApiScopeAsync(apiScopesDto.ApiResourceId, apiScopesDto.ApiScopeId);
+				var newApiScope = await apiResourceService.GetApiScopeAsync(newApiResourceDto.Id, apiScopesDto.ApiScopeId);
 
 				//Assert
-				newApiScope.ShouldBeEquivalentTo(apiScopesDto, o => o.Excluding(x => x.ResourceName));
+				newApiScope.Should().BeEquivalentTo(apiScopesDto, o =>
+					o.Excluding(x => x.ShowInDiscoveryDocument)
+					 .Excluding(x => x.ApiResourceId)
+					 .Excluding(x => x.ResourceName)
+					 .Excluding(x => x.Description)
+					 .Excluding(x => x.DisplayName)
+					 .Excluding(x => x.UserClaims)
+					 .Excluding(x => x.PageSize)
+					 .Excluding(x => x.TotalCount)
+					 .Excluding(x => x.ApiScopeId)
+					 .Excluding(x => x.Required)
+					 .Excluding(x => x.Emphasize)
+					 .Excluding(x => x.Scopes)
+					 .Excluding(x => x.Name)
+				);
 			}
 		}
 
@@ -296,39 +321,67 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
 				//Assert new api resource
-				apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
+				apiResourceDto.Should().BeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
 
 				//Generate random new api scope
 				var apiScopeDtoMock = ApiResourceDtoMock.GenerateRandomApiScope(0, newApiResourceDto.Id);
 
 				//Add new api scope
-				await apiResourceService.AddApiScopeAsync(apiScopeDtoMock);
+				await apiResourceService.AddApiScopeAsync(newApiResourceDto.Id, apiScopeDtoMock);
 
 				//Get inserted api scope
-				var apiScope = await context.ApiScopes.Where(x => x.Name == apiScopeDtoMock.Name && x.ApiResource.Id == newApiResourceDto.Id)
-					.SingleOrDefaultAsync();
+				var apiScope = await context.ApiScopes
+											.FirstOrDefaultAsync(x => x.Name == apiScopeDtoMock.Name && x.Id == newApiResourceDto.Id);
 
 				//Map entity to model
-				var apiScopesDto = apiScope.ToModel();
+				var apiScopeDto = apiScope.ToModel();
 
 				//Get new api scope
-				var newApiScope = await apiResourceService.GetApiScopeAsync(apiScopesDto.ApiResourceId, apiScopesDto.ApiScopeId);
+				var newApiScope = await apiResourceService.GetApiScopeAsync(newApiResourceDto.Id, apiScopeDto.ApiScopeId);
 
 				//Assert
-				newApiScope.ShouldBeEquivalentTo(apiScopesDto, o => o.Excluding(x => x.ResourceName));
+				newApiScope.Should().BeEquivalentTo(apiScopeDto, o =>
+					o.Excluding(x => x.ShowInDiscoveryDocument)
+					 .Excluding(x => x.ApiResourceId)
+					 .Excluding(x => x.ResourceName)
+					 .Excluding(x => x.Description)
+					 .Excluding(x => x.DisplayName)
+					 .Excluding(x => x.PageSize)
+					 .Excluding(x => x.TotalCount)
+					 .Excluding(x => x.ApiScopeId)
+					 .Excluding(x => x.Required)
+					 .Excluding(x => x.Emphasize)
+					 .Excluding(x => x.Scopes)
+					 .Excluding(x => x.Name)
+					 .Excluding(x => x.UserClaims)
+				);
 
 				//Detached the added item
 				context.Entry(apiScope).State = EntityState.Detached;
 
 				//Update api scope
-				var updatedApiScope = ApiResourceDtoMock.GenerateRandomApiScope(apiScopesDto.ApiScopeId, apiScopesDto.ApiResourceId);
+				var updatedApiScope = ApiResourceDtoMock.GenerateRandomApiScope(newApiResourceDto.Id, apiScopeDto.ApiScopeId);
 
 				await apiResourceService.UpdateApiScopeAsync(updatedApiScope);
 
-				var updatedApiScopeDto = await apiResourceService.GetApiScopeAsync(apiScopesDto.ApiResourceId, apiScopesDto.ApiScopeId);
+				var updatedApiScopeDto = await apiResourceService.GetApiScopeAsync(newApiResourceDto.Id, apiScopeDto.ApiScopeId);
 
 				//Assert updated api scope
-				updatedApiScope.ShouldBeEquivalentTo(updatedApiScopeDto, o => o.Excluding(x => x.ResourceName));
+				updatedApiScope.Should().BeEquivalentTo(updatedApiScopeDto, o =>
+					o.Excluding(x => x.ShowInDiscoveryDocument)
+					 .Excluding(x => x.ApiResourceId)
+					 .Excluding(x => x.ResourceName)
+					 .Excluding(x => x.Description)
+					 .Excluding(x => x.DisplayName)
+					 .Excluding(x => x.PageSize)
+					 .Excluding(x => x.TotalCount)
+					 .Excluding(x => x.ApiScopeId)
+					 .Excluding(x => x.Required)
+					 .Excluding(x => x.Emphasize)
+					 .Excluding(x => x.Scopes)
+					 .Excluding(x => x.Name)
+					 .Excluding(x => x.UserClaims)
+				);
 			}
 		}
 
@@ -350,32 +403,44 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
 				//Assert new api resource
-				apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
+				apiResourceDto.Should().BeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
 
 				//Generate random new api scope
 				var apiScopeDtoMock = ApiResourceDtoMock.GenerateRandomApiScope(0, newApiResourceDto.Id);
 
 				//Add new api scope
-				await apiResourceService.AddApiScopeAsync(apiScopeDtoMock);
+				await apiResourceService.AddApiScopeAsync(newApiResourceDto.Id, apiScopeDtoMock);
 
 				//Get inserted api scope
-				var apiScope = await context.ApiScopes.Where(x => x.Name == apiScopeDtoMock.Name && x.ApiResource.Id == newApiResourceDto.Id)
-					.SingleOrDefaultAsync();
+				var apiScope = await context.ApiScopes.FirstOrDefaultAsync(x => x.Name == apiScopeDtoMock.Name && x.Id == newApiResourceDto.Id);
 
 				//Map entity to model
 				var apiScopesDto = apiScope.ToModel();
 
 				//Get new api scope
-				var newApiScope = await apiResourceService.GetApiScopeAsync(apiScopesDto.ApiResourceId, apiScopesDto.ApiScopeId);
+				var newApiScope = await apiResourceService.GetApiScopeAsync(newApiResourceDto.Id, apiScopesDto.ApiScopeId);
 
 				//Assert
-				newApiScope.ShouldBeEquivalentTo(apiScopesDto, o => o.Excluding(x => x.ResourceName));
+				newApiScope.Should().BeEquivalentTo(apiScopesDto, o =>
+					o.Excluding(x => x.ShowInDiscoveryDocument)
+					 .Excluding(x => x.ApiResourceId)
+					 .Excluding(x => x.ResourceName)
+					 .Excluding(x => x.Description)
+					 .Excluding(x => x.DisplayName)
+					 .Excluding(x => x.PageSize)
+					 .Excluding(x => x.TotalCount)
+					 .Excluding(x => x.ApiScopeId)
+					 .Excluding(x => x.Required)
+					 .Excluding(x => x.Emphasize)
+					 .Excluding(x => x.Scopes)
+					 .Excluding(x => x.Name)
+					 .Excluding(x => x.UserClaims)
+				);
 
 				//Delete it
 				await apiResourceService.DeleteApiScopeAsync(newApiScope);
 
-				var deletedApiScope = await context.ApiScopes.Where(x => x.Name == apiScopeDtoMock.Name && x.ApiResource.Id == newApiResourceDto.Id)
-					.SingleOrDefaultAsync();
+				var deletedApiScope = await context.ApiScopes.FirstOrDefaultAsync(x => x.Name == apiScopeDtoMock.Name && x.Id == newApiResourceDto.Id);
 
 				//Assert after deleting
 				deletedApiScope.Should().BeNull();
@@ -395,22 +460,21 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				await apiResourceService.AddApiResourceAsync(apiResourceDto);
 
 				//Get new api resource
-				var apiResource = await context.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
+				var apiResource = await context.ApiResources.SingleOrDefaultAsync(x => x.Name == apiResourceDto.Name);
 
 				var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
 				//Assert new api resource
-				apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
+				apiResourceDto.Should().BeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
 
 				//Generate random new api secret
-				var apiSecretsDto = ApiResourceDtoMock.GenerateRandomApiSecret(0, newApiResourceDto.Id);
+				var apiSecretsDto = ApiResourceDtoMock.GenerateRandomApiResourceSecret(0, newApiResourceDto.Id);
 
 				//Add new api secret
-				await apiResourceService.AddApiSecretAsync(apiSecretsDto);
+				await apiResourceService.AddApiResourceSecretAsync(apiSecretsDto);
 
 				//Get inserted api secret
-				var apiSecret = await context.ApiSecrets.Where(x => x.Value == apiSecretsDto.Value && x.ApiResource.Id == newApiResourceDto.Id)
-					.SingleOrDefaultAsync();
+				var apiSecret = await context.ApiResourceSecrets.FirstOrDefaultAsync(x => x.Value == apiSecretsDto.Value && x.ApiResource.Id == newApiResourceDto.Id);
 
 				//Map entity to model
 				var secretsDto = apiSecret.ToModel();
@@ -419,7 +483,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				var newApiSecret = await apiResourceService.GetApiSecretAsync(secretsDto.ApiSecretId);
 
 				//Assert
-				newApiSecret.ShouldBeEquivalentTo(secretsDto, o => o.Excluding(x => x.ApiResourceName));
+				newApiSecret.Should().BeEquivalentTo(secretsDto, o => 
+					o.Excluding(x => x.ApiResourceName)
+					 .Excluding(o => o.ApiResourceSecrets));
 			}
 		}
 
@@ -441,32 +507,32 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				var newApiResourceDto = await apiResourceService.GetApiResourceAsync(apiResource.Id);
 
 				//Assert new api resource
-				apiResourceDto.ShouldBeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
+				apiResourceDto.Should().BeEquivalentTo(newApiResourceDto, options => options.Excluding(o => o.Id));
 
 				//Generate random new api secret
-				var apiSecretsDtoMock = ApiResourceDtoMock.GenerateRandomApiSecret(0, newApiResourceDto.Id);
+				var apiSecretsDtoMock = ApiResourceDtoMock.GenerateRandomApiResourceSecret(0, newApiResourceDto.Id);
 
 				//Add new api secret
-				await apiResourceService.AddApiSecretAsync(apiSecretsDtoMock);
+				await apiResourceService.AddApiResourceSecretAsync(apiSecretsDtoMock);
 
 				//Get inserted api secret
-				var apiSecret = await context.ApiSecrets.Where(x => x.Value == apiSecretsDtoMock.Value && x.ApiResource.Id == newApiResourceDto.Id)
-					.SingleOrDefaultAsync();
+				var apiResourceSecret = await context.ApiResourceSecrets.FirstOrDefaultAsync(x => x.Value == apiSecretsDtoMock.Value && x.ApiResource.Id == newApiResourceDto.Id);
 
 				//Map entity to model
-				var apiSecretsDto = apiSecret.ToModel();
+				var apiResourceSecretDto = apiResourceSecret.ToModel();
 
 				//Get new api secret    
-				var newApiSecret = await apiResourceService.GetApiSecretAsync(apiSecretsDto.ApiSecretId);
+				var newApiResourceSecret = await apiResourceService.GetApiSecretAsync(apiResourceSecretDto.ApiResourceId);
 
 				//Assert
-				newApiSecret.ShouldBeEquivalentTo(apiSecretsDto, o => o.Excluding(x => x.ApiResourceName));
+				newApiResourceSecret.Should().BeEquivalentTo(apiResourceSecretDto, o => 
+					o.Excluding(x => x.Description)
+					 .Excluding(o => o.ApiResourceSecrets));
 
 				//Delete it
-				await apiResourceService.DeleteApiSecretAsync(newApiSecret);
+				await apiResourceService.DeleteApiResourceSecretAsync(newApiResourceSecret);
 
-				var deletedApiSecret = await context.ApiSecrets.Where(x => x.Value == apiSecretsDtoMock.Value && x.ApiResource.Id == newApiResourceDto.Id)
-					.SingleOrDefaultAsync();
+				var deletedApiSecret = await context.ApiResourceSecrets.FirstOrDefaultAsync(x => x.Value == apiSecretsDtoMock.Value && x.ApiResource.Id == newApiResourceDto.Id);
 
 				//Assert after deleting
 				deletedApiSecret.Should().BeNull();
@@ -486,12 +552,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				await apiResourceService.AddApiResourceAsync(apiResource);
 
 				//Get new api resource
-				var resource = await context.ApiResources.Where(x => x.Name == apiResource.Name).SingleOrDefaultAsync();
+				var resource = await context.ApiResources.SingleOrDefaultAsync(x => x.Name == apiResource.Name);
 
 				var apiResourceDto = await apiResourceService.GetApiResourceAsync(resource.Id);
 
 				//Assert new api resource
-				apiResource.ShouldBeEquivalentTo(apiResourceDto, options => options.Excluding(o => o.Id));
+				apiResource.Should().BeEquivalentTo(apiResourceDto, options => options.Excluding(o => o.Id));
 
 				//Generate random new api resource property
 				var apiResourceProperty = ApiResourceDtoMock.GenerateRandomApiResourceProperty(0, resource.Id);
@@ -500,8 +566,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				await apiResourceService.AddApiResourcePropertyAsync(apiResourceProperty);
 
 				//Get inserted api resource property
-				var property = await context.ApiResourceProperties.Where(x => x.Value == apiResourceProperty.Value && x.ApiResource.Id == resource.Id)
-					.SingleOrDefaultAsync();
+				var property = await context.ApiResourceProperties.SingleOrDefaultAsync(x => x.Value == apiResourceProperty.Value && x.ApiResource.Id == resource.Id);
 
 				//Map entity to model
 				var propertyDto = property.ToModel();
@@ -510,7 +575,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				var resourcePropertiesDto = await apiResourceService.GetApiResourcePropertyAsync(property.Id);
 
 				//Assert
-				resourcePropertiesDto.ShouldBeEquivalentTo(propertyDto, options =>
+				resourcePropertiesDto.Should().BeEquivalentTo(propertyDto, options =>
 					options.Excluding(o => o.ApiResourcePropertyId)
 						   .Excluding(o => o.ApiResourceName));
 			}
@@ -529,12 +594,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				await apiResourceService.AddApiResourceAsync(apiResource);
 
 				//Get new api resource
-				var resource = await context.ApiResources.Where(x => x.Name == apiResource.Name).SingleOrDefaultAsync();
+				var resource = await context.ApiResources.FirstOrDefaultAsync(x => x.Name == apiResource.Name);
 
 				var apiResourceDto = await apiResourceService.GetApiResourceAsync(resource.Id);
 
 				//Assert new api resource
-				apiResource.ShouldBeEquivalentTo(apiResourceDto, options => options.Excluding(o => o.Id));
+				apiResource.Should().BeEquivalentTo(apiResourceDto, options => options.Excluding(o => o.Id));
 
 				//Generate random new api resource property
 				var apiResourceProperty = ApiResourceDtoMock.GenerateRandomApiResourceProperty(0, resource.Id);
@@ -543,8 +608,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				await apiResourceService.AddApiResourcePropertyAsync(apiResourceProperty);
 
 				//Get inserted api resource property
-				var property = await context.ApiResourceProperties.Where(x => x.Value == apiResourceProperty.Value && x.ApiResource.Id == resource.Id)
-					.SingleOrDefaultAsync();
+				var property = await context.ApiResourceProperties.FirstOrDefaultAsync(x => x.Value == apiResourceProperty.Value && x.ApiResource.Id == resource.Id);
 
 				//Map entity to model
 				var propertyDto = property.ToModel();
@@ -553,7 +617,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				var apiResourcePropertiesDto = await apiResourceService.GetApiResourcePropertyAsync(property.Id);
 
 				//Assert
-				apiResourcePropertiesDto.ShouldBeEquivalentTo(propertyDto, options =>
+				apiResourcePropertiesDto.Should().BeEquivalentTo(propertyDto, options =>
 					options.Excluding(o => o.ApiResourcePropertyId)
 					.Excluding(o => o.ApiResourceName));
 			}
@@ -572,12 +636,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				await apiResourceService.AddApiResourceAsync(apiResource);
 
 				//Get new api resource
-				var resource = await context.ApiResources.Where(x => x.Name == apiResource.Name).SingleOrDefaultAsync();
+				var resource = await context.ApiResources.FirstOrDefaultAsync(x => x.Name == apiResource.Name);
 
 				var apiResourceDto = await apiResourceService.GetApiResourceAsync(resource.Id);
 
 				//Assert new api resource
-				apiResource.ShouldBeEquivalentTo(apiResourceDto, options => options.Excluding(o => o.Id));
+				apiResource.Should().BeEquivalentTo(apiResourceDto, options => options.Excluding(o => o.Id));
 
 				//Generate random new api resource Property
 				var apiResourcePropertiesDto = ApiResourceDtoMock.GenerateRandomApiResourceProperty(0, resource.Id);
@@ -586,8 +650,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				await apiResourceService.AddApiResourcePropertyAsync(apiResourcePropertiesDto);
 
 				//Get inserted api resource Property
-				var property = await context.ApiResourceProperties.Where(x => x.Value == apiResourcePropertiesDto.Value && x.ApiResource.Id == resource.Id)
-					.SingleOrDefaultAsync();
+				var property = await context.ApiResourceProperties.FirstOrDefaultAsync(x => x.Value == apiResourcePropertiesDto.Value && x.ApiResource.Id == resource.Id);
 
 				//Map entity to model
 				var propertiesDto = property.ToModel();
@@ -596,7 +659,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				var resourcePropertiesDto = await apiResourceService.GetApiResourcePropertyAsync(property.Id);
 
 				//Assert
-				resourcePropertiesDto.ShouldBeEquivalentTo(propertiesDto, options => 
+				resourcePropertiesDto.Should().BeEquivalentTo(propertiesDto, options => 
 					options.Excluding(o => o.ApiResourcePropertyId)
 					.Excluding(o => o.ApiResourceName));
 
@@ -604,7 +667,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				await apiResourceService.DeleteApiResourcePropertyAsync(resourcePropertiesDto);
 
 				//Get removed api resource Property
-				var apiResourceProperty = await context.ApiResourceProperties.Where(x => x.Id == property.Id).SingleOrDefaultAsync();
+				var apiResourceProperty = await context.ApiResourceProperties.FirstOrDefaultAsync(x => x.Id == property.Id);
 
 				//Assert after delete it
 				apiResourceProperty.Should().BeNull();

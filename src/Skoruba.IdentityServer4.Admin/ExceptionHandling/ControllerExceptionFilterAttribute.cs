@@ -11,7 +11,7 @@ using Skoruba.IdentityServer4.Admin.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin.ExceptionHandling
 {
-    public class ControllerExceptionFilterAttribute : ExceptionFilterAttribute
+    public sealed class ControllerExceptionFilterAttribute : ExceptionFilterAttribute
     {
         private readonly ITempDataDictionaryFactory _tempDataDictionaryFactory;
         private readonly IModelMetadataProvider _modelMetadataProvider;
@@ -96,7 +96,7 @@ namespace Skoruba.IdentityServer4.Admin.ExceptionHandling
             }
         }
         
-        protected void CreateNotification(NotificationHelpers.AlertType type, ITempDataDictionary tempData, string message, string title = "")
+        public void CreateNotification(NotificationHelpers.AlertType type, ITempDataDictionary tempData, string message, string title = "")
         {
             var toast = new NotificationHelpers.Alert
             {

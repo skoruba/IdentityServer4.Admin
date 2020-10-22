@@ -3,7 +3,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 {
-    public class LogMock
+    public static class LogMock
     {
         public static Faker<Log> GetLogFaker(int id)
         {

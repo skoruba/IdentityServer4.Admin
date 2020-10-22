@@ -7,7 +7,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
 	{
 		public ApiScopeDto()
 		{
-			UserClaims = new List<string>();
+			ScopeClaims = new List<ApiScopeClaimsDto>();
+			ScopeProperties = new List<ApiScopePropetiesDto>();
 		}
 
 		public bool ShowInDiscoveryDocument { get; set; } = true;
@@ -26,5 +27,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
 		public bool Emphasize { get; set; }
 
 		public List<string> UserClaims { get; set; }
+		
+		public List<ApiScopeClaimsDto> ScopeClaims { get; set; }
+
+		public List<ApiScopePropetiesDto> ScopeProperties { get; set; }
 	}
 }
