@@ -317,6 +317,30 @@ services.AddAuditLogging(options => { options.Source = auditLoggingConfiguration
             services.AddTransient<IAuditLogService, AuditLogService<TAuditLog>>();
 ```
 
+### Admin Configuration
+
+Admin and STS can be customized without editing code in `appsettings.json` under AdminConfiguration section
+
+#### Themes
+
+Ui can be customized using themes integrated from ("bootswatch")[https://bootswatch.com/]
+By default, configuration value is null to use default theme. if you want to use a theme, just fill the lowercase theme name as configuration value of `Theme` key.
+
+You can also use your custom theme by integrating it in your project or hosting css on your place to pass the url in `CustomThemeCss` key. (Note that custom theme override standard theme)
+
+- Important Note: Theme can use external ressources which caused errors due to CSP. If you get errors, please make sure that you configured correctly CSP section in your `appsettings.json` with thrusted domains for ressources.
+
+```json
+  "AdminConfiguration": {
+    "PageTitle": "Skoruba IdentityServer4",
+    "HomePageLogoUri": "~/images/skoruba-icon.png",
+    "FaviconUri": "~/favicon.ico",
+    "Theme": "united",
+    "CustomThemeCss": null,
+    ...
+  },
+```
+
 ### Audit Logging Configuration
 
 In `appsettings.json` is following configuration:
