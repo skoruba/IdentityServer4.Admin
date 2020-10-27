@@ -15,20 +15,24 @@
 
     <environment include="Development">
         <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
+        @if (!string.IsNullOrEmpty(RootConfiguration.AdminConfiguration.Theme))
+        {
+            <link href="@UrlHelper.Content(string.Concat("~/dist/css/themes/",RootConfiguration.AdminConfiguration.Theme,"/bootstrap.min.css"))" asp-append-version="true" rel="stylesheet" />
+        }
         <link href="~/dist/css/web.css" asp-append-version="true" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
         <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
+        @if (!string.IsNullOrEmpty(RootConfiguration.AdminConfiguration.Theme))
+        {
+            <link href="@UrlHelper.Content(string.Concat("~/dist/css/themes/",RootConfiguration.AdminConfiguration.Theme,"/bootstrap.min.css"))" asp-append-version="true" rel="stylesheet" />
+        }
         <link href="~/dist/css/web.min.css" asp-append-version="true" rel="stylesheet" />
     </environment>
-    @if (!string.IsNullOrEmpty(RootConfiguration.AdminConfiguration.Theme))
-    {
-        <link href="@string.Concat("~/dist/css/themes/",RootConfiguration.AdminConfiguration.Theme,".min.css")" asp-append-version="true" rel="stylesheet" />
-    }
 
     @if (!string.IsNullOrEmpty(RootConfiguration.AdminConfiguration.CustomThemeCss))
     {
-        <link href="@RootConfiguration.AdminConfiguration.CustomThemeCss" asp-append-version="true" rel="stylesheet" />
+        <link href="@UrlHelper.Content(RootConfiguration.AdminConfiguration.CustomThemeCss)" asp-append-version="true" rel="stylesheet" />
     }
 
     @await RenderSectionAsync("styles", required: false)

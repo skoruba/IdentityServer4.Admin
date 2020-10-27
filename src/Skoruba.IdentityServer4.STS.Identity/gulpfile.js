@@ -73,8 +73,8 @@ function processStyles() {
 
 function processTheme() {
     return gulp
-        .src('Styles/themes/**')
-		.pipe(gulp.dest(cssThemeFolder));
+        .src('node_modules/bootswatch/dist/**/bootstrap.min.css')
+        .pipe(gulp.dest(cssThemeFolder));
 }
 
 var buildStyles = gulp.series(processStyles, processTheme, processSass, processSassMin);

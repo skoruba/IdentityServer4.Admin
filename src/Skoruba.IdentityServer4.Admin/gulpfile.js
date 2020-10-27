@@ -95,7 +95,7 @@ function processStyles() {
 
 function processTheme() {
     return gulp
-        .src('Styles/themes/**')
+        .src('node_modules/bootswatch/dist/**/bootstrap.min.css')
         .pipe(gulp.dest(cssThemeFolder));
 }
 
