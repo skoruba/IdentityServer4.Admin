@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>netcoreapp3.1</TargetFramework>
-		<Version>1.0.0-rc3</Version>
+		<Version>1.0.0-rc4</Version>
 		<Authors>Jan Škoruba</Authors>
 		<Description>Entity Framework layer for the administration of the Asp.Net Core Identity and IdentityServer4</Description>
 		<PackageTags>IdentityServer4 Admin OpenIDConnect OAuth2 Identity</PackageTags>
@@ -21,5 +21,6 @@
 	</ItemGroup>
 
 </Project>
+
 
 
