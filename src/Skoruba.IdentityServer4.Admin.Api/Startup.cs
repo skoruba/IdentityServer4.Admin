@@ -45,9 +45,7 @@ namespace Skoruba.IdentityServer4.Admin.Api
             // Add DbContexts
             RegisterDbContexts(services);
 
-            services.AddDataProtection()
-                .SetApplicationName("Skoruba.IdentityServer4")
-                .PersistKeysToDbContext<IdentityServerDataProtectionDbContext>();
+            services.AddDataProtection<IdentityServerDataProtectionDbContext>(Configuration);
 
             // Add email senders which is currently setup for SendGrid and SMTP
             services.AddEmailSenders(Configuration);

@@ -8,6 +8,7 @@ var del = require('del');
 var distFolder = './wwwroot/dist/';
 var jsFolder = `${distFolder}js/`;
 var cssFolder = `${distFolder}css/`;
+var cssThemeFolder = `${distFolder}css/themes/`;
 
 function processClean() {
     return del(`${distFolder}**`, { force: true });
@@ -35,7 +36,7 @@ function processScripts() {
             './node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js',
             './node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.de.min.js',
             './node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.da.min.js',
-            './node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.sv.min.js',
+            './node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt.min.js',
             './Scripts/App/components/Menu.js',
             './Scripts/App/components/Picker.es5.js',
             './Scripts/App/components/Theme.js',
@@ -92,7 +93,13 @@ function processStyles() {
         .pipe(gulp.dest(cssFolder));
 }
 
-var buildStyles = gulp.series(processStyles, processSass, processSassMin);
+function processTheme() {
+    return gulp
+        .src('node_modules/bootswatch/dist/**/bootstrap.min.css')
+        .pipe(gulp.dest(cssThemeFolder));
+}
+
+var buildStyles = gulp.series(processStyles, processTheme, processSass, processSassMin);
 var build = gulp.parallel(buildStyles, processScripts);
 
 gulp.task('clean', processClean);

@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <Version>1.0.0-rc3</Version>
+        <Version>1.0.0-rc4</Version>
         <Authors>Jan Škoruba</Authors>
         <LangVersion>latest</LangVersion>
         <UserSecretsId>8fe260ca-ef4c-4fa3-9364-029146f8d339</UserSecretsId>
@@ -132,3 +132,4 @@
     </ItemGroup>
 
 </Project>
+

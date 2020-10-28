@@ -1,5 +1,7 @@
 param([string] $version)
 
+Set-Location "../"
+
 # build docker images according to docker-compose
 docker-compose build
 

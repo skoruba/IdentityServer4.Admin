@@ -1,4 +1,4 @@
-﻿namespace Skoruba.IdentityServer4.STS.Identity.Configuration
+﻿namespace Skoruba.IdentityServer4.Shared.Configuration.Common
 {
     public class CertificateConfiguration
     {
@@ -26,5 +26,9 @@
         public string ValidationCertificatePfxFilePath { get; set; }
 
         public string ValidationCertificatePfxFilePassword { get; set; }
+
+        public bool UseSigningCertificateForAzureKeyVault { get; set; }
+
+        public bool UseValidationCertificateForAzureKeyVault { get; set; }
     }
 }
