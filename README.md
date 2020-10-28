@@ -23,7 +23,7 @@ The application is written in the **Asp.Net Core MVC - using .NET Core 3.1**
 - Install the dotnet new template:
 
 ```sh
-dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-rc3
+dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-rc4
 ```
 
 - Create new project:
@@ -161,11 +161,11 @@ docker-compose up -d
 ### Docker images
 - Docker images will be available also in [docker hub](https://hub.docker.com/u/skoruba)
   - AdminUI:
-    - `skoruba/identityserver4-admin:rc3`
+    - `skoruba/identityserver4-admin:rc4`
   - Admin Api:
-    - `skoruba/identityserver4-admin-api:rc3`
+    - `skoruba/identityserver4-admin-api:rc4`
   - STS:
-    - `skoruba/identityserver4-sts-identity:rc3`
+    - `skoruba/identityserver4-sts-identity:rc4`
        
 ### Publish Docker images to Docker hub
 - Check the script in `build/publish-docker-images.ps1` - change the profile name according to your requirements.
@@ -245,6 +245,59 @@ The following Gulp commands are available:
 - In the controllers is used the policy which name is stored in - `AuthorizationConsts.AdministrationPolicy`. In the policy - `AuthorizationConsts.AdministrationPolicy` is defined required role stored in - `appsettings.json` - `AdministrationRole`.
 - With the default configuration, it is necessary to configure and run instance of IdentityServer4. It is possible to use initial migration for creating the client as it mentioned above
 
+## Azure Key Vault
+
+- It is possible to use Azure Key Vault and configure it in the `appsettings.json` with following configuration:
+
+```
+"AzureKeyVaultConfiguration": {
+    "AzureKeyVaultEndpoint": "",
+    "ClientId": "",
+    "ClientSecret": "",
+    "UseClientCredentials": true
+  }
+```
+
+If your application is running in `Azure App Service`, you can specify `AzureKeyVaultEndpoint`. For applications which are running outside of Azure environment it is possible to use the client credentials flow - so it is necesarry to go to Azure portal, register new application and connect this application to Azure Key Vault and setup the client secret.
+
+- It is possible to use Azure Key Vault for following parts of application:
+
+### Application Secrets and Database Connection Strings:
+
+- It is necesarry to configure the connection to Azure Key Vault and allow following settings:
+
+```
+"AzureKeyVaultConfiguration": {
+    "ReadConfigurationFromKeyVault": true
+  }
+```
+
+### Dataprotection:
+
+Enable Azure Key Vault for dataprotection with following configuration:
+```
+"DataProtectionConfiguration": {
+    "ProtectKeysWithAzureKeyVault": false
+  }
+```
+
+The you need specify the key identifier in configuration:
+
+```
+"AzureKeyVaultConfiguration": {
+    "DataProtectionKeyIdentifier": ""
+  }
+```
+
+### IdentityServer certificate for signing tokens:
+
+- It is possible to go to Azure Key Vault - generate new certificate and use this certificate name below:
+
+```
+"AzureKeyVaultConfiguration": {
+    "IdentityServerCertificateName": ""
+  }
+```
 
 ## Logging
 
