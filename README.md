@@ -376,7 +376,8 @@ Admin and STS can be customized without editing code in `appsettings.json` under
 
 #### Themes
 
-Ui can be customized using themes integrated from ("bootswatch")[https://bootswatch.com/]
+Ui can be customized using themes integrated from [bootswatch](https://bootswatch.com).
+
 By default, configuration value is null to use default theme. if you want to use a theme, just fill the lowercase theme name as configuration value of `Theme` key.
 
 You can also use your custom theme by integrating it in your project or hosting css on your place to pass the url in `CustomThemeCss` key. (Note that custom theme override standard theme)
@@ -547,6 +548,7 @@ In STS project - in `appsettings.json`:
   - French
   - Finish
   - German
+  - Portuguese
   
 #### Feel free to send a PR with your translation. :blush:
 
