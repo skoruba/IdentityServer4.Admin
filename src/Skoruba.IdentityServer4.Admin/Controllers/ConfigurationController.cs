@@ -558,7 +558,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ApiScopes(int apiResourceId, ApiScopesDto apiScope)
+        public async Task<IActionResult> ApiScopes(ApiScopesDto apiScope)
         {
             if (!ModelState.IsValid)
             {
@@ -566,19 +566,21 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             }
 
             await _apiResourceService.BuildApiScopeViewModelAsync(apiScope);
+            int apiScopeId;
 
             if (apiScope.ApiScopeId == 0)
             {
-                await _apiResourceService.AddApiScopeAsync(apiResourceId, apiScope);
+                apiScopeId = await _apiResourceService.AddApiScopeAsync(apiScope.ApiResourceId, apiScope);
             }
             else
             {
+                apiScopeId = apiScope.ApiScopeId;
                 await _apiResourceService.UpdateApiScopeAsync(apiScope);
             }
 
             SuccessNotification(string.Format(_localizer["SuccessAddApiScope"], apiScope.Name), _localizer["SuccessTitle"]);
 
-            return RedirectToAction(nameof(ApiScopes), new { apiResourceId });
+            return RedirectToAction(nameof(ApiScopes), new { Id = apiScope.ApiResourceId, Scope = apiScopeId });
         }
 
         [HttpGet]
@@ -598,7 +600,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             await _apiResourceService.DeleteApiScopeAsync(apiScope);
             SuccessNotification(_localizer["SuccessDeleteApiScope"], _localizer["SuccessTitle"]);
 
-            return RedirectToAction(nameof(ApiScopes), new { apiScope.ApiResourceId });
+            return RedirectToAction(nameof(ApiScopes), new { id = apiScope.ApiResourceId });
         }
 
         [HttpGet]

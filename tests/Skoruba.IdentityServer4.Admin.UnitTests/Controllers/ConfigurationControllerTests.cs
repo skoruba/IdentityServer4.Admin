@@ -550,7 +550,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var resource = await dbContext.ApiResources.SingleOrDefaultAsync(x => x.Name == apiResourceDto.Name);
             var apiScopeDto = ApiResourceDtoMock.GenerateRandomApiScope(0, resource.Id);
 
-            var result = await controller.ApiScopes(resource.Id, apiScopeDto);
+            var result = await controller.ApiScopes(apiScopeDto);
 
             // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
@@ -634,7 +634,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             apiScopeAdded.Should().NotBeNull();
 
             var updatedApiScopeDto = ApiResourceDtoMock.GenerateRandomApiScope(apiScopeAdded.Id, resource.Id);
-            var result = await controller.ApiScopes(resource.Id, updatedApiScopeDto);
+            var result = await controller.ApiScopes(updatedApiScopeDto);
 
             // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
