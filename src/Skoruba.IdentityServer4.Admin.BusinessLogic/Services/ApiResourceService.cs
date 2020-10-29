@@ -195,32 +195,23 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return await ApiResourceRepository.CanInsertApiResourceAsync(resource);
         }
 
-        public virtual async Task<ApiScopesDto> GetApiScopesAsync(int apiResourceId, int page = 1, int pageSize = 10)
+        public virtual async Task<ApiScopesDto> GetApiScopesAsync(int page = 1, int pageSize = 10)
         {
-            var apiResource = await ApiResourceRepository.GetApiResourceAsync(apiResourceId);
-            if (apiResource == null) throw new UserFriendlyErrorPageException(string.Format(ApiResourceServiceResources.ApiResourceDoesNotExist().Description, apiResourceId), ApiResourceServiceResources.ApiResourceDoesNotExist().Description);
-
-            var pagedList = await ApiResourceRepository.GetApiScopesAsync(apiResourceId, page, pageSize);
+            var pagedList = await ApiResourceRepository.GetApiScopesAsync(page, pageSize);
 
             var apiScopesDto = pagedList.ToModel();
-            apiScopesDto.ApiResourceId = apiResourceId;
-            apiScopesDto.ResourceName = await GetApiResourceNameAsync(apiResourceId);
 
             await AuditEventLogger.LogEventAsync(new ApiScopesRequestedEvent(apiScopesDto));
 
             return apiScopesDto;
         }
 
-        public virtual async Task<ApiScopesDto> GetApiScopeAsync(int apiResourceId, int apiScopeId)
+        public virtual async Task<ApiScopesDto> GetApiScopeAsync(int apiScopeId)
         {
-            var apiResource = await ApiResourceRepository.GetApiResourceAsync(apiResourceId);
-            if (apiResource == null) throw new UserFriendlyErrorPageException(string.Format(ApiResourceServiceResources.ApiResourceDoesNotExist().Description, apiResourceId), ApiResourceServiceResources.ApiResourceDoesNotExist().Description);
-
-            var apiScope = await ApiResourceRepository.GetApiScopeAsync(apiResourceId, apiScopeId);
+            var apiScope = await ApiResourceRepository.GetApiScopeAsync(apiScopeId);
             if (apiScope == null) throw new UserFriendlyErrorPageException(string.Format(ApiResourceServiceResources.ApiScopeDoesNotExist().Description, apiScopeId), ApiResourceServiceResources.ApiScopeDoesNotExist().Description);
 
             var apiScopesDto = apiScope.ToModel();
-            apiScopesDto.ResourceName = await GetApiResourceNameAsync(apiResourceId);
 
             await AuditEventLogger.LogEventAsync(new ApiScopeRequestedEvent(apiScopesDto));
 
@@ -238,7 +229,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var scope = apiScope.ToEntity();
 
-            var added = await ApiResourceRepository.AddApiScopeAsync(apiScope.ApiResourceId, scope);
+            var added = await ApiResourceRepository.AddApiScopeAsync(scope);
 
             await AuditEventLogger.LogEventAsync(new ApiScopeAddedEvent(apiScope));
 
@@ -256,7 +247,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
         {
             if (apiScope.ApiScopeId == 0)
             {
-                var apiScopesDto = await GetApiScopesAsync(apiScope.ApiResourceId);
+                var apiScopesDto = await GetApiScopesAsync();
                 apiScope.Scopes.AddRange(apiScopesDto.Scopes);
                 apiScope.TotalCount = apiScopesDto.TotalCount;
             }
@@ -280,9 +271,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var scope = apiScope.ToEntity();
             
-            var originalApiScope = await GetApiScopeAsync(apiScope.ApiResourceId, apiScope.ApiScopeId);
+            var originalApiScope = await GetApiScopeAsync(apiScope.ApiScopeId);
 
-            var updated = await ApiResourceRepository.UpdateApiScopeAsync(apiScope.ApiResourceId, scope);
+            var updated = await ApiResourceRepository.UpdateApiScopeAsync(scope);
 
             await AuditEventLogger.LogEventAsync(new ApiScopeUpdatedEvent(originalApiScope, apiScope));
 

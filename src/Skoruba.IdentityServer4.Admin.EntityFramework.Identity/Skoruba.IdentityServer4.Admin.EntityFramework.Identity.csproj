@@ -12,8 +12,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="IdentityServer4.EntityFramework" Version="3.1.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.6" />
+		<PackageReference Include="IdentityServer4.EntityFramework" Version="4.1.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.9" />
 	</ItemGroup>
 
 	<ItemGroup>

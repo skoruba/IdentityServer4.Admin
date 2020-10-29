@@ -343,7 +343,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 
                     if (!string.IsNullOrEmpty(advancedConfiguration.PublicOrigin))
                     {
-                        options.PublicOrigin = advancedConfiguration.PublicOrigin;
+                        //options.PublicOrigin = advancedConfiguration.PublicOrigin;
                     }
 
                     if (!string.IsNullOrEmpty(advancedConfiguration.IssuerUri))

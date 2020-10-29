@@ -514,19 +514,22 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ApiScopes(int id, int? page, int? scope)
+        public async Task<IActionResult> ApiScopes(int? page, int? scope)
         {
-            if (id == 0 || !ModelState.IsValid) return NotFound();
+            if (!ModelState.IsValid)
+            {
+                return NotFound();
+            }
 
             if (scope == null)
             {
-                var apiScopesDto = await _apiResourceService.GetApiScopesAsync(id, page ?? 1);
+                var apiScopesDto = await _apiResourceService.GetApiScopesAsync(page ?? 1);
 
                 return View(apiScopesDto);
             }
             else
             {
-                var apiScopesDto = await _apiResourceService.GetApiScopeAsync(id, scope.Value);
+                var apiScopesDto = await _apiResourceService.GetApiScopeAsync(scope.Value);
                 return View(apiScopesDto);
             }
         }
@@ -556,15 +559,15 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
             SuccessNotification(string.Format(_localizer["SuccessAddApiScope"], apiScope.Name), _localizer["SuccessTitle"]);
 
-            return RedirectToAction(nameof(ApiScopes), new { Id = apiScope.ApiResourceId, Scope = apiScopeId });
+            return RedirectToAction(nameof(ApiScopes), new { Scope = apiScopeId });
         }
 
         [HttpGet]
-        public async Task<IActionResult> ApiScopeDelete(int id, int scope)
+        public async Task<IActionResult> ApiScopeDelete(int scope)
         {
-            if (id == 0 || scope == 0) return NotFound();
+            if (scope == 0) return NotFound();
 
-            var apiScope = await _apiResourceService.GetApiScopeAsync(id, scope);
+            var apiScope = await _apiResourceService.GetApiScopeAsync(scope);
 
             return View(nameof(ApiScopeDelete), apiScope);
         }
@@ -576,7 +579,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             await _apiResourceService.DeleteApiScopeAsync(apiScope);
             SuccessNotification(_localizer["SuccessDeleteApiScope"], _localizer["SuccessTitle"]);
 
-            return RedirectToAction(nameof(ApiScopes), new { Id = apiScope.ApiResourceId });
+            return RedirectToAction(nameof(ApiScopes));
         }
 
         [HttpGet]

@@ -10,11 +10,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
 			Scopes = new List<ApiScopeDto>();
 			UserClaims = new List<string>();
 		}
-
-		public int ApiResourceId { get; set; }
-
-	    public string ResourceName { get; set; }
-
+		
 		public bool ShowInDiscoveryDocument { get; set; } = true;
 
 		public int ApiScopeId { get; set; }

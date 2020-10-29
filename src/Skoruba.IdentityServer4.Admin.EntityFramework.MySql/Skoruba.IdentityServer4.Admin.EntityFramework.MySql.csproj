@@ -12,8 +12,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="IdentityServer4.EntityFramework.Storage" Version="3.1.1" />
-        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
+        <PackageReference Include="IdentityServer4.EntityFramework.Storage" Version="4.1.1" />
+        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.3" />
         <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.2" />
     </ItemGroup>
 

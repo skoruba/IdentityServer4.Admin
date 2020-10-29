@@ -87,18 +87,18 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpGet("{id}/Scopes")]
-        public async Task<ActionResult<ApiScopesApiDto>> GetScopes(int id, int page = 1, int pageSize = 10)
+        public async Task<ActionResult<ApiScopesApiDto>> GetScopes(int page = 1, int pageSize = 10)
         {
-            var apiScopesDto = await _apiResourceService.GetApiScopesAsync(id, page, pageSize);
+            var apiScopesDto = await _apiResourceService.GetApiScopesAsync(page, pageSize);
             var apiScopesApiDto = apiScopesDto.ToApiResourceApiModel<ApiScopesApiDto>();
 
             return Ok(apiScopesApiDto);
         }
 
         [HttpGet("{id}/Scopes/{scopeId}")]
-        public async Task<ActionResult<ApiScopeApiDto>> GetScope(int id, int scopeId)
+        public async Task<ActionResult<ApiScopeApiDto>> GetScope(int scopeId)
         {
-            var apiScopesDto = await _apiResourceService.GetApiScopeAsync(id, scopeId);
+            var apiScopesDto = await _apiResourceService.GetApiScopeAsync(scopeId);
             var apiScopeApiDto = apiScopesDto.ToApiResourceApiModel<ApiScopeApiDto>();
 
             return Ok(apiScopeApiDto);
@@ -110,14 +110,12 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         public async Task<IActionResult> PostScope(int id, [FromBody]ApiScopeApiDto apiScopeApi)
         {
             var apiScope = apiScopeApi.ToApiResourceApiModel<ApiScopesDto>();
-            apiScope.ApiResourceId = id;
-
+            
             if (!apiScope.ApiScopeId.Equals(default))
             {
                 return BadRequest(_errorResources.CannotSetId());
             }
 
-            await _apiResourceService.GetApiResourceAsync(apiScope.ApiResourceId);
             var scopeId = await _apiResourceService.AddApiScopeAsync(apiScope);
             apiScope.ApiScopeId = scopeId;
 
@@ -128,10 +126,8 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         public async Task<IActionResult> PutScope(int id, [FromBody]ApiScopeApiDto apiScopeApi)
         {
             var apiScope = apiScopeApi.ToApiResourceApiModel<ApiScopesDto>();
-            apiScope.ApiResourceId = id;
-
-            await _apiResourceService.GetApiResourceAsync(apiScope.ApiResourceId);
-            await _apiResourceService.GetApiScopeAsync(apiScope.ApiResourceId, apiScope.ApiScopeId);
+            
+            await _apiResourceService.GetApiScopeAsync(apiScope.ApiScopeId);
 
             await _apiResourceService.UpdateApiScopeAsync(apiScope);
 
@@ -139,12 +135,11 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpDelete("{id}/Scopes/{apiScopeId}")]
-        public async Task<IActionResult> DeleteScope(int id, int apiScopeId)
+        public async Task<IActionResult> DeleteScope(int apiScopeId)
         {
-            var apiScope = new ApiScopesDto { ApiResourceId = id, ApiScopeId = apiScopeId };
+            var apiScope = new ApiScopesDto { ApiScopeId = apiScopeId };
 
-            await _apiResourceService.GetApiResourceAsync(apiScope.ApiResourceId);
-            await _apiResourceService.GetApiScopeAsync(apiScope.ApiResourceId, apiScope.ApiScopeId);
+            await _apiResourceService.GetApiScopeAsync(apiScope.ApiScopeId);
 
             await _apiResourceService.DeleteApiScopeAsync(apiScope);
 

@@ -29,23 +29,23 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
 
         Task<bool> CanInsertApiResourceAsync(ApiResource apiResource);
 
-        Task<PagedList<ApiScope>> GetApiScopesAsync(int apiResourceId, int page = 1, int pageSize = 10);
+        Task<PagedList<ApiScope>> GetApiScopesAsync(int page = 1, int pageSize = 10);
 
-        Task<ApiScope> GetApiScopeAsync(int apiResourceId, int apiScopeId);
+        Task<ApiScope> GetApiScopeAsync(int apiScopeId);
 
-        Task<int> AddApiScopeAsync(int apiResourceId, ApiScope apiScope);
+        Task<int> AddApiScopeAsync(ApiScope apiScope);
 
-        Task<int> UpdateApiScopeAsync(int apiResourceId, ApiScope apiScope);
+        Task<int> UpdateApiScopeAsync(ApiScope apiScope);
 
         Task<int> DeleteApiScopeAsync(ApiScope apiScope);
 
-        Task<PagedList<ApiSecret>> GetApiSecretsAsync(int apiResourceId, int page = 1, int pageSize = 10);
+        Task<PagedList<ApiResourceSecret>> GetApiSecretsAsync(int apiResourceId, int page = 1, int pageSize = 10);
 
-        Task<int> AddApiSecretAsync(int apiResourceId, ApiSecret apiSecret);
+        Task<int> AddApiSecretAsync(int apiResourceId, ApiResourceSecret apiSecret);
 
-        Task<ApiSecret> GetApiSecretAsync(int apiSecretId);
+        Task<ApiResourceSecret> GetApiSecretAsync(int apiSecretId);
 
-        Task<int> DeleteApiSecretAsync(ApiSecret apiSecret);
+        Task<int> DeleteApiSecretAsync(ApiResourceSecret apiSecret);
 
         Task<bool> CanInsertApiScopeAsync(ApiScope apiScope);
 

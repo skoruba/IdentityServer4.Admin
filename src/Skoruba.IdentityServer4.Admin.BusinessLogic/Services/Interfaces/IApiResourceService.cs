@@ -31,9 +31,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
 
         Task<bool> CanInsertApiResourceAsync(ApiResourceDto apiResource);
 
-        Task<ApiScopesDto> GetApiScopesAsync(int apiResourceId, int page = 1, int pageSize = 10);
+        Task<ApiScopesDto> GetApiScopesAsync(int page = 1, int pageSize = 10);
 
-        Task<ApiScopesDto> GetApiScopeAsync(int apiResourceId, int apiScopeId);
+        Task<ApiScopesDto> GetApiScopeAsync(int apiScopeId);
 
         Task<int> AddApiScopeAsync(ApiScopesDto apiScope);
 
