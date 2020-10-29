@@ -15,16 +15,16 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
                 .RuleFor(o => o.Description, f => f.Random.Words(f.Random.Number(1, 5)))
                 .RuleFor(o => o.DisplayName, f => f.Random.Words(f.Random.Number(1, 5)))
                 .RuleFor(o => o.Enabled, f => f.Random.Bool())
-                .RuleFor(o => o.Scopes, new List<ApiScope>()) //Api Scopes are managed with separate method
-                .RuleFor(o => o.Secrets, new List<ApiSecret>()) //Api Secret are managed with separate method
+                .RuleFor(o => o.Scopes, new List<ApiResourceScope>()) //Api Scopes are managed with separate method
+                .RuleFor(o => o.Secrets, new List<ApiResourceSecret>()) //Api Secret are managed with separate method
                 .RuleFor(o => o.UserClaims, f => GetApiResourceClaimFaker(0).Generate(f.Random.Number(10)));
 
             return fakerApiResource;
         }
 
-        public static Faker<ApiSecret> GetApiSecretFaker(int id)
+        public static Faker<ApiResourceSecret> GetApiSecretFaker(int id)
         {
-            var fakerApiSecret = new Faker<ApiSecret>()
+            var fakerApiSecret = new Faker<ApiResourceSecret>()
                 .RuleFor(o => o.Type, f => Guid.NewGuid().ToString())
                 .RuleFor(o => o.Value, f => Guid.NewGuid().ToString())
                 .RuleFor(o => o.Id, id)
@@ -101,7 +101,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             return apiScope;
         }
 
-        public static ApiSecret GenerateRandomApiSecret(int id)
+        public static ApiResourceSecret GenerateRandomApiSecret(int id)
         {
             var apiSecret = GetApiSecretFaker(id).Generate();
 

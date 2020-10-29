@@ -159,17 +159,11 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
             {
                 var apiResourceRepository = GetApiResourceRepository(context);
 
-                //Generate random new api resource
-                var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
-
-                //Add new api resource
-                await apiResourceRepository.AddApiResourceAsync(apiResource);
-
                 //Generate random new api scope
                 var apiScope = ApiResourceMock.GenerateRandomApiScope(0);
 
                 //Add new api scope
-                await apiResourceRepository.AddApiScopeAsync(apiResource.Id, apiScope);
+                await apiResourceRepository.AddApiScopeAsync(apiScope);
 
                 //Get new api scope
                 var newApiScopes = await context.ApiScopes.Where(x => x.Id == apiScope.Id).SingleAsync();
@@ -186,26 +180,11 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
             {
                 var apiResourceRepository = GetApiResourceRepository(context);
 
-                //Generate random new api resource
-                var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
-
-                //Add new api resource
-                await apiResourceRepository.AddApiResourceAsync(apiResource);
-
-                //Get new api resource
-                var newApiResource = await context.ApiResources.Where(x => x.Id == apiResource.Id).SingleOrDefaultAsync();
-
-                //Assert new api resource
-                newApiResource.ShouldBeEquivalentTo(apiResource, options => options.Excluding(o => o.Id));
-
-                //Detached the added item
-                context.Entry(newApiResource).State = EntityState.Detached;
-
                 //Generate random new api scope
                 var apiScope = ApiResourceMock.GenerateRandomApiScope(0);
 
                 //Add new api scope
-                await apiResourceRepository.AddApiScopeAsync(apiResource.Id, apiScope);
+                await apiResourceRepository.AddApiScopeAsync(apiScope);
 
                 //Detached the added item
                 context.Entry(apiScope).State = EntityState.Detached;
@@ -214,7 +193,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 var updatedApiScope = ApiResourceMock.GenerateRandomApiScope(apiScope.Id);
 
                 //Update api scope
-                await apiResourceRepository.UpdateApiScopeAsync(apiResource.Id, updatedApiScope);
+                await apiResourceRepository.UpdateApiScopeAsync(updatedApiScope);
 
                 //Get updated api scope
                 var updatedApiScopeEntity = await context.ApiScopes.Where(x => x.Id == updatedApiScope.Id).SingleAsync();
@@ -231,17 +210,11 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
             {
                 var apiResourceRepository = GetApiResourceRepository(context);
 
-                //Generate random new api resource
-                var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
-
-                //Add new api resource
-                await apiResourceRepository.AddApiResourceAsync(apiResource);
-
                 //Generate random new api scope
                 var apiScope = ApiResourceMock.GenerateRandomApiScope(0);
 
                 //Add new api resource
-                await apiResourceRepository.AddApiScopeAsync(apiResource.Id, apiScope);
+                await apiResourceRepository.AddApiScopeAsync(apiScope);
 
                 //Get new api resource
                 var newApiScopes = await context.ApiScopes.Where(x => x.Id == apiScope.Id).SingleOrDefaultAsync();
@@ -267,27 +240,18 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
             {
                 var apiResourceRepository = GetApiResourceRepository(context);
 
-                //Generate random new api resource
-                var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
-
-                //Add new api resource
-                await apiResourceRepository.AddApiResourceAsync(apiResource);
-
                 //Generate random new api scope
                 var apiScope = ApiResourceMock.GenerateRandomApiScope(0);
 
                 //Add new api scope
-                await apiResourceRepository.AddApiScopeAsync(apiResource.Id, apiScope);
+                await apiResourceRepository.AddApiScopeAsync(apiScope);
 
                 //Get new api scope
-                var newApiScopes = await apiResourceRepository.GetApiScopeAsync(apiResource.Id, apiScope.Id);
+                var newApiScopes = await apiResourceRepository.GetApiScopeAsync(apiScope.Id);
 
                 //Assert new api resource
                 newApiScopes.ShouldBeEquivalentTo(apiScope, options => options.Excluding(o => o.Id)
-                    .Excluding(o => o.UserClaims)
-                    .Excluding(o => o.ApiResource.Secrets)
-                    .Excluding(o => o.ApiResource.UserClaims)
-                    .Excluding(o => o.ApiResource.Scopes));
+                    .Excluding(o => o.UserClaims));
 
                 newApiScopes.UserClaims.ShouldBeEquivalentTo(apiScope.UserClaims,
                     option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
