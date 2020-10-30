@@ -24,5 +24,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
 		public List<string> UserClaims { get; set; }
 
 		public string UserClaimsItems { get; set; }
+
+        public bool ShowInDiscoveryDocument { get; set; }
+
+        public List<string> AllowedAccessTokenSigningAlgorithms { get; set; }
 	}
 }

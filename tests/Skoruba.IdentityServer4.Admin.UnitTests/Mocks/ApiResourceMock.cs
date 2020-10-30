@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Bogus;
 using IdentityServer4.EntityFramework.Entities;
 
@@ -8,7 +9,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
     public static class ApiResourceMock
     {
         public static Faker<ApiResource> GetApiResourceFaker(int id)
-        {            
+        {
             var fakerApiResource = new Faker<ApiResource>()
                 .RuleFor(o => o.Name, f => Guid.NewGuid().ToString())
                 .RuleFor(o => o.Id, id)
@@ -17,7 +18,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
                 .RuleFor(o => o.Enabled, f => f.Random.Bool())
                 .RuleFor(o => o.Scopes, new List<ApiResourceScope>()) //Api Scopes are managed with separate method
                 .RuleFor(o => o.Secrets, new List<ApiResourceSecret>()) //Api Secret are managed with separate method
-                .RuleFor(o => o.UserClaims, f => GetApiResourceClaimFaker(0).Generate(f.Random.Number(10)));
+                .RuleFor(o => o.UserClaims, f => GetApiResourceClaimFaker(0).Generate(f.Random.Number(10)))
+                .RuleFor(o => o.ShowInDiscoveryDocument, f => f.Random.Bool())
+                .RuleFor(o => o.AllowedAccessTokenSigningAlgorithms, f => string.Join(",", ClientMock.AllowedSigningAlgorithms().Take(f.Random.Number(1, 5)).ToList()));
 
             return fakerApiResource;
         }
@@ -29,32 +32,32 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
                 .RuleFor(o => o.Value, f => Guid.NewGuid().ToString())
                 .RuleFor(o => o.Id, id)
                 .RuleFor(o => o.Description, f => f.Random.Words(f.Random.Number(1, 5)))
-                .RuleFor(o => o.Expiration, f => f.Date.Future());                
+                .RuleFor(o => o.Expiration, f => f.Date.Future());
 
             return fakerApiSecret;
         }
 
-	    public static ApiResourceProperty GenerateRandomApiResourceProperty(int id)
-	    {
-		    var apiResourcePropertyFaker = ApiResourcePropertyFaker(id);
+        public static ApiResourceProperty GenerateRandomApiResourceProperty(int id)
+        {
+            var apiResourcePropertyFaker = ApiResourcePropertyFaker(id);
 
-		    var apiResourceProperty = apiResourcePropertyFaker.Generate();
+            var apiResourceProperty = apiResourcePropertyFaker.Generate();
 
-		    return apiResourceProperty;
-	    }
+            return apiResourceProperty;
+        }
 
-	    public static Faker<ApiResourceProperty> ApiResourcePropertyFaker(int id)
-	    {
-		    var resourcePropertyFaker = new Faker<ApiResourceProperty>()
-			    .StrictMode(false)
-			    .RuleFor(o => o.Id, id)
-			    .RuleFor(o => o.Key, f => Guid.NewGuid().ToString())
-			    .RuleFor(o => o.Value, f => f.Random.Words(f.Random.Number(1, 5)));
+        public static Faker<ApiResourceProperty> ApiResourcePropertyFaker(int id)
+        {
+            var resourcePropertyFaker = new Faker<ApiResourceProperty>()
+                .StrictMode(false)
+                .RuleFor(o => o.Id, id)
+                .RuleFor(o => o.Key, f => Guid.NewGuid().ToString())
+                .RuleFor(o => o.Value, f => f.Random.Words(f.Random.Number(1, 5)));
 
-		    return resourcePropertyFaker;
-	    }
+            return resourcePropertyFaker;
+        }
 
-		public static Faker<ApiResourceClaim> GetApiResourceClaimFaker(int id)
+        public static Faker<ApiResourceClaim> GetApiResourceClaimFaker(int id)
         {
             var fakerApiResourceClaim = new Faker<ApiResourceClaim>()
                 .RuleFor(o => o.Type, f => Guid.NewGuid().ToString())
@@ -66,7 +69,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
         public static Faker<ApiScopeClaim> GetApiScopeClaim(int id)
         {
             var fakerApiScopeClaim = new Faker<ApiScopeClaim>()
-                .RuleFor(o => o.Type, f => Guid.NewGuid().ToString())                
+                .RuleFor(o => o.Type, f => Guid.NewGuid().ToString())
                 .RuleFor(o => o.Id, id);
 
             return fakerApiScopeClaim;
@@ -82,7 +85,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
                 .RuleFor(o => o.UserClaims, f => GetApiScopeClaim(0).Generate(f.Random.Number(10)))
                 .RuleFor(o => o.Emphasize, f => f.Random.Bool())
                 .RuleFor(o => o.Required, f => f.Random.Bool())
-                .RuleFor(o => o.ShowInDiscoveryDocument, f => f.Random.Bool());                
+                .RuleFor(o => o.ShowInDiscoveryDocument, f => f.Random.Bool());
 
             return fakerApiScope;
         }

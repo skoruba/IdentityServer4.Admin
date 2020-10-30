@@ -255,7 +255,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
 
                 newApiScopes.UserClaims.ShouldBeEquivalentTo(apiScope.UserClaims,
                     option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
-                        .Excluding(x => x.SelectedMemberPath.EndsWith("ApiScope")));
+                        .Excluding(x => x.SelectedMemberPath.EndsWith("Scope")));
             }
         }
 

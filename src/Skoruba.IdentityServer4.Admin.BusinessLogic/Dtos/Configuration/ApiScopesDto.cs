@@ -35,5 +35,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
 		public List<string> UserClaims { get; set; }
 
 		public string UserClaimsItems { get; set; }
+
+        public bool Enabled { get; set; } = true;
+
+        public List<ApiScopePropertyDto> ApiScopeProperties { get; set; }
 	}
 }

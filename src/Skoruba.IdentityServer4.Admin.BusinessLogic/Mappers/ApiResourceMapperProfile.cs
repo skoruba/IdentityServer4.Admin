@@ -7,6 +7,7 @@ using System.Linq;
 using AutoMapper;
 using IdentityServer4.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers.Converters;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
@@ -17,7 +18,10 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
         {
             // entity to model
             CreateMap<ApiResource, ApiResourceDto>(MemberList.Destination)
-                .ForMember(x => x.UserClaims, opts => opts.MapFrom(src => src.UserClaims.Select(x => x.Type)));
+                .ForMember(x => x.UserClaims, opts => opts.MapFrom(src => src.UserClaims.Select(x => x.Type)))
+                .ForMember(x => x.AllowedAccessTokenSigningAlgorithms,
+                    opts => opts.ConvertUsing(AllowedSigningAlgorithmsConverter.Converter,
+                        x => x.AllowedAccessTokenSigningAlgorithms));
 
             CreateMap<ApiScope, ApiScopesDto>(MemberList.Destination)
                 .ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(x => x.Type)))
@@ -57,7 +61,10 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
 
             // model to entity
             CreateMap<ApiResourceDto, ApiResource>(MemberList.Source)
-                .ForMember(x => x.UserClaims, opts => opts.MapFrom(src => src.UserClaims.Select(x => new ApiResourceClaim { Type = x })));
+                .ForMember(x => x.UserClaims, opts => opts.MapFrom(src => src.UserClaims.Select(x => new ApiResourceClaim { Type = x })))
+                .ForMember(x => x.AllowedAccessTokenSigningAlgorithms,
+                    opts => opts.ConvertUsing(AllowedSigningAlgorithmsConverter.Converter,
+                        x => x.AllowedAccessTokenSigningAlgorithms));
 
             CreateMap<ApiSecretsDto, ApiResourceSecret>(MemberList.Source)
                 .ForMember(x => x.ApiResource, opts => opts.MapFrom(src => new ApiResource() { Id = src.ApiResourceId }))
