@@ -539,11 +539,11 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var controller = PrepareConfigurationController(serviceProvider);
             var apiScopeDto = ApiResourceDtoMock.GenerateRandomApiScope(0);
 
-            var result = await controller.ApiScopes(apiScopeDto);
+            var result = await controller.ApiScope(apiScopeDto);
 
             // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
-            viewResult.ActionName.Should().Be("ApiScopes");
+            viewResult.ActionName.Should().Be("ApiScope");
 
             var apiScope = await dbContext.ApiScopes.Where(x => x.Name == apiScopeDto.Name).SingleOrDefaultAsync();
             var addedApiScope = await apiResourceService.GetApiScopeAsync(apiScope.Id);
@@ -602,11 +602,11 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             apiScopeAdded.Should().NotBeNull();
 
             var updatedApiScopeDto = ApiResourceDtoMock.GenerateRandomApiScope(apiScopeAdded.Id);
-            var result = await controller.ApiScopes(updatedApiScopeDto);
+            var result = await controller.ApiScope(updatedApiScopeDto);
 
             // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
-            viewResult.ActionName.Should().Be("ApiScopes");
+            viewResult.ActionName.Should().Be("ApiScope");
 
             var apiScope = await dbContext.ApiScopes.Where(x => x.Id == apiScopeAdded.Id).SingleOrDefaultAsync();
             var addedApiScope = await apiResourceService.GetApiScopeAsync(apiScope.Id);
