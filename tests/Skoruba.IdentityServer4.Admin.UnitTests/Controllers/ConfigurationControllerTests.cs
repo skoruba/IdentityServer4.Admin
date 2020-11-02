@@ -571,7 +571,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
                 await apiResourceService.AddApiScopeAsync(apiScopeDto);
             }
 
-            var result = await controller.ApiScopes(1, null);
+            var result = await controller.ApiScopes(1);
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);

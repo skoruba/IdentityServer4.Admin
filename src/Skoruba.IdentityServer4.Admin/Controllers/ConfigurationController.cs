@@ -515,25 +515,11 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ApiScopes(int? page, int? scope)
+        public async Task<IActionResult> ApiScopes(int? page)
         {
-            if (!ModelState.IsValid)
-            {
-                return NotFound();
-            }
+            var apiScopesDto = await _apiResourceService.GetApiScopesAsync(page ?? 1);
 
-            if (scope == null)
-            {
-                var apiScopesDto = await _apiResourceService.GetApiScopesAsync(page ?? 1);
-
-                return View(apiScopesDto);
-            }
-            else
-            {
-                var apiScopesDto = await _apiResourceService.GetApiScopeAsync(scope.Value);
-
-                return View(apiScopesDto);
-            }
+            return View(apiScopesDto);
         }
 
         [HttpGet]
