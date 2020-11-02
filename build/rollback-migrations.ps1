@@ -44,10 +44,8 @@ foreach ($provider in $dpProviders.Keys) {
                 
                 if ($targetContext -eq 'All' -or $context -eq $targetContext) {
 
-                    $migrationPath = $targetContexts[$context];
-
                     Write-Host "Migrating context " $context
-                    dotnet ef migrations add $migration -c $context -o $migrationPath -p $projectPath
+                    dotnet ef database update $migration -c $context -p $projectPath
                 }
             } 
         }

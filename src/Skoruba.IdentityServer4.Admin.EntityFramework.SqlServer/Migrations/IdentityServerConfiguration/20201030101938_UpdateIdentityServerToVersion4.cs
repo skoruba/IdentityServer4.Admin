@@ -7,8 +7,6 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ide
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            return;
-
             migrationBuilder.DropForeignKey(
                 name: "FK_ApiClaims_ApiResources_ApiResourceId",
                 table: "ApiClaims");
@@ -276,6 +274,8 @@ INSERT INTO IdentityResourceClaims
 SELECT 
  Id, [Type], IdentityResourceId
 FROM IdentityClaims
+GO
+SET IDENTITY_INSERT IdentityResourceClaims OFF; 
 GO");
 
             migrationBuilder.Sql(@"INSERT INTO ApiResourceScopes 
@@ -336,19 +336,7 @@ FROM ApiScopes");
             migrationBuilder.DropForeignKey(
                 name: "FK_IdentityResourceProperties_IdentityResources_IdentityResourceId",
                 table: "IdentityResourceProperties");
-
-            migrationBuilder.DropTable(
-                name: "ApiResourceScopes");
-
-            migrationBuilder.DropTable(
-                name: "ApiResourceSecrets");
-
-            migrationBuilder.DropTable(
-                name: "ApiScopeProperties");
-
-            migrationBuilder.DropTable(
-                name: "IdentityResourceClaims");
-
+            
             migrationBuilder.DropIndex(
                 name: "IX_ApiScopeClaims_ScopeId",
                 table: "ApiScopeClaims");
@@ -364,30 +352,6 @@ FROM ApiScopes");
             migrationBuilder.DropPrimaryKey(
                 name: "PK_ApiResourceClaims",
                 table: "ApiResourceClaims");
-
-            migrationBuilder.DropColumn(
-                name: "AllowedIdentityTokenSigningAlgorithms",
-                table: "Clients");
-
-            migrationBuilder.DropColumn(
-                name: "RequireRequestObject",
-                table: "Clients");
-
-            migrationBuilder.DropColumn(
-                name: "Enabled",
-                table: "ApiScopes");
-
-            migrationBuilder.DropColumn(
-                name: "ScopeId",
-                table: "ApiScopeClaims");
-
-            migrationBuilder.DropColumn(
-                name: "AllowedAccessTokenSigningAlgorithms",
-                table: "ApiResources");
-
-            migrationBuilder.DropColumn(
-                name: "ShowInDiscoveryDocument",
-                table: "ApiResources");
 
             migrationBuilder.RenameTable(
                 name: "IdentityResourceProperties",
@@ -524,6 +488,77 @@ FROM ApiScopes");
                 principalTable: "ApiResources",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
+
+            // Rollback data back
+            migrationBuilder.Sql(@"SET IDENTITY_INSERT ApiSecrets ON;  
+GO
+
+INSERT INTO ApiSecrets
+ (Id, [Description], [Value], Expiration, [Type], Created, ApiResourceId)
+SELECT 
+ Id, [Description], [Value], Expiration, [Type], Created, ApiResourceId
+FROM ApiResourceSecrets
+GO
+
+SET IDENTITY_INSERT ApiSecrets OFF;
+GO");
+
+            migrationBuilder.Sql(@"SET IDENTITY_INSERT IdentityClaims ON;
+GO
+
+INSERT INTO IdentityClaims
+ (Id, [Type], IdentityResourceId)
+SELECT 
+ Id, [Type], IdentityResourceId
+FROM IdentityResourceClaims
+GO
+SET IDENTITY_INSERT IdentityClaims OFF;
+GO");
+
+            migrationBuilder.Sql(@"UPDATE asp
+SET ApiResourceId = arc.ApiResourceId
+FROM dbo.ApiScopes asp
+    INNER JOIN dbo.ApiResourceScopes arc
+        ON arc.Id = asp.Id
+");
+
+            migrationBuilder.Sql(@"UPDATE dbo.ApiScopeClaims SET ApiScopeId = ScopeId");
+
+            migrationBuilder.DropTable(
+                name: "ApiResourceScopes");
+
+            migrationBuilder.DropTable(
+                name: "ApiResourceSecrets");
+
+            migrationBuilder.DropTable(
+                name: "ApiScopeProperties");
+
+            migrationBuilder.DropTable(
+                name: "IdentityResourceClaims");
+
+            migrationBuilder.DropColumn(
+                name: "AllowedIdentityTokenSigningAlgorithms",
+                table: "Clients");
+
+            migrationBuilder.DropColumn(
+                name: "RequireRequestObject",
+                table: "Clients");
+
+            migrationBuilder.DropColumn(
+                name: "Enabled",
+                table: "ApiScopes");
+
+            migrationBuilder.DropColumn(
+                name: "ScopeId",
+                table: "ApiScopeClaims");
+
+            migrationBuilder.DropColumn(
+                name: "AllowedAccessTokenSigningAlgorithms",
+                table: "ApiResources");
+
+            migrationBuilder.DropColumn(
+                name: "ShowInDiscoveryDocument",
+                table: "ApiResources");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_ApiScopeClaims_ApiScopes_ApiScopeId",
