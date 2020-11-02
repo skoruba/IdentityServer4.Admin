@@ -433,6 +433,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             }
 
             ComboBoxHelpers.PopulateValuesToList(apiResource.UserClaimsItems, apiResource.UserClaims);
+            ComboBoxHelpers.PopulateValuesToList(apiResource.ScopesItems, apiResource.Scopes);
 
             int apiResourceId;
 
@@ -530,13 +531,31 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             else
             {
                 var apiScopesDto = await _apiResourceService.GetApiScopeAsync(scope.Value);
+
+                return View(apiScopesDto);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ApiScope(int? scope)
+        {
+            if (scope == null)
+            {
+                var apiScopesDto = new ApiScopesDto();
+
+                return View(apiScopesDto);
+            }
+            else
+            {
+                var apiScopesDto = await _apiResourceService.GetApiScopeAsync(scope.Value);
+
                 return View(apiScopesDto);
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ApiScopes(ApiScopesDto apiScope)
+        public async Task<IActionResult> ApiScope(ApiScopesDto apiScope)
         {
             if (!ModelState.IsValid)
             {
@@ -559,7 +578,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
             SuccessNotification(string.Format(_localizer["SuccessAddApiScope"], apiScope.Name), _localizer["SuccessTitle"]);
 
-            return RedirectToAction(nameof(ApiScopes), new { Scope = apiScopeId });
+            return RedirectToAction(nameof(ApiScope), new { Scope = apiScopeId });
         }
 
         [HttpGet]

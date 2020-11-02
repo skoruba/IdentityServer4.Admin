@@ -39,5 +39,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces
         DbSet<ApiResourceProperty> ApiResourceProperties { get; set; }
 
         DbSet<ApiScopeProperty> ApiScopeProperties { get; set; }
+
+        DbSet<ApiResourceScope> ApiResourceScopes { get; set; }
     }
 }

@@ -43,6 +43,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
         {
             return DbContext.ApiResources
                 .Include(x => x.UserClaims)
+                .Include(x => x.Scopes)
                 .Where(x => x.Id == apiResourceId)
                 .AsNoTracking()
                 .SingleOrDefaultAsync();
@@ -139,15 +140,23 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
 
         private async Task RemoveApiResourceClaimsAsync(ApiResource identityResource)
         {
-            //Remove old identity claims
+            //Remove old api resource claims
             var apiResourceClaims = await DbContext.ApiResourceClaims.Where(x => x.ApiResource.Id == identityResource.Id).ToListAsync();
             DbContext.ApiResourceClaims.RemoveRange(apiResourceClaims);
+        }
+
+        private async Task RemoveApiResourceScopesAsync(ApiResource identityResource)
+        {
+            //Remove old api resource scopes
+            var apiResourceScopes = await DbContext.ApiResourceScopes.Where(x => x.ApiResource.Id == identityResource.Id).ToListAsync();
+            DbContext.ApiResourceScopes.RemoveRange(apiResourceScopes);
         }
 
         public virtual async Task<int> UpdateApiResourceAsync(ApiResource apiResource)
         {
             //Remove old relations
             await RemoveApiResourceClaimsAsync(apiResource);
+            await RemoveApiResourceScopesAsync(apiResource);
 
             //Update with new data
             DbContext.ApiResources.Update(apiResource);

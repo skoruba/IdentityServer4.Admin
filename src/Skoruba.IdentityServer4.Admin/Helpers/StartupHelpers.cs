@@ -298,6 +298,10 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 {
                     o.Conventions.Add(new GenericControllerRouteConvention());
                 })
+#if DEBUG
+                // It is not necessary to re-build the views for new changes
+                .AddRazorRuntimeCompilation()
+#endif
                 .AddViewLocalization(
                     LanguageViewLocationExpanderFormat.Suffix,
                     opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; })

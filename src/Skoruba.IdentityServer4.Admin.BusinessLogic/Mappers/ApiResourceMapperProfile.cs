@@ -19,6 +19,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
             // entity to model
             CreateMap<ApiResource, ApiResourceDto>(MemberList.Destination)
                 .ForMember(x => x.UserClaims, opts => opts.MapFrom(src => src.UserClaims.Select(x => x.Type)))
+                .ForMember(x => x.Scopes, opts => opts.MapFrom(src => src.Scopes.Select(x => x.Scope)))
                 .ForMember(x => x.AllowedAccessTokenSigningAlgorithms,
                     opts => opts.ConvertUsing(AllowedSigningAlgorithmsConverter.Converter,
                         x => x.AllowedAccessTokenSigningAlgorithms));
@@ -62,6 +63,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
             // model to entity
             CreateMap<ApiResourceDto, ApiResource>(MemberList.Source)
                 .ForMember(x => x.UserClaims, opts => opts.MapFrom(src => src.UserClaims.Select(x => new ApiResourceClaim { Type = x })))
+                .ForMember(x => x.Scopes, opts => opts.MapFrom(src => src.Scopes.Select(x => new ApiResourceScope { Scope = x})))
                 .ForMember(x => x.AllowedAccessTokenSigningAlgorithms,
                     opts => opts.ConvertUsing(AllowedSigningAlgorithmsConverter.Converter,
                         x => x.AllowedAccessTokenSigningAlgorithms));
