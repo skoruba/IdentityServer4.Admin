@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -353,6 +354,14 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             var scopes = await _clientService.GetScopesAsync(scope, limit);
 
             return Ok(scopes);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SearchApiScopes(string scope, int limit = 0)
+        {
+            var scopes = await _apiScopeService.GetApiScopesAsync(scope, limit);
+
+            return Ok(scopes.ToList());
         }
 
         [HttpGet]

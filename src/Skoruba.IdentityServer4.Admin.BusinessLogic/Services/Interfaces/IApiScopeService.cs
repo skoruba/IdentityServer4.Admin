@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
@@ -8,6 +9,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
         ApiScopesDto BuildApiScopeViewModel(ApiScopesDto apiScope);
 
         Task<ApiScopesDto> GetApiScopesAsync(int page = 1, int pageSize = 10);
+
+        Task<ICollection<string>> GetApiScopesAsync(string scope, int limit = 0);
 
         Task<ApiScopesDto> GetApiScopeAsync(int apiScopeId);
 

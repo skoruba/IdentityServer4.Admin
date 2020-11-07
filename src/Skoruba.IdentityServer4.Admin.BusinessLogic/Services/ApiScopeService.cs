@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Skoruba.AuditLogging.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Events.ApiScope;
@@ -35,6 +37,14 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             return apiScopesDto;
         }
+
+        public virtual async Task<ICollection<string>> GetApiScopesAsync(string scope, int limit = 0)
+        {
+            var scopes = await ApiScopeRepository.GetApiScopesAsync(scope, limit);
+
+            return scopes;
+        }
+
 
         public virtual async Task<ApiScopesDto> GetApiScopeAsync(int apiScopeId)
         {

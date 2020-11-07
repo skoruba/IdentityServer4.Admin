@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -48,6 +49,16 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             pagedList.PageSize = pageSize;
 
             return pagedList;
+        }
+
+        public virtual async Task<ICollection<string>> GetApiScopesAsync(string scope, int limit = 0)
+        {
+            var apiScopes = await DbContext.ApiScopes
+                .WhereIf(!string.IsNullOrEmpty(scope), x => x.Name.Contains(scope))
+                .TakeIf(x => x.Id, limit > 0, limit)
+                .Select(x => x.Name).ToListAsync();
+            
+            return apiScopes;
         }
 
         public virtual Task<ApiScope> GetApiScopeAsync(int apiScopeId)

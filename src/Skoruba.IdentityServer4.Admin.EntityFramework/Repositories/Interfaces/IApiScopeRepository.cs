@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
 
@@ -17,6 +18,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
         Task<int> DeleteApiScopeAsync(ApiScope apiScope);
 
         Task<bool> CanInsertApiScopeAsync(ApiScope apiScope);
+
+        Task<ICollection<string>> GetApiScopesAsync(string scope, int limit = 0);
 
         Task<int> SaveAllChangesAsync();
 
