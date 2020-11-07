@@ -7,7 +7,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
 {
     public interface IApiScopeRepository
     {
-        Task<PagedList<ApiScope>> GetApiScopesAsync(int page = 1, int pageSize = 10);
+        Task<PagedList<ApiScope>> GetApiScopesAsync(string search, int page = 1, int pageSize = 10);
 
         Task<ApiScope> GetApiScopeAsync(int apiScopeId);
 
@@ -19,7 +19,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
 
         Task<bool> CanInsertApiScopeAsync(ApiScope apiScope);
 
-        Task<ICollection<string>> GetApiScopesAsync(string scope, int limit = 0);
+        Task<ICollection<string>> GetApiScopesNameAsync(string scope, int limit = 0);
 
         Task<int> SaveAllChangesAsync();
 

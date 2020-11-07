@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -37,21 +39,25 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             }
         }
 
-        public virtual async Task<PagedList<ApiScope>> GetApiScopesAsync(int page = 1, int pageSize = 10)
+        public virtual async Task<PagedList<ApiScope>> GetApiScopesAsync(string search, int page = 1, int pageSize = 10)
         {
             var pagedList = new PagedList<ApiScope>();
+            Expression<Func<ApiScope, bool>> searchCondition = x => x.Name.Contains(search);
 
-            var apiScopes = await DbContext.ApiScopes
+            var filteredApiScopes = DbContext.ApiScopes
+                .WhereIf(!string.IsNullOrEmpty(search), searchCondition);
+
+            var apiScopes = await filteredApiScopes
                 .PageBy(x => x.Name, page, pageSize).ToListAsync();
 
             pagedList.Data.AddRange(apiScopes);
-            pagedList.TotalCount = await DbContext.ApiScopes.CountAsync();
+            pagedList.TotalCount = await filteredApiScopes.CountAsync();
             pagedList.PageSize = pageSize;
 
             return pagedList;
         }
 
-        public virtual async Task<ICollection<string>> GetApiScopesAsync(string scope, int limit = 0)
+        public virtual async Task<ICollection<string>> GetApiScopesNameAsync(string scope, int limit = 0)
         {
             var apiScopes = await DbContext.ApiScopes
                 .WhereIf(!string.IsNullOrEmpty(scope), x => x.Name.Contains(scope))

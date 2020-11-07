@@ -27,9 +27,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
         }
 
-        public virtual async Task<ApiScopesDto> GetApiScopesAsync(int page = 1, int pageSize = 10)
+        public virtual async Task<ApiScopesDto> GetApiScopesAsync(string search, int page = 1, int pageSize = 10)
         {
-            var pagedList = await ApiScopeRepository.GetApiScopesAsync(page, pageSize);
+            var pagedList = await ApiScopeRepository.GetApiScopesAsync(search, page, pageSize);
 
             var apiScopesDto = pagedList.ToModel();
 
@@ -38,13 +38,12 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return apiScopesDto;
         }
 
-        public virtual async Task<ICollection<string>> GetApiScopesAsync(string scope, int limit = 0)
+        public virtual async Task<ICollection<string>> GetApiScopesNameAsync(string scope, int limit = 0)
         {
-            var scopes = await ApiScopeRepository.GetApiScopesAsync(scope, limit);
+            var scopes = await ApiScopeRepository.GetApiScopesNameAsync(scope, limit);
 
             return scopes;
         }
-
 
         public virtual async Task<ApiScopesDto> GetApiScopeAsync(int apiScopeId)
         {
@@ -87,7 +86,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
         {
             if (apiScope.ApiScopeId == 0)
             {
-                var apiScopesDto = await GetApiScopesAsync();
+                var apiScopesDto = await GetApiScopesAsync(string.Empty, page: 1, pageSize: 10);
                 apiScope.Scopes.AddRange(apiScopesDto.Scopes);
                 apiScope.TotalCount = apiScopesDto.TotalCount;
             }

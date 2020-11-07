@@ -10,63 +10,47 @@
 
 <div class="row">
     <div class="col-12">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-
-                @if (Model.ApiScopeId != 0)
-                {
-                    <li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiScopes">@Localizer["NavigationApiScopes"]</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
-                }
-                else
-                {
-                    <li class="breadcrumb-item active" aria-current="page">@Localizer["NavigationApiScopes"]</li>
-                }
-            </ol>
-        </nav>
-    </div>
-
-    <div class="col-12">
         <h2>@Localizer["PageTitle"]</h2>
     </div>
-    
+
     <div class="col-12">
         <a asp-action="ApiScope" class="btn btn-outline-primary mb-3"><span class="oi oi-plus"></span> @Localizer["Add Api Scope"]</a>
+    </div>
+
+    <div class="col-12">
+        @await Html.PartialAsync("Common/Search", new Search() { Action = "ApiScopes", Controller = "Configuration" })
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-12">
-        <div class="card mt-3">
-            <h5 class="card-header">@Localizer["PageTitle"]</h5>
-            <div class="card-body">
-                <div class="row table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>@Localizer["TableName"]</th>
-                                <th></th>
-                            </tr>
-                        </thead>
 
-                        <tbody>
-                            @foreach (var scope in Model.Scopes)
-                            {
-                                <tr>
-                                    <td>@scope.Name</td>
-                                    <td><a asp-action="ApiScope" asp-route-scope="@scope.Id" class="btn btn-primary">@Localizer["TableButtonEdit"]</a> <a asp-action="ApiScopeDelete" asp-route-scope="@scope.Id" class="btn btn-danger">@Localizer["TableButtonRemove"]</a></td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+        <div class="row table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>@Localizer["TableName"]</th>
+                        <th></th>
+                    </tr>
+                </thead>
 
-                <div class="row">
-                    <div class="col-12">
-                        @await Html.PartialAsync("Common/Pager", new Pager() { Action = "ApiScopes", PageSize = Model.PageSize, TotalCount = Model.TotalCount })
-                    </div>
-                </div>
+                <tbody>
+                    @foreach (var scope in Model.Scopes)
+                    {
+                        <tr>
+                            <td><a asp-action="ApiScope" asp-route-scope="@scope.Id" class="btn btn-primary">@Localizer["TableButtonEdit"]</a></td>
+                            <td>@scope.Name</td>
+                            <td><a asp-action="ApiScopeDelete" asp-route-scope="@scope.Id" class="btn btn-danger"><span class="oi oi-x"></span></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
 
+        <div class="row">
+            <div class="col-12">
+                @await Html.PartialAsync("Common/Pager", new Pager() { Action = "ApiScopes", PageSize = Model.PageSize, TotalCount = Model.TotalCount, EnableSearch = true, Search = @ViewBag.Search })
             </div>
         </div>
 

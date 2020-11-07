@@ -29,9 +29,9 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ApiScopesApiDto>> GetScopes(int page = 1, int pageSize = 10)
+        public async Task<ActionResult<ApiScopesApiDto>> GetScopes(string search, int page = 1, int pageSize = 10)
         {
-            var apiScopesDto = await _apiScopeService.GetApiScopesAsync(page, pageSize);
+            var apiScopesDto = await _apiScopeService.GetApiScopesAsync(search, page, pageSize);
             var apiScopesApiDto = apiScopesDto.ToApiScopeApiModel<ApiScopesApiDto>();
 
             return Ok(apiScopesApiDto);

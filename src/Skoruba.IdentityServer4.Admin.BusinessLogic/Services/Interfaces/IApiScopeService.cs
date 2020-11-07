@@ -8,9 +8,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
     {
         ApiScopesDto BuildApiScopeViewModel(ApiScopesDto apiScope);
 
-        Task<ApiScopesDto> GetApiScopesAsync(int page = 1, int pageSize = 10);
+        Task<ApiScopesDto> GetApiScopesAsync(string search, int page = 1, int pageSize = 10);
 
-        Task<ICollection<string>> GetApiScopesAsync(string scope, int limit = 0);
+        Task<ICollection<string>> GetApiScopesNameAsync(string scope, int limit = 0);
 
         Task<ApiScopesDto> GetApiScopeAsync(int apiScopeId);
 

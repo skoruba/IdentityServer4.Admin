@@ -570,7 +570,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
                 await apiScopeService.AddApiScopeAsync(apiScopeDto);
             }
 
-            var result = await controller.ApiScopes(1);
+            var result = await controller.ApiScopes(string.Empty, 1);
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
@@ -791,7 +791,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
                 .AddDefaultEventData()
                 .AddAuditSinks<DatabaseAuditEventLoggerSink<AuditLog>>();
             services.AddTransient<IAuditLoggingRepository<AuditLog>, AuditLoggingRepository<AdminAuditLogDbContext, AuditLog>>();
-            
+
             //Add Admin services
             services.AddMvcExceptionFilters();
 

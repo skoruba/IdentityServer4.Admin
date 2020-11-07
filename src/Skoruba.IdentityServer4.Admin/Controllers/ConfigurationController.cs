@@ -359,7 +359,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> SearchApiScopes(string scope, int limit = 0)
         {
-            var scopes = await _apiScopeService.GetApiScopesAsync(scope, limit);
+            var scopes = await _apiScopeService.GetApiScopesNameAsync(scope, limit);
 
             return Ok(scopes.ToList());
         }
@@ -527,9 +527,10 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ApiScopes(int? page)
+        public async Task<IActionResult> ApiScopes(string search, int? page)
         {
-            var apiScopesDto = await _apiScopeService.GetApiScopesAsync(page ?? 1);
+            ViewBag.Search = search;
+            var apiScopesDto = await _apiScopeService.GetApiScopesAsync(search, page ?? 1);
 
             return View(apiScopesDto);
         }
