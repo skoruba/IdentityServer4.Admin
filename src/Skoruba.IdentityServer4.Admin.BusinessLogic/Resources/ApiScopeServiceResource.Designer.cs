@@ -22,24 +22,24 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ApiResourceServiceResource {
+    public class ApiScopeServiceResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ApiResourceServiceResource() {
+        internal ApiScopeServiceResource() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Skoruba.IdentityServer4.Admin.BusinessLogic.Resources.ApiResourceServiceResource", typeof(ApiResourceServiceResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Skoruba.IdentityServer4.Admin.BusinessLogic.Resources.ApiScopeServiceResource", typeof(ApiScopeServiceResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,65 +61,29 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Api Resource with id {0} doesn&apos;t exist.
+        ///   Looks up a localized string similar to Api Scope with id {0} doesn&apos;t exist.
         /// </summary>
-        internal static string ApiResourceDoesNotExist {
+        public static string ApiScopeDoesNotExist {
             get {
-                return ResourceManager.GetString("ApiResourceDoesNotExist", resourceCulture);
+                return ResourceManager.GetString("ApiScopeDoesNotExist", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Api Resource already exists.
+        ///   Looks up a localized string similar to Api Scope already exists.
         /// </summary>
-        internal static string ApiResourceExistsKey {
+        public static string ApiScopeExistsKey {
             get {
-                return ResourceManager.GetString("ApiResourceExistsKey", resourceCulture);
+                return ResourceManager.GetString("ApiScopeExistsKey", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Api Resource ({0}) already exists.
+        ///   Looks up a localized string similar to Api Scope ({0}) already exists.
         /// </summary>
-        internal static string ApiResourceExistsValue {
+        public static string ApiScopeExistsValue {
             get {
-                return ResourceManager.GetString("ApiResourceExistsValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Api Resource Property with id {0} doesn&apos;t exist.
-        /// </summary>
-        internal static string ApiResourcePropertyDoesNotExist {
-            get {
-                return ResourceManager.GetString("ApiResourcePropertyDoesNotExist", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Api Resource Property already exists.
-        /// </summary>
-        internal static string ApiResourcePropertyExistsKey {
-            get {
-                return ResourceManager.GetString("ApiResourcePropertyExistsKey", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Api Resource Property with key ({0}) already exists.
-        /// </summary>
-        internal static string ApiResourcePropertyExistsValue {
-            get {
-                return ResourceManager.GetString("ApiResourcePropertyExistsValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Api Secret with id {0} doesn&apos;t exist.
-        /// </summary>
-        internal static string ApiSecretDoesNotExist {
-            get {
-                return ResourceManager.GetString("ApiSecretDoesNotExist", resourceCulture);
+                return ResourceManager.GetString("ApiScopeExistsValue", resourceCulture);
             }
         }
     }

@@ -19,18 +19,21 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         private readonly IApiResourceService _apiResourceService;
         private readonly IClientService _clientService;
         private readonly IStringLocalizer<ConfigurationController> _localizer;
+        private readonly IApiScopeService _apiScopeService;
 
         public ConfigurationController(IIdentityResourceService identityResourceService,
             IApiResourceService apiResourceService,
             IClientService clientService,
             IStringLocalizer<ConfigurationController> localizer,
-            ILogger<ConfigurationController> logger)
+            ILogger<ConfigurationController> logger,
+            IApiScopeService apiScopeService)
             : base(logger)
         {
             _identityResourceService = identityResourceService;
             _apiResourceService = apiResourceService;
             _clientService = clientService;
             _localizer = localizer;
+            _apiScopeService = apiScopeService;
         }
 
         [HttpGet]
@@ -517,7 +520,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ApiScopes(int? page)
         {
-            var apiScopesDto = await _apiResourceService.GetApiScopesAsync(page ?? 1);
+            var apiScopesDto = await _apiScopeService.GetApiScopesAsync(page ?? 1);
 
             return View(apiScopesDto);
         }
@@ -533,7 +536,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             }
             else
             {
-                var apiScopesDto = await _apiResourceService.GetApiScopeAsync(scope.Value);
+                var apiScopesDto = await _apiScopeService.GetApiScopeAsync(scope.Value);
 
                 return View(apiScopesDto);
             }
@@ -548,18 +551,18 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
                 return View(apiScope);
             }
 
-            _apiResourceService.BuildApiScopeViewModel(apiScope);
+            _apiScopeService.BuildApiScopeViewModel(apiScope);
 
             int apiScopeId;
 
             if (apiScope.ApiScopeId == 0)
             {
-                apiScopeId = await _apiResourceService.AddApiScopeAsync(apiScope);
+                apiScopeId = await _apiScopeService.AddApiScopeAsync(apiScope);
             }
             else
             {
                 apiScopeId = apiScope.ApiScopeId;
-                await _apiResourceService.UpdateApiScopeAsync(apiScope);
+                await _apiScopeService.UpdateApiScopeAsync(apiScope);
             }
 
             SuccessNotification(string.Format(_localizer["SuccessAddApiScope"], apiScope.Name), _localizer["SuccessTitle"]);
@@ -572,7 +575,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         {
             if (scope == 0) return NotFound();
 
-            var apiScope = await _apiResourceService.GetApiScopeAsync(scope);
+            var apiScope = await _apiScopeService.GetApiScopeAsync(scope);
 
             return View(nameof(ApiScopeDelete), apiScope);
         }
@@ -581,7 +584,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ApiScopeDelete(ApiScopesDto apiScope)
         {
-            await _apiResourceService.DeleteApiScopeAsync(apiScope);
+            await _apiScopeService.DeleteApiScopeAsync(apiScope);
             SuccessNotification(_localizer["SuccessDeleteApiScope"], _localizer["SuccessTitle"]);
 
             return RedirectToAction(nameof(ApiScopes));

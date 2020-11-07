@@ -40,16 +40,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
             return secrets == null ? null : Mapper.Map<ApiSecretsDto>(secrets);
         }
 
-        public static ApiScopesDto ToModel(this PagedList<ApiScope> scopes)
-        {
-            return scopes == null ? null : Mapper.Map<ApiScopesDto>(scopes);
-        }
-
-        public static ApiScopesDto ToModel(this ApiScope resource)
-        {
-            return resource == null ? null : Mapper.Map<ApiScopesDto>(resource);
-        }
-
         public static ApiSecretsDto ToModel(this ApiResourceSecret resource)
         {
             return resource == null ? null : Mapper.Map<ApiSecretsDto>(resource);
@@ -63,11 +53,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
         public static ApiResourceSecret ToEntity(this ApiSecretsDto resource)
         {
             return resource == null ? null : Mapper.Map<ApiResourceSecret>(resource);
-        }
-
-        public static ApiScope ToEntity(this ApiScopesDto resource)
-        {
-            return resource == null ? null : Mapper.Map<ApiScope>(resource);
         }
 
         public static ApiResourceProperty ToEntity(this ApiResourcePropertiesDto apiResourceProperties)

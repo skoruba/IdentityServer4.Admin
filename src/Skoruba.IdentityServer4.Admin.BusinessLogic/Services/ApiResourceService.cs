@@ -195,64 +195,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return await ApiResourceRepository.CanInsertApiResourceAsync(resource);
         }
 
-        public virtual async Task<ApiScopesDto> GetApiScopesAsync(int page = 1, int pageSize = 10)
-        {
-            var pagedList = await ApiResourceRepository.GetApiScopesAsync(page, pageSize);
-
-            var apiScopesDto = pagedList.ToModel();
-
-            await AuditEventLogger.LogEventAsync(new ApiScopesRequestedEvent(apiScopesDto));
-
-            return apiScopesDto;
-        }
-
-        public virtual async Task<ApiScopesDto> GetApiScopeAsync(int apiScopeId)
-        {
-            var apiScope = await ApiResourceRepository.GetApiScopeAsync(apiScopeId);
-            if (apiScope == null) throw new UserFriendlyErrorPageException(string.Format(ApiResourceServiceResources.ApiScopeDoesNotExist().Description, apiScopeId), ApiResourceServiceResources.ApiScopeDoesNotExist().Description);
-
-            var apiScopesDto = apiScope.ToModel();
-
-            await AuditEventLogger.LogEventAsync(new ApiScopeRequestedEvent(apiScopesDto));
-
-            return apiScopesDto;
-        }
-
-        public virtual async Task<int> AddApiScopeAsync(ApiScopesDto apiScope)
-        {
-            var canInsert = await CanInsertApiScopeAsync(apiScope);
-            if (!canInsert)
-            {
-                await BuildApiScopesViewModelAsync(apiScope);
-                throw new UserFriendlyViewException(string.Format(ApiResourceServiceResources.ApiScopeExistsValue().Description, apiScope.Name), ApiResourceServiceResources.ApiScopeExistsKey().Description, apiScope);
-            }
-
-            var scope = apiScope.ToEntity();
-
-            var added = await ApiResourceRepository.AddApiScopeAsync(scope);
-
-            await AuditEventLogger.LogEventAsync(new ApiScopeAddedEvent(apiScope));
-
-            return added;
-        }
-
-        public virtual ApiScopesDto BuildApiScopeViewModel(ApiScopesDto apiScope)
-        {
-            ComboBoxHelpers.PopulateValuesToList(apiScope.UserClaimsItems, apiScope.UserClaims);
-
-            return apiScope;
-        }
-
-        private async Task BuildApiScopesViewModelAsync(ApiScopesDto apiScope)
-        {
-            if (apiScope.ApiScopeId == 0)
-            {
-                var apiScopesDto = await GetApiScopesAsync();
-                apiScope.Scopes.AddRange(apiScopesDto.Scopes);
-                apiScope.TotalCount = apiScopesDto.TotalCount;
-            }
-        }
-
         private async Task BuildApiResourcePropertiesViewModelAsync(ApiResourcePropertiesDto apiResourceProperties)
         {
             var apiResourcePropertiesDto = await GetApiResourcePropertiesAsync(apiResourceProperties.ApiResourceId);
@@ -260,38 +202,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             apiResourceProperties.TotalCount = apiResourcePropertiesDto.TotalCount;
         }
 
-        public virtual async Task<int> UpdateApiScopeAsync(ApiScopesDto apiScope)
-        {
-            var canInsert = await CanInsertApiScopeAsync(apiScope);
-            if (!canInsert)
-            {
-                await BuildApiScopesViewModelAsync(apiScope);
-                throw new UserFriendlyViewException(string.Format(ApiResourceServiceResources.ApiScopeExistsValue().Description, apiScope.Name), ApiResourceServiceResources.ApiScopeExistsKey().Description, apiScope);
-            }
-
-            var scope = apiScope.ToEntity();
-            
-            var originalApiScope = await GetApiScopeAsync(apiScope.ApiScopeId);
-
-            var updated = await ApiResourceRepository.UpdateApiScopeAsync(scope);
-
-            await AuditEventLogger.LogEventAsync(new ApiScopeUpdatedEvent(originalApiScope, apiScope));
-
-            return updated;
-        }
-
-        public virtual async Task<int> DeleteApiScopeAsync(ApiScopesDto apiScope)
-        {
-            var scope = apiScope.ToEntity();
-
-            var deleted = await ApiResourceRepository.DeleteApiScopeAsync(scope);
-
-            await AuditEventLogger.LogEventAsync(new ApiScopeDeletedEvent(apiScope));
-
-            return deleted;
-        }
-
-        public virtual async Task<ApiSecretsDto> GetApiSecretsAsync(int apiResourceId, int page = 1, int pageSize = 10)
+       public virtual async Task<ApiSecretsDto> GetApiSecretsAsync(int apiResourceId, int page = 1, int pageSize = 10)
         {
             var apiResource = await ApiResourceRepository.GetApiResourceAsync(apiResourceId);
             if (apiResource == null) throw new UserFriendlyErrorPageException(string.Format(ApiResourceServiceResources.ApiResourceDoesNotExist().Description, apiResourceId), ApiResourceServiceResources.ApiResourceDoesNotExist().Description);
@@ -340,13 +251,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             await AuditEventLogger.LogEventAsync(new ApiSecretDeletedEvent(apiSecret.ApiResourceId, apiSecret.ApiSecretId));
 
             return deleted;
-        }
-
-        public virtual async Task<bool> CanInsertApiScopeAsync(ApiScopesDto apiScopes)
-        {
-            var apiScope = apiScopes.ToEntity();
-
-            return await ApiResourceRepository.CanInsertApiScopeAsync(apiScope);
         }
 
         public virtual async Task<string> GetApiResourceNameAsync(int apiResourceId)

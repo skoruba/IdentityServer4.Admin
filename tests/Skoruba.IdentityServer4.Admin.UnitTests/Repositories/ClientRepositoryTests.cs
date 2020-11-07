@@ -45,6 +45,13 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
             return apiResourceRepository;
         }
 
+        private IApiScopeRepository GetApiScopeRepository(IdentityServerConfigurationDbContext context)
+        {
+            IApiScopeRepository apiScopeRepository = new ApiScopeRepository<IdentityServerConfigurationDbContext>(context);
+
+            return apiScopeRepository;
+        }
+
         private IIdentityResourceRepository GetIdentityResourceRepository(IdentityServerConfigurationDbContext context)
         {
             IIdentityResourceRepository identityResourceRepository = new IdentityResourceRepository<IdentityServerConfigurationDbContext>(context);
@@ -804,10 +811,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
             using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 var clientRepository = GetClientRepository(context);
-                var apiResourceRepository = GetApiResourceRepository(context);
+                var apiScopeRepository = GetApiScopeRepository(context);
                 
                 var apiScope = ApiResourceMock.GenerateRandomApiScope(0);
-                await apiResourceRepository.AddApiScopeAsync(apiScope);
+                await apiScopeRepository.AddApiScopeAsync(apiScope);
 
                 var apiScopes = await clientRepository.GetScopesAsync(apiScope.Name);
 

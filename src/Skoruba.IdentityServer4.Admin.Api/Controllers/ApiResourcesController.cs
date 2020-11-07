@@ -85,67 +85,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
 
             return Ok();
         }
-
-        [HttpGet("{id}/Scopes")]
-        public async Task<ActionResult<ApiScopesApiDto>> GetScopes(int page = 1, int pageSize = 10)
-        {
-            var apiScopesDto = await _apiResourceService.GetApiScopesAsync(page, pageSize);
-            var apiScopesApiDto = apiScopesDto.ToApiResourceApiModel<ApiScopesApiDto>();
-
-            return Ok(apiScopesApiDto);
-        }
-
-        [HttpGet("{id}/Scopes/{scopeId}")]
-        public async Task<ActionResult<ApiScopeApiDto>> GetScope(int scopeId)
-        {
-            var apiScopesDto = await _apiResourceService.GetApiScopeAsync(scopeId);
-            var apiScopeApiDto = apiScopesDto.ToApiResourceApiModel<ApiScopeApiDto>();
-
-            return Ok(apiScopeApiDto);
-        }
-
-        [HttpPost("{id}/Scopes")]
-        [ProducesResponseType(201)]
-        [ProducesResponseType(400)]
-        public async Task<IActionResult> PostScope(int id, [FromBody]ApiScopeApiDto apiScopeApi)
-        {
-            var apiScope = apiScopeApi.ToApiResourceApiModel<ApiScopesDto>();
-            
-            if (!apiScope.ApiScopeId.Equals(default))
-            {
-                return BadRequest(_errorResources.CannotSetId());
-            }
-
-            var scopeId = await _apiResourceService.AddApiScopeAsync(apiScope);
-            apiScope.ApiScopeId = scopeId;
-
-            return CreatedAtAction(nameof(GetScope), new { id, scopeId }, apiScope);
-        }
-
-        [HttpPut("{id}/Scopes")]
-        public async Task<IActionResult> PutScope(int id, [FromBody]ApiScopeApiDto apiScopeApi)
-        {
-            var apiScope = apiScopeApi.ToApiResourceApiModel<ApiScopesDto>();
-            
-            await _apiResourceService.GetApiScopeAsync(apiScope.ApiScopeId);
-
-            await _apiResourceService.UpdateApiScopeAsync(apiScope);
-
-            return Ok();
-        }
-
-        [HttpDelete("{id}/Scopes/{apiScopeId}")]
-        public async Task<IActionResult> DeleteScope(int apiScopeId)
-        {
-            var apiScope = new ApiScopesDto { ApiScopeId = apiScopeId };
-
-            await _apiResourceService.GetApiScopeAsync(apiScope.ApiScopeId);
-
-            await _apiResourceService.DeleteApiScopeAsync(apiScope);
-
-            return Ok();
-        }
-
+        
         [HttpGet("{id}/Secrets")]
         public async Task<ActionResult<ApiSecretsApiDto>> GetSecrets(int id, int page = 1, int pageSize = 10)
         {
