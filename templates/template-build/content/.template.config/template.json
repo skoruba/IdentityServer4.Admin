@@ -67,13 +67,16 @@
     },
     {
       "path": "src/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer/Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.csproj"
+    },
+    {
+      "path": "src/Skoruba.IdentityServer4.Shared/Skoruba.IdentityServer4.Shared.csproj"
     }
   ],
   "postActions": [
     {
       "actionId": "D396686C-DE0E-4DE6-906D-291CD29FC5DE",
       "args": {
-        "primaryOutputIndexes": "0;1;2;3;4;5;6"
+        "primaryOutputIndexes": "0;1;2;3;4;5;6;7"
       },
       "continueOnError": false,
       "manualInstructions": [

@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -12,7 +12,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers.TagHelpers
             var childContent = await output.GetChildContentAsync();
 
             var divSlider = new TagBuilder("div");
-            divSlider.AddCssClass("slider round");
+            divSlider.AddCssClass("slider round bg-primary");
 
             output.TagName = "label";
             output.Attributes.Add("class", "switch");

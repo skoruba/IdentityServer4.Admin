@@ -121,26 +121,26 @@
     <value>Verifikationskode</value>
   </data>
   <data name="DownloadTitle" xml:space="preserve">
-    <value>Download en Two-Factor Authenticator App som f.eks. Microsoft Authenticator til</value>
+    <value>Download en totrinsbekræftelses app som f.eks. Microsoft Authenticator til</value>
   </data>
   <data name="GoogleAuthenticatorTitle" xml:space="preserve">
-    <value>Google Authenticator for</value>
+    <value>Google Authenticator til</value>
   </data>
   <data name="Info" xml:space="preserve">
-    <value>Når du har scannet QR-koden eller indtastet nøglen ovenfor, vil din Two-Factor Authentication App give dig
-                med en unik kode. Indtast koden i bekræftelsesfeltet nedenfor.</value>
+    <value>Når du har scannet QR-koden eller indtastet nøglen ovenfor, vil din totrinsbekræftelse app give dig
+                en unik kode. Indtast koden i bekræftelsesfeltet nedenfor.</value>
   </data>
   <data name="ScanQR" xml:space="preserve">
-    <value>Scan QR-koden, eller indtast denne nøgle</value>
+    <value>Scan QR-koden eller indtast denne nøgle</value>
   </data>
   <data name="ScanQRSubTitle" xml:space="preserve">
-    <value>i din Two-Factor Authentication App. Mellemrum og skriftstørrelse betyder ikke noget.</value>
+    <value>i din totrinsbekræftelse app. Mellemrum og skriftstørrelse betyder ikke noget.</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
-    <value>For at bruge en Authentication App skal du gennemføre følgende trin:</value>
+    <value>For at bruge en totrinsbekræftelse app skal du følge disse trin:</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Konfigurer Authentication App</value>
+    <value>Konfigurer totrinsbekræftelse app</value>
   </data>
   <data name="Verify" xml:space="preserve">
     <value>Bekræft</value>

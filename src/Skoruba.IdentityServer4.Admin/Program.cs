@@ -3,12 +3,18 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Azure.KeyVault;
+using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.AzureKeyVault;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using Skoruba.IdentityServer4.Admin.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.Helpers;
+using Skoruba.IdentityServer4.Shared.Configuration.Common;
+using Skoruba.IdentityServer4.Shared.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin
 {
@@ -26,20 +32,11 @@ namespace Skoruba.IdentityServer4.Admin
 
             try
             {
-                var seed = args.Any(x => x == SeedArgs);
-                if (seed) args = args.Except(new[] { SeedArgs }).ToArray();
+                DockerHelpers.ApplyDockerConfiguration(configuration);
 
                 var host = CreateHostBuilder(args).Build();
 
-                // Uncomment this to seed upon startup, alternatively pass in `dotnet run /seed` to seed using CLI
-                // await DbMigrationHelpers.EnsureSeedData<IdentityServerConfigurationDbContext, AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext, UserIdentity, UserIdentityRole>(host);
-                if (seed)
-                {
-                    await DbMigrationHelpers
-                        .EnsureSeedData<IdentityServerConfigurationDbContext, AdminIdentityDbContext,
-                            IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext,
-                            IdentityServerDataProtectionDbContext, UserIdentity, UserIdentityRole>(host);
-                }
+                await ApplyDbMigrationsWithDataSeedAsync(args, configuration, host);
 
                 host.Run();
             }
@@ -52,7 +49,23 @@ namespace Skoruba.IdentityServer4.Admin
                 Log.CloseAndFlush();
             }
         }
-        
+
+        private static async Task ApplyDbMigrationsWithDataSeedAsync(string[] args, IConfiguration configuration, IHost host)
+        {
+            var applyDbMigrationWithDataSeedFromProgramArguments = args.Any(x => x == SeedArgs);
+            if (applyDbMigrationWithDataSeedFromProgramArguments) args = args.Except(new[] { SeedArgs }).ToArray();
+
+            var seedConfiguration = configuration.GetSection(nameof(SeedConfiguration)).Get<SeedConfiguration>();
+            var databaseMigrationsConfiguration = configuration.GetSection(nameof(DatabaseMigrationsConfiguration))
+                .Get<DatabaseMigrationsConfiguration>();
+
+            await DbMigrationHelpers
+                .ApplyDbMigrationsWithDataSeedAsync<IdentityServerConfigurationDbContext, AdminIdentityDbContext,
+                    IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext,
+                    IdentityServerDataProtectionDbContext, UserIdentity, UserIdentityRole>(host,
+                    applyDbMigrationWithDataSeedFromProgramArguments, seedConfiguration, databaseMigrationsConfiguration);
+        }
+
         private static IConfiguration GetConfiguration(string[] args)
         {
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
@@ -61,12 +74,18 @@ namespace Skoruba.IdentityServer4.Admin
             var configurationBuilder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile("serilog.json", optional: true, reloadOnChange: true);
+                .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("serilog.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"serilog.{environment}.json", optional: true, reloadOnChange: true);
 
             if (isDevelopment)
             {
                 configurationBuilder.AddUserSecrets<Startup>();
             }
+
+            var configuration = configurationBuilder.Build();
+
+            configuration.AddAzureKeyVaultConfiguration(configurationBuilder);
 
             configurationBuilder.AddCommandLine(args);
             configurationBuilder.AddEnvironmentVariables();
@@ -78,14 +97,24 @@ namespace Skoruba.IdentityServer4.Admin
             Host.CreateDefaultBuilder(args)
                  .ConfigureAppConfiguration((hostContext, configApp) =>
                  {
+                     var configurationRoot = configApp.Build();
+
                      configApp.AddJsonFile("serilog.json", optional: true, reloadOnChange: true);
                      configApp.AddJsonFile("identitydata.json", optional: true, reloadOnChange: true);
                      configApp.AddJsonFile("identityserverdata.json", optional: true, reloadOnChange: true);
 
-                     if (hostContext.HostingEnvironment.IsDevelopment())
+                     var env = hostContext.HostingEnvironment;
+
+                     configApp.AddJsonFile($"serilog.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                     configApp.AddJsonFile($"identitydata.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                     configApp.AddJsonFile($"identityserverdata.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
+                     if (env.IsDevelopment())
                      {
                          configApp.AddUserSecrets<Startup>();
                      }
+
+                     configurationRoot.AddAzureKeyVaultConfiguration(configApp);
 
                      configApp.AddEnvironmentVariables();
                      configApp.AddCommandLine(args);

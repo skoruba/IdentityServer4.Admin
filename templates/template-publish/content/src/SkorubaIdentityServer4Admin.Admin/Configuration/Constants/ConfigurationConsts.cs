@@ -1,3 +1,5 @@
+﻿using System.Collections.Generic;
+
 namespace SkorubaIdentityServer4Admin.Admin.Configuration.Constants
 {
     public class ConfigurationConsts
@@ -21,6 +23,11 @@ namespace SkorubaIdentityServer4Admin.Admin.Configuration.Constants
         public const string IdentityDataConfigurationKey = "IdentityData";
 
         public const string AdminAuditLogDbConnectionStringKey = "AdminAuditLogDbConnection";
+
+        public const string DataProtectionDbConnectionStringKey = "DataProtectionDbConnection";
+
+        public const string CspTrustedDomainsKey = "CspTrustedDomains";
+
     }
 }
 

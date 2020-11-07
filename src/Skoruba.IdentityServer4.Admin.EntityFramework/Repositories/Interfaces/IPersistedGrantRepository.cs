@@ -14,5 +14,6 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
 	    Task<int> DeletePersistedGrantsAsync(string userId);
         Task<bool> ExistsPersistedGrantsAsync(string subjectId);
 	    Task<int> SaveAllChangesAsync();
-	}
+        bool AutoSaveChanges { get; set; }
+    }
 }

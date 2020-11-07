@@ -1,4 +1,4 @@
-namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.PersistedGrants
+﻿namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.PersistedGrants
 {
     public class PersistedGrantSubjectApiDto
     {

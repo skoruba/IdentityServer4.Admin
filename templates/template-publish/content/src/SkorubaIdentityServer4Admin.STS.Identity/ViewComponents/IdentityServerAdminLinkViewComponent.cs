@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SkorubaIdentityServer4Admin.STS.Identity.Configuration.Interfaces;
 
 namespace SkorubaIdentityServer4Admin.STS.Identity.ViewComponents

@@ -1,4 +1,4 @@
-﻿$checkbox-active-background-color: #007bff;
+﻿$checkbox-passive-background-color: #ccc;
 
 .switch {
 	display: inline-block;
@@ -13,7 +13,6 @@
 }
 
 .slider {
-	background-color: #ccc;
 	bottom: 0;
 	cursor: pointer;
 	left: 0;
@@ -34,8 +33,8 @@
 	width: 20px;
 }
 
-input:checked + .slider {
-	background-color: $checkbox-active-background-color;
+input:not(:checked) + .bg-primary {
+	background-color: $checkbox-passive-background-color !important;
 }
 
 input:checked + .slider:before {

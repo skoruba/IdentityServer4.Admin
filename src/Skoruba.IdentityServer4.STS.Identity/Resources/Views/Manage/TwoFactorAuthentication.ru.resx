@@ -127,7 +127,7 @@
     <value>до того как вы можете войти с кодом восстановления</value>
   </data>
   <data name="Disable2FA" xml:space="preserve">
-    <value>Отлкючить 2FA</value>
+    <value>Отключить 2FA</value>
   </data>
   <data name="ForgetBrowser" xml:space="preserve">
     <value>Забыть этот браузер</value>
