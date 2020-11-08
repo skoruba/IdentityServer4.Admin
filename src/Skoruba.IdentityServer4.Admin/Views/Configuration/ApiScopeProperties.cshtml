@@ -14,16 +14,16 @@
 		<div class="col-12">
 			<nav aria-label="breadcrumb">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiScopes">@Localizer["Api Scopes"]</a></li>
+					<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiScopes">@Localizer["NavigationApiScopes"]</a></li>
 					<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiScope" asp-route-id="@Model.ApiScopeId">@Model.ApiScopeName</a></li>
-					<li class="breadcrumb-item active" aria-current="page">@Localizer["Api Scope Properties"]</li>
+					<li class="breadcrumb-item active" aria-current="page">@Localizer["PageTitle"]</li>
 				</ol>
 			</nav>
 		</div>
 
 		<div class="col-md-12">
 
-			<h3>@Localizer["Api Scope Properties"]</h3>
+			<h3>@Localizer["PageTitle"]</h3>
 
 			<div asp-validation-summary="All" class="text-danger"></div>
 
@@ -34,7 +34,7 @@
 			<input type="hidden" asp-for="ApiScopeName" />
 
 			<div class="card mt-3">
-				<h5 class="card-header">@Localizer["Api Scope Property"]</h5>
+				<h5 class="card-header">@Localizer["PageSubTitle"]</h5>
 				<div class="card-body">
 
 					<!--Input - text -->
@@ -64,7 +64,7 @@
 						<label class="col-sm-3 col-form-label">
 						</label>
 						<div class="col-sm-9">
-							<button type="submit" class="btn btn-primary">@Localizer["Add Api Scope Property"]</button>
+							<button type="submit" class="btn btn-primary">@Localizer["ButtonAddApiScopeProperty"]</button>
 						</div>
 					</div>
 				</div>
@@ -76,14 +76,14 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="card mt-3">
-			<h5 class="card-header">@Localizer["Api Scope Properties"]</h5>
+			<h5 class="card-header">@Localizer["PageTitle"]</h5>
 			<div class="card-body">
 				<div class="row table-responsive">
 					<table class="table table-striped">
 						<thead>
 							<tr>
-								<th>@Localizer["Key"]</th>
-								<th>@Localizer["Value"]</th>
+								<th>@Localizer["TableKey"]</th>
+								<th>@Localizer["TableValue"]</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -93,7 +93,7 @@
 								<tr>
 									<td>@apiResourceProperty.Key</td>
 									<td>@apiResourceProperty.Value</td>
-									<td><a asp-action="ApiScopePropertyDelete" asp-route-id="@apiResourceProperty.Id" class="btn btn-danger">@Localizer["Delete"]</a></td>
+									<td><a asp-action="ApiScopePropertyDelete" asp-route-id="@apiResourceProperty.Id" class="btn btn-danger">@Localizer["TableDelete"]</a></td>
 								</tr>
 							}
 						</tbody>

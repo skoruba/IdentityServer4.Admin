@@ -120,6 +120,9 @@
   <data name="ButtonAddApiScope" xml:space="preserve">
     <value>ذخیره Api اسکوپ</value>
   </data>
+  <data name="ButtonAddNewApiScope" xml:space="preserve">
+    <value>Add Api Scope</value>
+  </data>
   <data name="NavigationApiResources" xml:space="preserve">
     <value>Api منابع</value>
   </data>

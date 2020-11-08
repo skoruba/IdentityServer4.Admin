@@ -183,6 +183,12 @@
   <data name="Secrets_Label" xml:space="preserve">
     <value>密钥</value>
   </data>
+  <data name="SigningAlgorithms_Info" xml:space="preserve">
+    <value>List of allowed signing algorithms for access token. If empty, will use the server default signing algorithm.</value>
+  </data>
+  <data name="SigningAlgorithms_Label" xml:space="preserve">
+    <value>Allowed Access Token Signing Algorithms</value>
+  </data>
   <data name="UserClaims_Info" xml:space="preserve">
     <value>应包含在访问令牌中的关联用户声明类型的列表。</value>
   </data>

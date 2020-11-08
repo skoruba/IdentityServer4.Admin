@@ -18,7 +18,7 @@
         <!--Select with tags-->
         <div class="form-group row">
             <label asp-for="AllowedIdentityTokenSigningAlgorithms" class="col-sm-3 col-form-label">
-                @await Html.PartialAsync("ApiResource/Section/Label", "SigningAlgorithms")
+                @await Html.PartialAsync("Client/Section/Label", "SigningAlgorithms")
             </label>
             <div class="col-sm-9">
                 <picker id="AllowedIdentityTokenSigningAlgorithmsItems" multiple-select="true" min-search-text="2"
