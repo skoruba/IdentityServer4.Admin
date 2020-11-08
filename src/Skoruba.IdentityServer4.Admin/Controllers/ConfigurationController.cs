@@ -158,6 +158,31 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             return View(properties);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ApiScopeProperties(int id, int? page)
+        {
+            if (id == 0) return NotFound();
+
+            var properties = await _apiScopeService.GetApiScopePropertiesAsync(id, page ?? 1);
+
+            return View(properties);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ApiScopeProperties(ApiScopePropertiesDto apiScopeProperty)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(apiScopeProperty);
+            }
+
+            await _apiScopeService.AddApiScopePropertyAsync(apiScopeProperty);
+            SuccessNotification(string.Format(_localizer["Api Scope property is successfully saved"], apiScopeProperty.Key, apiScopeProperty.ApiScopeName), _localizer["SuccessTitle"]);
+
+            return RedirectToAction(nameof(ApiScopeProperties), new { Id = apiScopeProperty.ApiScopeId });
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ApiResourceProperties(ApiResourcePropertiesDto apiResourceProperty)
@@ -256,6 +281,26 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             var apiResourceProperty = await _apiResourceService.GetApiResourcePropertyAsync(id);
 
             return View(nameof(ApiResourcePropertyDelete), apiResourceProperty);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ApiScopePropertyDelete(int id)
+        {
+            if (id == 0) return NotFound();
+
+            var apiScopeProperty = await _apiScopeService.GetApiScopePropertyAsync(id);
+
+            return View(nameof(ApiScopePropertyDelete), apiScopeProperty);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ApiScopePropertyDelete(ApiScopePropertiesDto apiScopeProperty)
+        {
+            await _apiScopeService.DeleteApiScopePropertyAsync(apiScopeProperty);
+            SuccessNotification(_localizer["Api Scope property is successfully deleted"], _localizer["SuccessTitle"]);
+
+            return RedirectToAction(nameof(ApiScopeProperties), new { Id = apiScopeProperty.ApiScopeId });
         }
 
         [HttpGet]
@@ -536,9 +581,9 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ApiScope(int? scope)
+        public async Task<IActionResult> ApiScope(int? id)
         {
-            if (scope == null)
+            if (id == null)
             {
                 var apiScopesDto = new ApiScopesDto();
 
@@ -546,7 +591,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             }
             else
             {
-                var apiScopesDto = await _apiScopeService.GetApiScopeAsync(scope.Value);
+                var apiScopesDto = await _apiScopeService.GetApiScopeAsync(id.Value);
 
                 return View(apiScopesDto);
             }
@@ -581,11 +626,11 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ApiScopeDelete(int scope)
+        public async Task<IActionResult> ApiScopeDelete(int id)
         {
-            if (scope == 0) return NotFound();
+            if (id == 0) return NotFound();
 
-            var apiScope = await _apiScopeService.GetApiScopeAsync(scope);
+            var apiScope = await _apiScopeService.GetApiScopeAsync(id);
 
             return View(nameof(ApiScopeDelete), apiScope);
         }

@@ -71,8 +71,20 @@
 					<input type="text" class="form-control" asp-for="Description">
 				</div>
 			</div>
+			
+            <!--Checkbox-->
+            <div class="form-group row">
+                <label asp-for="Enabled" class="col-sm-3 col-form-label">
+                    @await Html.PartialAsync("IdentityResource/Section/Label", "Enabled")
+                </label>
+                <div class="col-sm-9">
+                    <toggle-button>
+                        <input asp-for="Enabled" type="checkbox">
+                    </toggle-button>
+                </div>
+            </div>
 
-			<!--Checkbox-->
+            <!--Checkbox-->
 			<div class="form-group row">
 				<label asp-for="Required" class="col-sm-3 col-form-label">
 					@await Html.PartialAsync("IdentityResource/Section/Label", "Required")
@@ -85,18 +97,31 @@
 			</div>
 
 			<!--Checkbox-->
-			<div class="form-group row">
-				<label asp-for="Emphasize" class="col-sm-3 col-form-label">
-					@await Html.PartialAsync("IdentityResource/Section/Label", "Emphasize")
-				</label>
-				<div class="col-sm-9">
-					<toggle-button>
-						<input asp-for="Emphasize" type="checkbox">
-					</toggle-button>
-				</div>
-			</div>
+            <div class="form-group row">
+                <label asp-for="Emphasize" class="col-sm-3 col-form-label">
+                    @await Html.PartialAsync("IdentityResource/Section/Label", "Emphasize")
+                </label>
+                <div class="col-sm-9">
+                    <toggle-button>
+                        <input asp-for="Emphasize" type="checkbox">
+                    </toggle-button>
+                </div>
+            </div>
+			
+            @if (Model.ApiScopeId != 0)
+            {
+               <!--Button-->
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">
+                        @await Html.PartialAsync("ApiResource/Section/Label", "Properties")
+                    </label>
+                    <div class="col-sm-9">
+                        <a asp-action="ApiScopeProperties" asp-route-id="@Model.ApiScopeId" class="btn btn-primary">@Localizer["Manage Api Scope Properties"]</a>
+                    </div>
+                </div>
+            }
 
-			<!--Select with tags-->
+            <!--Select with tags-->
 			<div class="form-group row">
 				<label asp-for="UserClaims" class="col-sm-3 col-form-label">
 					@await Html.PartialAsync("ApiResource/Section/Label", "UserClaims")

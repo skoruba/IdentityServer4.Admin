@@ -29,5 +29,20 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
         {
             return resource == null ? null : Mapper.Map<ApiScope>(resource);
         }
+
+        public static ApiScopeProperty ToEntity(this ApiScopePropertiesDto resource)
+        {
+            return resource == null ? null : Mapper.Map<ApiScopeProperty>(resource);
+        }
+
+        public static ApiScopePropertiesDto ToModel(this PagedList<ApiScopeProperty> scope)
+        {
+            return scope == null ? null : Mapper.Map<ApiScopePropertiesDto>(scope);
+        }
+
+        public static ApiScopePropertiesDto ToModel(this ApiScopeProperty scope)
+        {
+            return scope == null ? null : Mapper.Map<ApiScopePropertiesDto>(scope);
+        }
     }
 }

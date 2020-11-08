@@ -202,7 +202,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             apiResourceProperties.TotalCount = apiResourcePropertiesDto.TotalCount;
         }
 
-       public virtual async Task<ApiSecretsDto> GetApiSecretsAsync(int apiResourceId, int page = 1, int pageSize = 10)
+        public virtual async Task<ApiSecretsDto> GetApiSecretsAsync(int apiResourceId, int page = 1, int pageSize = 10)
         {
             var apiResource = await ApiResourceRepository.GetApiResourceAsync(apiResourceId);
             if (apiResource == null) throw new UserFriendlyErrorPageException(string.Format(ApiResourceServiceResources.ApiResourceDoesNotExist().Description, apiResourceId), ApiResourceServiceResources.ApiResourceDoesNotExist().Description);

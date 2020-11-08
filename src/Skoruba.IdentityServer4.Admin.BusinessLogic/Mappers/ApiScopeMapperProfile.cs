@@ -23,9 +23,20 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
             CreateMap<ApiScope, ApiScopeDto>(MemberList.Destination)
                 .ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(x => x.Type)));
 
+            CreateMap<ApiScopeProperty, ApiScopePropertyDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<ApiScopeProperty, ApiScopePropertiesDto>(MemberList.Destination)
+                .ForMember(dest => dest.Key, opt => opt.Condition(srs => srs != null))
+                .ForMember(x => x.ApiScopePropertyId, opt => opt.MapFrom(x => x.Id))
+                .ForMember(x => x.ApiScopeId, opt => opt.MapFrom(x => x.Scope.Id));
+
             // PagedLists
             CreateMap<PagedList<ApiScope>, ApiScopesDto>(MemberList.Destination)
                 .ForMember(x => x.Scopes, opt => opt.MapFrom(src => src.Data));
+
+            CreateMap<PagedList<ApiScopeProperty>, ApiScopePropertiesDto>(MemberList.Destination)
+                .ForMember(x => x.ApiScopeProperties, opt => opt.MapFrom(src => src.Data));
 
             // model to entity
             CreateMap<ApiScopesDto, ApiScope>(MemberList.Source)
@@ -34,6 +45,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
 
             CreateMap<ApiScopeDto, ApiScope>(MemberList.Source)
                 .ForMember(x => x.UserClaims, opts => opts.MapFrom(src => src.UserClaims.Select(x => new ApiScopeClaim { Type = x })));
+
+            CreateMap<ApiScopePropertiesDto, ApiScopeProperty>(MemberList.Source)
+                .ForMember(x => x.Scope, dto => dto.MapFrom(src => new ApiScope { Id = src.ApiScopeId }))
+                .ForMember(x => x.ScopeId, dto => dto.MapFrom(src => src.ApiScopeId))
+                .ForMember(x => x.Id, opt => opt.MapFrom(src => src.ApiScopePropertyId));
         }
     }
 }

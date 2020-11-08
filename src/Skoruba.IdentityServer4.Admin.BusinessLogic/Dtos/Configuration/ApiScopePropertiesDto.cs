@@ -17,7 +17,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
         [Required]
         public string Value { get; set; }
 
-        public List<ApiScopePropertyDto> ApiResourceProperties { get; set; } = new List<ApiScopePropertyDto>();
+        public List<ApiScopePropertyDto> ApiScopeProperties { get; set; } = new List<ApiScopePropertyDto>();
 
         public int TotalCount { get; set; }
 

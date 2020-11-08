@@ -39,9 +39,9 @@
                     @foreach (var scope in Model.Scopes)
                     {
                         <tr>
-                            <td><a asp-action="ApiScope" asp-route-scope="@scope.Id" class="btn btn-primary">@Localizer["TableButtonEdit"]</a></td>
+                            <td><a asp-action="ApiScope" asp-route-id="@scope.Id" class="btn btn-primary">@Localizer["TableButtonEdit"]</a></td>
                             <td>@scope.Name</td>
-                            <td><a asp-action="ApiScopeDelete" asp-route-scope="@scope.Id" class="btn btn-danger"><span class="oi oi-x"></span></a></td>
+                            <td><a asp-action="ApiScopeDelete" asp-route-id="@scope.Id" class="btn btn-danger"><span class="oi oi-x"></span></a></td>
                         </tr>
                     }
                 </tbody>

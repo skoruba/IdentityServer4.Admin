@@ -25,6 +25,64 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             DbContext = dbContext;
         }
 
+        public virtual Task<ApiScopeProperty> GetApiScopePropertyAsync(int apiScopePropertyId)
+        {
+            return DbContext.ApiScopeProperties
+                .Include(x => x.Scope)
+                .Where(x => x.Id == apiScopePropertyId)
+                .SingleOrDefaultAsync();
+        }
+
+        public virtual async Task<int> AddApiScopePropertyAsync(int apiScopeId, ApiScopeProperty apiScopeProperty)
+        {
+            var apiScope = await DbContext.ApiScopes.Where(x => x.Id == apiScopeId).SingleOrDefaultAsync();
+
+            apiScopeProperty.Scope = apiScope;
+            await DbContext.ApiScopeProperties.AddAsync(apiScopeProperty);
+
+            return await AutoSaveChangesAsync();
+        }
+
+        public virtual async Task<int> DeleteApiScopePropertyAsync(ApiScopeProperty apiScopeProperty)
+        {
+            var propertyToDelete = await DbContext.ApiScopeProperties.Where(x => x.Id == apiScopeProperty.Id).SingleOrDefaultAsync();
+
+            DbContext.ApiScopeProperties.Remove(propertyToDelete);
+
+            return await AutoSaveChangesAsync();
+        }
+
+        public virtual async Task<bool> CanInsertApiScopePropertyAsync(ApiScopeProperty apiScopeProperty)
+        {
+            var existsWithSameName = await DbContext.ApiScopeProperties.Where(x => x.Key == apiScopeProperty.Key
+                                                                                   && x.Scope.Id == apiScopeProperty.Scope.Id).SingleOrDefaultAsync();
+            return existsWithSameName == null;
+        }
+
+
+        public virtual async Task<string> GetApiScopeNameAsync(int apiScopeId)
+        {
+            var apiScopeName = await DbContext.ApiScopes.Where(x => x.Id == apiScopeId).Select(x => x.Name).SingleOrDefaultAsync();
+
+            return apiScopeName;
+        }
+
+        public virtual async Task<PagedList<ApiScopeProperty>> GetApiScopePropertiesAsync(int apiScopeId, int page = 1, int pageSize = 10)
+        {
+            var pagedList = new PagedList<ApiScopeProperty>();
+
+            var apiScopeProperties = DbContext.ApiScopeProperties.Where(x => x.Scope.Id == apiScopeId);
+
+            var properties = await apiScopeProperties.PageBy(x => x.Id, page, pageSize)
+                .ToListAsync();
+
+            pagedList.Data.AddRange(properties);
+            pagedList.TotalCount = await apiScopeProperties.CountAsync();
+            pagedList.PageSize = pageSize;
+
+            return pagedList;
+        }
+
         public virtual async Task<bool> CanInsertApiScopeAsync(ApiScope apiScope)
         {
             if (apiScope.Id == 0)
@@ -79,12 +137,11 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
         /// <summary>
         /// Add new api scope
         /// </summary>
-        /// <param name="apiResourceId"></param>
         /// <param name="apiScope"></param>
         /// <returns>This method return new api scope id</returns>
         public virtual async Task<int> AddApiScopeAsync(ApiScope apiScope)
         {
-            DbContext.ApiScopes.Add(apiScope);
+            await DbContext.ApiScopes.AddAsync(apiScope);
 
             await AutoSaveChangesAsync();
 

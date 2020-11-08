@@ -21,5 +21,15 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
         Task<int> DeleteApiScopeAsync(ApiScopesDto apiScope);
 
         Task<bool> CanInsertApiScopeAsync(ApiScopesDto apiScopes);
+
+        Task<ApiScopePropertiesDto> GetApiScopePropertiesAsync(int apiScopeId, int page = 1, int pageSize = 10);
+
+        Task<int> AddApiScopePropertyAsync(ApiScopePropertiesDto apiScopeProperties);
+
+        Task<int> DeleteApiScopePropertyAsync(ApiScopePropertiesDto apiScopeProperty);
+
+        Task<ApiScopePropertiesDto> GetApiScopePropertyAsync(int apiScopePropertyId);
+
+        Task<bool> CanInsertApiScopePropertyAsync(ApiScopePropertiesDto apiResourceProperty);
     }
 }

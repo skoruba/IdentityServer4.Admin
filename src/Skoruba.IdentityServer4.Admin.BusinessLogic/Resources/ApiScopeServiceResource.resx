@@ -126,4 +126,13 @@
   <data name="ApiScopeExistsValue" xml:space="preserve">
     <value>Api Scope ({0}) already exists</value>
   </data>
+  <data name="ApiScopePropertyDoesNotExist" xml:space="preserve">
+    <value>Api Scope Property with id {0} doesn't exist</value>
+  </data>
+  <data name="ApiScopePropertyExistsKey" xml:space="preserve">
+    <value>Api Scope Property already exists</value>
+  </data>
+  <data name="ApiScopePropertyExistsValue" xml:space="preserve">
+    <value>Api Scope Property ({0}) already exists</value>
+  </data>
 </root>
