@@ -178,7 +178,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             }
 
             await _apiScopeService.AddApiScopePropertyAsync(apiScopeProperty);
-            SuccessNotification(string.Format(_localizer["Api Scope property is successfully saved"], apiScopeProperty.Key, apiScopeProperty.ApiScopeName), _localizer["SuccessTitle"]);
+            SuccessNotification(string.Format(_localizer["SuccessAddApiScopeProperty"], apiScopeProperty.Key, apiScopeProperty.ApiScopeName), _localizer["SuccessTitle"]);
 
             return RedirectToAction(nameof(ApiScopeProperties), new { Id = apiScopeProperty.ApiScopeId });
         }
@@ -298,7 +298,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         public async Task<IActionResult> ApiScopePropertyDelete(ApiScopePropertiesDto apiScopeProperty)
         {
             await _apiScopeService.DeleteApiScopePropertyAsync(apiScopeProperty);
-            SuccessNotification(_localizer["Api Scope property is successfully deleted"], _localizer["SuccessTitle"]);
+            SuccessNotification(_localizer["SuccessDeleteApiScopeProperty"], _localizer["SuccessTitle"]);
 
             return RedirectToAction(nameof(ApiScopeProperties), new { Id = apiScopeProperty.ApiScopeId });
         }

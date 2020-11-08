@@ -117,52 +117,83 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ButtonDeleteAll" xml:space="preserve">
-    <value>Excluir tudo</value>
+  <data name="Enabled_Info" xml:space="preserve">
+    <value>Indique si le client est activé. La valeur par défaut est Vrai.</value>
   </data>
-  <data name="DeleteDialogMessage" xml:space="preserve">
-    <value>Tem certeza? Todas as concessões persistentes para este assunto serão excluídas.</value>
+  <data name="Enabled_Label" xml:space="preserve">
+    <value>Activé</value>
   </data>
-  <data name="DeleteDialogNo" xml:space="preserve">
-    <value>Não - fechar</value>
+  <data name="Description_Info" xml:space="preserve">
+    <value>Description Client</value>
   </data>
-  <data name="DeleteDialogTitle" xml:space="preserve">
-    <value>Aviso</value>
-  </data>
-  <data name="DeleteDialogYes" xml:space="preserve">
-    <value>Sim - excluir</value>
-  </data>
-  <data name="NavigationPersistedGrants" xml:space="preserve">
-    <value>Concessões persistentes</value>
-  </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>Concessões persistentes</value>
-  </data>
-  <data name="TableClient" xml:space="preserve">
-    <value>Sistema</value>
-  </data>
-  <data name="TableConsumedTime" xml:space="preserve">
-    <value>Consumed Time</value>
-  </data>
-  <data name="TableCreationTime" xml:space="preserve">
-    <value>Creation Time</value>
-  </data>
-  <data name="TableData" xml:space="preserve">
-    <value>Dados</value>
-  </data>
-  <data name="TableDescription" xml:space="preserve">
+  <data name="Description_Label" xml:space="preserve">
     <value>Description</value>
   </data>
-  <data name="TableExpiration" xml:space="preserve">
-    <value>Expiração</value>
+  <data name="Properties_Info" xml:space="preserve">
+    <value>Dictionnaire pour contenir autant de valeurs personnalisées spécifiques au client que nécessaire.</value>
+    <comment>Dictionnaire pour contenir toutes les valeurs personnalisées spécifiques au client selon les besoins.</comment>
   </data>
-  <data name="TableSessionId" xml:space="preserve">
-    <value>SessionId</value>
+  <data name="Properties_Label" xml:space="preserve">
+    <value>Propriétés</value>
   </data>
-  <data name="TableSubjectId" xml:space="preserve">
-    <value>ID do assunto</value>
+  <data name="PropertyKey_Info" xml:space="preserve">
+    <value>Clé</value>
   </data>
-  <data name="TableType" xml:space="preserve">
-    <value>Tipo</value>
+  <data name="PropertyKey_Label" xml:space="preserve">
+    <value>Clé</value>
+  </data>
+  <data name="PropertyValue_Info" xml:space="preserve">
+    <value>Valeur</value>
+  </data>
+  <data name="PropertyValue_Label" xml:space="preserve">
+    <value>Valeur</value>
+  </data>
+  <data name="Expiration_Info" xml:space="preserve">
+    <value>Expiration</value>
+  </data>
+  <data name="Expiration_Label" xml:space="preserve">
+    <value>Expiration</value>
+  </data>
+  <data name="SecretDescription_Info" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="SecretDescription_Label" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="SigningAlgorithms_Info" xml:space="preserve">
+    <value>List of allowed signing algorithms for identity token. If empty, will use the server default signing algorithm.</value>
+  </data>
+  <data name="SigningAlgorithms_Label" xml:space="preserve">
+    <value>Allowed Identity Token Signing Algorithms</value>
+  </data>
+  <data name="DisplayName_Info" xml:space="preserve">
+    <value>This value can be used e.g. on the consent screen.</value>
+  </data>
+  <data name="DisplayName_Label" xml:space="preserve">
+    <value>Display Name</value>
+  </data>
+  <data name="Name_Info" xml:space="preserve">
+    <value>The unique name of the API. This value is used for authentication with introspection and will be added to the audience of the outgoing access token.</value>
+  </data>
+  <data name="Name_Label" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Scopes_Info" xml:space="preserve">
+    <value>An API must have at least one scope. Each scope can have different settings.</value>
+  </data>
+  <data name="Scopes_Label" xml:space="preserve">
+    <value>Scopes</value>
+  </data>
+  <data name="Secrets_Info" xml:space="preserve">
+    <value>The API secret is used for the introspection endpoint. The API can authenticate with introspection using the API name and secret.</value>
+  </data>
+  <data name="Secrets_Label" xml:space="preserve">
+    <value>Secrets</value>
+  </data>
+  <data name="UserClaims_Info" xml:space="preserve">
+    <value>List of associated user claim types that should be included in the access token.</value>
+  </data>
+  <data name="UserClaims_Label" xml:space="preserve">
+    <value>User Claims</value>
   </data>
 </root>

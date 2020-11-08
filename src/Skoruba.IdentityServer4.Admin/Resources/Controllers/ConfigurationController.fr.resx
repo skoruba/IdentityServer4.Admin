@@ -127,6 +127,9 @@
     <value>Scope Api {0} enregistré avec succès !</value>
     <comment>Portée , étendue, droits d'accès, scope API, API scope</comment>
   </data>
+  <data name="SuccessAddApiScopeProperty" xml:space="preserve">
+    <value>Api Scope property {0} for api scope {1} is successfully saved!</value>
+  </data>
   <data name="SuccessAddApiSecret" xml:space="preserve">
     <value>Secret Api créé avec succès !</value>
   </data>
@@ -163,6 +166,9 @@
   </data>
   <data name="SuccessDeleteApiScope" xml:space="preserve">
     <value>Scope API supprimé avec succès !</value>
+  </data>
+  <data name="SuccessDeleteApiScopeProperty" xml:space="preserve">
+    <value>Api Scope property is successfully deleted!</value>
   </data>
   <data name="SuccessDeleteApiSecret" xml:space="preserve">
     <value>Secret Api supprimé avec succès !</value>

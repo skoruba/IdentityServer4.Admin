@@ -117,52 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ButtonDeleteAll" xml:space="preserve">
-    <value>Excluir tudo</value>
+  <data name="Properties_Info" xml:space="preserve">
+    <value>Dictionnaire pour contenir autant de valeurs personnalisées spécifiques au client que nécessaire.</value>
+    <comment>Dictionnaire pour contenir toutes les valeurs personnalisées spécifiques au client selon les besoins.</comment>
   </data>
-  <data name="DeleteDialogMessage" xml:space="preserve">
-    <value>Tem certeza? Todas as concessões persistentes para este assunto serão excluídas.</value>
+  <data name="Properties_Label" xml:space="preserve">
+    <value>Propriétés</value>
   </data>
-  <data name="DeleteDialogNo" xml:space="preserve">
-    <value>Não - fechar</value>
+  <data name="PropertyKey_Info" xml:space="preserve">
+    <value>Clé</value>
   </data>
-  <data name="DeleteDialogTitle" xml:space="preserve">
-    <value>Aviso</value>
+  <data name="PropertyKey_Label" xml:space="preserve">
+    <value>Clé</value>
   </data>
-  <data name="DeleteDialogYes" xml:space="preserve">
-    <value>Sim - excluir</value>
+  <data name="PropertyValue_Info" xml:space="preserve">
+    <value>Valeur</value>
   </data>
-  <data name="NavigationPersistedGrants" xml:space="preserve">
-    <value>Concessões persistentes</value>
-  </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>Concessões persistentes</value>
-  </data>
-  <data name="TableClient" xml:space="preserve">
-    <value>Sistema</value>
-  </data>
-  <data name="TableConsumedTime" xml:space="preserve">
-    <value>Consumed Time</value>
-  </data>
-  <data name="TableCreationTime" xml:space="preserve">
-    <value>Creation Time</value>
-  </data>
-  <data name="TableData" xml:space="preserve">
-    <value>Dados</value>
-  </data>
-  <data name="TableDescription" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="TableExpiration" xml:space="preserve">
-    <value>Expiração</value>
-  </data>
-  <data name="TableSessionId" xml:space="preserve">
-    <value>SessionId</value>
-  </data>
-  <data name="TableSubjectId" xml:space="preserve">
-    <value>ID do assunto</value>
-  </data>
-  <data name="TableType" xml:space="preserve">
-    <value>Tipo</value>
+  <data name="PropertyValue_Label" xml:space="preserve">
+    <value>Valeur</value>
   </data>
 </root>
