@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Skoruba.IdentityServer4.Admin.Api.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.Api.Dtos.ApiResources;
+using Skoruba.IdentityServer4.Admin.Api.Dtos.ApiScopes;
 using Skoruba.IdentityServer4.Admin.Api.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Api.Mappers;
 using Skoruba.IdentityServer4.Admin.Api.Resources;
@@ -46,6 +47,15 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
             return Ok(apiScopeApiDto);
         }
 
+        [HttpGet("{id}/Properties")]
+        public async Task<ActionResult<ApiScopePropertiesApiDto>> GetScopeProperties(int id, int page = 1, int pageSize = 10)
+        {
+            var apiScopePropertiesDto = await _apiScopeService.GetApiScopePropertiesAsync(id, page, pageSize);
+            var apiScopePropertiesApiDto = apiScopePropertiesDto.ToApiScopeApiModel<ApiScopePropertiesApiDto>();
+
+            return Ok(apiScopePropertiesApiDto);
+        }
+
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
@@ -62,6 +72,45 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
             apiScope.Id = id;
 
             return CreatedAtAction(nameof(GetScope), new {scopeId = id}, apiScope);
+        }
+
+        [HttpPost("{id}/Properties")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> PostProperty(int id, [FromBody]ApiScopePropertyApiDto apiScopePropertyApi)
+        {
+            var apiResourcePropertiesDto = apiScopePropertyApi.ToApiScopeApiModel<ApiScopePropertiesDto>();
+            apiResourcePropertiesDto.ApiScopeId = id;
+
+            if (!apiResourcePropertiesDto.ApiScopePropertyId.Equals(default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
+
+            var propertyId = await _apiScopeService.AddApiScopePropertyAsync(apiResourcePropertiesDto);
+            apiScopePropertyApi.Id = propertyId;
+
+            return CreatedAtAction(nameof(GetProperty), new { propertyId }, apiScopePropertyApi);
+        }
+
+        [HttpGet("Properties/{propertyId}")]
+        public async Task<ActionResult<ApiScopePropertyApiDto>> GetProperty(int propertyId)
+        {
+            var apiScopePropertyAsync = await _apiScopeService.GetApiScopePropertyAsync(propertyId);
+            var resourcePropertyApiDto = apiScopePropertyAsync.ToApiScopeApiModel<ApiScopePropertyApiDto>();
+
+            return Ok(resourcePropertyApiDto);
+        }
+
+        [HttpDelete("Properties/{propertyId}")]
+        public async Task<IActionResult> DeleteProperty(int propertyId)
+        {
+            var apiScopePropertiesDto = new ApiScopePropertiesDto { ApiScopePropertyId = propertyId };
+
+            await _apiScopeService.GetApiScopePropertyAsync(apiScopePropertiesDto.ApiScopePropertyId);
+            await _apiScopeService.DeleteApiScopePropertyAsync(apiScopePropertiesDto);
+
+            return Ok();
         }
 
         [HttpPut]

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Skoruba.IdentityServer4.Admin.Api.Dtos.ApiResources;
+using Skoruba.IdentityServer4.Admin.Api.Dtos.ApiScopes;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 
 namespace Skoruba.IdentityServer4.Admin.Api.Mappers
@@ -13,6 +13,17 @@ namespace Skoruba.IdentityServer4.Admin.Api.Mappers
                 .ReverseMap();
 
             CreateMap<ApiScopeDto, ApiScopeApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            // Api Scope Properties
+            CreateMap<ApiScopePropertiesDto, ApiScopePropertiesApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<ApiScopePropertyDto, ApiScopePropertyApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<ApiScopePropertiesDto, ApiScopePropertyApiDto>(MemberList.Destination)
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ApiScopePropertyId))
                 .ReverseMap();
         }
     }
