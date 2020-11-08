@@ -9,7 +9,12 @@
     Layout = "_Layout";
 }
 
-<h2>@Localizer["PageTitle"]</h2>
+<div class="row">
+    <div class="col-12 mb-3 text-center mt-1">
+        <h2><span class="oi oi-bug" title="Error Logs" aria-hidden="true"></span> @Localizer["PageTitle"]</h2>
+    </div>
+</div>
+
 
 <div class="col-12">
     <div asp-validation-summary="All" class="text-danger"></div>
@@ -32,7 +37,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Modal -->
     <div class="modal fade" id="deleteLogsModal" tabindex="-1" role="dialog" aria-labelledby="deleteLogsModal">
         <div class="modal-dialog" role="document">

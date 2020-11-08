@@ -813,7 +813,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 var clientRepository = GetClientRepository(context);
                 var apiScopeRepository = GetApiScopeRepository(context);
                 
-                var apiScope = ApiResourceMock.GenerateRandomApiScope(0);
+                var apiScope = ApiScopeMock.GenerateRandomApiScope(0);
                 await apiScopeRepository.AddApiScopeAsync(apiScope);
 
                 var apiScopes = await clientRepository.GetScopesAsync(apiScope.Name);

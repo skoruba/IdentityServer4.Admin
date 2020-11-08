@@ -537,7 +537,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
-            var apiScopeDto = ApiResourceDtoMock.GenerateRandomApiScope(0);
+            var apiScopeDto = ApiScopeDtoMock.GenerateRandomApiScope(0);
 
             var result = await controller.ApiScope(apiScopeDto);
 
@@ -548,7 +548,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var apiScope = await dbContext.ApiScopes.Where(x => x.Name == apiScopeDto.Name).SingleOrDefaultAsync();
             var addedApiScope = await apiScopeService.GetApiScopeAsync(apiScope.Id);
 
-            apiScopeDto.ShouldBeEquivalentTo(addedApiScope, opts => opts.Excluding(x => x.ApiScopeId));
+            apiScopeDto.ShouldBeEquivalentTo(addedApiScope, opts => opts.Excluding(x => x.Id));
         }
 
         [Fact]
@@ -566,7 +566,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             // Add Api Scopes
             for (var i = 0; i < generateScopes; i++)
             {
-                var apiScopeDto = ApiResourceDtoMock.GenerateRandomApiScope(0);
+                var apiScopeDto = ApiScopeDtoMock.GenerateRandomApiScope(0);
                 await apiScopeService.AddApiScopeAsync(apiScopeDto);
             }
 
@@ -591,7 +591,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
-            var apiScopeDto = ApiResourceDtoMock.GenerateRandomApiScope(0);
+            var apiScopeDto = ApiScopeDtoMock.GenerateRandomApiScope(0);
 
             await apiScopeService.AddApiScopeAsync(apiScopeDto);
             var apiScopeAdded = await dbContext.ApiScopes.Where(x => x.Name == apiScopeDto.Name).SingleOrDefaultAsync();
@@ -600,7 +600,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             apiScopeAdded.Should().NotBeNull();
 
-            var updatedApiScopeDto = ApiResourceDtoMock.GenerateRandomApiScope(apiScopeAdded.Id);
+            var updatedApiScopeDto = ApiScopeDtoMock.GenerateRandomApiScope(apiScopeAdded.Id);
             var result = await controller.ApiScope(updatedApiScopeDto);
 
             // Assert
@@ -610,7 +610,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var apiScope = await dbContext.ApiScopes.Where(x => x.Id == apiScopeAdded.Id).SingleOrDefaultAsync();
             var addedApiScope = await apiScopeService.GetApiScopeAsync(apiScope.Id);
 
-            updatedApiScopeDto.ShouldBeEquivalentTo(addedApiScope, opts => opts.Excluding(x => x.ApiScopeId));
+            updatedApiScopeDto.ShouldBeEquivalentTo(addedApiScope, opts => opts.Excluding(x => x.Id));
         }
 
         [Fact]
@@ -623,14 +623,14 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
-            var apiScopeDto = ApiResourceDtoMock.GenerateRandomApiScope(0);
+            var apiScopeDto = ApiScopeDtoMock.GenerateRandomApiScope(0);
             await apiScopeService.AddApiScopeAsync(apiScopeDto);
 
             var apiScopeId = await dbContext.ApiScopes.Where(x => x.Name == apiScopeDto.Name).Select(x => x.Id).SingleOrDefaultAsync();
 
             apiScopeId.Should().NotBe(0);
 
-            apiScopeDto.ApiScopeId = apiScopeId;
+            apiScopeDto.Id = apiScopeId;
 
             var result = await controller.ApiScopeDelete(apiScopeDto);
 
@@ -638,7 +638,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("ApiScopes");
 
-            var apiScope = await dbContext.ApiScopes.Where(x => x.Id == apiScopeDto.ApiScopeId).SingleOrDefaultAsync();
+            var apiScope = await dbContext.ApiScopes.Where(x => x.Id == apiScopeDto.Id).SingleOrDefaultAsync();
             apiScope.Should().BeNull();
         }
 

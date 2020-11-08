@@ -71,7 +71,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mappers
 		public void CanMapApiScopeToModel()
 		{
             //Generate DTO
-            var apiScopeDto = ApiResourceMock.GenerateRandomApiScope(1);
+            var apiScopeDto = ApiScopeMock.GenerateRandomApiScope(1);
 
             //Try map to entity
             var apiScope = apiScopeDto.ToModel();
@@ -81,22 +81,18 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mappers
             apiScope.ShouldBeEquivalentTo(apiScopeDto, options =>
                 options.Excluding(o => o.UserClaims)
                     .Excluding(o => o.ApiScopeProperties)
-                    .Excluding(o => o.ApiScopeId)
-                    .Excluding(o => o.PageSize)
-                    .Excluding(o => o.TotalCount)
-                    .Excluding(o => o.Scopes)
                     .Excluding(o => o.UserClaimsItems));
 
 			//Assert collection
             apiScopeDto.UserClaims.Select(x => x.Type).ShouldBeEquivalentTo(apiScope.UserClaims);
-            apiScope.ApiScopeId.Should().Be(apiScopeDto.Id);
+            apiScope.Id.Should().Be(apiScopeDto.Id);
 		}
 
 		[Fact]
 		public void CanMapApiScopeDtoToEntity()
 		{
 			//Generate DTO
-			var apiScopeDto = ApiResourceDtoMock.GenerateRandomApiScope(1);
+			var apiScopeDto = ApiScopeDtoMock.GenerateRandomApiScope(1);
 
 			//Try map to entity
 			var apiScope = apiScopeDto.ToEntity();
@@ -110,7 +106,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mappers
 
 			//Assert collection
 			apiScope.UserClaims.Select(x => x.Type).ShouldBeEquivalentTo(apiScopeDto.UserClaims);
-			apiScope.Id.Should().Be(apiScopeDto.ApiScopeId);
+			apiScope.Id.Should().Be(apiScopeDto.Id);
 		}
 
 		[Fact]

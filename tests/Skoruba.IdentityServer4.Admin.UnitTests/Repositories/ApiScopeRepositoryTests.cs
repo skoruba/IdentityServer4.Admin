@@ -43,7 +43,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 var apiResourceRepository = GetApiScopeRepository(context);
 
                 //Generate random new api scope
-                var apiScope = ApiResourceMock.GenerateRandomApiScope(0);
+                var apiScope = ApiScopeMock.GenerateRandomApiScope(0);
 
                 //Add new api scope
                 await apiResourceRepository.AddApiScopeAsync(apiScope);
@@ -64,7 +64,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 var apiResourceRepository = GetApiScopeRepository(context);
 
                 //Generate random new api scope
-                var apiScope = ApiResourceMock.GenerateRandomApiScope(0);
+                var apiScope = ApiScopeMock.GenerateRandomApiScope(0);
 
                 //Add new api scope
                 await apiResourceRepository.AddApiScopeAsync(apiScope);
@@ -73,7 +73,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 context.Entry(apiScope).State = EntityState.Detached;
 
                 //Generete new api scope with added item id
-                var updatedApiScope = ApiResourceMock.GenerateRandomApiScope(apiScope.Id);
+                var updatedApiScope = ApiScopeMock.GenerateRandomApiScope(apiScope.Id);
 
                 //Update api scope
                 await apiResourceRepository.UpdateApiScopeAsync(updatedApiScope);
@@ -94,7 +94,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 var apiResourceRepository = GetApiScopeRepository(context);
 
                 //Generate random new api scope
-                var apiScope = ApiResourceMock.GenerateRandomApiScope(0);
+                var apiScope = ApiScopeMock.GenerateRandomApiScope(0);
 
                 //Add new api resource
                 await apiResourceRepository.AddApiScopeAsync(apiScope);
@@ -124,7 +124,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 var apiResourceRepository = GetApiScopeRepository(context);
 
                 //Generate random new api scope
-                var apiScope = ApiResourceMock.GenerateRandomApiScope(0);
+                var apiScope = ApiScopeMock.GenerateRandomApiScope(0);
 
                 //Add new api scope
                 await apiResourceRepository.AddApiScopeAsync(apiScope);

@@ -63,24 +63,23 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return apiScopePropertiesDto;
         }
 
-        public virtual async Task<ApiScopesDto> GetApiScopeAsync(int apiScopeId)
+        public virtual async Task<ApiScopeDto> GetApiScopeAsync(int apiScopeId)
         {
             var apiScope = await ApiScopeRepository.GetApiScopeAsync(apiScopeId);
             if (apiScope == null) throw new UserFriendlyErrorPageException(string.Format(ApiScopeServiceResources.ApiScopeDoesNotExist().Description, apiScopeId), ApiScopeServiceResources.ApiScopeDoesNotExist().Description);
 
-            var apiScopesDto = apiScope.ToModel();
+            var apiScopeDto = apiScope.ToModel();
 
-            await AuditEventLogger.LogEventAsync(new ApiScopeRequestedEvent(apiScopesDto));
+            await AuditEventLogger.LogEventAsync(new ApiScopeRequestedEvent(apiScopeDto));
 
-            return apiScopesDto;
+            return apiScopeDto;
         }
 
-        public virtual async Task<int> AddApiScopeAsync(ApiScopesDto apiScope)
+        public virtual async Task<int> AddApiScopeAsync(ApiScopeDto apiScope)
         {
             var canInsert = await CanInsertApiScopeAsync(apiScope);
             if (!canInsert)
             {
-                await BuildApiScopesViewModelAsync(apiScope);
                 throw new UserFriendlyViewException(string.Format(ApiScopeServiceResources.ApiScopeExistsValue().Description, apiScope.Name), ApiScopeServiceResources.ApiScopeExistsKey().Description, apiScope);
             }
 
@@ -93,35 +92,24 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return added;
         }
 
-        public virtual ApiScopesDto BuildApiScopeViewModel(ApiScopesDto apiScope)
+        public virtual ApiScopeDto BuildApiScopeViewModel(ApiScopeDto apiScope)
         {
             ComboBoxHelpers.PopulateValuesToList(apiScope.UserClaimsItems, apiScope.UserClaims);
 
             return apiScope;
         }
 
-        private async Task BuildApiScopesViewModelAsync(ApiScopesDto apiScope)
-        {
-            if (apiScope.ApiScopeId == 0)
-            {
-                var apiScopesDto = await GetApiScopesAsync(string.Empty, page: 1, pageSize: 10);
-                apiScope.Scopes.AddRange(apiScopesDto.Scopes);
-                apiScope.TotalCount = apiScopesDto.TotalCount;
-            }
-        }
-
-        public virtual async Task<int> UpdateApiScopeAsync(ApiScopesDto apiScope)
+        public virtual async Task<int> UpdateApiScopeAsync(ApiScopeDto apiScope)
         {
             var canInsert = await CanInsertApiScopeAsync(apiScope);
             if (!canInsert)
             {
-                await BuildApiScopesViewModelAsync(apiScope);
                 throw new UserFriendlyViewException(string.Format(ApiScopeServiceResources.ApiScopeExistsValue().Description, apiScope.Name), ApiScopeServiceResources.ApiScopeExistsKey().Description, apiScope);
             }
 
             var scope = apiScope.ToEntity();
 
-            var originalApiScope = await GetApiScopeAsync(apiScope.ApiScopeId);
+            var originalApiScope = await GetApiScopeAsync(apiScope.Id);
 
             var updated = await ApiScopeRepository.UpdateApiScopeAsync(scope);
 
@@ -130,7 +118,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return updated;
         }
 
-        public virtual async Task<int> DeleteApiScopeAsync(ApiScopesDto apiScope)
+        public virtual async Task<int> DeleteApiScopeAsync(ApiScopeDto apiScope)
         {
             var scope = apiScope.ToEntity();
 
@@ -141,9 +129,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return deleted;
         }
 
-        public virtual async Task<bool> CanInsertApiScopeAsync(ApiScopesDto apiScopes)
+        public virtual async Task<bool> CanInsertApiScopeAsync(ApiScopeDto apiScopeDto)
         {
-            var apiScope = apiScopes.ToEntity();
+            var apiScope = apiScopeDto.ToEntity();
 
             return await ApiScopeRepository.CanInsertApiScopeAsync(apiScope);
         }

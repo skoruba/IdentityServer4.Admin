@@ -51,15 +51,15 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [ProducesResponseType(400)]
         public async Task<IActionResult> PostScope([FromBody]ApiScopeApiDto apiScopeApi)
         {
-            var apiScope = apiScopeApi.ToApiScopeApiModel<ApiScopesDto>();
+            var apiScope = apiScopeApi.ToApiScopeApiModel<ApiScopeDto>();
             
-            if (!apiScope.ApiScopeId.Equals(default))
+            if (!apiScope.Id.Equals(default))
             {
                 return BadRequest(_errorResources.CannotSetId());
             }
 
             var id = await _apiScopeService.AddApiScopeAsync(apiScope);
-            apiScope.ApiScopeId = id;
+            apiScope.Id = id;
 
             return CreatedAtAction(nameof(GetScope), new {scopeId = id}, apiScope);
         }
@@ -67,9 +67,9 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> PutScope([FromBody]ApiScopeApiDto apiScopeApi)
         {
-            var apiScope = apiScopeApi.ToApiScopeApiModel<ApiScopesDto>();
+            var apiScope = apiScopeApi.ToApiScopeApiModel<ApiScopeDto>();
             
-            await _apiScopeService.GetApiScopeAsync(apiScope.ApiScopeId);
+            await _apiScopeService.GetApiScopeAsync(apiScope.Id);
 
             await _apiScopeService.UpdateApiScopeAsync(apiScope);
 
@@ -79,9 +79,9 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteScope(int id)
         {
-            var apiScope = new ApiScopesDto { ApiScopeId = id };
+            var apiScope = new ApiScopeDto { Id = id };
 
-            await _apiScopeService.GetApiScopeAsync(apiScope.ApiScopeId);
+            await _apiScopeService.GetApiScopeAsync(apiScope.Id);
 
             await _apiScopeService.DeleteApiScopeAsync(apiScope);
 

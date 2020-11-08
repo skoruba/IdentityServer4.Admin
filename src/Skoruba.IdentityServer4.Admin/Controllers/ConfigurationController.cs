@@ -418,6 +418,15 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         }
 
         [HttpGet]
+        public IActionResult SearchSigningAlgorithms(string algorithm, int limit = 0)
+        {
+            var signingAlgorithms = _clientService.GetSigningAlgorithms(algorithm, limit);
+
+            return Ok(signingAlgorithms);
+        }
+
+
+        [HttpGet]
         public IActionResult SearchGrantTypes(string grant, int limit = 0)
         {
             var grants = _clientService.GetGrantTypes(grant, limit);
@@ -491,6 +500,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
             ComboBoxHelpers.PopulateValuesToList(apiResource.UserClaimsItems, apiResource.UserClaims);
             ComboBoxHelpers.PopulateValuesToList(apiResource.ScopesItems, apiResource.Scopes);
+            ComboBoxHelpers.PopulateValuesToList(apiResource.AllowedAccessTokenSigningAlgorithmsItems, apiResource.AllowedAccessTokenSigningAlgorithms);
 
             int apiResourceId;
 
@@ -585,21 +595,21 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         {
             if (id == null)
             {
-                var apiScopesDto = new ApiScopesDto();
+                var apiScopeDto = new ApiScopeDto();
 
-                return View(apiScopesDto);
+                return View(apiScopeDto);
             }
             else
             {
-                var apiScopesDto = await _apiScopeService.GetApiScopeAsync(id.Value);
+                var apiScopeDto = await _apiScopeService.GetApiScopeAsync(id.Value);
 
-                return View(apiScopesDto);
+                return View(apiScopeDto);
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ApiScope(ApiScopesDto apiScope)
+        public async Task<IActionResult> ApiScope(ApiScopeDto apiScope)
         {
             if (!ModelState.IsValid)
             {
@@ -610,13 +620,13 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
             int apiScopeId;
 
-            if (apiScope.ApiScopeId == 0)
+            if (apiScope.Id == 0)
             {
                 apiScopeId = await _apiScopeService.AddApiScopeAsync(apiScope);
             }
             else
             {
-                apiScopeId = apiScope.ApiScopeId;
+                apiScopeId = apiScope.Id;
                 await _apiScopeService.UpdateApiScopeAsync(apiScope);
             }
 
@@ -637,7 +647,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ApiScopeDelete(ApiScopesDto apiScope)
+        public async Task<IActionResult> ApiScopeDelete(ApiScopeDto apiScope)
         {
             await _apiScopeService.DeleteApiScopeAsync(apiScope);
             SuccessNotification(_localizer["SuccessDeleteApiScope"], _localizer["SuccessTitle"]);

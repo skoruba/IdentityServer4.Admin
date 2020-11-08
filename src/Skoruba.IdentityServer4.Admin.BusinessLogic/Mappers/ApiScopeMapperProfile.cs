@@ -16,13 +16,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
         public ApiScopeMapperProfile()
         {
             // entity to model
-            CreateMap<ApiScope, ApiScopesDto>(MemberList.Destination)
-                .ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(x => x.Type)))
-                .ForMember(x => x.ApiScopeId, opt => opt.MapFrom(src => src.Id));
-
             CreateMap<ApiScope, ApiScopeDto>(MemberList.Destination)
                 .ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(x => x.Type)));
-
+            
             CreateMap<ApiScopeProperty, ApiScopePropertyDto>(MemberList.Destination)
                 .ReverseMap();
 
@@ -39,10 +35,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
                 .ForMember(x => x.ApiScopeProperties, opt => opt.MapFrom(src => src.Data));
 
             // model to entity
-            CreateMap<ApiScopesDto, ApiScope>(MemberList.Source)
-                .ForMember(x => x.UserClaims, opts => opts.MapFrom(src => src.UserClaims.Select(x => new ApiScopeClaim { Type = x })))
-                .ForMember(x => x.Id, opt => opt.MapFrom(src => src.ApiScopeId));
-
             CreateMap<ApiScopeDto, ApiScope>(MemberList.Source)
                 .ForMember(x => x.UserClaims, opts => opts.MapFrom(src => src.UserClaims.Select(x => new ApiScopeClaim { Type = x })));
 

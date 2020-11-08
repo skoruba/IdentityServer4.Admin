@@ -5,9 +5,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Events.ApiScope
 {
     public class ApiScopeRequestedEvent : AuditEvent
     {
-        public ApiScopesDto ApiScopes { get; set; }
+        public ApiScopeDto ApiScopes { get; set; }
 
-        public ApiScopeRequestedEvent(ApiScopesDto apiScopes)
+        public ApiScopeRequestedEvent(ApiScopeDto apiScopes)
         {
             ApiScopes = apiScopes;
         }

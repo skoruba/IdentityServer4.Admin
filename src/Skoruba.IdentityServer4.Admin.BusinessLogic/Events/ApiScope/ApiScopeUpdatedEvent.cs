@@ -5,10 +5,10 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Events.ApiScope
 {
     public class ApiScopeUpdatedEvent : AuditEvent
     {
-        public ApiScopesDto OriginalApiScope { get; set; }
-        public ApiScopesDto ApiScope { get; set; }
+        public ApiScopeDto OriginalApiScope { get; set; }
+        public ApiScopeDto ApiScope { get; set; }
 
-        public ApiScopeUpdatedEvent(ApiScopesDto originalApiScope, ApiScopesDto apiScope)
+        public ApiScopeUpdatedEvent(ApiScopeDto originalApiScope, ApiScopeDto apiScope)
         {
             OriginalApiScope = originalApiScope;
             ApiScope = apiScope;

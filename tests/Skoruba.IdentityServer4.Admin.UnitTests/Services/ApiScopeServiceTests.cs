@@ -43,9 +43,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 
         private IApiScopeService GetApiScopeService(IApiScopeRepository repository, IApiScopeServiceResources resources, IAuditEventLogger auditEventLogger)
         {
-            IApiScopeService apiResourceService = new ApiScopeService(resources, repository, auditEventLogger);
+            IApiScopeService apiScopeService = new ApiScopeService(resources, repository, auditEventLogger);
 
-            return apiResourceService;
+            return apiScopeService;
         }
 
         private IApiScopeService GetApiScopeService(IdentityServerConfigurationDbContext context)
@@ -71,13 +71,13 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		{
 			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
-				var apiResourceService = GetApiScopeService(context);
+				var apiScopeService = GetApiScopeService(context);
 
 				//Generate random new api scope
-				var apiScopeDtoMock = ApiResourceDtoMock.GenerateRandomApiScope(0);
+				var apiScopeDtoMock = ApiScopeDtoMock.GenerateRandomApiScope(0);
 
 				//Add new api scope
-				await apiResourceService.AddApiScopeAsync(apiScopeDtoMock);
+				await apiScopeService.AddApiScopeAsync(apiScopeDtoMock);
 
 				//Get inserted api scope
 				var apiScope = await context.ApiScopes.Where(x => x.Name == apiScopeDtoMock.Name)
@@ -87,7 +87,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				var apiScopesDto = apiScope.ToModel();
 
 				//Get new api scope
-				var newApiScope = await apiResourceService.GetApiScopeAsync(apiScopesDto.ApiScopeId);
+				var newApiScope = await apiScopeService.GetApiScopeAsync(apiScopesDto.Id);
 
 				//Assert
 				newApiScope.ShouldBeEquivalentTo(apiScopesDto);
@@ -99,13 +99,13 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		{
 			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
-				var apiResourceService = GetApiScopeService(context);
+				var apiScopeService = GetApiScopeService(context);
 
 				//Generate random new api scope
-				var apiScopeDtoMock = ApiResourceDtoMock.GenerateRandomApiScope(0);
+				var apiScopeDtoMock = ApiScopeDtoMock.GenerateRandomApiScope(0);
 
 				//Add new api scope
-				await apiResourceService.AddApiScopeAsync(apiScopeDtoMock);
+				await apiScopeService.AddApiScopeAsync(apiScopeDtoMock);
 
 				//Get inserted api scope
 				var apiScope = await context.ApiScopes.Where(x => x.Name == apiScopeDtoMock.Name)
@@ -115,7 +115,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				var apiScopesDto = apiScope.ToModel();
 
 				//Get new api scope
-				var newApiScope = await apiResourceService.GetApiScopeAsync(apiScopesDto.ApiScopeId);
+				var newApiScope = await apiScopeService.GetApiScopeAsync(apiScopesDto.Id);
 
 				//Assert
 				newApiScope.ShouldBeEquivalentTo(apiScopesDto);
@@ -127,13 +127,13 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		{
 			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
-				var apiResourceService = GetApiScopeService(context);
+				var apiScopeService = GetApiScopeService(context);
 
 				//Generate random new api scope
-				var apiScopeDtoMock = ApiResourceDtoMock.GenerateRandomApiScope(0);
+				var apiScopeDtoMock = ApiScopeDtoMock.GenerateRandomApiScope(0);
 
 				//Add new api scope
-				await apiResourceService.AddApiScopeAsync(apiScopeDtoMock);
+				await apiScopeService.AddApiScopeAsync(apiScopeDtoMock);
 
 				//Get inserted api scope
 				var apiScope = await context.ApiScopes.Where(x => x.Name == apiScopeDtoMock.Name)
@@ -143,7 +143,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				var apiScopesDto = apiScope.ToModel();
 
 				//Get new api scope
-				var newApiScope = await apiResourceService.GetApiScopeAsync(apiScopesDto.ApiScopeId);
+				var newApiScope = await apiScopeService.GetApiScopeAsync(apiScopesDto.Id);
 
 				//Assert
 				newApiScope.ShouldBeEquivalentTo(apiScopesDto);
@@ -152,11 +152,11 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 				context.Entry(apiScope).State = EntityState.Detached;
 
 				//Update api scope
-				var updatedApiScope = ApiResourceDtoMock.GenerateRandomApiScope(apiScopesDto.ApiScopeId);
+				var updatedApiScope = ApiScopeDtoMock.GenerateRandomApiScope(apiScopesDto.Id);
 
-				await apiResourceService.UpdateApiScopeAsync(updatedApiScope);
+				await apiScopeService.UpdateApiScopeAsync(updatedApiScope);
 
-				var updatedApiScopeDto = await apiResourceService.GetApiScopeAsync(apiScopesDto.ApiScopeId);
+				var updatedApiScopeDto = await apiScopeService.GetApiScopeAsync(apiScopesDto.Id);
 
 				//Assert updated api scope
 				updatedApiScope.ShouldBeEquivalentTo(updatedApiScopeDto);
@@ -168,29 +168,29 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 		{
 			using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
 			{
-				var apiResourceService = GetApiScopeService(context);
+				var apiScopeService = GetApiScopeService(context);
 
 				//Generate random new api scope
-				var apiScopeDtoMock = ApiResourceDtoMock.GenerateRandomApiScope(0);
+				var apiScopeDtoMock = ApiScopeDtoMock.GenerateRandomApiScope(0);
 
 				//Add new api scope
-				await apiResourceService.AddApiScopeAsync(apiScopeDtoMock);
+				await apiScopeService.AddApiScopeAsync(apiScopeDtoMock);
 
 				//Get inserted api scope
 				var apiScope = await context.ApiScopes.Where(x => x.Name == apiScopeDtoMock.Name)
 					.SingleOrDefaultAsync();
 
 				//Map entity to model
-				var apiScopesDto = apiScope.ToModel();
+				var apiScopeDto = apiScope.ToModel();
 
 				//Get new api scope
-				var newApiScope = await apiResourceService.GetApiScopeAsync(apiScopesDto.ApiScopeId);
+				var newApiScope = await apiScopeService.GetApiScopeAsync(apiScopeDto.Id);
 
 				//Assert
-				newApiScope.ShouldBeEquivalentTo(apiScopesDto);
+				newApiScope.ShouldBeEquivalentTo(apiScopeDto);
 
 				//Delete it
-				await apiResourceService.DeleteApiScopeAsync(newApiScope);
+				await apiScopeService.DeleteApiScopeAsync(newApiScope);
 
 				var deletedApiScope = await context.ApiScopes.Where(x => x.Name == apiScopeDtoMock.Name)
 					.SingleOrDefaultAsync();

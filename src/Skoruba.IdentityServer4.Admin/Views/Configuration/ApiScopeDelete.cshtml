@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.ApiScopesDto
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.ApiScopeDto
 @inject IViewLocalizer Localizer
 
 @{
@@ -12,7 +12,7 @@
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiScopes">@Localizer["NavigationApiScopes"]</a></li>
-				<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiScopes" asp-route-scope="@Model.ApiScopeId">@Model.Name</a></li>
+				<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiScopes" asp-route-scope="@Model.Id">@Model.Name</a></li>
 				<li class="breadcrumb-item active" aria-current="page">@Localizer["PageTitle"]</li>
 			</ol>
 		</nav>
@@ -26,7 +26,7 @@
 <form asp-action="ApiScopeDelete" method="post">
 
 	<!--Hidden -->
-	<input type="hidden" asp-for="ApiScopeId" />
+	<input type="hidden" asp-for="Id" />
 	
 	<div class="card mt-3">
 		<h5 class="card-header">@Localizer["PanelTitle"]</h5>
