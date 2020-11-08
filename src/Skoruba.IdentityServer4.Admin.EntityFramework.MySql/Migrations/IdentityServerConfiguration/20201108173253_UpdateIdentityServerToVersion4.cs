@@ -1,7 +1,8 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.IdentityServerConfiguration
+namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.IdentityServerConfiguration
 {
     public partial class UpdateIdentityServerToVersion4 : Migration
     {
@@ -130,7 +131,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ide
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Scope = table.Column<string>(maxLength: 200, nullable: false),
                     ApiResourceId = table.Column<int>(nullable: false)
                 },
@@ -150,7 +151,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ide
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(maxLength: 1000, nullable: true),
                     Value = table.Column<string>(maxLength: 4000, nullable: false),
                     Expiration = table.Column<DateTime>(nullable: true),
@@ -174,7 +175,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ide
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Key = table.Column<string>(maxLength: 250, nullable: false),
                     Value = table.Column<string>(maxLength: 2000, nullable: false),
                     ScopeId = table.Column<int>(nullable: false)
@@ -195,7 +196,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ide
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Type = table.Column<string>(maxLength: 200, nullable: false),
                     IdentityResourceId = table.Column<int>(nullable: false)
                 },
@@ -253,40 +254,27 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ide
 
             // migrate data
 
-            migrationBuilder.Sql(@"SET IDENTITY_INSERT ApiResourceSecrets ON;  
-GO
-
-INSERT INTO ApiResourceSecrets
- (Id, [Description], [Value], Expiration, [Type], Created, ApiResourceId)
+            migrationBuilder.Sql(@"INSERT INTO `ApiResourceSecrets`
+ (`Id`, `Description`, `Value`, `Expiration`, `Type`, `Created`, `ApiResourceId`)
 SELECT 
- Id, [Description], [Value], Expiration, [Type], Created, ApiResourceId
-FROM ApiSecrets
-GO
+ `Id`, `Description`, `Value`, `Expiration`, `Type`, `Created`, `ApiResourceId`
+FROM `ApiSecrets`;");
 
-SET IDENTITY_INSERT ApiResourceSecrets OFF;  
-GO");
-
-            migrationBuilder.Sql(@"SET IDENTITY_INSERT IdentityResourceClaims ON;  
-GO
-
-INSERT INTO IdentityResourceClaims
- (Id, [Type], IdentityResourceId)
+            migrationBuilder.Sql(@"INSERT INTO `IdentityResourceClaims`
+ (`Id`, `Type`, `IdentityResourceId`)
 SELECT 
- Id, [Type], IdentityResourceId
-FROM IdentityClaims
-GO
-SET IDENTITY_INSERT IdentityResourceClaims OFF; 
-GO");
+ `Id`, `Type`, `IdentityResourceId`
+FROM `IdentityClaims`;");
 
-            migrationBuilder.Sql(@"INSERT INTO ApiResourceScopes 
- ([Scope], [ApiResourceId])
+            migrationBuilder.Sql(@"INSERT INTO `ApiResourceScopes` 
+ (`Scope`, `ApiResourceId`)
 SELECT 
- [Name], [ApiResourceId]
-FROM ApiScopes");
+ `Name`, `ApiResourceId`
+FROM `ApiScopes`;");
 
-            migrationBuilder.Sql(@"UPDATE ApiScopeClaims SET ScopeId = ApiScopeId");
+            migrationBuilder.Sql(@"UPDATE `ApiScopeClaims` SET `ScopeId` = `ApiScopeId`");
 
-            migrationBuilder.Sql(@"UPDATE ApiScopes SET [Enabled] = 1");
+            migrationBuilder.Sql(@"UPDATE `ApiScopes` SET `Enabled` = 1");
 
             migrationBuilder.DropTable(
                 name: "ApiSecrets");
@@ -311,7 +299,7 @@ FROM ApiScopes");
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IdentityResourceProperties_IdentityResources_IdentityResourceId",
+                name: "FK_IdentityResourceProperties_IdentityResources_IdentityResourc~",
                 table: "IdentityResourceProperties",
                 column: "IdentityResourceId",
                 principalTable: "IdentityResources",
@@ -334,9 +322,9 @@ FROM ApiScopes");
                 table: "ApiScopeClaims");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IdentityResourceProperties_IdentityResources_IdentityResourceId",
+                name: "FK_IdentityResourceProperties_IdentityResources_IdentityResourc~",
                 table: "IdentityResourceProperties");
-            
+
             migrationBuilder.DropIndex(
                 name: "IX_ApiScopeClaims_ScopeId",
                 table: "ApiScopeClaims");
@@ -414,13 +402,13 @@ FROM ApiScopes");
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     ApiResourceId = table.Column<int>(type: "int", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
-                    Expiration = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Type = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: false)
+                    Created = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Description = table.Column<string>(type: "varchar(1000) CHARACTER SET utf8mb4", maxLength: 1000, nullable: true),
+                    Expiration = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Type = table.Column<string>(type: "varchar(250) CHARACTER SET utf8mb4", maxLength: 250, nullable: false),
+                    Value = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", maxLength: 4000, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -438,9 +426,9 @@ FROM ApiScopes");
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     IdentityResourceId = table.Column<int>(type: "int", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
+                    Type = table.Column<string>(type: "varchar(200) CHARACTER SET utf8mb4", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -490,39 +478,26 @@ FROM ApiScopes");
                 onDelete: ReferentialAction.Cascade);
 
             // Rollback data back
-            migrationBuilder.Sql(@"SET IDENTITY_INSERT ApiSecrets ON;  
-GO
-
-INSERT INTO ApiSecrets
- (Id, [Description], [Value], Expiration, [Type], Created, ApiResourceId)
+            migrationBuilder.Sql(@"INSERT INTO `ApiSecrets`
+ (`Id`, `Description`, `Value`, `Expiration`, `Type`, `Created`, `ApiResourceId`)
 SELECT 
- Id, [Description], [Value], Expiration, [Type], Created, ApiResourceId
-FROM ApiResourceSecrets
-GO
+ Id, `Description`, `Value`, `Expiration`, `Type`, `Created`, `ApiResourceId`
+FROM `ApiResourceSecrets`");
 
-SET IDENTITY_INSERT ApiSecrets OFF;
-GO");
-
-            migrationBuilder.Sql(@"SET IDENTITY_INSERT IdentityClaims ON;
-GO
-
-INSERT INTO IdentityClaims
- (Id, [Type], IdentityResourceId)
+            migrationBuilder.Sql(@"INSERT INTO `IdentityClaims`
+ (`Id`, `Type`, `IdentityResourceId`)
 SELECT 
- Id, [Type], IdentityResourceId
-FROM IdentityResourceClaims
-GO
-SET IDENTITY_INSERT IdentityClaims OFF;
-GO");
+ `Id`, `Type`, `IdentityResourceId`
+FROM `IdentityResourceClaims`");
 
-            migrationBuilder.Sql(@"UPDATE asp
-SET ApiResourceId = arc.ApiResourceId
-FROM ApiScopes asp
-    INNER JOIN ApiResourceScopes arc
-        ON arc.Id = asp.Id
+            migrationBuilder.Sql(@"UPDATE `ApiResourceScopes` asp
+SET `ApiResourceId` = arc.`ApiResourceId`
+FROM `ApiScopes` asp
+    INNER JOIN `ApiResourceScopes` arc
+        ON arc.`Id` = asp.`Id`
 ");
 
-            migrationBuilder.Sql(@"UPDATE ApiScopeClaims SET ApiScopeId = ScopeId");
+            migrationBuilder.Sql(@"UPDATE `ApiScopeClaims` SET `ApiScopeId` = `ScopeId`");
 
             migrationBuilder.DropTable(
                 name: "ApiResourceScopes");

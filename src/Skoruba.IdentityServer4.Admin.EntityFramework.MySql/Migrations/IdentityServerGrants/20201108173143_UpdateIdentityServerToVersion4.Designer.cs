@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.IdentityServerGrants
 {
     [DbContext(typeof(IdentityServerPersistedGrantDbContext))]
-    partial class IdentityServerPersistedGrantDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201108173143_UpdateIdentityServerToVersion4")]
+    partial class UpdateIdentityServerToVersion4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
