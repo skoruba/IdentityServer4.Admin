@@ -76,9 +76,7 @@
             {
                 "Name": "skoruba_identity_admin_api",
                 "Scopes": [
-                    {
-                        "Scope": "skoruba_identity_admin_api"
-                    }
+                    "skoruba_identity_admin_api"
                 ]
             }
         ],

@@ -246,27 +246,27 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Migrations.Id
 
             // migrate data
 
-            migrationBuilder.Sql(@"INSERT INTO ApiResourceSecrets
-                (Id, Description, Value, Expiration, Type, Created, ApiResourceId)
+            migrationBuilder.Sql(@"INSERT INTO ""ApiResourceSecrets""
+                (""Id"", ""Description"", ""Value"", ""Expiration"", ""Type"", ""Created"", ""ApiResourceId"")
             SELECT
-            Id, Description, Value, Expiration, Type, Created, ApiResourceId
-            FROM ApiSecrets;");
+            ""Id"", ""Description"", ""Value"", ""Expiration"", ""Type"", ""Created"", ""ApiResourceId""
+            FROM ""ApiSecrets"";");
 
-            migrationBuilder.Sql(@"INSERT INTO IdentityResourceClaims
- (Id, Type, IdentityResourceId)
+            migrationBuilder.Sql(@"INSERT INTO ""IdentityResourceClaims""
+ (""Id"", ""Type"", ""IdentityResourceId"")
 SELECT 
- Id, Type, IdentityResourceId
-FROM IdentityClaims;");
+ ""Id"", ""Type"", ""IdentityResourceId""
+FROM ""IdentityClaims"";");
 
-            migrationBuilder.Sql(@"INSERT INTO ApiResourceScopes 
- ([Scope], [ApiResourceId])
+            migrationBuilder.Sql(@"INSERT INTO ""ApiResourceScopes""
+ (""Scope"", ""ApiResourceId"")
 SELECT 
- [Name], [ApiResourceId]
-FROM ApiScopes;");
+ ""Name"", ""ApiResourceId""
+FROM ""ApiScopes"";");
 
-            migrationBuilder.Sql(@"UPDATE ApiScopeClaims SET ScopeId = ApiScopeId;");
+            migrationBuilder.Sql(@"UPDATE ""ApiScopeClaims"" SET ""ScopeId"" = ""ApiScopeId"";");
 
-            migrationBuilder.Sql(@"UPDATE ApiScopes SET Enabled = TRUE;");
+            migrationBuilder.Sql(@"UPDATE ""ApiScopes"" SET ""Enabled"" = TRUE;");
 
             migrationBuilder.DropTable(
                 name: "ApiSecrets");
@@ -478,25 +478,23 @@ FROM ApiScopes;");
                 onDelete: ReferentialAction.Cascade);
 
             // Rollback data back
-            migrationBuilder.Sql(@"INSERT INTO ApiSecrets
- (Id, Description, Value, Expiration, Type, Created, ApiResourceId)
+            migrationBuilder.Sql(@"INSERT INTO ""ApiSecrets""
+ (""Id"", ""Description"", ""Value"", ""Expiration"", ""Type"", ""Created"", ""ApiResourceId"")
+SELECT ""Id"", ""Description"", ""Value"", ""Expiration"", ""Type"", ""Created"", ""ApiResourceId""
+FROM ""ApiResourceSecrets"";");
+
+            migrationBuilder.Sql(@"INSERT INTO ""IdentityClaims""
+ (""Id"", ""Type"", ""IdentityResourceId"")
 SELECT 
- Id, Description, Value, Expiration, Type, Created, ApiResourceId
-FROM ApiResourceSecrets;");
+ ""Id"", ""Type"", ""IdentityResourceId""
+FROM ""IdentityResourceClaims"";");
 
-            migrationBuilder.Sql(@"INSERT INTO IdentityClaims
- (Id, Type, IdentityResourceId)
-SELECT 
- Id, Type, IdentityResourceId
-FROM IdentityResourceClaims;");
+            migrationBuilder.Sql(@"UPDATE ""ApiScopes"" asp
+SET ""ApiResourceId"" = arc.""ApiResourceId""
+FROM ""ApiResourceScopes"" arc
+WHERE arc.""Id"" = asp.""Id"";");
 
-            migrationBuilder.Sql(@"UPDATE ApiScopes asp
-SET ApiResourceId = arc.ApiResourceId
-FROM ApiScopes asp
-    INNER JOIN ApiResourceScopes arc
-        ON arc.Id = asp.Id;");
-
-            migrationBuilder.Sql(@"UPDATE ApiScopeClaims SET ApiScopeId = ScopeId;");
+            migrationBuilder.Sql(@"UPDATE ""ApiScopeClaims"" SET ""ApiScopeId"" = ""ScopeId"";");
 
             migrationBuilder.DropTable(
                 name: "ApiResourceScopes");

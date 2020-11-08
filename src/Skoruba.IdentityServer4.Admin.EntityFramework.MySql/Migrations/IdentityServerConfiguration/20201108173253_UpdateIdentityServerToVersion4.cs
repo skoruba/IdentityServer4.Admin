@@ -490,12 +490,10 @@ SELECT
  `Id`, `Type`, `IdentityResourceId`
 FROM `IdentityResourceClaims`");
 
-            migrationBuilder.Sql(@"UPDATE `ApiResourceScopes` asp
-SET `ApiResourceId` = arc.`ApiResourceId`
-FROM `ApiScopes` asp
+            migrationBuilder.Sql(@"UPDATE `ApiScopes` asp
     INNER JOIN `ApiResourceScopes` arc
         ON arc.`Id` = asp.`Id`
-");
+SET asp.`ApiResourceId` = arc.`ApiResourceId`;");
 
             migrationBuilder.Sql(@"UPDATE `ApiScopeClaims` SET `ApiScopeId` = `ScopeId`");
 
