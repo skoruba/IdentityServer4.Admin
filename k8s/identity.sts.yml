@@ -1,0 +1,72 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    system: identityadmin-demo
+    app: identity-sts
+    version: "1.0"
+  name: identity-sts
+  namespace: identityadmin-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      system: identityadmin-demo
+      app: identity-sts
+  template:
+    metadata:
+      labels:
+        system: identityadmin-demo
+        app: identity-sts
+        version: "1.0"
+    spec:
+      containers:
+      - env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: ConnectionStrings__ConfigurationDbConnection
+          value: Server=sqlserver;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true
+        - name: ConnectionStrings__PersistedGrantDbConnection
+          value: Server=sqlserver;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true
+        - name: ConnectionStrings__IdentityDbConnection
+          value: Server=sqlserver;Database=IdentityServer4Admin;User Id=sa;Password=Password_123;MultipleActiveResultSets=true
+        - name: AdminConfiguration__IdentityAdminBaseUrl
+          value: http://host.docker.internal:9000
+        - name: Serilog__MinimumLevel__Default
+          value: Information
+        image: skoruba/identityserver4-sts-identity:rc1
+        imagePullPolicy: IfNotPresent
+        name: identity-sts
+        ports:
+        - name: http
+          containerPort: 80
+        resources:
+          requests:
+            memory: "200Mi"
+            cpu: "250m"
+          limits:
+            memory: "250Mi"
+            cpu: "500m"
+      imagePullSecrets:
+      - name: regcred
+      restartPolicy: Always
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    system: identityadmin-demo
+    app: identity-sts
+    version: v1
+  name: identity-sts
+  namespace: identityadmin-demo
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: identity-sts

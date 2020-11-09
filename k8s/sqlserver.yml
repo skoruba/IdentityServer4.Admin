@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    system: identityadmin-demo
+    app: sqlserver
+    version: v1
+  name: sqlserver
+  namespace: identityadmin-demo
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      system: identityadmin-demo
+      app: sqlserver
+  template:
+    metadata:
+      labels:
+        system: identityadmin-demo
+        app: sqlserver
+        version: v1
+    spec:
+      containers:
+      - env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: MSSQL_PID
+          value: Developer
+        - name: SA_PASSWORD
+          value: Password_123
+        image: microsoft/mssql-server-linux:latest
+        imagePullPolicy: IfNotPresent
+        name: sqlserver
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        ports:
+        - containerPort: 1433
+      restartPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    system: identityadmin-demo
+    app: sqlserver
+    version: v1
+  name: sqlserver
+  namespace: identityadmin-demo
+spec:
+  type: NodePort
+  ports:
+  - name: "tds"
+    port: 1433
+    targetPort: 1433
+    nodePort: 30000
+  selector:
+    system: identityadmin-demo
+    app: sqlserver
+    version: v1
