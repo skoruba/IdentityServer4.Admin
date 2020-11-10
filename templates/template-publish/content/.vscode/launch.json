@@ -1,0 +1,85 @@
+{
+  // Use IntelliSense to find out which attributes exist for C# debugging
+  // Use hover for the description of the existing attributes
+  // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "launch Admin",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/Skoruba.IdentityServer4.Admin/bin/Debug/netcoreapp3.1/Skoruba.IdentityServer4.Admin.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/Skoruba.IdentityServer4.Admin",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      },
+      "preLaunchTask": "build Admin"
+    },
+    {
+      "name": "launch Admin.Api",
+      "type": "coreclr",
+      "request": "launch",
+      // If you have changed target frameworks, make sure to update the program path.
+      "program": "${workspaceFolder}/src/Skoruba.IdentityServer4.Admin.Api/bin/Debug/netcoreapp3.1/Skoruba.IdentityServer4.Admin.Api.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/Skoruba.IdentityServer4.Admin.Api",
+      "stopAtEntry": false,
+      // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      },
+      "preLaunchTask": "build Admin.Api"
+    },
+    {
+      "name": "launch STS.Identity",
+      "type": "coreclr",
+      "request": "launch",
+      // If you have changed target frameworks, make sure to update the program path.
+      "program": "${workspaceFolder}/src/Skoruba.IdentityServer4.STS.Identity/bin/Debug/netcoreapp3.1/Skoruba.IdentityServer4.STS.Identity.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/Skoruba.IdentityServer4.STS.Identity",
+      "stopAtEntry": false,
+      // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      },
+      "preLaunchTask": "build STS.Identity"
+    },
+    {
+      "name": ".NET Core Attach",
+      "type": "coreclr",
+      "request": "attach",
+      "processId": "${command:pickProcess}"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "STS.Identity + Admin.Api + Admin",
+      "configurations": ["launch STS.Identity", "launch Admin.Api", "launch Admin"],
+      "preLaunchTask": "build all"
+    }
+  ]
+}
