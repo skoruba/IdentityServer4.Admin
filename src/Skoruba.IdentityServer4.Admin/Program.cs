@@ -125,6 +125,21 @@ namespace Skoruba.IdentityServer4.Admin
                      configApp.AddJsonFile("identityserverdata.json", optional: true, reloadOnChange: true);
                      configApp.AddJsonFile($"CustomSettings/identityserverdata.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
 
+                     if (!hostContext.HostingEnvironment.IsDevelopment())
+                     {
+                         configApp.AddSecretsManager(configurator: options =>
+                         {
+                             var prefix = $"{bootstrapperAdminConfig.ApplicationName}/{env.EnvironmentName}/";
+                             options.SecretFilter = entry => entry.Name.StartsWith(prefix);
+                             options.KeyGenerator = (entry, key) =>
+                             {
+                                 var transformedKey = key.Substring(prefix.Length).Replace("__", ":");
+                                 Console.WriteLine($"Reading secret key {key} transformed as {transformedKey}");
+
+                                 return transformedKey;
+                             };
+                         });
+                     }
 
                      if (env.IsDevelopment())
                      {
