@@ -45,6 +45,7 @@
         <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.5.0" />
         <PackageReference Include="Serilog.Sinks.Seq" Version="4.0.0" />
         <PackageReference Include="Skoruba.AuditLogging.EntityFramework" Version="1.0.0" />
+        <PackageReference Include="StackExchange.Redis" Version="2.1.58" /> <!-- EZY-modification (EZYC-3029): To support Redis.List -->
     </ItemGroup>
 
     <ItemGroup>
@@ -90,6 +91,15 @@
       </EmbeddedResource>
     </ItemGroup>
 
+    <!-- EZY-modification (EZYC-3029): To support Redis.List -->
+    <ItemGroup>
+        <Reference Include="Serilog.Sinks.Redis.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <HintPath>..\lib\Serilog.Sinks.Redis.Core.dll</HintPath>
+        </Reference>
+        <Reference Include="Serilog.Sinks.Redis.List, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <HintPath>..\lib\Serilog.Sinks.Redis.List.dll</HintPath>
+        </Reference>
+    </ItemGroup>
 </Project>
 
 

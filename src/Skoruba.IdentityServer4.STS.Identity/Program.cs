@@ -97,6 +97,19 @@ namespace Skoruba.IdentityServer4.STS.Identity
                     loggerConfig
                         .ReadFrom.Configuration(hostContext.Configuration)
                         .Enrich.WithProperty("ApplicationName", hostContext.HostingEnvironment.ApplicationName);
+
+                    // EZYC-2851-modification below
+                    loggerConfig.WriteTo.Logger(lc =>
+                    {
+                        // Serilog doesn't allow to override certain logger levels on per-logger basis. Also, it would be good to have at least some
+                        // decent console logging on non-dev environments, like few initial lifetime (startup) events. That's why, let's include console
+                        // logger for every environment and only in Development mode, let's not restrict it to Microsoft.Hosting.Lifetime
+                        var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                        if (environment != "Development")
+                            lc.Filter.ByIncludingOnly(Matching.FromSource("Microsoft.Hosting.Lifetime"));
+
+                        lc.WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3} {SourceContext}] {Message:lj}{NewLine}{Exception}");
+                    });
                 });
     }
 }
