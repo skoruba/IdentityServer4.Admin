@@ -4,22 +4,25 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using Skoruba.IdentityServer4.Shared.Helpers;
+using Serilog.Filters;
+using Skoruba.IdentityServer4.STS.Identity.Configuration;
 
 namespace Skoruba.IdentityServer4.STS.Identity
 {
     public class Program
     {
+        private static IConfiguration _bootstrapperConfig;
+
         public static void Main(string[] args)
         {
-            var configuration = GetConfiguration(args);
-
+            _bootstrapperConfig = GetBootstrapperConfig(args);
             Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(configuration)
+                .ReadFrom.Configuration(_bootstrapperConfig)
                 .CreateLogger();
             try
             {
-                DockerHelpers.ApplyDockerConfiguration(configuration);
+                // EZYC-2851-modification: we're not using default way of dockerizing.
+                //DockerHelpers.ApplyDockerConfiguration(configuration);
 
                 CreateHostBuilder(args).Build().Run();
             }
@@ -33,7 +36,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
             }
         }
 
-        private static IConfiguration GetConfiguration(string[] args)
+        private static IConfiguration GetBootstrapperConfig(string[] args)
         {
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var isDevelopment = environment == Environments.Development;
@@ -50,9 +53,10 @@ namespace Skoruba.IdentityServer4.STS.Identity
                 configurationBuilder.AddUserSecrets<Startup>();
             }
 
-            var configuration = configurationBuilder.Build();
-
-            configuration.AddAzureKeyVaultConfiguration(configurationBuilder);
+            // EZY-modification (EZYC-3029) - disabled Azure key Vault for consistency with the Admin project. Here it however looks to be correctly applied
+            // var configuration = configurationBuilder.Build();
+            //
+            // configuration.AddAzureKeyVaultConfiguration(configurationBuilder);
 
             configurationBuilder.AddCommandLine(args);
             configurationBuilder.AddEnvironmentVariables();
@@ -77,7 +81,8 @@ namespace Skoruba.IdentityServer4.STS.Identity
                          configApp.AddUserSecrets<Startup>();
                      }
 
-                     configurationRoot.AddAzureKeyVaultConfiguration(configApp);
+                     // EZY-modification (EZYC-3029): disabling Azure key vault - as per above comments
+                     // configurationRoot.AddAzureKeyVaultConfiguration(configApp);
 
                      configApp.AddEnvironmentVariables();
                      configApp.AddCommandLine(args);
