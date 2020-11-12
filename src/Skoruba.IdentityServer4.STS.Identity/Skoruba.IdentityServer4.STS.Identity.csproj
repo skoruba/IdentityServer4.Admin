@@ -100,6 +100,18 @@
             <HintPath>..\lib\Serilog.Sinks.Redis.List.dll</HintPath>
         </Reference>
     </ItemGroup>
+
+    <!-- EZY-modification (EZYC-3029): CustomSettings folder is only meant for development in IDE purposes
+         It contains only the configurations that help developers test against target dev databases. However, 
+         actual configuration should be placed in target repository (e.g. ezyC's) and will be mounted as a volume in 
+         deployed environment. That's why, we want this folder
+            * to be copied to build output, to allow IDE development
+            * to be removed from a published package
+         -->
+    <ItemGroup>
+        <Content Remove="CustomSettings\**" />
+        <Content Include="CustomSettings\**" CopyToPublishDirectory="Never" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
 </Project>
 
 

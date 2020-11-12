@@ -1,0 +1,196 @@
+﻿{
+  "IdentityServerData": {
+    "IdentityResources": [
+      {
+        "Name": "roles",
+        "Enabled": true,
+        "DisplayName": "Roles",
+        "UserClaims": [
+          "role"
+        ]
+      },
+      {
+        "Name": "openid",
+        "Enabled": true,
+        "Required": true,
+        "DisplayName": "Your user identifier",
+        "UserClaims": [
+          "sub"
+        ]
+      },
+      {
+        "Name": "profile",
+        "Enabled": true,
+        "DisplayName": "User profile",
+        "Description": "Your user profile information (first name, last name, etc.)",
+        "Emphasize": true,
+        "UserClaims": [
+          "name",
+          "family_name",
+          "given_name",
+          "middle_name",
+          "nickname",
+          "preferred_username",
+          "profile",
+          "picture",
+          "website",
+          "gender",
+          "birthdate",
+          "zoneinfo",
+          "locale",
+          "updated_at"
+        ]
+      },
+      {
+        "Name": "email",
+        "Enabled": true,
+        "DisplayName": "Your email address",
+        "Emphasize": true,
+        "UserClaims": [
+          "email",
+          "email_verified"
+        ]
+      },
+      // EZYC-2851-modification: our custom resources below:
+      {
+        "Name": "tenant",
+        "Enabled": true,
+        "DisplayName": "Tenant",
+        "UserClaims": [
+          "tenant"
+        ]
+      }
+    ],
+    "ApiResources": [
+      {
+        "Name": "skoruba_identity_admin_api",
+        "Scopes": [
+          {
+            "Name": "skoruba_identity_admin_api",
+            "DisplayName": "skoruba_identity_admin_api",
+            "Required": true,
+            "UserClaims": [
+              "role",
+              "name"
+            ]
+          }
+        ]
+      },
+      {
+        "Name": "booksecure.api",
+        "DisplayName": "BookSecure API",
+        "UserClaims": [
+          "role",
+          "tenant"
+        ],
+        "ApiSecrets": [
+          {
+            "Value": "4Alr9ltyV3WgreeNitiGlkU7OuE1LIJA"
+          }
+        ],
+        "Scopes": [
+          {
+            "Name": "booksecure.api.read",
+            "UserClaims": [
+              "role",
+              "tenant"
+            ]
+          },
+          {
+            "Name": "booksecure.api.write",
+            "UserClaims": [
+              "role",
+              "tenant"
+            ]
+          }
+        ]
+      },
+      {
+        "Name": "adminportal.api",
+        "DisplayName": "Admin Portal API",
+        "UserClaims": [
+          "role",
+          "tenant"
+        ],
+        "ApiSecrets": [
+          {
+            "Value": "2s8SgHPHBsvGpEIcpMyjq6ihCCU9Z79L"
+          }
+        ],
+        "Scopes": [
+          {
+            "Name": "adminportal.api.full_access"
+          },
+          {
+            "Name": "adminportal.api.read_only"
+          }
+        ]
+      }
+    ],
+    "Clients": [
+      {
+        "ClientId": "skoruba_identity_admin",
+        "ClientName": "skoruba_identity_admin",
+        "ClientUri": "http://localhost:9606",
+        "AllowedGrantTypes": [
+          "authorization_code"
+        ],
+        "RequirePkce": true,
+        "ClientSecrets": [
+          {
+            "Value": "skoruba_admin_client_secret"
+          }
+        ],
+        "RedirectUris": [
+          "http://localhost:9606/signin-oidc"
+        ],
+        "FrontChannelLogoutUri": "http://localhost:9606/signout-oidc",
+        "PostLogoutRedirectUris": [
+          "http://localhost:9606/signout-callback-oidc"
+        ],
+        "AllowedCorsOrigins": [
+          "http://localhost:9606"
+        ],
+        "AllowedScopes": [
+          "openid",
+          "email",
+          "profile",
+          "roles"
+        ],
+        "RequireConsent": false
+      },
+      {
+        "ClientId": "adminportal.frontend",
+        "ClientName": "Admin Portal Frontend",
+        "ClientUri": "http://localhost:5000",
+        "AllowedGrantTypes": [
+          "implicit"
+        ],
+        "RedirectUris": [
+          "http://localhost:5000/callback"
+        ],
+        "FrontChannelLogoutUri": "http://localhost:5000",
+        "PostLogoutRedirectUris": [
+          "http://localhost:5000"
+        ],
+        "AllowedCorsOrigins": [
+          "http://localhost:5000"
+        ],
+        "AllowedScopes": [
+          "openid",
+          "email",
+          "profile",
+          "roles",
+          "tenant",
+          "adminportal.api.full_access",
+          "adminportal.api.read_only"
+        ],
+        "AccessTokenType": "Reference",
+        "AllowAccessTokensViaBrowser": true,
+        "AlwaysSendClientClaims": true,
+        "AlwaysIncludeUserClaimsInIdToken": true,
+        "RequireConsent": false
+      }
+    ]
+  }
+}

@@ -39,14 +39,20 @@ namespace Skoruba.IdentityServer4.STS.Identity
         private static IConfiguration GetBootstrapperConfig(string[] args)
         {
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            // EZYC-2851-modification: allow sub-environment config
+            var subEnvironment = Environment.GetEnvironmentVariable("SUB_ENVIRONMENT");
             var isDevelopment = environment == Environments.Development;
 
             var configurationBuilder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("CustomSettings/appsettings._Shared.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"CustomSettings/appsettings.{environment}.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"CustomSettings/appsettings.{environment}.{subEnvironment}.json", optional: true, reloadOnChange: true)
                 .AddJsonFile("serilog.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"serilog.{environment}.json", optional: true, reloadOnChange: true);
+                .AddJsonFile("CustomSettings/serilog._Shared.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"CustomSettings/serilog.{environment}.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"CustomSettings/serilog.{environment}.{subEnvironment}.json", optional: true, reloadOnChange: true);
 
             if (isDevelopment)
             {
@@ -68,13 +74,19 @@ namespace Skoruba.IdentityServer4.STS.Identity
             Host.CreateDefaultBuilder(args)
                  .ConfigureAppConfiguration((hostContext, configApp) =>
                  {
-                     var configurationRoot = configApp.Build();
-
-                     configApp.AddJsonFile("serilog.json", optional: true, reloadOnChange: true);
-
+                     // EZYC-2851-modification: allow more robust configuration
+                     var bootstrapperAdminConfig = _bootstrapperConfig.GetSection(nameof(AdminConfiguration)).Get<AdminConfiguration>();
                      var env = hostContext.HostingEnvironment;
+                     var subEnvironment = Environment.GetEnvironmentVariable("SUB_ENVIRONMENT");
+                     configApp.AddJsonFile($"CustomSettings/appsettings._Shared.json", optional: true, reloadOnChange: true);
+                     configApp.AddJsonFile($"CustomSettings/appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                     configApp.AddJsonFile($"CustomSettings/appsettings.{env.EnvironmentName}.{subEnvironment}.json", optional: true,
+                         reloadOnChange: true);
+                     configApp.AddJsonFile("serilog.json", optional: true, reloadOnChange: true);
+                     configApp.AddJsonFile("CustomSettings/serilog._Shared.json", optional: true, reloadOnChange: true);
+                     configApp.AddJsonFile($"CustomSettings/serilog.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                     configApp.AddJsonFile($"CustomSettings/serilog.{env.EnvironmentName}.{subEnvironment}.json", optional: true, reloadOnChange: true);
 
-                     configApp.AddJsonFile($"serilog.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
 
                      if (env.IsDevelopment())
                      {
