@@ -14,7 +14,11 @@ namespace Skoruba.IdentityServer4.Admin.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            var identityServerUrl = _configuration.AdminConfiguration.IdentityServerBaseUrl;
+            // EZY-modification (EZYC-3029): allow external url when run in docker
+            var identityServerUrl = _configuration.AdminConfiguration.IdentityServerUseExternalBaseUrl ?
+                _configuration.AdminConfiguration.IdentityServerExternalBaseUrl:
+                _configuration.AdminConfiguration.IdentityServerBaseUrl;
+
             
             return View(model: identityServerUrl);
         }

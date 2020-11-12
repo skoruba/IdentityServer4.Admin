@@ -434,7 +434,9 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         options.Events = new OpenIdConnectEvents
                         {
                             OnMessageReceived = context => OnMessageReceived(context, adminConfiguration),
-                            OnRedirectToIdentityProvider = context => OnRedirectToIdentityProvider(context, adminConfiguration)
+                            OnRedirectToIdentityProvider = context => OnRedirectToIdentityProvider(context, adminConfiguration),
+                            // EZY-modification (EZYC-3029): custom feature to support logging out when deployed inside d-c where ports are different.
+                            OnRedirectToIdentityProviderForSignOut = context => OnRedirectToIdentityProviderForSignOut(context, adminConfiguration),
                         };
                     });
         }
@@ -450,6 +452,25 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         private static Task OnRedirectToIdentityProvider(RedirectContext n, AdminConfiguration adminConfiguration)
         {
             n.ProtocolMessage.RedirectUri = adminConfiguration.IdentityAdminRedirectUri;
+
+            // EZY-modification (EZYC-3029): custom feature to support redirecting when deployed inside d-c where ports are different.
+            if (adminConfiguration.IdentityServerUseExternalBaseUrl)
+            {
+                n.ProtocolMessage.IssuerAddress = n.ProtocolMessage.IssuerAddress.Replace(
+                    adminConfiguration.IdentityServerBaseUrl, adminConfiguration.IdentityServerExternalBaseUrl);
+            }
+
+            return Task.FromResult(0);
+        }
+
+        // EZY-modification (EZYC-3029): custom feature to support logging out when deployed inside d-c where ports are different.
+        private static Task OnRedirectToIdentityProviderForSignOut(RedirectContext n, AdminConfiguration adminConfiguration)
+        {
+            if (adminConfiguration.IdentityServerUseExternalBaseUrl)
+            {
+                n.ProtocolMessage.IssuerAddress = n.ProtocolMessage.IssuerAddress.Replace(
+                    adminConfiguration.IdentityServerBaseUrl, adminConfiguration.IdentityServerExternalBaseUrl);
+            }
 
             return Task.FromResult(0);
         }
