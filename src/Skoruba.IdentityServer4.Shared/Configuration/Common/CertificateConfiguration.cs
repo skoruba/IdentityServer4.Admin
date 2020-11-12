@@ -30,5 +30,10 @@
         public bool UseSigningCertificateForAzureKeyVault { get; set; }
 
         public bool UseValidationCertificateForAzureKeyVault { get; set; }
+
+        // EZY-modification (EZYC-3029): below our custom settings
+        public bool UseSigningCertificateFromConfig { get; set; }
+        public string SigningCertificateFromConfigPfxBase64Content { get; set; }
+        public string SigningCertificateFromConfigPassword { get; set; }
     }
 }

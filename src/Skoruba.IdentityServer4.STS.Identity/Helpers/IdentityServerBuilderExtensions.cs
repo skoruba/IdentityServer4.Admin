@@ -99,6 +99,12 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     throw new Exception($"Signing key file: {certificateConfiguration.SigningCertificatePfxFilePath} not found");
                 }
             }
+            // EZY-modification (EZYC-3029): below 'else if' - our custom way of fetching certs from configuration (e.g. AWS Secrets Manager)
+            else if (certificateConfiguration.UseSigningCertificateFromConfig)
+            {
+                byte[] pfxBytes = Convert.FromBase64String(certificateConfiguration.SigningCertificateFromConfigPfxBase64Content);
+                builder.AddSigningCredential(new X509Certificate2(pfxBytes, certificateConfiguration.SigningCertificateFromConfigPassword));
+            }
             else if (certificateConfiguration.UseTemporarySigningKeyForDevelopment)
             {
                 builder.AddDeveloperSigningCredential();
