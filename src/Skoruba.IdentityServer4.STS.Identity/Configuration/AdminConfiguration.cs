@@ -11,5 +11,8 @@
         public string Theme { get; set; }
 
         public string CustomThemeCss { get; set; }
+
+        // EZY-modification (EZYC-3029): below our custom settings
+        public string ApplicationName { get; set; } = "Id.STS.Identity";
     }
 }
