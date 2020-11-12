@@ -17,6 +17,7 @@ using Skoruba.IdentityServer4.Admin.Configuration;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
 using System;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.IdentityModel.Logging;
 using Skoruba.IdentityServer4.Shared.Dtos;
 using Skoruba.IdentityServer4.Shared.Dtos.Identity;
 using Skoruba.IdentityServer4.Shared.Helpers;
@@ -38,6 +39,10 @@ namespace Skoruba.IdentityServer4.Admin
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // EZYC-2851-modification: Allow to show more details about errors
+            if (HostingEnvironment.IsDevelopment())
+                IdentityModelEventSource.ShowPII = true;
+            
             var rootConfiguration = CreateRootConfiguration();
             services.AddSingleton(rootConfiguration);
 
