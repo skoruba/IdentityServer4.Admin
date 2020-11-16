@@ -9,7 +9,7 @@ class DockerRegistry
   end
 
   def login
-    non_printable_env_var_cmd = @is_windows ? "%GCR_PAT_DEV_EZYDEPLOY%" : "$GCR_PAT_DEV_EZYDEPLOY"
+    non_printable_env_var_cmd = @is_windows ? "%GCR_PAT%" : "$GCR_PAT"
     sh "echo #{non_printable_env_var_cmd} | docker login #{@url} -u ezydeploy --password-stdin"
   end
 
