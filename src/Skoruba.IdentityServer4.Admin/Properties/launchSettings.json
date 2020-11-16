@@ -3,25 +3,24 @@
         "windowsAuthentication": false,
         "anonymousAuthentication": true,
         "iisExpress": {
-            "applicationUrl": "https://localhost:44303",
-            "sslPort": 44303
+            "applicationUrl": "http://localhost:9606",
+            "sslPort": 0
         }
     },
     "profiles": {
-        "IIS Express": {
+        "ezyc.id.admin (IIS Express)": {
             "commandName": "IISExpress",
-            "launchBrowser": true,
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             }
         },
-        "Skoruba.IdentityServer4.Admin": {
+        "ezyc.id.admin": {
             "commandName": "Project",
             "launchBrowser": true,
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
-            "applicationUrl": "https://localhost:44303"
+            "applicationUrl": "http://localhost:9606"
         }
     }
 }

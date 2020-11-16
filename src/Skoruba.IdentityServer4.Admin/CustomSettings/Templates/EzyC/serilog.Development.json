@@ -1,0 +1,16 @@
+﻿{
+  "Serilog": {
+    "WriteTo": [
+      {
+        "Name": "RedisList",
+        "Args": {
+          "redisUris": "localhost:9600",
+          "keyName": "logstash-booksecure.id.admin.dev"
+        }
+      }
+    ],
+    "Properties": {
+      "type": "booksecure.id.admin.dev"
+    }
+  }
+}

@@ -21,5 +21,8 @@
         public const string AdvancedConfigurationKey = "AdvancedConfiguration";
 
         public const string CspTrustedDomainsKey = "CspTrustedDomains";
+
+        // EZY-modification (EZYC-3029): below our custom settings
+        public const string SingleDbConnectionStringKey = "SingleDbConnection";
     }
 }

@@ -21,5 +21,9 @@
 
         public string CustomThemeCss { get; set; }
 
+        // EZY-modification (EZYC-3029): below our custom settings
+        public bool IdentityServerUseExternalBaseUrl { get; set; }
+        public string IdentityServerExternalBaseUrl { get; set; }
+        public string ApplicationName { get; set; } = "Id.Admin";
     }
 }

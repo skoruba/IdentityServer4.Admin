@@ -13,6 +13,7 @@ using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using System;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.IdentityModel.Logging;
 using Skoruba.IdentityServer4.Shared.Helpers;
 
 namespace Skoruba.IdentityServer4.STS.Identity
@@ -30,6 +31,10 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // EZYC-2851-modification: Allow to show more details about errors
+            if (Environment.IsDevelopment())
+                IdentityModelEventSource.ShowPII = true;
+
             var rootConfiguration = CreateRootConfiguration();
             services.AddSingleton(rootConfiguration);
             // Register DbContexts for IdentityServer and Identity

@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ezyc.all" type="CompoundRunConfigurationType">
+    <toRun name="Skoruba.IdentityServer4.STS.Identity: ezyc.id.sts.identity" type="LaunchSettings" />
+    <toRun name="Skoruba.IdentityServer4.Admin: ezyc.id.admin" type="LaunchSettings" />
+    <method v="2" />
+  </configuration>
+</component>
