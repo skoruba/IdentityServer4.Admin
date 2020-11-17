@@ -19,8 +19,6 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts
 
         public DbSet<ApiResourceSecret> ApiSecrets { get; set; }
 
-        public DbSet<ApiScope> ApiScopes { get; set; }
-
         public DbSet<ApiScopeClaim> ApiScopeClaims { get; set; }
 
         public DbSet<IdentityResourceClaim> IdentityClaims { get; set; }
@@ -34,8 +32,6 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ClientSecret> ClientSecrets { get; set; }
 
         public DbSet<ClientPostLogoutRedirectUri> ClientPostLogoutRedirectUris { get; set; }
-
-        public DbSet<ClientCorsOrigin> ClientCorsOrigins { get; set; }
 
         public DbSet<ClientIdPRestriction> ClientIdPRestrictions { get; set; }
 
