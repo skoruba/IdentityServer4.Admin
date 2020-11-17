@@ -12,8 +12,6 @@
 
 The application is written in the **Asp.Net Core MVC - using .NET Core 3.1**
 
-**NOTE:** Currently works only with **IdentityServer4 version 4** 🚀
-
 ## Requirements
 
 - [Install](https://www.microsoft.com/net/download/windows#/current) the latest .NET Core 3.x SDK (using older versions may lead to 502.5 errors when hosted on IIS or application exiting immediately after starting when self-hosted)
@@ -22,8 +20,20 @@ The application is written in the **Asp.Net Core MVC - using .NET Core 3.1**
 
 - Install the dotnet new template:
 
+### Stable version 1.0.0 works with **IdentityServer4 version 3** 🚀
+
 ```sh
 dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0
+```
+
+### Beta version 2.0.0 works with **IdentityServer4 version 4** 🚀
+
+> NOTE: This version affects your database data if you use the default database migrations that are part of the project - double check the migrations according to your database provider and create a database backup
+
+- The source code for version **2.0.0** is available in the branch [release/2.0.0-beta1](https://github.com/skoruba/IdentityServer4.Admin/tree/release/2.0.0-beta1)
+
+```sh
+dotnet new -i Skoruba.IdentityServer4.Admin.Templates::2.0.0-beta1
 ```
 
 - Create new project:
@@ -161,11 +171,20 @@ docker-compose up -d
 ### Docker images
 - Docker images will be available also in [docker hub](https://hub.docker.com/u/skoruba)
   - AdminUI:
+    - **Stable version:** 
     - `skoruba/identityserver4-admin:1.0.0`
+    - **Beta version:** 
+    - `skoruba/identityserver4-admin:2.0.0-beta1`
   - Admin Api:
+    - **Stable version:** 
     - `skoruba/identityserver4-admin-api:1.0.0`
+    - **Beta version:** 
+    - `skoruba/identityserver4-admin-api:2.0.0-beta1`
   - STS:
+    - **Stable version:** 
     - `skoruba/identityserver4-sts-identity:1.0.0`
+    - **Beta version:** 
+    - `skoruba/identityserver4-sts-identity:2.0.0-beta1`
        
 ### Publish Docker images to Docker hub
 - Check the script in `build/publish-docker-images.ps1` - change the profile name according to your requirements.
