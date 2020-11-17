@@ -126,6 +126,9 @@
   <data name="SuccessAddApiScope" xml:space="preserve">
     <value>¡El alcance de API {0} fue guardado con éxito!</value>
   </data>
+  <data name="SuccessAddApiScopeProperty" xml:space="preserve">
+    <value>Api Scope property {0} for api scope {1} is successfully saved!</value>
+  </data>
   <data name="SuccessAddApiSecret" xml:space="preserve">
     <value>¡El secreto de API fue creado con éxito!</value>
   </data>
@@ -161,6 +164,9 @@
   </data>
   <data name="SuccessDeleteApiScope" xml:space="preserve">
     <value>¡El alcance de API fue eliminada con éxito!</value>
+  </data>
+  <data name="SuccessDeleteApiScopeProperty" xml:space="preserve">
+    <value>Api Scope property is successfully deleted!</value>
   </data>
   <data name="SuccessDeleteApiSecret" xml:space="preserve">
     <value>¡El secreto de API fue eliminado con éxito!</value>

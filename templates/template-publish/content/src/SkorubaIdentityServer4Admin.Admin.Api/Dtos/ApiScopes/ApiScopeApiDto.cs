@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.ApiResources
+namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.ApiScopes
 {
     public class ApiScopeApiDto
     {
@@ -24,6 +24,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.ApiResources
         public bool Required { get; set; }
 
         public bool Emphasize { get; set; }
+
+        public bool Enabled { get; set; } = true;
 
         public List<string> UserClaims { get; set; }
     }

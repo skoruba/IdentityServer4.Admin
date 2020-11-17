@@ -168,4 +168,13 @@
   <data name="Audit Logs" xml:space="preserve">
     <value>Log de Auditoria</value>
   </data>
+  <data name="LinkApiScopes" xml:space="preserve">
+    <value>Api Scopes</value>
+  </data>
+  <data name="LinkAuditLogs" xml:space="preserve">
+    <value>Audit Logs</value>
+  </data>
+  <data name="LinkErrorLogs" xml:space="preserve">
+    <value>Error Logs</value>
+  </data>
 </root>

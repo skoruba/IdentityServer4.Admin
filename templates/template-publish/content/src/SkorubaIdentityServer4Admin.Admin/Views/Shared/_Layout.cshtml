@@ -55,7 +55,9 @@
                 <a class="dropdown-item" asp-area="" asp-controller="Configuration" asp-action="Clients">@Localizer["LinkClients"]</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" asp-area="" asp-controller="Configuration" asp-action="IdentityResources">@Localizer["LinkIdentityResources"]</a>
+
                 <a class="dropdown-item" asp-area="" asp-controller="Configuration" asp-action="ApiResources">@Localizer["LinkApiResources"]</a>
+                <a class="dropdown-item" asp-area="" asp-controller="Configuration" asp-action="ApiScopes">@Localizer["LinkApiScopes"]</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" asp-area="" asp-controller="Grant" asp-action="PersistedGrants">@Localizer["LinkPersistedGrants"]</a>
             </div>
@@ -78,11 +80,11 @@
                 @Localizer["TitleLogs"]
             </button>
             <div class="dropdown-menu">
-                <a class="dropdown-item" asp-area="" asp-controller="Log" asp-action="AuditLog">@Localizer["Audit Logs"]</a>
+                <a class="dropdown-item" asp-area="" asp-controller="Log" asp-action="AuditLog">@Localizer["LinkAuditLogs"]</a>
 
                 @if (!RootConfiguration.AdminConfiguration.HideUIForMSSqlErrorLogging)
                 {
-                    <a class="dropdown-item" asp-area="" asp-controller="Log" asp-action="ErrorsLog">@Localizer["Error Logs"]</a>
+                    <a class="dropdown-item" asp-area="" asp-controller="Log" asp-action="ErrorsLog">@Localizer["LinkErrorLogs"]</a>
                 }
             </div>
         </div>
