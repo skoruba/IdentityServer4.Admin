@@ -90,7 +90,7 @@ gulp.task('build', build);
 
 // watch
 function processWatch() {
-    gulp.watch(['Styles/*.scss'], processSass);
+    gulp.watch(['Styles/**/*.scss'], processSass);
 }
 gulp.task('watch', processWatch);
 exports.default = processWatch;
