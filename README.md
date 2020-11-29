@@ -324,7 +324,7 @@ The you need specify the key identifier in configuration:
             {
                 "Name": "File",
                 "Args": {
-                    "path": "log.txt",
+                    "path": "log.log",
                     "rollingInterval": "Day"
                 }
             },

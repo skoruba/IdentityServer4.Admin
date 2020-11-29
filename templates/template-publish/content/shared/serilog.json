@@ -20,7 +20,7 @@
           "buffered": true,
           "flushToDiskInterval": 15,
           "outputTemplate": "[{Timestamp:o}][{Level:u4}][{ThreadId}][{SourceContext}] {Message}{NewLine}{Exception}",
-          "pathFormat": "Logs//log-{Date}.txt",
+          "pathFormat": "Logs//log-{Date}.log",
           "retainedFileCountLimit": 3,
           "textFormatter": "Serilog.Formatting.Json.JsonFormatter, Serilog"
         },
