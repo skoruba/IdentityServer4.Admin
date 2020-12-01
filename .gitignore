@@ -282,3 +282,4 @@ __pycache__/
 /src/Skoruba.IdentityServer4.Admin.Api/appsettings.Production.json
 
 /shared/nginx/certs/
+/.vscode/settings.json
