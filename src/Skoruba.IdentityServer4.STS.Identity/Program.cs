@@ -2,6 +2,7 @@
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Filters;
@@ -41,19 +42,20 @@ namespace Skoruba.IdentityServer4.STS.Identity
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             // EZYC-2851-modification: allow sub-environment config
             var subEnvironment = Environment.GetEnvironmentVariable("SUB_ENVIRONMENT");
-            var templatesFolder = Environment.GetEnvironmentVariable("ENV_TEMPLATES_FOLDER") ?? "CustomSettings";
-            var isDevelopment = environment == Environments.Development;
+            var customSettingsPath = Environment.GetEnvironmentVariable("CUSTOM_SETTINGS_PATH") ?? "CustomSettings";
+            var fp = customSettingsPath == "CustomSettings" ? null : new PhysicalFileProvider(customSettingsPath);
             var configurationBuilder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile("{templatesFolder}/appsettings._Shared.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"{templatesFolder}/appsettings.{environment}.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"{templatesFolder}/appsettings.{environment}.{subEnvironment}.json", optional: true, reloadOnChange: true)
+                .AddJsonFile(fp, $"{"CustomSettings"}/appsettings._Shared.json", optional: true, reloadOnChange: true)
+                .AddJsonFile(fp, $"{"CustomSettings"}/appsettings.{environment}.json", optional: true, reloadOnChange: true)
+                .AddJsonFile(fp, $"{"CustomSettings"}/appsettings.{environment}.{subEnvironment}.json", optional: true, reloadOnChange: true)
                 .AddJsonFile("serilog.json", optional: true, reloadOnChange: true)
-                .AddJsonFile("{templatesFolder}/serilog._Shared.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"{templatesFolder}/serilog.{environment}.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"{templatesFolder}/serilog.{environment}.{subEnvironment}.json", optional: true, reloadOnChange: true);
+                .AddJsonFile(fp, $"{"CustomSettings"}/serilog._Shared.json", optional: true, reloadOnChange: true)
+                .AddJsonFile(fp, $"{"CustomSettings"}/serilog.{environment}.json", optional: true, reloadOnChange: true)
+                .AddJsonFile(fp, $"{"CustomSettings"}/serilog.{environment}.{subEnvironment}.json", optional: true, reloadOnChange: true);
 
+            var isDevelopment = environment == Environments.Development;
             if (isDevelopment)
             {
                 configurationBuilder.AddUserSecrets<Startup>();
@@ -78,15 +80,16 @@ namespace Skoruba.IdentityServer4.STS.Identity
                      var bootstrapperAdminConfig = _bootstrapperConfig.GetSection(nameof(AdminConfiguration)).Get<AdminConfiguration>();
                      var env = hostContext.HostingEnvironment;
                      var subEnvironment = Environment.GetEnvironmentVariable("SUB_ENVIRONMENT");
-                     var templatesFolder = Environment.GetEnvironmentVariable("ENV_TEMPLATES_FOLDER") ?? "CustomSettings";
-                     configApp.AddJsonFile($"{templatesFolder}/appsettings._Shared.json", optional: true, reloadOnChange: true);
-                     configApp.AddJsonFile($"{templatesFolder}/appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
-                     configApp.AddJsonFile($"{templatesFolder}/appsettings.{env.EnvironmentName}.{subEnvironment}.json", optional: true,
+                     var customSettingsPath = Environment.GetEnvironmentVariable("CUSTOM_SETTINGS_PATH") ?? "CustomSettings";
+                     var fp = customSettingsPath == "CustomSettings" ? null : new PhysicalFileProvider(customSettingsPath);
+                     configApp.AddJsonFile(fp, $"{"CustomSettings"}/appsettings._Shared.json", optional: true, reloadOnChange: true);
+                     configApp.AddJsonFile(fp, $"{"CustomSettings"}/appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                     configApp.AddJsonFile(fp, $"{"CustomSettings"}/appsettings.{env.EnvironmentName}.{subEnvironment}.json", optional: true,
                          reloadOnChange: true);
                      configApp.AddJsonFile("serilog.json", optional: true, reloadOnChange: true);
-                     configApp.AddJsonFile("{templatesFolder}/serilog._Shared.json", optional: true, reloadOnChange: true);
-                     configApp.AddJsonFile($"{templatesFolder}/serilog.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
-                     configApp.AddJsonFile($"{templatesFolder}/serilog.{env.EnvironmentName}.{subEnvironment}.json", optional: true, reloadOnChange: true);
+                     configApp.AddJsonFile(fp, $"{"CustomSettings"}/serilog._Shared.json", optional: true, reloadOnChange: true);
+                     configApp.AddJsonFile(fp, $"{"CustomSettings"}/serilog.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                     configApp.AddJsonFile(fp, $"{"CustomSettings"}/serilog.{env.EnvironmentName}.{subEnvironment}.json", optional: true, reloadOnChange: true);
 
                      if (!hostContext.HostingEnvironment.IsDevelopment())
                      {

@@ -12,7 +12,7 @@
             "commandName": "IISExpress",
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
-                "ENV_TEMPLATES_FOLDER" : "CustomSettings/Templates/EzyC"
+                "CUSTOM_SETTINGS_PATH" : "/projekt/BookSecure/docker/IdentityServer/STS.Identity"
             }
         },
         "ezyc.id.sts.identity": {
@@ -20,7 +20,7 @@
             "launchBrowser": true,
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
-                "ENV_TEMPLATES_FOLDER" : "CustomSettings/Templates/EzyC"
+                "CUSTOM_SETTINGS_PATH" : "/projekt/BookSecure/docker/IdentityServer/STS.Identity"
             },
             "applicationUrl": "http://localhost:9605"
         }
