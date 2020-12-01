@@ -281,8 +281,4 @@ __pycache__/
 !/src/Skoruba.IdentityServer4.Admin.BusinessLogic/Events/Log/
 /src/Skoruba.IdentityServer4.Admin.Api/appsettings.Production.json
 
-# EZY-modification (EZYC-3029): CustomSettings folder needs to be empty, as it can't be placed to a published package.
-/src/Skoruba.IdentityServer4.Admin/CustomSettings/*.*
-/src/Skoruba.IdentityServer4.STS.Identity/CustomSettings/*.*
-
 /shared/nginx/certs/

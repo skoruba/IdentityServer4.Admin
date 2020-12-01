@@ -11,14 +11,16 @@
         "ezyc.id.admin (IIS Express)": {
             "commandName": "IISExpress",
             "environmentVariables": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ENV_TEMPLATES_FOLDER" : "CustomSettings/Templates/EzyC"
             }
         },
         "ezyc.id.admin": {
             "commandName": "Project",
             "launchBrowser": true,
             "environmentVariables": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ENV_TEMPLATES_FOLDER" : "CustomSettings/Templates/EzyC"
             },
             "applicationUrl": "http://localhost:9606"
         }
