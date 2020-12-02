@@ -1,0 +1,42 @@
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Code" xml:space="preserve">
+    <value>Verificatie Code</value>
+  </data>
+  <data name="DownloadTitle" xml:space="preserve">
+    <value>Download een two-factor authenticator app, bijvoorbeeld Microsoft Authenticator for</value>
+  </data>
+  <data name="GoogleAuthenticatorTitle" xml:space="preserve">
+    <value>Google Authenticator voor</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Zodra u de QR-code gescanned heeft of de key hierboven heeft ingevoerd, zal uw two-factor app u voorzien van
+                een unieke code. Voer de code in in het bevestigingsveld hieronder.</value>
+  </data>
+  <data name="ScanQR" xml:space="preserve">
+    <value>Scan de QR Code voer deze key in</value>
+  </data>
+  <data name="ScanQRSubTitle" xml:space="preserve">
+    <value>in uw two factor authenticator app. Spaties en hoofdlettergevoeligheid zijn niet relevant.</value>
+  </data>
+  <data name="SubTitle" xml:space="preserve">
+    <value>Om een authenticator app te kunnen gebruiken volgt u de volgende stappen:</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Configureer authenticator app</value>
+  </data>
+  <data name="Verify" xml:space="preserve">
+    <value>Verifieer</value>
+  </data>
+</root>

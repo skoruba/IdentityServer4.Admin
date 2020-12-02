@@ -1,0 +1,56 @@
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ButtonClone" xml:space="preserve">
+    <value>Kloon Client</value>
+  </data>
+  <data name="InfoDescription" xml:space="preserve">
+    <value>De client secrets worden niet mee gekloond.</value>
+  </data>
+  <data name="InfoTitle" xml:space="preserve">
+    <value>Info:</value>
+  </data>
+  <data name="LabelCloneClientClaims" xml:space="preserve">
+    <value>Client Claims</value>
+  </data>
+  <data name="LabelCloneClientCorsOrigins" xml:space="preserve">
+    <value>Client Cors Origins</value>
+  </data>
+  <data name="LabelCloneClientGrantTypes" xml:space="preserve">
+    <value>Client Grant Types</value>
+  </data>
+  <data name="LabelCloneClientIdPRestrictions" xml:space="preserve">
+    <value>Client IdP Restricties</value>
+  </data>
+  <data name="LabelCloneClientPostLogoutRedirectUris" xml:space="preserve">
+    <value>Client Post Logout Redirect Uris</value>
+  </data>
+  <data name="LabelCloneClientProperties" xml:space="preserve">
+    <value>Client Properties</value>
+  </data>
+  <data name="LabelCloneClientRedirectUris" xml:space="preserve">
+    <value>Client Redirect Uris</value>
+  </data>
+  <data name="LabelCloneClientScopes" xml:space="preserve">
+    <value>Client Scopes</value>
+  </data>
+  <data name="NavigationClients" xml:space="preserve">
+    <value>Clients</value>
+  </data>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Kloon Client</value>
+  </data>
+  <data name="PanelTitle" xml:space="preserve">
+    <value>Client</value>
+  </data>
+</root>
