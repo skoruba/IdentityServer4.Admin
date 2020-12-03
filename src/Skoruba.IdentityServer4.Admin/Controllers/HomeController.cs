@@ -21,6 +21,11 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Anyone can visit the home page, if you don’t set this, keep clicking to cancel login will keep looping
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();

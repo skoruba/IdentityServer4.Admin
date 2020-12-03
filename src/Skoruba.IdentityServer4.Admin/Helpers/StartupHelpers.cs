@@ -182,7 +182,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             app.UseXContentTypeOptions();
             app.UseXfo(options => options.SameOrigin());
             app.UseReferrerPolicy(options => options.NoReferrer());
-           
+
             // CSP Configuration to be able to use external resources
             var cspTrustedDomains = new List<string>();
             configuration.GetSection(ConfigurationConsts.CspTrustedDomainsKey).Bind(cspTrustedDomains);
@@ -286,7 +286,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             where TUserChangePasswordDto : UserChangePasswordDto<TKey>
             where TRoleClaimsDto : RoleClaimsDto<TRoleClaimDto, TKey>
             where TUserClaimDto : UserClaimDto<TKey>
-            where TRoleClaimDto: RoleClaimDto<TKey>
+            where TRoleClaimDto : RoleClaimDto<TKey>
         {
             services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
 
@@ -433,7 +433,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         options.Events = new OpenIdConnectEvents
                         {
                             OnMessageReceived = context => OnMessageReceived(context, adminConfiguration),
-                            OnRedirectToIdentityProvider = context => OnRedirectToIdentityProvider(context, adminConfiguration)
+                            OnRedirectToIdentityProvider = context => OnRedirectToIdentityProvider(context, adminConfiguration),
+                            OnRemoteFailure = OnRemoteFailure
                         };
                     });
         }
@@ -449,6 +450,19 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         private static Task OnRedirectToIdentityProvider(RedirectContext n, AdminConfiguration adminConfiguration)
         {
             n.ProtocolMessage.RedirectUri = adminConfiguration.IdentityAdminRedirectUri;
+
+            return Task.FromResult(0);
+        }
+
+        /// <summary>
+        /// Handle the event of clicking the cancel button on the authorized website
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        private static Task OnRemoteFailure(RemoteFailureContext context)
+        {
+            context.Response.Redirect("/"); // Redirect to home page
+            context.HandleResponse();
 
             return Task.FromResult(0);
         }
