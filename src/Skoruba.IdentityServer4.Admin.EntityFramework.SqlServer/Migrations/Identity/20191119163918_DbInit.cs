@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Identity
@@ -9,8 +10,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ide
         {
             migrationBuilder.CreateTable(
                 name: "Roles",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
@@ -23,8 +23,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ide
 
             migrationBuilder.CreateTable(
                 name: "Users",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<string>(nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
@@ -48,8 +47,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ide
 
             migrationBuilder.CreateTable(
                 name: "RoleClaims",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
@@ -69,8 +67,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ide
 
             migrationBuilder.CreateTable(
                 name: "UserClaims",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
@@ -90,8 +87,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ide
 
             migrationBuilder.CreateTable(
                 name: "UserLogins",
-                columns: table => new
-                {
+                columns: table => new {
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
@@ -110,8 +106,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ide
 
             migrationBuilder.CreateTable(
                 name: "UserRoles",
-                columns: table => new
-                {
+                columns: table => new {
                     UserId = table.Column<string>(nullable: false),
                     RoleId = table.Column<string>(nullable: false)
                 },
@@ -134,8 +129,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ide
 
             migrationBuilder.CreateTable(
                 name: "UserTokens",
-                columns: table => new
-                {
+                columns: table => new {
                     UserId = table.Column<string>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),

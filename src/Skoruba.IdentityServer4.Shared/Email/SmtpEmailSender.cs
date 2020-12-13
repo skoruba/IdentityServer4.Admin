@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.Extensions.Logging;
-using Skoruba.IdentityServer4.Shared.Configuration.Email;
-using System;
+﻿using System;
 using System.Net.Mail;
 using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Logging;
+
+using Skoruba.IdentityServer4.Shared.Configuration.Email;
 
 namespace Skoruba.IdentityServer4.Shared.Email
 {
@@ -41,10 +43,10 @@ namespace Skoruba.IdentityServer4.Shared.Email
                 mail.IsBodyHtml = true;
                 mail.Subject = subject;
                 mail.Body = htmlMessage;
-                
+
                 _client.Send(mail);
                 _logger.LogInformation($"Email: {email}, subject: {subject}, message: {htmlMessage} successfully sent");
-                
+
                 return Task.CompletedTask;
             }
             catch (Exception ex)

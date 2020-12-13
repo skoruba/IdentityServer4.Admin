@@ -1,5 +1,7 @@
 ﻿using System;
+
 using Bogus;
+
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
@@ -49,7 +51,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             return userChangePassword;
         }
 
-        public static UserDto<TKey> GenerateRandomUser(TKey id = default(TKey))        
+        public static UserDto<TKey> GenerateRandomUser(TKey id = default(TKey))
         {
             var user = GetUserFaker(id).Generate();
 
@@ -99,7 +101,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             return userRole;
         }
 
-        public static Faker<UserProvidersDto<UserProviderDto<TKey>,TKey>> GetUserProvidersFaker(string key, string loginProvider, TKey userId)
+        public static Faker<UserProvidersDto<UserProviderDto<TKey>, TKey>> GetUserProvidersFaker(string key, string loginProvider, TKey userId)
         {
             var userProvidersFaker = new Faker<UserProvidersDto<UserProviderDto<TKey>, TKey>>()
                 .RuleFor(o => o.LoginProvider, f => loginProvider)

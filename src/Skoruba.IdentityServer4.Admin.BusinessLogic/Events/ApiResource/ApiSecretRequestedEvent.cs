@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Skoruba.AuditLogging.Events;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Events.ApiResource

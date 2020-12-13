@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces

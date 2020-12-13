@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+
 using FluentAssertions;
+
 using IdentityServer4.EntityFramework.Options;
+
 using Microsoft.EntityFrameworkCore;
+
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
+
 using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories

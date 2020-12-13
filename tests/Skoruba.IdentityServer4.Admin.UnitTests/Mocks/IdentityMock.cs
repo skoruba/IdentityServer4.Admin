@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using Bogus;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+
 using Moq;
+
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks

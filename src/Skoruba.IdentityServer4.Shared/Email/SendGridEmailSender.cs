@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Logging;
+
 using SendGrid;
+
 using Skoruba.IdentityServer4.Shared.Configuration.Email;
-using System.Threading.Tasks;
 
 namespace Skoruba.IdentityServer4.Shared.Email
 {
@@ -42,11 +45,11 @@ namespace Skoruba.IdentityServer4.Shared.Email
                     _logger.LogInformation($"Email: {email}, subject: {subject}, message: {htmlMessage} successfully sent");
                     break;
                 default:
-                {
-                    var errorMessage = await response.Body.ReadAsStringAsync();
-                    _logger.LogError($"Response with code {response.StatusCode} and body {errorMessage} after sending email: {email}, subject: {subject}");
-                    break;
-                }
+                    {
+                        var errorMessage = await response.Body.ReadAsStringAsync();
+                        _logger.LogError($"Response with code {response.StatusCode} and body {errorMessage} after sending email: {email}, subject: {subject}");
+                        break;
+                    }
             }
         }
     }

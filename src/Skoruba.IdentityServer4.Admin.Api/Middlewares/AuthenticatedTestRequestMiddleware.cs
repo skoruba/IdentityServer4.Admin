@@ -2,8 +2,11 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+
 using IdentityModel;
+
 using IdentityServer4.AccessTokenValidation;
+
 using Microsoft.AspNetCore.Http;
 
 namespace Skoruba.IdentityServer4.Admin.Api.Middlewares

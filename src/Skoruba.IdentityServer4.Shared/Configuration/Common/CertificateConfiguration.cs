@@ -11,13 +11,13 @@
 
         public string SigningCertificateThumbprint { get; set; }
 
-        public bool UseSigningCertificatePfxFile { get; set; }        
+        public bool UseSigningCertificatePfxFile { get; set; }
 
         public string SigningCertificatePfxFilePath { get; set; }
 
         public string SigningCertificatePfxFilePassword { get; set; }
 
-        public bool UseValidationCertificateThumbprint { get; set; }        
+        public bool UseValidationCertificateThumbprint { get; set; }
 
         public string ValidationCertificateThumbprint { get; set; }
 

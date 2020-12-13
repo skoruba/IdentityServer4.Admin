@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+
 using IdentityServer4.EntityFramework.Entities;
+
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Grant;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
@@ -22,7 +24,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers
 
             CreateMap<PagedList<PersistedGrant>, PersistedGrantsDto>(MemberList.Destination)
                 .ForMember(x => x.PersistedGrants,
-                    opt => opt.MapFrom(src => src.Data));            
+                    opt => opt.MapFrom(src => src.Data));
         }
     }
 }

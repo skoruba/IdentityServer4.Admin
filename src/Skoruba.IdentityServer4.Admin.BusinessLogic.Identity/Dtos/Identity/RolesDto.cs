@@ -1,10 +1,11 @@
-﻿using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
 {
-    public class RolesDto<TRoleDto, TKey>: IRolesDto where TRoleDto : RoleDto<TKey>
+    public class RolesDto<TRoleDto, TKey> : IRolesDto where TRoleDto : RoleDto<TKey>
     {
         public RolesDto()
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+
 using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Common;
 
 namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Mocks

@@ -8,8 +8,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Dat
         {
             migrationBuilder.CreateTable(
                 name: "DataProtectionKeys",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FriendlyName = table.Column<string>(nullable: true),

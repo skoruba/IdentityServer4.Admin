@@ -26,17 +26,17 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.TagHelpers
                 output.TagName = "img";
                 if (!string.IsNullOrWhiteSpace(Class))
                 {
-                    output.Attributes.Add("class", Class); 
+                    output.Attributes.Add("class", Class);
                 }
 
                 if (!string.IsNullOrWhiteSpace(Alt))
                 {
                     output.Attributes.Add("alt", Alt);
                 }
-                
+
                 output.Attributes.Add("src", GetAvatarUrl(hash, Size));
                 output.TagMode = TagMode.SelfClosing;
-            } 
+            }
         }
 
         private static string GetAvatarUrl(string hash, int size)

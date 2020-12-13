@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+
 using Skoruba.AuditLogging.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Events.IdentityResource;
@@ -159,7 +160,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             var originalIdentityResource = await GetIdentityResourceAsync(resource.Id);
 
             var updated = await IdentityResourceRepository.UpdateIdentityResourceAsync(resource);
-            
+
             await AuditEventLogger.LogEventAsync(new IdentityResourceUpdatedEvent(originalIdentityResource, identityResource));
 
             return updated;

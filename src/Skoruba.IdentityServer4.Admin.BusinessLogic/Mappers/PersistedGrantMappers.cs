@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+
 using IdentityServer4.EntityFramework.Entities;
+
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Grant;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
@@ -10,7 +12,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
     {
         static PersistedGrantMappers()
         {
-            Mapper = new MapperConfiguration(cfg =>cfg.AddProfile<PersistedGrantMapperProfile>())
+            Mapper = new MapperConfiguration(cfg => cfg.AddProfile<PersistedGrantMapperProfile>())
                 .CreateMapper();
         }
 

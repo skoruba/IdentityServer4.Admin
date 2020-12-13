@@ -5,6 +5,7 @@
 // Modified by Jan Škoruba
 
 using System.Threading.Tasks;
+
 using IdentityServer4.Stores;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers

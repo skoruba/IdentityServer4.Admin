@@ -1,9 +1,12 @@
 ﻿using System.Net.Http;
+
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+
 using Skoruba.IdentityServer4.Admin.Api.Configuration;
 using Skoruba.IdentityServer4.Admin.Api.Configuration.Test;
 using Skoruba.IdentityServer4.Admin.Api.IntegrationTests.Common;
+
 using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.Api.IntegrationTests.Tests.Base

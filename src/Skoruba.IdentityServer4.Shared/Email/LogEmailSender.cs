@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 
 namespace Skoruba.IdentityServer4.Shared.Email
 {

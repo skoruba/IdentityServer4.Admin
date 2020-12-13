@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Microsoft.EntityFrameworkCore;
+
 using Skoruba.AuditLogging.EntityFramework.DbContexts;
 using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
@@ -46,7 +48,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
                 .WhereIf(!string.IsNullOrEmpty(category), log => log.Category.Contains(category))
                 .WhereIf(created.HasValue, log => log.Created.Date == created.Value.Date)
                 .CountAsync();
-            
+
             return pagedList;
         }
 

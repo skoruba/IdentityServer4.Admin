@@ -1,5 +1,6 @@
-﻿using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Interfaces
 {

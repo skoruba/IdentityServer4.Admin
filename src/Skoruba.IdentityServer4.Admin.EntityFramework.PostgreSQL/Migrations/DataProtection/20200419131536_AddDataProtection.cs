@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Migrations.DataProtection
@@ -9,8 +10,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Migrations.Da
         {
             migrationBuilder.CreateTable(
                 name: "DataProtectionKeys",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     FriendlyName = table.Column<string>(nullable: true),

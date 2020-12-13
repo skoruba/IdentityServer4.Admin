@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts
 {

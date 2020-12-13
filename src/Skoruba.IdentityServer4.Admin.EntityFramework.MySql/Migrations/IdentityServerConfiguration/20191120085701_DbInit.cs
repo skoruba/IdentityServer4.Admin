@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
@@ -10,8 +11,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
         {
             migrationBuilder.CreateTable(
                 name: "ApiResources",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Enabled = table.Column<bool>(nullable: false),
@@ -30,8 +30,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
             migrationBuilder.CreateTable(
                 name: "Clients",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Enabled = table.Column<bool>(nullable: false),
@@ -83,8 +82,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
             migrationBuilder.CreateTable(
                 name: "IdentityResources",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Enabled = table.Column<bool>(nullable: false),
@@ -105,8 +103,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
             migrationBuilder.CreateTable(
                 name: "ApiClaims",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Type = table.Column<string>(maxLength: 200, nullable: false),
@@ -125,8 +122,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
             migrationBuilder.CreateTable(
                 name: "ApiProperties",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Key = table.Column<string>(maxLength: 250, nullable: false),
@@ -146,8 +142,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
             migrationBuilder.CreateTable(
                 name: "ApiScopes",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 200, nullable: false),
@@ -171,8 +166,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
             migrationBuilder.CreateTable(
                 name: "ApiSecrets",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(maxLength: 1000, nullable: true),
@@ -195,8 +189,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
             migrationBuilder.CreateTable(
                 name: "ClientClaims",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Type = table.Column<string>(maxLength: 250, nullable: false),
@@ -216,8 +209,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
             migrationBuilder.CreateTable(
                 name: "ClientCorsOrigins",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Origin = table.Column<string>(maxLength: 150, nullable: false),
@@ -236,8 +228,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
             migrationBuilder.CreateTable(
                 name: "ClientGrantTypes",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     GrantType = table.Column<string>(maxLength: 250, nullable: false),
@@ -256,8 +247,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
             migrationBuilder.CreateTable(
                 name: "ClientIdPRestrictions",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Provider = table.Column<string>(maxLength: 200, nullable: false),
@@ -276,8 +266,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
             migrationBuilder.CreateTable(
                 name: "ClientPostLogoutRedirectUris",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     PostLogoutRedirectUri = table.Column<string>(maxLength: 2000, nullable: false),
@@ -296,8 +285,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
             migrationBuilder.CreateTable(
                 name: "ClientProperties",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Key = table.Column<string>(maxLength: 250, nullable: false),
@@ -317,8 +305,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
             migrationBuilder.CreateTable(
                 name: "ClientRedirectUris",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     RedirectUri = table.Column<string>(maxLength: 2000, nullable: false),
@@ -337,8 +324,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
             migrationBuilder.CreateTable(
                 name: "ClientScopes",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Scope = table.Column<string>(maxLength: 200, nullable: false),
@@ -357,8 +343,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
             migrationBuilder.CreateTable(
                 name: "ClientSecrets",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(maxLength: 2000, nullable: true),
@@ -381,8 +366,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
             migrationBuilder.CreateTable(
                 name: "IdentityClaims",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Type = table.Column<string>(maxLength: 200, nullable: false),
@@ -401,8 +385,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
             migrationBuilder.CreateTable(
                 name: "IdentityProperties",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Key = table.Column<string>(maxLength: 250, nullable: false),
@@ -422,8 +405,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
             migrationBuilder.CreateTable(
                 name: "ApiScopeClaims",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Type = table.Column<string>(maxLength: 200, nullable: false),

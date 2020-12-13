@@ -1,5 +1,7 @@
 ﻿using System;
+
 using Microsoft.EntityFrameworkCore.Migrations;
+
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Migrations.AuditLogging
@@ -10,8 +12,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Migrations.Au
         {
             migrationBuilder.CreateTable(
                 name: "AuditLog",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Event = table.Column<string>(nullable: true),

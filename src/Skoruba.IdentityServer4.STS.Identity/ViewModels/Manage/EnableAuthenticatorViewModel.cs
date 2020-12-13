@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Skoruba.IdentityServer4.STS.Identity.ViewModels.Manage

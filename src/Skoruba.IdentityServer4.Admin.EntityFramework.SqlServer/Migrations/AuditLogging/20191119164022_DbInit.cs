@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.AuditLogging
@@ -9,8 +10,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Aud
         {
             migrationBuilder.CreateTable(
                 name: "AuditLog",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Event = table.Column<string>(nullable: true),

@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin.Api.Dtos.Clients
@@ -18,10 +19,8 @@ namespace Skoruba.IdentityServer4.Admin.Api.Dtos.Clients
 
         public string HashType { get; set; }
 
-        public HashType HashTypeEnum
-        {
-            get
-            {
+        public HashType HashTypeEnum {
+            get {
                 HashType result;
 
                 if (Enum.TryParse(HashType, true, out result))

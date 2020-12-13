@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
+
 using Newtonsoft.Json;
+
 using Skoruba.IdentityServer4.Admin.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin.Controllers
@@ -56,7 +59,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             ViewBag.Notifications = TempData[NotificationHelpers.NotificationKey];
             TempData.Remove(NotificationHelpers.NotificationKey);
         }
-        
+
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             GenerateNotifications();

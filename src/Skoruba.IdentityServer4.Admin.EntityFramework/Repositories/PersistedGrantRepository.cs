@@ -2,8 +2,11 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+
 using IdentityServer4.EntityFramework.Entities;
+
 using Microsoft.EntityFrameworkCore;
+
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Enums;
@@ -15,7 +18,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
 {
     public class PersistedGrantRepository<TDbContext> : IPersistedGrantRepository
         where TDbContext : DbContext, IAdminPersistedGrantDbContext
-        
+
     {
         protected readonly TDbContext DbContext;
 

@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.IdentityServerGrants
@@ -9,8 +10,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ide
         {
             migrationBuilder.CreateTable(
                 name: "DeviceCodes",
-                columns: table => new
-                {
+                columns: table => new {
                     UserCode = table.Column<string>(maxLength: 200, nullable: false),
                     DeviceCode = table.Column<string>(maxLength: 200, nullable: false),
                     SubjectId = table.Column<string>(maxLength: 200, nullable: true),
@@ -26,8 +26,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ide
 
             migrationBuilder.CreateTable(
                 name: "PersistedGrants",
-                columns: table => new
-                {
+                columns: table => new {
                     Key = table.Column<string>(maxLength: 200, nullable: false),
                     Type = table.Column<string>(maxLength: 50, nullable: false),
                     SubjectId = table.Column<string>(maxLength: 200, nullable: true),

@@ -1,5 +1,7 @@
 ﻿using System;
+
 using Bogus;
+
 using IdentityServer4.EntityFramework.Entities;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
@@ -16,33 +18,33 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
                 .RuleFor(o => o.Enabled, f => f.Random.Bool())
                 .RuleFor(o => o.Emphasize, f => f.Random.Bool())
                 .RuleFor(o => o.ShowInDiscoveryDocument, f => f.Random.Bool())
-                .RuleFor(o => o.Required, f => f.Random.Bool())                
+                .RuleFor(o => o.Required, f => f.Random.Bool())
                 .RuleFor(o => o.UserClaims, f => GetIdentityClaimFaker(0).Generate(f.Random.Number(10)));
 
             return fakerIdentityResource;
         }
 
-	    public static IdentityResourceProperty GenerateRandomIdentityResourceProperty(int id)
-	    {
-		    var identityResourcePropertyFaker = IdentityResourcePropertyFaker(id);
+        public static IdentityResourceProperty GenerateRandomIdentityResourceProperty(int id)
+        {
+            var identityResourcePropertyFaker = IdentityResourcePropertyFaker(id);
 
-		    var identityResourceProperty = identityResourcePropertyFaker.Generate();
+            var identityResourceProperty = identityResourcePropertyFaker.Generate();
 
-		    return identityResourceProperty;
-	    }
+            return identityResourceProperty;
+        }
 
-	    public static Faker<IdentityResourceProperty> IdentityResourcePropertyFaker(int id)
-	    {
-		    var identityResourcePropertyFaker = new Faker<IdentityResourceProperty>()
-			    .StrictMode(false)
-			    .RuleFor(o => o.Id, id)
-			    .RuleFor(o => o.Key, f => Guid.NewGuid().ToString())
-			    .RuleFor(o => o.Value, f => f.Random.Words(f.Random.Number(1, 5)));
+        public static Faker<IdentityResourceProperty> IdentityResourcePropertyFaker(int id)
+        {
+            var identityResourcePropertyFaker = new Faker<IdentityResourceProperty>()
+                .StrictMode(false)
+                .RuleFor(o => o.Id, id)
+                .RuleFor(o => o.Key, f => Guid.NewGuid().ToString())
+                .RuleFor(o => o.Value, f => f.Random.Words(f.Random.Number(1, 5)));
 
-		    return identityResourcePropertyFaker;
-	    }
+            return identityResourcePropertyFaker;
+        }
 
-		public static Faker<IdentityClaim> GetIdentityClaimFaker(int id)
+        public static Faker<IdentityClaim> GetIdentityClaimFaker(int id)
         {
             var fakerIdentityClaim = new Faker<IdentityClaim>()
                 .RuleFor(o => o.Type, f => Guid.NewGuid().ToString())

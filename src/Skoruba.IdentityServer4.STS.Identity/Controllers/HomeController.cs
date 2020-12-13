@@ -6,10 +6,13 @@
 
 using System;
 using System.Threading.Tasks;
+
 using IdentityServer4.Services;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using Skoruba.IdentityServer4.STS.Identity.ViewModels.Home;
 

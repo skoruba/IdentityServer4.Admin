@@ -2,14 +2,14 @@
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
 {
-	public class ClientClaimDto
-	{
-	    public int Id { get; set; }
+    public class ClientClaimDto
+    {
+        public int Id { get; set; }
 
-	    [Required]
+        [Required]
         public string Type { get; set; }
 
-	    [Required]
+        [Required]
         public string Value { get; set; }
-	}
+    }
 }

@@ -13,7 +13,7 @@
         public string TokenValidationClaimName { get; set; }
         public string TokenValidationClaimRole { get; set; }
         public string IdentityServerBaseUrl { get; set; }
-        public string ClientId { get; set; } 
+        public string ClientId { get; set; }
         public string ClientSecret { get; set; }
         public string OidcResponseType { get; set; }
         public bool HideUIForMSSqlErrorLogging { get; set; }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+
 using Skoruba.IdentityServer4.Shared.Configuration.Common;
 
 namespace Skoruba.IdentityServer4.Shared.Helpers

@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+
 using AutoMapper;
+
 using IdentityServer4.EntityFramework.Entities;
+
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
@@ -41,26 +44,26 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
         {
             return Mapper.Map<ClientPropertiesDto>(clientProperties);
         }
-        
-		public static Client ToEntity(this ClientDto client)
+
+        public static Client ToEntity(this ClientDto client)
         {
             return Mapper.Map<Client>(client);
         }
 
-		public static ClientSecretsDto ToModel(this ClientSecret clientSecret)
-		{
-			return Mapper.Map<ClientSecretsDto>(clientSecret);
-		}
-        
+        public static ClientSecretsDto ToModel(this ClientSecret clientSecret)
+        {
+            return Mapper.Map<ClientSecretsDto>(clientSecret);
+        }
+
         public static ClientSecret ToEntity(this ClientSecretsDto clientSecret)
-		{
-			return Mapper.Map<ClientSecret>(clientSecret);
-		}
+        {
+            return Mapper.Map<ClientSecret>(clientSecret);
+        }
 
         public static ClientClaimsDto ToModel(this ClientClaim clientClaim)
-		{
-			return Mapper.Map<ClientClaimsDto>(clientClaim);
-		}
+        {
+            return Mapper.Map<ClientClaimsDto>(clientClaim);
+        }
 
         public static ClientPropertiesDto ToModel(this ClientProperty clientProperty)
         {
@@ -68,9 +71,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
         }
 
         public static ClientClaim ToEntity(this ClientClaimsDto clientClaim)
-		{
-			return Mapper.Map<ClientClaim>(clientClaim);
-		}
+        {
+            return Mapper.Map<ClientClaim>(clientClaim);
+        }
 
         public static ClientProperty ToEntity(this ClientPropertiesDto clientProperties)
         {

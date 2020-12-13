@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using System;
 using System.Linq;
+
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Helpers
 {

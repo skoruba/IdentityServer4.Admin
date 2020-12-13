@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+
 using Microsoft.Net.Http.Headers;
 
 namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Common
@@ -17,14 +18,14 @@ namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Common
             return (ExtractAntiForgeryToken(await response.Content.ReadAsStringAsync()),
                 ExtractAntiForgeryCookieValueFrom(response));
         }
-        
+
         private string ExtractAntiForgeryCookieValueFrom(HttpResponseMessage response)
         {
             var antiForgeryCookie = response.Headers.GetValues("Set-Cookie").FirstOrDefault(x => x.Contains(AntiForgeryCookieName));
 
             if (antiForgeryCookie is null)
             {
-                throw new ArgumentException($"Cookie '{AntiForgeryCookieName}' not found in HTTP response",nameof(response));
+                throw new ArgumentException($"Cookie '{AntiForgeryCookieName}' not found in HTTP response", nameof(response));
             }
 
             var antiForgeryCookieValue = SetCookieHeaderValue.Parse(antiForgeryCookie).Value;

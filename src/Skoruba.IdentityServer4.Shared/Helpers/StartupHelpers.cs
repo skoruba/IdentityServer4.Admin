@@ -7,7 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.AzureKeyVault;
 using Microsoft.Extensions.DependencyInjection;
+
 using SendGrid;
+
 using Skoruba.IdentityServer4.Shared.Configuration.Common;
 using Skoruba.IdentityServer4.Shared.Configuration.Email;
 using Skoruba.IdentityServer4.Shared.Email;

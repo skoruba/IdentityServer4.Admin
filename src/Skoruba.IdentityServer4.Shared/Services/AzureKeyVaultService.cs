@@ -6,10 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.KeyVault.Models;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
+
 using Skoruba.IdentityServer4.Shared.Configuration.Common;
 
 namespace Skoruba.IdentityServer4.Shared.Services
