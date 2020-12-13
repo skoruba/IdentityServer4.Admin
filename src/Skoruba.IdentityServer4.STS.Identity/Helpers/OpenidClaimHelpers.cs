@@ -1,11 +1,14 @@
-﻿using IdentityModel;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+
+using IdentityModel;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
+using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
@@ -16,27 +19,27 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             var addressJson = new JObject();
             if (!string.IsNullOrWhiteSpace(profile.StreetAddress))
             {
-                 addressJson[AddressClaimConstants.StreetAddress] = profile.StreetAddress;
+                addressJson[AddressClaimConstants.StreetAddress] = profile.StreetAddress;
             }
 
             if (!string.IsNullOrWhiteSpace(profile.Locality))
             {
-                 addressJson[AddressClaimConstants.Locality] = profile.Locality;
+                addressJson[AddressClaimConstants.Locality] = profile.Locality;
             }
 
             if (!string.IsNullOrWhiteSpace(profile.Region))
             {
-                 addressJson[AddressClaimConstants.Region] = profile.Region;
+                addressJson[AddressClaimConstants.Region] = profile.Region;
             }
 
             if (!string.IsNullOrWhiteSpace(profile.PostalCode))
             {
-                 addressJson[AddressClaimConstants.PostalCode] = profile.PostalCode;
+                addressJson[AddressClaimConstants.PostalCode] = profile.PostalCode;
             }
 
             if (!string.IsNullOrWhiteSpace(profile.Country))
             {
-                 addressJson[AddressClaimConstants.Country] = profile.Country;
+                addressJson[AddressClaimConstants.Country] = profile.Country;
             }
 
 
@@ -175,7 +178,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <param name="oldClaims"></param>
         /// <param name="newProfile"></param>
         /// <returns></returns>
-        public static IList<Tuple<Claim,Claim>> ExtractClaimsToReplace(IList<Claim> oldClaims, OpenIdProfile newProfile)
+        public static IList<Tuple<Claim, Claim>> ExtractClaimsToReplace(IList<Claim> oldClaims, OpenIdProfile newProfile)
         {
             var oldProfile = ExtractProfileInfo(oldClaims);
             var claimsToReplace = new List<Tuple<Claim, Claim>>();

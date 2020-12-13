@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+
 using FluentAssertions;
+
 using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Options;
+
 using Microsoft.EntityFrameworkCore;
+
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
+
 using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
@@ -198,7 +203,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 ClientCloneCompare(cloneClientEntity, clientToCompare);
             }
         }
-        
+
         [Fact]
         public async Task CloneClientWithoutCorsAsync()
         {
@@ -788,10 +793,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
             {
                 var clientRepository = GetClientRepository(context);
                 var identityResourceRepository = GetIdentityResourceRepository(context);
-                
+
                 var identityResource = IdentityResourceMock.GenerateRandomIdentityResource(0);
                 await identityResourceRepository.AddIdentityResourceAsync(identityResource);
-                
+
                 var identityScopes = await clientRepository.GetScopesAsync(identityResource.Name);
 
                 identityScopes[0].Should().Be(identityResource.Name);
@@ -805,7 +810,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
             {
                 var clientRepository = GetClientRepository(context);
                 var apiResourceRepository = GetApiResourceRepository(context);
-                
+
                 var apiResource = ApiResourceMock.GenerateRandomApiResource(0);
                 await apiResourceRepository.AddApiResourceAsync(apiResource);
 
@@ -819,7 +824,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 apiScopes[0].Should().Be(apiScope.Name);
             }
         }
-        
+
         private void ClientCloneCompare(Client cloneClientEntity, Client clientToCompare, bool cloneClientCorsOrigins = true, bool cloneClientGrantTypes = true, bool cloneClientIdPRestrictions = true, bool cloneClientPostLogoutRedirectUris = true, bool cloneClientScopes = true, bool cloneClientRedirectUris = true, bool cloneClientClaims = true, bool cloneClientProperties = true)
         {
             //Assert cloned client

@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+
 using Microsoft.AspNetCore.Http;
+
 using Skoruba.AuditLogging.Constants;
 using Skoruba.AuditLogging.Events;
 using Skoruba.IdentityServer4.Admin.Api.Configuration;
@@ -18,8 +20,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.AuditLogging
             SubjectName = subClaim == null ? clientIdClaim.Value : nameClaim?.Value;
             SubjectType = subClaim == null ? AuditSubjectTypes.Machine : AuditSubjectTypes.User;
 
-            SubjectAdditionalData = new
-            {
+            SubjectAdditionalData = new {
                 RemoteIpAddress = accessor.HttpContext.Connection?.RemoteIpAddress?.ToString(),
                 LocalIpAddress = accessor.HttpContext.Connection?.LocalIpAddress?.ToString(),
                 Claims = accessor.HttpContext.User.Claims?.Select(x => new { x.Type, x.Value })

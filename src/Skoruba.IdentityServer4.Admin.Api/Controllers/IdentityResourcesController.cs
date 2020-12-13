@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
-using IdentityServer4.AccessTokenValidation;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 using Skoruba.IdentityServer4.Admin.Api.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.Api.Dtos.IdentityResources;
 using Skoruba.IdentityServer4.Admin.Api.ExceptionHandling;
@@ -49,7 +50,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Post([FromBody]IdentityResourceApiDto identityResourceApi)
+        public async Task<IActionResult> Post([FromBody] IdentityResourceApiDto identityResourceApi)
         {
             var identityResourceDto = identityResourceApi.ToIdentityResourceApiModel<IdentityResourceDto>();
 
@@ -65,7 +66,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody]IdentityResourceApiDto identityResourceApi)
+        public async Task<IActionResult> Put([FromBody] IdentityResourceApiDto identityResourceApi)
         {
             var identityResource = identityResourceApi.ToIdentityResourceApiModel<IdentityResourceDto>();
 
@@ -107,7 +108,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
         [HttpPost("{id}/Properties")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> PostProperty(int id, [FromBody]IdentityResourcePropertyApiDto identityResourcePropertyApi)
+        public async Task<IActionResult> PostProperty(int id, [FromBody] IdentityResourcePropertyApiDto identityResourcePropertyApi)
         {
             var identityResourcePropertiesDto = identityResourcePropertyApi.ToIdentityResourceApiModel<IdentityResourcePropertiesDto>();
             identityResourcePropertiesDto.IdentityResourceId = id;

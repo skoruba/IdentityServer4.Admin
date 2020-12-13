@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+
 using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Log;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Entities;

@@ -1,8 +1,10 @@
 ﻿using System.Diagnostics;
 using System.Linq;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.ExceptionHandling;
 
 namespace Skoruba.IdentityServer4.Admin.Api.ExceptionHandling
@@ -34,10 +36,10 @@ namespace Skoruba.IdentityServer4.Admin.Api.ExceptionHandling
                 Status = StatusCodes.Status400BadRequest,
                 Instance = context.HttpContext.Request.Path
             };
-            
+
             SetTraceId(context.HttpContext.TraceIdentifier, problemDetails);
 
-            var exceptionResult =  new BadRequestObjectResult(problemDetails)
+            var exceptionResult = new BadRequestObjectResult(problemDetails)
             {
                 ContentTypes = {
                     "application/problem+json",

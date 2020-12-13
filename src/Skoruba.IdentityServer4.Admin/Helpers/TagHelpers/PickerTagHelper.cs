@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+
 using Newtonsoft.Json;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers.TagHelpers
@@ -38,7 +40,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.TagHelpers
         public bool AllowItemAlreadySelectedNotification { get; set; } = true;
 
         public string ItemAlreadySelectedTitle { get; set; }
-        
+
         public bool AllowSuggestedItems { get; set; } = true;
 
         public int TopSuggestedItems { get; set; } = 5;
@@ -66,11 +68,9 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.TagHelpers
         {
             var selectedItems = GetSelectedItems();
 
-            var component = new
-            {
+            var component = new {
                 name = "picker",
-                @params = new
-                {
+                @params = new {
                     search = "",
                     hiddenId = Id,
                     url = Url,

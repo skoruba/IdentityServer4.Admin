@@ -8,7 +8,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.ExceptionHandling
         public string ErrorKey { get; set; }
 
         public object Model { get; set; }
-       
+
         public List<ViewErrorMessage> ErrorMessages { get; set; }
 
         public UserFriendlyViewException(string message, string errorKey, object model) : base(message)

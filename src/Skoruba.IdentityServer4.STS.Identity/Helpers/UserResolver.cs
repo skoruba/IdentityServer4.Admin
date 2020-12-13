@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Skoruba.IdentityServer4.STS.Identity.Configuration;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Identity;
+
 using Skoruba.IdentityServer4.Shared.Configuration.Identity;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers

@@ -1,8 +1,10 @@
 ﻿using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
@@ -44,7 +46,7 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
                 return View(clientDto);
             }
 
-            var client = await _clientService.GetClientAsync((int)id);
+            var client = await _clientService.GetClientAsync(id);
             client = _clientService.BuildClientViewModel(client);
 
             return View(client);

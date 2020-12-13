@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+
 using Skoruba.AuditLogging.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Grant;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Events.PersistedGrant;
@@ -55,7 +56,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             var persistedGrantDto = persistedGrant.ToModel();
 
             await AuditEventLogger.LogEventAsync(new PersistedGrantRequestedEvent(persistedGrantDto));
-            
+
             return persistedGrantDto;
         }
 

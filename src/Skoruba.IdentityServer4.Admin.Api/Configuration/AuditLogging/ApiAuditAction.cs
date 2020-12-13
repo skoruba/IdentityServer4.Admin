@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
+
 using Skoruba.AuditLogging.Events;
 
 namespace Skoruba.IdentityServer4.Admin.Api.AuditLogging
@@ -8,8 +9,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.AuditLogging
     {
         public ApiAuditAction(IHttpContextAccessor accessor)
         {
-            Action = new
-            {
+            Action = new {
                 TraceIdentifier = accessor.HttpContext.TraceIdentifier,
                 RequestUrl = accessor.HttpContext.Request.GetDisplayUrl(),
                 HttpMethod = accessor.HttpContext.Request.Method

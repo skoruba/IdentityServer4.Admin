@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace Skoruba.IdentityServer4.Shared.Configuration.Common
+﻿namespace Skoruba.IdentityServer4.Shared.Configuration.Common
 {
     public class AzureKeyVaultConfiguration
     {

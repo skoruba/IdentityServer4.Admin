@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
+
 using FluentAssertions;
+
 using IdentityServer4.EntityFramework.Options;
+
 using Microsoft.EntityFrameworkCore;
+
 using Moq;
+
 using Skoruba.AuditLogging.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services;
@@ -13,6 +18,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.Interf
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
+
 using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
@@ -71,7 +77,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 
                     var auditLoggerMock = new Mock<IAuditEventLogger>();
                     var auditLogger = auditLoggerMock.Object;
-                    
+
                     var persistedGrantService = GetPersistedGrantService(persistedGrantRepository, localizer, auditLogger);
 
                     //Generate persisted grant

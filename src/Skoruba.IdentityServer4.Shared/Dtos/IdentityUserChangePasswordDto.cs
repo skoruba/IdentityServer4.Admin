@@ -4,6 +4,6 @@ namespace Skoruba.IdentityServer4.Shared.Dtos
 {
     public class IdentityUserChangePasswordDto : UserChangePasswordDto<string>
     {
-        
+
     }
 }

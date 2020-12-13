@@ -1,11 +1,15 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
+
 using FluentAssertions;
+
 using Microsoft.AspNetCore.Mvc.Testing;
+
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Test;
 using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Common;
 using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Mocks;
 using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests.Base;
+
 using Xunit;
 
 namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests

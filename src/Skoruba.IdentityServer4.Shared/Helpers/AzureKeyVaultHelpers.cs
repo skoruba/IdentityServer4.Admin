@@ -3,6 +3,7 @@
 
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+
 using Skoruba.IdentityServer4.Shared.Configuration.Common;
 using Skoruba.IdentityServer4.Shared.Services;
 

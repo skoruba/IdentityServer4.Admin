@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Base;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Interfaces;
 

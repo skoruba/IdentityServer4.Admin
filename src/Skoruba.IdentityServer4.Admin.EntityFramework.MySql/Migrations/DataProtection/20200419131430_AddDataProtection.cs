@@ -9,8 +9,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.DataPro
         {
             migrationBuilder.CreateTable(
                 name: "DataProtectionKeys",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     FriendlyName = table.Column<string>(nullable: true),

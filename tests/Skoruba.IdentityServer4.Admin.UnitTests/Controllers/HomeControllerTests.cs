@@ -1,8 +1,11 @@
 ﻿using System;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+
 using Skoruba.IdentityServer4.Admin.Controllers;
+
 using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers

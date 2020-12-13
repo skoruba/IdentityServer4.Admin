@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 using Microsoft.Extensions.Localization;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers.Localization

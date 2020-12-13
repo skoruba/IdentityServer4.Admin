@@ -2,10 +2,12 @@
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+
 using FluentAssertions;
-using IdentityModel;
+
 using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Options;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
@@ -17,6 +19,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+
 using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.AuditLogging.EntityFramework.Extensions;
 using Skoruba.AuditLogging.EntityFramework.Repositories;
@@ -27,8 +30,9 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.Controllers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
-using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Skoruba.IdentityServer4.Admin.Helpers;
+using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
+
 using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
@@ -807,7 +811,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
                 .AddDefaultEventData()
                 .AddAuditSinks<DatabaseAuditEventLoggerSink<AuditLog>>();
             services.AddTransient<IAuditLoggingRepository<AuditLog>, AuditLoggingRepository<AdminAuditLogDbContext, AuditLog>>();
-            
+
             //Add Admin services
             services.AddMvcExceptionFilters();
 

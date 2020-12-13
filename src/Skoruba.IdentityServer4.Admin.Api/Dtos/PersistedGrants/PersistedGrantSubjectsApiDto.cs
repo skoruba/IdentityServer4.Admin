@@ -7,7 +7,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Dtos.PersistedGrants
         public PersistedGrantSubjectsApiDto()
         {
             PersistedGrants = new List<PersistedGrantSubjectApiDto>();
-        }        
+        }
 
         public int TotalCount { get; set; }
 

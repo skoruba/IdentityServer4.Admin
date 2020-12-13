@@ -26,6 +26,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
 
         public int TotalCount { get; set; }
 
-        public int PageSize { get; set; }        
+        public int PageSize { get; set; }
     }
 }

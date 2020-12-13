@@ -1,6 +1,8 @@
 using System.Linq;
 using System.Threading.Tasks;
+
 using IdentityServer4.Models;
+
 using Skoruba.AuditLogging.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Events.ApiResource;
@@ -279,7 +281,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             }
 
             var scope = apiScope.ToEntity();
-            
+
             var originalApiScope = await GetApiScopeAsync(apiScope.ApiResourceId, apiScope.ApiScopeId);
 
             var updated = await ApiResourceRepository.UpdateApiScopeAsync(apiScope.ApiResourceId, scope);

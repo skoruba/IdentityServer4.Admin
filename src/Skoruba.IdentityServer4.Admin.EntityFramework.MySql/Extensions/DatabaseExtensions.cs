@@ -1,8 +1,11 @@
 ﻿using System.Reflection;
+
 using IdentityServer4.EntityFramework.Storage;
+
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+
 using Skoruba.AuditLogging.EntityFramework.DbContexts;
 using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
@@ -62,7 +65,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions
                 optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
 
             // DataProtectionKey DB from existing connection
-            if(!string.IsNullOrEmpty(dataProtectionConnectionString))
+            if (!string.IsNullOrEmpty(dataProtectionConnectionString))
                 services.AddDbContext<TDataProtectionDbContext>(options => options.UseMySql(dataProtectionConnectionString,
                     optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
         }

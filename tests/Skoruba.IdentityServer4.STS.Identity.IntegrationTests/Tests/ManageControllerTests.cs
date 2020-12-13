@@ -1,11 +1,15 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
+
 using FluentAssertions;
+
 using Microsoft.AspNetCore.Mvc.Testing;
+
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Test;
 using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Common;
 using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Mocks;
 using Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests.Base;
+
 using Xunit;
 
 namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
@@ -24,11 +28,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
 
             // Register new user
             var registerFormData = UserMocks.GenerateRegisterData();
-            var registerResponse = await UserMocks.RegisterNewUserAsync(Client,registerFormData);
+            var registerResponse = await UserMocks.RegisterNewUserAsync(Client, registerFormData);
 
             // Get cookie with user identity for next request
             Client.PutCookiesOnRequest(registerResponse);
-            
+
             foreach (var route in RoutesConstants.GetManageRoutes())
             {
                 // Act
@@ -58,7 +62,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
                 response.Headers.Location.ToString().Should().Contain("Account/Login");
             }
         }
-        
+
         [Fact]
         public async Task UserIsAbleToUpdateProfile()
         {

@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+
 using FluentAssertions;
+
 using IdentityServer4.EntityFramework.Options;
+
 using Microsoft.EntityFrameworkCore;
+
 using Moq;
+
 using Skoruba.AuditLogging.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Resources;
@@ -14,6 +19,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
+
 using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
@@ -476,7 +482,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var clientPropertiesDto = await clientService.GetClientPropertyAsync(property.Id);
 
                 //Assert
-                clientPropertiesDto.ShouldBeEquivalentTo(propertyDto, options => 
+                clientPropertiesDto.ShouldBeEquivalentTo(propertyDto, options =>
                     options.Excluding(o => o.ClientPropertyId)
                            .Excluding(o => o.ClientName));
             }
@@ -615,7 +621,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var secretsDto = await clientService.GetClientSecretAsync(secret.Id);
 
                 //Assert
-                secretsDto.ShouldBeEquivalentTo(clientSecretsDto, options => 
+                secretsDto.ShouldBeEquivalentTo(clientSecretsDto, options =>
                     options.Excluding(o => o.ClientSecretId)
                            .Excluding(o => o.ClientName));
             }
@@ -670,7 +676,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
             using (var context = new IdentityServerConfigurationDbContext(_dbContextOptions, _storeOptions))
             {
                 var clientService = GetClientService(context);
-                
+
                 //Generate random new client
                 var client = ClientDtoMock.GenerateRandomClient(0);
 

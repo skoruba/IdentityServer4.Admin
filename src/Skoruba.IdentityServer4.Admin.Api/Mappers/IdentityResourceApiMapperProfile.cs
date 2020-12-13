@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+
 using Skoruba.IdentityServer4.Admin.Api.Dtos.IdentityResources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 
