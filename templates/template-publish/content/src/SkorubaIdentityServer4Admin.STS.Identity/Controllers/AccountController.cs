@@ -40,7 +40,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
     {
         private readonly UserResolver<TUser> _userResolver;
         private readonly UserManager<TUser> _userManager;
-        private readonly SignInManager<TUser> _signInManager;
+        private readonly ApplicationSignInManager<TUser> _signInManager;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
@@ -55,7 +55,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
         public AccountController(
             UserResolver<TUser> userResolver,
             UserManager<TUser> userManager,
-            SignInManager<TUser> signInManager,
+            ApplicationSignInManager<TUser> signInManager,
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
@@ -199,6 +199,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
         /// Show logout page
         /// </summary>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Logout(string logoutId)
         {
             // build a model so the logout page knows what to display
@@ -596,7 +597,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null, bool IsCalledFromRegisterWithoutUsername = false)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
 
@@ -633,7 +634,21 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
             AddErrors(result);
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            if (IsCalledFromRegisterWithoutUsername)
+            {
+                var registerWithoutUsernameModel = new RegisterWithoutUsernameViewModel
+                {
+                    Email = model.Email,
+                    Password = model.Password,
+                    ConfirmPassword = model.ConfirmPassword
+                };
+
+                return View("RegisterWithoutUsername", registerWithoutUsernameModel);
+            }
+            else
+            {
+                return View(model);
+            }
         }
 
         [HttpPost]
@@ -649,9 +664,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
                 ConfirmPassword = model.ConfirmPassword
             };
 
-            return await Register(registerModel, returnUrl);
+            return await Register(registerModel, returnUrl, true);
         }
-
 
         /*****************************************/
         /* helper APIs for the AccountController */
@@ -799,6 +813,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
         }
     }
 }
+
 
 
 

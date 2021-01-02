@@ -165,7 +165,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers
         /// Using of Forwarded Headers, Hsts, XXssProtection and Csp
         /// </summary>
         /// <param name="app"></param>
-        public static void UseSecurityHeaders(this IApplicationBuilder app)
+        /// <param name="configuration"></param>
+        public static void UseSecurityHeaders(this IApplicationBuilder app, IConfiguration configuration)
         {
             var forwardingOptions = new ForwardedHeadersOptions()
             {
@@ -181,35 +182,49 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers
             app.UseXContentTypeOptions();
             app.UseXfo(options => options.SameOrigin());
             app.UseReferrerPolicy(options => options.NoReferrer());
-            var allowCspUrls = new List<string>
+           
+            // CSP Configuration to be able to use external resources
+            var cspTrustedDomains = new List<string>();
+            configuration.GetSection(ConfigurationConsts.CspTrustedDomainsKey).Bind(cspTrustedDomains);
+            if (cspTrustedDomains.Any())
             {
-                "https://fonts.googleapis.com/",
-                "https://fonts.gstatic.com/"
-            };
-
-            app.UseCsp(options =>
-            {
-                options.FontSources(configuration =>
+                app.UseCsp(csp =>
                 {
-                    configuration.SelfSrc = true;
-                    configuration.CustomSources = allowCspUrls;
+                    csp.ImageSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                    });
+                    csp.FontSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                    });
+                    csp.ScriptSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                        options.UnsafeInlineSrc = true;
+                        options.UnsafeEvalSrc = true;
+                    });
+                    csp.StyleSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                        options.UnsafeInlineSrc = true;
+                    });
+                    csp.DefaultSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                    });
                 });
-
-                //TODO: consider remove unsafe sources - currently using for toastr inline scripts in Notification.cshtml
-                options.ScriptSources(configuration =>
-                {
-                    configuration.SelfSrc = true;
-                    configuration.UnsafeInlineSrc = true;
-                    configuration.UnsafeEvalSrc = true;
-                });
-
-                options.StyleSources(configuration =>
-                {
-                    configuration.SelfSrc = true;
-                    configuration.CustomSources = allowCspUrls;
-                    configuration.UnsafeInlineSrc = true;
-                });
-            });
+            }
         }
 
         /// <summary>
@@ -251,7 +266,7 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers
         /// <param name="services"></param>
         public static void AddMvcWithLocalization<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto>(this IServiceCollection services, IConfiguration configuration)
+            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>(this IServiceCollection services, IConfiguration configuration)
             where TUserDto : UserDto<TKey>, new()
             where TRoleDto : RoleDto<TKey>, new()
             where TUser : IdentityUser<TKey>
@@ -267,10 +282,11 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers
             where TUserRolesDto : UserRolesDto<TRoleDto, TKey>
             where TUserClaimsDto : UserClaimsDto<TUserClaimDto, TKey>
             where TUserProviderDto : UserProviderDto<TKey>
-            where TUserProvidersDto : UserProvidersDto<TKey>
+            where TUserProvidersDto : UserProvidersDto<TUserProviderDto, TKey>
             where TUserChangePasswordDto : UserChangePasswordDto<TKey>
-            where TRoleClaimsDto : RoleClaimsDto<TKey>
+            where TRoleClaimsDto : RoleClaimsDto<TRoleClaimDto, TKey>
             where TUserClaimDto : UserClaimDto<TKey>
+            where TRoleClaimDto: RoleClaimDto<TKey>
         {
             services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
 
@@ -290,7 +306,7 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers
                 {
                     m.FeatureProviders.Add(new GenericTypeControllerFeatureProvider<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                         TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto>());
+                        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>());
                 });
 
             var cultureConfiguration = configuration.GetSection(nameof(CultureConfiguration)).Get<CultureConfiguration>();

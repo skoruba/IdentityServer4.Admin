@@ -2,7 +2,7 @@
 
 namespace SkorubaIdentityServer4Admin.Shared.Dtos.Identity
 {
-    public class IdentityUserProvidersDto : UserProvidersDto<string>
+    public class IdentityUserProvidersDto : UserProvidersDto<IdentityUserProviderDto, string>
     {
         
     }

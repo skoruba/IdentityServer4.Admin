@@ -2,7 +2,7 @@
 
 namespace Skoruba.IdentityServer4.Shared.Dtos.Identity
 {
-    public class IdentityRoleClaimsDto : RoleClaimsDto<string>
+    public class IdentityRoleClaimsDto : RoleClaimsDto<IdentityRoleClaimDto, string>
     {
         
     }

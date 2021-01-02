@@ -36,9 +36,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity
             RegisterDbContexts(services);
 
             // Save data protection keys to db, using a common application name shared between Admin and STS
-            services.AddDataProtection()
-                .SetApplicationName("SkorubaIdentityServer4Admin")
-                .PersistKeysToDbContext<IdentityServerDataProtectionDbContext>();
+            services.AddDataProtection<IdentityServerDataProtectionDbContext>(Configuration);
 
             // Add email senders which is currently setup for SendGrid and SMTP
             services.AddEmailSenders(Configuration);
@@ -76,7 +74,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity
             app.UsePathBase(Configuration.GetValue<string>("BasePath"));
 
             // Add custom security headers
-            app.UseSecurityHeaders();
+            app.UseSecurityHeaders(Configuration);
 
             app.UseStaticFiles();
             UseAuthentication(app);

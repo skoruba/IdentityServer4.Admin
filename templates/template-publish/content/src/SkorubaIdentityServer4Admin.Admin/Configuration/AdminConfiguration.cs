@@ -17,6 +17,10 @@
         public string ClientSecret { get; set; }
         public string OidcResponseType { get; set; }
         public bool HideUIForMSSqlErrorLogging { get; set; }
+        public string Theme { get; set; }
+
+        public string CustomThemeCss { get; set; }
+
     }
 }
 

@@ -19,5 +19,7 @@
         public const string RegisterConfigurationKey = "RegisterConfiguration";
 
         public const string AdvancedConfigurationKey = "AdvancedConfiguration";
+
+        public const string CspTrustedDomainsKey = "CspTrustedDomains";
     }
 }
