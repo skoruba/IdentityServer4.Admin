@@ -24,6 +24,7 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Oracle.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
@@ -163,6 +164,9 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                     break;
                 case DatabaseProviderType.MySql:
                     services.RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString, errorLoggingConnectionString, auditLoggingConnectionString, dataProtectionConnectionString);
+                    break;
+                case DatabaseProviderType.Oracle:
+                    services.RegisterOracleDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(identityConnectionString, configurationConnectionString, persistedGrantsConnectionString, errorLoggingConnectionString, auditLoggingConnectionString, dataProtectionConnectionString);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(databaseProvider.ProviderType), $@"The value needs to be one of {string.Join(", ", Enum.GetNames(typeof(DatabaseProviderType)))}.");
@@ -339,6 +343,20 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                             .AddMySql(logDbConnectionString, name: "LogDb")
                             .AddMySql(auditLogDbConnectionString, name: "AuditLogDb")
                             .AddMySql(dataProtectionDbConnectionString, name: "DataProtectionDb");
+                        break;
+                    case DatabaseProviderType.Oracle:
+                        healthChecksBuilder.AddOracle(configurationDbConnectionString, name: "ConfigurationDb",
+                                healthQuery: $"SELECT * FROM \"{configurationTableName}\" WHERE ROWNUM = 1")
+                            .AddOracle(persistedGrantsDbConnectionString, name: "PersistentGrantsDb",
+                                healthQuery: $"SELECT * FROM \"{persistedGrantTableName}\" WHERE ROWNUM = 1")
+                            .AddOracle(identityDbConnectionString, name: "IdentityDb",
+                                healthQuery: $"SELECT * FROM \"{identityTableName}\" WHERE ROWNUM = 1")
+                            .AddOracle(logDbConnectionString, name: "LogDb",
+                                healthQuery: $"SELECT * FROM \"{logTableName}\" WHERE ROWNUM = 1")
+                            .AddOracle(auditLogDbConnectionString, name: "AuditLogDb",
+                                healthQuery: $"SELECT * FROM \"{auditLogTableName}\" WHERE ROWNUM = 1")
+                            .AddOracle(dataProtectionDbConnectionString, name: "DataProtectionDb",
+                                healthQuery: $"SELECT * FROM \"{dataProtectionTableName}\" WHERE ROWNUM = 1");
                         break;
                     default:
                         throw new NotImplementedException($"Health checks not defined for database provider {databaseProvider.ProviderType}");

@@ -28,6 +28,9 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts
                 log.ToTable(TableConsts.Logging);
                 log.HasKey(x => x.Id);
                 log.Property(x => x.Level).HasMaxLength(128);
+                log.Property(x => x.Message).HasMaxLength(50000);
+                log.Property(x => x.MessageTemplate).HasMaxLength(50000);
+                log.Property(x => x.Exception).HasMaxLength(50000);
             });
         }
     }
