@@ -19,7 +19,6 @@ namespace Skoruba.IdentityServer4.STS.Identity.MobileAuth.Validation
     public class PhoneNumberTokenGrantValidator : IExtensionGrantValidator
     {
         private readonly PhoneNumberTokenProvider<UserIdentity> _phoneNumberTokenProvider;
-        private readonly DataProtectorTokenProvider<UserIdentity> _dataProtectorTokenProvider;
         private readonly UserManager<UserIdentity> _userManager;
         private readonly SignInManager<UserIdentity> _signInManager;
         private readonly IEventService _events;
@@ -27,14 +26,12 @@ namespace Skoruba.IdentityServer4.STS.Identity.MobileAuth.Validation
 
         public PhoneNumberTokenGrantValidator(
             PhoneNumberTokenProvider<UserIdentity> phoneNumberTokenProvider,
-            DataProtectorTokenProvider<UserIdentity> dataProtectorTokenProvider,
             UserManager<UserIdentity> userManager,
             SignInManager<UserIdentity> signInManager,
             IEventService events,
             ILogger<PhoneNumberTokenGrantValidator> logger)
         {
-            _phoneNumberTokenProvider = phoneNumberTokenProvider;
-            _dataProtectorTokenProvider = dataProtectorTokenProvider;
+            _phoneNumberTokenProvider = phoneNumberTokenProvider;           
             _userManager = userManager;
             _signInManager = signInManager;
             _events = events;

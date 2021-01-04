@@ -31,6 +31,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.MobileAuth.Validation
                 var acr_values = raw.ToNameValueCollection(OidcConstants.AuthorizeRequest.AcrValues);
                 var subject = context.Result.ValidatedRequest.Subject ?? context.Result.ValidatedRequest.AuthorizationCode?.Subject;
 
+
                 if (!string.IsNullOrEmpty(acr_values.Get("device_id")))
                 {
                     if (subject != null)
