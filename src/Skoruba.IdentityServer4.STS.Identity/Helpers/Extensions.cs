@@ -4,8 +4,11 @@
 // Original file: https://github.com/IdentityServer/IdentityServer4.Quickstart.UI
 // Modified by Jan Škoruba
 
-using System.Threading.Tasks;
 using IdentityServer4.Stores;
+using System;
+using System.Collections.Specialized;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
@@ -26,6 +29,43 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             }
 
             return false;
+        }
+
+        public static NameValueCollection ToNameValueCollection(this NameValueCollection @this, string key)
+        {
+            var result = new NameValueCollection();
+
+            if (@this != null && !string.IsNullOrEmpty(@this.Get(key)))
+                result = @this.Get(key).ToNameValueCollection();
+
+            return result;
+        }
+        public static NameValueCollection ToNameValueCollection(this string @this)
+        {
+            var result = new NameValueCollection();
+
+            if (!string.IsNullOrEmpty(@this))
+            {
+                try
+                {
+                    var splitedraw = @this.ToString().Split(' ', StringSplitOptions.RemoveEmptyEntries).ToList();
+
+                    foreach (var item in splitedraw)
+                    {
+                        string[] parts = item.Split(':', 2, StringSplitOptions.RemoveEmptyEntries);
+                        if (parts.Length == 2)
+                        {
+                            string key = parts[0].Trim();
+                            string val = parts[1].Trim();
+
+                            result.Add(key, val);
+                        }
+                    }
+                }
+                catch (Exception) { }
+            }
+
+            return result;
         }
     }
 }
