@@ -5,17 +5,19 @@
 // Modified by Jan Škoruba
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using IdentityServer4;
+using IdentityServer4.Configuration;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
-using IdentityServer4.Stores;
+using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using Skoruba.IdentityServer4.STS.Identity.ViewModels.Consent;
@@ -28,28 +30,27 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
     public class DeviceController : Controller
     {
         private readonly IDeviceFlowInteractionService _interaction;
-        private readonly IClientStore _clientStore;
-        private readonly IResourceStore _resourceStore;
         private readonly IEventService _events;
+        private readonly IOptions<IdentityServerOptions> _options;
         private readonly ILogger<DeviceController> _logger;
 
         public DeviceController(
             IDeviceFlowInteractionService interaction,
-            IClientStore clientStore,
-            IResourceStore resourceStore,
             IEventService eventService,
+            IOptions<IdentityServerOptions> options,
             ILogger<DeviceController> logger)
         {
             _interaction = interaction;
-            _clientStore = clientStore;
-            _resourceStore = resourceStore;
             _events = eventService;
+            _options = options;
             _logger = logger;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery(Name = "user_code")] string userCode)
+        public async Task<IActionResult> Index()
         {
+            string userCodeParamName = _options.Value.UserInteraction.DeviceVerificationUserCodeParameter;
+            string userCode = Request.Query[userCodeParamName];
             if (string.IsNullOrWhiteSpace(userCode)) return View("UserCodeCapture");
 
             var vm = await BuildViewModelAsync(userCode);
@@ -93,10 +94,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             // user clicked 'no' - send back the standard 'access_denied' response
             if (model.Button == "no")
             {
-                grantedConsent = ConsentResponse.Denied;
+                grantedConsent = new ConsentResponse { Error = AuthorizationError.AccessDenied };
 
                 // emit event
-                await _events.RaiseAsync(new ConsentDeniedEvent(User.GetSubjectId(), request.ClientId, request.ScopesRequested));
+                await _events.RaiseAsync(new ConsentDeniedEvent(User.GetSubjectId(), request.Client.ClientId, request.ValidatedResources.RawScopeValues));
             }
             // user clicked 'yes' - validate the data
             else if (model.Button == "yes")
@@ -107,17 +108,18 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                     var scopes = model.ScopesConsented;
                     if (ConsentOptions.EnableOfflineAccess == false)
                     {
-                        scopes = scopes.Where(x => x != IdentityServerConstants.StandardScopes.OfflineAccess);
+                        scopes = scopes.Where(x => x != global::IdentityServer4.IdentityServerConstants.StandardScopes.OfflineAccess);
                     }
 
                     grantedConsent = new ConsentResponse
                     {
                         RememberConsent = model.RememberConsent,
-                        ScopesConsented = scopes.ToArray()
+                        ScopesValuesConsented = scopes.ToArray(),
+                        Description = model.Description
                     };
 
                     // emit event
-                    await _events.RaiseAsync(new ConsentGrantedEvent(User.GetSubjectId(), request.ClientId, request.ScopesRequested, grantedConsent.ScopesConsented, grantedConsent.RememberConsent));
+                    await _events.RaiseAsync(new ConsentGrantedEvent(User.GetSubjectId(), request.Client.ClientId, request.ValidatedResources.RawScopeValues, grantedConsent.ScopesValuesConsented, grantedConsent.RememberConsent));
                 }
                 else
                 {
@@ -136,7 +138,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
                 // indicate that's it ok to redirect back to authorization endpoint
                 result.RedirectUri = model.ReturnUrl;
-                result.ClientId = request.ClientId;
+                result.Client = request.Client;
             }
             else
             {
@@ -152,52 +154,45 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             var request = await _interaction.GetAuthorizationContextAsync(userCode);
             if (request != null)
             {
-                var client = await _clientStore.FindEnabledClientByIdAsync(request.ClientId);
-                if (client != null)
-                {
-                    var resources = await _resourceStore.FindEnabledResourcesByScopeAsync(request.ScopesRequested);
-                    if (resources != null && (resources.IdentityResources.Any() || resources.ApiResources.Any()))
-                    {
-                        return CreateConsentViewModel(userCode, model, client, resources);
-                    }
-                    else
-                    {
-                        _logger.LogError("No scopes matching: {0}", request.ScopesRequested.Aggregate((x, y) => x + ", " + y));
-                    }
-                }
-                else
-                {
-                    _logger.LogError("Invalid client id: {0}", request.ClientId);
-                }
+                return CreateConsentViewModel(userCode, model, request);
             }
 
             return null;
         }
 
-        private DeviceAuthorizationViewModel CreateConsentViewModel(string userCode, DeviceAuthorizationInputModel model, Client client, Resources resources)
+        private DeviceAuthorizationViewModel CreateConsentViewModel(string userCode, DeviceAuthorizationInputModel model, DeviceFlowAuthorizationRequest request)
         {
             var vm = new DeviceAuthorizationViewModel
             {
                 UserCode = userCode,
+                Description = model?.Description,
 
                 RememberConsent = model?.RememberConsent ?? true,
                 ScopesConsented = model?.ScopesConsented ?? Enumerable.Empty<string>(),
-                
-                ClientName = client.ClientName ?? client.ClientId,
-                ClientUrl = client.ClientUri,
-                ClientLogoUrl = client.LogoUri,
-                AllowRememberConsent = client.AllowRememberConsent
+
+                ClientName = request.Client.ClientName ?? request.Client.ClientId,
+                ClientUrl = request.Client.ClientUri,
+                ClientLogoUrl = request.Client.LogoUri,
+                AllowRememberConsent = request.Client.AllowRememberConsent
             };
 
-            vm.IdentityScopes = resources.IdentityResources.Select(x => CreateScopeViewModel(x, vm.ScopesConsented.Contains(x.Name) || model == null)).ToArray();
-            vm.ResourceScopes = resources.ApiResources.SelectMany(x => x.Scopes).Select(x => CreateScopeViewModel(x, vm.ScopesConsented.Contains(x.Name) || model == null)).ToArray();
-            if (ConsentOptions.EnableOfflineAccess && resources.OfflineAccess)
+            vm.IdentityScopes = request.ValidatedResources.Resources.IdentityResources.Select(x => CreateScopeViewModel(x, vm.ScopesConsented.Contains(x.Name) || model == null)).ToArray();
+
+            var apiScopes = new List<ScopeViewModel>();
+            foreach (var parsedScope in request.ValidatedResources.ParsedScopes)
             {
-                vm.ResourceScopes = vm.ResourceScopes.Union(new[]
+                var apiScope = request.ValidatedResources.Resources.FindApiScope(parsedScope.ParsedName);
+                if (apiScope != null)
                 {
-                    GetOfflineAccessScope(vm.ScopesConsented.Contains(IdentityServerConstants.StandardScopes.OfflineAccess) || model == null)
-                });
+                    var scopeVm = CreateScopeViewModel(parsedScope, apiScope, vm.ScopesConsented.Contains(parsedScope.RawValue) || model == null);
+                    apiScopes.Add(scopeVm);
+                }
             }
+            if (ConsentOptions.EnableOfflineAccess && request.ValidatedResources.Resources.OfflineAccess)
+            {
+                apiScopes.Add(GetOfflineAccessScope(vm.ScopesConsented.Contains(global::IdentityServer4.IdentityServerConstants.StandardScopes.OfflineAccess) || model == null));
+            }
+            vm.ApiScopes = apiScopes;
 
             return vm;
         }
@@ -206,8 +201,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         {
             return new ScopeViewModel
             {
-                Name = identity.Name,
-                DisplayName = identity.DisplayName,
+                Value = identity.Name,
+                DisplayName = identity.DisplayName ?? identity.Name,
                 Description = identity.Description,
                 Emphasize = identity.Emphasize,
                 Required = identity.Required,
@@ -215,23 +210,24 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             };
         }
 
-        public ScopeViewModel CreateScopeViewModel(Scope scope, bool check)
+        public ScopeViewModel CreateScopeViewModel(ParsedScopeValue parsedScopeValue, ApiScope apiScope, bool check)
         {
             return new ScopeViewModel
             {
-                Name = scope.Name,
-                DisplayName = scope.DisplayName,
-                Description = scope.Description,
-                Emphasize = scope.Emphasize,
-                Required = scope.Required,
-                Checked = check || scope.Required
+                Value = parsedScopeValue.RawValue,
+                // todo: use the parsed scope value in the display?
+                DisplayName = apiScope.DisplayName ?? apiScope.Name,
+                Description = apiScope.Description,
+                Emphasize = apiScope.Emphasize,
+                Required = apiScope.Required,
+                Checked = check || apiScope.Required
             };
         }
         private ScopeViewModel GetOfflineAccessScope(bool check)
         {
             return new ScopeViewModel
             {
-                Name = IdentityServerConstants.StandardScopes.OfflineAccess,
+                Value = global::IdentityServer4.IdentityServerConstants.StandardScopes.OfflineAccess,
                 DisplayName = ConsentOptions.OfflineAccessDisplayName,
                 Description = ConsentOptions.OfflineAccessDescription,
                 Emphasize = true,

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -19,18 +20,21 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         private readonly IApiResourceService _apiResourceService;
         private readonly IClientService _clientService;
         private readonly IStringLocalizer<ConfigurationController> _localizer;
+        private readonly IApiScopeService _apiScopeService;
 
         public ConfigurationController(IIdentityResourceService identityResourceService,
             IApiResourceService apiResourceService,
             IClientService clientService,
             IStringLocalizer<ConfigurationController> localizer,
-            ILogger<ConfigurationController> logger)
+            ILogger<ConfigurationController> logger,
+            IApiScopeService apiScopeService)
             : base(logger)
         {
             _identityResourceService = identityResourceService;
             _apiResourceService = apiResourceService;
             _clientService = clientService;
             _localizer = localizer;
+            _apiScopeService = apiScopeService;
         }
 
         [HttpGet]
@@ -154,6 +158,31 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             return View(properties);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ApiScopeProperties(int id, int? page)
+        {
+            if (id == 0) return NotFound();
+
+            var properties = await _apiScopeService.GetApiScopePropertiesAsync(id, page ?? 1);
+
+            return View(properties);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ApiScopeProperties(ApiScopePropertiesDto apiScopeProperty)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(apiScopeProperty);
+            }
+
+            await _apiScopeService.AddApiScopePropertyAsync(apiScopeProperty);
+            SuccessNotification(string.Format(_localizer["SuccessAddApiScopeProperty"], apiScopeProperty.Key, apiScopeProperty.ApiScopeName), _localizer["SuccessTitle"]);
+
+            return RedirectToAction(nameof(ApiScopeProperties), new { Id = apiScopeProperty.ApiScopeId });
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ApiResourceProperties(ApiResourcePropertiesDto apiResourceProperty)
@@ -255,6 +284,26 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> ApiScopePropertyDelete(int id)
+        {
+            if (id == 0) return NotFound();
+
+            var apiScopeProperty = await _apiScopeService.GetApiScopePropertyAsync(id);
+
+            return View(nameof(ApiScopePropertyDelete), apiScopeProperty);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ApiScopePropertyDelete(ApiScopePropertiesDto apiScopeProperty)
+        {
+            await _apiScopeService.DeleteApiScopePropertyAsync(apiScopeProperty);
+            SuccessNotification(_localizer["SuccessDeleteApiScopeProperty"], _localizer["SuccessTitle"]);
+
+            return RedirectToAction(nameof(ApiScopeProperties), new { Id = apiScopeProperty.ApiScopeId });
+        }
+
+        [HttpGet]
         public async Task<IActionResult> IdentityResourcePropertyDelete(int id)
         {
             if (id == 0) return NotFound();
@@ -353,12 +402,29 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> SearchApiScopes(string scope, int limit = 0)
+        {
+            var scopes = await _apiScopeService.GetApiScopesNameAsync(scope, limit);
+
+            return Ok(scopes.ToList());
+        }
+
+        [HttpGet]
         public IActionResult SearchClaims(string claim, int limit = 0)
         {
             var claims = _clientService.GetStandardClaims(claim, limit);
 
             return Ok(claims);
         }
+
+        [HttpGet]
+        public IActionResult SearchSigningAlgorithms(string algorithm, int limit = 0)
+        {
+            var signingAlgorithms = _clientService.GetSigningAlgorithms(algorithm, limit);
+
+            return Ok(signingAlgorithms);
+        }
+
 
         [HttpGet]
         public IActionResult SearchGrantTypes(string grant, int limit = 0)
@@ -433,6 +499,8 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
             }
 
             ComboBoxHelpers.PopulateValuesToList(apiResource.UserClaimsItems, apiResource.UserClaims);
+            ComboBoxHelpers.PopulateValuesToList(apiResource.ScopesItems, apiResource.Scopes);
+            ComboBoxHelpers.PopulateValuesToList(apiResource.AllowedAccessTokenSigningAlgorithmsItems, apiResource.AllowedAccessTokenSigningAlgorithms);
 
             int apiResourceId;
 
@@ -514,69 +582,77 @@ namespace Skoruba.IdentityServer4.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ApiScopes(int id, int? page, int? scope)
+        public async Task<IActionResult> ApiScopes(string search, int? page)
         {
-            if (id == 0 || !ModelState.IsValid) return NotFound();
+            ViewBag.Search = search;
+            var apiScopesDto = await _apiScopeService.GetApiScopesAsync(search, page ?? 1);
 
-            if (scope == null)
+            return View(apiScopesDto);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ApiScope(int? id)
+        {
+            if (id == null)
             {
-                var apiScopesDto = await _apiResourceService.GetApiScopesAsync(id, page ?? 1);
+                var apiScopeDto = new ApiScopeDto();
 
-                return View(apiScopesDto);
+                return View(apiScopeDto);
             }
             else
             {
-                var apiScopesDto = await _apiResourceService.GetApiScopeAsync(id, scope.Value);
-                return View(apiScopesDto);
+                var apiScopeDto = await _apiScopeService.GetApiScopeAsync(id.Value);
+
+                return View(apiScopeDto);
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ApiScopes(ApiScopesDto apiScope)
+        public async Task<IActionResult> ApiScope(ApiScopeDto apiScope)
         {
             if (!ModelState.IsValid)
             {
                 return View(apiScope);
             }
 
-            _apiResourceService.BuildApiScopeViewModel(apiScope);
+            _apiScopeService.BuildApiScopeViewModel(apiScope);
 
             int apiScopeId;
 
-            if (apiScope.ApiScopeId == 0)
+            if (apiScope.Id == 0)
             {
-                apiScopeId = await _apiResourceService.AddApiScopeAsync(apiScope);
+                apiScopeId = await _apiScopeService.AddApiScopeAsync(apiScope);
             }
             else
             {
-                apiScopeId = apiScope.ApiScopeId;
-                await _apiResourceService.UpdateApiScopeAsync(apiScope);
+                apiScopeId = apiScope.Id;
+                await _apiScopeService.UpdateApiScopeAsync(apiScope);
             }
 
             SuccessNotification(string.Format(_localizer["SuccessAddApiScope"], apiScope.Name), _localizer["SuccessTitle"]);
 
-            return RedirectToAction(nameof(ApiScopes), new { Id = apiScope.ApiResourceId, Scope = apiScopeId });
+            return RedirectToAction(nameof(ApiScope), new { Scope = apiScopeId });
         }
 
         [HttpGet]
-        public async Task<IActionResult> ApiScopeDelete(int id, int scope)
+        public async Task<IActionResult> ApiScopeDelete(int id)
         {
-            if (id == 0 || scope == 0) return NotFound();
+            if (id == 0) return NotFound();
 
-            var apiScope = await _apiResourceService.GetApiScopeAsync(id, scope);
+            var apiScope = await _apiScopeService.GetApiScopeAsync(id);
 
             return View(nameof(ApiScopeDelete), apiScope);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ApiScopeDelete(ApiScopesDto apiScope)
+        public async Task<IActionResult> ApiScopeDelete(ApiScopeDto apiScope)
         {
-            await _apiResourceService.DeleteApiScopeAsync(apiScope);
+            await _apiScopeService.DeleteApiScopeAsync(apiScope);
             SuccessNotification(_localizer["SuccessDeleteApiScope"], _localizer["SuccessTitle"]);
 
-            return RedirectToAction(nameof(ApiScopes), new { Id = apiScope.ApiResourceId });
+            return RedirectToAction(nameof(ApiScopes));
         }
 
         [HttpGet]

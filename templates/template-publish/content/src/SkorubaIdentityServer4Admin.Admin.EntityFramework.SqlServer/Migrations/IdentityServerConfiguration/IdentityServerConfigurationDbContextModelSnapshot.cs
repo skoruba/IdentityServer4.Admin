@@ -15,7 +15,7 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.0.0")
+                .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -25,6 +25,10 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AllowedAccessTokenSigningAlgorithms")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -49,6 +53,9 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Migrations
                         .HasMaxLength(200);
 
                     b.Property<bool>("NonEditable")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ShowInDiscoveryDocument")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("Updated")
@@ -81,7 +88,7 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Migrations
 
                     b.HasIndex("ApiResourceId");
 
-                    b.ToTable("ApiClaims");
+                    b.ToTable("ApiResourceClaims");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiResourceProperty", b =>
@@ -108,10 +115,10 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Migrations
 
                     b.HasIndex("ApiResourceId");
 
-                    b.ToTable("ApiProperties");
+                    b.ToTable("ApiResourceProperties");
                 });
 
-            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiScope", b =>
+            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiResourceScope", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -121,61 +128,19 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Migrations
                     b.Property<int>("ApiResourceId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
-
-                    b.Property<string>("DisplayName")
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
-
-                    b.Property<bool>("Emphasize")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("Scope")
                         .IsRequired()
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
-
-                    b.Property<bool>("Required")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("ShowInDiscoveryDocument")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ApiResourceId");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("ApiScopes");
+                    b.ToTable("ApiResourceScopes");
                 });
 
-            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiScopeClaim", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ApiScopeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApiScopeId");
-
-                    b.ToTable("ApiScopeClaims");
-                });
-
-            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiSecret", b =>
+            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiResourceSecret", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -209,7 +174,96 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Migrations
 
                     b.HasIndex("ApiResourceId");
 
-                    b.ToTable("ApiSecrets");
+                    b.ToTable("ApiResourceSecrets");
+                });
+
+            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiScope", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<bool>("Emphasize")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<bool>("Required")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ShowInDiscoveryDocument")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("ApiScopes");
+                });
+
+            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiScopeClaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ScopeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ScopeId");
+
+                    b.ToTable("ApiScopeClaims");
+                });
+
+            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiScopeProperty", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
+
+                    b.Property<int>("ScopeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(2000)")
+                        .HasMaxLength(2000);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ScopeId");
+
+                    b.ToTable("ApiScopeProperties");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.Client", b =>
@@ -239,6 +293,10 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Migrations
 
                     b.Property<bool>("AllowRememberConsent")
                         .HasColumnType("bit");
+
+                    b.Property<string>("AllowedIdentityTokenSigningAlgorithms")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<bool>("AlwaysIncludeUserClaimsInIdToken")
                         .HasColumnType("bit");
@@ -337,6 +395,9 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("RequirePkce")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("RequireRequestObject")
                         .HasColumnType("bit");
 
                     b.Property<int>("SlidingRefreshTokenLifetime")
@@ -586,28 +647,6 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Migrations
                     b.ToTable("ClientSecrets");
                 });
 
-            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.IdentityClaim", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("IdentityResourceId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdentityResourceId");
-
-                    b.ToTable("IdentityClaims");
-                });
-
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.IdentityResource", b =>
                 {
                     b.Property<int>("Id")
@@ -657,6 +696,28 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Migrations
                     b.ToTable("IdentityResources");
                 });
 
+            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.IdentityResourceClaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("IdentityResourceId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdentityResourceId");
+
+                    b.ToTable("IdentityResourceClaims");
+                });
+
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.IdentityResourceProperty", b =>
                 {
                     b.Property<int>("Id")
@@ -681,7 +742,7 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Migrations
 
                     b.HasIndex("IdentityResourceId");
 
-                    b.ToTable("IdentityProperties");
+                    b.ToTable("IdentityResourceProperties");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiResourceClaim", b =>
@@ -702,7 +763,7 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiScope", b =>
+            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiResourceScope", b =>
                 {
                     b.HasOne("IdentityServer4.EntityFramework.Entities.ApiResource", "ApiResource")
                         .WithMany("Scopes")
@@ -711,20 +772,29 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiScopeClaim", b =>
-                {
-                    b.HasOne("IdentityServer4.EntityFramework.Entities.ApiScope", "ApiScope")
-                        .WithMany("UserClaims")
-                        .HasForeignKey("ApiScopeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiSecret", b =>
+            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiResourceSecret", b =>
                 {
                     b.HasOne("IdentityServer4.EntityFramework.Entities.ApiResource", "ApiResource")
                         .WithMany("Secrets")
                         .HasForeignKey("ApiResourceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiScopeClaim", b =>
+                {
+                    b.HasOne("IdentityServer4.EntityFramework.Entities.ApiScope", "Scope")
+                        .WithMany("UserClaims")
+                        .HasForeignKey("ScopeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiScopeProperty", b =>
+                {
+                    b.HasOne("IdentityServer4.EntityFramework.Entities.ApiScope", "Scope")
+                        .WithMany("Properties")
+                        .HasForeignKey("ScopeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -810,7 +880,7 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.IdentityClaim", b =>
+            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.IdentityResourceClaim", b =>
                 {
                     b.HasOne("IdentityServer4.EntityFramework.Entities.IdentityResource", "IdentityResource")
                         .WithMany("UserClaims")

@@ -14,6 +14,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
 using Client = IdentityServer4.EntityFramework.Entities.Client;
+using ClientClaim = IdentityServer4.EntityFramework.Entities.ClientClaim;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
 {
@@ -83,6 +84,17 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
                 .ToList();
 
             return filteredGrants;
+        }
+
+        public virtual List<string> GetSigningAlgorithms(string algorithm, int limit = 0)
+        {
+            var signingAlgorithms = ClientConsts.SigningAlgorithms()
+                .WhereIf(!string.IsNullOrWhiteSpace(algorithm), x => x.Contains(algorithm))
+                .TakeIf(x => x, limit > 0, limit)
+                .OrderBy(x => x)
+                .ToList();
+
+            return signingAlgorithms;
         }
 
         public virtual List<SelectItem> GetProtocolTypes()

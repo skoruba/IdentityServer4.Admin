@@ -6,13 +6,13 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces
 {
     public interface IAdminConfigurationDbContext : IConfigurationDbContext
     {
-        DbSet<ApiSecret> ApiSecrets { get; set; }
+        DbSet<ApiResourceSecret> ApiSecrets { get; set; }
 
         DbSet<ApiScope> ApiScopes { get; set; }
 
         DbSet<ApiScopeClaim> ApiScopeClaims { get; set; }
 
-        DbSet<IdentityClaim> IdentityClaims { get; set; }
+        DbSet<IdentityResourceClaim> IdentityClaims { get; set; }
 
         DbSet<ApiResourceClaim> ApiResourceClaims { get; set; }
 
@@ -37,5 +37,9 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces
         DbSet<IdentityResourceProperty> IdentityResourceProperties { get; set; }
 
         DbSet<ApiResourceProperty> ApiResourceProperties { get; set; }
+
+        DbSet<ApiScopeProperty> ApiScopeProperties { get; set; }
+
+        DbSet<ApiResourceScope> ApiResourceScopes { get; set; }
     }
 }

@@ -186,4 +186,10 @@
   <data name="SuccessDeleteApiScope" xml:space="preserve">
     <value>Escopo da API excluído com sucesso!</value>
   </data>
+  <data name="SuccessAddApiScopeProperty" xml:space="preserve">
+    <value>Api Scope property {0} for api scope {1} is successfully saved!</value>
+  </data>
+  <data name="SuccessDeleteApiScopeProperty" xml:space="preserve">
+    <value>Api Scope property is successfully deleted!</value>
+  </data>
 </root>

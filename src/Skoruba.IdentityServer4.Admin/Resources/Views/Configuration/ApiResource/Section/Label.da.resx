@@ -183,6 +183,12 @@
   <data name="Secrets_Label" xml:space="preserve">
     <value>Secrets</value>
   </data>
+  <data name="SigningAlgorithms_Info" xml:space="preserve">
+    <value>List of allowed signing algorithms for access token. If empty, will use the server default signing algorithm.</value>
+  </data>
+  <data name="SigningAlgorithms_Label" xml:space="preserve">
+    <value>Allowed Access Token Signing Algorithms</value>
+  </data>
   <data name="UserClaims_Info" xml:space="preserve">
     <value>Liste over tilknyttede Bruger Claims, der skal inkluderes i access token.</value>
   </data>

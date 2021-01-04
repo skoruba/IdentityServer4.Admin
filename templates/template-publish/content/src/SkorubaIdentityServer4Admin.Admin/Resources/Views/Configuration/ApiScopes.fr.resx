@@ -120,6 +120,9 @@
   <data name="ButtonAddApiScope" xml:space="preserve">
     <value>Enregistrer Api Scope</value>
   </data>
+  <data name="ButtonAddNewApiScope" xml:space="preserve">
+    <value>Add Api Scope</value>
+  </data>
   <data name="NavigationApiResources" xml:space="preserve">
     <value>Ressources Api</value>
   </data>

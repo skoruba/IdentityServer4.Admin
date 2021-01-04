@@ -44,7 +44,6 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Shared.Authentication;
-using Skoruba.IdentityServer4.Shared.Configuration.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.Helpers
 {
@@ -298,6 +297,10 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 {
                     o.Conventions.Add(new GenericControllerRouteConvention());
                 })
+#if DEBUG
+                // It is not necessary to re-build the views for new changes
+                .AddRazorRuntimeCompilation()
+#endif
                 .AddViewLocalization(
                     LanguageViewLocationExpanderFormat.Suffix,
                     opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; })

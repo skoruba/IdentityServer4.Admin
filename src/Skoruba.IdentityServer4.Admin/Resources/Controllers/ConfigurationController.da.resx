@@ -126,6 +126,9 @@
   <data name="SuccessAddApiScope" xml:space="preserve">
     <value>Api Scope {0} er gemt succesfuldt!</value>
   </data>
+  <data name="SuccessAddApiScopeProperty" xml:space="preserve">
+    <value>Api Scope property {0} for api scope {1} is successfully saved!</value>
+  </data>
   <data name="SuccessAddApiSecret" xml:space="preserve">
     <value>Api Secret er oprettet succesfuldt!</value>
   </data>
@@ -161,6 +164,9 @@
   </data>
   <data name="SuccessDeleteApiScope" xml:space="preserve">
     <value>Api Scope er slettet succesfuldt!</value>
+  </data>
+  <data name="SuccessDeleteApiScopeProperty" xml:space="preserve">
+    <value>Api Scope property is successfully deleted!</value>
   </data>
   <data name="SuccessDeleteApiSecret" xml:space="preserve">
     <value>Api Secret er slettet succesfuldt!</value>

@@ -8,6 +8,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
 		public ApiResourceDto()
 		{
 			UserClaims = new List<string>();
+			Scopes = new List<string>();
+			AllowedAccessTokenSigningAlgorithms = new List<string>();
 		}
 
 		public int Id { get; set; }
@@ -24,5 +26,15 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
 		public List<string> UserClaims { get; set; }
 
 		public string UserClaimsItems { get; set; }
+
+        public bool ShowInDiscoveryDocument { get; set; }
+
+        public List<string> AllowedAccessTokenSigningAlgorithms { get; set; }
+
+        public string AllowedAccessTokenSigningAlgorithmsItems { get; set; }
+
+		public List<string> Scopes { get; set; }
+
+        public string ScopesItems { get; set; }
 	}
 }

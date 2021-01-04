@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using IdentityModel;
 using IdentityServer4.EntityFramework.Mappers;
+using IdentityServer4.Models;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -42,14 +43,14 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers
             using (var serviceScope = host.Services.CreateScope())
             {
                 var services = serviceScope.ServiceProvider;
-                
-                if ((databaseMigrationsConfiguration != null && databaseMigrationsConfiguration.ApplyDatabaseMigrations) 
+
+                if ((databaseMigrationsConfiguration != null && databaseMigrationsConfiguration.ApplyDatabaseMigrations)
                     || (applyDbMigrationWithDataSeedFromProgramArguments))
                 {
                     await EnsureDatabasesMigratedAsync<TIdentityDbContext, TIdentityServerDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLogDbContext, TDataProtectionDbContext>(services);
                 }
 
-                if ((seedConfiguration != null && seedConfiguration.ApplySeed) 
+                if ((seedConfiguration != null && seedConfiguration.ApplySeed)
                     || (applyDbMigrationWithDataSeedFromProgramArguments))
                 {
                     await EnsureSeedDataAsync<TIdentityServerDbContext, TUser, TRole>(services);
@@ -124,60 +125,63 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers
             where TUser : IdentityUser, new()
             where TRole : IdentityRole, new()
         {
-            if (!await roleManager.Roles.AnyAsync())
+            // adding roles from seed
+            foreach (var r in identityDataConfiguration.Roles)
             {
-                // adding roles from seed
-                foreach (var r in identityDataConfiguration.Roles)
+                if (!await roleManager.RoleExistsAsync(r.Name))
                 {
-                    if (!await roleManager.RoleExistsAsync(r.Name))
+                    var role = new TRole
                     {
-                        var role = new TRole
-                        {
-                            Name = r.Name
-                        };
+                        Name = r.Name
+                    };
 
-                        var result = await roleManager.CreateAsync(role);
+                    var result = await roleManager.CreateAsync(role);
 
-                        if (result.Succeeded)
+                    if (result.Succeeded)
+                    {
+                        foreach (var claim in r.Claims)
                         {
-                            foreach (var claim in r.Claims)
-                            {
-                                await roleManager.AddClaimAsync(role, new System.Security.Claims.Claim(claim.Type, claim.Value));
-                            }
+                            await roleManager.AddClaimAsync(role, new System.Security.Claims.Claim(claim.Type, claim.Value));
                         }
                     }
                 }
             }
 
-            if (!await userManager.Users.AnyAsync())
+            // adding users from seed
+            foreach (var user in identityDataConfiguration.Users)
             {
-                // adding users from seed
-                foreach (var user in identityDataConfiguration.Users)
+                var identityUser = new TUser
                 {
-                    var identityUser = new TUser
+                    UserName = user.Username,
+                    Email = user.Email,
+                    EmailConfirmed = true
+                };
+
+                var userByUserName = await userManager.FindByNameAsync(user.Username);
+                var userByEmail = await userManager.FindByEmailAsync(user.Email);
+
+                // User is already exists in database
+                if (userByUserName != default || userByEmail != default)
+                {
+                    continue;
+                }
+
+                // if there is no password we create user without password
+                // user can reset password later, because accounts have EmailConfirmed set to true
+                var result = !string.IsNullOrEmpty(user.Password)
+                ? await userManager.CreateAsync(identityUser, user.Password)
+                : await userManager.CreateAsync(identityUser);
+
+                if (result.Succeeded)
+                {
+                    foreach (var claim in user.Claims)
                     {
-                        UserName = user.Username,
-                        Email = user.Email,
-                        EmailConfirmed = true
-                    };
+                        await userManager.AddClaimAsync(identityUser, new System.Security.Claims.Claim(claim.Type, claim.Value));
+                    }
 
-                    // if there is no password we create user without password
-                    // user can reset password later, because accounts have EmailConfirmed set to true
-                    var result = !string.IsNullOrEmpty(user.Password)
-                        ? await userManager.CreateAsync(identityUser, user.Password)
-                        : await userManager.CreateAsync(identityUser);
-
-                    if (result.Succeeded)
+                    foreach (var role in user.Roles)
                     {
-                        foreach (var claim in user.Claims)
-                        {
-                            await userManager.AddClaimAsync(identityUser, new System.Security.Claims.Claim(claim.Type, claim.Value));
-                        }
-
-                        foreach (var role in user.Roles)
-                        {
-                            await userManager.AddToRoleAsync(identityUser, role);
-                        }
+                        await userManager.AddToRoleAsync(identityUser, role);
                     }
                 }
             }
@@ -189,49 +193,70 @@ namespace SkorubaIdentityServer4Admin.Admin.Helpers
         private static async Task EnsureSeedIdentityServerData<TIdentityServerDbContext>(TIdentityServerDbContext context, IdentityServerDataConfiguration identityServerDataConfiguration)
             where TIdentityServerDbContext : DbContext, IAdminConfigurationDbContext
         {
-            if (!context.IdentityResources.Any())
+            foreach (var resource in identityServerDataConfiguration.IdentityResources)
             {
-                foreach (var resource in identityServerDataConfiguration.IdentityResources)
+                var exits = await context.IdentityResources.AnyAsync(a => a.Name == resource.Name);
+
+                if (exits)
                 {
-                    await context.IdentityResources.AddAsync(resource.ToEntity());
+                    continue;
                 }
 
-                await context.SaveChangesAsync();
+                await context.IdentityResources.AddAsync(resource.ToEntity());
             }
 
-            if (!context.ApiResources.Any())
+            foreach (var apiScope in identityServerDataConfiguration.ApiScopes)
             {
-                foreach (var resource in identityServerDataConfiguration.ApiResources)
-                {
-                    foreach (var s in resource.ApiSecrets)
-                    {
-                        s.Value = s.Value.ToSha256();
-                    }
+                var exits = await context.ApiScopes.AnyAsync(a => a.Name == apiScope.Name);
 
-                    await context.ApiResources.AddAsync(resource.ToEntity());
+                if (exits)
+                {
+                    continue;
                 }
 
-                await context.SaveChangesAsync();
+                await context.ApiScopes.AddAsync(apiScope.ToEntity());
             }
 
-            if (!context.Clients.Any())
+            foreach (var resource in identityServerDataConfiguration.ApiResources)
             {
-                foreach (var client in identityServerDataConfiguration.Clients)
+                var exits = await context.ApiResources.AnyAsync(a => a.Name == resource.Name);
+
+                if (exits)
                 {
-                    foreach (var secret in client.ClientSecrets)
-                    {
-                        secret.Value = secret.Value.ToSha256();
-                    }
-
-                    client.Claims = client.ClientClaims
-                        .Select(c => new System.Security.Claims.Claim(c.Type, c.Value))
-                        .ToList();
-
-                    await context.Clients.AddAsync(client.ToEntity());
+                    continue;
                 }
 
-                await context.SaveChangesAsync();
+                foreach (var s in resource.ApiSecrets)
+                {
+                    s.Value = s.Value.ToSha256();
+                }
+
+                await context.ApiResources.AddAsync(resource.ToEntity());
             }
+
+
+            foreach (var client in identityServerDataConfiguration.Clients)
+            {
+                var exits = await context.Clients.AnyAsync(a => a.ClientId == client.ClientId);
+
+                if (exits)
+                {
+                    continue;
+                }
+
+                foreach (var secret in client.ClientSecrets)
+                {
+                    secret.Value = secret.Value.ToSha256();
+                }
+
+                client.Claims = client.ClientClaims
+                    .Select(c => new ClientClaim(c.Type, c.Value))
+                    .ToList();
+
+                await context.Clients.AddAsync(client.ToEntity());
+            }
+
+            await context.SaveChangesAsync();
         }
     }
 }

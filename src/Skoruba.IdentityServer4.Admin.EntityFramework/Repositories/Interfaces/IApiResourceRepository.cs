@@ -29,25 +29,13 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
 
         Task<bool> CanInsertApiResourceAsync(ApiResource apiResource);
 
-        Task<PagedList<ApiScope>> GetApiScopesAsync(int apiResourceId, int page = 1, int pageSize = 10);
+        Task<PagedList<ApiResourceSecret>> GetApiSecretsAsync(int apiResourceId, int page = 1, int pageSize = 10);
 
-        Task<ApiScope> GetApiScopeAsync(int apiResourceId, int apiScopeId);
+        Task<int> AddApiSecretAsync(int apiResourceId, ApiResourceSecret apiSecret);
 
-        Task<int> AddApiScopeAsync(int apiResourceId, ApiScope apiScope);
+        Task<ApiResourceSecret> GetApiSecretAsync(int apiSecretId);
 
-        Task<int> UpdateApiScopeAsync(int apiResourceId, ApiScope apiScope);
-
-        Task<int> DeleteApiScopeAsync(ApiScope apiScope);
-
-        Task<PagedList<ApiSecret>> GetApiSecretsAsync(int apiResourceId, int page = 1, int pageSize = 10);
-
-        Task<int> AddApiSecretAsync(int apiResourceId, ApiSecret apiSecret);
-
-        Task<ApiSecret> GetApiSecretAsync(int apiSecretId);
-
-        Task<int> DeleteApiSecretAsync(ApiSecret apiSecret);
-
-        Task<bool> CanInsertApiScopeAsync(ApiScope apiScope);
+        Task<int> DeleteApiSecretAsync(ApiResourceSecret apiSecret);
 
         Task<int> SaveAllChangesAsync();
 

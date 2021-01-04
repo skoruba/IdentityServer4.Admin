@@ -40,18 +40,29 @@
 		</div>
 
 		<!--Checkbox-->
-		<div class="form-group row">
-			<label asp-for="RequireClientSecret" class="col-sm-3 col-form-label">
-				@await Html.PartialAsync("Client/Section/Label", "RequireClientSecret")
-			</label>
-			<div class="col-sm-9">
-				<toggle-button>
-					<input asp-for="RequireClientSecret" type="checkbox">
-				</toggle-button>
-			</div>
-		</div>
+        <div class="form-group row">
+            <label asp-for="RequireClientSecret" class="col-sm-3 col-form-label">
+                @await Html.PartialAsync("Client/Section/Label", "RequireClientSecret")
+            </label>
+            <div class="col-sm-9">
+                <toggle-button>
+                    <input asp-for="RequireClientSecret" type="checkbox">
+                </toggle-button>
+            </div>
+        </div>
+		
+        <div class="form-group row">
+            <label asp-for="RequireRequestObject" class="col-sm-3 col-form-label">
+                @await Html.PartialAsync("Client/Section/Label", "RequireRequestObject")
+            </label>
+            <div class="col-sm-9">
+                <toggle-button>
+                    <input asp-for="RequireRequestObject" type="checkbox">
+                </toggle-button>
+            </div>
+        </div>
 
-		<!--Checkbox-->
+        <!--Checkbox-->
 		<div class="form-group row">
 			<label asp-for="RequirePkce" class="col-sm-3 col-form-label">
 				@await Html.PartialAsync("Client/Section/Label", "RequirePkce")

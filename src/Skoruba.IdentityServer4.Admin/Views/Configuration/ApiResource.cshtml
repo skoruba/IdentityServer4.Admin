@@ -63,8 +63,20 @@
 					<input type="text" class="form-control" asp-for="Description">
 				</div>
 			</div>
+			
+            <!--Checkbox-->
+            <div class="form-group row">
+                <label asp-for="ShowInDiscoveryDocument" class="col-sm-3 col-form-label">
+                    @await Html.PartialAsync("IdentityResource/Section/Label", "ShowInDiscoveryDocument")
+                </label>
+                <div class="col-sm-9">
+                    <toggle-button>
+                        <input asp-for="ShowInDiscoveryDocument" type="checkbox">
+                    </toggle-button>
+                </div>
+            </div>
 
-			<!--Checkbox-->
+            <!--Checkbox-->
 			<div class="form-group row">
 				<label asp-for="Enabled" class="col-sm-3 col-form-label">
 					@await Html.PartialAsync("ApiResource/Section/Label", "Enabled")
@@ -78,15 +90,6 @@
 
 			@if (Model.Id != 0)
 			{
-				<!--Button-->
-				<div class="form-group row">
-					<label class="col-sm-3 col-form-label">
-						@await Html.PartialAsync("ApiResource/Section/Label", "Scopes")
-					</label>
-					<div class="col-sm-9">
-						<a asp-action="ApiScopes" asp-route-id="@Model.Id" class="btn btn-primary">@Localizer["ButtonManageScopes"]</a>
-					</div>
-				</div>
 				<!--Button-->
 				<div class="form-group row">
 					<label class="col-sm-3 col-form-label">
@@ -106,15 +109,53 @@
 					</div>
 				</div>
 			}
+			
+            <!--Select with tags-->
+            <div class="form-group row">
+                <label asp-for="AllowedAccessTokenSigningAlgorithms" class="col-sm-3 col-form-label">
+                    @await Html.PartialAsync("ApiResource/Section/Label", "SigningAlgorithms")
+                </label>
+                <div class="col-sm-9">
+                    <picker id="AllowedAccessTokenSigningAlgorithmsItems" multiple-select="true" min-search-text="2"
+                            selected-items="@Model.AllowedAccessTokenSigningAlgorithms" url="@Url.Action("SearchSigningAlgorithms","Configuration")?algorithm"
+                            search-input-placeholder="@Localizer["PickerSearchItemPlaceholder"].Value"
+                            selected-items-title="@Localizer["PickerSelectedItemsTitle"].Value"
+                            search-result-title="@Localizer["PickerSearchResultTitle"].Value"
+                            suggested-items-title="@Localizer["PickerSuggestedItemsTitle"].Value"
+                            no-item-selected-title="@Localizer["PickerNoItemSelectedTitle"].Value"
+                            show-all-items-title="@Localizer["PickerShowAllItemsTitle"].Value"
+                            item-already-selected-title="@Localizer["PickerItemAlreadySelectedTitle"].Value">
+                    </picker>
+                </div>
+            </div>
 
-			<!--Select with tags-->
+            <!--Select with tags-->
+            <div class="form-group row">
+                <label asp-for="UserClaims" class="col-sm-3 col-form-label">
+                    @await Html.PartialAsync("ApiResource/Section/Label", "UserClaims")
+                </label>
+                <div class="col-sm-9">
+                    <picker id="UserClaimsItems" multiple-select="true" min-search-text="2"
+                            selected-items="@Model.UserClaims" url="@Url.Action("SearchClaims","Configuration")?claim"
+                            search-input-placeholder="@Localizer["PickerSearchItemPlaceholder"].Value"
+                            selected-items-title="@Localizer["PickerSelectedItemsTitle"].Value"
+                            search-result-title="@Localizer["PickerSearchResultTitle"].Value"
+                            suggested-items-title="@Localizer["PickerSuggestedItemsTitle"].Value"
+                            no-item-selected-title="@Localizer["PickerNoItemSelectedTitle"].Value"
+                            show-all-items-title="@Localizer["PickerShowAllItemsTitle"].Value"
+                            item-already-selected-title="@Localizer["PickerItemAlreadySelectedTitle"].Value">
+                    </picker>
+                </div>
+            </div>
+
+            <!--Select with tags-->
 			<div class="form-group row">
-				<label asp-for="UserClaims" class="col-sm-3 col-form-label">
-					@await Html.PartialAsync("ApiResource/Section/Label", "UserClaims")
+				<label asp-for="Scopes" class="col-sm-3 col-form-label">
+					@await Html.PartialAsync("ApiResource/Section/Label", "Scopes")
 				</label>
 				<div class="col-sm-9">
-					<picker id="UserClaimsItems" multiple-select="true" min-search-text="2"
-							selected-items="@Model.UserClaims" url="@Url.Action("SearchClaims","Configuration")?claim"
+					<picker id="ScopesItems" multiple-select="true" min-search-text="2"
+							selected-items="@Model.Scopes" url="@Url.Action("SearchApiScopes","Configuration")?scope"
 							search-input-placeholder="@Localizer["PickerSearchItemPlaceholder"].Value"
 							selected-items-title="@Localizer["PickerSelectedItemsTitle"].Value"
 							search-result-title="@Localizer["PickerSearchResultTitle"].Value"

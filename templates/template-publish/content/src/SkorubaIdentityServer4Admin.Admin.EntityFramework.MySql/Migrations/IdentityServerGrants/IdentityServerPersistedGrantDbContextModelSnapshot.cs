@@ -14,7 +14,7 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.MySql.Migrations.Ide
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.0.0")
+                .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
@@ -36,6 +36,10 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.MySql.Migrations.Ide
                         .HasColumnType("longtext CHARACTER SET utf8mb4")
                         .HasMaxLength(50000);
 
+                    b.Property<string>("Description")
+                        .HasColumnType("varchar(200) CHARACTER SET utf8mb4")
+                        .HasMaxLength(200);
+
                     b.Property<string>("DeviceCode")
                         .IsRequired()
                         .HasColumnType("varchar(200) CHARACTER SET utf8mb4")
@@ -44,6 +48,10 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.MySql.Migrations.Ide
                     b.Property<DateTime?>("Expiration")
                         .IsRequired()
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("SessionId")
+                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
+                        .HasMaxLength(100);
 
                     b.Property<string>("SubjectId")
                         .HasColumnType("varchar(200) CHARACTER SET utf8mb4")
@@ -70,6 +78,9 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.MySql.Migrations.Ide
                         .HasColumnType("varchar(200) CHARACTER SET utf8mb4")
                         .HasMaxLength(200);
 
+                    b.Property<DateTime?>("ConsumedTime")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime(6)");
 
@@ -78,8 +89,16 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.MySql.Migrations.Ide
                         .HasColumnType("longtext CHARACTER SET utf8mb4")
                         .HasMaxLength(50000);
 
+                    b.Property<string>("Description")
+                        .HasColumnType("varchar(200) CHARACTER SET utf8mb4")
+                        .HasMaxLength(200);
+
                     b.Property<DateTime?>("Expiration")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("SessionId")
+                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
+                        .HasMaxLength(100);
 
                     b.Property<string>("SubjectId")
                         .HasColumnType("varchar(200) CHARACTER SET utf8mb4")
@@ -95,6 +114,8 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.MySql.Migrations.Ide
                     b.HasIndex("Expiration");
 
                     b.HasIndex("SubjectId", "ClientId", "Type");
+
+                    b.HasIndex("SubjectId", "SessionId", "Type");
 
                     b.ToTable("PersistedGrants");
                 });

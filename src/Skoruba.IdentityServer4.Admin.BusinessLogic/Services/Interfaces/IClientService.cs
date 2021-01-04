@@ -67,6 +67,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
 
         Task<int> DeleteClientPropertyAsync(ClientPropertiesDto clientProperty);
 
+        List<string> GetSigningAlgorithms(string algorithm, int limit = 0);
+
         List<SelectItemDto> GetProtocolTypes();
     }
 }

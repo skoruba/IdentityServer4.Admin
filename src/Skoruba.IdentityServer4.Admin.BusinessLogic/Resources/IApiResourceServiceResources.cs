@@ -7,9 +7,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Resources
         ResourceMessage ApiResourceDoesNotExist();
         ResourceMessage ApiResourceExistsValue();
         ResourceMessage ApiResourceExistsKey();
-        ResourceMessage ApiScopeDoesNotExist();
-        ResourceMessage ApiScopeExistsValue();
-        ResourceMessage ApiScopeExistsKey();
         ResourceMessage ApiSecretDoesNotExist();
         ResourceMessage ApiResourcePropertyDoesNotExist();
         ResourceMessage ApiResourcePropertyExistsKey();
