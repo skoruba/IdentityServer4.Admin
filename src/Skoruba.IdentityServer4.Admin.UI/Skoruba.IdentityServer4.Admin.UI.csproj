@@ -1,0 +1,155 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Account\AccessDenied.cshtml" />
+    <Content Remove="Views\Configuration\ApiResource.cshtml" />
+    <Content Remove="Views\Configuration\ApiResourceDelete.cshtml" />
+    <Content Remove="Views\Configuration\ApiResourceProperties.cshtml" />
+    <Content Remove="Views\Configuration\ApiResourcePropertyDelete.cshtml" />
+    <Content Remove="Views\Configuration\ApiResources.cshtml" />
+    <Content Remove="Views\Configuration\ApiResource\Section\Label.cshtml" />
+    <Content Remove="Views\Configuration\ApiScopeDelete.cshtml" />
+    <Content Remove="Views\Configuration\ApiScopes.cshtml" />
+    <Content Remove="Views\Configuration\ApiSecretDelete.cshtml" />
+    <Content Remove="Views\Configuration\ApiSecrets.cshtml" />
+    <Content Remove="Views\Configuration\Client.cshtml" />
+    <Content Remove="Views\Configuration\ClientClaimDelete.cshtml" />
+    <Content Remove="Views\Configuration\ClientClaims.cshtml" />
+    <Content Remove="Views\Configuration\ClientClone.cshtml" />
+    <Content Remove="Views\Configuration\ClientDelete.cshtml" />
+    <Content Remove="Views\Configuration\ClientProperties.cshtml" />
+    <Content Remove="Views\Configuration\ClientPropertyDelete.cshtml" />
+    <Content Remove="Views\Configuration\Clients.cshtml" />
+    <Content Remove="Views\Configuration\ClientSecretDelete.cshtml" />
+    <Content Remove="Views\Configuration\ClientSecrets.cshtml" />
+    <Content Remove="Views\Configuration\Client\Section\ActionButtons.cshtml" />
+    <Content Remove="Views\Configuration\Client\Section\Authentication.cshtml" />
+    <Content Remove="Views\Configuration\Client\Section\Basics.cshtml" />
+    <Content Remove="Views\Configuration\Client\Section\Consent.cshtml" />
+    <Content Remove="Views\Configuration\Client\Section\DeviceFlow.cshtml" />
+    <Content Remove="Views\Configuration\Client\Section\Label.cshtml" />
+    <Content Remove="Views\Configuration\Client\Section\Name.cshtml" />
+    <Content Remove="Views\Configuration\Client\Section\Token.cshtml" />
+    <Content Remove="Views\Configuration\Client\Settings.cshtml" />
+    <Content Remove="Views\Configuration\IdentityResource.cshtml" />
+    <Content Remove="Views\Configuration\IdentityResourceDelete.cshtml" />
+    <Content Remove="Views\Configuration\IdentityResourceProperties.cshtml" />
+    <Content Remove="Views\Configuration\IdentityResourcePropertyDelete.cshtml" />
+    <Content Remove="Views\Configuration\IdentityResources.cshtml" />
+    <Content Remove="Views\Configuration\IdentityResource\Section\Label.cshtml" />
+    <Content Remove="Views\Grant\PersistedGrant.cshtml" />
+    <Content Remove="Views\Grant\PersistedGrantDelete.cshtml" />
+    <Content Remove="Views\Grant\PersistedGrants.cshtml" />
+    <Content Remove="Views\Home\Error.cshtml" />
+    <Content Remove="Views\Home\Index.cshtml" />
+    <Content Remove="Views\Identity\Role.cshtml" />
+    <Content Remove="Views\Identity\RoleClaims.cshtml" />
+    <Content Remove="Views\Identity\RoleClaimsDelete.cshtml" />
+    <Content Remove="Views\Identity\RoleDelete.cshtml" />
+    <Content Remove="Views\Identity\Roles.cshtml" />
+    <Content Remove="Views\Identity\Role\Section\Label.cshtml" />
+    <Content Remove="Views\Identity\UserChangePassword.cshtml" />
+    <Content Remove="Views\Identity\UserClaims.cshtml" />
+    <Content Remove="Views\Identity\UserClaimsDelete.cshtml" />
+    <Content Remove="Views\Identity\UserDelete.cshtml" />
+    <Content Remove="Views\Identity\UserProfile.cshtml" />
+    <Content Remove="Views\Identity\UserProviders.cshtml" />
+    <Content Remove="Views\Identity\UserProvidersDelete.cshtml" />
+    <Content Remove="Views\Identity\UserRoles.cshtml" />
+    <Content Remove="Views\Identity\UserRolesDelete.cshtml" />
+    <Content Remove="Views\Identity\Users.cshtml" />
+    <Content Remove="Views\Identity\User\Section\Label.cshtml" />
+    <Content Remove="Views\Log\ErrorsLog.cshtml" />
+    <Content Remove="Views\Shared\Common\ErrorPage.cshtml" />
+    <Content Remove="Views\Shared\Common\Notification.cshtml" />
+    <Content Remove="Views\Shared\Common\Pager.cshtml" />
+    <Content Remove="Views\Shared\Common\Search.cshtml" />
+    <Content Remove="Views\Shared\Common\SelectLanguage.cshtml" />
+    <Content Remove="Views\Shared\Error.cshtml" />
+    <Content Remove="Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Account\AccessDenied.cshtml" />
+    <None Include="Views\Configuration\ApiResource.cshtml" />
+    <None Include="Views\Configuration\ApiResourceDelete.cshtml" />
+    <None Include="Views\Configuration\ApiResourceProperties.cshtml" />
+    <None Include="Views\Configuration\ApiResourcePropertyDelete.cshtml" />
+    <None Include="Views\Configuration\ApiResources.cshtml" />
+    <None Include="Views\Configuration\ApiResource\Section\Label.cshtml" />
+    <None Include="Views\Configuration\ApiScopeDelete.cshtml" />
+    <None Include="Views\Configuration\ApiScopes.cshtml" />
+    <None Include="Views\Configuration\ApiSecretDelete.cshtml" />
+    <None Include="Views\Configuration\ApiSecrets.cshtml" />
+    <None Include="Views\Configuration\Client.cshtml" />
+    <None Include="Views\Configuration\ClientClaimDelete.cshtml" />
+    <None Include="Views\Configuration\ClientClaims.cshtml" />
+    <None Include="Views\Configuration\ClientClone.cshtml" />
+    <None Include="Views\Configuration\ClientDelete.cshtml" />
+    <None Include="Views\Configuration\ClientProperties.cshtml" />
+    <None Include="Views\Configuration\ClientPropertyDelete.cshtml" />
+    <None Include="Views\Configuration\Clients.cshtml" />
+    <None Include="Views\Configuration\ClientSecretDelete.cshtml" />
+    <None Include="Views\Configuration\ClientSecrets.cshtml" />
+    <None Include="Views\Configuration\Client\Section\ActionButtons.cshtml" />
+    <None Include="Views\Configuration\Client\Section\Authentication.cshtml" />
+    <None Include="Views\Configuration\Client\Section\Basics.cshtml" />
+    <None Include="Views\Configuration\Client\Section\Consent.cshtml" />
+    <None Include="Views\Configuration\Client\Section\DeviceFlow.cshtml" />
+    <None Include="Views\Configuration\Client\Section\Label.cshtml" />
+    <None Include="Views\Configuration\Client\Section\Name.cshtml" />
+    <None Include="Views\Configuration\Client\Section\Token.cshtml" />
+    <None Include="Views\Configuration\Client\Settings.cshtml" />
+    <None Include="Views\Configuration\IdentityResource.cshtml" />
+    <None Include="Views\Configuration\IdentityResourceDelete.cshtml" />
+    <None Include="Views\Configuration\IdentityResourceProperties.cshtml" />
+    <None Include="Views\Configuration\IdentityResourcePropertyDelete.cshtml" />
+    <None Include="Views\Configuration\IdentityResources.cshtml" />
+    <None Include="Views\Configuration\IdentityResource\Section\Label.cshtml" />
+    <None Include="Views\Grant\PersistedGrant.cshtml" />
+    <None Include="Views\Grant\PersistedGrantDelete.cshtml" />
+    <None Include="Views\Grant\PersistedGrants.cshtml" />
+    <None Include="Views\Home\Error.cshtml" />
+    <None Include="Views\Home\Index.cshtml" />
+    <None Include="Views\Identity\Role.cshtml" />
+    <None Include="Views\Identity\RoleClaims.cshtml" />
+    <None Include="Views\Identity\RoleClaimsDelete.cshtml" />
+    <None Include="Views\Identity\RoleDelete.cshtml" />
+    <None Include="Views\Identity\Roles.cshtml" />
+    <None Include="Views\Identity\Role\Section\Label.cshtml" />
+    <None Include="Views\Identity\UserChangePassword.cshtml" />
+    <None Include="Views\Identity\UserClaims.cshtml" />
+    <None Include="Views\Identity\UserClaimsDelete.cshtml" />
+    <None Include="Views\Identity\UserDelete.cshtml" />
+    <None Include="Views\Identity\UserProfile.cshtml" />
+    <None Include="Views\Identity\UserProviders.cshtml" />
+    <None Include="Views\Identity\UserProvidersDelete.cshtml" />
+    <None Include="Views\Identity\UserRoles.cshtml" />
+    <None Include="Views\Identity\UserRolesDelete.cshtml" />
+    <None Include="Views\Identity\Users.cshtml" />
+    <None Include="Views\Identity\User\Section\Label.cshtml" />
+    <None Include="Views\Log\ErrorsLog.cshtml" />
+    <None Include="Views\Shared\Common\ErrorPage.cshtml" />
+    <None Include="Views\Shared\Common\Notification.cshtml" />
+    <None Include="Views\Shared\Common\Pager.cshtml" />
+    <None Include="Views\Shared\Common\Search.cshtml" />
+    <None Include="Views\Shared\Common\SelectLanguage.cshtml" />
+    <None Include="Views\Shared\Error.cshtml" />
+    <None Include="Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.csproj" />
+		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.BusinessLogic\Skoruba.IdentityServer4.Admin.BusinessLogic.csproj" />
+	</ItemGroup>
+
+</Project>
