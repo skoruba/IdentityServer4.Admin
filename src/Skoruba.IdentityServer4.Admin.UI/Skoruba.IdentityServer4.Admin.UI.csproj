@@ -150,9 +150,25 @@
     <None Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="3.1.6" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.6" />
+	  <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="3.1.6" />
+	  <PackageReference Include="AspNetCore.HealthChecks.MySql" Version="3.1.1" />
+	  <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="3.1.1" />
+	  <PackageReference Include="AspNetCore.HealthChecks.OpenIdConnectServer" Version="3.1.1" />
+	  <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="3.1.1" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.csproj" />
 		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.BusinessLogic\Skoruba.IdentityServer4.Admin.BusinessLogic.csproj" />
+		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.MySql\Skoruba.IdentityServer4.Admin.EntityFramework.MySql.csproj" />
+		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL\Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.csproj" />
+		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.Shared\Skoruba.IdentityServer4.Admin.EntityFramework.Shared.csproj" />
+		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer\Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.csproj" />
+		<ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.IdentityServer4.Admin.EntityFramework.csproj" />
+		<ProjectReference Include="..\Skoruba.IdentityServer4.Shared\Skoruba.IdentityServer4.Shared.csproj" />
 	</ItemGroup>
 
 </Project>
