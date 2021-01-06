@@ -2,9 +2,7 @@
 @using Skoruba.IdentityServer4.Admin
 
 @{
-    var runtimeVersion = typeof(Startup)
-        .GetTypeInfo()
-        .Assembly
+    var runtimeVersion = Assembly.GetExecutingAssembly()
         .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
 }
 
