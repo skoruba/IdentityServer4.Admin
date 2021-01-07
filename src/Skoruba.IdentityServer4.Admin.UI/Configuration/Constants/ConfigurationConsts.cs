@@ -28,7 +28,5 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.Constants
 
         public const string DataProtectionDbConnectionStringKey = "DataProtectionDbConnection";
 
-        public const string CspTrustedDomainsKey = "CspTrustedDomains";
-
     }
 }
