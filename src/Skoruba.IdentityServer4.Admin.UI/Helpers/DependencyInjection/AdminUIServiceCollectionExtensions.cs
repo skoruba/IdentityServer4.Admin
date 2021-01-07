@@ -66,6 +66,7 @@ namespace Microsoft.Extensions.DependencyInjection
 			IdentityServer4AdminUIOptions options = new IdentityServer4AdminUIOptions();
 			optionsAction(options);
 			services.AddSingleton(options);
+			services.AddSingleton(options.Admin);
 
 			// Add DbContexts for Asp.Net Core Identity, Logging and IdentityServer - Configuration store and Operational store
 			if (!options.IsStaging)

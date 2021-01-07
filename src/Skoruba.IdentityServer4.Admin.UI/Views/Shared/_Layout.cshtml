@@ -1,38 +1,38 @@
 ﻿@using IdentityServer4.Extensions
 @using Microsoft.AspNetCore.Mvc.Localization
-@using Skoruba.IdentityServer4.Admin.Configuration.Interfaces
+@using Skoruba.IdentityServer4.Admin.UI.Configuration
 @inject IViewLocalizer Localizer
-@inject IRootConfiguration RootConfiguration
+@inject AdminConfiguration AdminConfiguration
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <link rel="icon" type="image/x-icon" href="@UrlHelper.Content(RootConfiguration.AdminConfiguration.FaviconUri)" />
-    <link rel="shortcut icon" type="image/x-icon" href="@UrlHelper.Content(RootConfiguration.AdminConfiguration.FaviconUri)" />
-    <title>@ViewData["Title"] - @RootConfiguration.AdminConfiguration.PageTitle</title>
+    <link rel="icon" type="image/x-icon" href="@UrlHelper.Content(AdminConfiguration.FaviconUri)" />
+    <link rel="shortcut icon" type="image/x-icon" href="@UrlHelper.Content(AdminConfiguration.FaviconUri)" />
+    <title>@ViewData["Title"] - @AdminConfiguration.PageTitle</title>
 
     <environment include="Development">
         <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
-        @if (!string.IsNullOrEmpty(RootConfiguration.AdminConfiguration.Theme))
+        @if (!string.IsNullOrEmpty(AdminConfiguration.Theme))
         {
-            <link href="@UrlHelper.Content(string.Concat("~/dist/css/themes/",RootConfiguration.AdminConfiguration.Theme,"/bootstrap.min.css"))" asp-append-version="true" rel="stylesheet" />
+            <link href="@UrlHelper.Content(string.Concat("~/dist/css/themes/",AdminConfiguration.Theme,"/bootstrap.min.css"))" asp-append-version="true" rel="stylesheet" />
         }
         <link href="~/dist/css/web.css" asp-append-version="true" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
         <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
-        @if (!string.IsNullOrEmpty(RootConfiguration.AdminConfiguration.Theme))
+        @if (!string.IsNullOrEmpty(AdminConfiguration.Theme))
         {
-            <link href="@UrlHelper.Content(string.Concat("~/dist/css/themes/",RootConfiguration.AdminConfiguration.Theme,"/bootstrap.min.css"))" asp-append-version="true" rel="stylesheet" />
+            <link href="@UrlHelper.Content(string.Concat("~/dist/css/themes/",AdminConfiguration.Theme,"/bootstrap.min.css"))" asp-append-version="true" rel="stylesheet" />
         }
         <link href="~/dist/css/web.min.css" asp-append-version="true" rel="stylesheet" />
     </environment>
 
-    @if (!string.IsNullOrEmpty(RootConfiguration.AdminConfiguration.CustomThemeCss))
+    @if (!string.IsNullOrEmpty(AdminConfiguration.CustomThemeCss))
     {
-        <link href="@UrlHelper.Content(RootConfiguration.AdminConfiguration.CustomThemeCss)" asp-append-version="true" rel="stylesheet" />
+        <link href="@UrlHelper.Content(AdminConfiguration.CustomThemeCss)" asp-append-version="true" rel="stylesheet" />
     }
 
     @await RenderSectionAsync("styles", required: false)
@@ -41,7 +41,7 @@
 
     <div class="menu d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
         <!--Site name -->
-        <h3 class="menu-logo my-0 mr-md-auto font-weight-normal"><a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@RootConfiguration.AdminConfiguration.PageTitle</a></h3>
+        <h3 class="menu-logo my-0 mr-md-auto font-weight-normal"><a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@AdminConfiguration.PageTitle</a></h3>
 
         <!--Menu item -->
         <vc:identity-server-link></vc:identity-server-link>
@@ -80,7 +80,7 @@
             <div class="dropdown-menu">
                 <a class="dropdown-item" asp-area="" asp-controller="Log" asp-action="AuditLog">@Localizer["Audit Logs"]</a>
 
-                @if (!RootConfiguration.AdminConfiguration.HideUIForMSSqlErrorLogging)
+                @if (!AdminConfiguration.HideUIForMSSqlErrorLogging)
                 {
                     <a class="dropdown-item" asp-area="" asp-controller="Log" asp-action="ErrorsLog">@Localizer["Error Logs"]</a>
                 }
@@ -105,7 +105,7 @@
         <footer class="pt-4 my-md-5 pt-md-5 border-top">
             <div class="row">
                 <div class="col-6 col-md">
-                    @RootConfiguration.AdminConfiguration.PageTitle
+                    @AdminConfiguration.PageTitle
                     <small class="d-block mb-3 text-muted">@Localizer["FooterCopyright"] @DateTime.Now.Year - @await Html.PartialAsync("Common/ApplicationVersion")</small>
                 </div>
                 <div class="col-md-6 text-right">
