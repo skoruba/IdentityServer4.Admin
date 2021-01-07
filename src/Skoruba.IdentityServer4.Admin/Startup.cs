@@ -41,53 +41,56 @@ namespace Skoruba.IdentityServer4.Admin
             var rootConfiguration = CreateRootConfiguration();
             services.AddSingleton(rootConfiguration);
 
-            // Add DbContexts for Asp.Net Core Identity, Logging and IdentityServer - Configuration store and Operational store
-            RegisterDbContexts(services);
+            // Adds the IdentityServer4 Admin UI with custom options.
+            services.AddIdentityServer4AdminUI(ConfigureUIOptions);
 
-            // Save data protection keys to db, using a common application name shared between Admin and STS
-            services.AddDataProtection<IdentityServerDataProtectionDbContext>(Configuration);
+            //// Add DbContexts for Asp.Net Core Identity, Logging and IdentityServer - Configuration store and Operational store
+            //RegisterDbContexts(services);
+
+            //// Save data protection keys to db, using a common application name shared between Admin and STS
+            //services.AddDataProtection<IdentityServerDataProtectionDbContext>(Configuration);
 
             // Add email senders which is currently setup for SendGrid and SMTP
             services.AddEmailSenders(Configuration);
 
-            // Add Asp.Net Core Identity Configuration and OpenIdConnect auth as well
-            RegisterAuthentication(services);
+            //// Add Asp.Net Core Identity Configuration and OpenIdConnect auth as well
+            //RegisterAuthentication(services);
 
             // Add HSTS options
             RegisterHstsOptions(services);
 
-            // Add exception filters in MVC
-            services.AddMvcExceptionFilters();
+            //// Add exception filters in MVC
+            //services.AddMvcExceptionFilters();
 
-            // Add all dependencies for IdentityServer Admin
-            services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
+            //// Add all dependencies for IdentityServer Admin
+            //services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
 
-            // Add all dependencies for Asp.Net Core Identity
-            // If you want to change primary keys or use another db model for Asp.Net Core Identity:
-            services.AddAdminAspNetIdentityServices<AdminIdentityDbContext, IdentityServerPersistedGrantDbContext,
-                IdentityUserDto, IdentityRoleDto, UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
-                                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
-                                IdentityUsersDto, IdentityRolesDto, IdentityUserRolesDto,
-                                IdentityUserClaimsDto, IdentityUserProviderDto, IdentityUserProvidersDto, IdentityUserChangePasswordDto,
-                                IdentityRoleClaimsDto, IdentityUserClaimDto, IdentityRoleClaimDto>();
+            //// Add all dependencies for Asp.Net Core Identity
+            //// If you want to change primary keys or use another db model for Asp.Net Core Identity:
+            //services.AddAdminAspNetIdentityServices<AdminIdentityDbContext, IdentityServerPersistedGrantDbContext,
+            //    IdentityUserDto, IdentityRoleDto, UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
+            //                    UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
+            //                    IdentityUsersDto, IdentityRolesDto, IdentityUserRolesDto,
+            //                    IdentityUserClaimsDto, IdentityUserProviderDto, IdentityUserProvidersDto, IdentityUserChangePasswordDto,
+            //                    IdentityRoleClaimsDto, IdentityUserClaimDto, IdentityRoleClaimDto>();
 
-            // Add all dependencies for Asp.Net Core Identity in MVC - these dependencies are injected into generic Controllers
-            // Including settings for MVC and Localization
-            // If you want to change primary keys or use another db model for Asp.Net Core Identity:
-            services.AddMvcWithLocalization<IdentityUserDto, IdentityRoleDto,
-                UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
-                UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
-                IdentityUsersDto, IdentityRolesDto, IdentityUserRolesDto,
-                IdentityUserClaimsDto, IdentityUserProviderDto, IdentityUserProvidersDto, IdentityUserChangePasswordDto,
-                IdentityRoleClaimsDto, IdentityUserClaimDto, IdentityRoleClaimDto>(Configuration);
+            //// Add all dependencies for Asp.Net Core Identity in MVC - these dependencies are injected into generic Controllers
+            //// Including settings for MVC and Localization
+            //// If you want to change primary keys or use another db model for Asp.Net Core Identity:
+            //services.AddMvcWithLocalization<IdentityUserDto, IdentityRoleDto,
+            //    UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
+            //    UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
+            //    IdentityUsersDto, IdentityRolesDto, IdentityUserRolesDto,
+            //    IdentityUserClaimsDto, IdentityUserProviderDto, IdentityUserProvidersDto, IdentityUserChangePasswordDto,
+            //    IdentityRoleClaimsDto, IdentityUserClaimDto, IdentityRoleClaimDto>(Configuration);
 
-            // Add authorization policies for MVC
-            RegisterAuthorization(services);
+            //// Add authorization policies for MVC
+            //RegisterAuthorization(services);
 
-            // Add audit logging
-            services.AddAuditEventLogging<AdminAuditLogDbContext, AuditLog>(Configuration);
+            //// Add audit logging
+            //services.AddAuditEventLogging<AdminAuditLogDbContext, AuditLog>(Configuration);
 
-            services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext>(Configuration, rootConfiguration.AdminConfiguration);
+            //services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext>(Configuration, rootConfiguration.AdminConfiguration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
@@ -128,22 +131,31 @@ namespace Skoruba.IdentityServer4.Admin
             });
         }
 
-        public virtual void RegisterDbContexts(IServiceCollection services)
-        {
-            services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext>(Configuration);
-        }
+        public virtual void ConfigureUIOptions(IdentityServer4AdminUIOptions options)
+		{
+            // Applies configuration from appsettings.
+            options.ApplyConfiguration(Configuration);
+            
+            // Use production DbContexts and auth services.
+            options.IsStaging = false;
+		}
 
-        public virtual void RegisterAuthentication(IServiceCollection services)
-        {
-            var rootConfiguration = CreateRootConfiguration();
-            services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Configuration);
-        }
+        //public virtual void RegisterDbContexts(IServiceCollection services)
+        //{
+        //    services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext>(Configuration);
+        //}
 
-        public virtual void RegisterAuthorization(IServiceCollection services)
-        {
-            var rootConfiguration = CreateRootConfiguration();
-            services.AddAuthorizationPolicies(rootConfiguration);
-        }
+        //public virtual void RegisterAuthentication(IServiceCollection services)
+        //{
+        //    var rootConfiguration = CreateRootConfiguration();
+        //    services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Configuration);
+        //}
+
+        //public virtual void RegisterAuthorization(IServiceCollection services)
+        //{
+        //    var rootConfiguration = CreateRootConfiguration();
+        //    services.AddAuthorizationPolicies(rootConfiguration);
+        //}
 
         public virtual void UseAuthentication(IApplicationBuilder app)
         {

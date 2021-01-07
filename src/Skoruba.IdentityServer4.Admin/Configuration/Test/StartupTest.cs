@@ -15,21 +15,30 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.Test
         {
         }
 
-        public override void RegisterDbContexts(IServiceCollection services)
+        public override void ConfigureUIOptions(IdentityServer4AdminUIOptions options)
         {
-            services.RegisterDbContextsStaging<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext>();
+            // Applies configuration from appsettings.
+            options.ApplyConfiguration(Configuration);
+
+            // Use staging DbContexts and auth services.
+            options.IsStaging = true;
         }
 
-        public override void RegisterAuthentication(IServiceCollection services)
-        {
-            services.AddAuthenticationServicesStaging<AdminIdentityDbContext, UserIdentity, UserIdentityRole>();
-        }
+        //public override void RegisterDbContexts(IServiceCollection services)
+        //{
+        //    services.RegisterDbContextsStaging<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext>();
+        //}
 
-        public override void RegisterAuthorization(IServiceCollection services)
-        {
-            var rootConfiguration = CreateRootConfiguration();
-            services.AddAuthorizationPolicies(rootConfiguration);
-        }
+        //public override void RegisterAuthentication(IServiceCollection services)
+        //{
+        //    services.AddAuthenticationServicesStaging<AdminIdentityDbContext, UserIdentity, UserIdentityRole>();
+        //}
+
+        //public override void RegisterAuthorization(IServiceCollection services)
+        //{
+        //    var rootConfiguration = CreateRootConfiguration();
+        //    services.AddAuthorizationPolicies(rootConfiguration);
+        //}
 
         public override void UseAuthentication(IApplicationBuilder app)
         {

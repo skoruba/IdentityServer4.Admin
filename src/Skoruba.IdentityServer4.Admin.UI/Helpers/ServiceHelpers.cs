@@ -26,7 +26,6 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.Configuration;
 using Skoruba.IdentityServer4.Admin.Configuration.ApplicationParts;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
-using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions;
@@ -47,12 +46,10 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
 {
 	public static class ServiceHelpers
 	{
-        public static IServiceCollection AddAuditEventLogging<TAuditLoggingDbContext, TAuditLog>(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddAuditEventLogging<TAuditLoggingDbContext, TAuditLog>(this IServiceCollection services, AuditLoggingConfiguration auditLoggingConfiguration)
             where TAuditLog : AuditLog, new()
             where TAuditLoggingDbContext : IAuditLoggingDbContext<TAuditLog>
         {
-            var auditLoggingConfiguration = configuration.GetSection(nameof(AuditLoggingConfiguration)).Get<AuditLoggingConfiguration>();
-
             services.AddAuditLogging(options => { options.Source = auditLoggingConfiguration.Source; })
                 .AddDefaultHttpEventData(subjectOptions =>
                 {
@@ -86,7 +83,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <typeparam name="TAuditLoggingDbContext"></typeparam>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        public static void RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(this IServiceCollection services, IConfiguration configuration)
+        public static void RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(this IServiceCollection services, ConnectionStringsConfiguration connectionStrings, DatabaseProviderConfiguration databaseProvider)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
@@ -94,14 +91,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
             where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
         {
-            var databaseProvider = configuration.GetSection(nameof(DatabaseProviderConfiguration)).Get<DatabaseProviderConfiguration>();
-
-            var identityConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
-            var configurationConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
-            var persistedGrantsConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);
-            var errorLoggingConnectionString = configuration.GetConnectionString(ConfigurationConsts.AdminLogDbConnectionStringKey);
-            var auditLoggingConnectionString = configuration.GetConnectionString(ConfigurationConsts.AdminAuditLogDbConnectionStringKey);
-            var dataProtectionConnectionString = configuration.GetConnectionString(ConfigurationConsts.DataProtectionDbConnectionStringKey);
+            var identityConnectionString = connectionStrings.IdentityDbConnection;
+            var configurationConnectionString = connectionStrings.ConfigurationDbConnection;
+            var persistedGrantsConnectionString = connectionStrings.PersistedGrantDbConnection;
+            var errorLoggingConnectionString = connectionStrings.AdminLogDbConnection;
+            var auditLoggingConnectionString = connectionStrings.AdminAuditLogDbConnection;
+            var dataProtectionConnectionString = connectionStrings.DataProtectionDbConnection;
 
             switch (databaseProvider.ProviderType)
             {
@@ -173,12 +168,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// Add authorization policies
         /// </summary>
         /// <param name="services"></param>
-        public static void AddAuthorizationPolicies(this IServiceCollection services, IRootConfiguration rootConfiguration)
+        public static void AddAuthorizationPolicies(this IServiceCollection services, AdminConfiguration adminConfiguration)
         {
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(AuthorizationConsts.AdministrationPolicy,
-                    policy => policy.RequireRole(rootConfiguration.AdminConfiguration.AdministrationRole));
+                    policy => policy.RequireRole(adminConfiguration.AdministrationRole));
             });
         }
 
@@ -198,7 +193,8 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <param name="services"></param>
         public static void AddMvcWithLocalization<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>(this IServiceCollection services, IConfiguration configuration)
+            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>
+            (this IServiceCollection services, CultureConfiguration cultureConfiguration)
             where TUserDto : UserDto<TKey>, new()
             where TRoleDto : RoleDto<TKey>, new()
             where TUser : IdentityUser<TKey>
@@ -241,7 +237,6 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                         TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>());
                 });
 
-            var cultureConfiguration = configuration.GetSection(nameof(CultureConfiguration)).Get<CultureConfiguration>();
             services.Configure<RequestLocalizationOptions>(
             opts =>
             {
@@ -301,11 +296,9 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
         /// <typeparam name="TUserIdentityRole"></typeparam>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, IConfiguration configuration)
+        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, AdminConfiguration adminConfiguration, Action<IdentityOptions> identityOptionsAction)
             where TContext : DbContext where TUserIdentity : class where TUserIdentityRole : class
         {
-            var adminConfiguration = configuration.GetSection(nameof(AdminConfiguration)).Get<AdminConfiguration>();
-
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
@@ -317,7 +310,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             });
 
             services
-                .AddIdentity<TUserIdentity, TUserIdentityRole>(options => configuration.GetSection(nameof(IdentityOptions)).Bind(options))
+                .AddIdentity<TUserIdentity, TUserIdentityRole>(identityOptionsAction)
                 .AddEntityFrameworkStores<TContext>()
                 .AddDefaultTokenProviders();
 
@@ -386,7 +379,10 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             return Task.FromResult(0);
         }
 
-        public static void AddIdSHealthChecks<TConfigurationDbContext, TPersistedGrantDbContext, TIdentityDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(this IServiceCollection services, IConfiguration configuration, AdminConfiguration adminConfiguration)
+        public static void AddIdSHealthChecks<TConfigurationDbContext, TPersistedGrantDbContext, TIdentityDbContext, 
+            TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>
+            (this IServiceCollection services, AdminConfiguration adminConfiguration, 
+            ConnectionStringsConfiguration connectionStringsConfiguration, DatabaseProviderConfiguration databaseProviderConfiguration)
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TIdentityDbContext : DbContext
@@ -394,12 +390,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
             where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
         {
-            var configurationDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.ConfigurationDbConnectionStringKey);
-            var persistedGrantsDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.PersistedGrantDbConnectionStringKey);
-            var identityDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.IdentityDbConnectionStringKey);
-            var logDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.AdminLogDbConnectionStringKey);
-            var auditLogDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.AdminAuditLogDbConnectionStringKey);
-            var dataProtectionDbConnectionString = configuration.GetConnectionString(ConfigurationConsts.DataProtectionDbConnectionStringKey);
+            var configurationDbConnectionString = connectionStringsConfiguration.ConfigurationDbConnection;
+            var persistedGrantsDbConnectionString = connectionStringsConfiguration.PersistedGrantDbConnection;
+            var identityDbConnectionString = connectionStringsConfiguration.IdentityDbConnection;
+            var logDbConnectionString = connectionStringsConfiguration.AdminLogDbConnection;
+            var auditLogDbConnectionString = connectionStringsConfiguration.AdminAuditLogDbConnection;
+            var dataProtectionDbConnectionString = connectionStringsConfiguration.DataProtectionDbConnection;
 
             var identityServerUri = adminConfiguration.IdentityServerBaseUrl;
             var healthChecksBuilder = services.AddHealthChecks()
@@ -423,8 +419,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 var auditLogTableName = DbContextHelpers.GetEntityTable<TAuditLoggingDbContext>(scope.ServiceProvider);
                 var dataProtectionTableName = DbContextHelpers.GetEntityTable<TDataProtectionDbContext>(scope.ServiceProvider);
 
-                var databaseProvider = configuration.GetSection(nameof(DatabaseProviderConfiguration)).Get<DatabaseProviderConfiguration>();
-                switch (databaseProvider.ProviderType)
+                switch (databaseProviderConfiguration.ProviderType)
                 {
                     case DatabaseProviderType.SqlServer:
                         healthChecksBuilder
@@ -466,7 +461,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                             .AddMySql(dataProtectionDbConnectionString, name: "DataProtectionDb");
                         break;
                     default:
-                        throw new NotImplementedException($"Health checks not defined for database provider {databaseProvider.ProviderType}");
+                        throw new NotImplementedException($"Health checks not defined for database provider {databaseProviderConfiguration.ProviderType}");
                 }
             }
         }

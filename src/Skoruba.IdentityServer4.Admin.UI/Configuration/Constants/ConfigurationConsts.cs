@@ -16,6 +16,8 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.Constants
 
         public const string ResourcesPath = "Resources";
 
+        public const string ConnectionStringsKey = "ConnectionStrings";
+
         public const string AdminConfigurationKey = "AdminConfiguration";
 
         public const string IdentityServerDataConfigurationKey = "IdentityServerData";
