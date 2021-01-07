@@ -88,26 +88,26 @@ namespace Skoruba.IdentityServer4.Admin
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.UseCookiePolicy();
+   //         app.UseCookiePolicy();
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
-            }
+   //         if (env.IsDevelopment())
+   //         {
+   //             app.UseDeveloperExceptionPage();
+   //         }
+   //         else
+   //         {
+   //             app.UseExceptionHandler("/Home/Error");
+   //             app.UseHsts();
+   //         }
 
-            app.UsePathBase(Configuration.GetValue<string>("BasePath"));
+   //         app.UsePathBase(Configuration.GetValue<string>("BasePath"));
 
-            // Add custom security headers
-            app.UseSecurityHeaders(Configuration);
+   //         // Add custom security headers
+   //         app.UseSecurityHeaders(Configuration);
 
-            app.UseStaticFiles();
+   //         app.UseStaticFiles();
 
-            UseAuthentication(app);
+   //         UseAuthentication(app);
 
 			//// Use Localization
 			//app.ConfigureLocalization();
@@ -115,16 +115,16 @@ namespace Skoruba.IdentityServer4.Admin
 			app.UseIdentityServer4AdminUI();
 
 			app.UseRouting();
-			app.UseAuthorization();
+			//app.UseAuthorization();
 			app.UseEndpoints(endpoint =>
             {
-				//endpoint.MapIdentityServer4AdminUI();
+				endpoint.MapIdentityServer4AdminUI();
 
-				endpoint.MapDefaultControllerRoute();
-				endpoint.MapHealthChecks("/health", new HealthCheckOptions
-				{
-					ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-				});
+				//endpoint.MapDefaultControllerRoute();
+				//endpoint.MapHealthChecks("/health", new HealthCheckOptions
+				//{
+				//	ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+				//});
 			});
         }
 
@@ -132,6 +132,7 @@ namespace Skoruba.IdentityServer4.Admin
 		{
             // Applies configuration from appsettings.
             options.ApplyConfiguration(Configuration);
+            options.ApplyConfiguration(HostingEnvironment);
             
             // Use production DbContexts and auth services.
             options.IsStaging = false;
@@ -154,10 +155,10 @@ namespace Skoruba.IdentityServer4.Admin
 		//    services.AddAuthorizationPolicies(rootConfiguration);
 		//}
 
-		public virtual void UseAuthentication(IApplicationBuilder app)
-		{
-			app.UseAuthentication();
-		}
+		//public virtual void UseAuthentication(IApplicationBuilder app)
+		//{
+		//	app.UseAuthentication();
+		//}
 
 		//public virtual void RegisterHstsOptions(IServiceCollection services)
   //      {

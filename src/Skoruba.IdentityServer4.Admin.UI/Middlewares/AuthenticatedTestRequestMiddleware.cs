@@ -4,7 +4,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Skoruba.IdentityServer4.Admin.Middlewares
+namespace Skoruba.IdentityServer4.Admin.UI.Middlewares
 {
     public class AuthenticatedTestRequestMiddleware
     {

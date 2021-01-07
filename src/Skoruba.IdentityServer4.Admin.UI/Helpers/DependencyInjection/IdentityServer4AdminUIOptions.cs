@@ -6,6 +6,8 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Shared.Configuration.Common;
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -61,6 +63,15 @@ namespace Microsoft.Extensions.DependencyInjection
 		/// </summary>
 		public List<string> CspTrustedDomains { get; set; } = new List<string>();
 
+		public string BasePath { get; set; } = "";
+
+		/// <summary>
+		/// Use the developer exception page instead of the Identity error handler.
+		/// </summary>
+		public bool UseDeveloperExceptionPage { get; set; } = false;
+
+		public bool UseHsts { get; set; } = true;
+
 		/// <summary>
 		/// Applies configuration parsed from an appsettings file into these options.
 		/// </summary>
@@ -76,6 +87,20 @@ namespace Microsoft.Extensions.DependencyInjection
 			configuration.GetSection(nameof(AzureKeyVaultConfiguration)).Bind(AzureKeyVault);
 			IdentityAction = options => configuration.GetSection(nameof(IdentityOptions)).Bind(options);
 			configuration.GetSection(ConfigurationConsts.CspTrustedDomainsKey).Bind(CspTrustedDomains);
+		}
+
+		public void ApplyConfiguration(IWebHostEnvironment env)
+		{
+			if (env.IsDevelopment())
+			{
+				UseDeveloperExceptionPage = true;
+				UseHsts = false;
+			}
+			else
+			{
+				UseDeveloperExceptionPage = false;
+				UseHsts = true;
+			}
 		}
 	}
 }

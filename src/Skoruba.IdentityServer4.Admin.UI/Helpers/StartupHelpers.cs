@@ -473,7 +473,7 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
         /// </summary>
         /// <param name="app"></param>
         /// <param name="configuration"></param>
-        public static void UseSecurityHeaders(this IApplicationBuilder app)
+        public static void UseSecurityHeaders(this IApplicationBuilder app, List<string> cspTrustedDomains)
         {
             var forwardingOptions = new ForwardedHeadersOptions()
             {
@@ -491,8 +491,7 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
             app.UseReferrerPolicy(options => options.NoReferrer());
 
             // CSP Configuration to be able to use external resources
-            var cspTrustedDomains = app.ApplicationServices.GetRequiredService<IdentityServer4AdminUIOptions>().CspTrustedDomains;
-            if (cspTrustedDomains.Any())
+            if (cspTrustedDomains != null && cspTrustedDomains.Any())
             {
                 app.UseCsp(csp =>
                 {

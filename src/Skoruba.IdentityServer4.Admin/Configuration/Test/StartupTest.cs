@@ -1,15 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
-using Skoruba.IdentityServer4.Admin.Helpers;
-using Skoruba.IdentityServer4.Admin.Middlewares;
 
 namespace Skoruba.IdentityServer4.Admin.Configuration.Test
 {
-    public class StartupTest : Startup
+	public class StartupTest : Startup
     {
         public StartupTest(IWebHostEnvironment env, IConfiguration configuration) : base(env, configuration)
         {
@@ -19,6 +14,7 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.Test
         {
             // Applies configuration from appsettings.
             options.ApplyConfiguration(Configuration);
+            options.ApplyConfiguration(HostingEnvironment);
 
             // Use staging DbContexts and auth services.
             options.IsStaging = true;
@@ -40,10 +36,10 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.Test
         //    services.AddAuthorizationPolicies(rootConfiguration);
         //}
 
-        public override void UseAuthentication(IApplicationBuilder app)
-        {
-            app.UseAuthentication();
-            app.UseMiddleware<AuthenticatedTestRequestMiddleware>();
-        }
+        //public override void UseAuthentication(IApplicationBuilder app)
+        //{
+        //    app.UseAuthentication();
+        //    app.UseMiddleware<AuthenticatedTestRequestMiddleware>();
+        //}
     }
 }
