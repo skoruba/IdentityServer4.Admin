@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using Skoruba.IdentityServer4.Admin.Configuration;
 using Skoruba.IdentityServer4.Admin.Middlewares;
+using Skoruba.IdentityServer4.Admin.UI.Configuration;
 
 namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Common
 {

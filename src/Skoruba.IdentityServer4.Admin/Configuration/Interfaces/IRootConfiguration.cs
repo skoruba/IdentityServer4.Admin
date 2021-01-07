@@ -1,4 +1,6 @@
-﻿namespace Skoruba.IdentityServer4.Admin.Configuration.Interfaces
+﻿using Skoruba.IdentityServer4.Admin.UI.Configuration;
+
+namespace Skoruba.IdentityServer4.Admin.Configuration.Interfaces
 {
     public interface IRootConfiguration
     {
