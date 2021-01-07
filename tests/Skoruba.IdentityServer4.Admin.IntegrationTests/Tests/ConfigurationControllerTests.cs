@@ -9,6 +9,7 @@ using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.Configuration.Test;
 using Skoruba.IdentityServer4.Admin.IntegrationTests.Common;
 using Skoruba.IdentityServer4.Admin.IntegrationTests.Tests.Base;
+using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants;
 using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Tests
