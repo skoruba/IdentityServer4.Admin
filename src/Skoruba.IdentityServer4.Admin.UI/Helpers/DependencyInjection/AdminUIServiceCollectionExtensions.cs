@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
@@ -64,6 +65,7 @@ namespace Microsoft.Extensions.DependencyInjection
 			// Builds the options from user preferences or configuration.
 			IdentityServer4AdminUIOptions options = new IdentityServer4AdminUIOptions();
 			optionsAction(options);
+			services.AddSingleton(options);
 
 			// Add DbContexts for Asp.Net Core Identity, Logging and IdentityServer - Configuration store and Operational store
 			if (!options.IsStaging)
@@ -93,6 +95,14 @@ namespace Microsoft.Extensions.DependencyInjection
 			{
 				services.AddAuthenticationServicesStaging<AdminIdentityDbContext, UserIdentity, UserIdentityRole>();
 			}
+
+			// Add HSTS options
+			services.AddHsts(options =>
+			{
+				options.Preload = true;
+				options.IncludeSubDomains = true;
+				options.MaxAge = TimeSpan.FromDays(365);
+			});
 
 			// Add exception filters in MVC
 			services.AddMvcExceptionFilters();

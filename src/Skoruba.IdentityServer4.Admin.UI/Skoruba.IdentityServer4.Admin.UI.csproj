@@ -158,6 +158,7 @@
 	  <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="3.1.1" />
 	  <PackageReference Include="AspNetCore.HealthChecks.OpenIdConnectServer" Version="3.1.1" />
 	  <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="3.1.1" />
+	  <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
   </ItemGroup>
 
 	<ItemGroup>

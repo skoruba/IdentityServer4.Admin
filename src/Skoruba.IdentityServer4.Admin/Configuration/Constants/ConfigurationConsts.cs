@@ -9,7 +9,5 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.Constants
         public const string IdentityServerDataConfigurationKey = "IdentityServerData";
 
         public const string IdentityDataConfigurationKey = "IdentityData";
-
-        public const string CspTrustedDomainsKey = "CspTrustedDomains";
     }
 }

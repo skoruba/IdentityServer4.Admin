@@ -5,6 +5,7 @@ using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Shared.Configuration.Common;
 using System;
+using System.Collections.Generic;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -55,6 +56,10 @@ namespace Microsoft.Extensions.DependencyInjection
 		/// </summary>
 		public AzureKeyVaultConfiguration AzureKeyVault { get; set; } = new AzureKeyVaultConfiguration();
 
+		/// <summary>
+		/// The trusted domains from which content can be downloaded.
+		/// </summary>
+		public List<string> CspTrustedDomains { get; set; } = new List<string>();
 
 		/// <summary>
 		/// Applies configuration parsed from an appsettings file into these options.
@@ -70,6 +75,7 @@ namespace Microsoft.Extensions.DependencyInjection
 			configuration.GetSection(nameof(DataProtectionConfiguration)).Bind(DataProtection);
 			configuration.GetSection(nameof(AzureKeyVaultConfiguration)).Bind(AzureKeyVault);
 			IdentityAction = options => configuration.GetSection(nameof(IdentityOptions)).Bind(options);
+			configuration.GetSection(ConfigurationConsts.CspTrustedDomainsKey).Bind(CspTrustedDomains);
 		}
 	}
 }

@@ -41,6 +41,8 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.HttpOverrides;
+using System.Collections.Generic;
 
 namespace Skoruba.IdentityServer4.Admin.UI.Helpers
 {
@@ -463,6 +465,71 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
                     default:
                         throw new NotImplementedException($"Health checks not defined for database provider {databaseProviderConfiguration.ProviderType}");
                 }
+            }
+        }
+
+        /// <summary>
+        /// Using of Forwarded Headers, Hsts, XXssProtection and Csp
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="configuration"></param>
+        public static void UseSecurityHeaders(this IApplicationBuilder app)
+        {
+            var forwardingOptions = new ForwardedHeadersOptions()
+            {
+                ForwardedHeaders = ForwardedHeaders.All
+            };
+
+            forwardingOptions.KnownNetworks.Clear();
+            forwardingOptions.KnownProxies.Clear();
+
+            app.UseForwardedHeaders(forwardingOptions);
+
+            app.UseXXssProtection(options => options.EnabledWithBlockMode());
+            app.UseXContentTypeOptions();
+            app.UseXfo(options => options.SameOrigin());
+            app.UseReferrerPolicy(options => options.NoReferrer());
+
+            // CSP Configuration to be able to use external resources
+            var cspTrustedDomains = app.ApplicationServices.GetRequiredService<IdentityServer4AdminUIOptions>().CspTrustedDomains;
+            if (cspTrustedDomains.Any())
+            {
+                app.UseCsp(csp =>
+                {
+                    csp.ImageSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                    });
+                    csp.FontSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                    });
+                    csp.ScriptSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                        options.UnsafeInlineSrc = true;
+                        options.UnsafeEvalSrc = true;
+                    });
+                    csp.StyleSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                        options.UnsafeInlineSrc = true;
+                    });
+                    csp.DefaultSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                    });
+                });
             }
         }
     }
