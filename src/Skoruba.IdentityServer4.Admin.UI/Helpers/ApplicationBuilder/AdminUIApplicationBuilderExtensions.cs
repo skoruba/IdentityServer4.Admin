@@ -42,15 +42,13 @@ namespace Microsoft.AspNetCore.Builder
 			app.UseStaticFiles();
 
 			app.UseAuthentication();
-
-			// Use Localization
-			app.ConfigureLocalization();
-
-			app.UseAuthorization();
 			if (options.IsStaging)
 			{
 				app.UseMiddleware<AuthenticatedTestRequestMiddleware>();
 			}
+
+			// Use Localization
+			app.ConfigureLocalization();
 
 			return app;
 		}

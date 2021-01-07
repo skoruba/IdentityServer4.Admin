@@ -115,7 +115,7 @@ namespace Skoruba.IdentityServer4.Admin
 			app.UseIdentityServer4AdminUI();
 
 			app.UseRouting();
-			//app.UseAuthorization();
+			app.UseAuthorization();
 			app.UseEndpoints(endpoint =>
             {
 				endpoint.MapIdentityServer4AdminUI();
