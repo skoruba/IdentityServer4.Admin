@@ -7,23 +7,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Skoruba.AuditLogging.EntityFramework.Entities;
-using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.Helpers;
 using Skoruba.IdentityServer4.Admin.Configuration;
 using Skoruba.IdentityServer4.Admin.Configuration.Constants;
 using System;
-using Microsoft.AspNetCore.DataProtection;
-using Skoruba.IdentityServer4.Shared.Dtos;
-using Skoruba.IdentityServer4.Shared.Dtos.Identity;
 using Skoruba.IdentityServer4.Shared.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin
 {
-    public class Startup
+	public class Startup
     {
         public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {
@@ -116,19 +109,23 @@ namespace Skoruba.IdentityServer4.Admin
 
             UseAuthentication(app);
 
-            // Use Localization
-            app.ConfigureLocalization();
+			//// Use Localization
+			//app.ConfigureLocalization();
 
-            app.UseRouting();
-            app.UseAuthorization();
-            app.UseEndpoints(endpoint =>
+			app.UseIdentityServer4AdminUI();
+
+			app.UseRouting();
+			app.UseAuthorization();
+			app.UseEndpoints(endpoint =>
             {
-                endpoint.MapDefaultControllerRoute();
-                endpoint.MapHealthChecks("/health", new HealthCheckOptions
-                {
-                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-                });
-            });
+				//endpoint.MapIdentityServer4AdminUI();
+
+				endpoint.MapDefaultControllerRoute();
+				endpoint.MapHealthChecks("/health", new HealthCheckOptions
+				{
+					ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+				});
+			});
         }
 
         public virtual void ConfigureUIOptions(IdentityServer4AdminUIOptions options)
@@ -140,29 +137,29 @@ namespace Skoruba.IdentityServer4.Admin
             options.IsStaging = false;
 		}
 
-        //public virtual void RegisterDbContexts(IServiceCollection services)
-        //{
-        //    services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext>(Configuration);
-        //}
+		//public virtual void RegisterDbContexts(IServiceCollection services)
+		//{
+		//    services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext>(Configuration);
+		//}
 
-        //public virtual void RegisterAuthentication(IServiceCollection services)
-        //{
-        //    var rootConfiguration = CreateRootConfiguration();
-        //    services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Configuration);
-        //}
+		//public virtual void RegisterAuthentication(IServiceCollection services)
+		//{
+		//    var rootConfiguration = CreateRootConfiguration();
+		//    services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Configuration);
+		//}
 
-        //public virtual void RegisterAuthorization(IServiceCollection services)
-        //{
-        //    var rootConfiguration = CreateRootConfiguration();
-        //    services.AddAuthorizationPolicies(rootConfiguration);
-        //}
+		//public virtual void RegisterAuthorization(IServiceCollection services)
+		//{
+		//    var rootConfiguration = CreateRootConfiguration();
+		//    services.AddAuthorizationPolicies(rootConfiguration);
+		//}
 
-        public virtual void UseAuthentication(IApplicationBuilder app)
-        {
-            app.UseAuthentication();
-        }
+		public virtual void UseAuthentication(IApplicationBuilder app)
+		{
+			app.UseAuthentication();
+		}
 
-        public virtual void RegisterHstsOptions(IServiceCollection services)
+		public virtual void RegisterHstsOptions(IServiceCollection services)
         {
             services.AddHsts(options =>
             {
