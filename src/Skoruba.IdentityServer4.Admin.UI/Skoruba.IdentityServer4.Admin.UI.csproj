@@ -2,10 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-	  <Version>1.0.0</Version>
-	  <Authors>Jan Škoruba</Authors>
-	  <LangVersion>latest</LangVersion>
+	<Version>1.0.0</Version>
+	<Authors>Jan Škoruba</Authors>
+	<LangVersion>latest</LangVersion>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <StaticWebAssetBasePath Condition="$(StaticWebAssetBasePath) == ''">/</StaticWebAssetBasePath>
   </PropertyGroup>
 
   <ItemGroup>
