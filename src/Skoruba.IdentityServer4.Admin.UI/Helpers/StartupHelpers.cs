@@ -23,9 +23,9 @@ using Skoruba.AuditLogging.EntityFramework.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
-using Skoruba.IdentityServer4.Admin.Configuration;
-using Skoruba.IdentityServer4.Admin.Configuration.ApplicationParts;
-using Skoruba.IdentityServer4.Admin.Configuration.Constants;
+using Skoruba.IdentityServer4.Admin.UI.Configuration;
+using Skoruba.IdentityServer4.Admin.UI.Configuration.ApplicationParts;
+using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions;
@@ -34,17 +34,17 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
-using Skoruba.IdentityServer4.Admin.ExceptionHandling;
-using Skoruba.IdentityServer4.Admin.Helpers.Localization;
+using Skoruba.IdentityServer4.Admin.UI.ExceptionHandling;
+using Skoruba.IdentityServer4.Admin.UI.Helpers.Localization;
 using Skoruba.IdentityServer4.Shared.Authentication;
 using System;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Skoruba.IdentityServer4.Admin.Helpers
+namespace Skoruba.IdentityServer4.Admin.UI.Helpers
 {
-	public static class ServiceHelpers
+	public static class StartupHelpers
 	{
         public static IServiceCollection AddAuditEventLogging<TAuditLoggingDbContext, TAuditLog>(this IServiceCollection services, AuditLoggingConfiguration auditLoggingConfiguration)
             where TAuditLog : AuditLog, new()

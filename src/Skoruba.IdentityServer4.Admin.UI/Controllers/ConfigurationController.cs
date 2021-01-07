@@ -6,10 +6,10 @@ using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
-using Skoruba.IdentityServer4.Admin.Configuration.Constants;
-using Skoruba.IdentityServer4.Admin.ExceptionHandling;
+using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants;
+using Skoruba.IdentityServer4.Admin.UI.ExceptionHandling;
 
-namespace Skoruba.IdentityServer4.Admin.Controllers
+namespace Skoruba.IdentityServer4.Admin.UI.Controllers
 {
     [Authorize(Policy = AuthorizationConsts.AdministrationPolicy)]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]

@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Skoruba.IdentityServer4.Admin.Configuration.Constants;
-using Skoruba.IdentityServer4.Admin.ExceptionHandling;
+using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants;
+using Skoruba.IdentityServer4.Admin.UI.ExceptionHandling;
 
-namespace Skoruba.IdentityServer4.Admin.Controllers
+namespace Skoruba.IdentityServer4.Admin.UI.Controllers
 {
     [Authorize(Policy = AuthorizationConsts.AdministrationPolicy)]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]

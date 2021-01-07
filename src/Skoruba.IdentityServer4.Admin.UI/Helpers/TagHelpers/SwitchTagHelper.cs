@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Skoruba.IdentityServer4.Admin.Helpers.TagHelpers
+namespace Skoruba.IdentityServer4.Admin.UI.Helpers.TagHelpers
 {
     [HtmlTargetElement("toggle-button")]
     public class SwitchTagHelper : TagHelper

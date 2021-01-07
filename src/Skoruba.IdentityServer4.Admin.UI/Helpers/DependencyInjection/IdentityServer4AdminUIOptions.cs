@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using Skoruba.IdentityServer4.Admin.Configuration;
-using Skoruba.IdentityServer4.Admin.Configuration.Constants;
+using Skoruba.IdentityServer4.Admin.UI.Configuration;
+using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Shared.Configuration.Common;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -65,7 +63,7 @@ namespace Microsoft.Extensions.DependencyInjection
 		public void ApplyConfiguration(IConfiguration configuration)
 		{
 			configuration.GetSection(ConfigurationConsts.ConnectionStringsKey).Bind(ConnectionStrings);
-			configuration.GetSection(ConfigurationConsts.AdminConfigurationKey).Bind(Admin);
+			configuration.GetSection(nameof(AdminConfiguration)).Bind(Admin);
 			configuration.GetSection(nameof(DatabaseProviderConfiguration)).Bind(DatabaseProvider);
 			configuration.GetSection(nameof(AuditLoggingConfiguration)).Bind(AuditLogging);
 			configuration.GetSection(nameof(CultureConfiguration)).Bind(Culture);
