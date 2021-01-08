@@ -16,26 +16,44 @@ namespace Microsoft.Extensions.DependencyInjection
 	public static class AdminUIServiceCollectionExtensions
 	{
 		/// <summary>
-		/// Adds the Skoruba IdentityServer4 Admin UI with default entities.
+		/// Adds the Skoruba IdentityServer4 Admin UI with the default entity model.
 		/// </summary>
 		/// <param name="services"></param>
 		/// <param name="optionsAction"></param>
 		/// <returns></returns>
 		public static IServiceCollection AddIdentityServer4AdminUI(this IServiceCollection services, Action<IdentityServer4AdminUIOptions> optionsAction)
 			=> AddIdentityServer4AdminUI<AdminIdentityDbContext, UserIdentity, UserIdentityRole, UserIdentityUserClaim,
-				UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken, string, 
+				UserIdentityUserRole, UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken, string,
 				IdentityUserDto, IdentityRoleDto, IdentityUsersDto, IdentityRolesDto, IdentityUserRolesDto,
 				IdentityUserClaimsDto, IdentityUserProviderDto, IdentityUserProvidersDto, IdentityUserChangePasswordDto,
 				IdentityRoleClaimsDto, IdentityUserClaimDto, IdentityRoleClaimDto>(services, optionsAction);
 
+		/// <summary>
+		/// Adds the Skoruba IdentityServer4 Admin UI with a custom user model and database context.
+		/// </summary>
+		/// <typeparam name="TIdentityDbContext"></typeparam>
+		/// <typeparam name="TUser"></typeparam>
+		/// <param name="services"></param>
+		/// <param name="optionsAction"></param>
+		/// <returns></returns>
+		public static IServiceCollection AddIdentityServer4AdminUI<TIdentityDbContext, TUser>(this IServiceCollection services, Action<IdentityServer4AdminUIOptions> optionsAction)
+			where TIdentityDbContext : IdentityDbContext<TUser, IdentityRole, string, IdentityUserClaim<string>,
+				IdentityUserRole<string>, IdentityUserLogin<string>, IdentityRoleClaim<string>, 
+				IdentityUserToken<string>>
+			where TUser : IdentityUser<string>
+			=> AddIdentityServer4AdminUI<TIdentityDbContext, TUser, IdentityRole, IdentityUserClaim<string>, 
+				IdentityUserRole<string>, IdentityUserLogin<string>, IdentityRoleClaim<string>, 
+				IdentityUserToken<string>, string, IdentityUserDto, IdentityRoleDto, IdentityUsersDto, IdentityRolesDto,
+				IdentityUserRolesDto, IdentityUserClaimsDto, IdentityUserProviderDto, IdentityUserProvidersDto, 
+				IdentityUserChangePasswordDto, IdentityRoleClaimsDto, IdentityUserClaimDto, IdentityRoleClaimDto>(services, optionsAction);
 
 		/// <summary>
-		/// Adds the Skoruba IdentityServer4 Admin UI with custom entity and database contexts.
+		/// Adds the Skoruba IdentityServer4 Admin UI with a fully custom entity model and database contexts.
 		/// </summary>
 		/// <param name="services"></param>
 		/// <param name="optionsAction"></param>
 		/// <returns></returns>
-		public static IServiceCollection AddIdentityServer4AdminUI<TIdentityDbContext, TUser, TRole, TUserClaim, 
+		public static IServiceCollection AddIdentityServer4AdminUI<TIdentityDbContext, TUser, TRole, TUserClaim,
 			TUserRole, TUserLogin, TRoleClaim, TUserToken, TKey, TUserDto, TRoleDto, TUsersDto, TRolesDto, TUserRolesDto,
 			TUserClaimsDto, TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto,
 			TRoleClaimDto>
@@ -81,7 +99,7 @@ namespace Microsoft.Extensions.DependencyInjection
 					IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext,
 					IdentityServerDataProtectionDbContext>();
 			}
-			
+
 
 			// Save data protection keys to db, using a common application name shared between Admin and STS
 			services.AddDataProtection<IdentityServerDataProtectionDbContext>(options.DataProtection, options.AzureKeyVault);
@@ -114,7 +132,7 @@ namespace Microsoft.Extensions.DependencyInjection
 			// Add all dependencies for Asp.Net Core Identity
 			// If you want to change primary keys or use another db model for Asp.Net Core Identity:
 			services.AddAdminAspNetIdentityServices<TIdentityDbContext, IdentityServerPersistedGrantDbContext,
-				TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, 
+				TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim,
 				TUserRole, TUserLogin, TRoleClaim, TUserToken, TUsersDto, TRolesDto, TUserRolesDto,
 				TUserClaimsDto, TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto,
 				TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>();
@@ -135,8 +153,8 @@ namespace Microsoft.Extensions.DependencyInjection
 			services.AddAuditEventLogging<AdminAuditLogDbContext, AuditLog>(options.AuditLogging);
 
 			// Add health checks.
-			services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, 
-				TIdentityDbContext, AdminLogDbContext, AdminAuditLogDbContext, 
+			services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext,
+				TIdentityDbContext, AdminLogDbContext, AdminAuditLogDbContext,
 				IdentityServerDataProtectionDbContext>(options.Admin, options.ConnectionStrings, options.DatabaseProvider);
 
 			return services;
