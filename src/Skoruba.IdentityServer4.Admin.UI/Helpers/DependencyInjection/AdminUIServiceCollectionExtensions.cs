@@ -93,13 +93,13 @@ namespace Microsoft.Extensions.DependencyInjection
 			// Add DbContexts for Asp.Net Core Identity, Logging and IdentityServer - Configuration store and Operational store
 			if (!options.IsStaging)
 			{
-				services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext,
+				services.RegisterDbContexts<TIdentityDbContext, IdentityServerConfigurationDbContext,
 					IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext,
 					IdentityServerDataProtectionDbContext>(options.ConnectionStrings, options.DatabaseProvider, options.DatabaseMigrations);
 			}
 			else
 			{
-				services.RegisterDbContextsStaging<AdminIdentityDbContext, IdentityServerConfigurationDbContext,
+				services.RegisterDbContextsStaging<TIdentityDbContext, IdentityServerConfigurationDbContext,
 					IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext,
 					IdentityServerDataProtectionDbContext>();
 			}
@@ -111,12 +111,12 @@ namespace Microsoft.Extensions.DependencyInjection
 			// Add Asp.Net Core Identity Configuration and OpenIdConnect auth as well
 			if (!options.IsStaging)
 			{
-				services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>
+				services.AddAuthenticationServices<TIdentityDbContext, TUser, TRole>
 						(options.Admin, options.IdentityAction);
 			}
 			else
 			{
-				services.AddAuthenticationServicesStaging<AdminIdentityDbContext, UserIdentity, UserIdentityRole>();
+				services.AddAuthenticationServicesStaging<TIdentityDbContext, TUser, TRole>();
 			}
 
 			// Add HSTS options
