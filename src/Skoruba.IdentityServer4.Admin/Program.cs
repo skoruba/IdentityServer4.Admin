@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
-using Skoruba.IdentityServer4.Admin.UI.Configuration;
-using Skoruba.IdentityServer4.Admin.UI.Helpers;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Helpers;
 using Skoruba.IdentityServer4.Shared.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin
