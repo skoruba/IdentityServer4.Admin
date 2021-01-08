@@ -84,7 +84,11 @@ namespace Microsoft.Extensions.DependencyInjection
 			IdentityServer4AdminUIOptions options = new IdentityServer4AdminUIOptions();
 			optionsAction(options);
 			services.AddSingleton(options);
+
+			// Adds root configuration to the DI.
 			services.AddSingleton(options.Admin);
+			services.AddSingleton(options.IdentityServerData);
+			services.AddSingleton(options.IdentityData);
 
 			// Add DbContexts for Asp.Net Core Identity, Logging and IdentityServer - Configuration store and Operational store
 			if (!options.IsStaging)

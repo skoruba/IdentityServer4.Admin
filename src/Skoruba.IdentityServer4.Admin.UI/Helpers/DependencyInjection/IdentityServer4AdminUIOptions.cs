@@ -59,6 +59,17 @@ namespace Microsoft.Extensions.DependencyInjection
 		public AzureKeyVaultConfiguration AzureKeyVault { get; set; } = new AzureKeyVaultConfiguration();
 
 		/// <summary>
+		/// Identity data to seed the databases.
+		/// </summary>
+		public IdentityDataConfiguration IdentityData { get; set; } = new IdentityDataConfiguration();
+
+		/// <summary>
+		/// Identity server data to seed the dtabases.
+		/// </summary>
+		public IdentityServerDataConfiguration IdentityServerData { get; set; } = new IdentityServerDataConfiguration();
+
+		#region App Building
+		/// <summary>
 		/// The trusted domains from which content can be downloaded.
 		/// </summary>
 		public List<string> CspTrustedDomains { get; set; } = new List<string>();
@@ -70,7 +81,8 @@ namespace Microsoft.Extensions.DependencyInjection
 		/// </summary>
 		public bool UseDeveloperExceptionPage { get; set; } = false;
 
-		public bool UseHsts { get; set; } = true;
+		public bool UseHsts { get; set; } = true; 
+		#endregion
 
 		/// <summary>
 		/// Applies configuration parsed from an appsettings file into these options.

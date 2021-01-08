@@ -10,13 +10,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Skoruba.AuditLogging.EntityFramework.DbContexts;
 using Skoruba.AuditLogging.EntityFramework.Entities;
-using Skoruba.IdentityServer4.Admin.Configuration;
-using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
+using Skoruba.IdentityServer4.Admin.UI.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
-namespace Skoruba.IdentityServer4.Admin.Helpers
+namespace Skoruba.IdentityServer4.Admin.UI.Helpers
 {
-    public static class DbMigrationHelpers
+	public static class DbMigrationHelpers
     {
         /// <summary>
         /// Generate migrations before running this method, you can use these steps bellow:
@@ -109,10 +108,11 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
                 var context = scope.ServiceProvider.GetRequiredService<TIdentityServerDbContext>();
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<TUser>>();
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<TRole>>();
-                var rootConfiguration = scope.ServiceProvider.GetRequiredService<IRootConfiguration>();
+                var idsDataConfiguration = scope.ServiceProvider.GetRequiredService<IdentityServerDataConfiguration>();
+                var idDataConfiguration = scope.ServiceProvider.GetRequiredService<IdentityDataConfiguration>();
 
-                await EnsureSeedIdentityServerData(context, rootConfiguration.IdentityServerDataConfiguration);
-                await EnsureSeedIdentityData(userManager, roleManager, rootConfiguration.IdentityDataConfiguration);
+                await EnsureSeedIdentityServerData(context, idsDataConfiguration);
+                await EnsureSeedIdentityData(userManager, roleManager, idDataConfiguration);
             }
         }
 

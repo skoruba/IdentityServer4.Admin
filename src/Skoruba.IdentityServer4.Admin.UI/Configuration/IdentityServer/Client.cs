@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Skoruba.IdentityServer4.Admin.Configuration.Identity;
+using Skoruba.IdentityServer4.Admin.UI.Configuration.Identity;
 
-namespace Skoruba.IdentityServer4.Admin.Configuration.IdentityServer
+namespace Skoruba.IdentityServer4.Admin.UI.Configuration.IdentityServer
 {
     public class Client : global::IdentityServer4.Models.Client
     {

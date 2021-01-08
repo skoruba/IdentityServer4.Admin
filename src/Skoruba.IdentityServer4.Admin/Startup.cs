@@ -1,17 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
-using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
-using Skoruba.IdentityServer4.Admin.Helpers;
-using Skoruba.IdentityServer4.Admin.Configuration;
-using Skoruba.IdentityServer4.Admin.Configuration.Constants;
-using System;
 using Skoruba.IdentityServer4.Shared.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin
@@ -31,8 +23,8 @@ namespace Skoruba.IdentityServer4.Admin
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var rootConfiguration = CreateRootConfiguration();
-            services.AddSingleton(rootConfiguration);
+            //var rootConfiguration = CreateRootConfiguration();
+            //services.AddSingleton(rootConfiguration);
 
             // Adds the IdentityServer4 Admin UI with custom options.
             services.AddIdentityServer4AdminUI(ConfigureUIOptions);
@@ -92,46 +84,5 @@ namespace Skoruba.IdentityServer4.Admin
             // Use production DbContexts and auth services.
             options.IsStaging = false;
 		}
-
-		//public virtual void RegisterDbContexts(IServiceCollection services)
-		//{
-		//    services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext>(Configuration);
-		//}
-
-		//public virtual void RegisterAuthentication(IServiceCollection services)
-		//{
-		//    var rootConfiguration = CreateRootConfiguration();
-		//    services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Configuration);
-		//}
-
-		//public virtual void RegisterAuthorization(IServiceCollection services)
-		//{
-		//    var rootConfiguration = CreateRootConfiguration();
-		//    services.AddAuthorizationPolicies(rootConfiguration);
-		//}
-
-		//public virtual void UseAuthentication(IApplicationBuilder app)
-		//{
-		//	app.UseAuthentication();
-		//}
-
-		//public virtual void RegisterHstsOptions(IServiceCollection services)
-  //      {
-  //          services.AddHsts(options =>
-  //          {
-  //              options.Preload = true;
-  //              options.IncludeSubDomains = true;
-  //              options.MaxAge = TimeSpan.FromDays(365);
-  //          });
-  //      }
-
-        protected IRootConfiguration CreateRootConfiguration()
-        {
-            var rootConfiguration = new RootConfiguration();
-            Configuration.GetSection(ConfigurationConsts.AdminConfigurationKey).Bind(rootConfiguration.AdminConfiguration);
-            Configuration.GetSection(ConfigurationConsts.IdentityDataConfigurationKey).Bind(rootConfiguration.IdentityDataConfiguration);
-            Configuration.GetSection(ConfigurationConsts.IdentityServerDataConfigurationKey).Bind(rootConfiguration.IdentityServerDataConfiguration);
-            return rootConfiguration;
-        }
     }
 }
