@@ -34,6 +34,11 @@ namespace Microsoft.Extensions.DependencyInjection
 		public DatabaseProviderConfiguration DatabaseProvider { get; set; } = new DatabaseProviderConfiguration();
 
 		/// <summary>
+		/// The settings for database migrations.
+		/// </summary>
+		public DatabaseMigrationsConfiguration DatabaseMigrations { get; set; } = new DatabaseMigrationsConfiguration();
+
+		/// <summary>
 		/// The settings for audit logging.
 		/// </summary>
 		public AuditLoggingConfiguration AuditLogging { get; set; } = new AuditLoggingConfiguration();
@@ -93,6 +98,7 @@ namespace Microsoft.Extensions.DependencyInjection
 			configuration.GetSection(ConfigurationConsts.ConnectionStringsKey).Bind(ConnectionStrings);
 			configuration.GetSection(nameof(AdminConfiguration)).Bind(Admin);
 			configuration.GetSection(nameof(DatabaseProviderConfiguration)).Bind(DatabaseProvider);
+			configuration.GetSection(nameof(DatabaseMigrationsConfiguration)).Bind(DatabaseMigrations);
 			configuration.GetSection(nameof(AuditLoggingConfiguration)).Bind(AuditLogging);
 			configuration.GetSection(nameof(CultureConfiguration)).Bind(Culture);
 			configuration.GetSection(nameof(DataProtectionConfiguration)).Bind(DataProtection);

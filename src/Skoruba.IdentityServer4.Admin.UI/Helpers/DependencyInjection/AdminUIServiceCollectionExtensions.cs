@@ -95,7 +95,7 @@ namespace Microsoft.Extensions.DependencyInjection
 			{
 				services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext,
 					IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext,
-					IdentityServerDataProtectionDbContext>(options.ConnectionStrings, options.DatabaseProvider);
+					IdentityServerDataProtectionDbContext>(options.ConnectionStrings, options.DatabaseProvider, options.DatabaseMigrations);
 			}
 			else
 			{

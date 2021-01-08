@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Skoruba.AuditLogging.EntityFramework.DbContexts;
 using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions
 {
@@ -28,9 +29,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions
         /// <param name="auditLoggingConnectionString"></param>
         public static void RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext,
             TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(this IServiceCollection services,
-            string identityConnectionString, string configurationConnectionString,
-            string persistedGrantConnectionString, string errorLoggingConnectionString,
-            string auditLoggingConnectionString, string dataProtectionConnectionString = null)
+            ConnectionStringsConfiguration connectionStrings,
+            DatabaseMigrationsConfiguration databaseMigrations)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
@@ -42,29 +42,29 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions
 
             // Config DB for identity
             services.AddDbContext<TIdentityDbContext>(options =>
-                options.UseMySql(identityConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
+                options.UseMySql(connectionStrings.IdentityDbConnection, sql => sql.MigrationsAssembly(databaseMigrations.IdentityDbMigrationsAssembly ?? migrationsAssembly)));
 
             // Config DB from existing connection
             services.AddConfigurationDbContext<TConfigurationDbContext>(options =>
                 options.ConfigureDbContext = b =>
-                    b.UseMySql(configurationConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
+                    b.UseMySql(connectionStrings.ConfigurationDbConnection, sql => sql.MigrationsAssembly(databaseMigrations.ConfigurationDbMigrationsAssembly ?? migrationsAssembly)));
 
             // Operational DB from existing connection
             services.AddOperationalDbContext<TPersistedGrantDbContext>(options => options.ConfigureDbContext = b =>
-                b.UseMySql(persistedGrantConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
+                b.UseMySql(connectionStrings.PersistedGrantDbConnection, sql => sql.MigrationsAssembly(databaseMigrations.PersistedGrantDbMigrationsAssembly ?? migrationsAssembly)));
 
             // Log DB from existing connection
-            services.AddDbContext<TLogDbContext>(options => options.UseMySql(errorLoggingConnectionString,
-                optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
+            services.AddDbContext<TLogDbContext>(options => options.UseMySql(connectionStrings.AdminLogDbConnection,
+                optionsSql => optionsSql.MigrationsAssembly(databaseMigrations.AdminLogDbMigrationsAssembly ?? migrationsAssembly)));
 
             // Audit logging connection
-            services.AddDbContext<TAuditLoggingDbContext>(options => options.UseMySql(auditLoggingConnectionString,
-                optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
+            services.AddDbContext<TAuditLoggingDbContext>(options => options.UseMySql(connectionStrings.AdminAuditLogDbConnection,
+                optionsSql => optionsSql.MigrationsAssembly(databaseMigrations.AdminAuditLogDbMigrationsAssembly ?? migrationsAssembly)));
 
             // DataProtectionKey DB from existing connection
-            if(!string.IsNullOrEmpty(dataProtectionConnectionString))
-                services.AddDbContext<TDataProtectionDbContext>(options => options.UseMySql(dataProtectionConnectionString,
-                    optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
+            if(!string.IsNullOrEmpty(connectionStrings.DataProtectionDbConnection))
+                services.AddDbContext<TDataProtectionDbContext>(options => options.UseMySql(connectionStrings.DataProtectionDbConnection,
+                    optionsSql => optionsSql.MigrationsAssembly(databaseMigrations.DataProtectionDbMigrationsAssembly ?? migrationsAssembly)));
         }
 
         /// <summary>
