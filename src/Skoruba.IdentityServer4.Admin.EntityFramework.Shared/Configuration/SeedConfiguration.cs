@@ -1,4 +1,4 @@
-﻿namespace Skoruba.IdentityServer4.Admin.UI.Configuration
+﻿namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration
 {
     public class SeedConfiguration
     {

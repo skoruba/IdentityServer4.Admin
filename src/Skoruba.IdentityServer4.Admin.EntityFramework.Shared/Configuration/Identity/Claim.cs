@@ -1,4 +1,4 @@
-﻿namespace Skoruba.IdentityServer4.Admin.UI.Configuration.Identity
+﻿namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration.Identity
 {
     public class Claim
     {

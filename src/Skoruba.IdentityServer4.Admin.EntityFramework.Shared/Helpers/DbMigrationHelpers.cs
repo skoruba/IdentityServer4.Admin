@@ -10,10 +10,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Skoruba.AuditLogging.EntityFramework.DbContexts;
 using Skoruba.AuditLogging.EntityFramework.Entities;
-using Skoruba.IdentityServer4.Admin.UI.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 
-namespace Skoruba.IdentityServer4.Admin.UI.Helpers
+namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Helpers
 {
 	public static class DbMigrationHelpers
     {
