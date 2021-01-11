@@ -43,6 +43,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Localization;
 
 namespace Skoruba.IdentityServer4.Admin.UI.Helpers
 {
@@ -221,6 +222,8 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
             services.AddLocalization(opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; });
 
             services.TryAddTransient(typeof(IGenericControllerLocalizer<>), typeof(GenericControllerLocalizer<>));
+
+            services.AddTransient<IViewLocalizer, ResourceViewLocalizer>();
 
             services.AddControllersWithViews(o =>
             {
