@@ -235,7 +235,27 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 var updatedClientDto = await clientService.GetClientAsync(updatedClientEntity.Id);
 
                 //Assert updated client
-                updatedClient.ShouldBeEquivalentTo(updatedClientDto, options => options.Excluding(o => o.Id));
+                updatedClientEntity.ShouldBeEquivalentTo(updatedClientDto, options => options.Excluding(o => o.Created)
+                    .Excluding(o => o.Updated)
+                    .Excluding(o => o.LastAccessed)
+                    .Excluding(o => o.AllowedScopes)
+                    .Excluding(o => o.IdentityProviderRestrictions)
+                    .Excluding(o => o.AllowedGrantTypes)
+                    .Excluding(o => o.AllowedCorsOrigins)
+                    .Excluding(o => o.RedirectUris)
+                    .Excluding(o => o.PostLogoutRedirectUris));
+
+                updatedClientEntity.AllowedScopes.Select(p => p.Scope).ShouldAllBeEquivalentTo(updatedClientDto.AllowedScopes);
+
+                updatedClientEntity.AllowedGrantTypes.Select(p => p.GrantType).ShouldAllBeEquivalentTo(updatedClientDto.AllowedGrantTypes);
+
+                updatedClientEntity.AllowedCorsOrigins.Select(p => p.Origin).ShouldAllBeEquivalentTo(updatedClientDto.AllowedCorsOrigins);
+
+                updatedClientEntity.RedirectUris.Select(p => p.RedirectUri).ShouldAllBeEquivalentTo(updatedClientDto.RedirectUris);
+
+                updatedClientEntity.PostLogoutRedirectUris.Select(p => p.PostLogoutRedirectUri).ShouldAllBeEquivalentTo(updatedClientDto.PostLogoutRedirectUris);
+
+                updatedClientEntity.IdentityProviderRestrictions.Select(p => p.Provider).ShouldAllBeEquivalentTo(updatedClientDto.IdentityProviderRestrictions);
             }
         }
 

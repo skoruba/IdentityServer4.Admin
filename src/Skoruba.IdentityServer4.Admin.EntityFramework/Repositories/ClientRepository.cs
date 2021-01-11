@@ -396,40 +396,94 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             return id;
         }
 
-        private async Task RemoveClientRelationsAsync(Client client)
-        {
-            //Remove old allowed scopes
-            var clientScopes = await DbContext.ClientScopes.Where(x => x.Client.Id == client.Id).ToListAsync();
-            DbContext.ClientScopes.RemoveRange(clientScopes);
-
-            //Remove old grant types
-            var clientGrantTypes = await DbContext.ClientGrantTypes.Where(x => x.Client.Id == client.Id).ToListAsync();
-            DbContext.ClientGrantTypes.RemoveRange(clientGrantTypes);
-
-            //Remove old redirect uri
-            var clientRedirectUris = await DbContext.ClientRedirectUris.Where(x => x.Client.Id == client.Id).ToListAsync();
-            DbContext.ClientRedirectUris.RemoveRange(clientRedirectUris);
-
-            //Remove old client cors
-            var clientCorsOrigins = await DbContext.ClientCorsOrigins.Where(x => x.Client.Id == client.Id).ToListAsync();
-            DbContext.ClientCorsOrigins.RemoveRange(clientCorsOrigins);
-
-            //Remove old client id restrictions
-            var clientIdPRestrictions = await DbContext.ClientIdPRestrictions.Where(x => x.Client.Id == client.Id).ToListAsync();
-            DbContext.ClientIdPRestrictions.RemoveRange(clientIdPRestrictions);
-
-            //Remove old client post logout redirect
-            var clientPostLogoutRedirectUris = await DbContext.ClientPostLogoutRedirectUris.Where(x => x.Client.Id == client.Id).ToListAsync();
-            DbContext.ClientPostLogoutRedirectUris.RemoveRange(clientPostLogoutRedirectUris);
-        }
-
         public virtual async Task<int> UpdateClientAsync(Client client)
         {
-            //Remove old relations
-            await RemoveClientRelationsAsync(client);
+            var clientToUpdate = await GetClientAsync(client.Id);
+
+            // Scopes
+            var scopesToRemove = clientToUpdate.AllowedScopes.Where(o => !client.AllowedScopes.Any(n => o.Scope == n.Scope));
+            DbContext.ClientScopes.RemoveRange(scopesToRemove);
+
+            var newScopes = client.AllowedScopes.Where(n => !clientToUpdate.AllowedScopes.Any(o => o.Scope == n.Scope));
+            clientToUpdate.AllowedScopes.AddRange(newScopes);
+
+            //Grant types
+            var grantTypesToRemove = clientToUpdate.AllowedGrantTypes.Where(o => !client.AllowedGrantTypes.Any(n => o.GrantType == n.GrantType));
+            DbContext.ClientGrantTypes.RemoveRange(grantTypesToRemove);
+
+            var newGrantTypes = client.AllowedGrantTypes.Where(n => !clientToUpdate.AllowedGrantTypes.Any(o => o.GrantType == n.GrantType));
+            clientToUpdate.AllowedGrantTypes.AddRange(newGrantTypes);
+
+            // Redirect URIs
+            var redirectUrisToRemove = clientToUpdate.RedirectUris.Where(o => !client.RedirectUris.Any(n => o.RedirectUri == n.RedirectUri));
+            DbContext.ClientRedirectUris.RemoveRange(redirectUrisToRemove);
+
+            var newRedirectUris = client.RedirectUris.Where(n => !clientToUpdate.RedirectUris.Any(o => o.RedirectUri == n.RedirectUri));
+            clientToUpdate.RedirectUris.AddRange(newRedirectUris);
+
+            // Post logout redirect URIs
+            var postLogoutRedirectUrisToRemove = clientToUpdate.PostLogoutRedirectUris.Where(o => !client.PostLogoutRedirectUris.Any(n => o.PostLogoutRedirectUri == n.PostLogoutRedirectUri));
+            DbContext.ClientPostLogoutRedirectUris.RemoveRange(postLogoutRedirectUrisToRemove);
+
+            var newPostLogoutRedirectUris = client.PostLogoutRedirectUris.Where(n => !clientToUpdate.PostLogoutRedirectUris.Any(o => o.PostLogoutRedirectUri == n.PostLogoutRedirectUri));
+            clientToUpdate.PostLogoutRedirectUris.AddRange(newPostLogoutRedirectUris);
+
+            // Client CORS
+            var clientCorsOriginsToRemove = clientToUpdate.AllowedCorsOrigins.Where(o => !client.AllowedCorsOrigins.Any(n => o.Origin == n.Origin));
+            DbContext.ClientCorsOrigins.RemoveRange(clientCorsOriginsToRemove);
+
+            var newClientCorsOrigins = client.AllowedCorsOrigins.Where(n => !clientToUpdate.AllowedCorsOrigins.Any(o => o.Origin == n.Origin));
+            clientToUpdate.AllowedCorsOrigins.AddRange(newClientCorsOrigins);
+
+            // Client id restrictions
+            var clientIdPRestrictionsToRemove = clientToUpdate.IdentityProviderRestrictions.Where(o => !client.IdentityProviderRestrictions.Any(n => o.Provider == n.Provider));
+            DbContext.ClientIdPRestrictions.RemoveRange(clientIdPRestrictionsToRemove);
+
+            var newClientIdPRestrictions = client.IdentityProviderRestrictions.Where(n => !clientToUpdate.IdentityProviderRestrictions.Any(o => o.Provider == n.Provider));
+            clientToUpdate.IdentityProviderRestrictions.AddRange(newClientIdPRestrictions);
 
             //Update with new data
-            DbContext.Clients.Update(client);
+            clientToUpdate.ClientId = client.ClientId;
+            clientToUpdate.Updated = DateTime.Now;
+            clientToUpdate.AuthorizationCodeLifetime = client.AuthorizationCodeLifetime;
+            clientToUpdate.ConsentLifetime = client.ConsentLifetime;
+            clientToUpdate.AbsoluteRefreshTokenLifetime = client.AbsoluteRefreshTokenLifetime;
+            clientToUpdate.SlidingRefreshTokenLifetime = client.SlidingRefreshTokenLifetime;
+            clientToUpdate.RefreshTokenUsage = client.RefreshTokenUsage;
+            clientToUpdate.UpdateAccessTokenClaimsOnRefresh = client.UpdateAccessTokenClaimsOnRefresh;
+            clientToUpdate.RefreshTokenExpiration = client.RefreshTokenExpiration;
+            clientToUpdate.AccessTokenType = client.AccessTokenType;
+            clientToUpdate.EnableLocalLogin = client.EnableLocalLogin;
+            clientToUpdate.AccessTokenLifetime = client.AccessTokenLifetime;
+            clientToUpdate.IncludeJwtId = client.IncludeJwtId;
+            clientToUpdate.AlwaysSendClientClaims = client.AlwaysSendClientClaims;
+            clientToUpdate.ClientClaimsPrefix = client.ClientClaimsPrefix;
+            clientToUpdate.PairWiseSubjectSalt = client.PairWiseSubjectSalt;
+            clientToUpdate.UserSsoLifetime = client.UserSsoLifetime;
+            clientToUpdate.UserCodeType = client.UserCodeType;
+            clientToUpdate.IdentityTokenLifetime = client.IdentityTokenLifetime;
+            clientToUpdate.AllowOfflineAccess = client.AllowOfflineAccess;
+            clientToUpdate.Enabled = client.Enabled;
+            clientToUpdate.ProtocolType = client.ProtocolType;
+            clientToUpdate.RequireClientSecret = client.RequireClientSecret;
+            clientToUpdate.ClientName = client.ClientName;
+            clientToUpdate.Description = client.Description;
+            clientToUpdate.ClientUri = client.ClientUri;
+            clientToUpdate.LogoUri = client.LogoUri;
+            clientToUpdate.RequireConsent = client.RequireConsent;
+            clientToUpdate.AllowRememberConsent = client.AllowRememberConsent;
+            clientToUpdate.AlwaysIncludeUserClaimsInIdToken = client.AlwaysIncludeUserClaimsInIdToken;
+            clientToUpdate.RequirePkce = client.RequirePkce;
+            clientToUpdate.AllowPlainTextPkce = client.AllowPlainTextPkce;
+            clientToUpdate.AllowAccessTokensViaBrowser = client.AllowAccessTokensViaBrowser;
+            clientToUpdate.FrontChannelLogoutUri = client.FrontChannelLogoutUri;
+            clientToUpdate.FrontChannelLogoutSessionRequired = client.FrontChannelLogoutSessionRequired;
+            clientToUpdate.BackChannelLogoutUri = client.BackChannelLogoutUri;
+            clientToUpdate.BackChannelLogoutSessionRequired = client.BackChannelLogoutSessionRequired;
+            clientToUpdate.DeviceCodeLifetime = client.DeviceCodeLifetime;
+            clientToUpdate.NonEditable = client.NonEditable;
+
+            DbContext.Clients.Update(clientToUpdate);
 
             return await AutoSaveChangesAsync();
         }

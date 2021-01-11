@@ -116,6 +116,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var adddedClient = await clientService.GetClientAsync(client.Id);
 
             clientDto.ShouldBeEquivalentTo(adddedClient, opts => opts.Excluding(x => x.Id)
+                .Excluding(o => o.Updated)
+                .Excluding(o => o.LastAccessed)
                 .Excluding(x => x.AccessTokenTypes)
                 .Excluding(x => x.ProtocolTypes)
                 .Excluding(x => x.RefreshTokenExpirations)

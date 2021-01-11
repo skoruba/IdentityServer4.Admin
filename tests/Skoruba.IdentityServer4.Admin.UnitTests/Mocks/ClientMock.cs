@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Bogus;
 using IdentityServer4.EntityFramework.Entities;
+using MoreLinq;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Constants;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
@@ -46,9 +47,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 				.RuleFor(o => o.AllowOfflineAccess, f => f.Random.Bool())
 				.RuleFor(o => o.AllowPlainTextPkce, f => f.Random.Bool())
 				.RuleFor(o => o.AllowRememberConsent, f => f.Random.Bool())
-				.RuleFor(o => o.AllowedCorsOrigins, f => GetClientCorsOriginFaker().Generate(f.Random.Number(10)))
-				.RuleFor(o => o.AllowedGrantTypes, f => ClientGrantTypesFaker().Generate(1))
-				.RuleFor(o => o.AllowedScopes, f => ClientScopesFaker().Generate(f.Random.Number(1, 3)))
+				.RuleFor(o => o.AllowedCorsOrigins, f => GetClientCorsOriginFaker().Generate(f.Random.Number(10)).DistinctBy(o => o.Origin).ToList())
+				.RuleFor(o => o.AllowedGrantTypes, f => ClientGrantTypesFaker().Generate(1).DistinctBy(o => o.GrantType).ToList())
+				.RuleFor(o => o.AllowedScopes, f => ClientScopesFaker().Generate(f.Random.Number(1, 3)).DistinctBy(o => o.Scope).ToList())
 				.RuleFor(o => o.AlwaysIncludeUserClaimsInIdToken, f => f.Random.Bool())
 				.RuleFor(o => o.Enabled, f => f.Random.Bool())
 				.RuleFor(o => o.ProtocolType, f => f.PickRandom(ClientConsts.GetProtocolTypes().Select(x => x.Id)))
@@ -61,9 +62,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
 				.RuleFor(o => o.ClientUri, f => f.Internet.Url())
 				.RuleFor(o => o.RequireConsent, f => f.Random.Bool())
 				.RuleFor(o => o.RequirePkce, f => f.Random.Bool())
-				.RuleFor(o => o.RedirectUris, f => ClientRedirectUriFaker().Generate(f.Random.Number(10)))
+				.RuleFor(o => o.RedirectUris, f => ClientRedirectUriFaker().Generate(f.Random.Number(10)).DistinctBy(o => o.RedirectUri).ToList())
 				.RuleFor(o => o.PostLogoutRedirectUris,
-					f => ClientPostLogoutRedirectUriFaker().Generate(f.Random.Number(10)))
+					f => ClientPostLogoutRedirectUriFaker().Generate(f.Random.Number(10)).DistinctBy(o => o.PostLogoutRedirectUri).ToList())
 				.RuleFor(o => o.FrontChannelLogoutUri, f => f.Internet.Url())
 				.RuleFor(o => o.FrontChannelLogoutSessionRequired, f => f.Random.Bool())
 				.RuleFor(o => o.BackChannelLogoutUri, f => f.Internet.Url())
