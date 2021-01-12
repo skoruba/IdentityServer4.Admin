@@ -277,7 +277,7 @@ __pycache__/
 # Don't ignore these log folders
 !/src/Skoruba.IdentityServer4.Admin.UI/Resources/Views/Log/
 !/src/Skoruba.IdentityServer4.Admin.BusinessLogic/Dtos/Log/
-!/src/Skoruba.IdentityServer4.Admin.UI/Views/Log/
+!**/Views/Log/
 !/src/Skoruba.IdentityServer4.Admin.BusinessLogic/Events/Log/
 /src/Skoruba.IdentityServer4.Admin.Api/appsettings.Production.json
 

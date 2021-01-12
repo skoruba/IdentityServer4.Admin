@@ -28,9 +28,9 @@ namespace Microsoft.AspNetCore.Builder
 		/// Maps the Skoruba IdentityServer4 Admin UI to the routes of this application.
 		/// </summary>
 		/// <param name="endpoint"></param>
-		public static IEndpointConventionBuilder MapIdentityServer4AdminUI(this IEndpointRouteBuilder endpoint)
+		public static IEndpointConventionBuilder MapIdentityServer4AdminUI(this IEndpointRouteBuilder endpoint, string patternPrefix = "/")
 		{
-			return endpoint.MapDefaultControllerRoute();
+			return endpoint.MapAreaControllerRoute("AdminUI", "AdminUI", patternPrefix + "{controller=Home}/{action=Index}/{id?}");
 		}
 
 		/// <summary>

@@ -9,10 +9,11 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.UI.ExceptionHandling;
 
-namespace Skoruba.IdentityServer4.Admin.UI.Controllers
+namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
 {
     [Authorize(Policy = AuthorizationConsts.AdministrationPolicy)]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
+    [Area("AdminUI")]
     public class ConfigurationController : BaseController
     {
         private readonly IIdentityResourceService _identityResourceService;

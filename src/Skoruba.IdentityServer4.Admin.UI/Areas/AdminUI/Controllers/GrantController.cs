@@ -9,10 +9,11 @@ using Skoruba.IdentityServer4.Admin.UI.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.UI.Helpers;
 using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants;
 
-namespace Skoruba.IdentityServer4.Admin.UI.Controllers
+namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
 {
     [Authorize(Policy = AuthorizationConsts.AdministrationPolicy)]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
+    [Area("AdminUI")]
     public class GrantController : BaseController
     {
         private readonly IPersistedGrantAspNetIdentityService _persistedGrantService;

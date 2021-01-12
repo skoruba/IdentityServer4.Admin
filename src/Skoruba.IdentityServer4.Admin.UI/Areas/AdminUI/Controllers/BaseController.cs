@@ -5,8 +5,9 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Skoruba.IdentityServer4.Admin.UI.Helpers;
 
-namespace Skoruba.IdentityServer4.Admin.UI.Controllers
+namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
 {
+    [Area("AdminUI")]
     public class BaseController : Controller
     {
         private readonly ILogger<BaseController> _logger;

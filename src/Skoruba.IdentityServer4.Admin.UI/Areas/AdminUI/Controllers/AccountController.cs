@@ -4,9 +4,10 @@ using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants;
 using System.Collections.Generic;
 
-namespace Skoruba.IdentityServer4.Admin.UI.Controllers
+namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
 {
     [Authorize]
+    [Area("AdminUI")]
     public class AccountController : BaseController
     {
         public AccountController(ILogger<ConfigurationController> logger) : base(logger)
