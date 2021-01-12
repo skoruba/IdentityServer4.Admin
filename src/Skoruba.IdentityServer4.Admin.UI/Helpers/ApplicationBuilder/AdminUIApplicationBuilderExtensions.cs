@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Skoruba.IdentityServer4.Admin.UI.Configuration;
 using Skoruba.IdentityServer4.Admin.UI.Helpers;
 using Skoruba.IdentityServer4.Admin.UI.Middlewares;
+using System;
 
 namespace Microsoft.AspNetCore.Builder
 {
@@ -27,22 +28,25 @@ namespace Microsoft.AspNetCore.Builder
 		/// Maps the Skoruba IdentityServer4 Admin UI to the routes of this application.
 		/// </summary>
 		/// <param name="endpoint"></param>
-		public static void MapIdentityServer4AdminUI(this IEndpointRouteBuilder endpoint)
+		public static IEndpointConventionBuilder MapIdentityServer4AdminUI(this IEndpointRouteBuilder endpoint)
 		{
-			endpoint.MapDefaultControllerRoute();
+			return endpoint.MapDefaultControllerRoute();
+		}
 
-			var healthChecksConfiguration = endpoint.ServiceProvider.GetRequiredService<HealthChecksConfiguration>();
-			if (healthChecksConfiguration.UseHealthChecks)
+		/// <summary>
+		/// Maps the Skoruba IdentityServer4 Admin UI health checks to the routes of this application.
+		/// </summary>
+		/// <param name="endpoint"></param>
+		public static IEndpointConventionBuilder MapIdentityServer4AdminUIHealthChecks(this IEndpointRouteBuilder endpoint, string pattern = "/health", Action<HealthCheckOptions> configureAction = null)
+		{
+			var options = new HealthCheckOptions
 			{
-				var options = new HealthCheckOptions
-				{
-					ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-				};
+				ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+			};
 
-				healthChecksConfiguration.ConfigureAction?.Invoke(options);
+			configureAction?.Invoke(options);
 
-				endpoint.MapHealthChecks(healthChecksConfiguration.RoutePattern, options);
-			}
+			return endpoint.MapHealthChecks(pattern, options);
 		}
 	}
 }

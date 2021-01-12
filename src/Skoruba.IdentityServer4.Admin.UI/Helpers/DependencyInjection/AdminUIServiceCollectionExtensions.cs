@@ -114,7 +114,7 @@ namespace Microsoft.Extensions.DependencyInjection
 			if (!options.Testing.IsStaging)
 			{
 				services.AddAuthenticationServices<TIdentityDbContext, TUser, TRole>
-						(options.Admin, options.IdentityAction);
+						(options.Admin, options.IdentityConfigureAction, options.Security.AuthenticationBuilderAction);
 			}
 			else
 			{
@@ -130,7 +130,7 @@ namespace Microsoft.Extensions.DependencyInjection
 					opt.IncludeSubDomains = true;
 					opt.MaxAge = TimeSpan.FromDays(365);
 
-					options.Security.HstsAction?.Invoke(opt);
+					options.Security.HstsConfigureAction?.Invoke(opt);
 				});
 			}
 
@@ -158,25 +158,21 @@ namespace Microsoft.Extensions.DependencyInjection
 				TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>(options.Culture);
 
 			// Add authorization policies for MVC
-			services.AddAuthorizationPolicies(options.Admin);
+			services.AddAuthorizationPolicies(options.Admin, options.Security.AuthorizationConfigureAction);
 
 			// Add audit logging
 			services.AddAuditEventLogging<AdminAuditLogDbContext, AuditLog>(options.AuditLogging);
 
 			// Add health checks.
-			if (options.HealthChecks.UseHealthChecks)
-			{
-				var healthChecksBuilder = options.HealthChecks.BuilderFactory?.Invoke(services) ?? services.AddHealthChecks();
-				healthChecksBuilder.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext,
-					TIdentityDbContext, AdminLogDbContext, AdminAuditLogDbContext,
-					IdentityServerDataProtectionDbContext>(options.Admin, options.ConnectionStrings, options.DatabaseProvider, options.HealthChecks);
-			}
+			var healthChecksBuilder = options.HealthChecksBuilderFactory?.Invoke(services) ?? services.AddHealthChecks();
+			healthChecksBuilder.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext,
+				TIdentityDbContext, AdminLogDbContext, AdminAuditLogDbContext,
+				IdentityServerDataProtectionDbContext>(options.Admin, options.ConnectionStrings, options.DatabaseProvider);
 
 			// Adds a startup filter for further middleware configuration.
 			services.AddSingleton(options.Testing);
 			services.AddSingleton(options.Security);
 			services.AddSingleton(options.Http);
-			services.AddSingleton(options.HealthChecks);
 			services.AddTransient<IStartupFilter, StartupFilter>();
 
 			return services;

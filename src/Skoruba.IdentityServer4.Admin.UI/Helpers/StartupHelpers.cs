@@ -46,6 +46,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.AspNetCore.Hosting;
 using Skoruba.IdentityServer4.Admin.UI.Middlewares;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Skoruba.IdentityServer4.Admin.UI.Helpers
 {
@@ -194,12 +195,15 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
         /// Add authorization policies
         /// </summary>
         /// <param name="services"></param>
-        public static void AddAuthorizationPolicies(this IServiceCollection services, AdminConfiguration adminConfiguration)
+        public static void AddAuthorizationPolicies(this IServiceCollection services, AdminConfiguration adminConfiguration,
+            Action<AuthorizationOptions> authorizationAction)
         {
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(AuthorizationConsts.AdministrationPolicy,
                     policy => policy.RequireRole(adminConfiguration.AdministrationRole));
+
+                authorizationAction?.Invoke(options);
             });
         }
 
@@ -324,7 +328,8 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
         /// <typeparam name="TUserIdentityRole"></typeparam>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services, AdminConfiguration adminConfiguration, Action<IdentityOptions> identityOptionsAction)
+        public static void AddAuthenticationServices<TContext, TUserIdentity, TUserIdentityRole>(this IServiceCollection services,
+            AdminConfiguration adminConfiguration, Action<IdentityOptions> identityOptionsAction, Action<AuthenticationBuilder> authenticationBuilderAction)
             where TContext : DbContext where TUserIdentity : class where TUserIdentityRole : class
         {
             services.Configure<CookiePolicyOptions>(options =>
@@ -342,7 +347,7 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
                 .AddEntityFrameworkStores<TContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication(options =>
+            var authenticationBuilder = services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = AuthenticationConsts.OidcAuthenticationScheme;
@@ -389,6 +394,8 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
                             OnRedirectToIdentityProvider = context => OnRedirectToIdentityProvider(context, adminConfiguration)
                         };
                     });
+
+            authenticationBuilderAction?.Invoke(authenticationBuilder);
         }
 
 
@@ -410,8 +417,7 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
         public static void AddIdSHealthChecks<TConfigurationDbContext, TPersistedGrantDbContext, TIdentityDbContext, 
             TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>
             (this IHealthChecksBuilder healthChecksBuilder, AdminConfiguration adminConfiguration, 
-            ConnectionStringsConfiguration connectionStringsConfiguration, DatabaseProviderConfiguration databaseProviderConfiguration,
-            HealthChecksConfiguration healthChecksConfiguration)
+            ConnectionStringsConfiguration connectionStringsConfiguration, DatabaseProviderConfiguration databaseProviderConfiguration)
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TIdentityDbContext : DbContext

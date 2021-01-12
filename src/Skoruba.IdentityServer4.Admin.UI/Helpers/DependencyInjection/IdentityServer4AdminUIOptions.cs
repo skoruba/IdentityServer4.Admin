@@ -51,7 +51,7 @@ namespace Microsoft.Extensions.DependencyInjection
 		/// <summary>
 		/// An action to configure ASP.NET Core Identity.
 		/// </summary>
-		public Action<IdentityOptions> IdentityAction { get; set; } = options => { };
+		public Action<IdentityOptions> IdentityConfigureAction { get; set; } = options => { };
 
 		/// <summary>
 		/// The settings for data protection.
@@ -84,9 +84,9 @@ namespace Microsoft.Extensions.DependencyInjection
 		public HttpConfiguration Http { get; set; } = new HttpConfiguration();
 
 		/// <summary>
-		/// The settings for health checks.
+		/// Customizes the health checks builder used to add health checks.
 		/// </summary>
-		public HealthChecksConfiguration HealthChecks { get; set; } = new HealthChecksConfiguration();
+		public Func<IServiceCollection, IHealthChecksBuilder> HealthChecksBuilderFactory { get; set; }
 
 		/// <summary>
 		/// Applies configuration parsed from an appsettings file into these options.
@@ -103,10 +103,9 @@ namespace Microsoft.Extensions.DependencyInjection
 			configuration.GetSection(nameof(CultureConfiguration)).Bind(Culture);
 			configuration.GetSection(nameof(DataProtectionConfiguration)).Bind(DataProtection);
 			configuration.GetSection(nameof(AzureKeyVaultConfiguration)).Bind(AzureKeyVault);
-			IdentityAction = options => configuration.GetSection(nameof(IdentityOptions)).Bind(options);
+			IdentityConfigureAction = options => configuration.GetSection(nameof(IdentityOptions)).Bind(options);
 			configuration.GetSection(nameof(SecurityConfiguration)).Bind(Security);
 			configuration.GetSection(nameof(HttpConfiguration)).Bind(Http);
-			configuration.GetSection(nameof(HealthChecksConfiguration)).Bind(HealthChecks);
 		}
 	}
 }

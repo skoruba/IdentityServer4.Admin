@@ -40,7 +40,8 @@ namespace Skoruba.IdentityServer4.Admin
             app.UseEndpoints(endpoint =>
             {
 				endpoint.MapIdentityServer4AdminUI();
-			});
+                endpoint.MapIdentityServer4AdminUIHealthChecks();
+            });
         }
 
         public virtual void ConfigureUIOptions(IdentityServer4AdminUIOptions options)
