@@ -409,8 +409,9 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
 
         public static void AddIdSHealthChecks<TConfigurationDbContext, TPersistedGrantDbContext, TIdentityDbContext, 
             TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>
-            (this IServiceCollection services, AdminConfiguration adminConfiguration, 
-            ConnectionStringsConfiguration connectionStringsConfiguration, DatabaseProviderConfiguration databaseProviderConfiguration)
+            (this IHealthChecksBuilder healthChecksBuilder, AdminConfiguration adminConfiguration, 
+            ConnectionStringsConfiguration connectionStringsConfiguration, DatabaseProviderConfiguration databaseProviderConfiguration,
+            HealthChecksConfiguration healthChecksConfiguration)
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TIdentityDbContext : DbContext
@@ -426,7 +427,7 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
             var dataProtectionDbConnectionString = connectionStringsConfiguration.DataProtectionDbConnection;
 
             var identityServerUri = adminConfiguration.IdentityServerBaseUrl;
-            var healthChecksBuilder = services.AddHealthChecks()
+            healthChecksBuilder = healthChecksBuilder
                 .AddDbContextCheck<TConfigurationDbContext>("ConfigurationDbContext")
                 .AddDbContextCheck<TPersistedGrantDbContext>("PersistedGrantsDbContext")
                 .AddDbContextCheck<TIdentityDbContext>("IdentityDbContext")
@@ -436,7 +437,7 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
 
                 .AddIdentityServer(new Uri(identityServerUri), "Identity Server");
 
-            var serviceProvider = services.BuildServiceProvider();
+            var serviceProvider = healthChecksBuilder.Services.BuildServiceProvider();
             var scopeFactory = serviceProvider.GetRequiredService<IServiceScopeFactory>();
             using (var scope = scopeFactory.CreateScope())
             {

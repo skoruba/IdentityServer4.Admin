@@ -164,14 +164,19 @@ namespace Microsoft.Extensions.DependencyInjection
 			services.AddAuditEventLogging<AdminAuditLogDbContext, AuditLog>(options.AuditLogging);
 
 			// Add health checks.
-			services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext,
-				TIdentityDbContext, AdminLogDbContext, AdminAuditLogDbContext,
-				IdentityServerDataProtectionDbContext>(options.Admin, options.ConnectionStrings, options.DatabaseProvider);
+			if (options.HealthChecks.UseHealthChecks)
+			{
+				var healthChecksBuilder = options.HealthChecks.BuilderFactory?.Invoke(services) ?? services.AddHealthChecks();
+				healthChecksBuilder.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext,
+					TIdentityDbContext, AdminLogDbContext, AdminAuditLogDbContext,
+					IdentityServerDataProtectionDbContext>(options.Admin, options.ConnectionStrings, options.DatabaseProvider, options.HealthChecks);
+			}
 
 			// Adds a startup filter for further middleware configuration.
 			services.AddSingleton(options.Testing);
 			services.AddSingleton(options.Security);
 			services.AddSingleton(options.Http);
+			services.AddSingleton(options.HealthChecks);
 			services.AddTransient<IStartupFilter, StartupFilter>();
 
 			return services;

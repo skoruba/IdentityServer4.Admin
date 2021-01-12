@@ -30,10 +30,19 @@ namespace Microsoft.AspNetCore.Builder
 		public static void MapIdentityServer4AdminUI(this IEndpointRouteBuilder endpoint)
 		{
 			endpoint.MapDefaultControllerRoute();
-			endpoint.MapHealthChecks("/health", new HealthCheckOptions
+
+			var healthChecksConfiguration = endpoint.ServiceProvider.GetRequiredService<HealthChecksConfiguration>();
+			if (healthChecksConfiguration.UseHealthChecks)
 			{
-				ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-			});
+				var options = new HealthCheckOptions
+				{
+					ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+				};
+
+				healthChecksConfiguration.ConfigureAction?.Invoke(options);
+
+				endpoint.MapHealthChecks(healthChecksConfiguration.RoutePattern, options);
+			}
 		}
 	}
 }
