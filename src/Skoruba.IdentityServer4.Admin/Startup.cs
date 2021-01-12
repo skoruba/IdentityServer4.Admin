@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Shared.Helpers;
 
@@ -23,9 +24,6 @@ namespace Skoruba.IdentityServer4.Admin
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //var rootConfiguration = CreateRootConfiguration();
-            //services.AddSingleton(rootConfiguration);
-
             // Adds the IdentityServer4 Admin UI with custom options.
             services.AddIdentityServer4AdminUI(ConfigureUIOptions);
 
@@ -35,54 +33,31 @@ namespace Skoruba.IdentityServer4.Admin
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-   //         app.UseCookiePolicy();
-
-   //         if (env.IsDevelopment())
-   //         {
-   //             app.UseDeveloperExceptionPage();
-   //         }
-   //         else
-   //         {
-   //             app.UseExceptionHandler("/Home/Error");
-   //             app.UseHsts();
-   //         }
-
-   //         app.UsePathBase(Configuration.GetValue<string>("BasePath"));
-
-   //         // Add custom security headers
-   //         app.UseSecurityHeaders(Configuration);
-
-   //         app.UseStaticFiles();
-
-   //         UseAuthentication(app);
-
-			//// Use Localization
-			//app.ConfigureLocalization();
-
-			app.UseIdentityServer4AdminUI();
-
 			app.UseRouting();
-			app.UseAuthorization();
-			app.UseEndpoints(endpoint =>
+
+            app.UseIdentityServer4AdminUI();
+
+            app.UseEndpoints(endpoint =>
             {
 				endpoint.MapIdentityServer4AdminUI();
-
-				//endpoint.MapDefaultControllerRoute();
-				//endpoint.MapHealthChecks("/health", new HealthCheckOptions
-				//{
-				//	ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-				//});
 			});
         }
 
         public virtual void ConfigureUIOptions(IdentityServer4AdminUIOptions options)
 		{
             // Applies configuration from appsettings.
-            options.ApplyConfiguration(Configuration);
-            options.ApplyConfiguration(HostingEnvironment);
+            options.BindConfiguration(Configuration);
+			if (HostingEnvironment.IsDevelopment())
+			{
+                options.Security.UseDeveloperExceptionPage = true;
+			}
+			else
+			{
+                options.Security.UseHsts = true;
+			}
             
             // Use production DbContexts and auth services.
-            options.IsStaging = false;
+            options.Testing.IsStaging = false;
 		}
     }
 }

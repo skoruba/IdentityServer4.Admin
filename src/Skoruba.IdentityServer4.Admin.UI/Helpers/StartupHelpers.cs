@@ -44,11 +44,36 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Localization;
+using Microsoft.AspNetCore.Hosting;
+using Skoruba.IdentityServer4.Admin.UI.Middlewares;
 
 namespace Skoruba.IdentityServer4.Admin.UI.Helpers
 {
 	public static class StartupHelpers
 	{
+        /// <summary>
+        /// A helper to inject common middleware into the application pipeline, without having to invoke Use*() methods.
+        /// </summary>
+        internal class StartupFilter : IStartupFilter
+        {
+            public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
+            {
+                return builder =>
+                {
+                    // Adds our required middlewares to the beginning of the app pipeline.
+                    // This does not include the middleware that is required to go between UseRouting and UseEndpoints.
+                    builder.UseCommonMiddleware(
+                        builder.ApplicationServices.GetRequiredService<SecurityConfiguration>(),
+                        builder.ApplicationServices.GetRequiredService<HttpConfiguration>());
+
+                    next(builder);
+
+                    // Routing-dependent middleware needs to go in between UseRouting and UseEndpoints and therefore 
+                    // needs to be handled by the user using UseIdentityServer4AdminUI().
+                };
+            }
+        }
+
         public static IServiceCollection AddAuditEventLogging<TAuditLoggingDbContext, TAuditLog>(this IServiceCollection services, AuditLoggingConfiguration auditLoggingConfiguration)
             where TAuditLog : AuditLog, new()
             where TAuditLoggingDbContext : IAuditLoggingDbContext<TAuditLog>
@@ -531,6 +556,46 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
                     });
                 });
             }
+        }
+
+        public static void UseCommonMiddleware(this IApplicationBuilder app, SecurityConfiguration securityConfiguration, HttpConfiguration httpConfiguration)
+		{
+            app.UseCookiePolicy();
+
+            if (securityConfiguration.UseDeveloperExceptionPage)
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
+
+            if (securityConfiguration.UseHsts)
+            {
+                app.UseHsts();
+            }
+
+            app.UsePathBase(httpConfiguration.BasePath);
+
+            // Add custom security headers
+            app.UseSecurityHeaders(securityConfiguration.CspTrustedDomains);
+
+            app.UseStaticFiles();
+
+            // Use Localization
+            app.ConfigureLocalization();
+        }
+
+        public static void UseRoutingDependentMiddleware(this IApplicationBuilder app, TestingConfiguration testingConfiguration)
+        {
+            app.UseAuthentication();
+            if (testingConfiguration.IsStaging)
+            {
+                app.UseMiddleware<AuthenticatedTestRequestMiddleware>();
+            }
+
+            app.UseAuthorization();
         }
     }
 }

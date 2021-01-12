@@ -14,9 +14,9 @@ namespace Microsoft.Extensions.DependencyInjection
 	public class IdentityServer4AdminUIOptions
 	{
 		/// <summary>
-		/// Use test instead of production services and pipelines.
+		/// The settings for test deployments.
 		/// </summary>
-		public bool IsStaging { get; set; }
+		public TestingConfiguration Testing { get; set; } = new TestingConfiguration();
 
 		/// <summary>
 		/// The database connection strings and settings.
@@ -69,32 +69,27 @@ namespace Microsoft.Extensions.DependencyInjection
 		public IdentityDataConfiguration IdentityData { get; set; } = new IdentityDataConfiguration();
 
 		/// <summary>
-		/// Identity server data to seed the dtabases.
+		/// Identity server data to seed the databases.
 		/// </summary>
 		public IdentityServerDataConfiguration IdentityServerData { get; set; } = new IdentityServerDataConfiguration();
 
-		#region App Building
 		/// <summary>
-		/// The trusted domains from which content can be downloaded.
+		/// The settings for security features.
 		/// </summary>
-		public List<string> CspTrustedDomains { get; set; } = new List<string>();
-
-		public string BasePath { get; set; } = "";
+		public SecurityConfiguration Security { get; set; } = new SecurityConfiguration();
 
 		/// <summary>
-		/// Use the developer exception page instead of the Identity error handler.
+		/// The settings for the HTTP hosting environment.
 		/// </summary>
-		public bool UseDeveloperExceptionPage { get; set; } = false;
-
-		public bool UseHsts { get; set; } = true; 
-		#endregion
+		public HttpConfiguration Http { get; set; } = new HttpConfiguration();
 
 		/// <summary>
 		/// Applies configuration parsed from an appsettings file into these options.
 		/// </summary>
 		/// <param name="configuration">The configuration to bind into this instance.</param>
-		public void ApplyConfiguration(IConfiguration configuration)
+		public void BindConfiguration(IConfiguration configuration)
 		{
+			configuration.GetSection(nameof(TestingConfiguration)).Bind(Testing);
 			configuration.GetSection(ConfigurationConsts.ConnectionStringsKey).Bind(ConnectionStrings);
 			configuration.GetSection(nameof(AdminConfiguration)).Bind(Admin);
 			configuration.GetSection(nameof(DatabaseProviderConfiguration)).Bind(DatabaseProvider);
@@ -104,21 +99,8 @@ namespace Microsoft.Extensions.DependencyInjection
 			configuration.GetSection(nameof(DataProtectionConfiguration)).Bind(DataProtection);
 			configuration.GetSection(nameof(AzureKeyVaultConfiguration)).Bind(AzureKeyVault);
 			IdentityAction = options => configuration.GetSection(nameof(IdentityOptions)).Bind(options);
-			configuration.GetSection(ConfigurationConsts.CspTrustedDomainsKey).Bind(CspTrustedDomains);
-		}
-
-		public void ApplyConfiguration(IWebHostEnvironment env)
-		{
-			if (env.IsDevelopment())
-			{
-				UseDeveloperExceptionPage = true;
-				UseHsts = false;
-			}
-			else
-			{
-				UseDeveloperExceptionPage = false;
-				UseHsts = true;
-			}
+			configuration.GetSection(nameof(SecurityConfiguration)).Bind(Security);
+			configuration.GetSection(nameof(HttpConfiguration)).Bind(Http);
 		}
 	}
 }

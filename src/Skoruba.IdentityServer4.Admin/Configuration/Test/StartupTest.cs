@@ -12,12 +12,10 @@ namespace Skoruba.IdentityServer4.Admin.Configuration.Test
 
         public override void ConfigureUIOptions(IdentityServer4AdminUIOptions options)
         {
-            // Applies configuration from appsettings.
-            options.ApplyConfiguration(Configuration);
-            options.ApplyConfiguration(HostingEnvironment);
+            base.ConfigureUIOptions(options);
 
             // Use staging DbContexts and auth services.
-            options.IsStaging = true;
+            options.Testing.IsStaging = true;
         }
     }
 }

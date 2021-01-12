@@ -1,15 +1,18 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
+using Skoruba.IdentityServer4.Admin.UI.Configuration;
 using Skoruba.IdentityServer4.Admin.UI.Helpers;
 using Skoruba.IdentityServer4.Shared.Dtos;
 using Skoruba.IdentityServer4.Shared.Dtos.Identity;
 using Skoruba.IdentityServer4.Shared.Helpers;
 using System;
+using static Skoruba.IdentityServer4.Admin.UI.Helpers.StartupHelpers;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -83,7 +86,6 @@ namespace Microsoft.Extensions.DependencyInjection
 			// Builds the options from user preferences or configuration.
 			IdentityServer4AdminUIOptions options = new IdentityServer4AdminUIOptions();
 			optionsAction(options);
-			services.AddSingleton(options);
 
 			// Adds root configuration to the DI.
 			services.AddSingleton(options.Admin);
@@ -91,7 +93,7 @@ namespace Microsoft.Extensions.DependencyInjection
 			services.AddSingleton(options.IdentityData);
 
 			// Add DbContexts for Asp.Net Core Identity, Logging and IdentityServer - Configuration store and Operational store
-			if (!options.IsStaging)
+			if (!options.Testing.IsStaging)
 			{
 				services.RegisterDbContexts<TIdentityDbContext, IdentityServerConfigurationDbContext,
 					IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext,
@@ -109,7 +111,7 @@ namespace Microsoft.Extensions.DependencyInjection
 			services.AddDataProtection<IdentityServerDataProtectionDbContext>(options.DataProtection, options.AzureKeyVault);
 
 			// Add Asp.Net Core Identity Configuration and OpenIdConnect auth as well
-			if (!options.IsStaging)
+			if (!options.Testing.IsStaging)
 			{
 				services.AddAuthenticationServices<TIdentityDbContext, TUser, TRole>
 						(options.Admin, options.IdentityAction);
@@ -120,12 +122,17 @@ namespace Microsoft.Extensions.DependencyInjection
 			}
 
 			// Add HSTS options
-			services.AddHsts(options =>
+			if (options.Security.UseHsts)
 			{
-				options.Preload = true;
-				options.IncludeSubDomains = true;
-				options.MaxAge = TimeSpan.FromDays(365);
-			});
+				services.AddHsts(opt =>
+				{
+					opt.Preload = true;
+					opt.IncludeSubDomains = true;
+					opt.MaxAge = TimeSpan.FromDays(365);
+
+					options.Security.HstsAction?.Invoke(opt);
+				});
+			}
 
 			// Add exception filters in MVC
 			services.AddMvcExceptionFilters();
@@ -160,6 +167,12 @@ namespace Microsoft.Extensions.DependencyInjection
 			services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext,
 				TIdentityDbContext, AdminLogDbContext, AdminAuditLogDbContext,
 				IdentityServerDataProtectionDbContext>(options.Admin, options.ConnectionStrings, options.DatabaseProvider);
+
+			// Adds a startup filter for further middleware configuration.
+			services.AddSingleton(options.Testing);
+			services.AddSingleton(options.Security);
+			services.AddSingleton(options.Http);
+			services.AddTransient<IStartupFilter, StartupFilter>();
 
 			return services;
 		}
