@@ -24,7 +24,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
                 .RuleFor(o => o.Data, f => f.Random.Words(f.Random.Number(1, 10)))
                 .RuleFor(o => o.Type, f => f.PickRandom(PersistedGransList()))
                 .RuleFor(o => o.Expiration, f => f.Date.Future())
-                .RuleFor(o => o.SubjectId, f => string.IsNullOrEmpty(subjectId) ? f.Random.Number(int.MaxValue).ToString() : subjectId.ToString());
+                .RuleFor(o => o.SubjectId, f => string.IsNullOrEmpty(subjectId) ? f.Random.Number(int.MaxValue).ToString() : subjectId.ToString())
+                .RuleFor(o => o.SessionId, Guid.NewGuid().ToString)
+                .RuleFor(o => o.Description, f => f.Random.Words(f.Random.Number(1, 10)))
+                .RuleFor(o => o.ConsumedTime, f => f.Date.Future());
 
             return persistedGrantFaker;
         }

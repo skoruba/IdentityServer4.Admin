@@ -141,11 +141,23 @@
   <data name="TableClient" xml:space="preserve">
     <value>Client</value>
   </data>
+  <data name="TableConsumedTime" xml:space="preserve">
+    <value>Consumed Time</value>
+  </data>
+  <data name="TableCreationTime" xml:space="preserve">
+    <value>Creation Time</value>
+  </data>
   <data name="TableData" xml:space="preserve">
     <value>Data</value>
   </data>
+  <data name="TableDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
   <data name="TableExpiration" xml:space="preserve">
     <value>Udløb</value>
+  </data>
+  <data name="TableSessionId" xml:space="preserve">
+    <value>SessionId</value>
   </data>
   <data name="TableSubjectId" xml:space="preserve">
     <value>Subject Id</value>

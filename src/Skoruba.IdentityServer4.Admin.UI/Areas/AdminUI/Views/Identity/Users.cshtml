@@ -8,9 +8,17 @@
     Layout = "_Layout";
 }
 
-<h2>@Localizer["Title"]</h2>
+<div class="row">
+    <div class="col-12 mb-3 text-center mt-1">
+        <h2><span class="oi oi-person" title="Users" aria-hidden="true"></span> @Localizer["Title"]</h2>
+    </div>
+</div>
 
-<a asp-action="UserProfile" class="btn btn-outline-primary mb-3 mt-3"><span class="oi oi-plus"></span> @Localizer["ActionAddUser"]</a>
+<div class="row">
+    <div class="col-12">
+        <a asp-action="UserProfile" class="btn btn-outline-primary mb-3 mt-3"><span class="oi oi-plus"></span> @Localizer["ActionAddUser"]</a>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-12">

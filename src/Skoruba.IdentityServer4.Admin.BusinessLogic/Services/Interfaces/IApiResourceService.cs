@@ -7,8 +7,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
     {
         ApiSecretsDto BuildApiSecretsViewModel(ApiSecretsDto apiSecrets);
 
-        ApiScopesDto BuildApiScopeViewModel(ApiScopesDto apiScope);
-
         Task<ApiResourcesDto> GetApiResourcesAsync(string search, int page = 1, int pageSize = 10);
 
         Task<ApiResourcePropertiesDto> GetApiResourcePropertiesAsync(int apiResourceId, int page = 1, int pageSize = 10);
@@ -30,17 +28,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
         Task<int> DeleteApiResourceAsync(ApiResourceDto apiResource);
 
         Task<bool> CanInsertApiResourceAsync(ApiResourceDto apiResource);
-
-        Task<ApiScopesDto> GetApiScopesAsync(int apiResourceId, int page = 1, int pageSize = 10);
-
-        Task<ApiScopesDto> GetApiScopeAsync(int apiResourceId, int apiScopeId);
-
-        Task<int> AddApiScopeAsync(ApiScopesDto apiScope);
-
-        Task<int> UpdateApiScopeAsync(ApiScopesDto apiScope);
-
-        Task<int> DeleteApiScopeAsync(ApiScopesDto apiScope);
-
+        
         Task<ApiSecretsDto> GetApiSecretsAsync(int apiResourceId, int page = 1, int pageSize = 10);
 
         Task<int> AddApiSecretAsync(ApiSecretsDto apiSecret);
@@ -48,8 +36,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
         Task<ApiSecretsDto> GetApiSecretAsync(int apiSecretId);
 
         Task<int> DeleteApiSecretAsync(ApiSecretsDto apiSecret);
-
-        Task<bool> CanInsertApiScopeAsync(ApiScopesDto apiScopes);
 
         Task<string> GetApiResourceNameAsync(int apiResourceId);
     }

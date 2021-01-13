@@ -31,33 +31,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Resources
             };
         }
 
-        public virtual ResourceMessage ApiScopeDoesNotExist()
-        {
-            return new ResourceMessage()
-            {
-                Code = nameof(ApiScopeDoesNotExist),
-                Description = ApiResourceServiceResource.ApiScopeDoesNotExist
-            };
-        }
-
-        public virtual ResourceMessage ApiScopeExistsValue()
-        {
-            return new ResourceMessage()
-            {
-                Code = nameof(ApiScopeExistsValue),
-                Description = ApiResourceServiceResource.ApiScopeExistsValue
-            };
-        }
-
-        public virtual ResourceMessage ApiScopeExistsKey()
-        {
-            return new ResourceMessage()
-            {
-                Code = nameof(ApiScopeExistsKey),
-                Description = ApiResourceServiceResource.ApiScopeExistsKey
-            };
-        }
-
         public virtual ResourceMessage ApiSecretDoesNotExist()
         {
             return new ResourceMessage()

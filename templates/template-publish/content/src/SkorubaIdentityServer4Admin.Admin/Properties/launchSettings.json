@@ -23,7 +23,7 @@
       },
       "applicationUrl": "https://localhost:44303"
     },
-    "Docker": {
+    "Docker (1)": {
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
