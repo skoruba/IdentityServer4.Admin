@@ -459,4 +459,16 @@
   <data name="SecretDescription_Label" xml:space="preserve">
     <value>شرح</value>
   </data>
+  <data name="RequireRequestObject_Info" xml:space="preserve">
+    <value>Specifies whether this client needs to wrap the authorize request parameters in a JWT (defaults to false)</value>
+  </data>
+  <data name="RequireRequestObject_Label" xml:space="preserve">
+    <value>Require Request Object</value>
+  </data>
+  <data name="SigningAlgorithms_Info" xml:space="preserve">
+    <value>List of allowed signing algorithms for identity token. If empty, will use the server default signing algorithm.</value>
+  </data>
+  <data name="SigningAlgorithms_Label" xml:space="preserve">
+    <value>Allowed Identity Token Signing Algorithms</value>
+  </data>
 </root>

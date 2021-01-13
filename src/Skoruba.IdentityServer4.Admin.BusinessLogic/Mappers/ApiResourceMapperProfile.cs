@@ -7,6 +7,7 @@ using System.Linq;
 using AutoMapper;
 using IdentityServer4.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
+using Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers.Converters;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
@@ -17,22 +18,18 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
         {
             // entity to model
             CreateMap<ApiResource, ApiResourceDto>(MemberList.Destination)
-                .ForMember(x => x.UserClaims, opts => opts.MapFrom(src => src.UserClaims.Select(x => x.Type)));
-
-            CreateMap<ApiScope, ApiScopesDto>(MemberList.Destination)
-                .ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(x => x.Type)))
-                .ForMember(x => x.ApiResourceId, opt => opt.MapFrom(src => src.ApiResource.Id))
-                .ForMember(x => x.ApiScopeId, opt => opt.MapFrom(src => src.Id));
-
-            CreateMap<ApiScope, ApiScopeDto>(MemberList.Destination)
-                .ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(x => x.Type)));
-
-            CreateMap<ApiSecret, ApiSecretsDto>(MemberList.Destination)
+                .ForMember(x => x.UserClaims, opts => opts.MapFrom(src => src.UserClaims.Select(x => x.Type)))
+                .ForMember(x => x.Scopes, opts => opts.MapFrom(src => src.Scopes.Select(x => x.Scope)))
+                .ForMember(x => x.AllowedAccessTokenSigningAlgorithms,
+                    opts => opts.ConvertUsing(AllowedSigningAlgorithmsConverter.Converter,
+                        x => x.AllowedAccessTokenSigningAlgorithms));
+            
+            CreateMap<ApiResourceSecret, ApiSecretsDto>(MemberList.Destination)
                 .ForMember(dest => dest.Type, opt => opt.Condition(srs => srs != null))
                 .ForMember(x => x.ApiSecretId, opt => opt.MapFrom(x => x.Id))
                 .ForMember(x => x.ApiResourceId, opt => opt.MapFrom(x => x.ApiResource.Id));
 
-            CreateMap<ApiSecret, ApiSecretDto>(MemberList.Destination)
+            CreateMap<ApiResourceSecret, ApiSecretDto>(MemberList.Destination)
                 .ForMember(dest => dest.Type, opt => opt.Condition(srs => srs != null));
 
             CreateMap<ApiResourceProperty, ApiResourcePropertyDto>(MemberList.Destination)
@@ -47,10 +44,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
             CreateMap<PagedList<ApiResource>, ApiResourcesDto>(MemberList.Destination)
                 .ForMember(x => x.ApiResources, opt => opt.MapFrom(src => src.Data));
 
-            CreateMap<PagedList<ApiScope>, ApiScopesDto>(MemberList.Destination)
-                .ForMember(x => x.Scopes, opt => opt.MapFrom(src => src.Data));
-
-            CreateMap<PagedList<ApiSecret>, ApiSecretsDto>(MemberList.Destination)
+            CreateMap<PagedList<ApiResourceSecret>, ApiSecretsDto>(MemberList.Destination)
                 .ForMember(x => x.ApiSecrets, opt => opt.MapFrom(src => src.Data));
 
             CreateMap<PagedList<ApiResourceProperty>, ApiResourcePropertiesDto>(MemberList.Destination)
@@ -58,18 +52,15 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Mappers
 
             // model to entity
             CreateMap<ApiResourceDto, ApiResource>(MemberList.Source)
-                .ForMember(x => x.UserClaims, opts => opts.MapFrom(src => src.UserClaims.Select(x => new ApiResourceClaim { Type = x })));
+                .ForMember(x => x.UserClaims, opts => opts.MapFrom(src => src.UserClaims.Select(x => new ApiResourceClaim { Type = x })))
+                .ForMember(x => x.Scopes, opts => opts.MapFrom(src => src.Scopes.Select(x => new ApiResourceScope { Scope = x})))
+                .ForMember(x => x.AllowedAccessTokenSigningAlgorithms,
+                    opts => opts.ConvertUsing(AllowedSigningAlgorithmsConverter.Converter,
+                        x => x.AllowedAccessTokenSigningAlgorithms));
 
-            CreateMap<ApiSecretsDto, ApiSecret>(MemberList.Source)
+            CreateMap<ApiSecretsDto, ApiResourceSecret>(MemberList.Source)
                 .ForMember(x => x.ApiResource, opts => opts.MapFrom(src => new ApiResource() { Id = src.ApiResourceId }))
                 .ForMember(x => x.Id, opt => opt.MapFrom(src => src.ApiSecretId));
-
-            CreateMap<ApiScopesDto, ApiScope>(MemberList.Source)
-                .ForMember(x => x.UserClaims, opts => opts.MapFrom(src => src.UserClaims.Select(x => new ApiScopeClaim { Type = x })))
-                .ForMember(x => x.Id, opt => opt.MapFrom(src => src.ApiScopeId));
-
-            CreateMap<ApiScopeDto, ApiScope>(MemberList.Source)
-                .ForMember(x => x.UserClaims, opts => opts.MapFrom(src => src.UserClaims.Select(x => new ApiScopeClaim { Type = x })));
 
             CreateMap<ApiResourcePropertiesDto, ApiResourceProperty>(MemberList.Source)
                 .ForMember(x => x.ApiResource, dto => dto.MapFrom(src => new ApiResource() { Id = src.ApiResourceId }))

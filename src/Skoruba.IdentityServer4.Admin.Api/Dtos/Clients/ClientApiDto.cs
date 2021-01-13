@@ -94,5 +94,9 @@ namespace Skoruba.IdentityServer4.Admin.Api.Dtos.Clients
         public int? UserSsoLifetime { get; set; }
         public string UserCodeType { get; set; }
         public int DeviceCodeLifetime { get; set; } = 300;
+
+        public bool RequireRequestObject { get; set; }
+
+        public List<string> AllowedIdentityTokenSigningAlgorithms { get; set; }
     }
 }

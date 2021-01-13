@@ -340,12 +340,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     options.Events.RaiseInformationEvents = true;
                     options.Events.RaiseFailureEvents = true;
                     options.Events.RaiseSuccessEvents = true;
-
-                    if (!string.IsNullOrEmpty(advancedConfiguration.PublicOrigin))
-                    {
-                        options.PublicOrigin = advancedConfiguration.PublicOrigin;
-                    }
-
+                    
                     if (!string.IsNullOrEmpty(advancedConfiguration.IssuerUri))
                     {
                         options.IssuerUri = advancedConfiguration.IssuerUri;

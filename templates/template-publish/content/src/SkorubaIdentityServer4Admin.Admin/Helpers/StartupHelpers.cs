@@ -44,7 +44,6 @@ using SkorubaIdentityServer4Admin.Admin.EntityFramework.PostgreSQL.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using SkorubaIdentityServer4Admin.Shared.Authentication;
-using SkorubaIdentityServer4Admin.Shared.Configuration.Identity;
 
 namespace SkorubaIdentityServer4Admin.Admin.Helpers
 {

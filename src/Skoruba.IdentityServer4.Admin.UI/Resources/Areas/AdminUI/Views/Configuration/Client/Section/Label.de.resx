@@ -236,7 +236,7 @@ Beim Auffrischen des Tokens wird die Lebensdauer des Refresh-Tokens durch Gleite
   <data name="RefreshTokenUsage.Info" xml:space="preserve">
     <value>Wiederverwendung des Refresh-Token-Handles bleibt beim Auffrischen der Token gleich
 
-OneTime wird das Refresh-Token-Handle aktualisiert, wenn Token aufgefrischt werden. </value> 
+OneTime wird das Refresh-Token-Handle aktualisiert, wenn Token aufgefrischt werden. </value>
   </data>
   <data name="RefreshTokenUsage.Label" xml:space="preserve">
     <value>Refresh Token Verwendung</value>
@@ -458,5 +458,17 @@ OneTime wird das Refresh-Token-Handle aktualisiert, wenn Token aufgefrischt werd
   </data>
   <data name="SecretDescription_Label" xml:space="preserve">
     <value>Beschreibung</value>
+  </data>
+  <data name="RequireRequestObject_Info" xml:space="preserve">
+    <value>Specifies whether this client needs to wrap the authorize request parameters in a JWT (defaults to false)</value>
+  </data>
+  <data name="RequireRequestObject_Label" xml:space="preserve">
+    <value>Require Request Object</value>
+  </data>
+  <data name="SigningAlgorithms_Info" xml:space="preserve">
+    <value>List of allowed signing algorithms for identity token. If empty, will use the server default signing algorithm.</value>
+  </data>
+  <data name="SigningAlgorithms_Label" xml:space="preserve">
+    <value>Allowed Identity Token Signing Algorithms</value>
   </data>
 </root>

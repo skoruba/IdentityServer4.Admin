@@ -43,6 +43,11 @@
                         <th>@Localizer["TableExpiration"]</th>
                         <th>@Localizer["TableData"]</th>
                         <th>@Localizer["TableClient"]</th>
+						
+                        <th>@Localizer["TableDescription"]</th>
+                        <th>@Localizer["TableSessionId"]</th>
+                        <th>@Localizer["TableCreationTime"]</th>
+                        <th>@Localizer["TableConsumedTime"]</th>
                     </tr>
 				</thead>
 
@@ -56,6 +61,10 @@
                         <td>@persistedGrant.Expiration</td>
                         <td>@persistedGrant.Data</td>
                         <td>@persistedGrant.ClientId</td>
+                        <td>@persistedGrant.Description</td>
+                        <td>@persistedGrant.SessionId</td>
+                        <td>@persistedGrant.ConsumedTime</td>
+                        <td>@persistedGrant.CreationTime</td>
                     </tr>
 					}
 				</tbody>

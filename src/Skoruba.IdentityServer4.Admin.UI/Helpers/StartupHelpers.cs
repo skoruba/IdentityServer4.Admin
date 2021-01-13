@@ -255,9 +255,13 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
             services.AddTransient<IViewLocalizer, ResourceViewLocalizer>();
 
             services.AddControllersWithViews(o =>
-            {
-                o.Conventions.Add(new GenericControllerRouteConvention());
-            })
+                {
+                    o.Conventions.Add(new GenericControllerRouteConvention());
+                })
+#if DEBUG
+                // It is not necessary to re-build the views for new changes
+                .AddRazorRuntimeCompilation()
+#endif
                 .AddViewLocalization(
                     LanguageViewLocationExpanderFormat.Suffix,
                     opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; })
