@@ -13,7 +13,7 @@
         "font-awesome": "4.7.0",
         "holderjs": "2.9.6",
         "jquery": "3.5.1",
-        "jquery-validation": "1.19.2",
+        "jquery-validation": "1.19.3",
         "jquery-validation-unobtrusive": "3.2.11",
         "knockout": "3.5.1",
         "moment": "2.27.0",
