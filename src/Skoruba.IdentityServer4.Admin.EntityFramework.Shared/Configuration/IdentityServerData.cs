@@ -4,7 +4,7 @@ using Client = Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuratio
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration
 {
-    public class IdentityServerDataConfiguration
+    public class IdentityServerData
     {
         public List<Client> Clients { get; set; } = new List<Client>();
         public List<IdentityResource> IdentityResources { get; set; } = new List<IdentityResource>();
