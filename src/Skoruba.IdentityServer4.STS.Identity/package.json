@@ -10,7 +10,7 @@
     },
     "dependencies": {
         "jquery": "3.5.1",
-        "jquery-validation": "1.19.2",
+        "jquery-validation": "1.19.3",
         "jquery-validation-unobtrusive": "3.2.11",
         "bootstrap": "4.5.0",
         "popper.js": "1.16.1",
