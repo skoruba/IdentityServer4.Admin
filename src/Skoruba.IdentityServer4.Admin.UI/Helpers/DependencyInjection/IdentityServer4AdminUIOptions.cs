@@ -66,12 +66,12 @@ namespace Microsoft.Extensions.DependencyInjection
 		/// <summary>
 		/// Identity data to seed the databases.
 		/// </summary>
-		public IdentityDataConfiguration IdentityData { get; set; } = new IdentityDataConfiguration();
+		public IdentityData IdentityData { get; set; } = new IdentityData();
 
 		/// <summary>
 		/// Identity server data to seed the databases.
 		/// </summary>
-		public IdentityServerDataConfiguration IdentityServerData { get; set; } = new IdentityServerDataConfiguration();
+		public IdentityServerData IdentityServerData { get; set; } = new IdentityServerData();
 
 		/// <summary>
 		/// The settings for security features.
@@ -106,6 +106,8 @@ namespace Microsoft.Extensions.DependencyInjection
 			IdentityConfigureAction = options => configuration.GetSection(nameof(IdentityOptions)).Bind(options);
 			configuration.GetSection(nameof(SecurityConfiguration)).Bind(Security);
 			configuration.GetSection(nameof(HttpConfiguration)).Bind(Http);
+			configuration.GetSection(nameof(Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration.IdentityServerData)).Bind(IdentityServerData);
+			configuration.GetSection(nameof(Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration.IdentityData)).Bind(IdentityData);
 		}
 	}
 }

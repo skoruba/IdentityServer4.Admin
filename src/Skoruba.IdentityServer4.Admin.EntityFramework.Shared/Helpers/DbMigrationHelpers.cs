@@ -108,8 +108,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Helpers
                 var context = scope.ServiceProvider.GetRequiredService<TIdentityServerDbContext>();
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<TUser>>();
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<TRole>>();
-                var idsDataConfiguration = scope.ServiceProvider.GetRequiredService<IdentityServerDataConfiguration>();
-                var idDataConfiguration = scope.ServiceProvider.GetRequiredService<IdentityDataConfiguration>();
+                var idsDataConfiguration = scope.ServiceProvider.GetRequiredService<IdentityServerData>();
+                var idDataConfiguration = scope.ServiceProvider.GetRequiredService<IdentityData>();
 
                 await EnsureSeedIdentityServerData(context, idsDataConfiguration);
                 await EnsureSeedIdentityData(userManager, roleManager, idDataConfiguration);
@@ -120,7 +120,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Helpers
         /// Generate default admin user / role
         /// </summary>
         private static async Task EnsureSeedIdentityData<TUser, TRole>(UserManager<TUser> userManager,
-            RoleManager<TRole> roleManager, IdentityDataConfiguration identityDataConfiguration)
+            RoleManager<TRole> roleManager, IdentityData identityDataConfiguration)
             where TUser : IdentityUser, new()
             where TRole : IdentityRole, new()
         {
@@ -186,7 +186,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Helpers
         /// <summary>
         /// Generate default clients, identity and api resources
         /// </summary>
-        private static async Task EnsureSeedIdentityServerData<TIdentityServerDbContext>(TIdentityServerDbContext context, IdentityServerDataConfiguration identityServerDataConfiguration)
+        private static async Task EnsureSeedIdentityServerData<TIdentityServerDbContext>(TIdentityServerDbContext context, IdentityServerData identityServerDataConfiguration)
             where TIdentityServerDbContext : DbContext, IAdminConfigurationDbContext
         {
             if (!context.IdentityResources.Any())
