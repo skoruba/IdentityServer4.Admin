@@ -383,7 +383,6 @@
   display: none; }
 
 .slider {
-  background-color: #ccc;
   bottom: 0;
   cursor: pointer;
   left: 0;
@@ -402,8 +401,8 @@
   transition: .4s;
   width: 20px; }
 
-input:checked + .slider {
-  background-color: #007bff; }
+input:not(:checked) + .bg-primary {
+  background-color: #ccc !important; }
 
 input:checked + .slider:before {
   transform: translateX(26px); }
@@ -426,9 +425,7 @@ input:checked + .slider:before {
   padding: .375rem .75rem;
   font-size: 1rem;
   line-height: 1.5;
-  border-radius: .25rem;
-  border-color: #007bff;
-  color: #007bff; }
+  border-radius: .25rem; }
 
 .picker .button__add {
   margin-top: 5px;
@@ -462,6 +459,21 @@ input:checked + .slider:before {
   opacity: 1;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   filter: alpha(opacity=100); }
+
+.toast {
+  background-color: #030303; }
+
+.toast-success {
+  background-color: #51a351; }
+
+.toast-error {
+  background-color: #bd362f; }
+
+.toast-info {
+  background-color: #2f96b4; }
+
+.toast-warning {
+  background-color: #f89406; }
 
 label.radio-img > input {
   visibility: hidden;

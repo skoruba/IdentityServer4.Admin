@@ -310,7 +310,7 @@ ko.components.register('picker', {
         '<div data-bind="visible: selectedResult().length > 0, text: selectedItemsTitle" class="search-title"></div>' +
         '<div class="row" data-bind="foreach: selectedResult">' +
         '<div class="col-12">' +
-        '<span class="button__text" data-bind="text: $data"></span>' +
+        '<span class="button__text text-primary border-primary" data-bind="text: $data"></span>' +
         '<button class="btn btn-outline-primary button__update" data-bind="click: function() { $parent.showEditDialog($data) }"><span class="oi oi-pencil"></span></button>' +
         '<button class="btn btn-outline-primary button__delete" data-bind="click: function() { $parent.remove($data); }"><span class="oi oi-x"></span></button>' +
         '</div>' +

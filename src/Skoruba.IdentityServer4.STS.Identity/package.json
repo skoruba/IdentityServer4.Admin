@@ -18,7 +18,8 @@
         "open-iconic": "1.1.1",
         "cookieconsent": "3.1.1",
         "font-awesome": "4.7.0",
-        "node-sass": "4.14.1"
+        "node-sass": "4.14.1",
+        "bootswatch": "4.5.3"
     },
     "devDependencies": {
         "gulp": "4.0.2",
