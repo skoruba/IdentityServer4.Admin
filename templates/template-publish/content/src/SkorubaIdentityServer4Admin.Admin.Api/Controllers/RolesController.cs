@@ -121,7 +121,7 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Controllers
         }
 
         [HttpGet("{id}/Users")]
-        public async Task<ActionResult<TRolesDto>> GetRoleUsers(string id, string searchText, int page = 1, int pageSize = 10)
+        public async Task<ActionResult<TUsersDto>> GetRoleUsers(string id, string searchText, int page = 1, int pageSize = 10)
         {
             var usersDto = await _identityService.GetRoleUsersAsync(id, searchText, page, pageSize);
 
@@ -179,6 +179,7 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Controllers
         }
     }
 }
+
 
 
 

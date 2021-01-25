@@ -3,13 +3,17 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Azure.KeyVault;
+using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.AzureKeyVault;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using SkorubaIdentityServer4Admin.Admin.Configuration;
 using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.DbContexts;
 using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Entities.Identity;
 using SkorubaIdentityServer4Admin.Admin.Helpers;
+using SkorubaIdentityServer4Admin.Shared.Configuration.Common;
 using SkorubaIdentityServer4Admin.Shared.Helpers;
 
 namespace SkorubaIdentityServer4Admin.Admin
@@ -49,7 +53,7 @@ namespace SkorubaIdentityServer4Admin.Admin
         private static async Task ApplyDbMigrationsWithDataSeedAsync(string[] args, IConfiguration configuration, IHost host)
         {
             var applyDbMigrationWithDataSeedFromProgramArguments = args.Any(x => x == SeedArgs);
-            if (applyDbMigrationWithDataSeedFromProgramArguments) args = args.Except(new[] {SeedArgs}).ToArray();
+            if (applyDbMigrationWithDataSeedFromProgramArguments) args = args.Except(new[] { SeedArgs }).ToArray();
 
             var seedConfiguration = configuration.GetSection(nameof(SeedConfiguration)).Get<SeedConfiguration>();
             var databaseMigrationsConfiguration = configuration.GetSection(nameof(DatabaseMigrationsConfiguration))
@@ -79,6 +83,10 @@ namespace SkorubaIdentityServer4Admin.Admin
                 configurationBuilder.AddUserSecrets<Startup>();
             }
 
+            var configuration = configurationBuilder.Build();
+
+            configuration.AddAzureKeyVaultConfiguration(configurationBuilder);
+
             configurationBuilder.AddCommandLine(args);
             configurationBuilder.AddEnvironmentVariables();
 
@@ -89,6 +97,8 @@ namespace SkorubaIdentityServer4Admin.Admin
             Host.CreateDefaultBuilder(args)
                  .ConfigureAppConfiguration((hostContext, configApp) =>
                  {
+                     var configurationRoot = configApp.Build();
+
                      configApp.AddJsonFile("serilog.json", optional: true, reloadOnChange: true);
                      configApp.AddJsonFile("identitydata.json", optional: true, reloadOnChange: true);
                      configApp.AddJsonFile("identityserverdata.json", optional: true, reloadOnChange: true);
@@ -103,6 +113,8 @@ namespace SkorubaIdentityServer4Admin.Admin
                      {
                          configApp.AddUserSecrets<Startup>();
                      }
+
+                     configurationRoot.AddAzureKeyVaultConfiguration(configApp);
 
                      configApp.AddEnvironmentVariables();
                      configApp.AddCommandLine(args);
