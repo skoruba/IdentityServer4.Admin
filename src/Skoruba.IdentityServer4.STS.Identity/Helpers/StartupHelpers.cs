@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using IdentityServer4.EntityFramework.Storage;
 using Microsoft.AspNetCore.Authentication;
@@ -22,6 +23,9 @@ using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 using System.Linq;
+using IdentityServer4;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
@@ -30,6 +34,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Tokens;
 using Skoruba.IdentityServer4.Shared.Authentication;
 using Skoruba.IdentityServer4.Shared.Configuration.Identity;
 
@@ -94,7 +99,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// Using of Forwarded Headers and Referrer Policy
         /// </summary>
         /// <param name="app"></param>
-        public static void UseSecurityHeaders(this IApplicationBuilder app)
+        /// <param name="configuration"></param>
+        public static void UseSecurityHeaders(this IApplicationBuilder app, IConfiguration configuration)
         {
             var forwardingOptions = new ForwardedHeadersOptions()
             {
@@ -107,6 +113,49 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             app.UseForwardedHeaders(forwardingOptions);
 
             app.UseReferrerPolicy(options => options.NoReferrer());
+
+            // CSP Configuration to be able to use external resources
+            var cspTrustedDomains = new List<string>();
+            configuration.GetSection(ConfigurationConsts.CspTrustedDomainsKey).Bind(cspTrustedDomains);
+            if (cspTrustedDomains.Any())
+            {
+                app.UseCsp(csp =>
+                {
+                    csp.ImageSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                    });
+                    csp.FontSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                    });
+                    csp.ScriptSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                        options.UnsafeInlineSrc = true;
+                    });
+                    csp.StyleSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                        options.UnsafeInlineSrc = true;
+                    });
+                    csp.DefaultSources(options =>
+                    {
+                        options.SelfSrc = true;
+                        options.CustomSources = cspTrustedDomains;
+                        options.Enabled = true;
+                    });
+                });
+            }
+
         }
 
         /// <summary>
@@ -205,6 +254,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 .AddSingleton(registrationConfiguration)
                 .AddSingleton(loginConfiguration)
                 .AddSingleton(identityOptions)
+                .AddScoped<ApplicationSignInManager<TUserIdentity>>()
                 .AddScoped<UserResolver<TUserIdentity>>()
                 .AddIdentity<TUserIdentity, TUserIdentityRole>(options => configuration.GetSection(nameof(IdentityOptions)).Bind(options))
                 .AddEntityFrameworkStores<TIdentityDbContext>()
@@ -307,6 +357,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 
             builder.AddCustomSigningCredential(configuration);
             builder.AddCustomValidationKey(configuration);
+            builder.AddExtensionGrantValidator<DelegationGrantValidator>();
 
             return builder;
         }
@@ -329,6 +380,20 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     options.ClientSecret = externalProviderConfiguration.GitHubClientSecret;
                     options.Scope.Add("user:email");
                 });
+            }
+
+            if (externalProviderConfiguration.UseAzureAdProvider)
+            {
+                authenticationBuilder.AddAzureAD(AzureADDefaults.AuthenticationScheme, AzureADDefaults.OpenIdScheme, AzureADDefaults.CookieScheme, AzureADDefaults.DisplayName,options =>
+                    {
+                        options.ClientSecret = externalProviderConfiguration.AzureAdSecret;
+                        options.ClientId = externalProviderConfiguration.AzureAdClientId;
+                        options.TenantId = externalProviderConfiguration.AzureAdTenantId;
+                        options.Instance = externalProviderConfiguration.AzureInstance;
+                        options.Domain = externalProviderConfiguration.AzureDomain;
+                        options.CallbackPath = externalProviderConfiguration.AzureAdCallbackPath;
+                        options.CookieSchemeName = IdentityConstants.ExternalScheme;
+                    });
             }
         }
 
