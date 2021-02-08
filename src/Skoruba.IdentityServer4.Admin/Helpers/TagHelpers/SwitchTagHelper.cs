@@ -12,7 +12,7 @@ namespace Skoruba.IdentityServer4.Admin.Helpers.TagHelpers
             var childContent = await output.GetChildContentAsync();
 
             var divSlider = new TagBuilder("div");
-            divSlider.AddCssClass("slider round");
+            divSlider.AddCssClass("slider round bg-primary");
 
             output.TagName = "label";
             output.Attributes.Add("class", "switch");

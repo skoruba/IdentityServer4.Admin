@@ -12,8 +12,6 @@
 
 The application is written in the **Asp.Net Core MVC - using .NET Core 3.1**
 
-**NOTE:** Currently works only with **IdentityServer4 version 3** 🚀
-
 ## Requirements
 
 - [Install](https://www.microsoft.com/net/download/windows#/current) the latest .NET Core 3.x SDK (using older versions may lead to 502.5 errors when hosted on IIS or application exiting immediately after starting when self-hosted)
@@ -22,11 +20,23 @@ The application is written in the **Asp.Net Core MVC - using .NET Core 3.1**
 
 - Install the dotnet new template:
 
+### Stable version 1.0.0 works with **IdentityServer4 version 3** 🚀
+
 ```sh
-dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0-rc3
+dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0
 ```
 
-- Create new project:
+### Beta version 2.0.0 works with **IdentityServer4 version 4** 🚀
+
+- 🔒 **NOTE:** This version affects your database data if you use the default database migrations that are part of the project - double check the migrations according to your database provider and create a database backup
+
+- The source code for version **2.0.0** is available in the branch [release/2.0.0-beta1](https://github.com/skoruba/IdentityServer4.Admin/tree/release/2.0.0-beta1)
+
+```sh
+dotnet new -i Skoruba.IdentityServer4.Admin.Templates::2.0.0-beta1
+```
+
+### Create new project:
 
 ```sh
 dotnet new skoruba.is4admin --name MyProject --title MyProject --adminemail "admin@example.com" --adminpassword "Pa$$word123" --adminrole MyRole --adminclientid MyClientId --adminclientsecret MyClientSecret --dockersupport true
@@ -161,11 +171,20 @@ docker-compose up -d
 ### Docker images
 - Docker images will be available also in [docker hub](https://hub.docker.com/u/skoruba)
   - AdminUI:
-    - `skoruba/identityserver4-admin:rc3`
+    - **Stable version:** 
+    - `skoruba/identityserver4-admin:1.0.0`
+    - **Beta version:** 
+    - `skoruba/identityserver4-admin:2.0.0-beta1`
   - Admin Api:
-    - `skoruba/identityserver4-admin-api:rc3`
+    - **Stable version:** 
+    - `skoruba/identityserver4-admin-api:1.0.0`
+    - **Beta version:** 
+    - `skoruba/identityserver4-admin-api:2.0.0-beta1`
   - STS:
-    - `skoruba/identityserver4-sts-identity:rc3`
+    - **Stable version:** 
+    - `skoruba/identityserver4-sts-identity:1.0.0`
+    - **Beta version:** 
+    - `skoruba/identityserver4-sts-identity:2.0.0-beta1`
        
 ### Publish Docker images to Docker hub
 - Check the script in `build/publish-docker-images.ps1` - change the profile name according to your requirements.
@@ -245,6 +264,59 @@ The following Gulp commands are available:
 - In the controllers is used the policy which name is stored in - `AuthorizationConsts.AdministrationPolicy`. In the policy - `AuthorizationConsts.AdministrationPolicy` is defined required role stored in - `appsettings.json` - `AdministrationRole`.
 - With the default configuration, it is necessary to configure and run instance of IdentityServer4. It is possible to use initial migration for creating the client as it mentioned above
 
+## Azure Key Vault
+
+- It is possible to use Azure Key Vault and configure it in the `appsettings.json` with following configuration:
+
+```
+"AzureKeyVaultConfiguration": {
+    "AzureKeyVaultEndpoint": "",
+    "ClientId": "",
+    "ClientSecret": "",
+    "UseClientCredentials": true
+  }
+```
+
+If your application is running in `Azure App Service`, you can specify `AzureKeyVaultEndpoint`. For applications which are running outside of Azure environment it is possible to use the client credentials flow - so it is necesarry to go to Azure portal, register new application and connect this application to Azure Key Vault and setup the client secret.
+
+- It is possible to use Azure Key Vault for following parts of application:
+
+### Application Secrets and Database Connection Strings:
+
+- It is necesarry to configure the connection to Azure Key Vault and allow following settings:
+
+```
+"AzureKeyVaultConfiguration": {
+    "ReadConfigurationFromKeyVault": true
+  }
+```
+
+### Dataprotection:
+
+Enable Azure Key Vault for dataprotection with following configuration:
+```
+"DataProtectionConfiguration": {
+    "ProtectKeysWithAzureKeyVault": false
+  }
+```
+
+The you need specify the key identifier in configuration:
+
+```
+"AzureKeyVaultConfiguration": {
+    "DataProtectionKeyIdentifier": ""
+  }
+```
+
+### IdentityServer certificate for signing tokens:
+
+- It is possible to go to Azure Key Vault - generate new certificate and use this certificate name below:
+
+```
+"AzureKeyVaultConfiguration": {
+    "IdentityServerCertificateName": ""
+  }
+```
 
 ## Logging
 
@@ -315,6 +387,31 @@ services.AddAuditLogging(options => { options.Source = auditLoggingConfiguration
             // repository and service for admin
             services.AddTransient<IAuditLogRepository<TAuditLog>, AuditLogRepository<TAuditLoggingDbContext, TAuditLog>>();
             services.AddTransient<IAuditLogService, AuditLogService<TAuditLog>>();
+```
+
+### Admin Configuration
+
+Admin and STS can be customized without editing code in `appsettings.json` under AdminConfiguration section
+
+#### Themes
+
+Ui can be customized using themes integrated from [bootswatch](https://bootswatch.com).
+
+By default, configuration value is null to use default theme. if you want to use a theme, just fill the lowercase theme name as configuration value of `Theme` key.
+
+You can also use your custom theme by integrating it in your project or hosting css on your place to pass the url in `CustomThemeCss` key. (Note that custom theme override standard theme)
+
+- Important Note: Theme can use external ressources which caused errors due to CSP. If you get errors, please make sure that you configured correctly CSP section in your `appsettings.json` with thrusted domains for ressources.
+
+```json
+  "AdminConfiguration": {
+    "PageTitle": "Skoruba IdentityServer4",
+    "HomePageLogoUri": "~/images/skoruba-icon.png",
+    "FaviconUri": "~/favicon.ico",
+    "Theme": "united",
+    "CustomThemeCss": null,
+    ...
+  },
 ```
 
 ### Audit Logging Configuration
@@ -470,6 +567,7 @@ In STS project - in `appsettings.json`:
   - French
   - Finish
   - German
+  - Portuguese
   
 #### Feel free to send a PR with your translation. :blush:
 
@@ -643,7 +741,7 @@ It is possible to define the configuration according the client type - by defaul
 - [x] Protect keys for dataprotection from Azure Key Vault ([#715](https://github.com/skoruba/IdentityServer4.Admin/pull/715))
 
 ### 2.0.0
-- [ ] Update to IdentityServer4 version 4 ([#633](https://github.com/skoruba/IdentityServer4.Admin/issues/633))
+- [x] Update to IdentityServer4 version 4 ([#633](https://github.com/skoruba/IdentityServer4.Admin/issues/633))
 
 ### 3.0.0:
 
@@ -697,7 +795,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 |[<img src="https://avatars0.githubusercontent.com/u/12243486?s=400&v=3" width="118px;"/><br /><sub>LobsterBandit </sub>](https://github.com/LobsterBandit) <br />💻|[<img src="https://avatars2.githubusercontent.com/u/3465794?s=400&v=3" width="118px;"/><br /><sub>Mehmet Perk </sub>](https://github.com/mperk) <br />💻|[<img src="https://avatars2.githubusercontent.com/u/46886295?s=400&v=3" width="118px;"/><br /><sub>tapmui </sub>](https://github.com/tapmui) <br />🌍|[<img src="https://avatars0.githubusercontent.com/u/12451743?s=400&v=3" width="118px;"/><br /><sub>Saeed Rahimi </sub>](https://github.com/saeedrahimi) <br />💻|[<img src="https://avatars3.githubusercontent.com/u/10605614?s=400&u=9d5f1bca5e31db4eb1975bd5043be2972aa32519&v=3" width="118px;"/><br /><sub>Joshua Williams </sub>](https://github.com/jwilliamsnephos) <br />💻|[<img src="https://avatars3.githubusercontent.com/u/12607748?s=400&u=189a0ff36baaeab34250062fe26ed13a1b78c011&v=3" width="118px;"/><br /><sub>Shengjie Yan </sub>](https://github.com/sheng-jie) <br />💻
 |[<img src="https://avatars3.githubusercontent.com/u/18211871?s=400&u=a994693d3f5d7c5d5365a635af54106452bc16cb&v=3" width="118px;"/><br /><sub>Anatoliy </sub>](https://github.com/UspAN) <br />💻|[<img src="https://avatars0.githubusercontent.com/u/3778268?s=400&u=1702548638153e09cf51d2a80731c7f33ea9185f&v=3" width="118px;"/><br /><sub>Nicholas Peterson </sub>](https://github.com/nickelbob) <br />💻|[<img src="https://avatars2.githubusercontent.com/u/13870734?s=400&u=cbc2f60b6cd630a286b7e7b1c157951287f25563&v=3" width="118px;"/><br /><sub>Alec Papierniak </sub>](https://github.com/AlecPapierniak) <br />💻|[<img src="https://avatars0.githubusercontent.com/u/33623601?s=400&u=53a2bb57c68045766f11fcc5fd6d0282992fec39&v=3" width="118px;"/><br /><sub>Carl Reid </sub>](https://github.com/carlreid) <br />💻|[<img src="https://avatars1.githubusercontent.com/u/12170676?s=400&u=5053e27317b4f7f577504aa0c1c3fddc0dbcbb89&v=3" width="118px;"/><br /><sub>ViRuSTriNiTy </sub>](https://github.com/ViRuSTriNiTy) <br />💻|[<img src="https://avatars2.githubusercontent.com/u/10232683?s=400&v=3" width="118px;"/><br /><sub>J. Arturo </sub>](https://github.com/zinkpad) <br />💻
 |[<img src="https://avatars1.githubusercontent.com/u/7604648?s=400&u=59a1ce466533aadb4c02944805c62957935b0ba9&v=3" width="118px;"/><br /><sub>Weihan Li </sub>](https://github.com/WeihanLi) <br />💻|[<img src="https://avatars3.githubusercontent.com/u/4563019?s=400&v=3" width="118px;"/><br /><sub>Saša Tančev </sub>](https://github.com/tancevsasa) <br />💻|[<img src="https://avatars1.githubusercontent.com/u/12811343?s=400&u=a417cca5ea7e206ecd979d2f623502bc766a504c&v=3" width="118px;"/><br /><sub>cuibty </sub>](https://github.com/cuibty) <br />💻|[<img src="https://avatars3.githubusercontent.com/u/17126867?s=400&u=387bb1de303c993b683cd1335f57a96e1671be45&v=3" width="118px;"/><br /><sub>Simo Paasisalo </sub>](https://github.com/spaasis) <br />💻|[<img src="https://avatars1.githubusercontent.com/u/10352866?s=400&v=3" width="118px;"/><br /><sub>klyse </sub>](https://github.com/klyse) <br />💻|[<img src="https://avatars0.githubusercontent.com/u/19854428?s=400&u=d0f37a7f51e8eaac4da754c9f8deae714e03da65&v=3" width="118px;"/><br /><sub>Martinus Suherman </sub>](https://github.com/martinussuherman) <br />💻
-|[<img src="https://avatars1.githubusercontent.com/u/540241?s=400&v=3" width="118px;"/><br /><sub>Pavel Usachev </sub>](https://github.com/pavel-usachev) <br />💻
+|[<img src="https://avatars1.githubusercontent.com/u/540241?s=400&v=3" width="118px;"/><br /><sub>Pavel Usachev </sub>](https://github.com/pavel-usachev) <br />💻|[<img src="https://avatars2.githubusercontent.com/u/64419131?s=400&u=e18b51ba9a0c1c2bf69ed86fba2251b44c1c3136&v=3" width="118px;"/><br /><sub>LabTrans - STIGeo </sub>](https://github.com/labtrans-ufsc) <br />🌍|[<img src="https://avatars1.githubusercontent.com/u/7376668?s=400&u=93af8ae5f2980c172f2ca13b5380f20a50053866&v=4" width="118px;"/><br /><sub>Valentin LECERF </sub>](https://github.com/ioxFR) <br />💻|[<img src="https://avatars0.githubusercontent.com/u/9968151?s=400&u=c210e5d589ec6433069105d1420bf3d8cb6265f2&v=4" width="118px;"/><br /><sub>Thomas Aunvik </sub>](https://github.com/ThomasAunvik) <br />🐛|[<img src="https://avatars1.githubusercontent.com/u/661509?s=400&u=16eeaa522ebe0f92ef2851b7bbf721f349b815b5&v=4" width="118px;"/><br /><sub>Sebastian Gebhardt </sub>](https://github.com/sgebhardt) <br />🐛
 <!-- prettier-ignore-end -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification.

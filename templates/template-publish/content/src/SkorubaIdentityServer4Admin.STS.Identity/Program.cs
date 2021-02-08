@@ -50,6 +50,10 @@ namespace SkorubaIdentityServer4Admin.STS.Identity
                 configurationBuilder.AddUserSecrets<Startup>();
             }
 
+            var configuration = configurationBuilder.Build();
+
+            configuration.AddAzureKeyVaultConfiguration(configurationBuilder);
+
             configurationBuilder.AddCommandLine(args);
             configurationBuilder.AddEnvironmentVariables();
 
@@ -60,6 +64,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity
             Host.CreateDefaultBuilder(args)
                  .ConfigureAppConfiguration((hostContext, configApp) =>
                  {
+                     var configurationRoot = configApp.Build();
+
                      configApp.AddJsonFile("serilog.json", optional: true, reloadOnChange: true);
 
                      var env = hostContext.HostingEnvironment;
@@ -70,6 +76,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity
                      {
                          configApp.AddUserSecrets<Startup>();
                      }
+
+                     configurationRoot.AddAzureKeyVaultConfiguration(configApp);
 
                      configApp.AddEnvironmentVariables();
                      configApp.AddCommandLine(args);
