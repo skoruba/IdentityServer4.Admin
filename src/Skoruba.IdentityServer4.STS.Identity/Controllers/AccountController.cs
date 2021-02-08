@@ -4,12 +4,6 @@
 // Original file: https://github.com/IdentityServer/IdentityServer4.Samples
 // Modified by Jan Škoruba
 
-using System;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
 using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Events;
@@ -29,6 +23,13 @@ using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
 using Skoruba.IdentityServer4.STS.Identity.ViewModels.Account;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 {
@@ -237,6 +238,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             // check if we need to trigger sign-out at an upstream identity provider
             if (vm.TriggerExternalSignout)
             {
+                await ProcessLogoutCallbackForSaml2p(User);
+
                 // build a return URL so the upstream provider will redirect back
                 // to us after the user has logged out. this allows us to then
                 // complete our single sign-out processing.
@@ -391,6 +394,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
             if (result.Succeeded)
             {
+                await ProcessLoginCallbackForSaml2p(info);
                 return RedirectToLocal(returnUrl);
             }
             if (result.RequiresTwoFactor)
@@ -451,6 +455,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
+                        await ProcessLoginCallbackForSaml2p(info, user);
+
                         await _signInManager.SignInAsync(user, isPersistent: false);
 
                         return RedirectToLocal(returnUrl);
@@ -814,6 +820,76 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             }
 
             return vm;
+        }
+
+        private async Task ProcessLoginCallbackForSaml2p(ExternalLoginInfo info, TUser user = null)
+        {
+            if (user == null)
+            {
+                user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+            }
+
+            var claims = new List<Claim>();
+            claims.AddRange(info.Principal.Claims.Where(c => c.Type.StartsWith("http://Sustainsys.se/Saml2")));
+            if (claims.Any())
+            {
+                // Carry over claims for Sustainsys library needs
+                var claimAny = claims.FirstOrDefault();
+                // Sustainsys library needs issuer but Microsoft.AspNetCore.Identity doesn't store it 
+                claims.Add(new Claim("http://Sustainsys.se/Saml2/Issuer", claimAny.Issuer));
+                claims.Add(new Claim("http://Sustainsys.se/Saml2/OriginalIssuer", claimAny.OriginalIssuer));
+                var userClaims = await _userManager.GetClaimsAsync(user);
+                if (!userClaims.Any(x => x.Type.StartsWith("http://Sustainsys.se/Saml2")))
+                {
+                    await _userManager.AddClaimsAsync(user, claims);
+                }
+                else
+                {
+                    foreach (var claim in claims)
+                    {
+                        var replaceClaim = userClaims.FirstOrDefault(x => x.Type == claim.Type);
+                        if (replaceClaim == null)
+                        {
+                            await _userManager.AddClaimAsync(user, claim);
+                        }
+                        else
+                        {
+                            await _userManager.ReplaceClaimAsync(user, replaceClaim, claim);
+                        }
+                    }
+                }
+                //await _signInManager.SignInWithClaimsAsync(user, info.AuthenticationProperties, claims);
+            }
+
+        }
+
+        private async Task ProcessLogoutCallbackForSaml2p(ClaimsPrincipal principal)
+        {
+            var user = await _userManager.GetUserAsync(principal);
+            var userStoredClaims = await _userManager.GetClaimsAsync(user);
+            if (userStoredClaims.Any(x => x.Type.StartsWith("http://Sustainsys.se/Saml2")))
+            {
+                var storedClaimIssuer = userStoredClaims.FirstOrDefault(x => x.Type == "http://Sustainsys.se/Saml2/Issuer");
+                var storedClaimOriginalIssuer = userStoredClaims.FirstOrDefault(x => x.Type == "http://Sustainsys.se/Saml2/OriginalIssuer");
+
+                if (storedClaimIssuer != null)
+                {
+                    var storedClaimIssuerValue = storedClaimIssuer.Value;
+                    var storedClaimOriginalIssuerValue = storedClaimOriginalIssuer != null ? storedClaimOriginalIssuer.Value : ClaimsIdentity.DefaultIssuer;
+                    var userClaims = new List<Claim>();
+                    userClaims.AddRange(userStoredClaims.Where(x => x.Type.StartsWith("http://Sustainsys.se/Saml2")));
+                    var identity = principal.Identity as ClaimsIdentity;
+                    foreach (var claim in userClaims)
+                    {
+                        var claimToRemove = identity.FindFirst(claim.Type);
+                        if (claimToRemove != null)
+                        {
+                            identity.RemoveClaim(claimToRemove);
+                            identity.AddClaim(new Claim(claim.Type, claim.Value, claim.ValueType, storedClaimIssuerValue, storedClaimOriginalIssuerValue, claim.Subject));
+                        }
+                    }
+                }
+            }
         }
     }
 }

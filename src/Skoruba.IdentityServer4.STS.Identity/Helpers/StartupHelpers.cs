@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using IdentityServer4;
 using IdentityServer4.EntityFramework.Storage;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
@@ -14,32 +14,25 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
-using SendGrid;
-using Skoruba.IdentityServer4.Shared.Configuration.Email;
-using Skoruba.IdentityServer4.Shared.Email;
-using Skoruba.IdentityServer4.STS.Identity.Configuration;
-using Skoruba.IdentityServer4.STS.Identity.Configuration.ApplicationParts;
-using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
-using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
-using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
-using System.Linq;
-using IdentityServer4;
-using Microsoft.AspNetCore.Authentication.AzureAD.UI;
-using Microsoft.AspNetCore.Authentication.OAuth;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
-using IdentityServer4;
-using Sustainsys.Saml2;
-using Sustainsys.Saml2.Metadata;
-using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
-using Microsoft.IdentityModel.Tokens;
 using Skoruba.IdentityServer4.Shared.Authentication;
 using Skoruba.IdentityServer4.Shared.Configuration.Identity;
+using Skoruba.IdentityServer4.STS.Identity.Configuration;
+using Skoruba.IdentityServer4.STS.Identity.Configuration.ApplicationParts;
+using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
+using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
+using Skoruba.IdentityServer4.STS.Identity.Helpers.Localization;
+using Sustainsys.Saml2;
+using Sustainsys.Saml2.Metadata;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 {
@@ -343,7 +336,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     options.Events.RaiseInformationEvents = true;
                     options.Events.RaiseFailureEvents = true;
                     options.Events.RaiseSuccessEvents = true;
-                    
+
                     if (!string.IsNullOrEmpty(advancedConfiguration.IssuerUri))
                     {
                         options.IssuerUri = advancedConfiguration.IssuerUri;
@@ -372,16 +365,18 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 
             if (externalProviderConfiguration.UseSaml2Provider)
             {
-                authenticationBuilder.AddSaml2(options => 
+                authenticationBuilder.AddSaml2(externalProviderConfiguration.Saml2Scheme, externalProviderConfiguration.Saml2DisplayName, options =>
                 {
                     options.SignInScheme = IdentityConstants.ExternalScheme;
                     options.SignOutScheme = IdentityServerConstants.DefaultCookieAuthenticationScheme;
                     options.SPOptions.EntityId = new EntityId(externalProviderConfiguration.Saml2OurEntityId);
+                    //auth0 bug
+                    //options.SPOptions.MinIncomingSigningAlgorithm = "http://www.w3.org/2000/09/xmldsig#rsa-sha1";
                     options.IdentityProviders.Add(
                         new IdentityProvider(
-                                new EntityId(externalProviderConfiguration.Saml2TheirEntityId), options.SPOptions) {
-                            MetadataLocation = externalProviderConfiguration.Saml2TheirMetadataLocation,
-                            LoadMetadata = true
+                                new EntityId(externalProviderConfiguration.Saml2TheirEntityId), options.SPOptions)
+                        {
+                            MetadataLocation = externalProviderConfiguration.Saml2TheirMetadataLocation
                         });
                     if (!string.IsNullOrEmpty(externalProviderConfiguration.Saml2OurCertificatePath))
                     {
@@ -402,16 +397,16 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 
             if (externalProviderConfiguration.UseAzureAdProvider)
             {
-                authenticationBuilder.AddAzureAD(AzureADDefaults.AuthenticationScheme, AzureADDefaults.OpenIdScheme, AzureADDefaults.CookieScheme, AzureADDefaults.DisplayName,options =>
-                    {
-                        options.ClientSecret = externalProviderConfiguration.AzureAdSecret;
-                        options.ClientId = externalProviderConfiguration.AzureAdClientId;
-                        options.TenantId = externalProviderConfiguration.AzureAdTenantId;
-                        options.Instance = externalProviderConfiguration.AzureInstance;
-                        options.Domain = externalProviderConfiguration.AzureDomain;
-                        options.CallbackPath = externalProviderConfiguration.AzureAdCallbackPath;
-                        options.CookieSchemeName = IdentityConstants.ExternalScheme;
-                    });
+                authenticationBuilder.AddAzureAD(AzureADDefaults.AuthenticationScheme, AzureADDefaults.OpenIdScheme, AzureADDefaults.CookieScheme, AzureADDefaults.DisplayName, options =>
+                     {
+                         options.ClientSecret = externalProviderConfiguration.AzureAdSecret;
+                         options.ClientId = externalProviderConfiguration.AzureAdClientId;
+                         options.TenantId = externalProviderConfiguration.AzureAdTenantId;
+                         options.Instance = externalProviderConfiguration.AzureInstance;
+                         options.Domain = externalProviderConfiguration.AzureDomain;
+                         options.CallbackPath = externalProviderConfiguration.AzureAdCallbackPath;
+                         options.CookieSchemeName = IdentityConstants.ExternalScheme;
+                     });
             }
         }
 
