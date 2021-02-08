@@ -32,6 +32,9 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
+using IdentityServer4;
+using Sustainsys.Saml2;
+using Sustainsys.Saml2.Metadata;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
@@ -366,6 +369,26 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             IConfiguration configuration)
         {
             var externalProviderConfiguration = configuration.GetSection(nameof(ExternalProvidersConfiguration)).Get<ExternalProvidersConfiguration>();
+
+            if (externalProviderConfiguration.UseSaml2Provider)
+            {
+                authenticationBuilder.AddSaml2(options => 
+                {
+                    options.SignInScheme = IdentityConstants.ExternalScheme;
+                    options.SignOutScheme = IdentityServerConstants.DefaultCookieAuthenticationScheme;
+                    options.SPOptions.EntityId = new EntityId(externalProviderConfiguration.Saml2OurEntityId);
+                    options.IdentityProviders.Add(
+                        new IdentityProvider(
+                                new EntityId(externalProviderConfiguration.Saml2TheirEntityId), options.SPOptions) {
+                            MetadataLocation = externalProviderConfiguration.Saml2TheirMetadataLocation,
+                            LoadMetadata = true
+                        });
+                    if (!string.IsNullOrEmpty(externalProviderConfiguration.Saml2OurCertificatePath))
+                    {
+                        options.SPOptions.ServiceCertificates.Add(new System.Security.Cryptography.X509Certificates.X509Certificate2(externalProviderConfiguration.Saml2OurCertificatePath, externalProviderConfiguration.Saml2OurCertificatePassword));
+                    }
+                });
+            }
 
             if (externalProviderConfiguration.UseGitHubProvider)
             {

@@ -28,7 +28,7 @@ dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0
 
 ### Beta version 2.0.0 works with **IdentityServer4 version 4** 🚀
 
-> NOTE: This version affects your database data if you use the default database migrations that are part of the project - double check the migrations according to your database provider and create a database backup
+- 🔒 **NOTE:** This version affects your database data if you use the default database migrations that are part of the project - double check the migrations according to your database provider and create a database backup
 
 - The source code for version **2.0.0** is available in the branch [release/2.0.0-beta1](https://github.com/skoruba/IdentityServer4.Admin/tree/release/2.0.0-beta1)
 
@@ -741,7 +741,7 @@ It is possible to define the configuration according the client type - by defaul
 - [x] Protect keys for dataprotection from Azure Key Vault ([#715](https://github.com/skoruba/IdentityServer4.Admin/pull/715))
 
 ### 2.0.0
-- [ ] Update to IdentityServer4 version 4 ([#633](https://github.com/skoruba/IdentityServer4.Admin/issues/633))
+- [x] Update to IdentityServer4 version 4 ([#633](https://github.com/skoruba/IdentityServer4.Admin/issues/633))
 
 ### 3.0.0:
 
