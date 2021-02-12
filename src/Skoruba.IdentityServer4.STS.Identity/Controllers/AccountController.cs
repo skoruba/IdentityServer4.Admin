@@ -459,7 +459,14 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
                         await _signInManager.SignInAsync(user, isPersistent: false);
 
-                        return RedirectToLocal(returnUrl);
+                        //Force so we can logout from external
+                        var externalResult = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
+
+                        if (externalResult.Succeeded)
+                        {
+
+                            return RedirectToLocal(returnUrl);
+                        }
                     }
                 }
 
