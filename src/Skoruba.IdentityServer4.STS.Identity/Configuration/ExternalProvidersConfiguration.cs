@@ -13,5 +13,14 @@
         public string AzureInstance { get; set; }
         public string AzureAdCallbackPath { get; set; }
         public string AzureDomain { get; set; }
+
+        public bool UseSaml2Provider { get; set; }
+        public string Saml2Scheme { get; set; }
+        public string Saml2DisplayName { get; set; }
+        public string Saml2OurEntityId { get; set; }
+        public string Saml2TheirEntityId { get; set; }
+        public string Saml2TheirMetadataLocation { get; set; }
+        public string Saml2OurCertificatePath { get; set; }
+        public string Saml2OurCertificatePassword { get; set; }
     }
 }
