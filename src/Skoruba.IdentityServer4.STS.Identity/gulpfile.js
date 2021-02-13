@@ -88,3 +88,10 @@ gulp.task('fonts', processFonts);
 gulp.task('scripts', processScripts);
 gulp.task('build', build);
 gulp.task('default', build);
+
+// watch
+function processWatch() {
+    gulp.watch(['Styles/**/*.scss'], processSass);
+}
+gulp.task('watch', processWatch);
+exports.default = processWatch;

@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Skoruba.AuditLogging.EntityFramework.DbContexts;
 using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions
 {
@@ -29,9 +30,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions
         /// <param name="auditLoggingConnectionString"></param>
         public static void RegisterNpgSqlDbContexts<TIdentityDbContext, TConfigurationDbContext,
             TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(this IServiceCollection services,
-            string identityConnectionString, string configurationConnectionString,
-            string persistedGrantConnectionString, string errorLoggingConnectionString,
-            string auditLoggingConnectionString, string dataProtectionConnectionString = null)
+            ConnectionStringsConfiguration connectionStrings,
+            DatabaseMigrationsConfiguration databaseMigrations)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
@@ -43,28 +43,28 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions
 
             // Config DB for identity
             services.AddDbContext<TIdentityDbContext>(options =>
-                options.UseNpgsql(identityConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
+                options.UseNpgsql(connectionStrings.IdentityDbConnection, sql => sql.MigrationsAssembly(databaseMigrations.IdentityDbMigrationsAssembly ?? migrationsAssembly)));
 
             // Config DB from existing connection
             services.AddConfigurationDbContext<TConfigurationDbContext>(options =>
                 options.ConfigureDbContext = b =>
-                    b.UseNpgsql(configurationConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
+                    b.UseNpgsql(connectionStrings.ConfigurationDbConnection, sql => sql.MigrationsAssembly(databaseMigrations.ConfigurationDbMigrationsAssembly ?? migrationsAssembly)));
 
             // Operational DB from existing connection
             services.AddOperationalDbContext<TPersistedGrantDbContext>(options => options.ConfigureDbContext = b =>
-                b.UseNpgsql(persistedGrantConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
+                b.UseNpgsql(connectionStrings.PersistedGrantDbConnection, sql => sql.MigrationsAssembly(databaseMigrations.PersistedGrantDbMigrationsAssembly ?? migrationsAssembly)));
 
             // Log DB from existing connection
-            services.AddDbContext<TLogDbContext>(options => options.UseNpgsql(errorLoggingConnectionString,
-                optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
+            services.AddDbContext<TLogDbContext>(options => options.UseNpgsql(connectionStrings.AdminLogDbConnection,
+                optionsSql => optionsSql.MigrationsAssembly(databaseMigrations.AdminLogDbMigrationsAssembly ?? migrationsAssembly)));
 
             // Audit logging connection
-            services.AddDbContext<TAuditLoggingDbContext>(options => options.UseNpgsql(auditLoggingConnectionString,
-                optionsSql => optionsSql.MigrationsAssembly(migrationsAssembly)));
+            services.AddDbContext<TAuditLoggingDbContext>(options => options.UseNpgsql(connectionStrings.AdminAuditLogDbConnection,
+                optionsSql => optionsSql.MigrationsAssembly(databaseMigrations.AdminAuditLogDbMigrationsAssembly ?? migrationsAssembly)));
 
             // DataProtectionKey DB from existing connection
-            if (!string.IsNullOrEmpty(dataProtectionConnectionString))
-                services.AddDbContext<TDataProtectionDbContext>(options => options.UseNpgsql(dataProtectionConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
+            if (!string.IsNullOrEmpty(connectionStrings.DataProtectionDbConnection))
+                services.AddDbContext<TDataProtectionDbContext>(options => options.UseNpgsql(connectionStrings.DataProtectionDbConnection, sql => sql.MigrationsAssembly(databaseMigrations.DataProtectionDbMigrationsAssembly ?? migrationsAssembly)));
         }
 
         /// <summary>

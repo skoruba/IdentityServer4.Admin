@@ -44,11 +44,17 @@ namespace Skoruba.IdentityServer4.Shared.Helpers
         }
 
         public static void AddDataProtection<TDbContext>(this IServiceCollection services, IConfiguration configuration)
+                    where TDbContext : DbContext, IDataProtectionKeyContext
+        {
+            AddDataProtection<TDbContext>(
+                services,
+                configuration.GetSection(nameof(DataProtectionConfiguration)).Get<DataProtectionConfiguration>(),
+                configuration.GetSection(nameof(AzureKeyVaultConfiguration)).Get<AzureKeyVaultConfiguration>());
+        }
+
+        public static void AddDataProtection<TDbContext>(this IServiceCollection services, DataProtectionConfiguration dataProtectionConfiguration, AzureKeyVaultConfiguration azureKeyVaultConfiguration)
             where TDbContext : DbContext, IDataProtectionKeyContext
         {
-            var dataProtectionConfiguration = configuration.GetSection(nameof(DataProtectionConfiguration)).Get<DataProtectionConfiguration>();
-            var azureKeyVaultConfiguration = configuration.GetSection(nameof(AzureKeyVaultConfiguration)).Get<AzureKeyVaultConfiguration>();
-
             var dataProtectionBuilder = services.AddDataProtection()
                 .SetApplicationName("Skoruba.IdentityServer4")
                 .PersistKeysToDbContext<TDbContext>();

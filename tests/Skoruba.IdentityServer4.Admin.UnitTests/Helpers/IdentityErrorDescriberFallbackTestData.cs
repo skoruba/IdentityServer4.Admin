@@ -1,4 +1,4 @@
-﻿using Skoruba.IdentityServer4.Admin.Helpers.Identity;
+﻿using Skoruba.IdentityServer4.Admin.UI.Helpers.Identity;
 using System.Collections;
 using System.Collections.Generic;
 

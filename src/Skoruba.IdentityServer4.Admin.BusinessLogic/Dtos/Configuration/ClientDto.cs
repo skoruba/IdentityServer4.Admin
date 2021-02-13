@@ -112,5 +112,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
         public int DeviceCodeLifetime { get; set; } = 300;
 
         public bool NonEditable { get; set; }
+
+        public bool RequireRequestObject { get; set; }
+
+        public List<string> AllowedIdentityTokenSigningAlgorithms { get; set; }
+
+        public string AllowedIdentityTokenSigningAlgorithmsItems { get; set; }
     }
 }

@@ -88,6 +88,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             ComboBoxHelpers.PopulateValuesToList(client.RedirectUrisItems, client.RedirectUris);
             ComboBoxHelpers.PopulateValuesToList(client.AllowedCorsOriginsItems, client.AllowedCorsOrigins);
             ComboBoxHelpers.PopulateValuesToList(client.AllowedGrantTypesItems, client.AllowedGrantTypes);
+            ComboBoxHelpers.PopulateValuesToList(client.AllowedIdentityTokenSigningAlgorithmsItems, client.AllowedIdentityTokenSigningAlgorithms);
         }
 
         public virtual ClientCloneDto BuildClientCloneViewModel(int id, ClientDto clientDto)
@@ -271,6 +272,13 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             var accessTokenTypes = ClientRepository.GetAccessTokenTypes().ToModel();
 
             return accessTokenTypes;
+        }
+
+        public virtual List<string> GetSigningAlgorithms(string algorithm, int limit = 0)
+        {
+            var signingAlgorithms = ClientRepository.GetSigningAlgorithms(algorithm, limit);
+
+            return signingAlgorithms;
         }
 
         public virtual List<SelectItemDto> GetTokenExpirations()
