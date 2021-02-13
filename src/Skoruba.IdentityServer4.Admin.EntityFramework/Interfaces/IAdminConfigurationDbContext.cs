@@ -8,8 +8,6 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces
     {
         DbSet<ApiResourceSecret> ApiSecrets { get; set; }
 
-        DbSet<ApiScope> ApiScopes { get; set; }
-
         DbSet<ApiScopeClaim> ApiScopeClaims { get; set; }
 
         DbSet<IdentityResourceClaim> IdentityClaims { get; set; }
@@ -23,8 +21,6 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces
         DbSet<ClientSecret> ClientSecrets { get; set; }
 
         DbSet<ClientPostLogoutRedirectUri> ClientPostLogoutRedirectUris { get; set; }
-
-        DbSet<ClientCorsOrigin> ClientCorsOrigins { get; set; }
 
         DbSet<ClientIdPRestriction> ClientIdPRestrictions { get; set; }
 
