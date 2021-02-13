@@ -1,0 +1,44 @@
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DeleteButton" xml:space="preserve">
+    <value>Verwijder logs ouder dan</value>
+  </data>
+  <data name="DeleteDialogMessage" xml:space="preserve">
+    <value>Weet u het zeker?</value>
+  </data>
+  <data name="DeleteDialogNo" xml:space="preserve">
+    <value>Nee - sluiten</value>
+  </data>
+  <data name="DeleteDialogTitle" xml:space="preserve">
+    <value>Waarschuwing</value>
+  </data>
+  <data name="DeleteDialogYes" xml:space="preserve">
+    <value>Ja - verwijder</value>
+  </data>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Logs</value>
+  </data>
+  <data name="TableLevel" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="TableLogged" xml:space="preserve">
+    <value>Logged</value>
+  </data>
+  <data name="TableMessage" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="TableShowDetail" xml:space="preserve">
+    <value>Toon Detail</value>
+  </data>
+</root>

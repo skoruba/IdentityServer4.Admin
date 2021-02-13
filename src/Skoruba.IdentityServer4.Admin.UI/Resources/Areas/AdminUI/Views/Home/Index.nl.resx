@@ -1,0 +1,38 @@
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ButtonApiResources" xml:space="preserve">
+    <value>Voeg Api Resource toe</value>
+  </data>
+  <data name="ButtonClients" xml:space="preserve">
+    <value>Clients</value>
+  </data>
+  <data name="ButtonIdentityClients" xml:space="preserve">
+    <value>Identity Resources</value>
+  </data>
+  <data name="ButtonManage" xml:space="preserve">
+    <value>Beheer</value>
+  </data>
+  <data name="ButtonPersistedGrants" xml:space="preserve">
+    <value>Persisted Grants</value>
+  </data>
+  <data name="ButtonRoles" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="ButtonUsers" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="PageSubTitle" xml:space="preserve">
+    <value>Beheer van Identity Server 4 en Asp.Net Core Identity</value>
+  </data>
+</root>

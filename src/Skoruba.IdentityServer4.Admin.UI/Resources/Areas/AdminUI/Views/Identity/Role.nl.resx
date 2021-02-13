@@ -1,0 +1,32 @@
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ActionAddClaims" xml:space="preserve">
+    <value>Voeg Role Claims toe</value>
+  </data>
+  <data name="ActionDeleteRole" xml:space="preserve">
+    <value>Verwijder Role</value>
+  </data>
+  <data name="ActionRoleUsers" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="ActionSaveRole" xml:space="preserve">
+    <value>Opslaan Role</value>
+  </data>
+  <data name="NavigationRoles" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Role</value>
+  </data>
+</root>

@@ -442,6 +442,10 @@ label.radio-img > h3, label > h4 {
   background-color: #007bff;
   border-color: transparent; }
 
+#qrCode canvas {
+  padding: 20px;
+  background-color: white; }
+
 /*Pages*/
 .consent-container .toggle-button__input {
   float: left; }

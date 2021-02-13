@@ -1,0 +1,53 @@
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="PanelTitle" xml:space="preserve">
+    <value>Naam</value>
+  </data>
+  <data name="TitleCode" xml:space="preserve">
+    <value>Authorization Code Flow met PKCE</value>
+  </data>
+  <data name="TitleDevice" xml:space="preserve">
+    <value>TV en Apparaat met beperkte invoer toepassing</value>
+  </data>
+  <data name="TitleDeviceFlow" xml:space="preserve">
+    <value>Device flow</value>
+  </data>
+  <data name="TitleEmpty" xml:space="preserve">
+    <value>Leeg - Default</value>
+  </data>
+  <data name="TitleHybrid" xml:space="preserve">
+    <value>Hybrid flow</value>
+  </data>
+  <data name="TitleImplicit" xml:space="preserve">
+    <value>Implicit flow</value>
+  </data>
+  <data name="TitleMachine" xml:space="preserve">
+    <value>Machine/Robot</value>
+  </data>
+  <data name="TitleNative" xml:space="preserve">
+    <value>Native Application - Mobile/Desktop</value>
+  </data>
+  <data name="TitlePasswordAndClient" xml:space="preserve">
+    <value>Client Credentials flow</value>
+  </data>
+  <data name="TitleSpa" xml:space="preserve">
+    <value>Single Page Application - Javascript</value>
+  </data>
+  <data name="TitleWebHybrid" xml:space="preserve">
+    <value>Web Application - Server side</value>
+  </data>
+  <data name="TitleWebImplicit" xml:space="preserve">
+    <value>Web Application - Server side</value>
+  </data>
+</root>

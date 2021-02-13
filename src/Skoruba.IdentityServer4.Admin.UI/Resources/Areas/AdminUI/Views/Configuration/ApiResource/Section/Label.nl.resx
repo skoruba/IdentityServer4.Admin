@@ -1,0 +1,86 @@
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Description_Info" xml:space="preserve">
+    <value>Deze waarde kan bijvoorbeeld op het consent scherm worden gebruikt.</value>
+  </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Omschrijving</value>
+  </data>
+  <data name="DisplayName_Info" xml:space="preserve">
+    <value>Deze waarde kan bijvoorbeeld op het consent scherm worden gebruikt.</value>
+  </data>
+  <data name="DisplayName_Label" xml:space="preserve">
+    <value>Weergavenaam</value>
+  </data>
+  <data name="Enabled_Info" xml:space="preserve">
+    <value>Geeft aan of deze resource actief is en requests accepteerd. Default is true.</value>
+  </data>
+  <data name="Enabled_Label" xml:space="preserve">
+    <value>Actief</value>
+  </data>
+  <data name="Expiration_Info" xml:space="preserve">
+    <value>Verlopen</value>
+  </data>
+  <data name="Expiration_Label" xml:space="preserve">
+    <value>Verlopen</value>
+  </data>
+  <data name="Name_Info" xml:space="preserve">
+    <value>De unieke naam van de API. Deze waarde wordt gebruikt voor authenticatie met introspectie en wordt meegegeven als 'audience' in het uitgaande access token.</value>
+  </data>
+  <data name="Name_Label" xml:space="preserve">
+    <value>Naam</value>
+  </data>
+  <data name="Properties_Info" xml:space="preserve">
+    <value>Een dictionary met custom api resource-specifieke waarden, vrij toe te passen.</value>
+  </data>
+  <data name="Properties_Label" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="PropertyKey_Info" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="PropertyKey_Label" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="PropertyValue_Info" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="PropertyValue_Label" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="Scopes_Info" xml:space="preserve">
+    <value>Een API moet minstens één scope toegekend hebben. Elke scope kan andere settings hebben.</value>
+  </data>
+  <data name="Scopes_Label" xml:space="preserve">
+    <value>Scopes</value>
+  </data>
+  <data name="SecretDescription_Info" xml:space="preserve">
+    <value>Omschrijving</value>
+  </data>
+  <data name="SecretDescription_Label" xml:space="preserve">
+    <value>Omschrijving</value>
+  </data>
+  <data name="Secrets_Label" xml:space="preserve">
+    <value>Secrets</value>
+  </data>
+  <data name="Secrets_Info" xml:space="preserve">
+    <value>Een API secret wordt gebruikt voor het introspectie endpoint. De API kan authenticeren via introspectie door gebruik te maken van de API name en secret. </value>
+  </data>
+  <data name="UserClaims_Info" xml:space="preserve">
+    <value>Lijst van geassocieerde user claim types welke in het access token moeten worden opgenomen.</value>
+  </data>
+  <data name="UserClaims_Label" xml:space="preserve">
+    <value>User Claims</value>
+  </data>
+</root>

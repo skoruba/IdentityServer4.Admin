@@ -1,0 +1,35 @@
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="NavAuthentication" xml:space="preserve">
+    <value>Authenticatie/Logout</value>
+  </data>
+  <data name="NavBasics" xml:space="preserve">
+    <value>Basis</value>
+  </data>
+  <data name="NavConsent" xml:space="preserve">
+    <value>Consentscherm</value>
+  </data>
+  <data name="NavDeviceFlow" xml:space="preserve">
+    <value>Device Flow</value>
+  </data>
+  <data name="NavName" xml:space="preserve">
+    <value>Naam</value>
+  </data>
+  <data name="NavToken" xml:space="preserve">
+    <value>Token</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+</root>

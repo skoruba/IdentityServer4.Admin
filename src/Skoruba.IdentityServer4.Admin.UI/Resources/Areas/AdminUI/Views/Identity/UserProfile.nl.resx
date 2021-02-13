@@ -1,0 +1,44 @@
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Audit Log" xml:space="preserve">
+    <value>Audit Log</value>
+  </data>
+  <data name="ButtonChangePassword" xml:space="preserve">
+    <value>Wijzig Wachwoord</value>
+  </data>
+  <data name="ButtonDeleteUser" xml:space="preserve">
+    <value>Verwijder User</value>
+  </data>
+  <data name="ButtonManageUserClaims" xml:space="preserve">
+    <value>Beheer User Claims</value>
+  </data>
+  <data name="ButtonManageUserExternalProviders" xml:space="preserve">
+    <value>Beheer User External Providers</value>
+  </data>
+  <data name="ButtonManageUserRoles" xml:space="preserve">
+    <value>Beheer User Roles</value>
+  </data>
+  <data name="ButtonSaveUser" xml:space="preserve">
+    <value>Sla User op</value>
+  </data>
+  <data name="NavigationUsers" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="PageTitle" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="PanelTitle" xml:space="preserve">
+    <value>User</value>
+  </data>
+</root>

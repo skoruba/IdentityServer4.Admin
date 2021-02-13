@@ -64,6 +64,10 @@
         <ProjectReference Include="..\Skoruba.IdentityServer4.Shared\Skoruba.IdentityServer4.Shared.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="log\" />
+    </ItemGroup>
+
 </Project>
 
 
