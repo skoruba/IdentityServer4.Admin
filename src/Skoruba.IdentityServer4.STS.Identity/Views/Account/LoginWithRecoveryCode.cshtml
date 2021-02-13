@@ -18,7 +18,7 @@
             <input asp-for="ReturnUrl" type="hidden" />
             <div class="form-group">
                 <label asp-for="RecoveryCode">@Localizer["Code"]</label>
-                <input asp-for="RecoveryCode" class="form-control" autocomplete="off" />
+                <input asp-for="RecoveryCode" class="form-control" autocomplete="off" autofocus />
                 <span asp-validation-for="RecoveryCode" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-primary">@Localizer["LogIn"]</button>
