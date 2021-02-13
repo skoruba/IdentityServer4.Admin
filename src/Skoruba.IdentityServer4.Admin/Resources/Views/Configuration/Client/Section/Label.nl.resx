@@ -1,0 +1,341 @@
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AbsoluteRefreshTokenLifetime_Info" xml:space="preserve">
+    <value>Maximale levensduur van een refresh token in seconden. Default is 2592000 seconden / 30 dagen</value>
+  </data>
+  <data name="AbsoluteRefreshTokenLifetime_Label" xml:space="preserve">
+    <value>Absolute Refresh Token levensduur</value>
+  </data>
+  <data name="AccessTokenLifetime_Info" xml:space="preserve">
+    <value>Levensduur van een access token in seconden (default is 3600 seconden / 1 uur)</value>
+  </data>
+  <data name="AccessTokenLifetime_Label" xml:space="preserve">
+    <value>Access Token levensduur</value>
+  </data>
+  <data name="AccessTokenTypes_Info" xml:space="preserve">
+    <value>Geeft aan of het access token een reference token betreft of een self-contained JWT token (default is JWT)</value>
+  </data>
+  <data name="AccessTokenTypes_Label" xml:space="preserve">
+    <value>Access Token Type</value>
+  </data>
+  <data name="AllowAccessTokensViaBrowser_Info" xml:space="preserve">
+    <value>Geeft aan of deze client access tokens mag ontvangen via de browser. Dit is nuttig om flows met ondersteuning voor meerdere response types robuster te maken (bijvoorbeeld in geval van een hybrid flow client, welke geacht wordt om een code id_token te gebruiken, te verbieden om het token response type toe te voegen wat zou leiden tot het prijsgeven van dit token via de browser).</value>
+  </data>
+  <data name="AllowAccessTokensViaBrowser_Label" xml:space="preserve">
+    <value>Access Token via browser toegestaan</value>
+  </data>
+  <data name="AllowedCorsOrigins_Info" xml:space="preserve">
+    <value>Indien gespecificeerd wordt dit gebruikt door de default CORS policy service implementaties (In-Memory en EF) om een CORS policy voor JavaScript clients te maken.</value>
+  </data>
+  <data name="AllowedCorsOrigins_Label" xml:space="preserve">
+    <value>Toegestane CORS origins</value>
+  </data>
+  <data name="AllowedGrantTypes_Info" xml:space="preserve">
+    <value>Geeft aan welke grant types voor deze client zijn toegestaan. Maak gebruikt van class GrantTypes voor gebruikelijke combinaties. Lijst met default grants: Implicit Grant - (implicit), Client Credentials Grant - (client_credentials), Authorization Code Grant - (authorization_code), Hybrid grant - (hybrid), Resource Owner Password Credentials Grant - (password)</value>
+  </data>
+  <data name="AllowedGrantTypes_Label" xml:space="preserve">
+    <value>Toegestane Grant Types</value>
+  </data>
+  <data name="AllowedScopes_Info" xml:space="preserve">
+    <value>Een client heeft standaard geen toegang tot resources - bepaal de resources waar toegang aan verschaft moet worden door ze toe te voegen met de corresponderende scope names.</value>
+  </data>
+  <data name="AllowedScopes_Label" xml:space="preserve">
+    <value>Toegestane Scopes</value>
+  </data>
+  <data name="AllowOfflineAccess_Info" xml:space="preserve">
+    <value>Geeft aan of deze client refresh tokens mag opvragen (m.a.w. dit betreft een offline_access scope request)</value>
+  </data>
+  <data name="AllowOfflineAccess_Label" xml:space="preserve">
+    <value>Sta Offline Access toe</value>
+  </data>
+  <data name="AllowPlainTextPkce_Info" xml:space="preserve">
+    <value>Geeft aan of PKCE clients een plain text code challenge mogen gebruiken (afgeraden - default is false).</value>
+  </data>
+  <data name="AllowPlainTextPkce_Label" xml:space="preserve">
+    <value>Sta Plain Text PKCE toe</value>
+  </data>
+  <data name="AllowRememberConsent_Info" xml:space="preserve">
+    <value>Geeft aan of de user mag kiezen om de consent-keuze op te slaan. Default is true.</value>
+  </data>
+  <data name="AllowRememberConsent_Label" xml:space="preserve">
+    <value>Sta onthouden Consent Keuze toe</value>
+  </data>
+  <data name="AlwaysSendClientClaims_Info" xml:space="preserve">
+    <value>Wanner dit is gespecificeerd zullen client claims altijd worden verzonden voor elke flow. Wanneer dit niet gespecificeerd is, worden client claims alleen in geval van de client credentials flow verzonden.</value>
+  </data>
+  <data name="AlwaysSendClientClaims_Label" xml:space="preserve">
+    <value>Client Claims altijd versturen</value>
+  </data>
+  <data name="AuthorizationCodeLifetime_Info" xml:space="preserve">
+    <value>Geldigheid van authorization code in seconden (default is 300 seconden / 5 minuten)</value>
+  </data>
+  <data name="AuthorizationCodeLifetime_Label" xml:space="preserve">
+    <value>Geldigheid Authorization Code</value>
+  </data>
+  <data name="BackChannelLogoutSessionRequired_Info" xml:space="preserve">
+    <value>Geeft aan of de user's session id verzonden moet worden naar de BackChannelLogoutUri. Default is true.</value>
+  </data>
+  <data name="BackChannelLogoutSessionRequired_Label" xml:space="preserve">
+    <value>Back Channel Logout Session is verplicht</value>
+  </data>
+  <data name="BackChannelLogoutUri_Info" xml:space="preserve">
+    <value>Bepaald de logout URI van een client voor een HTTP-gebaseerde back-channel logout. Zie ook de specificatie voor OIDC Back-Channel voor meer informatie.</value>
+  </data>
+  <data name="BackChannelLogoutUri_Label" xml:space="preserve">
+    <value>Back Channel Logout Uri</value>
+  </data>
+  <data name="AlwaysIncludeUserClaimsInIdToken_Info" xml:space="preserve">
+    <value>Geeft aan of User Claims altijd in het IdToken moeten worden opgenomen</value>
+  </data>
+  <data name="AlwaysIncludeUserClaimsInIdToken_Label" xml:space="preserve">
+    <value>Neem User Claims altijd op in het IdToken</value>
+  </data>
+  <data name="Claims_Info" xml:space="preserve">
+    <value>Staat settings claims toe voor de client (zal worden toegevoegd aan het access token).</value>
+  </data>
+  <data name="Claims_Label" xml:space="preserve">
+    <value>Claims</value>
+  </data>
+  <data name="ClientClaimsPrefix_Info" xml:space="preserve">
+    <value>Als hier een waarde is ingevuld zal deze waarde worden toegevoegd als prefix aan client claims. Default waarde is client_. Het doel van de prefix is om verwarring tussen client claims en user claims te voorkomen. </value>
+  </data>
+  <data name="ClientClaimsPrefix_Label" xml:space="preserve">
+    <value>Client Claims Prefix</value>
+  </data>
+  <data name="ClientId_Info" xml:space="preserve">
+    <value>Unieke ID van de client</value>
+  </data>
+  <data name="ClientId_Label" xml:space="preserve">
+    <value>ClientId</value>
+  </data>
+  <data name="ClientName_Info" xml:space="preserve">
+    <value>Waargavenaam voor de client (gebruikt voor loggingdoeleinden en weegave op het consent scherm).</value>
+  </data>
+  <data name="ClientName_Label" xml:space="preserve">
+    <value>Client naam</value>
+  </data>
+  <data name="ClientSecrets_Info" xml:space="preserve">
+    <value>Lijst met client secrets - credentials om het token endpoint mee aan te roepen</value>
+  </data>
+  <data name="ClientSecrets_Label" xml:space="preserve">
+    <value>Client Secrets</value>
+  </data>
+  <data name="ClientUri_Info" xml:space="preserve">
+    <value>URI naar meer informatie over de client (gebruikt op het consent scherm)</value>
+  </data>
+  <data name="ClientUri_Label" xml:space="preserve">
+    <value>Client Uri</value>
+  </data>
+  <data name="Description_Info" xml:space="preserve">
+    <value>Client omschrijving</value>
+  </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Omschrijving</value>
+  </data>
+  <data name="DeviceCodeLifetime_Info" xml:space="preserve">
+    <value>Geldigheid van device code in seconden (default is 300 seconden / 5 minuten)</value>
+  </data>
+  <data name="DeviceCodeLifetime_Label" xml:space="preserve">
+    <value>Device Code geldigheid</value>
+  </data>
+  <data name="Enabled_Info" xml:space="preserve">
+    <value>Geeft aan of de client actief is. Default is true.</value>
+  </data>
+  <data name="Enabled_Label" xml:space="preserve">
+    <value>Actief</value>
+  </data>
+  <data name="EnableLocalLogin_Info" xml:space="preserve">
+    <value>Geeft aan of de client lokale accounts mag gebruiken of uitsluitend externe IdP's (Identity Providers). Default is true.</value>
+  </data>
+  <data name="EnableLocalLogin_Label" xml:space="preserve">
+    <value>Sta Local Login toe</value>
+  </data>
+  <data name="Expiration_Info" xml:space="preserve">
+    <value>Verlopen</value>
+  </data>
+  <data name="Expiration_Label" xml:space="preserve">
+    <value>Verlopen</value>
+  </data>
+  <data name="FrontChannelLogoutSessionRequired_Info" xml:space="preserve">
+    <value>Geeft aan of de user's session id verzonden moet worden naar de FrontChannelLogoutUri. Default is true.</value>
+  </data>
+  <data name="FrontChannelLogoutSessionRequired_Label" xml:space="preserve">
+    <value>Front Channel Logout Session Vereist</value>
+  </data>
+  <data name="FrontChannelLogoutUri_Info" xml:space="preserve">
+    <value>Geeft de logout URI aan voor een client in geval van een HTTP-gebaseerde front-channel logout. Zie ook de OIDC Front-Channel specificatie voor meer informatie.</value>
+  </data>
+  <data name="FrontChannelLogoutUri_Label" xml:space="preserve">
+    <value>Front Channel Logout Uri</value>
+  </data>
+  <data name="HashType_Label" xml:space="preserve">
+    <value>Hash Type</value>
+  </data>
+  <data name="IdentityProviderRestrictions_Info" xml:space="preserve">
+    <value>Geeft aan welke externe IdP's gebruikt mogen worden voor deze client (als niet is opgegeven worden alle IdP's toegestaan). Default is een lege waarde.</value>
+  </data>
+  <data name="IdentityProviderRestrictions_Label" xml:space="preserve">
+    <value>Identity Provider Restricties</value>
+  </data>
+  <data name="IdentityTokenLifetime_Info" xml:space="preserve">
+    <value>Geldigheid van het identity token in seconden (default is 300 seconden / 5 minuten)</value>
+  </data>
+  <data name="IdentityTokenLifetime_Label" xml:space="preserve">
+    <value>Geldigheid Identity Token</value>
+  </data>
+  <data name="IncludeJwtId_Info" xml:space="preserve">
+    <value>Geeft aan of JWT access tokens een unieke embedded ID moeten bevatten (via de JTI claim)</value>
+  </data>
+  <data name="IncludeJwtId_Label" xml:space="preserve">
+    <value>Voeg Jwt Id toe</value>
+  </data>
+  <data name="LogoUri_Info" xml:space="preserve">
+    <value>URI voor client logo (gebruikt op het consentscherm)</value>
+  </data>
+  <data name="LogoUri_Label" xml:space="preserve">
+    <value>Logo Uri</value>
+  </data>
+  <data name="PairWiseSubjectSalt_Info" xml:space="preserve">
+    <value>Salt waarde gebruikt tijdens pair-wise subjectId generatie voor users van deze client.</value>
+  </data>
+  <data name="PairWiseSubjectSalt_Label" xml:space="preserve">
+    <value>Pair Wise Subject Salt</value>
+  </data>
+  <data name="PostLogoutRedirectUris_Info" xml:space="preserve">
+    <value>Geeft aan welke redirect URIs toegestaan zijn na een logout</value>
+  </data>
+  <data name="PostLogoutRedirectUris_Label" xml:space="preserve">
+    <value>Post-logout Redirect Uris</value>
+  </data>
+  <data name="Properties_Info" xml:space="preserve">
+    <value>Een dictionary met custom client-specifieke waarden, vrij toe te passen.</value>
+  </data>
+  <data name="Properties_Label" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="PropertyKey_Info" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="PropertyKey_Label" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="PropertyValue_Info" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="PropertyValue_Label" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="ProtocolType_Info" xml:space="preserve">
+    <value>Default is OpenID Connect protocol</value>
+  </data>
+  <data name="ProtocolType_Label" xml:space="preserve">
+    <value>Protocol Type</value>
+  </data>
+  <data name="RedirectUris_Info" xml:space="preserve">
+    <value>Geeft aan wat de toegestane URIs zijn om tokens/authorization codes naar toe te sturen</value>
+  </data>
+  <data name="RedirectUris_Label" xml:space="preserve">
+    <value>Redirect Uris</value>
+  </data>
+  <data name="RefreshTokenExpiration_Label" xml:space="preserve">
+    <value>Refresh Token geldigheid</value>
+  </data>
+  <data name="RefreshTokenExpiration_Info" xml:space="preserve">
+    <value>Absolute - het refresh token zal verlopen op een exact vast moment in tijd (met AbsoluteRefreshTokenLifetime).
+
+Sliding - wanneer het refresh token wordt vernieuwd dan zal de geldigheid van refresh token ook worden vernieuwd (met de hoeveelheid tijd aangegeven met SlidingRefreshTokenLifetime). De geldigheid kan nooit verder in de toekomst liggen dan de waarde aangegeven voor AbsoluteRefreshTokenLifetime).</value>
+  </data>
+  <data name="RefreshTokenUsage.Info" xml:space="preserve">
+    <value>ReUse - de refresh token handle blijft hetzelfde wanneer het token wordt vernieuwd.
+
+OneTime - de refresh token handle wordt vernieuwd wanneer het refresh token wordt vernieuwd.</value>
+  </data>
+  <data name="RefreshTokenUsage.Label" xml:space="preserve">
+    <value>Refresh Token gebruik</value>
+  </data>
+  <data name="RefreshTokenUsage_Info" xml:space="preserve">
+    <value>ReUse - de refresh token handle blijft hetzelfde wanneer het token wordt vernieuwd.
+
+OneTime - de refresh token handle wordt vernieuwd wanneer het refresh token wordt vernieuwd.</value>
+  </data>
+  <data name="RefreshTokenUsage_Label" xml:space="preserve">
+    <value>Refresh Token gebruik</value>
+  </data>
+  <data name="RequireClientSecret_Info" xml:space="preserve">
+    <value>Geeft aan of de client een secret vereist om tokens te mogen opvragen op het token endpoint (default is true)</value>
+  </data>
+  <data name="RequireClientSecret_Label" xml:space="preserve">
+    <value>Client Secret vereist</value>
+  </data>
+  <data name="RequireConsent_Info" xml:space="preserve">
+    <value>Geeft aan of een consentscherm vereist is. Default is true.</value>
+  </data>
+  <data name="RequireConsent_Label" xml:space="preserve">
+    <value>Consent vereist</value>
+  </data>
+  <data name="RequirePkce_Info" xml:space="preserve">
+    <value>Geeft aan of clients, welke gebruik maken van een authorization code gebaseerde grant type, bewijs moeten sturen in de vorm van een proof key</value>
+  </data>
+  <data name="RequirePkce_Label" xml:space="preserve">
+    <value>PKCE vereist</value>
+  </data>
+  <data name="RoleNormalizedName_Info" xml:space="preserve">
+    <value>Genormaliseerde Role naam</value>
+  </data>
+  <data name="RoleNormalizedName_Label" xml:space="preserve">
+    <value>Normaliseer naam</value>
+  </data>
+  <data name="SecretDescription_Info" xml:space="preserve">
+    <value>Omschrijving</value>
+  </data>
+  <data name="SecretDescription_Label" xml:space="preserve">
+    <value>Omschrijving</value>
+  </data>
+  <data name="SecretType_Label" xml:space="preserve">
+    <value>Secret Type</value>
+  </data>
+  <data name="SecretValue_Label" xml:space="preserve">
+    <value>Secret Value</value>
+  </data>
+  <data name="SlidingRefreshTokenLifetime_Info" xml:space="preserve">
+    <value>Sliding lifetime van een refresh token in seconden. Defaults is 1296000 seconden / 15 dagen</value>
+  </data>
+  <data name="SlidingRefreshTokenLifetime_Label" xml:space="preserve">
+    <value>Sliding Refresh Token geldigheid</value>
+  </data>
+  <data name="Type_Label" xml:space="preserve">
+    <value>Claim Type</value>
+  </data>
+  <data name="UpdateAccessTokenClaimsOnRefresh_Info" xml:space="preserve">
+    <value>Geeft aan of het access token (en bijbehorende claims) geupdate moet worden in geval van een refresh token request.</value>
+  </data>
+  <data name="UpdateAccessTokenClaimsOnRefresh_Label" xml:space="preserve">
+    <value>Update Access Token Claims On Refresh</value>
+  </data>
+  <data name="UserCodeType_Info" xml:space="preserve">
+    <value>Geeft aan welk type user code gebruikt moet worden voor de client. Default wordt anders gebruikt.</value>
+  </data>
+  <data name="UserCodeType_Label" xml:space="preserve">
+    <value>User Code Type</value>
+  </data>
+  <data name="UserSsoLifetime_Info" xml:space="preserve">
+    <value>De maximale lengte (in seconden) sinds de laatste keer dat een user succesvol geautenticeerd was. Default is null.</value>
+  </data>
+  <data name="UserSsoLifetime_Label" xml:space="preserve">
+    <value>User Sso Geldigheid</value>
+  </data>
+  <data name="Value_Label" xml:space="preserve">
+    <value>Claim Value</value>
+  </data>
+</root>
