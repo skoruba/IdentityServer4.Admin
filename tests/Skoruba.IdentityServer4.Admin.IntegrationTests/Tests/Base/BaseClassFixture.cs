@@ -1,14 +1,14 @@
 ﻿using System.Net.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using Skoruba.IdentityServer4.Admin.Configuration.Interfaces;
 using Skoruba.IdentityServer4.Admin.Configuration.Test;
 using Skoruba.IdentityServer4.Admin.IntegrationTests.Common;
+using Skoruba.IdentityServer4.Admin.UI.Configuration;
 using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Tests.Base
 {
-    public class BaseClassFixture : IClassFixture<WebApplicationFactory<StartupTest>>
+	public class BaseClassFixture : IClassFixture<WebApplicationFactory<StartupTest>>
     {
         protected readonly WebApplicationFactory<StartupTest> Factory;
         protected readonly HttpClient Client;
@@ -24,8 +24,8 @@ namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Tests.Base
         {
             using (var scope = Factory.Services.CreateScope())
             {
-                var configuration = scope.ServiceProvider.GetRequiredService<IRootConfiguration>();
-                Client.SetAdminClaimsViaHeaders(configuration.AdminConfiguration);
+                var configuration = scope.ServiceProvider.GetRequiredService<AdminConfiguration>();
+                Client.SetAdminClaimsViaHeaders(configuration);
             }
         }
     }

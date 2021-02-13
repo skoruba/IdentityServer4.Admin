@@ -1,0 +1,9 @@
+﻿@using System.Reflection
+@using Skoruba.IdentityServer4.Admin
+
+@{
+    var runtimeVersion = Assembly.GetExecutingAssembly()
+        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
+}
+
+@runtimeVersion
