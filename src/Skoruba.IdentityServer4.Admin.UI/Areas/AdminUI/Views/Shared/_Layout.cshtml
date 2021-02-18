@@ -1,6 +1,7 @@
 ﻿@using IdentityServer4.Extensions
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.UI.Configuration
+@using Skoruba.IdentityServer4.Shared.Helpers
 @inject IViewLocalizer Localizer
 @inject AdminConfiguration AdminConfiguration
 
@@ -15,7 +16,11 @@
 
     <environment include="Development">
         <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
-        @if (!string.IsNullOrEmpty(AdminConfiguration.Theme))
+        @if (!string.IsNullOrEmpty(Context.Request.Cookies[ThemeHelpers.CookieThemeKey]) || Context.Request.Cookies[ThemeHelpers.CookieThemeKey] != ThemeHelpers.DefaultTheme)
+        {
+            <link href="@UrlHelper.Content(string.Concat("~/dist/css/themes/",Context.Request.Cookies[ThemeHelpers.CookieThemeKey],"/bootstrap.min.css"))" asp-append-version="true" rel="stylesheet" />
+        }
+        else if (!string.IsNullOrEmpty(AdminConfiguration.Theme))
         {
             <link href="@UrlHelper.Content(string.Concat("~/dist/css/themes/",AdminConfiguration.Theme,"/bootstrap.min.css"))" asp-append-version="true" rel="stylesheet" />
         }
@@ -39,7 +44,7 @@
 </head>
 <body>
 
-    <div class="menu d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <div class="menu d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom box-shadow">
         <!--Site name -->
         <h3 class="menu-logo my-0 mr-md-auto font-weight-normal"><a class="logo" asp-area="AdminUI" asp-controller="Home" asp-action="Index">@AdminConfiguration.PageTitle</a></h3>
 
@@ -109,7 +114,10 @@
                     @AdminConfiguration.PageTitle
                     <small class="d-block mb-3 text-muted">@Localizer["FooterCopyright"] @DateTime.Now.Year - @await Html.PartialAsync("Common/ApplicationVersion")</small>
                 </div>
-                <div class="col-md-6 text-right">
+                <div class="col-md-3 text-right">
+                    @await Html.PartialAsync("Common/SelectTheme")
+                </div>
+                <div class="col-md-3 text-right">
                     @await Html.PartialAsync("Common/SelectLanguage")
                 </div>
             </div>
