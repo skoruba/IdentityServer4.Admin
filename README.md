@@ -601,7 +601,9 @@ Integration tests use StartupTest class which is pre-configured with:
 
 - Admin UI:
 
-  - `Skoruba.IdentityServer4.Admin` - ASP.NET Core MVC application that contains Admin UI
+  - `Skoruba.IdentityServer4.Admin.UI` - ASP.NET Core MVC application that contains Admin UI
+
+  - `Skoruba.IdentityServer4.Admin` - ASP.NET Core MVC application that uses Admin UI package and it's only for application bootstrap
 
   - `Skoruba.IdentityServer4.Admin.BusinessLogic` - project that contains Dtos, Repositories, Services and Mappers for the IdentityServer4
 
