@@ -1,7 +1,6 @@
 ﻿@using IdentityServer4.Extensions
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.UI.Configuration
-@using Skoruba.IdentityServer4.Shared.Helpers
 @inject IViewLocalizer Localizer
 @inject AdminConfiguration AdminConfiguration
 
@@ -16,22 +15,12 @@
 
     <environment include="Development">
         <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
-        @if (!string.IsNullOrEmpty(Context.Request.Cookies[ThemeHelpers.CookieThemeKey]) || Context.Request.Cookies[ThemeHelpers.CookieThemeKey] != ThemeHelpers.DefaultTheme)
-        {
-            <link href="@UrlHelper.Content(string.Concat("~/dist/css/themes/",Context.Request.Cookies[ThemeHelpers.CookieThemeKey],"/bootstrap.min.css"))" asp-append-version="true" rel="stylesheet" />
-        }
-        else if (!string.IsNullOrEmpty(AdminConfiguration.Theme))
-        {
-            <link href="@UrlHelper.Content(string.Concat("~/dist/css/themes/",AdminConfiguration.Theme,"/bootstrap.min.css"))" asp-append-version="true" rel="stylesheet" />
-        }
+        @await Html.PartialAsync("Common/ThemeResources")
         <link href="~/dist/css/web.css" asp-append-version="true" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
         <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
-        @if (!string.IsNullOrEmpty(AdminConfiguration.Theme))
-        {
-            <link href="@UrlHelper.Content(string.Concat("~/dist/css/themes/",AdminConfiguration.Theme,"/bootstrap.min.css"))" asp-append-version="true" rel="stylesheet" />
-        }
+        @await Html.PartialAsync("Common/ThemeResources")
         <link href="~/dist/css/web.min.css" asp-append-version="true" rel="stylesheet" />
     </environment>
 
