@@ -3,22 +3,18 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Azure.KeyVault;
-using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.AzureKeyVault;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using Skoruba.IdentityServer4.Admin.Configuration;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
-using Skoruba.IdentityServer4.Admin.Helpers;
-using Skoruba.IdentityServer4.Shared.Configuration.Common;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Helpers;
 using Skoruba.IdentityServer4.Shared.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin
 {
-    public class Program
+	public class Program
     {
         private const string SeedArgs = "/seed";
 

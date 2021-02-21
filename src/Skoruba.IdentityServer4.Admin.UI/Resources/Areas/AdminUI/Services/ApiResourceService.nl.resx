@@ -1,0 +1,44 @@
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ApiResourceDoesNotExist" xml:space="preserve">
+    <value>Api Resource met id {0} bestaat niet</value>
+  </data>
+  <data name="ApiResourceExistsKey" xml:space="preserve">
+    <value>Api Resource bestaat al</value>
+  </data>
+  <data name="ApiResourceExistsValue" xml:space="preserve">
+    <value>Api Resource ({0}) bestaat al</value>
+  </data>
+  <data name="ApiResourcePropertyDoesNotExist" xml:space="preserve">
+    <value>Api Resource Property met id {0} bestaat niet</value>
+  </data>
+  <data name="ApiResourcePropertyExistsKey" xml:space="preserve">
+    <value>Api Resource Property bestaat al</value>
+  </data>
+  <data name="ApiResourcePropertyExistsValue" xml:space="preserve">
+    <value>Api Resource Property met key ({0}) bestaat al</value>
+  </data>
+  <data name="ApiScopeDoesNotExist" xml:space="preserve">
+    <value>Api Scope met id {0} bestaat niet</value>
+  </data>
+  <data name="ApiScopeExistsKey" xml:space="preserve">
+    <value>Api Scope bestaat al</value>
+  </data>
+  <data name="ApiScopeExistsValue" xml:space="preserve">
+    <value>Api Scope ({0}) bestaat al</value>
+  </data>
+  <data name="ApiSecretDoesNotExist" xml:space="preserve">
+    <value>Api Secret met id {0} bestaat niet</value>
+  </data>
+</root>

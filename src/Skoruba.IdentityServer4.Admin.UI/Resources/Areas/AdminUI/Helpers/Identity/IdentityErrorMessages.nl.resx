@@ -1,0 +1,95 @@
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="LoginAlreadyAssociated" xml:space="preserve">
+    <value>Een user met deze login bestaat al.</value>
+  </data>
+  <data name="PasswordMismatch" xml:space="preserve">
+    <value>Wachtwoord onjuist</value>
+  </data>
+  <data name="PasswordRequiresDigit" xml:space="preserve">
+    <value>Wachtwoorden moeten minstens 1 nummer bevatten ('0'-'9').</value>
+  </data>
+  <data name="PasswordRequiresLower" xml:space="preserve">
+    <value>Wachtwoorden moeten minstens één kleine letter bevatten ('a'-'z').</value>
+  </data>
+  <data name="PasswordRequiresNonAlphanumeric" xml:space="preserve">
+    <value>Wachtwoorden moeten minstens één niet-alphanumeriek teken bevatten.</value>
+  </data>
+  <data name="PasswordRequiresUniqueChars" xml:space="preserve">
+    <value>Wachtwoorden moeten uit minstens {0} verschillende tekens bestaan.</value>
+  </data>
+  <data name="PasswordRequiresUpper" xml:space="preserve">
+    <value>Wachtwoorden moeten minstens één hoofdletter bevatten ('A'-'Z').</value>
+  </data>
+  <data name="PasswordTooShort" xml:space="preserve">
+    <value>Wachtwoorden moeten een minimale lengte hebben van {0} tekens.</value>
+  </data>
+  <data name="RoleNotFound" xml:space="preserve">
+    <value>Role {0} bestaat niet.</value>
+  </data>
+  <data name="RecoveryCodeRedemptionFailed" xml:space="preserve">
+    <value>Inwisselen van herstelcode is mislukt.</value>
+  </data>
+  <data name="DefaultError" xml:space="preserve">
+    <value>Onbekende fout opgetreden.</value>
+  </data>
+  <data name="DuplicateEmail" xml:space="preserve">
+    <value>Email '{0}' is al in gebruik.</value>
+  </data>
+  <data name="DuplicateRoleName" xml:space="preserve">
+    <value>Role name '{0}' is al in gebruik.</value>
+  </data>
+  <data name="DuplicateUserName" xml:space="preserve">
+    <value>User name '{0}' is al in gebruik.</value>
+  </data>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value>Email '{0}' is ongeldig.</value>
+  </data>
+  <data name="InvalidPasswordHasherCompatibilityMode" xml:space="preserve">
+    <value>De opgegeven PasswordHasherCompatibilityMode is ongeldig.</value>
+  </data>
+  <data name="InvalidRoleName" xml:space="preserve">
+    <value>Role name '{0}' is ongeldig.</value>
+  </data>
+  <data name="InvalidToken" xml:space="preserve">
+    <value>Ongeldig token.</value>
+  </data>
+  <data name="InvalidUserName" xml:space="preserve">
+    <value>Gebruikersnaam '{0}' is ongeldig, het moet uitsluitend uit cijfers en letters bestaan.</value>
+  </data>
+  <data name="UserAlreadyHasPassword" xml:space="preserve">
+    <value>De user heeft al een wachtwoord ingesteld</value>
+  </data>
+  <data name="UserAlreadyInRole" xml:space="preserve">
+    <value>Het user account heeft al de role '{0}' toegekend.</value>
+  </data>
+  <data name="UserLockedOut" xml:space="preserve">
+    <value>Het user account is geblokkeerd</value>
+  </data>
+  <data name="UserLockoutNotEnabled" xml:space="preserve">
+    <value>Blokkeren staat uit voor dit user account</value>
+  </data>
+  <data name="UserNameNotFound" xml:space="preserve">
+    <value>User '{0}' bestaan niet.</value>
+  </data>
+  <data name="UserNotInRole" xml:space="preserve">
+    <value>Role '{0}' is niet toekgekend aan het user account</value>
+  </data>
+  <data name="ConcurrencyFailure" xml:space="preserve">
+    <value>Optimistic concurrency failure, object has been modified.</value>
+  </data>
+  <data name="InvalidPasswordHasherIterationCount" xml:space="preserve">
+    <value>The iteration count must be a positive integer.</value>
+  </data>
+</root>
