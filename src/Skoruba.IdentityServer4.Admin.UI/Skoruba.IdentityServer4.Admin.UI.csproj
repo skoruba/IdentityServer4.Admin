@@ -81,6 +81,8 @@
     <None Include="Areas\AdminUI\Views\Shared\Common\Pager.cshtml" />
     <None Include="Areas\AdminUI\Views\Shared\Common\PagerDynamic.cshtml" />
     <None Include="Areas\AdminUI\Views\Shared\Common\Search.cshtml" />
+    <None Include="Areas\AdminUI\Views\Shared\Common\ThemeResources.cshtml" />
+    <None Include="Areas\AdminUI\Views\Shared\Common\SelectTheme.cshtml" />
     <None Include="Areas\AdminUI\Views\Shared\Common\SelectLanguage.cshtml" />
     <None Include="Areas\AdminUI\Views\Shared\Components\IdentityServerLink\Default.cshtml" />
     <None Include="Areas\AdminUI\Views\Shared\Error.cshtml" />

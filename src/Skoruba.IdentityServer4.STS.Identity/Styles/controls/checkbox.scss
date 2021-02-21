@@ -1,10 +1,11 @@
 ﻿$checkbox-passive-background-color: #ccc;
+$checkbox-active-background-color: #4ed164;
 
 .switch {
 	display: inline-block;
 	height: 28px;
 	position: relative;
-	width: 60px;
+	width: 54px;
 	margin-top: 5px;
 }
 
@@ -24,17 +25,23 @@
 
 .slider:before {
 	background-color: #fff;
-	bottom: 4px;
+	bottom: 1px;
 	content: "";
-	height: 20px;
-	left: 7px;
+	height: 26px;
+	left: 1px;
 	position: absolute;
 	transition: .4s;
-	width: 20px;
+	width: 26px;
 }
 
 input:not(:checked) + .bg-primary {
 	background-color: $checkbox-passive-background-color !important;
+	background-image: none !important;
+}
+
+input:checked + .bg-primary {
+	background-color: $checkbox-active-background-color !important;
+	background-image: none !important;
 }
 
 input:checked + .slider:before {

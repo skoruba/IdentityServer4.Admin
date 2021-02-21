@@ -1,5 +1,5 @@
 {
-    "version": "1.0.0",
+    "version": "2.0.0",
     "name": "skoruba-identity-server-4-admin",
     "description": "The administration for the IdentityServer4 and Asp.Net Core Identity",
     "author": "Jan Skoruba & jan@skoruba.com",

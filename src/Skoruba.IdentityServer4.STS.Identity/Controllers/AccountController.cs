@@ -583,15 +583,12 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             ViewData["ReturnUrl"] = returnUrl;
 
-            switch (_loginConfiguration.ResolutionPolicy)
+            return _loginConfiguration.ResolutionPolicy switch
             {
-                case LoginResolutionPolicy.Username:
-                    return View();
-                case LoginResolutionPolicy.Email:
-                    return View("RegisterWithoutUsername");
-                default:
-                    return View("RegisterFailure");
-            }
+                LoginResolutionPolicy.Username => View(),
+                LoginResolutionPolicy.Email => View("RegisterWithoutUsername"),
+                _ => View("RegisterFailure")
+            };
         }
 
         [HttpPost]
@@ -599,7 +596,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null, bool IsCalledFromRegisterWithoutUsername = false)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            if (!_registerConfiguration.Enabled) return View("RegisterFailure");
+
+            returnUrl ??= Url.Content("~/");
 
             ViewData["ReturnUrl"] = returnUrl;
 
