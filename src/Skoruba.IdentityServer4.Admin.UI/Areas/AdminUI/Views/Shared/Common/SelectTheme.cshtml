@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Builder
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Microsoft.Extensions.Options
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @using Skoruba.IdentityServer4.Shared.Helpers
 @inject IViewLocalizer Localizer
 @inject IOptions<RequestLocalizationOptions> LocOptions
@@ -16,7 +17,7 @@
 {
     <div title="@Localizer["Request culture provider:"] @Context.Request.Cookies[ThemeHelpers.CookieThemeKey]">
         <form id="SelectTheme" asp-controller="Home"
-              asp-action="SelectTheme" asp-route-returnUrl="@returnUrl"
+              asp-action="SelectTheme" asp-area="@CommonConsts.AdminUIArea" asp-route-returnUrl="@returnUrl"
               method="post" class="form-inline justify-content-end" role="form">
             <div class="form-group">
                 <label asp-for="@Context.Request.Cookies[ThemeHelpers.CookieThemeKey]" class="mr-2">@Localizer["Theme:"]</label>

@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Interfaces.IRoleDto
 @inject IViewLocalizer Localizer
 
@@ -11,8 +12,8 @@
 	<div class="col-12">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="Roles">@Localizer["NavigationRoles"]</a></li>
-				<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="Role">@Model.Name</a></li>
+				<li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Identity" asp-action="Roles">@Localizer["NavigationRoles"]</a></li>
+				<li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Identity" asp-action="Role">@Model.Name</a></li>
 				<li class="breadcrumb-item active" aria-current="page">@Localizer["PageTitle"]</li>
 			</ol>
 		</nav>
@@ -23,7 +24,7 @@
 	</div>
 </div>
 
-<form id="client-form" asp-controller="Identity" asp-action="RoleDelete" Method="post">
+<form asp-area="@CommonConsts.AdminUIArea" id="client-form" asp-controller="Identity" asp-action="RoleDelete" Method="post">
 
 	<!--Hidden -->
 	<input type="hidden" asp-for="Id" />

@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Interfaces.IRoleDto
 @inject IViewLocalizer Localizer
 
@@ -11,7 +12,7 @@
 	<div class="col-12">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="Roles">@Localizer["NavigationRoles"]</a></li>
+				<li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Identity" asp-action="Roles">@Localizer["NavigationRoles"]</a></li>
 				<li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
 			</ol>
 		</nav>
@@ -23,7 +24,7 @@
 </div>
 
 
-<form id="client-form" asp-controller="Identity" asp-action="Role" Method="post">
+<form asp-area="@CommonConsts.AdminUIArea" id="client-form" asp-controller="Identity" asp-action="Role" Method="post">
 
 	<div asp-validation-summary="All" class="text-danger"></div>
 
@@ -32,9 +33,9 @@
 		<!--Button-->
 		<div class="form-group row">
 			<div class="col-sm-12">
-				<a asp-action="RoleClaims" asp-route-id="@Model.Id" class="btn btn-outline-primary"><span class="oi oi-plus"></span> @Localizer["ActionAddClaims"]</a>
-			    <a asp-action="RoleUsers" asp-route-id="@Model.Id" class="btn btn-primary"> @Localizer["ActionRoleUsers"]</a>
-			    <a asp-action="RoleDelete" asp-route-id="@Model.Id" class="btn btn-danger"> @Localizer["ActionDeleteRole"]</a>			    
+				<a asp-area="@CommonConsts.AdminUIArea" asp-action="RoleClaims" asp-route-id="@Model.Id" class="btn btn-outline-primary"><span class="oi oi-plus"></span> @Localizer["ActionAddClaims"]</a>
+			    <a asp-area="@CommonConsts.AdminUIArea" asp-action="RoleUsers" asp-route-id="@Model.Id" class="btn btn-primary"> @Localizer["ActionRoleUsers"]</a>
+			    <a asp-area="@CommonConsts.AdminUIArea" asp-action="RoleDelete" asp-route-id="@Model.Id" class="btn btn-danger"> @Localizer["ActionDeleteRole"]</a>			    
 			</div>
 		</div>
 	}

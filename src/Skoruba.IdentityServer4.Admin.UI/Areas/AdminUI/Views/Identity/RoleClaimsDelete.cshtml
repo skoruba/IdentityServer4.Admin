@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Interfaces.IRoleClaimsDto
 @inject IViewLocalizer Localizer
 
@@ -7,15 +8,15 @@
 	Layout = "_Layout";
 }
 
-<form asp-controller="Identity" asp-action="RoleClaimsDelete" Method="post">
+<form asp-area="@CommonConsts.AdminUIArea" asp-controller="Identity" asp-action="RoleClaimsDelete" Method="post">
 	<div class="row">
 
 		<div class="col-12">
 			<nav aria-label="breadcrumb">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="Roles">@Localizer["NavigationRoles"]</a></li>
-					<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="Role" asp-route-id="@Model.RoleId">@Model.RoleName</a></li>
-					<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="RoleClaims" asp-route-id="@Model.RoleId">@Localizer["NavigationRoleClaims"]</a></li>
+					<li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Identity" asp-action="Roles">@Localizer["NavigationRoles"]</a></li>
+					<li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Identity" asp-action="Role" asp-route-id="@Model.RoleId">@Model.RoleName</a></li>
+					<li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Identity" asp-action="RoleClaims" asp-route-id="@Model.RoleId">@Localizer["NavigationRoleClaims"]</a></li>
 					<li class="breadcrumb-item active" aria-current="page">@Localizer["PageTitle"]</li>
 				</ol>
 			</nav>

@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Interfaces.IRoleClaimsDto
 @inject IViewLocalizer Localizer
 
@@ -10,14 +11,14 @@
 
 
 
-<form id="role-claims-form" asp-controller="Identity" asp-action="RoleClaims" Method="post">
+<form asp-area="@CommonConsts.AdminUIArea" id="role-claims-form" asp-controller="Identity" asp-action="RoleClaims" Method="post">
 	<div class="row">
 
 		<div class="col-12">
 			<nav aria-label="breadcrumb">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="Roles">@Localizer["NavigationRoles"]</a></li>
-					<li class="breadcrumb-item"><a asp-controller="Identity" asp-action="Role" asp-route-id="@Model.RoleId">@Model.RoleName</a></li>
+					<li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Identity" asp-action="Roles">@Localizer["NavigationRoles"]</a></li>
+					<li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Identity" asp-action="Role" asp-route-id="@Model.RoleId">@Model.RoleName</a></li>
 					<li class="breadcrumb-item active" aria-current="page">@Localizer["PageTitle"]</li>
 				</ol>
 			</nav>
@@ -102,7 +103,7 @@
 								<tr>
 									<td>@client.ClaimType</td>
 									<td>@client.ClaimValue</td>
-									<td><a asp-action="RoleClaimsDelete" asp-route-claimId="@client.ClaimId" asp-route-id="@Model.RoleId" class="btn btn-danger">@Localizer["TableButtonRemove"]</a></td>
+									<td><a asp-area="@CommonConsts.AdminUIArea" asp-action="RoleClaimsDelete" asp-route-claimId="@client.ClaimId" asp-route-id="@Model.RoleId" class="btn btn-danger">@Localizer["TableButtonRemove"]</a></td>
 								</tr>
 							}
 						</tbody>

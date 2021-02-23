@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @using Skoruba.IdentityServer4.Admin.UI.Helpers
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common.Pager
 @inject IViewLocalizer Localizer
@@ -16,22 +17,22 @@
 
 			@if (Model.EnableSearch)
 			{
-				<li class="page-item"><a class="page-link" asp-action="@Model.Action" asp-route-page="1" asp-route-search="@Model.Search">@Localizer["FirstButtonText"]</a></li>
+				<li class="page-item"><a class="page-link" asp-area="@CommonConsts.AdminUIArea" asp-action="@Model.Action" asp-route-page="1" asp-route-search="@Model.Search">@Localizer["FirstButtonText"]</a></li>
 			}
 			else
 			{
-				<li class="page-item"><a class="page-link" asp-action="@Model.Action" asp-route-page="1">@Localizer["FirstButtonText"]</a></li>
+				<li class="page-item"><a class="page-link" asp-area="@CommonConsts.AdminUIArea" asp-action="@Model.Action" asp-route-page="1">@Localizer["FirstButtonText"]</a></li>
 			}
 
 			@if (PagerHelpers.ShowLeftPagerButton(Model.MaxPages, totalCount, currentPage))
 			{
 				if (Model.EnableSearch)
 				{
-					<li class="page-item"><a class="page-link" asp-action="@Model.Action" asp-route-page="@(minPage - 1)" asp-route-search="@Model.Search">...</a></li>
+					<li class="page-item"><a class="page-link" asp-area="@CommonConsts.AdminUIArea" asp-action="@Model.Action" asp-route-page="@(minPage - 1)" asp-route-search="@Model.Search">...</a></li>
 				}
 				else
 				{
-					<li class="page-item"><a class="page-link" asp-action="@Model.Action" asp-route-page="@(minPage - 1)">...</a></li>
+					<li class="page-item"><a class="page-link" asp-area="@CommonConsts.AdminUIArea" asp-action="@Model.Action" asp-route-page="@(minPage - 1)">...</a></li>
 				}
 			}
 
@@ -52,11 +53,11 @@
 				{
 					if (PagerHelpers.IsActivePage(currentPage, i))
 					{
-						<li class="page-item active"><a class="page-link" asp-action="@Model.Action" asp-route-page="@i">@i</a></li>
+						<li class="page-item active"><a class="page-link" asp-area="@CommonConsts.AdminUIArea" asp-action="@Model.Action" asp-route-page="@i">@i</a></li>
 					}
 					else
 					{
-						<li class="page-item"><a class="page-link" asp-action="@Model.Action" asp-route-page="@i">@i</a></li>
+						<li class="page-item"><a class="page-link" asp-area="@CommonConsts.AdminUIArea" asp-action="@Model.Action" asp-route-page="@i">@i</a></li>
 					}
 				}
 			}
@@ -65,21 +66,21 @@
 			{
 				if (Model.EnableSearch)
 				{
-					<li class="page-item"><a class="page-link" asp-action="@Model.Action" asp-route-page="@(maxPage + 1)" asp-route-search="@Model.Search">...</a></li>
+					<li class="page-item"><a class="page-link" asp-area="@CommonConsts.AdminUIArea" asp-action="@Model.Action" asp-route-page="@(maxPage + 1)" asp-route-search="@Model.Search">...</a></li>
 				}
 				else
 				{
-					<li class="page-item"><a class="page-link" asp-action="@Model.Action" asp-route-page="@(maxPage + 1)">...</a></li>
+					<li class="page-item"><a class="page-link" asp-area="@CommonConsts.AdminUIArea" asp-action="@Model.Action" asp-route-page="@(maxPage + 1)">...</a></li>
 				}
 			}
 
 			@if (Model.EnableSearch)
 			{
-				<li class="page-item"><a class="page-link" asp-action="@Model.Action" asp-route-page="@totalCount" asp-route-search="@Model.Search">@Localizer["LastButtonText"]</a></li>
+				<li class="page-item"><a class="page-link" asp-area="@CommonConsts.AdminUIArea" asp-action="@Model.Action" asp-route-page="@totalCount" asp-route-search="@Model.Search">@Localizer["LastButtonText"]</a></li>
 			}
 			else
 			{
-				<li class="page-item"><a class="page-link" asp-action="@Model.Action" asp-route-page="@totalCount">@Localizer["LastButtonText"]</a></li>
+				<li class="page-item"><a class="page-link" asp-area="@CommonConsts.AdminUIArea" asp-action="@Model.Action" asp-route-page="@totalCount">@Localizer["LastButtonText"]</a></li>
 			}
 		</ul>
 	</nav>

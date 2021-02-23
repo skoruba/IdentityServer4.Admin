@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Interfaces.IUserDto
 @inject IViewLocalizer Localizer
 
@@ -11,7 +12,7 @@
     <div class="col-12">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a asp-controller="Identity" asp-action="Users">@Localizer["NavigationUsers"]</a></li>
+                <li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Identity" asp-action="Users">@Localizer["NavigationUsers"]</a></li>
                 <li class="breadcrumb-item active" aria-current="page">@Model.UserName</li>
             </ol>
         </nav>
@@ -22,7 +23,7 @@
     </div>
 </div>
 
-<form id="client-form" asp-controller="Identity" asp-action="UserProfile" Method="post">
+<form id="client-form" asp-area="@CommonConsts.AdminUIArea" asp-controller="Identity" asp-action="UserProfile" Method="post">
 
     <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -31,12 +32,12 @@
         <!--Button-->
         <div class="form-group row">
             <div class="col-md-12 col-m-b-10  col-m-t-10">
-                <a asp-action="UserClaims" asp-route-id="@Model.Id" class="btn btn-outline-primary">@Localizer["ButtonManageUserClaims"]</a>
-                <a asp-action="UserRoles" asp-route-id="@Model.Id" class="btn btn-outline-primary">@Localizer["ButtonManageUserRoles"]</a>
-                <a asp-action="UserProviders" asp-route-id="@Model.Id" class="btn btn-outline-primary">@Localizer["ButtonManageUserExternalProviders"]</a>
-                <a asp-action="AuditLog" asp-controller="Log" asp-route-subjectIdentifier="@Model.Id" class="btn btn-primary">@Localizer["Audit Log"]</a>
-                <a asp-action="UserChangePassword" asp-route-id="@Model.Id" class="btn btn-dark">@Localizer["ButtonChangePassword"]</a>
-                <a asp-action="UserDelete" asp-route-id="@Model.Id" class="btn btn-danger">@Localizer["ButtonDeleteUser"]</a>
+                <a asp-area="@CommonConsts.AdminUIArea" asp-action="UserClaims" asp-route-id="@Model.Id" class="btn btn-outline-primary">@Localizer["ButtonManageUserClaims"]</a>
+                <a asp-area="@CommonConsts.AdminUIArea" asp-action="UserRoles" asp-route-id="@Model.Id" class="btn btn-outline-primary">@Localizer["ButtonManageUserRoles"]</a>
+                <a asp-area="@CommonConsts.AdminUIArea" asp-action="UserProviders" asp-route-id="@Model.Id" class="btn btn-outline-primary">@Localizer["ButtonManageUserExternalProviders"]</a>
+                <a asp-area="@CommonConsts.AdminUIArea" asp-action="AuditLog" asp-controller="Log" asp-route-subjectIdentifier="@Model.Id" class="btn btn-primary">@Localizer["Audit Log"]</a>
+                <a asp-area="@CommonConsts.AdminUIArea" asp-action="UserChangePassword" asp-route-id="@Model.Id" class="btn btn-dark">@Localizer["ButtonChangePassword"]</a>
+                <a asp-area="@CommonConsts.AdminUIArea" asp-action="UserDelete" asp-route-id="@Model.Id" class="btn btn-danger">@Localizer["ButtonDeleteUser"]</a>
             </div>
         </div>
     }

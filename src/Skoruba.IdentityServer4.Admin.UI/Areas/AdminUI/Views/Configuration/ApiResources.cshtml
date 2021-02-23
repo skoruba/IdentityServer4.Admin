@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.ApiResourcesDto
 @inject IViewLocalizer Localizer
 
@@ -15,7 +16,7 @@
 	</div>
 
 	<div class="col-12">
-		<a asp-action="ApiResource" class="btn btn-outline-primary mb-3"><span class="oi oi-plus"></span> @Localizer["ButtonAddResource"]</a>
+		<a asp-area="@CommonConsts.AdminUIArea" asp-action="ApiResource" class="btn btn-outline-primary mb-3"><span class="oi oi-plus"></span> @Localizer["ButtonAddResource"]</a>
 	</div>
 
 	<div class="col-12">
@@ -38,10 +39,10 @@
 					@foreach (var api in Model.ApiResources)
 					{
 						<tr>
-							<th scope="row"><a class="btn btn-primary" asp-action="ApiResource" asp-route-id="@api.Id">@Localizer["TableButtonEdit"]</a></th>
+							<th scope="row"><a asp-area="@CommonConsts.AdminUIArea" class="btn btn-primary" asp-action="ApiResource" asp-route-id="@api.Id">@Localizer["TableButtonEdit"]</a></th>
 							<td>@api.Name</td>
 							<td>
-								<a class="btn btn-danger" asp-action="ApiResourceDelete" asp-route-id="@api.Id"><span class="oi oi-x"></span></a>
+								<a asp-area="@CommonConsts.AdminUIArea" class="btn btn-danger" asp-action="ApiResourceDelete" asp-route-id="@api.Id"><span class="oi oi-x"></span></a>
 							</td>
 						</tr>
 					}

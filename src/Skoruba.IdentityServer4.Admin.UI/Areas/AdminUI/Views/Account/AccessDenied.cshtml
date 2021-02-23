@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.UI.Configuration
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @inject IViewLocalizer Localizer
 @inject AdminConfiguration AdminConfiguration
 @{ Layout = null; }
@@ -35,7 +36,7 @@
                                 <span class="oi oi-circle-x" title="Warning" aria-hidden="true"></span>
                             </h1>
                             <a href="@AdminConfiguration.IdentityServerBaseUrl" class="btn btn-lg btn-block btn-danger">@Localizer["ReturnToIdentityServer"]</a>
-                            <a asp-controller="Account" asp-action="Logout" class="btn btn-lg btn-block btn-danger">@Localizer["Logout"]</a>
+                            <a asp-controller="Account" asp-area="@CommonConsts.AdminUIArea" asp-action="Logout" class="btn btn-lg btn-block btn-danger">@Localizer["Logout"]</a>
                         </div>
                     </div>
                 </div>

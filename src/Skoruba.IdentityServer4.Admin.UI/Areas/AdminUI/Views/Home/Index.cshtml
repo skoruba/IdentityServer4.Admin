@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.UI.Configuration
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @inject AdminConfiguration AdminConfiguration
 @inject IViewLocalizer Localizer
 
@@ -24,7 +25,7 @@
             <h1 class="card-title">
                 <span class="oi oi-monitor" title="Clients" aria-hidden="true"></span>
             </h1>
-            <a asp-controller="Configuration" asp-action="Clients" class="btn btn-lg btn-block btn-primary">@Localizer["ButtonManage"]</a>
+            <a asp-area="@CommonConsts.AdminUIArea" asp-controller="Configuration" asp-action="Clients" class="btn btn-lg btn-block btn-primary">@Localizer["ButtonManage"]</a>
         </div>
     </div>
     <!-- Identity Resources -->
@@ -36,7 +37,7 @@
             <h1 class="card-title">
                 <span class="oi oi-tags" title="Identity Resources" aria-hidden="true"></span>
             </h1>
-            <a asp-controller="Configuration" asp-action="IdentityResources" class="btn btn-lg btn-block btn-outline-primary">@Localizer["ButtonManage"]</a>
+            <a asp-area="@CommonConsts.AdminUIArea" asp-controller="Configuration" asp-action="IdentityResources" class="btn btn-lg btn-block btn-outline-primary">@Localizer["ButtonManage"]</a>
         </div>
     </div>
     <!-- Api Resources -->
@@ -48,7 +49,7 @@
             <h1 class="card-title">
                 <span class="oi oi-cloud" title="Api Resources" aria-hidden="true"></span>
             </h1>
-            <a asp-controller="Configuration" asp-action="ApiResources" class="btn btn-lg btn-block btn-primary">@Localizer["ButtonManage"]</a>
+            <a asp-area="@CommonConsts.AdminUIArea" asp-controller="Configuration" asp-action="ApiResources" class="btn btn-lg btn-block btn-primary">@Localizer["ButtonManage"]</a>
         </div>
     </div>
     
@@ -61,7 +62,7 @@
             <h1 class="card-title">
                 <span class="oi oi-wrench" title="Api Scopes" aria-hidden="true"></span>
             </h1>
-            <a asp-controller="Configuration" asp-action="ApiScopes" class="btn btn-lg btn-block btn-outline-primary">@Localizer["ButtonManage"]</a>
+            <a asp-area="@CommonConsts.AdminUIArea" asp-controller="Configuration" asp-action="ApiScopes" class="btn btn-lg btn-block btn-outline-primary">@Localizer["ButtonManage"]</a>
         </div>
     </div>
 </div>
@@ -77,7 +78,7 @@
             <h1 class="card-title">
                 <span class="oi oi-key" title="Persisted Grants" aria-hidden="true"></span>
             </h1>
-            <a asp-controller="Grant" asp-action="PersistedGrants" class="btn btn-lg btn-block btn-primary">@Localizer["ButtonManage"]</a>
+            <a asp-area="@CommonConsts.AdminUIArea" asp-controller="Grant" asp-action="PersistedGrants" class="btn btn-lg btn-block btn-primary">@Localizer["ButtonManage"]</a>
         </div>
     </div>
     <!-- Users -->
@@ -89,7 +90,7 @@
             <h1 class="card-title">
                 <span class="oi oi-person" title="Users" aria-hidden="true"></span>
             </h1>
-            <a asp-controller="Identity" asp-action="Users" class="btn btn-lg btn-block btn-outline-primary">@Localizer["ButtonManage"]</a>
+            <a asp-area="@CommonConsts.AdminUIArea" asp-controller="Identity" asp-action="Users" class="btn btn-lg btn-block btn-outline-primary">@Localizer["ButtonManage"]</a>
         </div>
     </div>
     <!-- Roles -->
@@ -101,7 +102,7 @@
             <h1 class="card-title">
                 <span class="oi oi-lock-locked" title="Roles" aria-hidden="true"></span>
             </h1>
-            <a asp-controller="Identity" asp-action="Roles" class="btn btn-lg btn-block btn-primary">@Localizer["ButtonManage"]</a>
+            <a asp-area="@CommonConsts.AdminUIArea" asp-controller="Identity" asp-action="Roles" class="btn btn-lg btn-block btn-primary">@Localizer["ButtonManage"]</a>
         </div>
     </div>
 
@@ -114,7 +115,7 @@
             <h1 class="card-title">
                 <span class="oi oi-eye" title="Audit Logging" aria-hidden="true"></span>
             </h1>
-            <a asp-controller="Log" asp-action="AuditLog" class="btn btn-lg btn-block btn-outline-primary">@Localizer["ButtonManage"]</a>
+            <a asp-area="@CommonConsts.AdminUIArea" asp-controller="Log" asp-action="AuditLog" class="btn btn-lg btn-block btn-outline-primary">@Localizer["ButtonManage"]</a>
         </div>
     </div>
 </div>

@@ -2,6 +2,7 @@
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Grant
 @using Skoruba.IdentityServer4.Admin.UI.Helpers
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @model PersistedGrantsDto
 @inject IViewLocalizer Localizer
 
@@ -14,7 +15,7 @@
 	<div class="col-12">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a asp-controller="Grant" asp-action="PersistedGrants">@Localizer["NavigationPersistedGrants"]</a></li>
+				<li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Grant" asp-action="PersistedGrants">@Localizer["NavigationPersistedGrants"]</a></li>
 				<li class="breadcrumb-item active" aria-current="page">@Model.SubjectId</li>
 			</ol>
 		</nav>
@@ -25,7 +26,7 @@
 	</div>
 </div>
 
-<form id="client-form" asp-controller="Grant" asp-action="PersistedGrantsDelete" Method="post">
+<form asp-area="@CommonConsts.AdminUIArea" id="client-form" asp-controller="Grant" asp-action="PersistedGrantsDelete" Method="post">
 
 	<a href="#" class="btn btn-danger mb-3" data-toggle="modal" data-target="#deletePersistedGrantsModal">@Localizer["ButtonDeleteAll"]</a>
 
@@ -55,7 +56,7 @@
 					@foreach (var persistedGrant in Model.PersistedGrants)
 					{
                     <tr>
-                        <td><a class="btn btn-danger" asp-action="PersistedGrantDelete" asp-route-id="@UrlHelpers.QueryStringSafeHash(persistedGrant.Key)"><span class="oi oi-x"></span></a></td>
+                        <td><a class="btn btn-danger" asp-area="@CommonConsts.AdminUIArea" asp-action="PersistedGrantDelete" asp-route-id="@UrlHelpers.QueryStringSafeHash(persistedGrant.Key)"><span class="oi oi-x"></span></a></td>
                         <td>@persistedGrant.SubjectId</td>
                         <td>@persistedGrant.Type</td>
                         <td>@persistedGrant.Expiration</td>

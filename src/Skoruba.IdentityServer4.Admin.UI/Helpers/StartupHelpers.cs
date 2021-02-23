@@ -50,8 +50,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Skoruba.IdentityServer4.Admin.UI.Helpers
 {
-	public static class StartupHelpers
-	{
+    public static class StartupHelpers
+    {
         /// <summary>
         /// A helper to inject common middleware into the application pipeline, without having to invoke Use*() methods.
         /// </summary>
@@ -112,11 +112,11 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
         /// <typeparam name="TAuditLoggingDbContext"></typeparam>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        public static void RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, 
+        public static void RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext,
             TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(
-			this IServiceCollection services,
-			ConnectionStringsConfiguration connectionStrings,
-			DatabaseProviderConfiguration databaseProvider,
+            this IServiceCollection services,
+            ConnectionStringsConfiguration connectionStrings,
+            DatabaseProviderConfiguration databaseProvider,
             DatabaseMigrationsConfiguration databaseMigrations)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
@@ -418,9 +418,9 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
             return Task.FromResult(0);
         }
 
-        public static void AddIdSHealthChecks<TConfigurationDbContext, TPersistedGrantDbContext, TIdentityDbContext, 
+        public static void AddIdSHealthChecks<TConfigurationDbContext, TPersistedGrantDbContext, TIdentityDbContext,
             TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>
-            (this IHealthChecksBuilder healthChecksBuilder, AdminConfiguration adminConfiguration, 
+            (this IHealthChecksBuilder healthChecksBuilder, AdminConfiguration adminConfiguration,
             ConnectionStringsConfiguration connectionStringsConfiguration, DatabaseProviderConfiguration databaseProviderConfiguration)
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
@@ -532,10 +532,14 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
             {
                 app.UseCsp(csp =>
                 {
+                    var imagesCustomSources = new List<string>();
+                    imagesCustomSources.AddRange(cspTrustedDomains);
+                    imagesCustomSources.Add("data:");
+
                     csp.ImageSources(options =>
                     {
                         options.SelfSrc = true;
-                        options.CustomSources = cspTrustedDomains;
+                        options.CustomSources = imagesCustomSources;
                         options.Enabled = true;
                     });
                     csp.FontSources(options =>
@@ -570,7 +574,7 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
         }
 
         public static void UseCommonMiddleware(this IApplicationBuilder app, SecurityConfiguration securityConfiguration, HttpConfiguration httpConfiguration)
-		{
+        {
             app.UseCookiePolicy();
 
             if (securityConfiguration.UseDeveloperExceptionPage)

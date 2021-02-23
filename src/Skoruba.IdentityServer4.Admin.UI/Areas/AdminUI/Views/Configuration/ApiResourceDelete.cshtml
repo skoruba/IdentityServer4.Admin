@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.ApiResourceDto
 @inject IViewLocalizer Localizer
 
@@ -11,8 +12,8 @@
 	<div class="col-12">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiResources">@Localizer["NavigationApiResources"]</a></li>
-				<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiResource" asp-route-id="@Model.Id">@Model.Name</a></li>
+				<li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Configuration" asp-action="ApiResources">@Localizer["NavigationApiResources"]</a></li>
+				<li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Configuration" asp-action="ApiResource" asp-route-id="@Model.Id">@Model.Name</a></li>
 				<li class="breadcrumb-item active" aria-current="page">@Localizer["PageTitle"]</li>
 			</ol>
 		</nav>
@@ -23,7 +24,7 @@
 	</div>
 </div>
 
-<form asp-action="ApiResourceDelete" method="post" id="api-resource-form">
+<form asp-area="@CommonConsts.AdminUIArea" asp-action="ApiResourceDelete" method="post" id="api-resource-form">
 
 	<!--Hidden -->
 	<input type="hidden" asp-for="Id" />

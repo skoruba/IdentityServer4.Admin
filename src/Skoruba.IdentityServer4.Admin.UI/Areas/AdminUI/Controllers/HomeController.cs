@@ -13,7 +13,7 @@ namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
 {
     [Authorize(Policy = AuthorizationConsts.AdministrationPolicy)]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
-    [Area("AdminUI")]
+    [Area(CommonConsts.AdminUIArea)]
     public class HomeController : BaseController
     {
         private readonly ILogger<ConfigurationController> _logger;

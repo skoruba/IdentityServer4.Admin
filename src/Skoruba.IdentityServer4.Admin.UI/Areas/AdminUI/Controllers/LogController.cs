@@ -9,7 +9,7 @@ using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants;
 namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
 {
     [Authorize(Policy = AuthorizationConsts.AdministrationPolicy)]
-    [Area("AdminUI")]
+    [Area(CommonConsts.AdminUIArea)]
     public class LogController : BaseController
     {
         private readonly ILogService _logService;

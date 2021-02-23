@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @using Skoruba.IdentityServer4.Admin.UI.Helpers
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Log.LogsDto
 @inject IViewLocalizer Localizer
@@ -20,7 +21,7 @@
     <div asp-validation-summary="All" class="text-danger"></div>
 </div>
 
-<form class="error-log-form" asp-controller="Log" asp-action="DeleteLogs">
+<form asp-area="@CommonConsts.AdminUIArea" class="error-log-form" asp-controller="Log" asp-action="DeleteLogs">
     <div class="d-flex flex-row mt-3 justify-content-end mb-3">
         <div class="p-2">
             <a href="#" class="btn btn-danger error-log-delete-button">

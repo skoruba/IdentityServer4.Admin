@@ -3,11 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.UI.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
 {
-    [Area("AdminUI")]
+    [Area(CommonConsts.AdminUIArea)]
     public class BaseController : Controller
     {
         private readonly ILogger<BaseController> _logger;

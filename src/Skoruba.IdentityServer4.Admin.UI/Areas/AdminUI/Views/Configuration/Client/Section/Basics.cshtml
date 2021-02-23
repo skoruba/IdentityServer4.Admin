@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.ClientDto
 @inject IViewLocalizer Localizer
 <!--Hidden -->
@@ -175,7 +176,7 @@
 				@await Html.PartialAsync("Client/Section/Label", "ClientSecrets")
 			</label>
 			<div class="col-sm-9">
-				<a asp-action="ClientSecrets" asp-route-id="@Model.Id" target="_blank" class="btn btn-primary">@Localizer["ButtonManageClientSecrets"]</a>
+				<a asp-area="@CommonConsts.AdminUIArea" asp-action="ClientSecrets" asp-route-id="@Model.Id" target="_blank" class="btn btn-primary">@Localizer["ButtonManageClientSecrets"]</a>
 			</div>
 		</div>
 
@@ -186,7 +187,7 @@
 				@await Html.PartialAsync("Client/Section/Label", "Properties")
 			</label>
 			<div class="col-sm-9">
-				<a asp-action="ClientProperties" asp-route-id="@Model.Id" target="_blank" class="btn btn-primary">@Localizer["ButtonManageClientProperties"]</a>
+				<a asp-area="@CommonConsts.AdminUIArea" asp-action="ClientProperties" asp-route-id="@Model.Id" target="_blank" class="btn btn-primary">@Localizer["ButtonManageClientProperties"]</a>
 			</div>
 		</div>
 	</div>

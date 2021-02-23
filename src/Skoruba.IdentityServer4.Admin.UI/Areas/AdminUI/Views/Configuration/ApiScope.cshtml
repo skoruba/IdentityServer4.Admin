@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.ApiScopeDto
 @inject IViewLocalizer Localizer
 
@@ -15,12 +16,12 @@
 
 				@if (Model.Id != 0)
 				{
-					<li class="breadcrumb-item"><a asp-area="AdminUI" asp-controller="Configuration" asp-action="ApiScopes">@Localizer["NavigationApiScopes"]</a></li>
+					<li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Configuration" asp-action="ApiScopes">@Localizer["NavigationApiScopes"]</a></li>
 					<li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
 				}
 				else
 				{
-				    <li class="breadcrumb-item"><a asp-area="AdminUI" asp-controller="Configuration" asp-action="ApiScopes">@Localizer["NavigationApiScopes"]</a></li>
+				    <li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Configuration" asp-action="ApiScopes">@Localizer["NavigationApiScopes"]</a></li>
 				}
 			</ol>
 		</nav>
@@ -31,7 +32,7 @@
 	</div>
 </div>
 
-<form asp-area="AdminUI" asp-action="ApiScope" id="api-scope-form" method="post">
+<form asp-area="@CommonConsts.AdminUIArea" asp-action="ApiScope" id="api-scope-form" method="post">
 
 	<div asp-validation-summary="All" class="text-danger"></div>
 
@@ -128,7 +129,7 @@
                         @await Html.PartialAsync("ApiResource/Section/Label", "Properties")
                     </label>
                     <div class="col-sm-9">
-                        <a asp-area="AdminUI" asp-action="ApiScopeProperties" asp-route-id="@Model.Id" class="btn btn-primary">@Localizer["ManageApiScopeProperties"]</a>
+                        <a asp-area="@CommonConsts.AdminUIArea" asp-action="ApiScopeProperties" asp-route-id="@Model.Id" class="btn btn-primary">@Localizer["ManageApiScopeProperties"]</a>
                     </div>
                 </div>
             }

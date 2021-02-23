@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.ClientDto
 @inject IViewLocalizer Localizer
 
@@ -197,7 +198,7 @@
 				@await Html.PartialAsync("Client/Section/Label", "Claims")
 			</label>
 			<div class="col-sm-9">
-				<a asp-action="ClientClaims" asp-route-id="@Model.Id" target="_blank" class="btn btn-primary">@Localizer["ButtonManageClientClaims"]</a>
+				<a asp-area="@CommonConsts.AdminUIArea" asp-action="ClientClaims" asp-route-id="@Model.Id" target="_blank" class="btn btn-primary">@Localizer["ButtonManageClientClaims"]</a>
 			</div>
 		</div>
 	</div>

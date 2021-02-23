@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Grant
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @model PersistedGrantsDto
 @inject IViewLocalizer Localizer
 
@@ -36,7 +37,7 @@
 				@foreach (var persistedGrant in Model.PersistedGrants)
 				{
 					<tr>
-						<th scope="row"><a class="btn btn-primary" asp-action="PersistedGrant" asp-route-id="@persistedGrant.SubjectId">@Localizer["TableButtonDetail"]</a></th>
+						<th scope="row"><a asp-area="@CommonConsts.AdminUIArea" class="btn btn-primary" asp-action="PersistedGrant" asp-route-id="@persistedGrant.SubjectId">@Localizer["TableButtonDetail"]</a></th>
 						<td>@persistedGrant.SubjectId</td>
 						<td>@persistedGrant.SubjectName</td>
 					</tr>

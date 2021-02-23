@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.ApiScopePropertiesDto
 @inject IViewLocalizer Localizer
 
@@ -7,15 +8,15 @@
 	Layout = "_Layout";
 }
 
-<form asp-area="AdminUI" asp-controller="Configuration" asp-action="ApiScopePropertyDelete" Method="post">
+<form asp-area="@CommonConsts.AdminUIArea" asp-controller="Configuration" asp-action="ApiScopePropertyDelete" Method="post">
 	<div class="row">
 
 		<div class="col-12">
 			<nav aria-label="breadcrumb">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a asp-area="AdminUI" asp-controller="Configuration" asp-action="ApiScopes">@Localizer["NavigationApiScopes"]</a></li>
-					<li class="breadcrumb-item"><a asp-area="AdminUI" asp-controller="Configuration" asp-action="ApiScope" asp-route-id="@Model.ApiScopeId">@Model.ApiScopeName</a></li>
-					<li class="breadcrumb-item"><a asp-area="AdminUI" asp-controller="Configuration" asp-action="ApiScopeProperties" asp-route-id="@Model.ApiScopeId">@Localizer["NavigationApiScopeProperties"]</a></li>
+					<li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Configuration" asp-action="ApiScopes">@Localizer["NavigationApiScopes"]</a></li>
+					<li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Configuration" asp-action="ApiScope" asp-route-id="@Model.ApiScopeId">@Model.ApiScopeName</a></li>
+					<li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Configuration" asp-action="ApiScopeProperties" asp-route-id="@Model.ApiScopeId">@Localizer["NavigationApiScopeProperties"]</a></li>
 					<li class="breadcrumb-item active" aria-current="page">@Localizer["PageTitle"]</li>
 				</ol>
 			</nav>

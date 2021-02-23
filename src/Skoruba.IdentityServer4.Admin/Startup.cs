@@ -5,8 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Skoruba.IdentityServer4.Shared.Dtos;
-using Skoruba.IdentityServer4.Shared.Dtos.Identity;
 using Skoruba.IdentityServer4.Shared.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin
@@ -30,7 +28,7 @@ namespace Skoruba.IdentityServer4.Admin
             services.AddIdentityServer4AdminUI(ConfigureUIOptions);
 
             // Add email senders which is currently setup for SendGrid and SMTP
-            //services.AddEmailSenders(Configuration);
+            services.AddEmailSenders(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
@@ -41,7 +39,7 @@ namespace Skoruba.IdentityServer4.Admin
 
             app.UseEndpoints(endpoint =>
             {
-				endpoint.MapIdentityServer4AdminUI();
+                endpoint.MapIdentityServer4AdminUI();
                 endpoint.MapIdentityServer4AdminUIHealthChecks();
             });
         }
@@ -50,7 +48,7 @@ namespace Skoruba.IdentityServer4.Admin
 		{
             // Applies configuration from appsettings.
             options.BindConfiguration(Configuration);
-			if (HostingEnvironment.IsDevelopment())
+            if (HostingEnvironment.IsDevelopment())
 			{
                 options.Security.UseDeveloperExceptionPage = true;
 			}

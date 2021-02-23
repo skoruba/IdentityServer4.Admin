@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.ApiResourceDto
 @inject IViewLocalizer Localizer
 
@@ -11,7 +12,7 @@
 	<div class="col-12">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiResources">@Localizer["NavigationApiResources"]</a></li>
+                <li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Configuration" asp-action="ApiResources">@Localizer["NavigationApiResources"]</a></li>
 				<li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
 			</ol>
 		</nav>
@@ -22,7 +23,7 @@
 	</div>
 </div>
 
-<form asp-action="ApiResource" method="post" id="api-resource-form">
+<form asp-area="@CommonConsts.AdminUIArea" asp-action="ApiResource" method="post" id="api-resource-form">
 
 	<div asp-validation-summary="All" class="text-danger"></div>
 
@@ -96,7 +97,7 @@
 						@await Html.PartialAsync("ApiResource/Section/Label", "Secrets")
 					</label>
 					<div class="col-sm-9">
-						<a asp-action="ApiSecrets" asp-route-id="@Model.Id" class="btn btn-primary">@Localizer["ButtonManageSecrets"]</a>
+						<a asp-area="@CommonConsts.AdminUIArea" asp-action="ApiSecrets" asp-route-id="@Model.Id" class="btn btn-primary">@Localizer["ButtonManageSecrets"]</a>
 					</div>
 				</div>
 				<!--Button-->
@@ -105,7 +106,7 @@
 						@await Html.PartialAsync("ApiResource/Section/Label", "Properties")
 					</label>
 					<div class="col-sm-9">
-						<a asp-action="ApiResourceProperties" asp-route-id="@Model.Id" class="btn btn-primary">@Localizer["ButtonManageProperties"]</a>
+						<a asp-area="@CommonConsts.AdminUIArea" asp-action="ApiResourceProperties" asp-route-id="@Model.Id" class="btn btn-primary">@Localizer["ButtonManageProperties"]</a>
 					</div>
 				</div>
 			}
@@ -175,7 +176,7 @@
 					<button type="submit" id="api-resource-save-button" class="btn btn-primary">@Localizer["ButtonSaveApiResource"]</button>
 					@if (Model.Id != 0)
 					{
-						<a class="btn btn-danger" asp-action="ApiResourceDelete" asp-route-id="@Model.Id">@Localizer["ButtonDeleteApiResource"]</a>
+						<a asp-area="@CommonConsts.AdminUIArea" class="btn btn-danger" asp-action="ApiResourceDelete" asp-route-id="@Model.Id">@Localizer["ButtonDeleteApiResource"]</a>
 					}
 				</div>
 			</div>

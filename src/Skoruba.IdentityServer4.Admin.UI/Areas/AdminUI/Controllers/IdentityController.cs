@@ -18,7 +18,7 @@ namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
 {
     [Authorize(Policy = AuthorizationConsts.AdministrationPolicy)]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
-    [Area("AdminUI")]
+    [Area(CommonConsts.AdminUIArea)]
     public class IdentityController<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
             TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto> : BaseController
@@ -72,8 +72,6 @@ namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
         }
 
         [HttpGet]
-        [Route("[controller]/[action]")]
-        [Route("[controller]/[action]/{id}")]
         public async Task<IActionResult> Role(TKey id)
         {
             if (EqualityComparer<TKey>.Default.Equals(id, default))
@@ -160,19 +158,17 @@ namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
 
             return RedirectToAction(nameof(UserProfile), new { Id = userId });
         }
-
+        
         [HttpGet]
-        public IActionResult UserProfile()
-        {
-            var newUser = new TUserDto();
-
-            return View("UserProfile", newUser);
-        }
-
-        [HttpGet]
-        [Route("[controller]/UserProfile/{id}")]
         public async Task<IActionResult> UserProfile(TKey id)
         {
+            if (EqualityComparer<TKey>.Default.Equals(id, default))
+            {
+                var newUser = new TUserDto();
+
+                return View("UserProfile", newUser);
+            }
+
             var user = await _identityService.GetUserAsync(id.ToString());
             if (user == null) return NotFound();
 

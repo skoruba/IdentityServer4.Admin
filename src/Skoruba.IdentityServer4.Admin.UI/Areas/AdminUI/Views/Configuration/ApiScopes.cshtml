@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.ApiScopesDto
 @inject IViewLocalizer Localizer
 
@@ -14,7 +15,7 @@
     </div>
 
     <div class="col-12">
-        <a asp-action="ApiScope" class="btn btn-outline-primary mb-3"><span class="oi oi-plus"></span> @Localizer["ButtonAddNewApiScope"]</a>
+        <a asp-area="@CommonConsts.AdminUIArea" asp-action="ApiScope" class="btn btn-outline-primary mb-3"><span class="oi oi-plus"></span> @Localizer["ButtonAddNewApiScope"]</a>
     </div>
 
     <div class="col-12">
@@ -39,9 +40,9 @@
                     @foreach (var scope in Model.Scopes)
                     {
                         <tr>
-                            <td><a asp-action="ApiScope" asp-route-id="@scope.Id" class="btn btn-primary">@Localizer["TableButtonEdit"]</a></td>
+                            <td><a asp-area="@CommonConsts.AdminUIArea" asp-action="ApiScope" asp-route-id="@scope.Id" class="btn btn-primary">@Localizer["TableButtonEdit"]</a></td>
                             <td>@scope.Name</td>
-                            <td><a asp-action="ApiScopeDelete" asp-route-id="@scope.Id" class="btn btn-danger"><span class="oi oi-x"></span></a></td>
+                            <td><a asp-area="@CommonConsts.AdminUIArea" asp-action="ApiScopeDelete" asp-route-id="@scope.Id" class="btn btn-danger"><span class="oi oi-x"></span></a></td>
                         </tr>
                     }
                 </tbody>

@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.ApiResourcePropertiesDto
 @inject IViewLocalizer Localizer
 
@@ -8,14 +9,14 @@
 	Layout = "_Layout";
 }
 
-<form asp-controller="Configuration" asp-action="ApiResourceProperties" Method="post">
+<form asp-area="@CommonConsts.AdminUIArea" asp-controller="Configuration" asp-action="ApiResourceProperties" Method="post">
 	<div class="row">
 
 		<div class="col-12">
 			<nav aria-label="breadcrumb">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiResources">@Localizer["NavigationApiResources"]</a></li>
-					<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ApiResource" asp-route-id="@Model.ApiResourceId">@Model.ApiResourceName</a></li>
+					<li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Configuration" asp-action="ApiResources">@Localizer["NavigationApiResources"]</a></li>
+					<li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Configuration" asp-action="ApiResource" asp-route-id="@Model.ApiResourceId">@Model.ApiResourceName</a></li>
 					<li class="breadcrumb-item active" aria-current="page">@Localizer["NavigationApiResourceProperties"]</li>
 				</ol>
 			</nav>
@@ -93,7 +94,7 @@
 								<tr>
 									<td>@apiResourceProperty.Key</td>
 									<td>@apiResourceProperty.Value</td>
-									<td><a asp-action="ApiResourcePropertyDelete" asp-route-id="@apiResourceProperty.Id" class="btn btn-danger">@Localizer["TableButtonRemove"]</a></td>
+									<td><a asp-area="@CommonConsts.AdminUIArea" asp-action="ApiResourcePropertyDelete" asp-route-id="@apiResourceProperty.Id" class="btn btn-danger">@Localizer["TableButtonRemove"]</a></td>
 								</tr>
 							}
 						</tbody>

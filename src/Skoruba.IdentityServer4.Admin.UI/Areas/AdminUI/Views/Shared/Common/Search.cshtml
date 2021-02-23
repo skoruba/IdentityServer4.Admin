@@ -1,8 +1,9 @@
 ﻿@model Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common.Search
 @using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @inject IViewLocalizer Localizer
 
-<form asp-controller="@Model.Controller" asp-action="@Model.Action" method="get">
+<form asp-area="@CommonConsts.AdminUIArea" asp-controller="@Model.Controller" asp-action="@Model.Action" method="get">
 	<div class="form-row">
 		<div class="col-12 mb-3">
 			<input name="search" value="@ViewBag.Search" type="text" placeholder="@Localizer["InputSearchPlaceHolder"]" class="form-control" />

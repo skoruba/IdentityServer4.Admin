@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Log.AuditLogsDto
 @inject IViewLocalizer Localizer
 @{
@@ -14,7 +15,7 @@
         </div>
     </div>
 
-    <form class="audit-log-form" asp-controller="Log" asp-action="DeleteAuditLogs">
+    <form asp-area="@CommonConsts.AdminUIArea" class="audit-log-form" asp-controller="Log" asp-action="DeleteAuditLogs">
         <div class="d-flex flex-row mt-3 justify-content-end mb-3">
             <div class="p-2">
                 <a href="#" class="btn btn-danger audit-log-delete-button">
@@ -54,7 +55,7 @@
 
     <div class="row">
         <div class="col-12">
-            <form asp-controller="Log" asp-action="AuditLog" method="get">
+            <form asp-area="@CommonConsts.AdminUIArea" asp-controller="Log" asp-action="AuditLog" method="get">
                 <div class="form-row">
                     <div class="col-2 mb-3">
                         <input name="subjectIdentifier" value="@ViewBag.SubjectIdentifier" type="text" placeholder="@Localizer["Subject Identifier"]" class="form-control" />
@@ -124,7 +125,7 @@
 
     <div class="row">
         <div class="col-12">
-            @await Html.PartialAsync("Common/PagerDynamic", new Pager { Action = Url.Action("AuditLog", "Log"), PageSize = Model.PageSize, TotalCount = Model.TotalCount, EnableSearch = true, Search = ViewBag.Search })
+            @await Html.PartialAsync("Common/PagerDynamic", new Pager { Action = Url.Action("AuditLog", "Log", new { Area = CommonConsts.AdminUIArea }), PageSize = Model.PageSize, TotalCount = Model.TotalCount, EnableSearch = true, Search = ViewBag.Search })
         </div>
     </div>
 

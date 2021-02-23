@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.ClientPropertiesDto
 @inject IViewLocalizer Localizer
 
@@ -7,15 +8,15 @@
 	Layout = "_Layout";
 }
 
-<form asp-controller="Configuration" asp-action="ClientPropertyDelete" Method="post">
+<form asp-area="@CommonConsts.AdminUIArea" asp-controller="Configuration" asp-action="ClientPropertyDelete" Method="post">
 	<div class="row">
 
 		<div class="col-12">
 			<nav aria-label="breadcrumb">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="Clients">@Localizer["NavigationClients"]</a></li>
-					<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="Client" asp-route-id="@Model.ClientId">@Model.ClientName</a></li>
-					<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="ClientProperties" asp-route-id="@Model.ClientId">@Localizer["NavigationClientProperties"]</a></li>
+					<li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Configuration" asp-action="Clients">@Localizer["NavigationClients"]</a></li>
+					<li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Configuration" asp-action="Client" asp-route-id="@Model.ClientId">@Model.ClientName</a></li>
+					<li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Configuration" asp-action="ClientProperties" asp-route-id="@Model.ClientId">@Localizer["NavigationClientProperties"]</a></li>
 					<li class="breadcrumb-item active" aria-current="page">@Localizer["PageTitle"]</li>
 				</ol>
 			</nav>

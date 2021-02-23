@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.IdentityResourceDto
 @inject IViewLocalizer Localizer
 
@@ -11,7 +12,7 @@
 	<div class="col-12">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a asp-controller="Configuration" asp-action="IdentityResources">@Localizer["NavigationIdentityResources"]</a></li>
+				<li class="breadcrumb-item"><a asp-area="@CommonConsts.AdminUIArea" asp-controller="Configuration" asp-action="IdentityResources">@Localizer["NavigationIdentityResources"]</a></li>
 				<li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
 			</ol>
 		</nav>
@@ -22,7 +23,7 @@
 	</div>
 </div>
 
-<form asp-action="IdentityResource" method="post" id="identity-resource-form">
+<form asp-area="@CommonConsts.AdminUIArea" asp-action="IdentityResource" method="post" id="identity-resource-form">
 
 	<div asp-validation-summary="All" class="text-danger"></div>
 
@@ -138,7 +139,7 @@
 						@await Html.PartialAsync("IdentityResource/Section/Label", "Properties")
 					</label>
 					<div class="col-sm-9">
-						<a asp-action="IdentityResourceProperties" asp-route-id="@Model.Id" class="btn btn-primary">@Localizer["ButtonManageProperties"]</a>
+						<a asp-area="@CommonConsts.AdminUIArea" asp-action="IdentityResourceProperties" asp-route-id="@Model.Id" class="btn btn-primary">@Localizer["ButtonManageProperties"]</a>
 					</div>
 				</div>
 			}
@@ -151,7 +152,7 @@
 					<button type="submit" asp-action="IdentityResource" id="identity-resource-save-button" class="btn btn-primary">@Localizer["ButtonSave"]</button>
 					@if (Model.Id != 0)
 					{
-						<a class="btn btn-danger" asp-action="IdentityResourceDelete" asp-route-id="@Model.Id">@Localizer["ButtonDelete"]</a>
+						<a asp-area="@CommonConsts.AdminUIArea" class="btn btn-danger" asp-action="IdentityResourceDelete" asp-route-id="@Model.Id">@Localizer["ButtonDelete"]</a>
 					}
 				</div>
 			</div>

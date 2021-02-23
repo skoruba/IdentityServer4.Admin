@@ -9,12 +9,13 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Helpers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.UI.ExceptionHandling;
+using Skoruba.IdentityServer4.Admin.UI.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
 {
     [Authorize(Policy = AuthorizationConsts.AdministrationPolicy)]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
-    [Area("AdminUI")]
+    [Area(CommonConsts.AdminUIArea)]
     public class ConfigurationController : BaseController
     {
         private readonly IIdentityResourceService _identityResourceService;
@@ -38,18 +39,21 @@ namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
             _apiScopeService = apiScopeService;
         }
 
-        [HttpGet]
-        [Route("[controller]/[action]")]
-        [Route("[controller]/[action]/{id:int}")]
-        public async Task<IActionResult> Client(int id)
+        public async Task<IActionResult> Client(string id)
         {
-            if (id == 0)
+            if (id.IsNotPresentedValidNumber())
+            {
+                return NotFound();
+            }
+
+            if (id == default)
             {
                 var clientDto = _clientService.BuildClientViewModel();
                 return View(clientDto);
             }
 
-            var client = await _clientService.GetClientAsync((int)id);
+            int.TryParse(id, out var clientId);
+            var client = await _clientService.GetClientAsync(clientId);
             client = _clientService.BuildClientViewModel(client);
 
             return View(client);
@@ -541,17 +545,21 @@ namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
         }
 
         [HttpGet]
-        [Route("[controller]/[action]")]
-        [Route("[controller]/[action]/{id:int}")]
-        public async Task<IActionResult> ApiResource(int id)
+        public async Task<IActionResult> ApiResource(string id)
         {
-            if (id == 0)
+            if (id.IsNotPresentedValidNumber())
+            {
+                return NotFound();
+            }
+
+            if (id == default)
             {
                 var apiResourceDto = new ApiResourceDto();
                 return View(apiResourceDto);
             }
 
-            var apiResource = await _apiResourceService.GetApiResourceAsync(id);
+            int.TryParse(id, out var apiResourceId);
+            var apiResource = await _apiResourceService.GetApiResourceAsync(apiResourceId);
 
             return View(apiResource);
         }
@@ -592,9 +600,14 @@ namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ApiScope(int? id)
+        public async Task<IActionResult> ApiScope(string id)
         {
-            if (id == null)
+            if (id.IsNotPresentedValidNumber())
+            {
+                return NotFound();
+            }
+
+            if (id == default)
             {
                 var apiScopeDto = new ApiScopeDto();
 
@@ -602,7 +615,8 @@ namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
             }
             else
             {
-                var apiScopeDto = await _apiScopeService.GetApiScopeAsync(id.Value);
+                int.TryParse(id, out var apiScopeId);
+                var apiScopeDto = await _apiScopeService.GetApiScopeAsync(apiScopeId);
 
                 return View(apiScopeDto);
             }
@@ -633,7 +647,7 @@ namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
 
             SuccessNotification(string.Format(_localizer["SuccessAddApiScope"], apiScope.Name), _localizer["SuccessTitle"]);
 
-            return RedirectToAction(nameof(ApiScope), new { Scope = apiScopeId });
+            return RedirectToAction(nameof(ApiScope), new { id = apiScopeId });
         }
 
         [HttpGet]
@@ -695,17 +709,21 @@ namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
         }
 
         [HttpGet]
-        [Route("[controller]/[action]")]
-        [Route("[controller]/[action]/{id:int}")]
-        public async Task<IActionResult> IdentityResource(int id)
+        public async Task<IActionResult> IdentityResource(string id)
         {
-            if (id == 0)
+            if (id.IsNotPresentedValidNumber())
+            {
+                return NotFound();
+            }
+
+            if (id == default)
             {
                 var identityResourceDto = new IdentityResourceDto();
                 return View(identityResourceDto);
             }
 
-            var identityResource = await _identityResourceService.GetIdentityResourceAsync(id);
+            int.TryParse(id, out var identityResourceId);
+            var identityResource = await _identityResourceService.GetIdentityResourceAsync(identityResourceId);
 
             return View(identityResource);
         }
