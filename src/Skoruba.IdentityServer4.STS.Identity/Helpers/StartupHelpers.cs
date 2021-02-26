@@ -373,6 +373,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 {
                     options.ClientId = externalProviderConfiguration.GitHubClientId;
                     options.ClientSecret = externalProviderConfiguration.GitHubClientSecret;
+                    options.CallbackPath = externalProviderConfiguration.GitHubCallbackPath;
                     options.Scope.Add("user:email");
                 });
             }
