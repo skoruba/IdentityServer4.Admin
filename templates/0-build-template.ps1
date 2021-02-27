@@ -61,6 +61,7 @@ dotnet.exe remove ./$templateSrc/Skoruba.IdentityServer4.Admin.Api/Skoruba.Ident
 dotnet.exe remove ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj reference ..\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.csproj
 dotnet.exe remove ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj reference ..\Skoruba.IdentityServer4.Admin.BusinessLogic.Shared\Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.csproj
 dotnet.exe remove ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj reference ..\Skoruba.IdentityServer4.Admin.BusinessLogic\Skoruba.IdentityServer4.Admin.BusinessLogic.csproj
+dotnet.exe remove ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj reference ..\Skoruba.IdentityServer4.Admin.UI\Skoruba.IdentityServer4.Admin.UI.csproj
 
 # STS
 dotnet.exe remove ./$templateSrc/Skoruba.IdentityServer4.STS.Identity/Skoruba.IdentityServer4.STS.Identity.csproj reference ..\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.IdentityServer4.Admin.EntityFramework.csproj
@@ -89,6 +90,7 @@ dotnet.exe remove ./$templateSrc/Skoruba.IdentityServer4.Shared/Skoruba.Identity
 # Admin
 dotnet.exe add ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj package Skoruba.IdentityServer4.Admin.BusinessLogic -v $packagesVersions
 dotnet.exe add ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj package Skoruba.IdentityServer4.Admin.BusinessLogic.Identity -v $packagesVersions
+dotnet.exe add ./$templateSrc/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj package Skoruba.IdentityServer4.Admin.UI -v $packagesVersions
 
 # API
 dotnet.exe add ./$templateSrc/Skoruba.IdentityServer4.Admin.Api/Skoruba.IdentityServer4.Admin.Api.csproj package Skoruba.IdentityServer4.Admin.BusinessLogic -v $packagesVersions
@@ -149,6 +151,10 @@ CleanBinObjFolders
 $templateFiles = Get-ChildItem .\SkorubaIdentityServer4Admin\src -include *.cs, *.csproj, *.cshtml -Recurse
 foreach ($file in $templateFiles) {
     Write-Host $file.PSPath
+
+    (Get-Content $file.PSPath -raw -Encoding UTF8) |
+    Foreach-Object { $_ -replace "SkorubaIdentityServer4Admin.Admin.UI", "Skoruba.IdentityServer4.Admin.UI" } |
+    Set-Content $file.PSPath -Encoding UTF8
 
     (Get-Content $file.PSPath -raw -Encoding UTF8) |
     Foreach-Object { $_ -replace "SkorubaIdentityServer4Admin.Admin.BusinessLogic", "Skoruba.IdentityServer4.Admin.BusinessLogic" } |
