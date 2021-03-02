@@ -26,6 +26,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
 using Skoruba.IdentityServer4.Shared.Configuration.Identity;
 
@@ -158,6 +159,9 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                     break;
                 case DatabaseProviderType.MySql:
                     services.RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(connectionStrings, databaseMigrations);
+                    break;
+                case DatabaseProviderType.Sqlite:
+                    services.RegisterSqliteDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(connectionStrings, databaseMigrations);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(databaseProvider.ProviderType), $@"The value needs to be one of {string.Join(", ", Enum.GetNames(typeof(DatabaseProviderType)))}.");
@@ -334,6 +338,15 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                             .AddMySql(logDbConnectionString, name: "LogDb")
                             .AddMySql(auditLogDbConnectionString, name: "AuditLogDb")
                             .AddMySql(dataProtectionDbConnectionString, name: "DataProtectionDb");
+                        break;
+                    case DatabaseProviderType.Sqlite:
+                        healthChecksBuilder
+                            .AddSqlite(configurationDbConnectionString, name: "ConfigurationDb")
+                            .AddSqlite(persistedGrantsDbConnectionString, name: "PersistentGrantsDb")
+                            .AddSqlite(identityDbConnectionString, name: "IdentityDb")
+                            .AddSqlite(logDbConnectionString, name: "LogDb")
+                            .AddSqlite(auditLogDbConnectionString, name: "AuditLogDb")
+                            .AddSqlite(dataProtectionDbConnectionString, name: "DataProtectionDb");
                         break;
                     default:
                         throw new NotImplementedException($"Health checks not defined for database provider {databaseProvider.ProviderType}");
