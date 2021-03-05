@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Skoruba.AuditLogging.EntityFramework.Entities;
+using Skoruba.IdentityServer4.Admin.Configuration.Database;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Shared.Configuration.Helpers;
@@ -70,7 +71,7 @@ namespace Skoruba.IdentityServer4.Admin
             }
 
             // Set migration assembly for application of db migrations
-            var migrationsAssembly = typeof(AdminIdentityDbContext).GetTypeInfo().Assembly.GetName().Name;
+            var migrationsAssembly = MigrationAssemblyConfiguration.GetMigrationAssemblyByProvider(options.DatabaseProvider);
             options.DatabaseMigrations.SetMigrationsAssemblies(migrationsAssembly);
 
             // Use production DbContexts and auth services.
