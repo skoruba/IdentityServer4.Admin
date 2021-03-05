@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Skoruba.AuditLogging.EntityFramework.DbContexts;
 using Skoruba.AuditLogging.EntityFramework.Entities;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions
 {
@@ -21,21 +21,21 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions
         /// <typeparam name="TLogDbContext"></typeparam>
         /// <typeparam name="TIdentityDbContext"></typeparam>
         /// <typeparam name="TAuditLoggingDbContext"></typeparam>
+        /// <typeparam name="TDataProtectionDbContext"></typeparam>
+        /// <typeparam name="TAuditLog"></typeparam>
         /// <param name="services"></param>
-        /// <param name="identityConnectionString"></param>
-        /// <param name="configurationConnectionString"></param>
-        /// <param name="persistedGrantConnectionString"></param>
-        /// <param name="errorLoggingConnectionString"></param>
-        /// <param name="auditLoggingConnectionString"></param>
-        public static void RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(this IServiceCollection services,
+        /// <param name="connectionStrings"></param>
+        /// <param name="databaseMigrations"></param>
+        public static void RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext, TAuditLog>(this IServiceCollection services,
             ConnectionStringsConfiguration connectionStrings,
             DatabaseMigrationsConfiguration databaseMigrations)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
-            where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
+            where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<TAuditLog>
             where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
+            where TAuditLog : AuditLog
         {
             var migrationsAssembly = typeof(DatabaseExtensions).GetTypeInfo().Assembly.GetName().Name;
 
@@ -69,10 +69,12 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions
         /// <typeparam name="TConfigurationDbContext"></typeparam>
         /// <typeparam name="TPersistedGrantDbContext"></typeparam>
         /// <typeparam name="TIdentityDbContext"></typeparam>
+        /// <typeparam name="TDataProtectionDbContext"></typeparam>
         /// <param name="services"></param>
         /// <param name="identityConnectionString"></param>
         /// <param name="configurationConnectionString"></param>
         /// <param name="persistedGrantConnectionString"></param>
+        /// <param name="dataProtectionConnectionString"></param>
         public static void RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext,
             TPersistedGrantDbContext, TDataProtectionDbContext>(this IServiceCollection services,
             string identityConnectionString, string configurationConnectionString,

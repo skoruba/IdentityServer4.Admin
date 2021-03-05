@@ -54,6 +54,7 @@
         <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL\Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.csproj" />
         <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.Shared\Skoruba.IdentityServer4.Admin.EntityFramework.Shared.csproj" />
         <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer\Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.csproj" />
+        <ProjectReference Include="..\Skoruba.IdentityServer4.Shared.Configuration\Skoruba.IdentityServer4.Shared.Configuration.csproj" />
         <ProjectReference Include="..\Skoruba.IdentityServer4.Shared\Skoruba.IdentityServer4.Shared.csproj" />
     </ItemGroup>
 

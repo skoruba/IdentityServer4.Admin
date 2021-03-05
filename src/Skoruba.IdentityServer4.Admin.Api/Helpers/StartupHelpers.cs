@@ -21,13 +21,12 @@ using Skoruba.IdentityServer4.Admin.Api.Configuration.ApplicationParts;
 using Skoruba.IdentityServer4.Admin.Api.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.Api.Helpers.Localization;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Extensions;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions;
-using Skoruba.IdentityServer4.Shared.Configuration.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.Api.Helpers
 {
@@ -136,13 +135,14 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
         /// <param name="services"></param>
         /// <param name="configuration"></param>
         public static void AddDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext,
-            TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(this IServiceCollection services, IConfiguration configuration)
+            TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext, TAuditLog>(this IServiceCollection services, IConfiguration configuration)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
             where TLogDbContext : DbContext, IAdminLogDbContext
-            where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<AuditLog>
+            where TAuditLoggingDbContext : DbContext, IAuditLoggingDbContext<TAuditLog>
             where TDataProtectionDbContext : DbContext, IDataProtectionKeyContext
+            where TAuditLog : AuditLog
         {
             var databaseProvider = configuration.GetSection(nameof(DatabaseProviderConfiguration)).Get<DatabaseProviderConfiguration>();
             var databaseMigrations = configuration.GetSection(nameof(DatabaseMigrationsConfiguration)).Get<DatabaseMigrationsConfiguration>() ?? new DatabaseMigrationsConfiguration();
@@ -151,13 +151,13 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
             switch (databaseProvider.ProviderType)
             {
                 case DatabaseProviderType.SqlServer:
-                    services.RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(connectionStrings, databaseMigrations);
+                    services.RegisterSqlServerDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext, TAuditLog>(connectionStrings, databaseMigrations);
                     break;
                 case DatabaseProviderType.PostgreSQL:
-                    services.RegisterNpgSqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(connectionStrings, databaseMigrations);
+                    services.RegisterNpgSqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext, TAuditLog>(connectionStrings, databaseMigrations);
                     break;
                 case DatabaseProviderType.MySql:
-                    services.RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(connectionStrings, databaseMigrations);
+                    services.RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext, TAuditLog>(connectionStrings, databaseMigrations);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(databaseProvider.ProviderType), $@"The value needs to be one of {string.Join(", ", Enum.GetNames(typeof(DatabaseProviderType)))}.");
