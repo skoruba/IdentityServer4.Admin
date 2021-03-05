@@ -1,4 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -67,6 +68,10 @@ namespace Skoruba.IdentityServer4.Admin
             {
                 options.Security.UseHsts = true;
             }
+
+            // Set migration assembly for application of db migrations
+            var migrationsAssembly = typeof(AdminIdentityDbContext).GetTypeInfo().Assembly.GetName().Name;
+            options.DatabaseMigrations.SetMigrationsAssemblies(migrationsAssembly);
 
             // Use production DbContexts and auth services.
             options.Testing.IsStaging = false;
