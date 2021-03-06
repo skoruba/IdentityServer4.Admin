@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <Version>2.0.0-rc1</Version>
+        <Version>2.0.0-rc2</Version>
         <Authors>Jan Škoruba</Authors>
         <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
         <UserSecretsId>1cc472a2-4e4b-48ce-846b-5219f71fc643</UserSecretsId>
@@ -74,6 +74,7 @@
     </ItemGroup>
 
 </Project>
+
 
 
 

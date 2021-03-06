@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-	  <Version>2.0.0-rc1</Version>
+	  <Version>2.0.0-rc2</Version>
 	  <Authors>Jan Škoruba</Authors>
 	  <PackageTags>IdentityServer4 Admin OpenIDConnect OAuth2 Identity</PackageTags>
 	  <Description>Entity Framework layer for the administration of the IdentityServer4</Description>
@@ -20,6 +20,7 @@
     <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.Extensions\Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.csproj" />
   </ItemGroup>
 </Project>
+
 
 
 
