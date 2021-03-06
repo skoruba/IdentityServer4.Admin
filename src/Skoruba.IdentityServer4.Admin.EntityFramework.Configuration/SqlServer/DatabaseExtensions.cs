@@ -8,7 +8,7 @@ using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 
-namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Extensions
+namespace Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.SqlServer
 {
     public static class DatabaseExtensions
     {
