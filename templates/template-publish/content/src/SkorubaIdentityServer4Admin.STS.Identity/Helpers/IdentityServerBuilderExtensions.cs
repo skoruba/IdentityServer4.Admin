@@ -1,13 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
-using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using SkorubaIdentityServer4Admin.Shared.Configuration.Common;
-using SkorubaIdentityServer4Admin.Shared.Helpers;
-using SkorubaIdentityServer4Admin.STS.Identity.Configuration;
+using Skoruba.IdentityServer4.Shared.Configuration.Configuration.Common;
+using Skoruba.IdentityServer4.Shared.Configuration.Helpers;
 
 namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
 {
@@ -182,6 +179,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
         }
     }
 }
+
+
 
 
 

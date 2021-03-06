@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -19,9 +17,9 @@ using SkorubaIdentityServer4Admin.Admin.Api.Mappers;
 using SkorubaIdentityServer4Admin.Admin.Api.Resources;
 using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.DbContexts;
 using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Entities.Identity;
+using Skoruba.IdentityServer4.Shared.Configuration.Helpers;
 using SkorubaIdentityServer4Admin.Shared.Dtos;
 using SkorubaIdentityServer4Admin.Shared.Dtos.Identity;
-using SkorubaIdentityServer4Admin.Shared.Helpers;
 
 namespace SkorubaIdentityServer4Admin.Admin.Api
 {
@@ -144,7 +142,7 @@ namespace SkorubaIdentityServer4Admin.Admin.Api
 
         public virtual void RegisterDbContexts(IServiceCollection services)
         {
-            services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext>(Configuration);
+            services.AddDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext, AuditLog>(Configuration);
         }
 
         public virtual void RegisterAuthentication(IServiceCollection services)
@@ -163,6 +161,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api
         }
     }
 }
+
+
 
 
 

@@ -1,0 +1,101 @@
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AskForPersonalDataLog" xml:space="preserve">
+    <value>User met ID '{0}' vraagt om zijn persoonlijke data.</value>
+  </data>
+  <data name="AuthenticatorVerified" xml:space="preserve">
+    <value>Uw authenticator app is geverifieerd.</value>
+  </data>
+  <data name="ConfirmEmailBody" xml:space="preserve">
+    <value>Bevestig a.u.b. uw account door &lt;a href='{0}'&gt;hier te klikken&lt;/a&gt;.</value>
+  </data>
+  <data name="ConfirmEmailTitle" xml:space="preserve">
+    <value>Bevestig uw email</value>
+  </data>
+  <data name="DeletePersonalData" xml:space="preserve">
+    <value>User met ID '{0}' heeft zichzelf verwijderd.</value>
+  </data>
+  <data name="Error2FANotEnabled" xml:space="preserve">
+    <value>Kan geen herstelcodes genereren for user met ID {0} omdat 2FA voor deze user niet geactiveerd is.</value>
+  </data>
+  <data name="ErrorCode" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="ErrorDeletingUser" xml:space="preserve">
+    <value>Onverwachte fout opgetreden tijdens het verwijderen van user met ID {0}.</value>
+  </data>
+  <data name="ErrorDisable2FA" xml:space="preserve">
+    <value>Onverwachte fout opgetreden tijdens deactiveren van 2FA voor user met ID {0}.</value>
+  </data>
+  <data name="ErrorGenerateCodesWithout2FA" xml:space="preserve">
+    <value>Kan geen herstelcodes genereren for user omdat 2FA voor deze user niet geactiveerd is.</value>
+  </data>
+  <data name="ErrorLoadingExternalLogin" xml:space="preserve">
+    <value>Onverwachte fout opgetreden tijdens het laden van externe login info voor user met ID {0}.</value>
+  </data>
+  <data name="ErrorRemovingExternalLogin" xml:space="preserve">
+    <value>Onverwachte fout opgetreden tijdens het verwijderen van externe login voor user met ID {0}.</value>
+  </data>
+  <data name="ErrorSettingEmail" xml:space="preserve">
+    <value>Onverwachte fout opgetreden tijdens het instellen van het emailadres voor user met ID {0}.</value>
+  </data>
+  <data name="ErrorSettingPhone" xml:space="preserve">
+    <value>Onverwachte fout opgetreden tijdens het instellen van het telefoonnummer voor user met ID {0}.</value>
+  </data>
+  <data name="ExternalLoginAdded" xml:space="preserve">
+    <value>De externe login is toegevoegd</value>
+  </data>
+  <data name="ExternalLoginRemoved" xml:space="preserve">
+    <value>De externe login is verwijderd</value>
+  </data>
+  <data name="InvalidVerificationCode" xml:space="preserve">
+    <value>Verificatiecode is ongeldig.</value>
+  </data>
+  <data name="PasswordChanged" xml:space="preserve">
+    <value>Uw wachtwoord is gewijzigd</value>
+  </data>
+  <data name="PasswordChangedLog" xml:space="preserve">
+    <value>User {0} heeft zijn wachtwoord succesvol gewijzigd </value>
+  </data>
+  <data name="PasswordNotCorrect" xml:space="preserve">
+    <value>Wachtwoord onjuist</value>
+  </data>
+  <data name="PasswordSet" xml:space="preserve">
+    <value>Uw wachtwoord is ingesteld</value>
+  </data>
+  <data name="ProfileUpdated" xml:space="preserve">
+    <value>Uw profiel is geupdate</value>
+  </data>
+  <data name="SuccessDisabled2FA" xml:space="preserve">
+    <value>User met ID {0} heeft 2FA gedeactiveerd.</value>
+  </data>
+  <data name="SuccessForgetBrowser2FA" xml:space="preserve">
+    <value>De huidige browser wordt vergeten. Wanneer u opnieuw inlogd met de huidige browser wordt u gevraagd om uw 2FA code.</value>
+  </data>
+  <data name="SuccessResetAuthenticationKey" xml:space="preserve">
+    <value>User met id {0} heeft zijn authentication app key gereset.</value>
+  </data>
+  <data name="SuccessUserEnabled2FA" xml:space="preserve">
+    <value>User met id {0} heeft 2FA geactiveerd met een authenticator app.</value>
+  </data>
+  <data name="UserGenerated2FACodes" xml:space="preserve">
+    <value>User met ID {0} nieuwe 2FA herstelcodes gegenereerd.</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>User met ID {0} kan niet worden geladen.</value>
+  </data>
+  <data name="VerificationSent" xml:space="preserve">
+    <value>Bevestigings email verzonden. Controleer a.u.b. uw email.</value>
+  </data>
+</root>

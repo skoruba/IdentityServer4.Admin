@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <Version>2.0.0-beta1</Version>
+        <Version>2.0.0-rc3</Version>
         <Authors>Jan Škoruba</Authors>
         <UserSecretsId>9c91d295-54c5-4d09-9bd6-fa56fb74011b</UserSecretsId>
         <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
@@ -45,13 +45,11 @@
         <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.5.1" />
         <PackageReference Include="Serilog.Sinks.Seq" Version="4.0.0" />
         <PackageReference Include="Skoruba.AuditLogging.EntityFramework" Version="1.0.0" />
+        <PackageReference Include="Skoruba.IdentityServer4.Shared.Configuration" Version="2.0.0-rc3" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\SkorubaIdentityServer4Admin.Admin.EntityFramework.MySql\SkorubaIdentityServer4Admin.Admin.EntityFramework.MySql.csproj" />
-        <ProjectReference Include="..\SkorubaIdentityServer4Admin.Admin.EntityFramework.PostgreSQL\SkorubaIdentityServer4Admin.Admin.EntityFramework.PostgreSQL.csproj" />
         <ProjectReference Include="..\SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared\SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.csproj" />
-        <ProjectReference Include="..\SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer\SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.csproj" />
         <ProjectReference Include="..\SkorubaIdentityServer4Admin.Shared\SkorubaIdentityServer4Admin.Shared.csproj" />
     </ItemGroup>
 
@@ -89,6 +87,12 @@
     </ItemGroup>
 
 </Project>
+
+
+
+
+
+
 
 
 

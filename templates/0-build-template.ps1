@@ -132,6 +132,9 @@ Remove-Item ./$templateSrc/Skoruba.IdentityServer4.Admin.BusinessLogic.Shared -F
 Remove-Item ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework -Force -recurse
 Remove-Item ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.Identity -Force -recurse
 Remove-Item ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.Extensions -Force -recurse
+Remove-Item ./$templateSrc/Skoruba.IdentityServer4.Admin.EntityFramework.Configuration -Force -recurse
+Remove-Item ./$templateSrc/Skoruba.IdentityServer4.Shared.Configuration -Force -recurse
+Remove-Item ./$templateSrc/Skoruba.IdentityServer4.Admin.UI -Force -recurse
 Remove-Item ./$templateTests -Force -recurse
 
 ######################################

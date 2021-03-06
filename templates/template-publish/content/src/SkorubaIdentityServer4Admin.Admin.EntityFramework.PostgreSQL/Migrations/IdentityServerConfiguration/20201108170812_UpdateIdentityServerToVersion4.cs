@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Original SQL scripts for database migration come from: https://github.com/RockSolidKnowledge/IdentityServer4.Migration.Scripts/blob/master/Postgres/ConfigurationDbContext.sql
+// Modified by Jan Škoruba
+
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -558,6 +561,8 @@ WHERE arc.""Id"" = asp.""Id"";");
         }
     }
 }
+
+
 
 
 

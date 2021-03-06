@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Original SQL scripts for database migration come from: https://github.com/RockSolidKnowledge/IdentityServer4.Migration.Scripts/blob/master/MSSQL/ConfigurationDbContext.sql
+// Modified by Jan Škoruba
+
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Migrations.IdentityServerConfiguration
@@ -586,6 +589,8 @@ FROM ApiScopes asp
         }
     }
 }
+
+
 
 
 

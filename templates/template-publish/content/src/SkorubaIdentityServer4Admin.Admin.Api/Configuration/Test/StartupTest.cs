@@ -8,7 +8,6 @@ using SkorubaIdentityServer4Admin.Admin.Api.Helpers;
 using SkorubaIdentityServer4Admin.Admin.Api.Middlewares;
 using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.DbContexts;
 using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Entities.Identity;
-using SkorubaIdentityServer4Admin.Shared.Configuration.Identity;
 
 namespace SkorubaIdentityServer4Admin.Admin.Api.Configuration.Test
 {
@@ -52,6 +51,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Configuration.Test
         }
     }
 }
+
+
 
 
 
