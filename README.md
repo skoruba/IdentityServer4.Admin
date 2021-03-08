@@ -28,13 +28,13 @@ The application is written in the **Asp.Net Core MVC - using .NET Core 3.1**
 dotnet new -i Skoruba.IdentityServer4.Admin.Templates::2.0.0
 ```
 
-### Version 1.1.0 works with **IdentityServer4 version 3** 🚀
+### Version 1.0.0 works with **IdentityServer4 version 3** 🚀
 
 ```sh
-dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.1.0
+dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0
 ```
 
-- The source code for version **1.1.0** is available in the branch [release/1.1.0](https://github.com/skoruba/IdentityServer4.Admin/tree/release/1.1.0)
+- The source code for version **1.0.0** is available in the branch [release/1.0.0](https://github.com/skoruba/IdentityServer4.Admin/tree/release/1.0.0)
 
 
 ### Create new project:
@@ -171,21 +171,12 @@ docker-compose up -d
 
 ### Docker images
 - Docker images will be available also in [docker hub](https://hub.docker.com/u/skoruba)
-  - AdminUI:
-    - **Stable version:** 
-    - `skoruba/identityserver4-admin:1.0.0`
-    - **Beta version:** 
-    - `skoruba/identityserver4-admin:2.0.0-beta1`
+  - AdminUI:    
+    - `skoruba/identityserver4-admin:2.0.0`
   - Admin Api:
-    - **Stable version:** 
-    - `skoruba/identityserver4-admin-api:1.0.0`
-    - **Beta version:** 
-    - `skoruba/identityserver4-admin-api:2.0.0-beta1`
+    - `skoruba/identityserver4-admin-api:2.0.0`
   - STS:
-    - **Stable version:** 
-    - `skoruba/identityserver4-sts-identity:1.0.0`
-    - **Beta version:** 
-    - `skoruba/identityserver4-sts-identity:2.0.0-beta1`
+    - `skoruba/identityserver4-sts-identity:2.0.0`
        
 ### Publish Docker images to Docker hub
 - Check the script in `build/publish-docker-images.ps1` - change the profile name according to your requirements.
@@ -209,6 +200,7 @@ The following Gulp commands are available:
 - `gulp scripts` - bundle and minify JS
 - `gulp clean` - remove the `dist` folder
 - `gulp build` - run the `styles` and `scripts` tasks
+- `gulp watch` - watch all changes in all sass files
 
 ## EF Core & Data Access
 
@@ -397,6 +389,8 @@ Admin and STS can be customized without editing code in `appsettings.json` under
 #### Themes
 
 Ui can be customized using themes integrated from [bootswatch](https://bootswatch.com).
+
+From version 2.0.0 is possible to change theme from UI. 🎈
 
 By default, configuration value is null to use default theme. if you want to use a theme, just fill the lowercase theme name as configuration value of `Theme` key.
 
@@ -611,9 +605,13 @@ Integration tests use StartupTest class which is pre-configured with:
 
   - `Skoruba.IdentityServer4.Admin.BusinessLogic.Shared` - project that contains shared Dtos and ExceptionHandling for the Business Logic layer of the IdentityServer4 and Asp.Net Core Identity
 
-  - `Skoruba.IdentityServer4.Shared` - Shared common layer for Admin UI, Admin UI Api and STS
+  - `Skoruba.IdentityServer4.Shared` - Shared common Identity DTOS for Admin UI, Admin UI Api and STS
+
+  - `Skoruba.IdentityServer4.Shared.Configuration` - Shared common layer for Admin UI, Admin UI Api and STS
 
   - `Skoruba.IdentityServer4.Admin.EntityFramework` - EF Core data layer that contains Entities for the IdentityServer4
+
+  - `Skoruba.IdentityServer4.Admin.EntityFramework.Configuration` - EF Core data layer that contains configurations
 
   - `Skoruba.IdentityServer4.Admin.EntityFramework.Identity` - EF Core data layer that contains Repositories for the Asp.Net Core Identity
   
@@ -749,6 +747,7 @@ It is possible to define the configuration according the client type - by defaul
 ### 2.0.0
 - [x] Update to IdentityServer4 version 4 ([#633](https://github.com/skoruba/IdentityServer4.Admin/issues/633))
 - [x] Add support for themes ([#725](https://github.com/skoruba/IdentityServer4.Admin/issues/725))
+- [x] Create separate UI using `Razor Class Library` ([#28](https://github.com/skoruba/IdentityServer4.Admin/issues/28), [#133](https://github.com/skoruba/IdentityServer4.Admin/issues/133))
 
 ### 3.0.0
 - [ ] Connect Admin Api to the Admin UI ([#478](https://github.com/skoruba/IdentityServer4.Admin/issues/478))
@@ -765,7 +764,7 @@ It is possible to define the configuration according the client type - by defaul
 - Add UI tests ([#97](https://github.com/skoruba/IdentityServer4.Admin/issues/97), [#116](https://github.com/skoruba/IdentityServer4.Admin/issues/116))
 - Add more unit and integration tests :blush:
 - Extend administration for another protocols
-- Create separate UI using `Razor Class Library` ([#28](https://github.com/skoruba/IdentityServer4.Admin/issues/28), [#133](https://github.com/skoruba/IdentityServer4.Admin/issues/133))
+
 
 ## Licence
 
