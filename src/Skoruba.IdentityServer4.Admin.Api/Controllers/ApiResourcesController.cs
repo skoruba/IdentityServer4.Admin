@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Skoruba.IdentityServer4.Admin.Api.Configuration.Constants;

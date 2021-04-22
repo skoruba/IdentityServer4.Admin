@@ -1,8 +1,6 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Skoruba.IdentityServer4.Admin.Configuration.Test;
 using Skoruba.IdentityServer4.Admin.IntegrationTests.Tests.Base;
 using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants;
 using Xunit;
@@ -11,8 +9,7 @@ namespace Skoruba.IdentityServer4.Admin.IntegrationTests.Tests
 {
 	public class HomeControllerTests : BaseClassFixture
     {
-        public HomeControllerTests(WebApplicationFactory<StartupTest> factory) : 
-            base(factory)
+        public HomeControllerTests(TestFixture fixture) : base(fixture)
         {
         }
 
