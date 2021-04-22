@@ -10,7 +10,7 @@
 [![Build Status](https://dev.azure.com/skoruba/IdentityServer4.Admin/_apis/build/status/IdentityServer4.Admin-CI?branchName=master)](https://dev.azure.com/skoruba/IdentityServer4.Admin/_build/latest?definitionId=2?branchName=master)
 [![Join the chat at https://gitter.im/skoruba/IdentityServer4.Admin](https://badges.gitter.im/skoruba/IdentityServer4.Admin.svg)](https://gitter.im/skoruba/IdentityServer4.Admin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-The application is written in the **Asp.Net Core MVC - using .NET Core 3.1**
+The application is written in the **Asp.Net Core MVC - using .NET 5**
 
 ## Requirements
 
@@ -20,22 +20,13 @@ The application is written in the **Asp.Net Core MVC - using .NET Core 3.1**
 
 - Install the dotnet new template:
 
-### Version 2.0.0 works with **IdentityServer4 version 4** 🚀
+### Version 2.0.0 works with **IdentityServer4 version 4** only 🚀
 
 - 🔒 **NOTE:** This version affects your database data if you use the default database migrations that are part of the project - double check the migrations according to your database provider and create a database backup
 
 ```sh
 dotnet new -i Skoruba.IdentityServer4.Admin.Templates::2.0.0
 ```
-
-### Version 1.0.0 works with **IdentityServer4 version 3** 🚀
-
-```sh
-dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.0.0
-```
-
-- The source code for version **1.0.0** is available in the branch [release/1.0.0](https://github.com/skoruba/IdentityServer4.Admin/tree/release/1.0.0)
-
 
 ### Create new project:
 
