@@ -614,10 +614,13 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 //Get new client secret    
                 var secretsDto = await clientService.GetClientSecretAsync(secret.Id);
 
+                clientSecretsDto.Value.Should().Be(clientSecret.Value);
+
                 //Assert
-                secretsDto.ShouldBeEquivalentTo(clientSecretsDto, options => 
+                secretsDto.ShouldBeEquivalentTo(clientSecretsDto, options =>
                     options.Excluding(o => o.ClientSecretId)
-                           .Excluding(o => o.ClientName));
+                        .Excluding(o => o.ClientName)
+                        .Excluding(o => o.Value));
             }
         }
 
@@ -658,9 +661,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                 //Get new client secret    
                 var secretsDto = await clientService.GetClientSecretAsync(secret.Id);
 
+                clientSecretsDto.Value.Should().Be(clientSecret.Value);
+
                 //Assert
                 secretsDto.ShouldBeEquivalentTo(clientSecretsDto, options => options.Excluding(o => o.ClientSecretId)
-                    .Excluding(o => o.ClientName));
+                    .Excluding(o => o.ClientName)
+                    .Excluding(o => o.Value));
             }
         }
 
@@ -703,7 +709,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
 
                 //Assert
                 clientSecretsDto.ShouldBeEquivalentTo(secretsDto, options => options.Excluding(o => o.ClientSecretId)
-                    .Excluding(o => o.ClientName));
+                    .Excluding(o => o.ClientName)
+                    .Excluding(o => o.Value));
+
+                clientSecret.Value.Should().Be(secret.Value);
 
                 //Delete client secret
                 await clientService.DeleteClientSecretAsync(clientSecretsDto);
