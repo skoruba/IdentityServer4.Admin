@@ -255,9 +255,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var clientSecretAdded = await dbContext.ClientSecrets.Where(x => x.Client.Id == clientId).SingleOrDefaultAsync();
             var newClientSecret = await clientService.GetClientSecretAsync(clientSecretAdded.Id);
 
+            clientSecret.Value.Should().Be(clientSecretAdded.Value);
+
             clientSecret.ShouldBeEquivalentTo(newClientSecret, opts => opts.Excluding(x => x.ClientSecretId)
                         .Excluding(x => x.ClientSecrets)
-                        .Excluding(x => x.ClientName));
+                        .Excluding(x => x.ClientName)
+                        .Excluding(x => x.Value));
         }
 
         [Fact]
@@ -284,9 +287,11 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             viewResult.ViewName.Should().BeNullOrEmpty();
             viewResult.ViewData.Should().NotBeNull();
 
+            clientSecretAdded.Value.Should().Be(clientSecret.Value);
+
             var viewModel = Assert.IsType<ClientSecretsDto>(viewResult.ViewData.Model);
             viewModel.ClientSecrets.Count.Should().Be(1);
-            viewModel.ClientSecrets[0].ShouldBeEquivalentTo(clientSecretAdded);
+            viewModel.ClientSecrets[0].ShouldBeEquivalentTo(clientSecretAdded, opts => opts.Excluding(x => x.Value));
         }
 
         [Fact]
@@ -699,7 +704,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var apiSecret = await dbContext.ApiSecrets.Where(x => x.Value == apiSecretsDto.Value).SingleOrDefaultAsync();
             var addedApiScope = await apiResourceService.GetApiSecretAsync(apiSecret.Id);
 
-            apiSecretsDto.ShouldBeEquivalentTo(addedApiScope, opts => opts.Excluding(x => x.ApiResourceId).Excluding(x => x.ApiResourceName).Excluding(x => x.ApiSecretId));
+            apiSecretsDto.Value.Should().Be(apiSecret.Value);
+
+            apiSecretsDto.ShouldBeEquivalentTo(addedApiScope, opts => opts.Excluding(x => x.ApiResourceId).Excluding(x => x.ApiResourceName).Excluding(x => x.ApiSecretId).Excluding(x => x.Value));
         }
 
         [Fact]
