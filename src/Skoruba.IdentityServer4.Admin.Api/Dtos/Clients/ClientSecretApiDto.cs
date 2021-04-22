@@ -18,20 +18,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Dtos.Clients
 
         public string HashType { get; set; }
 
-        public HashType HashTypeEnum
-        {
-            get
-            {
-                HashType result;
-
-                if (Enum.TryParse(HashType, true, out result))
-                {
-                    return result;
-                }
-
-                return Skoruba.IdentityServer4.Admin.EntityFramework.Helpers.HashType.Sha256;
-            }
-        }
+        public HashType HashTypeEnum => Enum.TryParse(HashType, true, out HashType result) ? result : Skoruba.IdentityServer4.Admin.EntityFramework.Helpers.HashType.Sha256;
 
         public DateTime? Expiration { get; set; }
     }

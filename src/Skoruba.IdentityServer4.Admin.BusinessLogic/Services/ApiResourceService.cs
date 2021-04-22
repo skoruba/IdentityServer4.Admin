@@ -213,6 +213,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             apiSecretsDto.ApiResourceId = apiResourceId;
             apiSecretsDto.ApiResourceName = await ApiResourceRepository.GetApiResourceNameAsync(apiResourceId);
 
+            // remove secret value from dto
+            apiSecretsDto.ApiSecrets.ForEach(x => x.Value = null);
+
             await AuditEventLogger.LogEventAsync(new ApiSecretsRequestedEvent(apiSecretsDto.ApiResourceId, apiSecretsDto.ApiSecrets.Select(x => (x.Id, x.Type, x.Expiration)).ToList()));
 
             return apiSecretsDto;
@@ -236,6 +239,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             var apiSecret = await ApiResourceRepository.GetApiSecretAsync(apiSecretId);
             if (apiSecret == null) throw new UserFriendlyErrorPageException(string.Format(ApiResourceServiceResources.ApiSecretDoesNotExist().Description, apiSecretId), ApiResourceServiceResources.ApiSecretDoesNotExist().Description);
             var apiSecretsDto = apiSecret.ToModel();
+
+            // remove secret value for dto
+            apiSecretsDto.Value = null;
 
             await AuditEventLogger.LogEventAsync(new ApiSecretRequestedEvent(apiSecretsDto.ApiResourceId, apiSecretsDto.ApiSecretId, apiSecretsDto.Type, apiSecretsDto.Expiration));
 

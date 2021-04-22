@@ -16,14 +16,6 @@
             $("#generate-guid-button").click(function() {
                 $("#secret-input").val(adminSecrets.guid());
             });
-
-            $(".secret-value-button").click(function () {
-                var secret = $(this).data("secret-value");
-
-                $(".modal-secret-value").html(secret);
-
-                $(".secret-modal").modal("show");
-            });
         },
 
         init: function() {

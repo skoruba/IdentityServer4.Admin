@@ -1,4 +1,4 @@
-﻿using IdentityServer4.AccessTokenValidation;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -31,12 +31,12 @@ namespace Skoruba.IdentityServer4.Admin.Api.Configuration.Test
 
             services.AddAuthentication(options =>
             {
-                options.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultSignInScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultForbidScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
-            }).AddCookie(IdentityServerAuthenticationDefaults.AuthenticationScheme);
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddCookie(JwtBearerDefaults.AuthenticationScheme);
         }
 
         public override void RegisterAuthorization(IServiceCollection services)

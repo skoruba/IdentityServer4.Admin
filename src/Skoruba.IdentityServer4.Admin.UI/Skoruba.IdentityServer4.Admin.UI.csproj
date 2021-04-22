@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-        <Version>2.0.0-rc3</Version>
+        <TargetFramework>net5.0</TargetFramework>
+        <Version>2.0.0-rc4</Version>
         <Authors>Jan Škoruba</Authors>
         <Description>The package with UI for the administration of the IdentityServer4</Description>
         <PackageTags>IdentityServer4 Admin OpenIDConnect OAuth2 Identity</PackageTags>
@@ -97,16 +97,16 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="3.1.9" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.6" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.9" />
-        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="3.1.9" />
-        <PackageReference Include="AspNetCore.HealthChecks.MySql" Version="3.1.1" />
-        <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="3.1.1" />
-        <PackageReference Include="AspNetCore.HealthChecks.OpenIdConnectServer" Version="3.1.1" />
-        <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="3.1.1" />
+        <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="5.0.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.5" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.5" />
+        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="5.0.5" />
+        <PackageReference Include="AspNetCore.HealthChecks.MySql" Version="5.0.1" />
+        <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="5.0.2" />
+        <PackageReference Include="AspNetCore.HealthChecks.OpenIdConnectServer" Version="5.0.1" />
+        <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="5.0.2" />
         <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
-        <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="3.1.1" />
+        <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="5.0.1" />
     </ItemGroup>
 
     <ItemGroup>
@@ -117,6 +117,7 @@
     </ItemGroup>
 
 </Project>
+
 
 
 

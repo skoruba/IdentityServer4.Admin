@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.DataProtection;
+﻿using System;
+using Azure.Identity;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Azure.KeyVault;
@@ -63,14 +65,14 @@ namespace Skoruba.IdentityServer4.Shared.Configuration.Helpers
             {
                 if (azureKeyVaultConfiguration.UseClientCredentials)
                 {
-                    dataProtectionBuilder.ProtectKeysWithAzureKeyVault(azureKeyVaultConfiguration.DataProtectionKeyIdentifier, azureKeyVaultConfiguration.ClientId, azureKeyVaultConfiguration.ClientSecret);
+                    dataProtectionBuilder.ProtectKeysWithAzureKeyVault(
+                        new Uri(azureKeyVaultConfiguration.DataProtectionKeyIdentifier),
+                        new ClientSecretCredential(azureKeyVaultConfiguration.TenantId,
+                            azureKeyVaultConfiguration.ClientId, azureKeyVaultConfiguration.ClientSecret));
                 }
                 else
                 {
-                    var azureServiceTokenProvider = new AzureServiceTokenProvider();
-                    var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
-
-                    dataProtectionBuilder.ProtectKeysWithAzureKeyVault(keyVaultClient, azureKeyVaultConfiguration.DataProtectionKeyIdentifier);
+                    dataProtectionBuilder.ProtectKeysWithAzureKeyVault(new Uri(azureKeyVaultConfiguration.DataProtectionKeyIdentifier), new DefaultAzureCredential());
                 }
             }
         }
