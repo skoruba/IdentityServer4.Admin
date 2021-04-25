@@ -14,9 +14,9 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="5.0.5" />
         <PackageReference Include="Skoruba.AuditLogging.EntityFramework" Version="1.0.0" />
-        <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework" Version="2.0.0-rc4" />
-        <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework.Configuration" Version="2.0.0-rc4" />
-        <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework.Identity" Version="2.0.0-rc4" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework" Version="2.0.0-rc5" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework.Configuration" Version="2.0.0-rc5" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework.Identity" Version="2.0.0-rc5" />
     </ItemGroup>
 </Project>
 

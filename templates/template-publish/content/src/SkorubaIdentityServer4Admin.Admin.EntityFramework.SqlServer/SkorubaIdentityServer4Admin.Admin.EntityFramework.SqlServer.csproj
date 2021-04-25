@@ -14,8 +14,8 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.5" />
         <PackageReference Include="IdentityServer4.EntityFramework.Storage" Version="4.1.2" />
-        <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework" Version="2.0.0-rc4" />
-        <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework.Identity" Version="2.0.0-rc4" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework" Version="2.0.0-rc5" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework.Identity" Version="2.0.0-rc5" />
     </ItemGroup>
 
     <ItemGroup>

@@ -12,13 +12,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Remove="log\**" />
-      <Content Remove="log\**" />
-      <EmbeddedResource Remove="log\**" />
-      <None Remove="log\**" />
-    </ItemGroup>
-
-    <ItemGroup>
         <PackageReference Include="AspNetCore.HealthChecks.MySql" Version="5.0.1" />
         <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="5.0.2" />
         <PackageReference Include="AspNetCore.HealthChecks.OpenIdConnectServer" Version="5.0.1" />
@@ -53,9 +46,9 @@
         <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
         <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.6.0" />
         <PackageReference Include="Serilog.Sinks.Seq" Version="5.0.1" />
-        <PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic" Version="2.0.0-rc4" />
-        <PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic.Identity" Version="2.0.0-rc4" />
-        <PackageReference Include="Skoruba.IdentityServer4.Admin.UI" Version="2.0.0-rc4" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic" Version="2.0.0-rc5" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic.Identity" Version="2.0.0-rc5" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.UI" Version="2.0.0-rc5" />
     </ItemGroup>
 
     <ItemGroup>
@@ -68,6 +61,10 @@
         <ProjectReference Include="..\SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared\SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.csproj" />
         <ProjectReference Include="..\SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer\SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.csproj" />
         <ProjectReference Include="..\SkorubaIdentityServer4Admin.Shared\SkorubaIdentityServer4Admin.Shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="log\" />
     </ItemGroup>
 
 </Project>

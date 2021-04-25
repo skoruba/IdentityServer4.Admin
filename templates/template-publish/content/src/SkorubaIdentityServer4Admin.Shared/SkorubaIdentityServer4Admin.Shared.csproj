@@ -19,7 +19,7 @@
         <PackageReference Include="Azure.Security.KeyVault.Certificates" Version="4.1.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.AzureKeyVault" Version="3.1.14" />
         <PackageReference Include="Sendgrid" Version="9.23.0" />
-        <PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic.Identity" Version="2.0.0-rc4" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic.Identity" Version="2.0.0-rc5" />
     </ItemGroup>
 
 </Project>
