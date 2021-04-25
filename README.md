@@ -71,21 +71,21 @@ Project template options:
 
 - This administration uses bootstrap 4
 
-- Admin UI - Light mode 🌞
+### Admin UI - Light mode 🌞
 
 ![Admin-preview](docs/Images/App/1.PNG)
 
-- Admin UI - Dark mode 🌙
+### Admin UI - Dark mode 🌙
 
 ![Admin-preview](docs/Images/App/2.PNG)
 
-- Security token service (STS)
+### Security token service (STS)
 
 ![Admin-preview](docs/Images/App/4.PNG)
 
-- Forms:
+### Forms:
 
-![Admin-preview-form](docs/Images/App/3.PNG)
+![Admin-preview-form](docs/Images/App/3.png)
 
 ## Cloning
 
