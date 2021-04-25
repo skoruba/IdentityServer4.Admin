@@ -20,7 +20,7 @@ The application is written in the **Asp.Net Core MVC - using .NET 5**
 
 - Install the dotnet new template:
 
-### Version 2.0.0 works with **IdentityServer4 version 4** only 🚀
+### Version 2.0.0 works with **IdentityServer4 version 4** 🚀
 
 - 🔒 **NOTE:** This version affects your database data if you use the default database migrations that are part of the project - double check the migrations according to your database provider and create a database backup
 
