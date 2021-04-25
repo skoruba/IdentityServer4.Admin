@@ -19,11 +19,11 @@ using SkorubaIdentityServer4Admin.STS.Identity.Configuration.Constants;
 using SkorubaIdentityServer4Admin.STS.Identity.Configuration.Interfaces;
 using SkorubaIdentityServer4Admin.STS.Identity.Helpers.Localization;
 using System.Linq;
-using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Identity.Web;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.MySql;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.PostgreSQL;
@@ -373,16 +373,15 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
 
             if (externalProviderConfiguration.UseAzureAdProvider)
             {
-                authenticationBuilder.AddAzureAD(AzureADDefaults.AuthenticationScheme, AzureADDefaults.OpenIdScheme, AzureADDefaults.CookieScheme, AzureADDefaults.DisplayName,options =>
-                    {
-                        options.ClientSecret = externalProviderConfiguration.AzureAdSecret;
-                        options.ClientId = externalProviderConfiguration.AzureAdClientId;
-                        options.TenantId = externalProviderConfiguration.AzureAdTenantId;
-                        options.Instance = externalProviderConfiguration.AzureInstance;
-                        options.Domain = externalProviderConfiguration.AzureDomain;
-                        options.CallbackPath = externalProviderConfiguration.AzureAdCallbackPath;
-                        options.CookieSchemeName = IdentityConstants.ExternalScheme;
-                    });
+                authenticationBuilder.AddMicrosoftIdentityWebApp(options =>
+                {
+                    options.ClientSecret = externalProviderConfiguration.AzureAdSecret;
+                    options.ClientId = externalProviderConfiguration.AzureAdClientId;
+                    options.TenantId = externalProviderConfiguration.AzureAdTenantId;
+                    options.Instance = externalProviderConfiguration.AzureInstance;
+                    options.Domain = externalProviderConfiguration.AzureDomain;
+                    options.CallbackPath = externalProviderConfiguration.AzureAdCallbackPath;
+                });
             }
         }
 

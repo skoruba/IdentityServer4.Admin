@@ -1,7 +1,7 @@
 ﻿using System;
 using IdentityModel;
-using IdentityServer4.AccessTokenValidation;
 using IdentityServer4.EntityFramework.Options;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -185,20 +185,21 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Helpers
                 .AddEntityFrameworkStores<TIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultSignInScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultForbidScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
-            })
-                .AddIdentityServerAuthentication(options =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
                 {
                     options.Authority = adminApiConfiguration.IdentityServerBaseUrl;
-                    options.ApiName = adminApiConfiguration.OidcApiName;
                     options.RequireHttpsMetadata = adminApiConfiguration.RequireHttpsMetadata;
                 });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(AuthorizationConsts.ApiScopePolicy, policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireClaim(JwtClaimTypes.Scope, adminApiConfiguration.OidcApiName);
+                });
+            });
         }
 
         /// <summary>
