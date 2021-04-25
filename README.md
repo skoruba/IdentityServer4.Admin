@@ -644,7 +644,7 @@ It is possible to define the configuration according the client type - by defaul
 - Empty
 - Web Application - Server side - Authorization Code Flow with PKCE
 - Single Page Application - Javascript - Authorization Code Flow with PKCE
-- Native Application - Mobile/Desktop - Hybrid flow
+- Native Application - Mobile/Desktop - Authorization Code Flow with PKCE
 - Machine/Robot - Client Credentials flow
 - TV and Limited-Input Device Application - Device flow
 
