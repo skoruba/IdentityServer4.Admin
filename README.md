@@ -2,7 +2,7 @@
 
 # Skoruba.IdentityServer4.Admin
 
-> The administration of the IdentityServer4 and Asp.Net Core Identity
+> The administration for the IdentityServer4 and Asp.Net Core Identity
 
 ## Project Status
 
