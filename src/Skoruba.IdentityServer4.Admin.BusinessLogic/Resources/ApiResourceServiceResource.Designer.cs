@@ -19,7 +19,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class ApiResourceServiceResource {
@@ -111,33 +111,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Resources {
         internal static string ApiResourcePropertyExistsValue {
             get {
                 return ResourceManager.GetString("ApiResourcePropertyExistsValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Api Scope with id {0} doesn&apos;t exist.
-        /// </summary>
-        internal static string ApiScopeDoesNotExist {
-            get {
-                return ResourceManager.GetString("ApiScopeDoesNotExist", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Api Scope already exists.
-        /// </summary>
-        internal static string ApiScopeExistsKey {
-            get {
-                return ResourceManager.GetString("ApiScopeExistsKey", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Api Scope ({0}) already exists.
-        /// </summary>
-        internal static string ApiScopeExistsValue {
-            get {
-                return ResourceManager.GetString("ApiScopeExistsValue", resourceCulture);
             }
         }
         

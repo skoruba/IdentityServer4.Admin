@@ -31,22 +31,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
 
 		public string HashType { get; set; }
 
-        public HashType HashTypeEnum
-        {
-            get
-            {
-                HashType result;
+        public HashType HashTypeEnum => Enum.TryParse(HashType, true, out HashType result) ? result : EntityFramework.Helpers.HashType.Sha256;
 
-                if (Enum.TryParse(HashType, true, out result))
-                {
-                    return result;
-                }
-
-                return EntityFramework.Helpers.HashType.Sha256;
-            }
-        }
-
-		public List<SelectItemDto> HashTypes { get; set; }
+        public List<SelectItemDto> HashTypes { get; set; }
 
 		public DateTime? Expiration { get; set; }
 

@@ -1,0 +1,65 @@
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Are you sure?" xml:space="preserve">
+    <value>Weet je het zeker?</value>
+  </data>
+  <data name="Audit Log" xml:space="preserve">
+    <value>Audit Log</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Categorie</value>
+  </data>
+  <data name="Created" xml:space="preserve">
+    <value>Aangemaakt</value>
+  </data>
+  <data name="Delete logs older than" xml:space="preserve">
+    <value>Verwijder logs ouder dan</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="Event" xml:space="preserve">
+    <value>Event</value>
+  </data>
+  <data name="No - close" xml:space="preserve">
+    <value>Nee - sluiten</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Zoek</value>
+  </data>
+  <data name="Show detail" xml:space="preserve">
+    <value>Toon detail</value>
+  </data>
+  <data name="Source" xml:space="preserve">
+    <value>Source</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Subject</value>
+  </data>
+  <data name="Subject Identifier" xml:space="preserve">
+    <value>Subject Identifier</value>
+  </data>
+  <data name="Subject Name" xml:space="preserve">
+    <value>Subject Name</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Waarschuwing</value>
+  </data>
+  <data name="Yes - delete" xml:space="preserve">
+    <value>Ja - verwijder</value>
+  </data>
+</root>

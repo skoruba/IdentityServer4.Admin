@@ -29,20 +29,12 @@
 
     <environment include="Development">
         <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
-        @if (!string.IsNullOrEmpty(RootConfiguration.AdminConfiguration.Theme))
-        {
-            <link href="@UrlHelper.Content(string.Concat("~/dist/css/themes/",RootConfiguration.AdminConfiguration.Theme,"/bootstrap.min.css"))" asp-append-version="true" rel="stylesheet" />
-        }
+        @await Html.PartialAsync("Common/ThemeResources")
         <link href="~/dist/css/web.css" asp-append-version="true" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
         <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
-
-        @if (!string.IsNullOrEmpty(RootConfiguration.AdminConfiguration.Theme))
-        {
-            <link href="@UrlHelper.Content(string.Concat("~/dist/css/themes/",RootConfiguration.AdminConfiguration.Theme,"/bootstrap.min.css"))" asp-append-version="true" rel="stylesheet" />
-        }
-
+        @await Html.PartialAsync("Common/ThemeResources")
         <link href="~/dist/css/web.min.css" asp-append-version="true" rel="stylesheet" />
     </environment>
 
@@ -55,7 +47,7 @@
 </head>
 <body>
 
-    <div class="menu d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <div class="menu d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom box-shadow">
         <!--Site name -->
         <h3 class="menu-logo my-0 mr-md-auto font-weight-normal"><a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@RootConfiguration.AdminConfiguration.PageTitle</a></h3>
         <!--Menu item -->
@@ -100,7 +92,10 @@
                     @RootConfiguration.AdminConfiguration.PageTitle
                     <small class="d-block mb-3 text-muted">@Localizer["FooterCopyright"] @DateTime.Now.Year - @await Html.PartialAsync("Common/ApplicationVersion")</small>
                 </div>
-                <div class="col-md-6 text-right">
+                <div class="col-md-3 text-right">
+                    @await Html.PartialAsync("Common/SelectTheme")
+                </div>
+                <div class="col-md-3 text-right">
                     @await Html.PartialAsync("Common/SelectLanguage")
                 </div>
             </div>
@@ -117,6 +112,8 @@
     @await RenderSectionAsync("scripts", required: false)
 </body>
 </html>
+
+
 
 
 

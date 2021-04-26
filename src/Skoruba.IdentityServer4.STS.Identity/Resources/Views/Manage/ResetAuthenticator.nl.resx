@@ -1,0 +1,27 @@
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Info" xml:space="preserve">
+    <value>Dit proces deactiveert 2FA totdat u uw authenticator heeft geverifieerd.
+        Wanneer u uw authenticator app configuratie niet afrond kunt u mogelijk de toegang tot uw account verliezen.</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset authenticator key</value>
+  </data>
+  <data name="SubTitle" xml:space="preserve">
+    <value>Wanneer u uw authenticator key reset zal uw authenticator app niet meer werken totdat u deze opnieuw configureerd.</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Reset authenticator key</value>
+  </data>
+</root>

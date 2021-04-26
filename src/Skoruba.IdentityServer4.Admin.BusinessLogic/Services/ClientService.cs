@@ -88,6 +88,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             ComboBoxHelpers.PopulateValuesToList(client.RedirectUrisItems, client.RedirectUris);
             ComboBoxHelpers.PopulateValuesToList(client.AllowedCorsOriginsItems, client.AllowedCorsOrigins);
             ComboBoxHelpers.PopulateValuesToList(client.AllowedGrantTypesItems, client.AllowedGrantTypes);
+            ComboBoxHelpers.PopulateValuesToList(client.AllowedIdentityTokenSigningAlgorithmsItems, client.AllowedIdentityTokenSigningAlgorithms);
         }
 
         public virtual ClientCloneDto BuildClientCloneViewModel(int id, ClientDto clientDto)
@@ -273,6 +274,13 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return accessTokenTypes;
         }
 
+        public virtual List<string> GetSigningAlgorithms(string algorithm, int limit = 0)
+        {
+            var signingAlgorithms = ClientRepository.GetSigningAlgorithms(algorithm, limit);
+
+            return signingAlgorithms;
+        }
+
         public virtual List<SelectItemDto> GetTokenExpirations()
         {
             var tokenExpirations = ClientRepository.GetTokenExpirations().ToModel();
@@ -348,6 +356,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             clientSecretsDto.ClientId = clientId;
             clientSecretsDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
 
+            // remove secret value from dto
+            clientSecretsDto.ClientSecrets.ForEach(x => x.Value = null);
+
             await AuditEventLogger.LogEventAsync(new ClientSecretsRequestedEvent(clientSecretsDto.ClientId, clientSecretsDto.ClientSecrets.Select(x => (x.Id, x.Type, x.Expiration)).ToList()));
 
             return clientSecretsDto;
@@ -364,6 +375,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             var clientSecretsDto = clientSecret.ToModel();
             clientSecretsDto.ClientId = clientSecret.Client.Id;
             clientSecretsDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
+
+            // remove secret value for dto
+            clientSecretsDto.Value = null;
 
             await AuditEventLogger.LogEventAsync(new ClientSecretRequestedEvent(clientSecretsDto.ClientId, clientSecretsDto.ClientSecretId, clientSecretsDto.Type, clientSecretsDto.Expiration));
 

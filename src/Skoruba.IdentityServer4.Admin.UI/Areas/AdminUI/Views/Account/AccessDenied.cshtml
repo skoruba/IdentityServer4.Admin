@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.UI.Configuration
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
+@inject IViewLocalizer Localizer
+@inject AdminConfiguration AdminConfiguration
+@{ Layout = null; }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="icon" type="image/x-icon" href="@UrlHelper.Content(AdminConfiguration.FaviconUri)" />
+    <link rel="shortcut icon" type="image/x-icon" href="@UrlHelper.Content(AdminConfiguration.FaviconUri)" />
+    <title>@Localizer["PageTitle"]</title>
+
+    <environment include="Development">
+        <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
+        <link href="~/dist/css/web.css" asp-append-version="true" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
+        <link href="~/dist/css/web.min.css" asp-append-version="true" rel="stylesheet" />
+    </environment>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-sm-12 col-md-6">
+                <div class="card-deck mb-3 mt-5 text-center">
+                    <div class="card mb-2 box-shadow">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">@Localizer["PageTitle"]</h4>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-title">
+                                <span class="oi oi-circle-x" title="Warning" aria-hidden="true"></span>
+                            </h1>
+                            <a href="@AdminConfiguration.IdentityServerBaseUrl" class="btn btn-lg btn-block btn-danger">@Localizer["ReturnToIdentityServer"]</a>
+                            <a asp-controller="Account" asp-area="@CommonConsts.AdminUIArea" asp-action="Logout" class="btn btn-lg btn-block btn-danger">@Localizer["Logout"]</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <environment include="Development">
+        <script src="~/dist/js/bundle.min.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/dist/js/bundle.min.js" asp-append-version="true"></script>
+    </environment>
+</body>
+</html>

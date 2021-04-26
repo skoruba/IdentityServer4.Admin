@@ -1,0 +1,12 @@
+﻿@using Skoruba.IdentityServer4.Shared.Configuration.Helpers
+@using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces
+@inject IRootConfiguration RootConfiguration
+
+@if (!string.IsNullOrEmpty(Context.Request.Cookies[ThemeHelpers.CookieThemeKey]) && Context.Request.Cookies[ThemeHelpers.CookieThemeKey] != ThemeHelpers.DefaultTheme)
+{
+    <link href="@UrlHelper.Content(string.Concat("~/dist/css/themes/",Context.Request.Cookies[ThemeHelpers.CookieThemeKey],"/bootstrap.min.css"))" asp-append-version="true" rel="stylesheet" />
+}
+else if (!string.IsNullOrEmpty(RootConfiguration.AdminConfiguration.Theme))
+{
+    <link href="@UrlHelper.Content(string.Concat("~/dist/css/themes/",RootConfiguration.AdminConfiguration.Theme,"/bootstrap.min.css"))" asp-append-version="true" rel="stylesheet" />
+}

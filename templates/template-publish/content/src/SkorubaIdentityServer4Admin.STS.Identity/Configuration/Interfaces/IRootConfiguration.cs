@@ -1,4 +1,4 @@
-﻿using SkorubaIdentityServer4Admin.Shared.Configuration.Identity;
+﻿using Skoruba.IdentityServer4.Shared.Configuration.Configuration.Identity;
 
 namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration.Interfaces
 {
@@ -9,6 +9,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration.Interfaces
         RegisterConfiguration RegisterConfiguration { get; }
     }
 }
+
+
 
 
 

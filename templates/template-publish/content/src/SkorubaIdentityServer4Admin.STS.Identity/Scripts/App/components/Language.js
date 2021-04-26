@@ -1,4 +1,4 @@
-﻿window.onload = function () {
+window.onload = function () {
 	var cultureSelect = document.getElementById('cultureSelect');
 	var cultureForm = document.getElementById('selectLanguageForm');
 

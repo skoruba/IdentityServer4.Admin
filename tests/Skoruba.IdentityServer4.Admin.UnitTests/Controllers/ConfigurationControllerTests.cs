@@ -24,11 +24,11 @@ using Skoruba.AuditLogging.EntityFramework.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces;
-using Skoruba.IdentityServer4.Admin.Controllers;
+using Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
-using Skoruba.IdentityServer4.Admin.Helpers;
+using Skoruba.IdentityServer4.Admin.UI.Helpers;
 using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
@@ -255,9 +255,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var clientSecretAdded = await dbContext.ClientSecrets.Where(x => x.Client.Id == clientId).SingleOrDefaultAsync();
             var newClientSecret = await clientService.GetClientSecretAsync(clientSecretAdded.Id);
 
+            clientSecret.Value.Should().Be(clientSecretAdded.Value);
+
             clientSecret.ShouldBeEquivalentTo(newClientSecret, opts => opts.Excluding(x => x.ClientSecretId)
                         .Excluding(x => x.ClientSecrets)
-                        .Excluding(x => x.ClientName));
+                        .Excluding(x => x.ClientName)
+                        .Excluding(x => x.Value));
         }
 
         [Fact]
@@ -284,9 +287,11 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             viewResult.ViewName.Should().BeNullOrEmpty();
             viewResult.ViewData.Should().NotBeNull();
 
+            clientSecretAdded.Value.Should().Be(clientSecret.Value);
+
             var viewModel = Assert.IsType<ClientSecretsDto>(viewResult.ViewData.Model);
             viewModel.ClientSecrets.Count.Should().Be(1);
-            viewModel.ClientSecrets[0].ShouldBeEquivalentTo(clientSecretAdded);
+            viewModel.ClientSecrets[0].ShouldBeEquivalentTo(clientSecretAdded, opts => opts.Excluding(x => x.Value));
         }
 
         [Fact]
@@ -533,25 +538,22 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             //Get Services
             var serviceProvider = GetServices();
             var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
-            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService>();
+            var apiScopeService = serviceProvider.GetRequiredService<IApiScopeService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
-            var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
-            await apiResourceService.AddApiResourceAsync(apiResourceDto);
-            var resource = await dbContext.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
-            var apiScopeDto = ApiResourceDtoMock.GenerateRandomApiScope(0, resource.Id);
+            var apiScopeDto = ApiScopeDtoMock.GenerateRandomApiScope(0);
 
-            var result = await controller.ApiScopes(apiScopeDto);
+            var result = await controller.ApiScope(apiScopeDto);
 
             // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
-            viewResult.ActionName.Should().Be("ApiScopes");
+            viewResult.ActionName.Should().Be("ApiScope");
 
             var apiScope = await dbContext.ApiScopes.Where(x => x.Name == apiScopeDto.Name).SingleOrDefaultAsync();
-            var addedApiScope = await apiResourceService.GetApiScopeAsync(resource.Id, apiScope.Id);
+            var addedApiScope = await apiScopeService.GetApiScopeAsync(apiScope.Id);
 
-            apiScopeDto.ShouldBeEquivalentTo(addedApiScope, opts => opts.Excluding(x => x.ApiResourceId).Excluding(x => x.ResourceName).Excluding(x => x.ApiScopeId));
+            apiScopeDto.ShouldBeEquivalentTo(addedApiScope, opts => opts.Excluding(x => x.Id));
         }
 
         [Fact]
@@ -559,27 +561,21 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
         {
             //Get Services
             var serviceProvider = GetServices();
-            var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
-            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService>();
+            var apiScopeService = serviceProvider.GetRequiredService<IApiScopeService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
-
-            var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
-            await apiResourceService.AddApiResourceAsync(apiResourceDto);
-
-            var resource = await dbContext.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
 
             const int generateScopes = 5;
 
             // Add Api Scopes
             for (var i = 0; i < generateScopes; i++)
             {
-                var apiScopeDto = ApiResourceDtoMock.GenerateRandomApiScope(0, resource.Id);
-                await apiResourceService.AddApiScopeAsync(apiScopeDto);
+                var apiScopeDto = ApiScopeDtoMock.GenerateRandomApiScope(0);
+                await apiScopeService.AddApiScopeAsync(apiScopeDto);
             }
 
-            var result = await controller.ApiScopes(resource.Id, 1, null);
+            var result = await controller.ApiScopes(string.Empty, 1);
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
@@ -596,35 +592,30 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             //Get Services
             var serviceProvider = GetServices();
             var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
-            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService>();
+            var apiScopeService = serviceProvider.GetRequiredService<IApiScopeService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
-            var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
-            await apiResourceService.AddApiResourceAsync(apiResourceDto);
-            var resource = await dbContext.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
-            var apiScopeDto = ApiResourceDtoMock.GenerateRandomApiScope(0, resource.Id);
+            var apiScopeDto = ApiScopeDtoMock.GenerateRandomApiScope(0);
 
-            await apiResourceService.AddApiScopeAsync(apiScopeDto);
+            await apiScopeService.AddApiScopeAsync(apiScopeDto);
             var apiScopeAdded = await dbContext.ApiScopes.Where(x => x.Name == apiScopeDto.Name).SingleOrDefaultAsync();
 
             dbContext.Entry(apiScopeAdded).State = EntityState.Detached;
 
             apiScopeAdded.Should().NotBeNull();
 
-            var updatedApiScopeDto = ApiResourceDtoMock.GenerateRandomApiScope(apiScopeAdded.Id, resource.Id);
-            var result = await controller.ApiScopes(updatedApiScopeDto);
+            var updatedApiScopeDto = ApiScopeDtoMock.GenerateRandomApiScope(apiScopeAdded.Id);
+            var result = await controller.ApiScope(updatedApiScopeDto);
 
             // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
-            viewResult.ActionName.Should().Be("ApiScopes");
+            viewResult.ActionName.Should().Be("ApiScope");
 
             var apiScope = await dbContext.ApiScopes.Where(x => x.Id == apiScopeAdded.Id).SingleOrDefaultAsync();
-            var addedApiScope = await apiResourceService.GetApiScopeAsync(resource.Id, apiScope.Id);
+            var addedApiScope = await apiScopeService.GetApiScopeAsync(apiScope.Id);
 
-            updatedApiScopeDto.ShouldBeEquivalentTo(addedApiScope, opts => opts.Excluding(x => x.ApiResourceId)
-                .Excluding(x => x.ResourceName)
-                .Excluding(x => x.ApiScopeId));
+            updatedApiScopeDto.ShouldBeEquivalentTo(addedApiScope, opts => opts.Excluding(x => x.Id));
         }
 
         [Fact]
@@ -633,21 +624,18 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             //Get Services
             var serviceProvider = GetServices();
             var dbContext = serviceProvider.GetRequiredService<IdentityServerConfigurationDbContext>();
-            var apiResourceService = serviceProvider.GetRequiredService<IApiResourceService>();
+            var apiScopeService = serviceProvider.GetRequiredService<IApiScopeService>();
 
             // Get controller
             var controller = PrepareConfigurationController(serviceProvider);
-            var apiResourceDto = ApiResourceDtoMock.GenerateRandomApiResource(0);
-            await apiResourceService.AddApiResourceAsync(apiResourceDto);
-            var resource = await dbContext.ApiResources.Where(x => x.Name == apiResourceDto.Name).SingleOrDefaultAsync();
-            var apiScopeDto = ApiResourceDtoMock.GenerateRandomApiScope(0, resource.Id);
-            await apiResourceService.AddApiScopeAsync(apiScopeDto);
+            var apiScopeDto = ApiScopeDtoMock.GenerateRandomApiScope(0);
+            await apiScopeService.AddApiScopeAsync(apiScopeDto);
 
             var apiScopeId = await dbContext.ApiScopes.Where(x => x.Name == apiScopeDto.Name).Select(x => x.Id).SingleOrDefaultAsync();
 
             apiScopeId.Should().NotBe(0);
 
-            apiScopeDto.ApiScopeId = apiScopeId;
+            apiScopeDto.Id = apiScopeId;
 
             var result = await controller.ApiScopeDelete(apiScopeDto);
 
@@ -655,7 +643,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var viewResult = Assert.IsType<RedirectToActionResult>(result);
             viewResult.ActionName.Should().Be("ApiScopes");
 
-            var apiScope = await dbContext.ApiScopes.Where(x => x.Id == apiScopeDto.ApiScopeId).SingleOrDefaultAsync();
+            var apiScope = await dbContext.ApiScopes.Where(x => x.Id == apiScopeDto.Id).SingleOrDefaultAsync();
             apiScope.Should().BeNull();
         }
 
@@ -716,7 +704,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var apiSecret = await dbContext.ApiSecrets.Where(x => x.Value == apiSecretsDto.Value).SingleOrDefaultAsync();
             var addedApiScope = await apiResourceService.GetApiSecretAsync(apiSecret.Id);
 
-            apiSecretsDto.ShouldBeEquivalentTo(addedApiScope, opts => opts.Excluding(x => x.ApiResourceId).Excluding(x => x.ApiResourceName).Excluding(x => x.ApiSecretId));
+            apiSecretsDto.Value.Should().Be(apiSecret.Value);
+
+            apiSecretsDto.ShouldBeEquivalentTo(addedApiScope, opts => opts.Excluding(x => x.ApiResourceId).Excluding(x => x.ApiResourceName).Excluding(x => x.ApiSecretId).Excluding(x => x.Value));
         }
 
         [Fact]
@@ -760,9 +750,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             var localizer = serviceProvider.GetRequiredService<IStringLocalizer<ConfigurationController>>();
             var logger = serviceProvider.GetRequiredService<ILogger<ConfigurationController>>();
             var tempDataDictionaryFactory = serviceProvider.GetRequiredService<ITempDataDictionaryFactory>();
+            var apiScopeService = serviceProvider.GetRequiredService<IApiScopeService>();
 
             //Get Controller
-            var controller = new ConfigurationController(identityResourceService, apiResourceService, clientService, localizer, logger);
+            var controller = new ConfigurationController(identityResourceService, apiResourceService, clientService, localizer, logger, apiScopeService);
 
             //Setup TempData for notofication in basecontroller
             var httpContext = serviceProvider.GetRequiredService<IHttpContextAccessor>().HttpContext;
@@ -807,7 +798,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
                 .AddDefaultEventData()
                 .AddAuditSinks<DatabaseAuditEventLoggerSink<AuditLog>>();
             services.AddTransient<IAuditLoggingRepository<AuditLog>, AuditLoggingRepository<AdminAuditLogDbContext, AuditLog>>();
-            
+
             //Add Admin services
             services.AddMvcExceptionFilters();
 

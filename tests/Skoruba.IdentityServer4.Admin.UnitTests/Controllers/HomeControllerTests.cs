@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Skoruba.IdentityServer4.Admin.Controllers;
+using Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers;
 using Xunit;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers

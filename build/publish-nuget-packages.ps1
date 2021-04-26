@@ -8,3 +8,8 @@ dotnet nuget push ./packages/Skoruba.IdentityServer4.Admin.EntityFramework.$vers
 dotnet nuget push ./packages/Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.$version.nupkg -k $key -s https://api.nuget.org/v3/index.json
 dotnet nuget push ./packages/Skoruba.IdentityServer4.Admin.EntityFramework.Identity.$version.nupkg -k $key -s https://api.nuget.org/v3/index.json
 dotnet nuget push ./packages/Skoruba.IdentityServer4.Admin.EntityFramework.Shared.$version.nupkg -k $key -s https://api.nuget.org/v3/index.json
+
+dotnet nuget push ./packages/Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.$version.nupkg -k $key -s https://api.nuget.org/v3/index.json
+dotnet nuget push ./packages/Skoruba.IdentityServer4.Shared.Configuration.$version.nupkg -k $key -s https://api.nuget.org/v3/index.json
+
+dotnet nuget push ./packages/Skoruba.IdentityServer4.Admin.UI.$version.nupkg -k $key -s https://api.nuget.org/v3/index.json

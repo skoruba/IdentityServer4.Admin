@@ -1,0 +1,502 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AbsoluteRefreshTokenLifetime_Info" xml:space="preserve">
+    <value>Durée de vie maximale d'un refresh token en secondes. Valeur par défaut : 2592000 secondes / 30 jours</value>
+  </data>
+  <data name="AbsoluteRefreshTokenLifetime_Label" xml:space="preserve">
+    <value>Durée de vie d'un refresh token (Absolute)</value>
+  </data>
+  <data name="AccessTokenLifetime_Info" xml:space="preserve">
+    <value>Durée de vie du jeton d'accès en secondes (par défaut 3600 secondes / 1 heure)</value>
+  </data>
+  <data name="AccessTokenLifetime_Label" xml:space="preserve">
+    <value>Durée de vie des jetons d'accès</value>
+  </data>
+  <data name="AccessTokenTypes_Info" xml:space="preserve">
+    <value>Indique si le jeton d'accès est un reference token ou un jeton JWT (par défaut : JWT).</value>
+    <comment>jeton de référence, jeton JWT autonome</comment>
+  </data>
+  <data name="AccessTokenTypes_Label" xml:space="preserve">
+    <value>Type de jeton d'accès</value>
+  </data>
+  <data name="AllowAccessTokensViaBrowser_Info" xml:space="preserve">
+    <value>Indique si ce client est autorisé à recevoir des jetons d'accès via le navigateur. Ce qui est utile pour sécuriser les flows qui permettent des types de réponse multiples (par exemple en refusant un client de flow hybride qui est censé utiliser le code id_token avec le type de réponse du jeton, exposant ainsi le jeton dans le navigateur.</value>
+  </data>
+  <data name="AllowAccessTokensViaBrowser_Label" xml:space="preserve">
+    <value>Autoriser le jeton d'accès via le navigateur</value>
+    <comment>Autoriser (les) jetons d'accès via le navigateur</comment>
+  </data>
+  <data name="AllowOfflineAccess_Info" xml:space="preserve">
+    <value>Indique si ce client peut demander des refresh tokens (nécessitera le scope offline_access)</value>
+    <comment>be requesting =&gt; (will be requesting) ? =&gt; demandera =&gt; nécessitera</comment>
+  </data>
+  <data name="AllowOfflineAccess_Label" xml:space="preserve">
+    <value>Autoriser l'accès hors ligne</value>
+  </data>
+  <data name="AllowPlainTextPkce_Info" xml:space="preserve">
+    <value>Indique si les clients utilisant PKCE peuvent utiliser un code challenge en texte clair (non recommandé - et par défaut à Faux)</value>
+  </data>
+  <data name="AllowPlainTextPkce_Label" xml:space="preserve">
+    <value>Autoriser le texte en clair Pkce</value>
+    <comment>Autoriser le texte en clair PKCE</comment>
+  </data>
+  <data name="AllowRememberConsent_Info" xml:space="preserve">
+    <value>Indique si l'utilisateur peut choisir d'enregistrer les décisions de consentement. La valeur par défaut est Vrai.</value>
+  </data>
+  <data name="AllowRememberConsent_Label" xml:space="preserve">
+    <value>Autoriser l'enregistrement du consentement</value>
+    <comment>Enregistrement, mémorisation, conservation, souvenir</comment>
+  </data>
+  <data name="AlwaysIncludeUserClaimsInIdToken_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AlwaysIncludeUserClaimsInIdToken_Label" xml:space="preserve">
+    <value>Toujours inclure les User Claims dans IdToken</value>
+  </data>
+  <data name="AlwaysSendClientClaims_Info" xml:space="preserve">
+    <value>Si activé, les User Claims seront envoyées à chaque flow. Sinon, uniquement pour le credentials flow du client (Faux par défaut)</value>
+    <comment>S'il est établi, les User Claims seront envoyées pour chaque flux. Si ce n'est pas le cas, uniquement pour le flux des informations d'identification du client (par défaut, c'est désactivé)</comment>
+  </data>
+  <data name="AlwaysSendClientClaims_Label" xml:space="preserve">
+    <value>Toujours envoyer les User Claims</value>
+  </data>
+  <data name="AuthorizationCodeLifetime_Info" xml:space="preserve">
+    <value>Durée de vie du code d'autorisation en secondes (par défaut 300 secondes / 5 minutes)</value>
+  </data>
+  <data name="AuthorizationCodeLifetime_Label" xml:space="preserve">
+    <value>Durée de vie du code d'autorisation</value>
+  </data>
+  <data name="ClientId_Info" xml:space="preserve">
+    <value>ID unique du client</value>
+  </data>
+  <data name="ClientId_Label" xml:space="preserve">
+    <value>ClientId</value>
+  </data>
+  <data name="ClientName_Info" xml:space="preserve">
+    <value>Nom d'affichage du client (utilisé pour l'enregistrement et l'écran de consentement)</value>
+  </data>
+  <data name="ClientName_Label" xml:space="preserve">
+    <value>Nom du client</value>
+  </data>
+  <data name="ClientUri_Info" xml:space="preserve">
+    <value>URI pour d'autres renseignement sur le client (utilisés sur l'écran de consentement)</value>
+    <comment>URI pour (des) informations supplémentaire/complémentaire à propos du client (utilisé(e)(s) sur l'écran de consentement)</comment>
+  </data>
+  <data name="ClientUri_Label" xml:space="preserve">
+    <value>Client Uri</value>
+  </data>
+  <data name="Enabled_Info" xml:space="preserve">
+    <value>Indique si le client est activé. La valeur par défaut est Vrai.</value>
+  </data>
+  <data name="Enabled_Label" xml:space="preserve">
+    <value>Activé</value>
+  </data>
+  <data name="EnableLocalLogin_Info" xml:space="preserve">
+    <value>Indique si ce client peut utiliser des comptes locaux, ou uniquement des IdPs externes . La valeur par défaut est Vrai.</value>
+  </data>
+  <data name="EnableLocalLogin_Label" xml:space="preserve">
+    <value>Activer la connexion locale</value>
+  </data>
+  <data name="IdentityTokenLifetime_Info" xml:space="preserve">
+    <value>Durée de vie du jeton d'identité en secondes (par défaut 300 secondes / 5 minutes)</value>
+  </data>
+  <data name="IdentityTokenLifetime_Label" xml:space="preserve">
+    <value>Durée de vie du jeton d'identité</value>
+  </data>
+  <data name="IncludeJwtId_Info" xml:space="preserve">
+    <value>Indique si les jetons d'accès JWT doivent avoir un ID unique intégré (via jti claim).</value>
+    <comment>Indique si les jetons d'accès JWT doivent avoir un ID unique embarqué (via (un) claim jti).</comment>
+  </data>
+  <data name="IncludeJwtId_Label" xml:space="preserve">
+    <value>Inclure l'ID Jwt</value>
+  </data>
+  <data name="LogoUri_Info" xml:space="preserve">
+    <value>URI du logo du client (utilisé sur l'écran de consentement)</value>
+    <comment>URI au logo (du) client (utilisé sur l'écran de consentement)</comment>
+  </data>
+  <data name="LogoUri_Label" xml:space="preserve">
+    <value>Logo Uri</value>
+  </data>
+  <data name="RefreshTokenExpiration_Info" xml:space="preserve">
+    <value>Absolute, le refresh token expirera à une date fixe (spécifiée par le paramètre AbsoluteRefreshTokenLifetime).
+
+Sliding, lors de la régénération du jeton, la durée de vie du refresh token sera renouvelée (de la quantité spécifiée par SlidingRefreshTokenLifetime). La durée de vie ne dépassera pas AbsoluteRefreshTokenLifetime.</value>
+  </data>
+  <data name="RefreshTokenExpiration_Label" xml:space="preserve">
+    <value>Expiration du refresh token</value>
+    <comment>des refresh tokens ?</comment>
+  </data>
+  <data name="RefreshTokenUsage.Info" xml:space="preserve">
+    <value>ReUse, la gestion des refresh token restera inchangée lors de la régénération des jetons.
+
+OneTime, la gestion des refresh tokens sera mise à jour lors de la régénération des jetons.</value>
+  </data>
+  <data name="RefreshTokenUsage.Label" xml:space="preserve">
+    <value>Utilisation des refresh token</value>
+  </data>
+  <data name="RefreshTokenUsage_Info" xml:space="preserve">
+    <value>ReUse, la gestion des refresh token restera inchangée lors de la régénération des jetons
+
+OneTime, la gestion des refresh token sera mise à jour lors de la régénération des jetons</value>
+  </data>
+  <data name="RefreshTokenUsage_Label" xml:space="preserve">
+    <value>Utilisation des refresh token</value>
+  </data>
+  <data name="RequireClientSecret_Info" xml:space="preserve">
+    <value>Indique si ce client a besoin d'un secret pour demander des jetons à partir du token endpoint (valeur par défaut : Vrai)</value>
+  </data>
+  <data name="RequireClientSecret_Label" xml:space="preserve">
+    <value>Exiger le secret client</value>
+  </data>
+  <data name="RequireConsent_Info" xml:space="preserve">
+    <value>Indique si un écran de consentement est exigé. La valeur par défaut est Vrai.</value>
+    <comment>requis, exigé, nécessaire, obligatoire, demandé</comment>
+  </data>
+  <data name="RequireConsent_Label" xml:space="preserve">
+    <value>Exiger le consentement</value>
+  </data>
+  <data name="RequirePkce_Info" xml:space="preserve">
+    <value>Indique si les clients qui utilisent un type d'octroi basé sur un code d'autorisation doivent envoyer une proof key.</value>
+    <comment>basé ?</comment>
+  </data>
+  <data name="RequirePkce_Label" xml:space="preserve">
+    <value>Nécessite PKCE</value>
+  </data>
+  <data name="SlidingRefreshTokenLifetime_Info" xml:space="preserve">
+    <value>Sliding, Durée de vie du refresh token en secondes. La valeur par défaut est 1296000 secondes / 15 jours.</value>
+    <comment>Durée de vie glissante/relative</comment>
+  </data>
+  <data name="SlidingRefreshTokenLifetime_Label" xml:space="preserve">
+    <value>Durée de vie d'un refresh token (Sliding)</value>
+  </data>
+  <data name="UpdateAccessTokenClaimsOnRefresh_Info" xml:space="preserve">
+    <value>Obtenir ou définir une valeur indiquant si le jeton d'accès (et ses claims) doivent être mis à jour lors d'une demande de refresh token.</value>
+  </data>
+  <data name="UpdateAccessTokenClaimsOnRefresh_Label" xml:space="preserve">
+    <value>Mise à jour des Claims de jetons d'accès lors d'une demande de refresh token</value>
+    <comment>Mise à jour des Claims de jetons d'accès</comment>
+  </data>
+  <data name="AllowedCorsOrigins_Info" xml:space="preserve">
+    <value>Si spécifié, sera utilisé avec l'implémentations par défaut des services de politique CORS (In-Memory et EF) pour construire une politique CORS pour les clients JavaScript.</value>
+    <comment>utilisé par l'implémentations par défaut</comment>
+  </data>
+  <data name="AllowedCorsOrigins_Label" xml:space="preserve">
+    <value>Origines CORS autorisées</value>
+  </data>
+  <data name="AllowedGrantTypes_Info" xml:space="preserve">
+    <value>Indique les types d'octroi que le client peut utiliser. Utilisez la class GrantTypes pour les combinaisons courantes. Liste des octroi par défaut: Octroi implicite - (implicit), Octroi par identifiants - (client_credentials), Octroi par code - (authorization_code), Octroi hybride - (hybrid), Resource Owner Password Credentials Grant - (password)</value>
+    <comment>Indique les types de grant que le client est autorisé à utiliser. Utilisez la classe GrantTypes pour les combinaisons courantes. Liste des grants par défaut : Grant implicite - (implicit), Grant relative aux justificatifs d'identité du client - (justificatifs d'identité du client), Grant relatif aux codes d'autorisations - (code autorisation), Grant hybride - (hybride), Grant relatif aux justificatifs du propriétaire des ressources - (mot de passe)</comment>
+  </data>
+  <data name="AllowedGrantTypes_Label" xml:space="preserve">
+    <value>Types d'octroi autorisés</value>
+  </data>
+  <data name="AllowedScopes_Info" xml:space="preserve">
+    <value>Par défaut, un client n'a accès à aucune ressource - indiquez les ressources accessibles en ajoutant les noms de scopes correspondants.</value>
+    <comment>les ressources autorisées</comment>
+  </data>
+  <data name="AllowedScopes_Label" xml:space="preserve">
+    <value>Scopes autorisés</value>
+  </data>
+  <data name="Claims_Info" xml:space="preserve">
+    <value>Permet de paramétrer les claims pour le client (sera inclus dans le jeton d'accès).</value>
+  </data>
+  <data name="Claims_Label" xml:space="preserve">
+    <value>Claims</value>
+  </data>
+  <data name="ClientSecrets_Info" xml:space="preserve">
+    <value>Liste des secrets clients - informations d'identification pour accéder au token endpoint.</value>
+  </data>
+  <data name="ClientSecrets_Label" xml:space="preserve">
+    <value>Secrets Client</value>
+  </data>
+  <data name="IdentityProviderRestrictions_Info" xml:space="preserve">
+    <value>Indique quels IdP externes peuvent être utilisés avec ce client (si la liste est vide, tous les IdP sont autorisés). La valeur par défaut est vide.</value>
+  </data>
+  <data name="IdentityProviderRestrictions_Label" xml:space="preserve">
+    <value>Restrictions concernant les fournisseurs d'identité</value>
+  </data>
+  <data name="PostLogoutRedirectUris_Info" xml:space="preserve">
+    <value>Indique les URI autorisées à rediriger vers après la déconnexion.</value>
+  </data>
+  <data name="PostLogoutRedirectUris_Label" xml:space="preserve">
+    <value>Uris de redirection après déconnexion</value>
+  </data>
+  <data name="RedirectUris_Info" xml:space="preserve">
+    <value>Indique les URI autorisées à renvoyer les jetons ou les codes d'autorisation à</value>
+    <comment>à ?</comment>
+  </data>
+  <data name="RedirectUris_Label" xml:space="preserve">
+    <value>Uris de redirection </value>
+  </data>
+  <data name="Type_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Type_Label" xml:space="preserve">
+    <value>Type Claim</value>
+  </data>
+  <data name="Value_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Value_Label" xml:space="preserve">
+    <value>Valeur Claim </value>
+  </data>
+  <data name="SecretType_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SecretType_Label" xml:space="preserve">
+    <value>Type Secret</value>
+  </data>
+  <data name="SecretValue_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SecretValue_Label" xml:space="preserve">
+    <value>Valeur Secret</value>
+  </data>
+  <data name="HashType_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="HashType_Label" xml:space="preserve">
+    <value>Hash Type</value>
+  </data>
+  <data name="RoleNormalizedName_Info" xml:space="preserve">
+    <value>Nom normalisé du rôle</value>
+    <comment>standardisé</comment>
+  </data>
+  <data name="RoleNormalizedName_Label" xml:space="preserve">
+    <value>Nom normalisé</value>
+    <comment>standardisé</comment>
+  </data>
+  <data name="BackChannelLogoutSessionRequired_Info" xml:space="preserve">
+    <value>Indique si l'id de session de l'utilisateur doit être envoyé dans la demande au BackChannelLogoutUri. La valeur par défaut est Vrai.</value>
+  </data>
+  <data name="BackChannelLogoutSessionRequired_Label" xml:space="preserve">
+    <value>Session de déconnexion Back Channel requise</value>
+  </data>
+  <data name="BackChannelLogoutUri_Info" xml:space="preserve">
+    <value>Indique l'URI de déconnexion au niveau du client pour une déconnexion HTTP basée sur le back-channel. Voir les spécifications du Back-Channel de l'OIDC pour plus de détails.</value>
+  </data>
+  <data name="BackChannelLogoutUri_Label" xml:space="preserve">
+    <value>Uri de déconnexion pour le Back Channel</value>
+    <comment>Back Channel</comment>
+  </data>
+  <data name="ClientClaimsPrefix_Info" xml:space="preserve">
+    <value>Si cette option est activée, les prefix client claim types seront précédés d'un préfixe. Par défaut : client_. L'objectif est de s'assurer qu'ils n'entrent pas accidentellement en collision avec les user claims.</value>
+  </data>
+  <data name="ClientClaimsPrefix_Label" xml:space="preserve">
+    <value>Préfixe claims client</value>
+  </data>
+  <data name="Description_Info" xml:space="preserve">
+    <value>Description Client</value>
+  </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="FrontChannelLogoutSessionRequired_Info" xml:space="preserve">
+    <value>Indique si l'id de session de l'utilisateur doit être envoyé à FrontChannelLogoutUri. La valeur par défaut est Vraie.</value>
+  </data>
+  <data name="FrontChannelLogoutSessionRequired_Label" xml:space="preserve">
+    <value>Session de déconnexion Front Channel requise</value>
+    <comment>requise?</comment>
+  </data>
+  <data name="FrontChannelLogoutUri_Info" xml:space="preserve">
+    <value>Indique l'URI de déconnexion au niveau du client pour la déconnexion HTTP Front Channel. Voir les spécifications du Front-Channel de l'OIDC pour plus de détails.</value>
+  </data>
+  <data name="FrontChannelLogoutUri_Label" xml:space="preserve">
+    <value>Uri de déconnexion pour le Front Channel</value>
+    <comment>Front Channel</comment>
+  </data>
+  <data name="PairWiseSubjectSalt_Info" xml:space="preserve">
+    <value>Valeur de sel utilisée pour la génération pair-wise du subjectId pour les utilisateurs de ce client.</value>
+    <comment>Valeur de sel utilisée dans la génération du subjectId par paire pour les utilisateurs de ce client.</comment>
+  </data>
+  <data name="PairWiseSubjectSalt_Label" xml:space="preserve">
+    <value>Sallage PairWise du sujet</value>
+    <comment>Pair Wise Subject Salt</comment>
+  </data>
+  <data name="Properties_Info" xml:space="preserve">
+    <value>Dictionnaire pour contenir autant de valeurs personnalisées spécifiques au client que nécessaire.</value>
+    <comment>Dictionnaire pour contenir toutes les valeurs personnalisées spécifiques au client selon les besoins.</comment>
+  </data>
+  <data name="Properties_Label" xml:space="preserve">
+    <value>Propriétés</value>
+  </data>
+  <data name="PropertyKey_Info" xml:space="preserve">
+    <value>Clé</value>
+  </data>
+  <data name="PropertyKey_Label" xml:space="preserve">
+    <value>Clé</value>
+  </data>
+  <data name="PropertyValue_Info" xml:space="preserve">
+    <value>Valeur</value>
+  </data>
+  <data name="PropertyValue_Label" xml:space="preserve">
+    <value>Valeur</value>
+  </data>
+  <data name="ProtocolType_Info" xml:space="preserve">
+    <value>Par défaut, le protocole OpenID Connect est utilisé.</value>
+  </data>
+  <data name="ProtocolType_Label" xml:space="preserve">
+    <value>Type de protocole</value>
+  </data>
+  <data name="UserSsoLifetime_Info" xml:space="preserve">
+    <value>La durée maximale (en secondes) depuis la dernière authentification de l'utilisateur. La valeur par défaut est nulle.</value>
+  </data>
+  <data name="UserSsoLifetime_Label" xml:space="preserve">
+    <value>Durée de vie du SSO de l'utilisateur</value>
+    <comment>Durée de vie d'authentification unique de l'utilisateur</comment>
+  </data>
+  <data name="DeviceCodeLifetime_Info" xml:space="preserve">
+    <value>Durée de vie du code de l'appareil en secondes (par défaut : 300 secondes / 5 minutes)</value>
+  </data>
+  <data name="DeviceCodeLifetime_Label" xml:space="preserve">
+    <value>Durée de vie du code de l'appareil</value>
+  </data>
+  <data name="UserCodeType_Info" xml:space="preserve">
+    <value>Indique le type de code utilisateur à utiliser pour le client. Dans le cas contraire, le système revient à la valeur par défaut.</value>
+  </data>
+  <data name="UserCodeType_Label" xml:space="preserve">
+    <value>Type de code utilisateur</value>
+    <comment>Type de code d'utilisateur</comment>
+  </data>
+  <data name="Expiration_Info" xml:space="preserve">
+    <value>Expiration</value>
+  </data>
+  <data name="Expiration_Label" xml:space="preserve">
+    <value>Expiration</value>
+  </data>
+  <data name="SecretDescription_Info" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="SecretDescription_Label" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="RequireRequestObject_Info" xml:space="preserve">
+    <value>Specifies whether this client needs to wrap the authorize request parameters in a JWT (defaults to false)</value>
+  </data>
+  <data name="RequireRequestObject_Label" xml:space="preserve">
+    <value>Require Request Object</value>
+  </data>
+  <data name="SigningAlgorithms_Info" xml:space="preserve">
+    <value>List of allowed signing algorithms for identity token. If empty, will use the server default signing algorithm.</value>
+  </data>
+  <data name="SigningAlgorithms_Label" xml:space="preserve">
+    <value>Allowed Identity Token Signing Algorithms</value>
+  </data>
+</root>

@@ -5,7 +5,7 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
     labels:
-      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages --additionalProbingPath /root/.nuget/fallbackpackages  "bin/Debug/netcoreapp3.1/Skoruba.IdentityServer4.Admin.dll" /seed'
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages --additionalProbingPath /root/.nuget/fallbackpackages  "bin/Debug/net5.0/Skoruba.IdentityServer4.Admin.dll" /seed'
 
   skoruba.identityserver4.admin.api:
     volumes:
