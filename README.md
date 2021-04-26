@@ -83,7 +83,7 @@ Project template options:
 
 ![Admin-preview](docs/Images/App/4.PNG)
 
-### Forms:
+### Forms
 
 ![Admin-preview-form](docs/Images/App/3.png)
 
