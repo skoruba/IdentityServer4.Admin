@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
-        <Version>2.0.0-rc4</Version>
+        <Version>2.0.0</Version>
         <Authors>Jan Škoruba</Authors>
         <PackageTags>IdentityServer4 Admin OpenIDConnect OAuth2 Identity</PackageTags>
         <Description>DbContexts and Identity entities for the administration of the IdentityServer4 and Asp.Net Core Identity</Description>
@@ -14,11 +14,13 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="5.0.5" />
         <PackageReference Include="Skoruba.AuditLogging.EntityFramework" Version="1.0.0" />
-        <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework" Version="2.0.0-rc5" />
-        <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework.Configuration" Version="2.0.0-rc5" />
-        <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework.Identity" Version="2.0.0-rc5" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework" Version="2.0.0" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework.Configuration" Version="2.0.0" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework.Identity" Version="2.0.0" />
     </ItemGroup>
 </Project>
+
+
 
 
 

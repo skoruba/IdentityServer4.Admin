@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
-        <Version>2.0.0-rc4</Version>
+        <Version>2.0.0</Version>
         <Authors>Jan Škoruba</Authors>
         <LangVersion>latest</LangVersion>
         <UserSecretsId>8fe260ca-ef4c-4fa3-9364-029146f8d339</UserSecretsId>
@@ -46,9 +46,9 @@
         <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
         <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.6.0" />
         <PackageReference Include="Serilog.Sinks.Seq" Version="5.0.1" />
-        <PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic" Version="2.0.0-rc5" />
-        <PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic.Identity" Version="2.0.0-rc5" />
-        <PackageReference Include="Skoruba.IdentityServer4.Admin.UI" Version="2.0.0-rc5" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic" Version="2.0.0" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic.Identity" Version="2.0.0" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.UI" Version="2.0.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -68,6 +68,8 @@
     </ItemGroup>
 
 </Project>
+
+
 
 
 
