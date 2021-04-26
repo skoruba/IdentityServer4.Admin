@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
-        <Version>2.0.0</Version>
+        <Version>2.0.1</Version>
         <Authors>Jan Škoruba</Authors>
         <UserSecretsId>9c91d295-54c5-4d09-9bd6-fa56fb74011b</UserSecretsId>
         <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
@@ -88,6 +88,7 @@
     </ItemGroup>
 
 </Project>
+
 
 
 
