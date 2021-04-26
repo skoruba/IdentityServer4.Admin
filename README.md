@@ -20,12 +20,12 @@ The application is written in the **Asp.Net Core MVC - using .NET 5**
 
 - Install the dotnet new template:
 
-### Version 2.0.0 works with **IdentityServer4 version 4** 🚀
+### Version 2.0.0 and higher works with **IdentityServer4 version 4** 🚀
 
 - 🔒 **NOTE:** This version affects your database data if you use the default database migrations that are part of the project - double check the migrations according to your database provider and create a database backup
 
 ```sh
-dotnet new -i Skoruba.IdentityServer4.Admin.Templates::2.0.0
+dotnet new -i Skoruba.IdentityServer4.Admin.Templates::2.0.1
 ```
 
 ### Create new project:
@@ -167,11 +167,11 @@ docker-compose up -d
 ### Docker images
 - Docker images will be available also in [docker hub](https://hub.docker.com/u/skoruba)
   - AdminUI:    
-    - `skoruba/identityserver4-admin:2.0.0`
+    - `skoruba/identityserver4-admin:2.0.1`
   - Admin Api:
-    - `skoruba/identityserver4-admin-api:2.0.0`
+    - `skoruba/identityserver4-admin-api:2.0.1`
   - STS:
-    - `skoruba/identityserver4-sts-identity:2.0.0`
+    - `skoruba/identityserver4-sts-identity:2.0.1`
        
 ### Publish Docker images to Docker hub
 - Check the script in `build/publish-docker-images.ps1` - change the profile name according to your requirements.
