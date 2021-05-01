@@ -14,6 +14,13 @@
     </div>
     <div class="col-sm-10">
         <form method="post">
+            @if (!string.IsNullOrEmpty(Model.UserDomain))
+            {
+                <div class="form-group">
+                    <label asp-for="UserDomain">@Localizer["UserDomain"]</label>
+                    <input asp-for="UserDomain" class="form-control" disabled />
+                </div>
+            }
             <div class="form-group">
                 <label asp-for="Username">@Localizer["UserName"]</label>
                 <input asp-for="Username" class="form-control" disabled />

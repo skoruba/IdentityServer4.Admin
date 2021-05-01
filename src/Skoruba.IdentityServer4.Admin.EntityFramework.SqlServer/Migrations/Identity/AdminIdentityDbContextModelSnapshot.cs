@@ -80,6 +80,10 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ide
                         .IsUnique()
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+                    
+                    b.Property<string>("UserDomain")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
 
                     b.ToTable("Users");
                 });

@@ -4,6 +4,6 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity
 {
 	public class UserIdentity : IdentityUser
 	{
-		
+		public string UserDomain { get; set; }
 	}
 }

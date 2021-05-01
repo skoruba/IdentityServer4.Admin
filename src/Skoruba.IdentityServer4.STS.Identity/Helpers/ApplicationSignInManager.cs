@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Skoruba.IdentityServer4.STS.Identity.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -21,6 +23,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         where TUser : class
     {
         private readonly IHttpContextAccessor _contextAccessor;
+        private readonly LdapWebApiProviderConfiguration<TUser> _ldapWebApiProvider;
 
         public ApplicationSignInManager(UserManager<TUser> userManager,
             IHttpContextAccessor contextAccessor,
@@ -28,10 +31,12 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             IOptions<IdentityOptions> optionsAccessor,
             ILogger<SignInManager<TUser>> logger,
             IAuthenticationSchemeProvider schemes,
-            IUserConfirmation<TUser> confirmation) : base(userManager, contextAccessor,
+            IUserConfirmation<TUser> confirmation,
+            LdapWebApiProviderConfiguration<TUser> ldapWebApiProvider) : base(userManager, contextAccessor,
                 claimsFactory, optionsAccessor, logger, schemes, confirmation)
         {
             _contextAccessor = contextAccessor;
+            _ldapWebApiProvider = ldapWebApiProvider;
         }
 
         public override async Task SignInWithClaimsAsync(TUser user, AuthenticationProperties authenticationProperties, IEnumerable<Claim> additionalClaims)
@@ -67,6 +72,37 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             }
 
             await base.SignInWithClaimsAsync(user, authenticationProperties, claims);
+        }
+
+        public override async Task<SignInResult> CheckPasswordSignInAsync(TUser user, string password, bool lockoutOnFailure)
+        {
+            var userDomainProfile = _ldapWebApiProvider.GetUserDomainProfile(user);
+
+            //The user does not have a Domain assigned. 
+            if (userDomainProfile == null)
+                return await base.CheckPasswordSignInAsync(user, password, lockoutOnFailure);
+
+            var userIdentity = (user as Admin.EntityFramework.Shared.Entities.Identity.UserIdentity);
+
+            var accountName = userIdentity.UserName.Split('\\').GetValue(1).ToString();
+
+            var accountSecurityData = new Bitai.LDAPWebApi.DTO.LDAPAccountCredentials
+            {
+                DomainName = (user as Admin.EntityFramework.Shared.Entities.Identity.UserIdentity).UserDomain,
+                AccountName = accountName,
+                AccountPassword = password
+            };
+
+            var ldapCredentialsClient = userDomainProfile.GetLdapCredentialsClient();
+            var response = await ldapCredentialsClient.AccountAuthenticationAsync(accountName, accountSecurityData);
+            if (!response.IsSuccessResponse)
+            {
+                return SignInResult.NotAllowed;
+            }
+            else
+            {
+                return SignInResult.Success;
+            }
         }
     }
 }
