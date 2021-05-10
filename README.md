@@ -391,7 +391,7 @@ By default, configuration value is null to use default theme. if you want to use
 
 You can also use your custom theme by integrating it in your project or hosting css on your place to pass the url in `CustomThemeCss` key. (Note that custom theme override standard theme)
 
-- Important Note: Theme can use external ressources which caused errors due to CSP. If you get errors, please make sure that you configured correctly CSP section in your `appsettings.json` with thrusted domains for ressources.
+- Important Note: Theme can use external resources which caused errors due to CSP. If you get errors, please make sure that you configured correctly CSP section in your `appsettings.json` with thrusted domains for resources.
 
 ```json
   "AdminConfiguration": {
@@ -530,7 +530,7 @@ In STS project - in `appsettings.json`:
 
 ## CSP - Content Security Policy
 
-- If you want to use favicon or logo not included/hosted on the same place, you need to declare trusted domain where ressources are hosted in appsettings.json.
+- If you want to use favicon or logo not included/hosted on the same place, you need to declare trusted domain where resources are hosted in appsettings.json.
 
 ```
   "CspTrustedDomains": [
