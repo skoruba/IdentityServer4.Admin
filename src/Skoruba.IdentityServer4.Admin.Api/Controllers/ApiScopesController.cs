@@ -1,9 +1,7 @@
 ﻿using System.Threading.Tasks;
-using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Skoruba.IdentityServer4.Admin.Api.Configuration.Constants;
-using Skoruba.IdentityServer4.Admin.Api.Dtos.ApiResources;
 using Skoruba.IdentityServer4.Admin.Api.Dtos.ApiScopes;
 using Skoruba.IdentityServer4.Admin.Api.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.Api.Mappers;

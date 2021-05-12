@@ -3,7 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using IdentityModel;
-using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 
 namespace SkorubaIdentityServer4Admin.Admin.Api.Middlewares
@@ -23,7 +23,7 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Middlewares
             {
                 var token = context.Request.Headers[TestAuthorizationHeader].Single();
                 var jwt = new JwtSecurityToken(token);
-                var claimsIdentity = new ClaimsIdentity(jwt.Claims, IdentityServerAuthenticationDefaults.AuthenticationScheme, JwtClaimTypes.Name, JwtClaimTypes.Role);
+                var claimsIdentity = new ClaimsIdentity(jwt.Claims, JwtBearerDefaults.AuthenticationScheme, JwtClaimTypes.Name, JwtClaimTypes.Role);
                 context.User = new ClaimsPrincipal(claimsIdentity);
             }
 
@@ -31,6 +31,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Middlewares
         }
     }
 }
+
+
 
 
 

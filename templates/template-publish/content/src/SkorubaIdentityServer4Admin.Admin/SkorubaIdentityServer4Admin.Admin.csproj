@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-        <Version>2.0.0-beta1</Version>
+        <TargetFramework>net5.0</TargetFramework>
+        <Version>2.0.1</Version>
         <Authors>Jan Škoruba</Authors>
         <LangVersion>latest</LangVersion>
         <UserSecretsId>8fe260ca-ef4c-4fa3-9364-029146f8d339</UserSecretsId>
@@ -12,115 +12,47 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AspNetCore.HealthChecks.MySql" Version="3.1.1" />
-        <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="3.1.1" />
-        <PackageReference Include="AspNetCore.HealthChecks.OpenIdConnectServer" Version="3.1.1" />
-        <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="3.1.1" />
-        <PackageReference Include="AspNetCore.HealthChecks.UI" Version="3.1.3" />
-        <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="3.1.2" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.9" />
-        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="3.1.9" />
-        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="3.1.9" />
+        <PackageReference Include="AspNetCore.HealthChecks.MySql" Version="5.0.1" />
+        <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="5.0.2" />
+        <PackageReference Include="AspNetCore.HealthChecks.OpenIdConnectServer" Version="5.0.1" />
+        <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="5.0.2" />
+        <PackageReference Include="AspNetCore.HealthChecks.UI" Version="5.0.1" />
+        <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="5.0.1" />
+        <PackageReference Include="IdentityServer4.EntityFramework" Version="4.1.2" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.5" />
+        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="5.0.5" />
+        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="5.0.5" />
 
-        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.9" />
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.9" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.9" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.9" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.9">
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.5" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.5">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="AutoMapper" Version="10.1.1" />
-        <PackageReference Include="IdentityServer4.EntityFramework" Version="4.1.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
-        <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.9" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
         <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
-        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
         <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
         <PackageReference Include="Serilog" Version="2.10.0" />
         <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
-        <PackageReference Include="Serilog.Extensions.Hosting" Version="3.1.0" />
+        <PackageReference Include="Serilog.Extensions.Hosting" Version="4.1.2" />
         <PackageReference Include="Serilog.Enrichers.Environment" Version="2.1.3" />
         <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
         <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
-        <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
-        <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.5.1" />
-        <PackageReference Include="Serilog.Sinks.Seq" Version="4.0.0" />
-        <PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic" Version="2.0.0-beta1" />
-        <PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic.Identity" Version="2.0.0-beta1" />
+        <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
+        <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.6.0" />
+        <PackageReference Include="Serilog.Sinks.Seq" Version="5.0.1" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic" Version="2.0.1" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.BusinessLogic.Identity" Version="2.0.1" />
+        <PackageReference Include="Skoruba.IdentityServer4.Admin.UI" Version="2.0.1" />
     </ItemGroup>
 
     <ItemGroup>
         <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <None Include="Views\Account\AccessDenied.cshtml" />
-        <None Include="Views\Configuration\ApiResource.cshtml" />
-        <None Include="Views\Configuration\ApiResourceDelete.cshtml" />
-        <None Include="Views\Configuration\ApiResourceProperties.cshtml" />
-        <None Include="Views\Configuration\ApiResourcePropertyDelete.cshtml" />
-        <None Include="Views\Configuration\ApiResources.cshtml" />
-        <None Include="Views\Configuration\ApiResource\Section\Label.cshtml" />
-        <None Include="Views\Configuration\ApiScopeDelete.cshtml" />
-        <None Include="Views\Configuration\ApiScopes.cshtml" />
-        <None Include="Views\Configuration\ApiSecretDelete.cshtml" />
-        <None Include="Views\Configuration\ApiSecrets.cshtml" />
-        <None Include="Views\Configuration\Client.cshtml" />
-        <None Include="Views\Configuration\ClientClaimDelete.cshtml" />
-        <None Include="Views\Configuration\ClientClaims.cshtml" />
-        <None Include="Views\Configuration\ClientClone.cshtml" />
-        <None Include="Views\Configuration\ClientDelete.cshtml" />
-        <None Include="Views\Configuration\ClientProperties.cshtml" />
-        <None Include="Views\Configuration\ClientPropertyDelete.cshtml" />
-        <None Include="Views\Configuration\Clients.cshtml" />
-        <None Include="Views\Configuration\ClientSecretDelete.cshtml" />
-        <None Include="Views\Configuration\ClientSecrets.cshtml" />
-        <None Include="Views\Configuration\Client\Section\ActionButtons.cshtml" />
-        <None Include="Views\Configuration\Client\Section\Authentication.cshtml" />
-        <None Include="Views\Configuration\Client\Section\Basics.cshtml" />
-        <None Include="Views\Configuration\Client\Section\Consent.cshtml" />
-        <None Include="Views\Configuration\Client\Section\DeviceFlow.cshtml" />
-        <None Include="Views\Configuration\Client\Section\Label.cshtml" />
-        <None Include="Views\Configuration\Client\Section\Name.cshtml" />
-        <None Include="Views\Configuration\Client\Section\Token.cshtml" />
-        <None Include="Views\Configuration\Client\Settings.cshtml" />
-        <None Include="Views\Configuration\IdentityResource.cshtml" />
-        <None Include="Views\Configuration\IdentityResourceDelete.cshtml" />
-        <None Include="Views\Configuration\IdentityResourceProperties.cshtml" />
-        <None Include="Views\Configuration\IdentityResourcePropertyDelete.cshtml" />
-        <None Include="Views\Configuration\IdentityResources.cshtml" />
-        <None Include="Views\Configuration\IdentityResource\Section\Label.cshtml" />
-        <None Include="Views\Grant\PersistedGrant.cshtml" />
-        <None Include="Views\Grant\PersistedGrantDelete.cshtml" />
-        <None Include="Views\Grant\PersistedGrants.cshtml" />
-        <None Include="Views\Home\Error.cshtml" />
-        <None Include="Views\Home\Index.cshtml" />
-        <None Include="Views\Identity\Role.cshtml" />
-        <None Include="Views\Identity\RoleClaims.cshtml" />
-        <None Include="Views\Identity\RoleClaimsDelete.cshtml" />
-        <None Include="Views\Identity\RoleDelete.cshtml" />
-        <None Include="Views\Identity\Roles.cshtml" />
-        <None Include="Views\Identity\Role\Section\Label.cshtml" />
-        <None Include="Views\Identity\UserChangePassword.cshtml" />
-        <None Include="Views\Identity\UserClaims.cshtml" />
-        <None Include="Views\Identity\UserClaimsDelete.cshtml" />
-        <None Include="Views\Identity\UserDelete.cshtml" />
-        <None Include="Views\Identity\UserProfile.cshtml" />
-        <None Include="Views\Identity\UserProviders.cshtml" />
-        <None Include="Views\Identity\UserProvidersDelete.cshtml" />
-        <None Include="Views\Identity\UserRoles.cshtml" />
-        <None Include="Views\Identity\UserRolesDelete.cshtml" />
-        <None Include="Views\Identity\Users.cshtml" />
-        <None Include="Views\Identity\User\Section\Label.cshtml" />
-        <None Include="Views\Log\ErrorsLog.cshtml" />
-        <None Include="Views\Shared\Common\ErrorPage.cshtml" />
-        <None Include="Views\Shared\Common\Notification.cshtml" />
-        <None Include="Views\Shared\Common\Pager.cshtml" />
-        <None Include="Views\Shared\Common\Search.cshtml" />
-        <None Include="Views\Shared\Common\SelectLanguage.cshtml" />
-        <None Include="Views\Shared\Error.cshtml" />
-        <None Include="Views\Shared\_Layout.cshtml" />
     </ItemGroup>
 
     <ItemGroup>
@@ -132,42 +64,20 @@
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Update="Resources\Views\Configuration\ApiScopeProperties.zh.resx">
-        <Generator>PublicResXFileCodeGenerator</Generator>
-      </EmbeddedResource>
-      <EmbeddedResource Update="Resources\Views\Configuration\ApiScopeProperties.sv.resx">
-        <Generator>PublicResXFileCodeGenerator</Generator>
-      </EmbeddedResource>
-      <EmbeddedResource Update="Resources\Views\Configuration\ApiScopeProperties.ru.resx">
-        <Generator>PublicResXFileCodeGenerator</Generator>
-      </EmbeddedResource>
-      <EmbeddedResource Update="Resources\Views\Configuration\ApiScopeProperties.pt.resx">
-        <Generator>PublicResXFileCodeGenerator</Generator>
-      </EmbeddedResource>
-      <EmbeddedResource Update="Resources\Views\Configuration\ApiScopeProperties.fr.resx">
-        <Generator>PublicResXFileCodeGenerator</Generator>
-      </EmbeddedResource>
-      <EmbeddedResource Update="Resources\Views\Configuration\ApiScopeProperties.fi.resx">
-        <Generator>PublicResXFileCodeGenerator</Generator>
-      </EmbeddedResource>
-      <EmbeddedResource Update="Resources\Views\Configuration\ApiScopeProperties.fa.resx">
-        <Generator>PublicResXFileCodeGenerator</Generator>
-      </EmbeddedResource>
-      <EmbeddedResource Update="Resources\Views\Configuration\ApiScopeProperties.es.resx">
-        <Generator>PublicResXFileCodeGenerator</Generator>
-      </EmbeddedResource>
-      <EmbeddedResource Update="Resources\Views\Configuration\ApiScopeProperties.de.resx">
-        <Generator>PublicResXFileCodeGenerator</Generator>
-      </EmbeddedResource>
-      <EmbeddedResource Update="Resources\Views\Configuration\ApiScopeProperties.da.resx">
-        <Generator>PublicResXFileCodeGenerator</Generator>
-      </EmbeddedResource>
-      <EmbeddedResource Update="Resources\Views\Configuration\ApiScopeProperties.en.resx">
-        <Generator>PublicResXFileCodeGenerator</Generator>
-      </EmbeddedResource>
+        <Folder Include="log\" />
     </ItemGroup>
 
 </Project>
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -2,7 +2,7 @@
 
 # Skoruba.IdentityServer4.Admin
 
-> The administration of the IdentityServer4 and Asp.Net Core Identity
+> The administration for the IdentityServer4 and Asp.Net Core Identity
 
 ## Project Status
 
@@ -10,32 +10,23 @@
 [![Build Status](https://dev.azure.com/skoruba/IdentityServer4.Admin/_apis/build/status/IdentityServer4.Admin-CI?branchName=master)](https://dev.azure.com/skoruba/IdentityServer4.Admin/_build/latest?definitionId=2?branchName=master)
 [![Join the chat at https://gitter.im/skoruba/IdentityServer4.Admin](https://badges.gitter.im/skoruba/IdentityServer4.Admin.svg)](https://gitter.im/skoruba/IdentityServer4.Admin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-The application is written in the **Asp.Net Core MVC - using .NET Core 3.1**
+The application is written in the **Asp.Net Core MVC - using .NET 5**
 
 ## Requirements
 
-- [Install](https://www.microsoft.com/net/download/windows#/current) the latest .NET Core 3.x SDK (using older versions may lead to 502.5 errors when hosted on IIS or application exiting immediately after starting when self-hosted)
+- [Install](https://www.microsoft.com/net/download/windows#/current) the latest .NET 5 SDK (using older versions may lead to 502.5 errors when hosted on IIS or application exiting immediately after starting when self-hosted)
 
 ## Installation via dotnet new template
 
 - Install the dotnet new template:
 
-### Version 2.0.0 works with **IdentityServer4 version 4** 🚀
+### Version 2.0.0 and higher works with **IdentityServer4 version 4** 🚀
 
 - 🔒 **NOTE:** This version affects your database data if you use the default database migrations that are part of the project - double check the migrations according to your database provider and create a database backup
 
 ```sh
-dotnet new -i Skoruba.IdentityServer4.Admin.Templates::2.0.0
+dotnet new -i Skoruba.IdentityServer4.Admin.Templates::2.0.1
 ```
-
-### Version 1.1.0 works with **IdentityServer4 version 3** 🚀
-
-```sh
-dotnet new -i Skoruba.IdentityServer4.Admin.Templates::1.1.0
-```
-
-- The source code for version **1.1.0** is available in the branch [release/1.1.0](https://github.com/skoruba/IdentityServer4.Admin/tree/release/1.1.0)
-
 
 ### Create new project:
 
@@ -80,17 +71,21 @@ Project template options:
 
 - This administration uses bootstrap 4
 
-- Admin UI
+### Admin UI - Light mode 🌞
 
-![Admin-preview](docs/Images/App/Skoruba-Home-Preview.PNG)
+![Admin-preview](docs/Images/App/1.PNG)
 
-- Security token service (STS)
+### Admin UI - Dark mode 🌙
 
-![Admin-preview](docs/Images/App/Skoruba-STS-Home-Preview.PNG)
+![Admin-preview](docs/Images/App/2.PNG)
 
-- Forms:
+### Security token service (STS)
 
-![Admin-preview-form](docs/Images/App/Skoruba-Forms-Preview.PNG)
+![Admin-preview](docs/Images/App/4.PNG)
+
+### Forms
+
+![Admin-preview-form](docs/Images/App/3.png)
 
 ## Cloning
 
@@ -171,21 +166,12 @@ docker-compose up -d
 
 ### Docker images
 - Docker images will be available also in [docker hub](https://hub.docker.com/u/skoruba)
-  - AdminUI:
-    - **Stable version:** 
-    - `skoruba/identityserver4-admin:1.0.0`
-    - **Beta version:** 
-    - `skoruba/identityserver4-admin:2.0.0-beta1`
+  - AdminUI:    
+    - `skoruba/identityserver4-admin:2.0.1`
   - Admin Api:
-    - **Stable version:** 
-    - `skoruba/identityserver4-admin-api:1.0.0`
-    - **Beta version:** 
-    - `skoruba/identityserver4-admin-api:2.0.0-beta1`
+    - `skoruba/identityserver4-admin-api:2.0.1`
   - STS:
-    - **Stable version:** 
-    - `skoruba/identityserver4-sts-identity:1.0.0`
-    - **Beta version:** 
-    - `skoruba/identityserver4-sts-identity:2.0.0-beta1`
+    - `skoruba/identityserver4-sts-identity:2.0.1`
        
 ### Publish Docker images to Docker hub
 - Check the script in `build/publish-docker-images.ps1` - change the profile name according to your requirements.
@@ -209,6 +195,7 @@ The following Gulp commands are available:
 - `gulp scripts` - bundle and minify JS
 - `gulp clean` - remove the `dist` folder
 - `gulp build` - run the `styles` and `scripts` tasks
+- `gulp watch` - watch all changes in all sass files
 
 ## EF Core & Data Access
 
@@ -397,6 +384,8 @@ Admin and STS can be customized without editing code in `appsettings.json` under
 #### Themes
 
 Ui can be customized using themes integrated from [bootswatch](https://bootswatch.com).
+
+From version 2.0.0 is possible to change theme from UI. 🎈
 
 By default, configuration value is null to use default theme. if you want to use a theme, just fill the lowercase theme name as configuration value of `Theme` key.
 
@@ -611,9 +600,13 @@ Integration tests use StartupTest class which is pre-configured with:
 
   - `Skoruba.IdentityServer4.Admin.BusinessLogic.Shared` - project that contains shared Dtos and ExceptionHandling for the Business Logic layer of the IdentityServer4 and Asp.Net Core Identity
 
-  - `Skoruba.IdentityServer4.Shared` - Shared common layer for Admin UI, Admin UI Api and STS
+  - `Skoruba.IdentityServer4.Shared` - Shared common Identity DTOS for Admin UI, Admin UI Api and STS
+
+  - `Skoruba.IdentityServer4.Shared.Configuration` - Shared common layer for Admin UI, Admin UI Api and STS
 
   - `Skoruba.IdentityServer4.Admin.EntityFramework` - EF Core data layer that contains Entities for the IdentityServer4
+
+  - `Skoruba.IdentityServer4.Admin.EntityFramework.Configuration` - EF Core data layer that contains configurations
 
   - `Skoruba.IdentityServer4.Admin.EntityFramework.Identity` - EF Core data layer that contains Repositories for the Asp.Net Core Identity
   
@@ -651,7 +644,7 @@ It is possible to define the configuration according the client type - by defaul
 - Empty
 - Web Application - Server side - Authorization Code Flow with PKCE
 - Single Page Application - Javascript - Authorization Code Flow with PKCE
-- Native Application - Mobile/Desktop - Hybrid flow
+- Native Application - Mobile/Desktop - Authorization Code Flow with PKCE
 - Machine/Robot - Client Credentials flow
 - TV and Limited-Input Device Application - Device flow
 
@@ -743,12 +736,10 @@ It is possible to define the configuration according the client type - by defaul
 - [x] Add support for loading signing key from Azure Key Vault ([#533](https://github.com/skoruba/IdentityServer4.Admin/issues/533))
 - [x] Protect keys for dataprotection from Azure Key Vault ([#715](https://github.com/skoruba/IdentityServer4.Admin/pull/715))
 
-### 1.1.0
-- [x] Extract UI part into nuget package ([#770](https://github.com/skoruba/IdentityServer4.Admin/issues/770), [#409](https://github.com/skoruba/IdentityServer4.Admin/issues/409), [#55](https://github.com/skoruba/IdentityServer4.Admin/issues/55),), [#322](https://github.com/skoruba/IdentityServer4.Admin/issues/322), [#28](https://github.com/skoruba/IdentityServer4.Admin/issues/28), , [#133](https://github.com/skoruba/IdentityServer4.Admin/issues/133)) 
-
 ### 2.0.0
 - [x] Update to IdentityServer4 version 4 ([#633](https://github.com/skoruba/IdentityServer4.Admin/issues/633))
 - [x] Add support for themes ([#725](https://github.com/skoruba/IdentityServer4.Admin/issues/725))
+- [x] Extract UI part into nuget package ([#770](https://github.com/skoruba/IdentityServer4.Admin/issues/770), [#409](https://github.com/skoruba/IdentityServer4.Admin/issues/409), [#55](https://github.com/skoruba/IdentityServer4.Admin/issues/55), [#322](https://github.com/skoruba/IdentityServer4.Admin/issues/322), [#28](https://github.com/skoruba/IdentityServer4.Admin/issues/28), [#133](https://github.com/skoruba/IdentityServer4.Admin/issues/133)) 
 
 ### 3.0.0
 - [ ] Connect Admin Api to the Admin UI ([#478](https://github.com/skoruba/IdentityServer4.Admin/issues/478))
@@ -765,7 +756,7 @@ It is possible to define the configuration according the client type - by defaul
 - Add UI tests ([#97](https://github.com/skoruba/IdentityServer4.Admin/issues/97), [#116](https://github.com/skoruba/IdentityServer4.Admin/issues/116))
 - Add more unit and integration tests :blush:
 - Extend administration for another protocols
-- Create separate UI using `Razor Class Library` ([#28](https://github.com/skoruba/IdentityServer4.Admin/issues/28), [#133](https://github.com/skoruba/IdentityServer4.Admin/issues/133))
+
 
 ## Licence
 

@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
@@ -14,29 +13,23 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
-using SendGrid;
-using SkorubaIdentityServer4Admin.Shared.Configuration.Email;
-using SkorubaIdentityServer4Admin.Shared.Email;
 using SkorubaIdentityServer4Admin.STS.Identity.Configuration;
 using SkorubaIdentityServer4Admin.STS.Identity.Configuration.ApplicationParts;
 using SkorubaIdentityServer4Admin.STS.Identity.Configuration.Constants;
 using SkorubaIdentityServer4Admin.STS.Identity.Configuration.Interfaces;
 using SkorubaIdentityServer4Admin.STS.Identity.Helpers.Localization;
 using System.Linq;
-using IdentityServer4;
-using Microsoft.AspNetCore.Authentication.AzureAD.UI;
-using Microsoft.AspNetCore.Authentication.OAuth;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
-using SkorubaIdentityServer4Admin.Admin.EntityFramework.MySql.Extensions;
-using SkorubaIdentityServer4Admin.Admin.EntityFramework.PostgreSQL.Extensions;
-using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Configuration;
-using SkorubaIdentityServer4Admin.Admin.EntityFramework.SqlServer.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
-using Microsoft.IdentityModel.Tokens;
-using SkorubaIdentityServer4Admin.Shared.Authentication;
-using SkorubaIdentityServer4Admin.Shared.Configuration.Identity;
+using Microsoft.Identity.Web;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.Configuration;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.MySql;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.PostgreSQL;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.SqlServer;
+using Skoruba.IdentityServer4.Shared.Configuration.Authentication;
+using Skoruba.IdentityServer4.Shared.Configuration.Configuration.Identity;
 
 namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
 {
@@ -373,22 +366,22 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
                 {
                     options.ClientId = externalProviderConfiguration.GitHubClientId;
                     options.ClientSecret = externalProviderConfiguration.GitHubClientSecret;
+                    options.CallbackPath = externalProviderConfiguration.GitHubCallbackPath;
                     options.Scope.Add("user:email");
                 });
             }
 
             if (externalProviderConfiguration.UseAzureAdProvider)
             {
-                authenticationBuilder.AddAzureAD(AzureADDefaults.AuthenticationScheme, AzureADDefaults.OpenIdScheme, AzureADDefaults.CookieScheme, AzureADDefaults.DisplayName,options =>
-                    {
-                        options.ClientSecret = externalProviderConfiguration.AzureAdSecret;
-                        options.ClientId = externalProviderConfiguration.AzureAdClientId;
-                        options.TenantId = externalProviderConfiguration.AzureAdTenantId;
-                        options.Instance = externalProviderConfiguration.AzureInstance;
-                        options.Domain = externalProviderConfiguration.AzureDomain;
-                        options.CallbackPath = externalProviderConfiguration.AzureAdCallbackPath;
-                        options.CookieSchemeName = IdentityConstants.ExternalScheme;
-                    });
+                authenticationBuilder.AddMicrosoftIdentityWebApp(options =>
+                {
+                    options.ClientSecret = externalProviderConfiguration.AzureAdSecret;
+                    options.ClientId = externalProviderConfiguration.AzureAdClientId;
+                    options.TenantId = externalProviderConfiguration.AzureAdTenantId;
+                    options.Instance = externalProviderConfiguration.AzureInstance;
+                    options.Domain = externalProviderConfiguration.AzureDomain;
+                    options.CallbackPath = externalProviderConfiguration.AzureAdCallbackPath;
+                });
             }
         }
 
@@ -483,6 +476,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
         }
     }
 }
+
+
 
 
 

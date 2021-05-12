@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <Version>2.0.1</Version>
+        <Authors>Jan Škoruba</Authors>
+        <PackageTags>IdentityServer4 Admin OpenIDConnect OAuth2 Identity</PackageTags>
+        <Description>Entity Framework configuration for the administration of the IdentityServer4 and Asp.Net Core Identity</Description>
+        <PackageLicenseUrl>https://github.com/skoruba/IdentityServer4.Admin/blob/master/LICENSE.md</PackageLicenseUrl>
+        <PackageProjectUrl>https://github.com/skoruba/IdentityServer4.Admin</PackageProjectUrl>
+        <PackageIconUrl>https://raw.githubusercontent.com/skoruba/IdentityServer4.Admin/master/docs/Images/Skoruba.IdentityServer4.Admin-Logo-Nuget.png</PackageIconUrl>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="5.0.5" />
+        <PackageReference Include="Skoruba.AuditLogging.EntityFramework" Version="1.0.0" />
+        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0-alpha.2" />
+        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.2" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.5.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.Identity\Skoruba.IdentityServer4.Admin.EntityFramework.Identity.csproj" />
+        <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.IdentityServer4.Admin.EntityFramework.csproj" />
+    </ItemGroup>
+
+</Project>
+
+
+
+
+
+

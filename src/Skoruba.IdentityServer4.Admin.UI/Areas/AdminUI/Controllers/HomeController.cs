@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.UI.ExceptionHandling;
-using Skoruba.IdentityServer4.Shared.Helpers;
+using Skoruba.IdentityServer4.Shared.Configuration.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
 {

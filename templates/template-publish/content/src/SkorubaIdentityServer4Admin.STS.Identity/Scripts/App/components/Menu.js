@@ -1,4 +1,4 @@
-﻿var Menu = {
+var Menu = {
 	
 	init: function() {
 

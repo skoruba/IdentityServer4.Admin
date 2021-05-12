@@ -2,12 +2,9 @@
 using Microsoft.Extensions.Configuration;
 using Skoruba.IdentityServer4.Admin.UI.Configuration;
 using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants;
-using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration;
-using Skoruba.IdentityServer4.Shared.Configuration.Common;
 using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.Configuration;
+using Skoruba.IdentityServer4.Shared.Configuration.Configuration.Common;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -106,8 +103,8 @@ namespace Microsoft.Extensions.DependencyInjection
 			IdentityConfigureAction = options => configuration.GetSection(nameof(IdentityOptions)).Bind(options);
 			configuration.GetSection(nameof(SecurityConfiguration)).Bind(Security);
 			configuration.GetSection(nameof(HttpConfiguration)).Bind(Http);
-			configuration.GetSection(nameof(Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration.IdentityServerData)).Bind(IdentityServerData);
-			configuration.GetSection(nameof(Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Configuration.IdentityData)).Bind(IdentityData);
+			configuration.GetSection(nameof(IdentityServerData)).Bind(IdentityServerData);
+			configuration.GetSection(nameof(IdentityData)).Bind(IdentityData);
 		}
 	}
 }
