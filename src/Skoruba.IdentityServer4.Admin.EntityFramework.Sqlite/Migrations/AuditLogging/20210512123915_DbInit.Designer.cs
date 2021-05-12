@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite.Migrations.AuditLogging
 {
     [DbContext(typeof(AdminAuditLogDbContext))]
-    partial class AdminAuditLogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210512123915_DbInit")]
+    partial class DbInit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

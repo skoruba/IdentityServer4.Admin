@@ -11,15 +11,15 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite.Migrations.Identi
                 name: "DeviceCodes",
                 columns: table => new
                 {
-                    UserCode = table.Column<string>(maxLength: 200, nullable: false),
-                    DeviceCode = table.Column<string>(maxLength: 200, nullable: false),
-                    SubjectId = table.Column<string>(maxLength: 200, nullable: true),
-                    SessionId = table.Column<string>(maxLength: 100, nullable: true),
-                    ClientId = table.Column<string>(maxLength: 200, nullable: false),
-                    Description = table.Column<string>(maxLength: 200, nullable: true),
-                    CreationTime = table.Column<DateTime>(nullable: false),
-                    Expiration = table.Column<DateTime>(nullable: false),
-                    Data = table.Column<string>(maxLength: 50000, nullable: false)
+                    UserCode = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    DeviceCode = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    SubjectId = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true),
+                    SessionId = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
+                    ClientId = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Expiration = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Data = table.Column<string>(type: "TEXT", maxLength: 50000, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,16 +30,16 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite.Migrations.Identi
                 name: "PersistedGrants",
                 columns: table => new
                 {
-                    Key = table.Column<string>(maxLength: 200, nullable: false),
-                    Type = table.Column<string>(maxLength: 50, nullable: false),
-                    SubjectId = table.Column<string>(maxLength: 200, nullable: true),
-                    SessionId = table.Column<string>(maxLength: 100, nullable: true),
-                    ClientId = table.Column<string>(maxLength: 200, nullable: false),
-                    Description = table.Column<string>(maxLength: 200, nullable: true),
-                    CreationTime = table.Column<DateTime>(nullable: false),
-                    Expiration = table.Column<DateTime>(nullable: true),
-                    ConsumedTime = table.Column<DateTime>(nullable: true),
-                    Data = table.Column<string>(maxLength: 50000, nullable: false)
+                    Key = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    Type = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    SubjectId = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true),
+                    SessionId = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
+                    ClientId = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Expiration = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    ConsumedTime = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Data = table.Column<string>(type: "TEXT", maxLength: 50000, nullable: false)
                 },
                 constraints: table =>
                 {

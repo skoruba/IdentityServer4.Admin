@@ -97,6 +97,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="AspNetCore.HealthChecks.Sqlite" Version="5.0.1" />
         <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="5.0.5" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.5" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.5" />

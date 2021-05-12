@@ -10,10 +10,10 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite.Migrations.DataPr
                 name: "DataProtectionKeys",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    FriendlyName = table.Column<string>(nullable: true),
-                    Xml = table.Column<string>(nullable: true)
+                    FriendlyName = table.Column<string>(type: "TEXT", nullable: true),
+                    Xml = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {

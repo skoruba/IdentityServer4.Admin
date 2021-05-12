@@ -45,6 +45,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.MySql;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.PostgreSQL;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.SqlServer;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.Sqlite;
 using Skoruba.IdentityServer4.Shared.Configuration.Authentication;
 
 namespace Skoruba.IdentityServer4.Admin.UI.Helpers
@@ -141,7 +142,7 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
                     services.RegisterMySqlDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext, TAuditLog>(connectionStrings, databaseMigrations);
                     break;
                 case DatabaseProviderType.Sqlite:
-                    services.RegisterSqliteDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext>(connectionStrings, databaseMigrations);
+                    services.RegisterSqliteDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLoggingDbContext, TDataProtectionDbContext, TAuditLog>(connectionStrings, databaseMigrations);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(databaseProvider.ProviderType), $@"The value needs to be one of {string.Join(", ", Enum.GetNames(typeof(DatabaseProviderType)))}.");

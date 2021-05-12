@@ -13,7 +13,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite.Migrations.DataPr
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9");
+                .HasAnnotation("ProductVersion", "5.0.5");
 
             modelBuilder.Entity("Microsoft.AspNetCore.DataProtection.EntityFrameworkCore.DataProtectionKey", b =>
                 {

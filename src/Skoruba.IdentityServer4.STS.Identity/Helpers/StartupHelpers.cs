@@ -27,6 +27,7 @@ using Microsoft.Identity.Web;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.MySql;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.PostgreSQL;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.Sqlite;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.SqlServer;
 using Skoruba.IdentityServer4.Shared.Configuration.Authentication;
 using Skoruba.IdentityServer4.Shared.Configuration.Configuration.Identity;

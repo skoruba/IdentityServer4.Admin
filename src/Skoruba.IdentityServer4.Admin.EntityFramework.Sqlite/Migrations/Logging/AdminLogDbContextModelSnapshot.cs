@@ -14,7 +14,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite.Migrations.Loggin
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9");
+                .HasAnnotation("ProductVersion", "5.0.5");
 
             modelBuilder.Entity("Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Log", b =>
                 {
@@ -26,8 +26,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite.Migrations.Loggin
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Level")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(128);
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("LogEvent")
                         .HasColumnType("TEXT");

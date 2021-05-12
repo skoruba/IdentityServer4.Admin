@@ -17,6 +17,8 @@
         <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0-alpha.2" />
         <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.2" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.5.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Design" Version="1.1.6" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.5" />
     </ItemGroup>
 

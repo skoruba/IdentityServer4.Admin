@@ -11,15 +11,15 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite.Migrations.Loggin
                 name: "Log",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Message = table.Column<string>(nullable: true),
-                    MessageTemplate = table.Column<string>(nullable: true),
-                    Level = table.Column<string>(maxLength: 128, nullable: true),
-                    TimeStamp = table.Column<DateTimeOffset>(nullable: false),
-                    Exception = table.Column<string>(nullable: true),
-                    LogEvent = table.Column<string>(nullable: true),
-                    Properties = table.Column<string>(nullable: true)
+                    Message = table.Column<string>(type: "TEXT", nullable: true),
+                    MessageTemplate = table.Column<string>(type: "TEXT", nullable: true),
+                    Level = table.Column<string>(type: "TEXT", maxLength: 128, nullable: true),
+                    TimeStamp = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    Exception = table.Column<string>(type: "TEXT", nullable: true),
+                    LogEvent = table.Column<string>(type: "TEXT", nullable: true),
+                    Properties = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {

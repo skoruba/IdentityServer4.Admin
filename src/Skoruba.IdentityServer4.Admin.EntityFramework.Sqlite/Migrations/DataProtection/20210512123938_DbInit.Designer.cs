@@ -8,14 +8,14 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite.Migrations.DataProtection
 {
     [DbContext(typeof(IdentityServerDataProtectionDbContext))]
-    [Migration("20210302092602_DbInit")]
+    [Migration("20210512123938_DbInit")]
     partial class DbInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9");
+                .HasAnnotation("ProductVersion", "5.0.5");
 
             modelBuilder.Entity("Microsoft.AspNetCore.DataProtection.EntityFrameworkCore.DataProtectionKey", b =>
                 {
