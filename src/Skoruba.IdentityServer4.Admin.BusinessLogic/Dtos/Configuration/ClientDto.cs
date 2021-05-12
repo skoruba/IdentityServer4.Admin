@@ -19,6 +19,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
             Claims = new List<ClientClaimDto>();
             ClientSecrets = new List<ClientSecretDto>();
             Properties = new List<ClientPropertyDto>();
+            AllowedIdentityTokenSigningAlgorithms = new List<string>();
         }
 
         public ClientType ClientType { get; set; }
