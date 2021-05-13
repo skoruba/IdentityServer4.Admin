@@ -87,6 +87,30 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 
             return mvcBuilder;
         }
+                
+        public static void UseCors(this IApplicationBuilder app, IConfiguration configuration)
+        {
+            CorsConfiguration corsConfiguration = new CorsConfiguration();
+            configuration.GetSection(ConfigurationConsts.CorsConfigurationKey).Bind(corsConfiguration);
+
+            if (corsConfiguration.CorsAllowAnyOrigin || corsConfiguration.CorsAllowOrigins?.Count() > 0)
+            {
+                app.UseCors(builder =>
+                {
+                    if (corsConfiguration.CorsAllowAnyOrigin)
+                    {
+                        builder.AllowAnyOrigin();
+                    }
+                    else
+                    {
+                        builder.WithOrigins(corsConfiguration.CorsAllowOrigins);
+                    }
+
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyMethod();
+                });
+            }
+        }
 
         /// <summary>
         /// Using of Forwarded Headers and Referrer Policy

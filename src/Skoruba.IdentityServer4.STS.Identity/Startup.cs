@@ -58,7 +58,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
+        {            
             app.UseCookiePolicy();
 
             if (env.IsDevelopment())
@@ -76,10 +76,14 @@ namespace Skoruba.IdentityServer4.STS.Identity
             app.UseSecurityHeaders(Configuration);
 
             app.UseStaticFiles();
+
+            app.UseCors(Configuration);
+
             UseAuthentication(app);
             app.UseMvcLocalizationServices();
 
             app.UseRouting();
+
             app.UseAuthorization();
             app.UseEndpoints(endpoint =>
             {
