@@ -55,6 +55,8 @@ namespace Skoruba.IdentityServer4.STS.Identity
             RegisterAuthorization(services);
 
             services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, IdentityServerDataProtectionDbContext>(Configuration);
+            
+            services.AddSTSCors(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -76,10 +78,12 @@ namespace Skoruba.IdentityServer4.STS.Identity
             app.UseSecurityHeaders(Configuration);
 
             app.UseStaticFiles();
+
             UseAuthentication(app);
             app.UseMvcLocalizationServices();
 
             app.UseRouting();
+
             app.UseAuthorization();
             app.UseEndpoints(endpoint =>
             {

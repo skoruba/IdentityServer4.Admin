@@ -21,5 +21,7 @@
         public const string AdvancedConfigurationKey = "AdvancedConfiguration";
 
         public const string CspTrustedDomainsKey = "CspTrustedDomains";
+
+        public const string CorsConfigurationKey = "CorsConfiguration";
     }
 }
