@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using IdentityServer4.EntityFramework.Storage;
+using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -12,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.ApplicationParts;
@@ -87,27 +89,32 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 
             return mvcBuilder;
         }
-                
-        public static void UseCors(this IApplicationBuilder app, IConfiguration configuration)
+
+        public static void AddSTSCors(this IServiceCollection services, IConfiguration configuration)
         {
             CorsConfiguration corsConfiguration = new CorsConfiguration();
             configuration.GetSection(ConfigurationConsts.CorsConfigurationKey).Bind(corsConfiguration);
 
             if (corsConfiguration.CorsAllowAnyOrigin || corsConfiguration.CorsAllowOrigins?.Count() > 0)
             {
-                app.UseCors(builder =>
+                services.AddSingleton<ICorsPolicyService>((container) =>
                 {
+                    var logger = container.GetRequiredService<ILogger<DefaultCorsPolicyService>>();
+
                     if (corsConfiguration.CorsAllowAnyOrigin)
                     {
-                        builder.AllowAnyOrigin();
+                        return new DefaultCorsPolicyService(logger)
+                        {
+                            AllowAll = true
+                        };
                     }
                     else
                     {
-                        builder.WithOrigins(corsConfiguration.CorsAllowOrigins);
+                        return new DefaultCorsPolicyService(logger)
+                        {
+                            AllowedOrigins = corsConfiguration.CorsAllowOrigins
+                        };
                     }
-
-                    builder.AllowAnyHeader();
-                    builder.AllowAnyMethod();
                 });
             }
         }
