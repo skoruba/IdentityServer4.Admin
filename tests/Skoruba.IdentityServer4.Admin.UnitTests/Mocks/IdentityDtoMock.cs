@@ -8,9 +8,10 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
     {
         public static Faker<UserDto<TKey>> GetUserFaker(TKey id)
         {
+            var newGuid = Guid.NewGuid().ToString();
             var userFaker = new Faker<UserDto<TKey>>()
                 .RuleFor(o => o.Id, id)
-                .RuleFor(o => o.UserName, f => Guid.NewGuid().ToString())
+                .RuleFor(o => o.UserName, f => newGuid)
                 .RuleFor(o => o.Email, f => f.Internet.Email())
                 .RuleFor(o => o.AccessFailedCount, f => f.Random.Int())
                 .RuleFor(o => o.EmailConfirmed, f => f.Random.Bool())
@@ -18,7 +19,9 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
                 .RuleFor(o => o.TwoFactorEnabled, f => f.Random.Bool())
                 .RuleFor(o => o.LockoutEnd, f => f.Date.Future())
                 .RuleFor(o => o.LockoutEnabled, f => true)
-                .RuleFor(o => o.PhoneNumber, f => f.Random.Number().ToString());
+                .RuleFor(o => o.PhoneNumber, f => f.Random.Number().ToString())
+                .RuleFor(o => o.UserNameView, f => newGuid)
+                .RuleFor(o => o.UserDomain, f=> null);
 
             return userFaker;
         }
