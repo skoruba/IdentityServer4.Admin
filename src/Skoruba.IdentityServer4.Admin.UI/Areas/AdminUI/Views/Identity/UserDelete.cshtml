@@ -30,6 +30,19 @@
 		<h5 class="card-header">@Localizer["PageTitle"]</h5>
 		<div class="card-body">
 
+			@if (!string.IsNullOrEmpty(Model.UserDomain))
+            {
+                <!--Input - text -->
+                <div class="form-group row">
+                    <label asp-for="UserDomain" class="col-sm-3 col-form-label">
+                        @await Html.PartialAsync("User/Section/Label", "UserUserDomain")
+                    </label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" disabled="disabled" asp-for="UserDomain">
+                    </div>
+                </div>
+            }
+
 			<!--Input - text -->
 			<div class="form-group row">
 				<label asp-for="UserName" class="col-sm-3 col-form-label">

@@ -13,6 +13,7 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants;
 using Skoruba.IdentityServer4.Admin.UI.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.UI.Helpers.Localization;
+using Skoruba.IdentityServer4.Shared.Configuration.Configuration.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
 {
@@ -49,6 +50,7 @@ namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
         private readonly IGenericControllerLocalizer<IdentityController<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
             TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>> _localizer;
+        private readonly UserDomainsConfiguration _userDomainsConfiguration;
 
         public IdentityController(IIdentityService<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
@@ -56,10 +58,11 @@ namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
             ILogger<ConfigurationController> logger,
             IGenericControllerLocalizer<IdentityController<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>> localizer) : base(logger)
+                TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>> localizer, UserDomainsConfiguration userDomainsConfiguration) : base(logger)
         {
             _identityService = identityService;
             _localizer = localizer;
+            _userDomainsConfiguration = userDomainsConfiguration;
         }
 
         [HttpGet]
@@ -143,6 +146,16 @@ namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
 
             TKey userId;
 
+            #region Check if Admin allow User Domains.
+            if (_userDomainsConfiguration.EnableUserDomains)
+            {
+                if (!string.IsNullOrEmpty(user.UserDomain))
+                {
+                    user.UserName = $"{user.UserDomain}\\{user.UserName}";
+                }
+            }
+            #endregion
+
             if (EqualityComparer<TKey>.Default.Equals(user.Id, default))
             {
                 var userData = await _identityService.CreateUserAsync(user);
@@ -171,6 +184,26 @@ namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
 
             var user = await _identityService.GetUserAsync(id.ToString());
             if (user == null) return NotFound();
+
+            #region Check if Admin allow User Domains.
+            if (_userDomainsConfiguration.EnableUserDomains)
+            {
+                if (user.UserName.Contains('\\'))
+                {
+                    var domainUsernameParts = user.UserName.Split('\\');
+
+                    if (user.UserDomain != domainUsernameParts[0])
+                        return NotFound();
+
+                    //Set only username part to show in html view.
+                    user.UserName = domainUsernameParts[1];
+                }
+                else
+                {
+                    //A domain prefix was not assigned to the user, the username remains as it was stored.
+                }
+            }
+            #endregion
 
             return View("UserProfile", user);
         }

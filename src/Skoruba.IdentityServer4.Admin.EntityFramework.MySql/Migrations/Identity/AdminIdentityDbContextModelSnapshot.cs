@@ -49,6 +49,10 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
                     b.Property<string>("NormalizedUserName")
                         .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
                         .HasMaxLength(256);
+                    
+                    b.Property<string>("UserDomain")
+                        .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
+                        .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");

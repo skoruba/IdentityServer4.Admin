@@ -219,6 +219,12 @@
   <data name="UserTwoFactorEnabled_Label" xml:space="preserve">
     <value>User Two Factor habilitado</value>
   </data>
+  <data name="UserUserDomain_Info" xml:space="preserve">
+    <value>Dominio que se puede usar para agrupar usuarios o para autenticarlos en un dominio de red mediante LDAP Web Api.</value>
+  </data>
+  <data name="UserUserDomain_Label" xml:space="preserve">
+    <value>Dominio</value>
+  </data>
   <data name="UserUserName_Info" xml:space="preserve">
     <value>Nombre de usuario</value>
   </data>

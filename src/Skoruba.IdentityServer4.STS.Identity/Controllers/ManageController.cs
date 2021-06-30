@@ -630,8 +630,11 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
             var claims = await _userManager.GetClaimsAsync(user);
             var profile = OpenIdClaimHelpers.ExtractProfileInfo(claims);
 
+            var userIdentity = (user as Admin.EntityFramework.Shared.Entities.Identity.UserIdentity);
+
             var model = new IndexViewModel
             {
+                UserDomain = userIdentity.UserDomain,
                 Username = user.UserName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,

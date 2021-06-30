@@ -1,8 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
 @using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
+@using Skoruba.IdentityServer4.Shared.Configuration.Configuration.Identity
 @model Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Interfaces.IUsersDto
 @inject IViewLocalizer Localizer
+@inject UserDomainsConfiguration UserDomainsConfiguration
 
 @{
     ViewBag.Title = Localizer["Title"];
@@ -37,6 +39,10 @@
                         <th></th>
                         <th>@Localizer["UserId"]</th>
                         <th>@Localizer["UserName"]</th>
+                        @if (UserDomainsConfiguration.EnableUserDomains)
+                        {
+                        <th>@Localizer["UserDomain"]</th>
+                        }
                         <th>@Localizer["Email"]</th>
                         <th></th>
                     </tr>
@@ -53,7 +59,15 @@
                                 <img-gravatar email="@user.Email" class="gravatar-image img-thumbnail" />
                             </td>
                             <td class="align-middle">@user.Id</td>
-                            <td class="align-middle">@user.UserName</td>
+                            @if (UserDomainsConfiguration.EnableUserDomains)
+                            {
+                                <td class="align-middle">@user.UserNameView</td>
+                                <td class="align-middle">@user.UserDomain</td>
+                            }
+                            else
+                            {
+                                <td class="align-middle">@user.UserName</td>
+                            }
                             <td class="align-middle">@user.Email</td>
                             <td class="align-middle">
                                 <a asp-area="@CommonConsts.AdminUIArea" class="btn btn-danger" asp-action="UserDelete" asp-route-id="@user.Id"><span class="oi oi-x"></span></a>

@@ -42,7 +42,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers
         public IdentityMapperProfile()
         {
             // entity to model
-            CreateMap<TUser, TUserDto>(MemberList.Destination);
+            CreateMap<TUser, TUserDto>(MemberList.Destination)
+                .ForMember(x => x.UserNameView, opt => opt.MapFrom(src => GetUserNameView(src.UserName)));
 
             CreateMap<UserLoginInfo, TUserProviderDto>(MemberList.Destination);
 
@@ -110,6 +111,15 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers
             // model to entity
             CreateMap<TUserDto, TUser>(MemberList.Source)
                 .ForMember(dest => dest.Id, opt => opt.Condition(srs => srs.Id != null)); ;
+        }
+
+        public string GetUserNameView(string username)
+        {
+            var index = username.IndexOf('\\');
+            if (index > -1)
+                return username.Substring(++index, username.Length - index);
+            else
+                return username;
         }
     }
 }
