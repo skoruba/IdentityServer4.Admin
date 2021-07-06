@@ -257,8 +257,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             id.AddClaim(new Claim(JwtClaimTypes.Subject, name));
             id.AddClaim(new Claim(ClaimTypes.NameIdentifier, name));
-            id.AddClaim(new Claim(JwtClaimTypes.Name, adProperties.DisplayName));
-            id.AddClaim(new Claim(JwtClaimTypes.Email, adProperties.Email));
+            id.AddClaim(new Claim(JwtClaimTypes.Name, adProperties.DisplayName??name));
+            id.AddClaim(new Claim(JwtClaimTypes.Email, adProperties.Email?? _windowsAuthConfiguration.EmailFallback));
 
             // we will issue the external cookie and then redirect the
             // user back to the external callback, in essence, treating windows

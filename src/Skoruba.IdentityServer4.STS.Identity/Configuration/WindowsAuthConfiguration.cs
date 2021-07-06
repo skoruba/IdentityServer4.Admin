@@ -37,6 +37,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Configuration
         // Subnets specified here will always be considered external
         // (useful for testing purposes and for intranet machines not joined to the domain)
         public List<Subnet> ExcludedLocalSubnets { get; set; } = new List<Subnet>();
+
+        public string EmailFallback { get; set; } = String.Empty;
     }
 
     public class Subnet
