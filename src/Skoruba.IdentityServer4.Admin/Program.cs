@@ -17,6 +17,7 @@ namespace Skoruba.IdentityServer4.Admin
 	public class Program
     {
         private const string SeedArgs = "/seed";
+        private const string MigrateOnlyArgs = "/migrateonly";
 
         public static async Task Main(string[] args)
         {
@@ -33,8 +34,12 @@ namespace Skoruba.IdentityServer4.Admin
                 var host = CreateHostBuilder(args).Build();
 
                 await ApplyDbMigrationsWithDataSeedAsync(args, configuration, host);
-
-                host.Run();
+                if (args.Any(x => x == MigrateOnlyArgs))
+                {
+                    await host.StopAsync();
+                    return;
+                }
+                await host.RunAsync();
             }
             catch (Exception ex)
             {
