@@ -33,11 +33,14 @@ namespace Skoruba.IdentityServer4.Admin
 
                 var host = CreateHostBuilder(args).Build();
 
-                await ApplyDbMigrationsWithDataSeedAsync(args, configuration, host);
+                var migrationComplete = await ApplyDbMigrationsWithDataSeedAsync(args, configuration, host);
                 if (args.Any(x => x == MigrateOnlyArgs))
                 {
                     await host.StopAsync();
-                    return;
+                    if (!migrationComplete) {
+                        Environment.ExitCode = -1;
+                    }
+                    return ;
                 }
                 await host.RunAsync();
             }
@@ -51,7 +54,7 @@ namespace Skoruba.IdentityServer4.Admin
             }
         }
 
-        private static async Task ApplyDbMigrationsWithDataSeedAsync(string[] args, IConfiguration configuration, IHost host)
+        private static async Task<bool> ApplyDbMigrationsWithDataSeedAsync(string[] args, IConfiguration configuration, IHost host)
         {
             var applyDbMigrationWithDataSeedFromProgramArguments = args.Any(x => x == SeedArgs);
             if (applyDbMigrationWithDataSeedFromProgramArguments) args = args.Except(new[] { SeedArgs }).ToArray();
@@ -60,7 +63,7 @@ namespace Skoruba.IdentityServer4.Admin
             var databaseMigrationsConfiguration = configuration.GetSection(nameof(DatabaseMigrationsConfiguration))
                 .Get<DatabaseMigrationsConfiguration>();
 
-            await DbMigrationHelpers
+            return await DbMigrationHelpers
                 .ApplyDbMigrationsWithDataSeedAsync<IdentityServerConfigurationDbContext, AdminIdentityDbContext,
                     IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext,
                     IdentityServerDataProtectionDbContext, UserIdentity, UserIdentityRole>(host,
