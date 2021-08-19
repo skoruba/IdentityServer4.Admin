@@ -14,7 +14,7 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="5.0.5" />
         <PackageReference Include="Skoruba.AuditLogging.EntityFramework" Version="1.0.0" />
-        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0-alpha.2" />
+        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.1" />
         <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.2" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.5.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.5" />

@@ -74,34 +74,77 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             await base.SignInWithClaimsAsync(user, authenticationProperties, claims);
         }
 
+        /// <summary>
+        /// Allow to authenticate user credentials against an LDAP Web Api.
+        /// </summary>
+        /// <remarks>
+        /// When a user does not have a domain assigned or when the user's 
+        /// domain is not related to an LDAP Web Api, the password verification
+        /// operation follows the regular flow in 
+        /// <see cref="SignInManager{TUser}.CheckPasswordSignInAsync(TUser, string, bool)"/>.
+        /// </remarks>
+        /// <param name="user">User identity. See <see cref="Admin.EntityFramework.Shared.Entities.Identity.UserIdentity"/>.</param>
+        /// <param name="password">User password.</param>
+        /// <param name="lockoutOnFailure">Whether or not to lockout the user account when password validation fails.</param>
+        /// <returns><see cref="SignInResult"/></returns>
         public override async Task<SignInResult> CheckPasswordSignInAsync(TUser user, string password, bool lockoutOnFailure)
         {
-            var userDomainProfile = _ldapWebApiProvider.GetUserDomainProfile(user);
+            var userIdentity = (user as Admin.EntityFramework.Shared.Entities.Identity.UserIdentity);
 
-            //The user does not have a Domain assigned. 
+            var userDomainProfile = _ldapWebApiProvider.GetUserDomainProfile(userIdentity.UserDomain);
+
+            // The user does not have an assigned domain or the user's domain is not registered to access the LDAP Web Api.
             if (userDomainProfile == null)
                 return await base.CheckPasswordSignInAsync(user, password, lockoutOnFailure);
 
-            var userIdentity = (user as Admin.EntityFramework.Shared.Entities.Identity.UserIdentity);
-
-            var accountName = userIdentity.UserName.Split('\\').GetValue(1).ToString();
-
-            var accountSecurityData = new Bitai.LDAPWebApi.DTO.LDAPAccountCredentials
+            var ldapAccountCredentials = new Bitai.LDAPWebApi.DTO.LDAPAccountCredentials
             {
-                DomainName = (user as Admin.EntityFramework.Shared.Entities.Identity.UserIdentity).UserDomain,
-                AccountName = accountName,
+                DomainName = userIdentity.UserDomain,
+                AccountName = userIdentity.UserName.Split('\\').Last(),
                 AccountPassword = password
             };
 
-            var ldapCredentialsClient = userDomainProfile.GetLdapCredentialsClient();
-            var response = await ldapCredentialsClient.AccountAuthenticationAsync(accountName, accountSecurityData);
-            if (!response.IsSuccessResponse)
+            var ldapAuthenticationsWebApiClient = userDomainProfile.GetLdapAuthenticationsWebApiClient();
+            var httpResponse = await ldapAuthenticationsWebApiClient.AccountAuthenticationAsync(ldapAccountCredentials);
+            if (!httpResponse.IsSuccessResponse)
             {
-                return SignInResult.NotAllowed;
+                #region Write event log
+                string responseContent = null;
+                switch (httpResponse.ContentMediaType)
+                {
+                    case Bitai.WebApi.Common.Content_MediaType.ApplicationJson:
+                        responseContent = (httpResponse as Bitai.WebApi.Client.NoSuccessResponseWithJsonStringContent).Content;
+                        break;
+
+                    case Bitai.WebApi.Common.Content_MediaType.ApplicationProblemJson:
+                        var middlewareException = (httpResponse as Bitai.WebApi.Client.NoSuccessResponseWithJsonExceptionContent).Content;
+                        responseContent = middlewareException.ToStringReport();
+                        break;
+
+                    case Bitai.WebApi.Common.Content_MediaType.TextHtml:
+                        responseContent = (httpResponse as Bitai.WebApi.Client.NoSuccessResponseWithHtmlContent).Content;
+                        break;
+
+                    case Bitai.WebApi.Common.Content_MediaType.NoContent:
+                        responseContent = "(No response content)";
+                        break;
+                }
+
+                Logger.LogError("Login failed: DomainName:{0}, AccountName:{1}", ldapAccountCredentials.DomainName, ldapAccountCredentials.AccountName);
+                Logger.LogError($"Unsuccessful response when try to authenticate user credentials by LDAP Web Api. Response code: {(int)httpResponse.HttpStatusCode} ({httpResponse.ReasonPhrase}). Content Type: {httpResponse.ContentMediaType}");
+                Logger.LogError(responseContent);
+                #endregion
+
+                return SignInResult.Failed;
             }
             else
             {
-                return SignInResult.Success;
+                var accountAuthenticationStatus = ldapAuthenticationsWebApiClient.GetDTOFromResponse<Bitai.LDAPWebApi.DTO.LDAPAccountAuthenticationStatus>(httpResponse);
+
+                if (accountAuthenticationStatus.IsAuthenticated)
+                    return SignInResult.Success;
+                else
+                    return SignInResult.NotAllowed;
             }
         }
     }

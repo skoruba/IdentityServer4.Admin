@@ -60,9 +60,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Configuration
             }
         }
 
-        public UserDomainProfile GetUserDomainProfile(TUserIdentity user)
+        public UserDomainProfile GetUserDomainProfile(string domainId)
         {
-            return UserDomainProfiles.Where(i => i.DomainId == (user as UserIdentity).UserDomain).SingleOrDefault();
+            return UserDomainProfiles.Where(i => i.DomainId == domainId).SingleOrDefault();
         }
 
 
@@ -72,13 +72,13 @@ namespace Skoruba.IdentityServer4.STS.Identity.Configuration
         {
             public string WebApiProfileId { get; set; }
             public string WebApiUrl { get; set; }
-            public Bitai.LDAPWebApi.Clients.WebApiSecurityDefinition WebApiSecurityDefinition { get; set; }
+            public Bitai.WebApi.Client.WebApiClientCredentials ClientCredentials { get; set; }
         }
 
         public class UserDomainProfile
         {
-            private Bitai.LDAPWebApi.Clients.LDAPCredentialsClient<Bitai.LDAPWebApi.DTO.LDAPAccountAuthenticationStatus> _lapCredentialsClient;
-            private Bitai.LDAPWebApi.Clients.LDAPUserDirectoryClient<Bitai.LDAPHelper.DTO.LDAPSearchResult> _ldapUserDirectoryClient;
+            private Bitai.LDAPWebApi.Clients.LDAPAuthenticationsWebApiClient _ldapAuthenticationsWebApiClient;
+            private Bitai.LDAPWebApi.Clients.LDAPUsersDirectoryWebApiClient _ldapUsersDirectoryWebApiClient;
 
 
 
@@ -90,20 +90,20 @@ namespace Skoruba.IdentityServer4.STS.Identity.Configuration
 
 
 
-            public Bitai.LDAPWebApi.Clients.LDAPCredentialsClient<Bitai.LDAPWebApi.DTO.LDAPAccountAuthenticationStatus> GetLdapCredentialsClient()
+            public Bitai.LDAPWebApi.Clients.LDAPAuthenticationsWebApiClient GetLdapAuthenticationsWebApiClient()
             {
-                if (_lapCredentialsClient == null)
-                    _lapCredentialsClient = new Bitai.LDAPWebApi.Clients.LDAPCredentialsClient<Bitai.LDAPWebApi.DTO.LDAPAccountAuthenticationStatus>(LdapWebApiProfile.WebApiUrl, LdapServerProfile, false, LdapWebApiProfile.WebApiSecurityDefinition);
+                if (_ldapAuthenticationsWebApiClient == null)
+                    _ldapAuthenticationsWebApiClient = new Bitai.LDAPWebApi.Clients.LDAPAuthenticationsWebApiClient(LdapWebApiProfile.WebApiUrl, LdapServerProfile, false, LdapWebApiProfile.ClientCredentials);
 
-                return _lapCredentialsClient;
+                return _ldapAuthenticationsWebApiClient;
             }
 
-            public Bitai.LDAPWebApi.Clients.LDAPUserDirectoryClient<Bitai.LDAPHelper.DTO.LDAPSearchResult> GetLdapUserDirectoryClient()
+            public Bitai.LDAPWebApi.Clients.LDAPUsersDirectoryWebApiClient GetLdapUsersDirectoryWebApiClient()
             {
-                if (_ldapUserDirectoryClient == null)
-                    _ldapUserDirectoryClient = new Bitai.LDAPWebApi.Clients.LDAPUserDirectoryClient<Bitai.LDAPHelper.DTO.LDAPSearchResult>(LdapWebApiProfile.WebApiUrl, LdapServerProfile, false, LdapWebApiProfile.WebApiSecurityDefinition);
+                if (_ldapUsersDirectoryWebApiClient == null)
+                    _ldapUsersDirectoryWebApiClient = new Bitai.LDAPWebApi.Clients.LDAPUsersDirectoryWebApiClient(LdapWebApiProfile.WebApiUrl, LdapServerProfile, false, LdapWebApiProfile.ClientCredentials);
 
-                return _ldapUserDirectoryClient;
+                return _ldapUsersDirectoryWebApiClient;
             }
         }
         #endregion
