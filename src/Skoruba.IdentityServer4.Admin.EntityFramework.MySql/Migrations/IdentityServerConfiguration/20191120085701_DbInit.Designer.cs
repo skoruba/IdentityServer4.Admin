@@ -196,8 +196,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4")
-                        .HasMaxLength(4000);
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
@@ -560,8 +559,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4")
-                        .HasMaxLength(4000);
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
