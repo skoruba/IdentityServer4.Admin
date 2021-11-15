@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
         <Version>2.0.1</Version>
         <Authors>Jan Škoruba</Authors>
         <Description>The package with UI for the administration of the IdentityServer4</Description>
@@ -13,6 +12,7 @@
         <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
         <StaticWebAssetBasePath Condition="$(StaticWebAssetBasePath) == ''">/</StaticWebAssetBasePath>
     </PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
 
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App" />

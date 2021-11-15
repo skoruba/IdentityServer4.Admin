@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
         <Version>2.0.1</Version>
         <Authors>Jan Škoruba</Authors>
         <PackageTags>IdentityServer4 Admin OpenIDConnect OAuth2 Identity</PackageTags>
@@ -20,6 +19,7 @@
         <PackageReference Include="Microsoft.Extensions.Configuration.AzureKeyVault" Version="3.1.14" />
         <PackageReference Include="Sendgrid" Version="9.23.0" />
     </ItemGroup>
+    <TargetFramework>net6.0</TargetFramework>
 
 </Project>
 

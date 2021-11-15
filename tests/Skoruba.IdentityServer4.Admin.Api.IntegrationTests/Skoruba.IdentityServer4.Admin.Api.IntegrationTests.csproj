@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
         <PreserveCompilationContext>true</PreserveCompilationContext>
         <IsPackable>false</IsPackable>
         <DebugType>Full</DebugType>
     </PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="5.0.5" />

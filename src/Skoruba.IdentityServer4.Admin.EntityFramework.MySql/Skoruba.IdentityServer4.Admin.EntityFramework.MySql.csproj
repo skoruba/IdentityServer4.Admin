@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
         <Version>2.0.1</Version>
         <Authors>Jan Škoruba</Authors>
         <PackageTags>IdentityServer4 Admin OpenIDConnect OAuth2 Identity</PackageTags>
@@ -22,6 +21,7 @@
         <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.Shared\Skoruba.IdentityServer4.Admin.EntityFramework.Shared.csproj" />
         <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework\Skoruba.IdentityServer4.Admin.EntityFramework.csproj" />
     </ItemGroup>
+    <TargetFramework>net6.0</TargetFramework>
 
 </Project>
 

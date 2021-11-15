@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
         <Version>2.0.1</Version>
         <Authors>Jan Škoruba</Authors>
         <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
@@ -72,6 +71,7 @@
             <LastGenOutput>ApiErrorResource.Designer.cs</LastGenOutput>
         </EmbeddedResource>
     </ItemGroup>
+    <TargetFramework>net6.0</TargetFramework>
 
 </Project>
 

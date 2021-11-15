@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
 		<Version>2.0.1</Version>
 		<Authors>Jan Škoruba</Authors>
 		<Description>Business Logic layer for the administration of the Asp.Net Core Identity and IdentityServer4</Description>
@@ -27,6 +26,7 @@
 	    <Generator></Generator>
 	  </EmbeddedResource>
 	</ItemGroup>
+    <TargetFramework>net6.0</TargetFramework>
 
 </Project>
 
