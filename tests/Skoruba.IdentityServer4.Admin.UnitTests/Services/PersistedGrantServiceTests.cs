@@ -86,7 +86,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                     var persistedGrantAdded = await persistedGrantService.GetPersistedGrantAsync(persistedGrantKey);
 
                     //Assert
-                    persistedGrant.ShouldBeEquivalentTo(persistedGrantAdded);
+                    persistedGrant.Should().BeEquivalentTo(persistedGrantAdded, options => options.Excluding(x => x.SubjectName));
                 }
             }
         }
