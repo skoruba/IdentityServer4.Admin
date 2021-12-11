@@ -31,7 +31,7 @@ Throughout tutorial we will use PostgreSQL running on localhost and default port
 
 ```
 sudo -u postgres psql
-ALTER USER postgre WITH PASSWORD 'postgres';
+ALTER USER postgres WITH PASSWORD 'postgres';
 ```
 
 ## IDE
