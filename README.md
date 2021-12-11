@@ -205,7 +205,7 @@ The following Gulp commands are available:
   - `AdminLogDbContext`: for logging
   - `IdentityServerConfigurationDbContext`: for IdentityServer configuration store
   - `IdentityServerPersistedGrantDbContext`: for IdentityServer operational store
-  - `AuditLoggingDbContext`: for Audit Logging
+  - `AdminAuditLogDbContext`: for Audit Logging
   - `IdentityServerDataProtectionDbContext`: for dataprotection
 
 ### Run entity framework migrations:
