@@ -17,6 +17,7 @@ namespace Skoruba.IdentityServer4.Admin
 	public class Program
     {
         private const string SeedArgs = "/seed";
+        private const string MigrateOnlyArgs = "/migrateonly";
 
         public static async Task Main(string[] args)
         {
@@ -32,9 +33,16 @@ namespace Skoruba.IdentityServer4.Admin
 
                 var host = CreateHostBuilder(args).Build();
 
-                await ApplyDbMigrationsWithDataSeedAsync(args, configuration, host);
-
-                host.Run();
+                var migrationComplete = await ApplyDbMigrationsWithDataSeedAsync(args, configuration, host);
+                if (args.Any(x => x == MigrateOnlyArgs))
+                {
+                    await host.StopAsync();
+                    if (!migrationComplete) {
+                        Environment.ExitCode = -1;
+                    }
+                    return ;
+                }
+                await host.RunAsync();
             }
             catch (Exception ex)
             {
@@ -46,7 +54,7 @@ namespace Skoruba.IdentityServer4.Admin
             }
         }
 
-        private static async Task ApplyDbMigrationsWithDataSeedAsync(string[] args, IConfiguration configuration, IHost host)
+        private static async Task<bool> ApplyDbMigrationsWithDataSeedAsync(string[] args, IConfiguration configuration, IHost host)
         {
             var applyDbMigrationWithDataSeedFromProgramArguments = args.Any(x => x == SeedArgs);
             if (applyDbMigrationWithDataSeedFromProgramArguments) args = args.Except(new[] { SeedArgs }).ToArray();
@@ -55,7 +63,7 @@ namespace Skoruba.IdentityServer4.Admin
             var databaseMigrationsConfiguration = configuration.GetSection(nameof(DatabaseMigrationsConfiguration))
                 .Get<DatabaseMigrationsConfiguration>();
 
-            await DbMigrationHelpers
+            return await DbMigrationHelpers
                 .ApplyDbMigrationsWithDataSeedAsync<IdentityServerConfigurationDbContext, AdminIdentityDbContext,
                     IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext,
                     IdentityServerDataProtectionDbContext, UserIdentity, UserIdentityRole>(host,
