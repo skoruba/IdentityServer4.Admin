@@ -381,7 +381,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     options.Instance = externalProviderConfiguration.AzureInstance;
                     options.Domain = externalProviderConfiguration.AzureDomain;
                     options.CallbackPath = externalProviderConfiguration.AzureAdCallbackPath;
-                });
+                },  cookieScheme: null);
             }
         }
 
