@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <Description>The package with UI for the administration of the IdentityServer4</Description>
+	  <TargetFramework>net6.0</TargetFramework>
+	  <Description>The package with UI for the administration of the IdentityServer4</Description>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <StaticWebAssetBasePath Condition="$(StaticWebAssetBasePath) == ''">/</StaticWebAssetBasePath>
   </PropertyGroup>

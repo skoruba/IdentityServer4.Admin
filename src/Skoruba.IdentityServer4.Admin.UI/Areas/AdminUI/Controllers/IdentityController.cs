@@ -121,12 +121,12 @@ namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> RoleUsers(string id, int? page, string search)
+        public async Task<IActionResult> RoleUsers(string roleId, int? page, string search)
         {
             ViewBag.Search = search;
-            var roleUsers = await _identityService.GetRoleUsersAsync(id, search, page ?? 1);
+            var roleUsers = await _identityService.GetRoleUsersAsync(roleId, search, page ?? 1);
 
-            var roleDto = await _identityService.GetRoleAsync(id);
+            var roleDto = await _identityService.GetRoleAsync(roleId);
             ViewData["RoleName"] = roleDto.Name;
 
             return View(roleUsers);

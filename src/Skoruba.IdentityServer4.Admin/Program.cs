@@ -40,7 +40,8 @@ namespace Skoruba.IdentityServer4.Admin
                     if (!migrationComplete) {
                         Environment.ExitCode = -1;
                     }
-                    return ;
+
+                    return;
                 }
                 await host.RunAsync();
             }
@@ -84,7 +85,7 @@ namespace Skoruba.IdentityServer4.Admin
 
             if (isDevelopment)
             {
-                configurationBuilder.AddUserSecrets<Startup>();
+                configurationBuilder.AddUserSecrets<Startup>(true);
             }
 
             var configuration = configurationBuilder.Build();
@@ -115,7 +116,7 @@ namespace Skoruba.IdentityServer4.Admin
 
                      if (env.IsDevelopment())
                      {
-                         configApp.AddUserSecrets<Startup>();
+                         configApp.AddUserSecrets<Startup>(true);
                      }
 
                      configurationRoot.AddAzureKeyVaultConfiguration(configApp);

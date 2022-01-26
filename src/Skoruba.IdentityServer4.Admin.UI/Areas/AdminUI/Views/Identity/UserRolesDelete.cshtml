@@ -36,8 +36,17 @@
 			<div class="card mt-3">
 				<h5 class="card-header">@Localizer["SubTitle"]</h5>
 				<div class="card-body">
+					
+                    <div class="form-group row">
+                        <label asp-for="UserName" class="col-sm-3 col-form-label">
+                            @await Html.PartialAsync("User/Section/Label", "UserUserName")
+                        </label>
+                        <div class="col-sm-9">
+                            <input asp-for="UserName" readonly class="form-control" />
+                        </div>
+                    </div>
 
-					<!--Select-->
+                    <!--Select-->
 					<div class="form-group row">
 						<label asp-for="RoleId" class="col-sm-3 col-form-label">
 							@await Html.PartialAsync("User/Section/Label", "RolesList")

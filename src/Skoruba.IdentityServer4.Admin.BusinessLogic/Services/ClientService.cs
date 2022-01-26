@@ -168,7 +168,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return added;
         }
 
-        public virtual async Task<int> UpdateClientAsync(ClientDto client)
+        public virtual async Task<int> UpdateClientAsync(ClientDto client, bool updateClientClaims = false, bool updateClientProperties = false)
         {
             var canInsert = await CanInsertClientAsync(client);
             if (!canInsert)

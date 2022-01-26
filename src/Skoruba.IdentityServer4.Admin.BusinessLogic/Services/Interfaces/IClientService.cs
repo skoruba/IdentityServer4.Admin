@@ -15,7 +15,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
 
         Task<int> AddClientAsync(ClientDto client);
 
-        Task<int> UpdateClientAsync(ClientDto client);
+        Task<int> UpdateClientAsync(ClientDto client, bool updateClientClaims = false, bool updateClientProperties = false);
 
         Task<int> RemoveClientAsync(ClientDto client);
 

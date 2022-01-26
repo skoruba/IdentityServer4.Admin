@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>EntityFramework extensions for the administration of the IdentityServer4 and Asp.Net Core Identity</Description>
+	  <TargetFramework>net6.0</TargetFramework>
+	  <Description>EntityFramework extensions for the administration of the IdentityServer4 and Asp.Net Core Identity</Description>
   </PropertyGroup>
 
 </Project>

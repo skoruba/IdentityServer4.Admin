@@ -1,4 +1,6 @@
 # ignore template build source
+/template-build/content/Directory.Build.props
+/template-build/content/.dockerignore
 /template-build/content/src
 /template-build/content/docker*
 /template-build/content/shared

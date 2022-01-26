@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+	  <TargetFramework>net6.0</TargetFramework>
 	  <Description>Entity Framework layer for the administration of the IdentityServer4</Description>
   </PropertyGroup>
 

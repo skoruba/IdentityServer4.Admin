@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+	  <TargetFramework>net6.0</TargetFramework>
 	  <Description>Shared Business Logic layer for the administration of the IdentityServer4 and Asp.Net Core Identity</Description>
   </PropertyGroup>
 
