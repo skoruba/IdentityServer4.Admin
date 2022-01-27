@@ -180,7 +180,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var originalClient = await GetClientAsync(client.Id);
 
-            var updated = await ClientRepository.UpdateClientAsync(clientEntity);
+            var updated = await ClientRepository.UpdateClientAsync(clientEntity, updateClientClaims, updateClientProperties);
 
             await AuditEventLogger.LogEventAsync(new ClientUpdatedEvent(originalClient, client));
 

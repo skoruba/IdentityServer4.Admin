@@ -9,8 +9,8 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.0" />
-		<PackageReference Include="Microsoft.AspNetCore.TestHost" Version="6.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.TestHost" Version="6.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -19,6 +19,10 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Skoruba.IdentityServer4.Admin\Skoruba.IdentityServer4.Admin.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="FluentAssertions" Version="6.4.0" />
 	</ItemGroup>
 
 </Project>

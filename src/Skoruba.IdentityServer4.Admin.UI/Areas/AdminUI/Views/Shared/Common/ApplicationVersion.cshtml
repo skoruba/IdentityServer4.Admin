@@ -1,8 +1,11 @@
 ﻿@using System.Reflection
 @using Skoruba.IdentityServer4.Admin
+@using Skoruba.IdentityServer4.Admin.UI.Configuration
 
 @{
-    var runtimeVersion = Assembly.GetExecutingAssembly()
+    var runtimeVersion = typeof(AdminConfiguration)
+        .GetTypeInfo()
+        .Assembly
         .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
 }
 

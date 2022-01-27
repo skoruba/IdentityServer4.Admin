@@ -27,7 +27,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mappers
                        .Excluding(o => o.PostLogoutRedirectUris)
                        .Excluding(o => o.AllowedGrantTypes)
                        .Excluding(o => o.AllowedScopes)
-					   .Excluding(o => o.Created)
+                       .Excluding(o => o.ClientSecrets)
+                       .Excluding(o => o.Created)
                        .Excluding(o => o.AllowedIdentityTokenSigningAlgorithms)
                        .Excluding(o => o.IdentityProviderRestrictions));
 
@@ -59,6 +60,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mappers
                     .Excluding(o => o.PostLogoutRedirectUris)
                     .Excluding(o => o.AllowedGrantTypes)
                     .Excluding(o => o.AllowedScopes)
+                    .Excluding(o => o.ClientSecrets)
                     .Excluding(o => o.AllowedIdentityTokenSigningAlgorithms)
                     .Excluding(o => o.Created)
 					.Excluding(o => o.IdentityProviderRestrictions));
