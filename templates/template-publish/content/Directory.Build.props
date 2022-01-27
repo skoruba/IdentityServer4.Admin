@@ -7,7 +7,7 @@
     <PackageTags>IdentityServer4 Admin OpenIDConnect OAuth2 Identity</PackageTags>
     <PackageProjectUrl>https://github.com/skoruba/IdentityServer4.Admin</PackageProjectUrl>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-    <PackageIcon>SkorubaIdentityServer4Admin.Admin-Logo-Nuget.png</PackageIcon>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
