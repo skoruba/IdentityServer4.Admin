@@ -45,6 +45,7 @@ Copy-Item ./$gitProjectFolder/docker-compose.vs.release.yml $templateRoot -recur
 Copy-Item ./$gitProjectFolder/docker-compose.yml $templateRoot -recurse -force
 Copy-Item ./$gitProjectFolder/shared $templateRoot -recurse -force
 Copy-Item ./$gitProjectFolder/package $templateRoot -recurse -force
+Copy-Item ./$gitProjectFolder/LICENSE.md $templateRoot -recurse -force
 
 Copy-Item ./$gitProjectFolder/Directory.Build.props $templateRoot -recurse -force
 
