@@ -1,4 +1,4 @@
-@for $i from 1 through 10 {
+﻿@for $i from 1 through 10 {
 	.col-m-#{$i * 5} {
 		margin: 1px * $i * 5;
 	}

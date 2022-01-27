@@ -98,6 +98,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Clients
         public bool RequireRequestObject { get; set; }
 
         public List<string> AllowedIdentityTokenSigningAlgorithms { get; set; }
+
+        public bool NonEditable { get; set; }
     }
 }
 

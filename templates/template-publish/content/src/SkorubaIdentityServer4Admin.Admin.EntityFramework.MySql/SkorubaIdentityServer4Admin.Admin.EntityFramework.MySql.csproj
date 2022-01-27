@@ -1,42 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
-        <Version>2.0.1</Version>
-        <Authors>Jan Škoruba</Authors>
-        <PackageTags>IdentityServer4 Admin OpenIDConnect OAuth2 Identity</PackageTags>
-        <Description>Entity Framework layer for the administration of the IdentityServer4 and Asp.Net Core Identity with MySql support</Description>
-        <PackageLicenseUrl>https://github.com/skoruba/IdentityServer4.Admin/blob/master/LICENSE.md</PackageLicenseUrl>
-        <PackageProjectUrl>https://github.com/skoruba/IdentityServer4.Admin</PackageProjectUrl>
-        <PackageIconUrl>https://raw.githubusercontent.com/skoruba/IdentityServer4.Admin/master/docs/Images/SkorubaIdentityServer4Admin.Admin-Logo-Nuget.png</PackageIconUrl>
-    </PropertyGroup>
+  <PropertyGroup>
+	  <TargetFramework>net6.0</TargetFramework>
+	  <Description>Entity Framework layer for the administration of the IdentityServer4 and Asp.Net Core Identity with MySql support</Description>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="IdentityServer4.EntityFramework.Storage" Version="4.1.2" />
-        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0-beta.1" />
-        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.2" />
-        <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework" Version="2.0.1" />
-        <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework.Identity" Version="2.0.1" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.2" />
+  </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared\SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared\SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.csproj" />
+  </ItemGroup>
 
 </Project>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

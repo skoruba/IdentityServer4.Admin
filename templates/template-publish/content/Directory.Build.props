@@ -1,0 +1,13 @@
+<Project>
+
+  <PropertyGroup>
+    <Version>2.1.0-rc1</Version>
+    <Authors>Jan Škoruba</Authors>
+    <LangVersion>latest</LangVersion>
+    <PackageTags>IdentityServer4 Admin OpenIDConnect OAuth2 Identity</PackageTags>
+    <PackageLicenseUrl>https://github.com/skoruba/IdentityServer4.Admin/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/skoruba/IdentityServer4.Admin</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/skoruba/IdentityServer4.Admin/master/docs/Images/SkorubaIdentityServer4Admin.Admin-Logo-Nuget.png</PackageIconUrl>
+  </PropertyGroup>
+
+</Project>

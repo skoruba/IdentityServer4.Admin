@@ -35,7 +35,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
                     b.Property<string>("Data")
                         .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4")
+                        .HasMaxLength(50000);
 
                     b.Property<string>("DeviceCode")
                         .IsRequired()
@@ -76,7 +77,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.MySql.Migrations.Identit
 
                     b.Property<string>("Data")
                         .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4")
+                        .HasMaxLength(50000);
 
                     b.Property<DateTime?>("Expiration")
                         .HasColumnType("datetime(6)");

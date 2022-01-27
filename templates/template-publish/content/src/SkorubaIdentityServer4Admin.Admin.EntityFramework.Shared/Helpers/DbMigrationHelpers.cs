@@ -26,7 +26,7 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Helpers
         /// <param name="applyDbMigrationWithDataSeedFromProgramArguments"></param>
         /// <param name="seedConfiguration"></param>
         /// <param name="databaseMigrationsConfiguration"></param>
-        public static async Task ApplyDbMigrationsWithDataSeedAsync<TIdentityServerDbContext, TIdentityDbContext,
+        public static async Task<bool> ApplyDbMigrationsWithDataSeedAsync<TIdentityServerDbContext, TIdentityDbContext,
             TPersistedGrantDbContext, TLogDbContext, TAuditLogDbContext, TDataProtectionDbContext, TUser, TRole>(
             IHost host, bool applyDbMigrationWithDataSeedFromProgramArguments, SeedConfiguration seedConfiguration,
             DatabaseMigrationsConfiguration databaseMigrationsConfiguration)
@@ -39,6 +39,7 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Helpers
             where TUser : IdentityUser, new()
             where TRole : IdentityRole, new()
         {
+            bool migrationComplete = false;
             using (var serviceScope = host.Services.CreateScope())
             {
                 var services = serviceScope.ServiceProvider;
@@ -46,18 +47,21 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Helpers
                 if ((databaseMigrationsConfiguration != null && databaseMigrationsConfiguration.ApplyDatabaseMigrations)
                     || (applyDbMigrationWithDataSeedFromProgramArguments))
                 {
-                    await EnsureDatabasesMigratedAsync<TIdentityDbContext, TIdentityServerDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLogDbContext, TDataProtectionDbContext>(services);
+                    migrationComplete = await EnsureDatabasesMigratedAsync<TIdentityDbContext, TIdentityServerDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLogDbContext, TDataProtectionDbContext>(services);
                 }
 
                 if ((seedConfiguration != null && seedConfiguration.ApplySeed)
                     || (applyDbMigrationWithDataSeedFromProgramArguments))
                 {
-                    await EnsureSeedDataAsync<TIdentityServerDbContext, TUser, TRole>(services);
+                    var seedComplete = await EnsureSeedDataAsync<TIdentityServerDbContext, TUser, TRole>(services);
+                    return migrationComplete && seedComplete;
                 }
+                
             }
+            return migrationComplete;
         }
 
-        public static async Task EnsureDatabasesMigratedAsync<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLogDbContext, TDataProtectionDbContext>(IServiceProvider services)
+        public static async Task<bool> EnsureDatabasesMigratedAsync<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TLogDbContext, TAuditLogDbContext, TDataProtectionDbContext>(IServiceProvider services)
             where TIdentityDbContext : DbContext
             where TPersistedGrantDbContext : DbContext
             where TConfigurationDbContext : DbContext
@@ -65,41 +69,50 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Helpers
             where TAuditLogDbContext : DbContext
             where TDataProtectionDbContext : DbContext
         {
+            int pendingMigrationCount = 0;
             using (var scope = services.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 using (var context = scope.ServiceProvider.GetRequiredService<TPersistedGrantDbContext>())
                 {
                     await context.Database.MigrateAsync();
+                    pendingMigrationCount += (await context.Database.GetPendingMigrationsAsync()).Count();
                 }
 
                 using (var context = scope.ServiceProvider.GetRequiredService<TIdentityDbContext>())
                 {
                     await context.Database.MigrateAsync();
+                    pendingMigrationCount += (await context.Database.GetPendingMigrationsAsync()).Count();
                 }
 
                 using (var context = scope.ServiceProvider.GetRequiredService<TConfigurationDbContext>())
                 {
                     await context.Database.MigrateAsync();
+                    pendingMigrationCount += (await context.Database.GetPendingMigrationsAsync()).Count();
                 }
 
                 using (var context = scope.ServiceProvider.GetRequiredService<TLogDbContext>())
                 {
                     await context.Database.MigrateAsync();
+                    pendingMigrationCount += (await context.Database.GetPendingMigrationsAsync()).Count();
                 }
 
                 using (var context = scope.ServiceProvider.GetRequiredService<TAuditLogDbContext>())
                 {
                     await context.Database.MigrateAsync();
+                    pendingMigrationCount += (await context.Database.GetPendingMigrationsAsync()).Count();
                 }
 
                 using (var context = scope.ServiceProvider.GetRequiredService<TDataProtectionDbContext>())
                 {
                     await context.Database.MigrateAsync();
+                    pendingMigrationCount += (await context.Database.GetPendingMigrationsAsync()).Count();
                 }
             }
+
+            return pendingMigrationCount == 0;
         }
 
-        public static async Task EnsureSeedDataAsync<TIdentityServerDbContext, TUser, TRole>(IServiceProvider serviceProvider)
+        public static async Task<bool> EnsureSeedDataAsync<TIdentityServerDbContext, TUser, TRole>(IServiceProvider serviceProvider)
         where TIdentityServerDbContext : DbContext, IAdminConfigurationDbContext
         where TUser : IdentityUser, new()
         where TRole : IdentityRole, new()
@@ -114,6 +127,7 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Helpers
 
                 await EnsureSeedIdentityServerData(context, idsDataConfiguration);
                 await EnsureSeedIdentityData(userManager, roleManager, idDataConfiguration);
+                return true;
             }
         }
 

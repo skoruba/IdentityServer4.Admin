@@ -93,8 +93,11 @@ services:
       - 'ConnectionStrings__IdentityDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true'
       - 'ConnectionStrings__DataProtectionDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true'
       - 'AdminConfiguration__IdentityAdminBaseUrl=https://admin.skoruba.local'
-      - 'AdvancedConfiguration__PublicOrigin=https://sts.skoruba.local'
-      - 'AdvancedConfiguration__IssuerUri=https://sts.skoruba.local'
+      - 'IdentityServerOptions__IssuerUri=https://sts.skoruba.local'
+      - IdentityServerOptions__Events__RaiseErrorEvents=true
+      - IdentityServerOptions__Events__RaiseInformationEvents=true
+      - IdentityServerOptions__Events__RaiseFailureEvents=true
+      - IdentityServerOptions__Events__RaiseSuccessEvents=true
       - DockerConfiguration__UpdateCaCertificate=true
       - ASPNETCORE_ENVIRONMENT=Development
     depends_on:
