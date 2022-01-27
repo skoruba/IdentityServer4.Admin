@@ -5,9 +5,23 @@
     <Authors>Jan Škoruba</Authors>
     <LangVersion>latest</LangVersion>
     <PackageTags>IdentityServer4 Admin OpenIDConnect OAuth2 Identity</PackageTags>
-    <PackageLicenseUrl>https://github.com/skoruba/IdentityServer4.Admin/blob/master/LICENSE.md</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/skoruba/IdentityServer4.Admin</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/skoruba/IdentityServer4.Admin/master/docs/Images/Skoruba.IdentityServer4.Admin-Logo-Nuget.png</PackageIconUrl>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <PackageIcon>Skoruba.IdentityServer4.Admin-Logo-Nuget.png</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\docs\Images\Skoruba.IdentityServer4.Admin-Logo-Nuget.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
