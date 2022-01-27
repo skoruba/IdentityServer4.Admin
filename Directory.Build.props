@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\docs\Images\Skoruba.IdentityServer4.Admin-Logo-Nuget.png">
+    <None Include="..\..\package\icon.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

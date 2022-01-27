@@ -9,6 +9,7 @@ if ((Test-Path -Path $templateSrc)) { Remove-Item ./$templateSrc -recurse -force
 # Copy new src folder
 Copy-Item ./$temporaryProjectFolder/src ./$templateSrc -recurse -force
 Copy-Item ./$temporaryProjectFolder/shared ./$templateRoot/shared  -recurse -force
+Copy-Item ./$temporaryProjectFolder/package ./$templateRoot/package  -recurse -force
 Copy-Item ./$temporaryProjectFolder/.dockerignore ./$templateRoot  -recurse -force
 Copy-Item ./$temporaryProjectFolder/docker-compose.dcproj ./$templateRoot  -recurse -force
 Copy-Item ./$temporaryProjectFolder/docker-compose.override.yml ./$templateRoot  -recurse -force

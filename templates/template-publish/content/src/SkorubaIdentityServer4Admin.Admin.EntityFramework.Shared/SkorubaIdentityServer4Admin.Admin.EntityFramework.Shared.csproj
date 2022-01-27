@@ -8,7 +8,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="6.0.1" />
     <PackageReference Include="Skoruba.AuditLogging.EntityFramework" Version="1.0.0" />
-    <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework.Configuration" Version="2.1.0-rc1" />
+    <PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework.Configuration" Version="2.1.0" />
   </ItemGroup>
 </Project>
 

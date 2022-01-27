@@ -35,7 +35,8 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.MySql.Migrations.Ide
 
                     b.Property<string>("Data")
                         .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4")
+                        .HasMaxLength(50000);
 
                     b.Property<string>("Description")
                         .HasColumnType("varchar(200) CHARACTER SET utf8mb4")
@@ -87,7 +88,8 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.MySql.Migrations.Ide
 
                     b.Property<string>("Data")
                         .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4")
+                        .HasMaxLength(50000);
 
                     b.Property<string>("Description")
                         .HasColumnType("varchar(200) CHARACTER SET utf8mb4")

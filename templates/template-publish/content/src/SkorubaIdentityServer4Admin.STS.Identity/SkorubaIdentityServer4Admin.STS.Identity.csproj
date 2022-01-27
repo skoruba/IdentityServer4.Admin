@@ -42,8 +42,8 @@
 		<PackageReference Include="Serilog.Sinks.Seq" Version="5.1.1" />
 		<PackageReference Include="Skoruba.AuditLogging.EntityFramework" Version="1.0.0" />
 		<PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
-		<PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework.Configuration" Version="2.1.0-rc1" />
-		<PackageReference Include="Skoruba.IdentityServer4.Shared.Configuration" Version="2.1.0-rc1" />
+		<PackageReference Include="Skoruba.IdentityServer4.Admin.EntityFramework.Configuration" Version="2.1.0" />
+		<PackageReference Include="Skoruba.IdentityServer4.Shared.Configuration" Version="2.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -5,9 +5,9 @@
     <version>2.1.0</version>
     <authors>Jan Škoruba</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <licenseUrl>https://github.com/skoruba/IdentityServer4.Admin/blob/master/LICENSE.md</licenseUrl>
+    <license type="file">LICENSE.md</license>
     <projectUrl>https://github.com/skoruba/IdentityServer4.Admin</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/skoruba/IdentityServer4.Admin/master/docs/Images/Skoruba.IdentityServer4.Admin-Logo-Nuget.png</iconUrl>
+    <icon>Icon.png</icon>
     <description>Templates for the administration of the IdentityServer4 and Asp.Net Core Identity</description>
     <language>en-US</language>
     <tags>IdentityServer4, Admin, OpenIDConnect, OAuth2, Identity</tags>
