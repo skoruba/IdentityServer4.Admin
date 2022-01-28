@@ -299,7 +299,15 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
                         }
                         break;
                     case LoginResolutionPolicy.Username:
-                        user = await _userManager.FindByNameAsync(model.Username);
+                        try
+                        {
+                            user = await _userManager.FindByNameAsync(model.Username);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError("Error retrieving user by userName ({0}) for forgot password functionality: {1}", model.Username, ex.Message);
+                            user = null;
+                        }
                         break;
                 }
 

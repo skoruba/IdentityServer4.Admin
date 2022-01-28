@@ -1,4 +1,4 @@
-@for $i from 1 through 10 {
+﻿@for $i from 1 through 10 {
 	.col-p-#{$i * 5} {
 		padding: 1px * $i * 5;
 	}

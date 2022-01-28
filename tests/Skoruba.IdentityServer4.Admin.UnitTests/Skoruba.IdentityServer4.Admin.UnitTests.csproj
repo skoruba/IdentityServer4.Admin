@@ -1,30 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
-		<DebugType>Full</DebugType>
-		<IsPackable>false</IsPackable>
+		<TargetFramework>net6.0</TargetFramework>
 	</PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="coverlet.msbuild" Version="3.0.3">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="xunit" Version="2.4.1" />
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-        </PackageReference>
-        <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
-        <PackageReference Include="Bogus" Version="33.0.2" />
-        <PackageReference Include="FluentAssertions" Version="4.19.4" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
-        <PackageReference Include="Moq" Version="4.16.1" />
-    </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Bogus" Version="34.0.1" />
+		<PackageReference Include="coverlet.msbuild" Version="3.1.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Moq" Version="4.16.1" />
+	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Skoruba.IdentityServer4.Admin\Skoruba.IdentityServer4.Admin.csproj" />
+		<DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\Skoruba.IdentityServer4.Admin\Skoruba.IdentityServer4.Admin.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="FluentAssertions" Version="6.4.0" />
 	</ItemGroup>
 
 </Project>

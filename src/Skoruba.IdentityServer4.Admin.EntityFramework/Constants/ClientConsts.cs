@@ -12,7 +12,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Constants
                 "SharedSecret",
                 "X509Thumbprint",
                 "X509Name",
-                "X509CertificateBase64"
+                "X509CertificateBase64",
+                "JWK"
             };
 
             return secretTypes;

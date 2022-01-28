@@ -36,7 +36,6 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
                 .Include(x => x.RedirectUris)
                 .Include(x => x.PostLogoutRedirectUris)
                 .Include(x => x.AllowedScopes)
-                .Include(x => x.ClientSecrets)
                 .Include(x => x.Claims)
                 .Include(x => x.IdentityProviderRestrictions)
                 .Include(x => x.AllowedCorsOrigins)
@@ -408,7 +407,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             return id;
         }
 
-        private async Task RemoveClientRelationsAsync(Client client)
+        private async Task RemoveClientRelationsAsync(Client client, bool updateClientClaims,
+            bool updateClientProperties)
         {
             //Remove old allowed scopes
             var clientScopes = await DbContext.ClientScopes.Where(x => x.Client.Id == client.Id).ToListAsync();
@@ -433,12 +433,26 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             //Remove old client post logout redirect
             var clientPostLogoutRedirectUris = await DbContext.ClientPostLogoutRedirectUris.Where(x => x.Client.Id == client.Id).ToListAsync();
             DbContext.ClientPostLogoutRedirectUris.RemoveRange(clientPostLogoutRedirectUris);
+
+            //Remove old client claims
+            if (updateClientClaims)
+            {
+                var clientClaims = await DbContext.ClientClaims.Where(x => x.Client.Id == client.Id).ToListAsync();
+                DbContext.ClientClaims.RemoveRange(clientClaims);
+            }
+
+            //Remove old client properties
+            if (updateClientProperties)
+            {
+                var clientProperties = await DbContext.ClientProperties.Where(x => x.Client.Id == client.Id).ToListAsync();
+                DbContext.ClientProperties.RemoveRange(clientProperties);
+            }
         }
 
-        public virtual async Task<int> UpdateClientAsync(Client client)
+        public virtual async Task<int> UpdateClientAsync(Client client, bool updateClientClaims = false, bool updateClientProperties = false)
         {
             //Remove old relations
-            await RemoveClientRelationsAsync(client);
+            await RemoveClientRelationsAsync(client, updateClientClaims, updateClientProperties);
 
             //Update with new data
             DbContext.Clients.Update(client);

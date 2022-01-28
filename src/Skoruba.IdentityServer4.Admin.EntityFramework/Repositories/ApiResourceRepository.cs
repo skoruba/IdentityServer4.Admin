@@ -124,17 +124,17 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             return apiResource.Id;
         }
 
-        private async Task RemoveApiResourceClaimsAsync(ApiResource identityResource)
+        private async Task RemoveApiResourceClaimsAsync(ApiResource apiResource)
         {
             //Remove old api resource claims
-            var apiResourceClaims = await DbContext.ApiResourceClaims.Where(x => x.ApiResource.Id == identityResource.Id).ToListAsync();
+            var apiResourceClaims = await DbContext.ApiResourceClaims.Where(x => x.ApiResource.Id == apiResource.Id).ToListAsync();
             DbContext.ApiResourceClaims.RemoveRange(apiResourceClaims);
         }
 
-        private async Task RemoveApiResourceScopesAsync(ApiResource identityResource)
+        private async Task RemoveApiResourceScopesAsync(ApiResource apiResource)
         {
             //Remove old api resource scopes
-            var apiResourceScopes = await DbContext.ApiResourceScopes.Where(x => x.ApiResource.Id == identityResource.Id).ToListAsync();
+            var apiResourceScopes = await DbContext.ApiResourceScopes.Where(x => x.ApiResource.Id == apiResource.Id).ToListAsync();
             DbContext.ApiResourceScopes.RemoveRange(apiResourceScopes);
         }
 

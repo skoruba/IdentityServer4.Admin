@@ -79,7 +79,6 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
                .RuleFor(o => o.AlwaysIncludeUserClaimsInIdToken, f => f.Random.Bool())
                .RuleFor(o => o.Enabled, f => f.Random.Bool())
                .RuleFor(o => o.ProtocolType, f => f.PickRandom(ClientConsts.GetProtocolTypes().Select(x => x.Id)))
-               .RuleFor(o => o.ClientSecrets, f => new List<ClientSecretDto>()) //Client Secrets are managed with seperate method
                .RuleFor(o => o.RequireClientSecret, f => f.Random.Bool())
                .RuleFor(o => o.Description, f => f.Random.Words(f.Random.Number(1, 7)))
                .RuleFor(o => o.ClientUri, f => f.Internet.Url())
@@ -163,6 +162,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
             var clientCloneDto = new Faker<ClientCloneDto>()
                 .StrictMode(false)
                 .RuleFor(o => o.Id, id)
+                .RuleFor(o => o.ClientId, f => Guid.NewGuid().ToString())
+                .RuleFor(o => o.ClientName, f => Guid.NewGuid().ToString())
                 .RuleFor(o => o.CloneClientClaims, cloneClientClaims)
                 .RuleFor(o => o.CloneClientCorsOrigins, cloneClientCorsOrigins)
                 .RuleFor(o => o.CloneClientGrantTypes, cloneClientGrantTypes)

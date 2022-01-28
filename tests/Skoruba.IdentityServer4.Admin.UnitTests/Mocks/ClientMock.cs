@@ -69,7 +69,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Mocks
                 .RuleFor(o => o.ClientSecrets,
                     f => generateSecrets
                         ? ClientSecretFaker(0).Generate(f.Random.Number(10))
-                        : new List<ClientSecret>()) //Client Secrets are managed with separate method
+                        : null) //Client Secrets are managed with separate method
                 .RuleFor(o => o.RequireClientSecret, f => f.Random.Bool())
                 .RuleFor(o => o.Description, f => f.Random.Words(f.Random.Number(1, 7)))
                 .RuleFor(o => o.ClientUri, f => f.Internet.Url())

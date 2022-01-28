@@ -1,9 +1,9 @@
 param([string] $packagesVersions)
 
 $templateNuspecPath = "template-publish/Skoruba.IdentityServer4.Admin.Templates.nuspec"
-nuget pack $templateNuspecPath
+nuget pack $templateNuspecPath -NoDefaultExcludes
 
-dotnet new --debug:reinit
+dotnet.exe new --uninstall Skoruba.IdentityServer4.Admin.Templates
 
 $templateLocalName = "Skoruba.IdentityServer4.Admin.Templates.$packagesVersions.nupkg"
 dotnet.exe new -i $templateLocalName

@@ -10,6 +10,7 @@ using Skoruba.AuditLogging.EntityFramework.Entities;
 using SkorubaIdentityServer4Admin.Admin.Configuration.Database;
 using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.DbContexts;
 using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Entities.Identity;
+using SkorubaIdentityServer4Admin.Admin.Helpers;
 using Skoruba.IdentityServer4.Shared.Configuration.Helpers;
 using SkorubaIdentityServer4Admin.Shared.Dtos;
 using SkorubaIdentityServer4Admin.Shared.Dtos.Identity;
@@ -39,6 +40,9 @@ namespace SkorubaIdentityServer4Admin.Admin
                 IdentityUserDto, IdentityRoleDto, IdentityUsersDto, IdentityRolesDto, IdentityUserRolesDto,
                 IdentityUserClaimsDto, IdentityUserProviderDto, IdentityUserProvidersDto, IdentityUserChangePasswordDto,
                 IdentityRoleClaimsDto, IdentityUserClaimDto, IdentityRoleClaimDto>(ConfigureUIOptions);
+
+            // Monitor changes in Admin UI views
+            services.AddAdminUIRazorRuntimeCompilation(HostingEnvironment);
 
             // Add email senders which is currently setup for SendGrid and SMTP
             services.AddEmailSenders(Configuration);

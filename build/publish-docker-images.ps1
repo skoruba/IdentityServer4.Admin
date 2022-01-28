@@ -3,7 +3,7 @@ param([string] $version)
 Set-Location "../"
 
 # build docker images according to docker-compose
-docker-compose build
+docker-compose -f docker-compose.yml build
 
 # rename images with following tag
 docker tag skoruba-identityserver4-admin skoruba/identityserver4-admin:$version

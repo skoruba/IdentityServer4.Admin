@@ -52,7 +52,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 var newApiScopes = await context.ApiScopes.Where(x => x.Id == apiScope.Id).SingleAsync();
 
                 //Assert new api scope
-                newApiScopes.ShouldBeEquivalentTo(apiScope, options => options.Excluding(o => o.Id));
+                newApiScopes.Should().BeEquivalentTo(apiScope, options => options.Excluding(o => o.Id));
             }
         }
 
@@ -82,7 +82,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 var updatedApiScopeEntity = await context.ApiScopes.Where(x => x.Id == updatedApiScope.Id).SingleAsync();
 
                 //Assert updated api scope
-                updatedApiScope.ShouldBeEquivalentTo(updatedApiScopeEntity);
+                updatedApiScope.Should().BeEquivalentTo(updatedApiScopeEntity);
             }
         }
 
@@ -103,7 +103,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 var newApiScopes = await context.ApiScopes.Where(x => x.Id == apiScope.Id).SingleOrDefaultAsync();
 
                 //Assert new api resource
-                newApiScopes.ShouldBeEquivalentTo(apiScope, options => options.Excluding(o => o.Id));
+                newApiScopes.Should().BeEquivalentTo(apiScope, options => options.Excluding(o => o.Id));
 
                 //Try delete it
                 await apiResourceRepository.DeleteApiScopeAsync(newApiScopes);
@@ -133,12 +133,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Repositories
                 var newApiScopes = await apiResourceRepository.GetApiScopeAsync(apiScope.Id);
 
                 //Assert new api resource
-                newApiScopes.ShouldBeEquivalentTo(apiScope, options => options.Excluding(o => o.Id)
+                newApiScopes.Should().BeEquivalentTo(apiScope, options => options.Excluding(o => o.Id)
                     .Excluding(o => o.UserClaims));
 
-                newApiScopes.UserClaims.ShouldBeEquivalentTo(apiScope.UserClaims,
-                    option => option.Excluding(x => x.SelectedMemberPath.EndsWith("Id"))
-                        .Excluding(x => x.SelectedMemberPath.EndsWith("Scope")));
+                newApiScopes.UserClaims.Should().BeEquivalentTo(apiScope.UserClaims,
+                    option => option.Excluding(x => x.Path.EndsWith("Id"))
+                        .Excluding(x => x.Path.EndsWith("Scope")));
             }
         }
     }

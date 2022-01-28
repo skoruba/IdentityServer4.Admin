@@ -44,7 +44,7 @@
                         <tr>
                             <th>
                                 <a asp-area="@CommonConsts.AdminUIArea" class="btn btn-primary" asp-action="Role" asp-route-id="@role.Id">@Localizer["TableButtonEdit"]</a>
-                                <a asp-area="@CommonConsts.AdminUIArea" class="btn btn-primary" asp-action="RoleUsers" asp-route-id="@role.Id">@Localizer["TableButtonUsers"]</a>
+                                <a asp-area="@CommonConsts.AdminUIArea" class="btn btn-primary" asp-action="RoleUsers" asp-route-roleId="@role.Id">@Localizer["TableButtonUsers"]</a>
                             </th>
                             <td>@role.Name</td>
                             <td>

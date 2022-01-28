@@ -9,7 +9,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces
     {
 		Task<int> AddClientAsync(Client client);
 
-		Task<int> UpdateClientAsync(Client client);
+		Task<int> UpdateClientAsync(Client client, bool updateClientClaims = false, bool updateClientProperties = false);
 
 	    Task<int> RemoveClientAsync(Client client);
 

@@ -69,7 +69,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
             var clientDto = client.ToClientApiModel<ClientDto>();
 
             await _clientService.GetClientAsync(clientDto.Id);
-            await _clientService.UpdateClientAsync(clientDto);
+            await _clientService.UpdateClientAsync(clientDto, true, true);
 
             return Ok();
         }

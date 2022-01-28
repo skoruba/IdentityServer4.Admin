@@ -1,0 +1,134 @@
+﻿{
+    "IdentityServerData": {
+        "IdentityResources": [
+            {
+                "Name": "roles",
+                "Enabled": true,
+                "DisplayName": "Roles",
+                "UserClaims": [
+                    "role"
+                ]
+            },
+            {
+                "Name": "openid",
+                "Enabled": true,
+                "Required": true,
+                "DisplayName": "Your user identifier",
+                "UserClaims": [
+                    "sub"
+                ]
+            },
+            {
+                "Name": "profile",
+                "Enabled": true,
+                "DisplayName": "User profile",
+                "Description": "Your user profile information (first name, last name, etc.)",
+                "Emphasize": true,
+                "UserClaims": [
+                    "name",
+                    "family_name",
+                    "given_name",
+                    "middle_name",
+                    "nickname",
+                    "preferred_username",
+                    "profile",
+                    "picture",
+                    "website",
+                    "gender",
+                    "birthdate",
+                    "zoneinfo",
+                    "locale",
+                    "updated_at"
+                ]
+            },
+            {
+                "Name": "email",
+                "Enabled": true,
+                "DisplayName": "Your email address",
+                "Emphasize": true,
+                "UserClaims": [
+                    "email",
+                    "email_verified"
+                ]
+            },
+            {
+                "Name": "address",
+                "Enabled": true,
+                "DisplayName": "Your address",
+                "Emphasize": true,
+                "UserClaims": [
+                    "address"
+                ]
+            }
+        ],
+        "ApiScopes": [
+            {
+                "Name": "skoruba_identity_admin_api",
+                "DisplayName": "skoruba_identity_admin_api",
+                "Required": true,
+                "UserClaims": [
+                    "role",
+                    "name"
+                ]
+            }
+        ],
+        "ApiResources": [
+            {
+                "Name": "skoruba_identity_admin_api",
+                "Scopes": [
+                    "skoruba_identity_admin_api"
+                ]
+            }
+        ],
+        "Clients": [
+            {
+                "ClientId": "skoruba_identity_admin",
+                "ClientName": "skoruba_identity_admin",
+                "ClientUri": "https://admin.skoruba.local",
+                "AllowedGrantTypes": [
+                    "authorization_code"
+                ],
+                "RequirePkce": true,
+                "ClientSecrets": [
+                    {
+                        "Value": "skoruba_admin_client_secret"
+                    }
+                ],
+                "RedirectUris": [
+                    "https://admin.skoruba.local/signin-oidc"
+                ],
+                "FrontChannelLogoutUri": "https://admin.skoruba.local/signout-oidc",
+                "PostLogoutRedirectUris": [
+                    "https://admin.skoruba.local/signout-callback-oidc"
+                ],
+                "AllowedCorsOrigins": [
+                    "https://admin.skoruba.local"
+                ],
+                "AllowedScopes": [
+                    "openid",
+                    "email",
+                    "profile",
+                    "roles"
+                ]
+            },
+            {
+                "ClientId": "skoruba_identity_admin_api_swaggerui",
+                "ClientName": "skoruba_identity_admin_api_swaggerui",
+                "AllowedGrantTypes": [
+                    "authorization_code"
+                ],
+                "RequireClientSecret": false,
+                "RequirePkce": true,
+                "RedirectUris": [
+                    "https://admin-api.skoruba.local/swagger/oauth2-redirect.html"
+                ],
+                "AllowedScopes": [
+                    "skoruba_identity_admin_api"
+                ],
+                "AllowedCorsOrigins": [
+                    "https://admin-api.skoruba.local"
+                ]
+            }
+        ]
+    }
+}

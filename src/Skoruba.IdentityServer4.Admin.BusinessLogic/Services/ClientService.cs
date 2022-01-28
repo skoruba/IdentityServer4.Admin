@@ -168,7 +168,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return added;
         }
 
-        public virtual async Task<int> UpdateClientAsync(ClientDto client)
+        public virtual async Task<int> UpdateClientAsync(ClientDto client, bool updateClientClaims = false, bool updateClientProperties = false)
         {
             var canInsert = await CanInsertClientAsync(client);
             if (!canInsert)
@@ -180,7 +180,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var originalClient = await GetClientAsync(client.Id);
 
-            var updated = await ClientRepository.UpdateClientAsync(clientEntity);
+            var updated = await ClientRepository.UpdateClientAsync(clientEntity, updateClientClaims, updateClientProperties);
 
             await AuditEventLogger.LogEventAsync(new ClientUpdatedEvent(originalClient, client));
 
