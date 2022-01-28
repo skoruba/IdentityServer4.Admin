@@ -142,7 +142,7 @@
     <value>Unexpected error occurred deleting user with ID {0}.</value>
   </data>
   <data name="ErrorDisable2FA" xml:space="preserve">
-    <value>Unexpected error occured disabling 2FA for user with ID {0}.</value>
+    <value>Unexpected error occurred disabling 2FA for user with ID {0}.</value>
   </data>
   <data name="ErrorGenerateCodesWithout2FA" xml:space="preserve">
     <value>Cannot generate recovery codes for user as they do not have 2FA enabled.</value>
