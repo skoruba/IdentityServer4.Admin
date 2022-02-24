@@ -1,0 +1,38 @@
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ApiGrants" xml:space="preserve">
+    <value>API Grants</value>
+  </data>
+  <data name="Created" xml:space="preserve">
+    <value>Aangemaakt:</value>
+  </data>
+  <data name="Expires" xml:space="preserve">
+    <value>Verloopt:</value>
+  </data>
+  <data name="IdentityGrants" xml:space="preserve">
+    <value>Identity Grants</value>
+  </data>
+  <data name="NoGrants" xml:space="preserve">
+    <value>Er is u tot geen enkele applicatie toegang verschaft.</value>
+  </data>
+  <data name="RevokeAccess" xml:space="preserve">
+    <value>Toegang Intrekken</value>
+  </data>
+  <data name="SubTitle" xml:space="preserve">
+    <value>Hieronder staat de lijst met applicaties waar u toegang aan verschaft heeft en de namen van de resources waar deze deze apps toegang toe hebben gekregen.</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Client Applicatie Toegang</value>
+  </data>
+</root>

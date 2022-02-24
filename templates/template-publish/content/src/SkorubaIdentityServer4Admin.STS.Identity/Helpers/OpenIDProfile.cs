@@ -1,4 +1,4 @@
-namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
+﻿namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
 {
     public class OpenIdProfile
     {
@@ -12,6 +12,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers
         public string Country { get; internal set; }
     }
 }
+
+
 
 
 

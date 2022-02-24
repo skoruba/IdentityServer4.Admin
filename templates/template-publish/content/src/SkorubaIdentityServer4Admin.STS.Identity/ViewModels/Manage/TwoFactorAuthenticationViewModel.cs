@@ -1,4 +1,4 @@
-namespace SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Manage
+﻿namespace SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Manage
 {
     public class TwoFactorAuthenticationViewModel
     {
@@ -11,6 +11,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Manage
         public bool IsMachineRemembered { get; set; }
     }
 }
+
+
 
 
 

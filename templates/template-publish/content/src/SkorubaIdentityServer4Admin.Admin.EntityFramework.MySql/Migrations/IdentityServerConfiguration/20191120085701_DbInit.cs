@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
@@ -606,6 +606,8 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.MySql.Migrations.Ide
         }
     }
 }
+
+
 
 
 

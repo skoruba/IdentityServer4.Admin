@@ -2,11 +2,11 @@
 
 namespace Skoruba.IdentityServer4.Admin.Api.Dtos.Users
 {
-    public class UserClaimApiDto<TUserDtoKey>
+    public class UserClaimApiDto<TKey>
     {
         public int ClaimId { get; set; }
 
-        public TUserDtoKey UserId { get; set; }
+        public TKey UserId { get; set; }
 
         [Required]
         public string ClaimType { get; set; }

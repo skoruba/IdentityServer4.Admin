@@ -16,7 +16,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
 {
     public class AccountControllerTests : BaseClassFixture
     {
-        public AccountControllerTests(WebApplicationFactory<StartupTest> factory) : base(factory)
+        public AccountControllerTests(TestFixture fixture) : base(fixture)
         {
         }
 
@@ -75,7 +75,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.IntegrationTests.Tests
             // Build expected error messages
             var expectedErrorMessages = new List<string>
             {
-                $"User name &#x27;{registerFormData["UserName"]}&#x27; is already taken.",
+                $"Username &#x27;{registerFormData["UserName"]}&#x27; is already taken.",
                 $"Email &#x27;{registerFormData["Email"]}&#x27; is already taken."
             };
 

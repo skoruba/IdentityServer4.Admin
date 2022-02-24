@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Clients
 {
@@ -38,6 +38,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Clients
         public bool CloneClientProperties { get; set; }
     }
 }
+
+
 
 
 

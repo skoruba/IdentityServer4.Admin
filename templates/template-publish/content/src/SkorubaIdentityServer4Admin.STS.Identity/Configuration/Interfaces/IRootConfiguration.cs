@@ -1,3 +1,5 @@
+﻿using Skoruba.IdentityServer4.Shared.Configuration.Configuration.Identity;
+
 namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration.Interfaces
 {
     public interface IRootConfiguration
@@ -7,6 +9,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Configuration.Interfaces
         RegisterConfiguration RegisterConfiguration { get; }
     }
 }
+
+
 
 
 

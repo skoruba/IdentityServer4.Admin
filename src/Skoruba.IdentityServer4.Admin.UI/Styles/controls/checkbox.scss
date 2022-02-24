@@ -1,0 +1,57 @@
+﻿$checkbox-passive-background-color: #ccc;
+$checkbox-active-background-color: #4ed164;
+
+.switch {
+    display: inline-block;
+    height: 28px;
+    position: relative;
+    width: 54px;
+    margin-top: 5px;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+}
+
+.slider:before {
+    background-color: #fff;
+    bottom: 1px;
+    content: "";
+    height: 26px;
+    left: 1px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+}
+
+input:not(:checked) + .bg-primary {
+    background-color: $checkbox-passive-background-color !important;
+    background-image: none !important;
+}
+
+input:checked + .bg-primary {
+    background-color: $checkbox-active-background-color !important;
+    background-image: none !important;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}

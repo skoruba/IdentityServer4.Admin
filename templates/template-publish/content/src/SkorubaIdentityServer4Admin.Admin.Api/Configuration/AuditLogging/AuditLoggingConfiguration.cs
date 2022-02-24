@@ -1,4 +1,4 @@
-namespace SkorubaIdentityServer4Admin.Admin.Api.Configuration
+﻿namespace SkorubaIdentityServer4Admin.Admin.Api.Configuration
 {
     public class AuditLoggingConfiguration
     {
@@ -11,6 +11,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Configuration
         public string ClientIdClaim { get; set; }
     }
 }
+
+
 
 
 

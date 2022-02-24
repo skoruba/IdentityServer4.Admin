@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Constants;
 using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Entities.Identity;
@@ -32,6 +32,8 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.DbContexts
         }
     }
 }
+
+
 
 
 

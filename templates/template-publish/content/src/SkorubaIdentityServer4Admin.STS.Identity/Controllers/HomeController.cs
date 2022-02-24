@@ -1,8 +1,8 @@
-// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 // Original file: https://github.com/IdentityServer/IdentityServer4.Quickstart.UI
-// Modified by Jan �koruba
+// Modified by Jan Škoruba
 
 using System;
 using System.Threading.Tasks;
@@ -10,6 +10,7 @@ using IdentityServer4.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Skoruba.IdentityServer4.Shared.Configuration.Helpers;
 using SkorubaIdentityServer4Admin.STS.Identity.Helpers;
 using SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Home;
 
@@ -31,6 +32,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult SetLanguage(string culture, string returnUrl)
         {
             Response.Cookies.Append(
@@ -38,6 +40,19 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
             );
+            return LocalRedirect(returnUrl);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SelectTheme(string theme, string returnUrl)
+        {
+            Response.Cookies.Append(
+                ThemeHelpers.CookieThemeKey,
+                theme,
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+
             return LocalRedirect(returnUrl);
         }
 
@@ -59,6 +74,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
         }
     }
 }
+
+
 
 
 

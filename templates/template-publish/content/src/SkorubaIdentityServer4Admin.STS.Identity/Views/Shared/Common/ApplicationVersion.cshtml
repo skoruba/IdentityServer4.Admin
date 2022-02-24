@@ -1,0 +1,18 @@
+﻿@using System.Reflection
+@using SkorubaIdentityServer4Admin.STS.Identity
+
+@{
+    var runtimeVersion = typeof(Startup)
+        .GetTypeInfo()
+        .Assembly
+        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
+}
+
+@runtimeVersion
+
+
+
+
+
+
+

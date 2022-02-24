@@ -133,7 +133,7 @@
     <value>запрашивает ваше разрешение</value>
   </data>
   <data name="UnCheckPermission" xml:space="preserve">
-    <value>Снять флажки с разрешений, которые Вы не хотите предоставлять</value>
+    <value>Снять флажки с разрешений, которые вы не хотите предоставлять</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Да, разрешить</value>

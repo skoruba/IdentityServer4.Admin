@@ -1,4 +1,4 @@
-﻿using HealthChecks.UI.Client;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +12,8 @@ using Skoruba.IdentityServer4.STS.Identity.Configuration;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Constants;
 using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
+using System;
+using Skoruba.IdentityServer4.Shared.Configuration.Helpers;
 
 namespace Skoruba.IdentityServer4.STS.Identity
 {
@@ -30,15 +32,20 @@ namespace Skoruba.IdentityServer4.STS.Identity
 		{
 			var rootConfiguration = CreateRootConfiguration();
 			services.AddSingleton(rootConfiguration);
-
 			// Register DbContexts for IdentityServer and Identity
 			RegisterDbContexts(services);
+
+            // Save data protection keys to db, using a common application name shared between Admin and STS
+            services.AddDataProtection<IdentityServerDataProtectionDbContext>(Configuration);
 
 			// Add email senders which is currently setup for SendGrid and SMTP
 			services.AddEmailSenders(Configuration);
 
 			// Add services for authentication, including Identity model and external providers
 			RegisterAuthentication(services);
+
+            // Add HSTS options
+            RegisterHstsOptions(services);
 
 			services.AddSingleton<SimpleEmailRenderer>(n => new SimpleEmailRenderer 
 			{
@@ -53,16 +60,24 @@ namespace Skoruba.IdentityServer4.STS.Identity
 			// Add authorization policies for MVC
 			RegisterAuthorization(services);
 
-			services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext>(Configuration);
+            services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, IdentityServerDataProtectionDbContext>(Configuration);
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
+            app.UseCookiePolicy();
+
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
 			}
+            else
+            {
+                app.UseHsts();
+            }
 
+            app.UsePathBase(Configuration.GetValue<string>("BasePath"));
+            
 			app.UseCors(policy => 
 			{
 				policy.AllowAnyOrigin();
@@ -70,11 +85,13 @@ namespace Skoruba.IdentityServer4.STS.Identity
 				policy.AllowAnyMethod();
 			});
 
-			// Add custom security headers
-			app.UseSecurityHeaders();
 
 			app.UseStaticFiles();
 			UseAuthentication(app);
+
+            // Add custom security headers
+            app.UseSecurityHeaders(Configuration);
+
 			app.UseMvcLocalizationServices();
 
 			app.UseRouting();
@@ -91,7 +108,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
 		public virtual void RegisterDbContexts(IServiceCollection services)
 		{
-			services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext>(Configuration);
+            services.RegisterDbContexts<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, IdentityServerDataProtectionDbContext>(Configuration);
 		}
 
 		public virtual void RegisterAuthentication(IServiceCollection services)
@@ -109,6 +126,16 @@ namespace Skoruba.IdentityServer4.STS.Identity
 		public virtual void UseAuthentication(IApplicationBuilder app)
 		{
 			app.UseIdentityServer();
+        }
+
+        public virtual void RegisterHstsOptions(IServiceCollection services)
+        {
+            services.AddHsts(options =>
+            {
+                options.Preload = true;
+                options.IncludeSubDomains = true;
+                options.MaxAge = TimeSpan.FromDays(365);
+            });
 		}
 
 		protected IRootConfiguration CreateRootConfiguration()

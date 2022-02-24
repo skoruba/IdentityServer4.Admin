@@ -14,6 +14,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
 using Client = IdentityServer4.EntityFramework.Entities.Client;
+using ClientClaim = IdentityServer4.EntityFramework.Entities.ClientClaim;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
 {
@@ -35,7 +36,6 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
                 .Include(x => x.RedirectUris)
                 .Include(x => x.PostLogoutRedirectUris)
                 .Include(x => x.AllowedScopes)
-                .Include(x => x.ClientSecrets)
                 .Include(x => x.Claims)
                 .Include(x => x.IdentityProviderRestrictions)
                 .Include(x => x.AllowedCorsOrigins)
@@ -83,6 +83,17 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
                 .ToList();
 
             return filteredGrants;
+        }
+
+        public virtual List<string> GetSigningAlgorithms(string algorithm, int limit = 0)
+        {
+            var signingAlgorithms = ClientConsts.SigningAlgorithms()
+                .WhereIf(!string.IsNullOrWhiteSpace(algorithm), x => x.Contains(algorithm))
+                .TakeIf(x => x, limit > 0, limit)
+                .OrderBy(x => x)
+                .ToList();
+
+            return signingAlgorithms;
         }
 
         public virtual List<SelectItem> GetProtocolTypes()
@@ -142,7 +153,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             return await AutoSaveChangesAsync();
         }
 
-        private async Task<int> AutoSaveChangesAsync()
+        protected virtual async Task<int> AutoSaveChangesAsync()
         {
             return AutoSaveChanges ? await DbContext.SaveChangesAsync() : (int)SavedStatus.WillBeSavedExplicitly;
         }
@@ -396,7 +407,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             return id;
         }
 
-        private async Task RemoveClientRelationsAsync(Client client)
+        private async Task RemoveClientRelationsAsync(Client client, bool updateClientClaims,
+            bool updateClientProperties)
         {
             //Remove old allowed scopes
             var clientScopes = await DbContext.ClientScopes.Where(x => x.Client.Id == client.Id).ToListAsync();
@@ -421,12 +433,26 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             //Remove old client post logout redirect
             var clientPostLogoutRedirectUris = await DbContext.ClientPostLogoutRedirectUris.Where(x => x.Client.Id == client.Id).ToListAsync();
             DbContext.ClientPostLogoutRedirectUris.RemoveRange(clientPostLogoutRedirectUris);
+
+            //Remove old client claims
+            if (updateClientClaims)
+            {
+                var clientClaims = await DbContext.ClientClaims.Where(x => x.Client.Id == client.Id).ToListAsync();
+                DbContext.ClientClaims.RemoveRange(clientClaims);
+            }
+
+            //Remove old client properties
+            if (updateClientProperties)
+            {
+                var clientProperties = await DbContext.ClientProperties.Where(x => x.Client.Id == client.Id).ToListAsync();
+                DbContext.ClientProperties.RemoveRange(clientProperties);
+            }
         }
 
-        public virtual async Task<int> UpdateClientAsync(Client client)
+        public virtual async Task<int> UpdateClientAsync(Client client, bool updateClientClaims = false, bool updateClientProperties = false)
         {
             //Remove old relations
-            await RemoveClientRelationsAsync(client);
+            await RemoveClientRelationsAsync(client, updateClientClaims, updateClientProperties);
 
             //Update with new data
             DbContext.Clients.Update(client);

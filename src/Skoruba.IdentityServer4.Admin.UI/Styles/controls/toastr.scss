@@ -1,0 +1,25 @@
+﻿#toast-container > div {
+	opacity: 1;
+	-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+	filter: alpha(opacity=100);
+}
+
+.toast {
+	background-color: #030303;
+}
+
+.toast-success {
+	background-color: #51a351;
+}
+
+.toast-error {
+	background-color: #bd362f;
+}
+
+.toast-info {
+	background-color: #2f96b4;
+}
+
+.toast-warning {
+	background-color: #f89406;
+}

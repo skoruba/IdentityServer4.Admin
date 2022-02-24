@@ -1,0 +1,16 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.ClientDto
+@inject IViewLocalizer Localizer
+
+<div class="row client">
+	<div class="col-md-12 action-butons">
+		<button class="client-save-button btn btn-primary">@Localizer["ButtonSave"]</button>
+
+		@if (Model.Id != 0)
+		{
+			<a asp-area="@CommonConsts.AdminUIArea" asp-action="ClientClone" asp-route-id="@Model.Id" target="_blank" class="btn btn-outline-primary">@Localizer["ButtonClone"]</a>
+			<a asp-area="@CommonConsts.AdminUIArea" asp-action="ClientDelete" asp-route-id="@Model.Id" class="btn btn-danger">@Localizer["ButtonDelete"]</a>
+		}
+	</div>
+</div>

@@ -15,7 +15,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
 
         Task<int> AddClientAsync(ClientDto client);
 
-        Task<int> UpdateClientAsync(ClientDto client);
+        Task<int> UpdateClientAsync(ClientDto client, bool updateClientClaims = false, bool updateClientProperties = false);
 
         Task<int> RemoveClientAsync(ClientDto client);
 
@@ -66,6 +66,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services.Interfaces
         Task<int> DeleteClientClaimAsync(ClientClaimsDto clientClaim);
 
         Task<int> DeleteClientPropertyAsync(ClientPropertiesDto clientProperty);
+
+        List<string> GetSigningAlgorithms(string algorithm, int limit = 0);
 
         List<SelectItemDto> GetProtocolTypes();
     }

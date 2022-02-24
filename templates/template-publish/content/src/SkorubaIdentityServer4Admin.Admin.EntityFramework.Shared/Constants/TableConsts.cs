@@ -1,4 +1,4 @@
-namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Constants
+﻿namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Constants
 {
     public static class TableConsts
     {
@@ -11,6 +11,8 @@ namespace SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Constants
         public const string IdentityUserTokens = "UserTokens";
     }
 }
+
+
 
 
 

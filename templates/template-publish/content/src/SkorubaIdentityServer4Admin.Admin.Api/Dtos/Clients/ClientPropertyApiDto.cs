@@ -1,4 +1,4 @@
-namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Clients
+﻿namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Clients
 {
     public class ClientPropertyApiDto
     {
@@ -7,6 +7,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Clients
         public string Value { get; set; }
     }
 }
+
+
 
 
 

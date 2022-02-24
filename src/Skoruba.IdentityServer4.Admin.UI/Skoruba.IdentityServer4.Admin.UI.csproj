@@ -1,0 +1,111 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+	  <TargetFramework>net6.0</TargetFramework>
+	  <Description>The package with UI for the administration of the IdentityServer4</Description>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <StaticWebAssetBasePath Condition="$(StaticWebAssetBasePath) == ''">/</StaticWebAssetBasePath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Areas\AdminUI\Views\Account\AccessDenied.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\ApiResource.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\ApiResourceDelete.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\ApiResourceProperties.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\ApiResourcePropertyDelete.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\ApiResources.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\ApiResource\Section\Label.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\ApiScopeDelete.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\ApiScopes.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\ApiSecretDelete.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\ApiSecrets.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\Client.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\ClientClaimDelete.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\ClientClaims.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\ClientClone.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\ClientDelete.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\ClientProperties.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\ClientPropertyDelete.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\Clients.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\ClientSecretDelete.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\ClientSecrets.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\Client\Section\ActionButtons.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\Client\Section\Authentication.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\Client\Section\Basics.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\Client\Section\Consent.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\Client\Section\DeviceFlow.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\Client\Section\Label.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\Client\Section\Name.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\Client\Section\Token.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\Client\Settings.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\IdentityResource.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\IdentityResourceDelete.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\IdentityResourceProperties.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\IdentityResourcePropertyDelete.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\IdentityResources.cshtml" />
+    <None Include="Areas\AdminUI\Views\Configuration\IdentityResource\Section\Label.cshtml" />
+    <None Include="Areas\AdminUI\Views\Grant\PersistedGrant.cshtml" />
+    <None Include="Areas\AdminUI\Views\Grant\PersistedGrantDelete.cshtml" />
+    <None Include="Areas\AdminUI\Views\Grant\PersistedGrants.cshtml" />
+    <None Include="Areas\AdminUI\Views\Home\Error.cshtml" />
+    <None Include="Areas\AdminUI\Views\Home\Index.cshtml" />
+    <None Include="Areas\AdminUI\Views\Identity\Role.cshtml" />
+    <None Include="Areas\AdminUI\Views\Identity\RoleClaims.cshtml" />
+    <None Include="Areas\AdminUI\Views\Identity\RoleClaimsDelete.cshtml" />
+    <None Include="Areas\AdminUI\Views\Identity\RoleDelete.cshtml" />
+    <None Include="Areas\AdminUI\Views\Identity\Roles.cshtml" />
+    <None Include="Areas\AdminUI\Views\Identity\RoleUsers.cshtml" />
+    <None Include="Areas\AdminUI\Views\Identity\Role\Section\Label.cshtml" />
+    <None Include="Areas\AdminUI\Views\Identity\UserChangePassword.cshtml" />
+    <None Include="Areas\AdminUI\Views\Identity\UserClaims.cshtml" />
+    <None Include="Areas\AdminUI\Views\Identity\UserClaimsDelete.cshtml" />
+    <None Include="Areas\AdminUI\Views\Identity\UserDelete.cshtml" />
+    <None Include="Areas\AdminUI\Views\Identity\UserProfile.cshtml" />
+    <None Include="Areas\AdminUI\Views\Identity\UserProviders.cshtml" />
+    <None Include="Areas\AdminUI\Views\Identity\UserProvidersDelete.cshtml" />
+    <None Include="Areas\AdminUI\Views\Identity\UserRoles.cshtml" />
+    <None Include="Areas\AdminUI\Views\Identity\UserRolesDelete.cshtml" />
+    <None Include="Areas\AdminUI\Views\Identity\Users.cshtml" />
+    <None Include="Areas\AdminUI\Views\Identity\User\Section\Label.cshtml" />
+    <None Include="Areas\AdminUI\Views\Log\AuditLog.cshtml" />
+    <None Include="Areas\AdminUI\Views\Log\ErrorsLog.cshtml" />
+    <None Include="Areas\AdminUI\Views\Shared\Common\ApplicationVersion.cshtml" />
+    <None Include="Areas\AdminUI\Views\Shared\Common\ErrorPage.cshtml" />
+    <None Include="Areas\AdminUI\Views\Shared\Common\Notification.cshtml" />
+    <None Include="Areas\AdminUI\Views\Shared\Common\Pager.cshtml" />
+    <None Include="Areas\AdminUI\Views\Shared\Common\PagerDynamic.cshtml" />
+    <None Include="Areas\AdminUI\Views\Shared\Common\Search.cshtml" />
+    <None Include="Areas\AdminUI\Views\Shared\Common\ThemeResources.cshtml" />
+    <None Include="Areas\AdminUI\Views\Shared\Common\SelectTheme.cshtml" />
+    <None Include="Areas\AdminUI\Views\Shared\Common\SelectLanguage.cshtml" />
+    <None Include="Areas\AdminUI\Views\Shared\Components\IdentityServerLink\Default.cshtml" />
+    <None Include="Areas\AdminUI\Views\Shared\Error.cshtml" />
+    <None Include="Areas\AdminUI\Views\Shared\_Layout.cshtml" />
+    <None Include="Areas\AdminUI\Views\_ViewImports.cshtml" />
+    <None Include="Areas\AdminUI\Views\_ViewStart.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.MySql" Version="6.0.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="6.0.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.OpenIdConnectServer" Version="6.0.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="6.0.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="6.0.1" />
+    <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity\Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.csproj" />
+    <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.BusinessLogic\Skoruba.IdentityServer4.Admin.BusinessLogic.csproj" />
+    <ProjectReference Include="..\Skoruba.IdentityServer4.Admin.EntityFramework.Configuration\Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.csproj" />
+    <ProjectReference Include="..\Skoruba.IdentityServer4.Shared.Configuration\Skoruba.IdentityServer4.Shared.Configuration.csproj" />
+  </ItemGroup>
+
+</Project>

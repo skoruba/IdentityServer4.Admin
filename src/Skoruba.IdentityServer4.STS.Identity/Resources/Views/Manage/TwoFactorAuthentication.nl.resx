@@ -1,0 +1,65 @@
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddAuthenticator" xml:space="preserve">
+    <value>Voeg authenticator app toe</value>
+  </data>
+  <data name="AuthenticatorApp" xml:space="preserve">
+    <value>Authenticator app</value>
+  </data>
+  <data name="BeforeLogin" xml:space="preserve">
+    <value>voordat u kunt inloggen met een herstelcode</value>
+  </data>
+  <data name="Disable2FA" xml:space="preserve">
+    <value>Deactiveer 2FA</value>
+  </data>
+  <data name="ForgetBrowser" xml:space="preserve">
+    <value>Vergeet deze browser</value>
+  </data>
+  <data name="GenerateNewCodes" xml:space="preserve">
+    <value>maak een nieuwe set herstelcodes</value>
+  </data>
+  <data name="NoCodes" xml:space="preserve">
+    <value>U heeft geen herstelcodes meer</value>
+  </data>
+  <data name="OneCode" xml:space="preserve">
+    <value>U heeft nog 1 herstelcode over</value>
+  </data>
+  <data name="RecoveryCodeLeft" xml:space="preserve">
+    <value>resterende herstelcodes</value>
+  </data>
+  <data name="ResetAuthenticator" xml:space="preserve">
+    <value>Reset authenticator app</value>
+  </data>
+  <data name="ResetCodes" xml:space="preserve">
+    <value>Reset herstelcodes</value>
+  </data>
+  <data name="SetupAuthenticator" xml:space="preserve">
+    <value>Configureer authenticator app</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Two-factor authenticatie (2FA)</value>
+  </data>
+  <data name="YouCanGenerateCodes" xml:space="preserve">
+    <value>U kunt een nieuwe set herstelcodes genereren</value>
+  </data>
+  <data name="YouHave" xml:space="preserve">
+    <value>U heeft</value>
+  </data>
+  <data name="YouMust" xml:space="preserve">
+    <value>U moet</value>
+  </data>
+  <data name="YouShould" xml:space="preserve">
+    <value>U zou moeten</value>
+  </data>
+</root>

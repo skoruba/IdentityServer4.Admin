@@ -133,7 +133,7 @@
     <value>Вы не предоставили доступ ни одному приложению</value>
   </data>
   <data name="RevokeAccess" xml:space="preserve">
-    <value>Анулировать доступ</value>
+    <value>Аннулировать доступ</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
     <value>Ниже приведен список приложений, к которым у вас есть доступ и имена ресурсов, к которым у них есть доступ. </value>

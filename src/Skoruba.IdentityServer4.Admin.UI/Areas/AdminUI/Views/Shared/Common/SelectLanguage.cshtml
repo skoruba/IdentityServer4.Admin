@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Options
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
+@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}{Context.Request.QueryString}";
+}
+@if (cultureItems.Count > 1)
+{
+    <div title="@Localizer["Request culture provider:"] @requestCulture?.Provider?.GetType().Name">
+        <form id="selectLanguage" asp-controller="Home"
+              asp-action="SetLanguage" asp-area="@CommonConsts.AdminUIArea" asp-route-returnUrl="@returnUrl"
+              method="post" class="form-inline justify-content-end" role="form">
+            <div class="form-group">
+                <label asp-for="@requestCulture.RequestCulture.UICulture.Name" class="mr-2">@Localizer["Language:"]</label>
+                <select name="culture" onchange="this.form.submit();" class="form-control" asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="cultureItems"></select>
+            </div>
+        </form>
+    </div>
+}

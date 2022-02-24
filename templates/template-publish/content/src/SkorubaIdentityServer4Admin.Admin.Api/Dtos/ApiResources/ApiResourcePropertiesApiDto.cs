@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.ApiResources
 {
@@ -16,6 +16,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.ApiResources
         public int PageSize { get; set; }
     }
 }
+
+
 
 
 

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.ApiResources
@@ -18,6 +18,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.ApiResources
         public DateTime? Expiration { get; set; }
     }
 }
+
+
 
 
 

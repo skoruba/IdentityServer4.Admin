@@ -1,0 +1,56 @@
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ErrorDeleteUser_CannotSelfDelete" xml:space="preserve">
+    <value>Je kunt je eigen account niet verwijderen. Om je eigen account te verwijderen maak je eerst een nieuw account met administratieve rechten. Vervolgens logt u in op dit nieuwe administratieve account om vervolgens het te verwijderen account te verwijderen. </value>
+  </data>
+  <data name="SuccessCreateRole" xml:space="preserve">
+    <value>Het opslaan van Role {0} is gelukt.</value>
+  </data>
+  <data name="SuccessDeleteRole" xml:space="preserve">
+    <value>Het verwijderen van de Role is gelukt.</value>
+  </data>
+  <data name="SuccessCreateRoleClaims" xml:space="preserve">
+    <value>Het opslaan van Claim {0} - {1} is gelukt.</value>
+  </data>
+  <data name="SuccessCreateUser" xml:space="preserve">
+    <value>Het opslaan van User {0} is gelukt.</value>
+  </data>
+  <data name="SuccessCreateUserClaims" xml:space="preserve">
+    <value>Het opslaan van Claim {0} - {1} is gelukt.</value>
+  </data>
+  <data name="SuccessCreateUserRole" xml:space="preserve">
+    <value>Het opslaan van de Role is gelukt.</value>
+  </data>
+  <data name="SuccessDeleteRoleClaims" xml:space="preserve">
+    <value>Het verwijderen van de Claim is gelukt.</value>
+  </data>
+  <data name="SuccessDeleteUser" xml:space="preserve">
+    <value>Het verwijderen van de User is gelukt.</value>
+  </data>
+  <data name="SuccessDeleteUserClaims" xml:space="preserve">
+    <value>Het verwijderen van de Claim is gelukt.</value>
+  </data>
+  <data name="SuccessDeleteUserProviders" xml:space="preserve">
+    <value>Het verwijderen van de User Provider is gelukt.</value>
+  </data>
+  <data name="SuccessDeleteUserRole" xml:space="preserve">
+    <value>Het verwijderen van de Role is gelukt.</value>
+  </data>
+  <data name="SuccessTitle" xml:space="preserve">
+    <value>Gelukt</value>
+  </data>
+  <data name="SuccessUserChangePassword" xml:space="preserve">
+    <value>Het wijzigen van het wachtwoord is gelukt.</value>
+  </data>
+</root>

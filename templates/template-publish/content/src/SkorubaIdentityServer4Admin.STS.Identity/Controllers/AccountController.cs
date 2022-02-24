@@ -1,12 +1,13 @@
-// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 // Original file: https://github.com/IdentityServer/IdentityServer4.Samples
-// Modified by Jan �koruba
+// Modified by Jan Škoruba
 
 using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using IdentityModel;
@@ -21,6 +22,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Logging;
+using Skoruba.IdentityServer4.Shared.Configuration.Configuration.Identity;
 using SkorubaIdentityServer4Admin.STS.Identity.Configuration;
 using SkorubaIdentityServer4Admin.STS.Identity.Helpers;
 using SkorubaIdentityServer4Admin.STS.Identity.Helpers.Localization;
@@ -36,7 +40,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
     {
         private readonly UserResolver<TUser> _userResolver;
         private readonly UserManager<TUser> _userManager;
-        private readonly SignInManager<TUser> _signInManager;
+        private readonly ApplicationSignInManager<TUser> _signInManager;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
@@ -45,11 +49,13 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
         private readonly IGenericControllerLocalizer<AccountController<TUser, TKey>> _localizer;
         private readonly LoginConfiguration _loginConfiguration;
         private readonly RegisterConfiguration _registerConfiguration;
+        private readonly IdentityOptions _identityOptions;
+        private readonly ILogger<AccountController<TUser, TKey>> _logger;
 
         public AccountController(
             UserResolver<TUser> userResolver,
             UserManager<TUser> userManager,
-            SignInManager<TUser> signInManager,
+            ApplicationSignInManager<TUser> signInManager,
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
@@ -57,7 +63,9 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
             IEmailSender emailSender,
             IGenericControllerLocalizer<AccountController<TUser, TKey>> localizer,
             LoginConfiguration loginConfiguration,
-            RegisterConfiguration registerConfiguration)
+            RegisterConfiguration registerConfiguration,
+            IdentityOptions identityOptions,
+            ILogger<AccountController<TUser, TKey>> logger)
         {
             _userResolver = userResolver;
             _userManager = userManager;
@@ -70,6 +78,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
             _localizer = localizer;
             _loginConfiguration = loginConfiguration;
             _registerConfiguration = registerConfiguration;
+            _identityOptions = identityOptions;
+            _logger = logger;
         }
 
         /// <summary>
@@ -110,14 +120,14 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
                     // if the user cancels, send a result back into IdentityServer as if they 
                     // denied the consent (even if this client does not require consent).
                     // this will send back an access denied OIDC error response to the client.
-                    await _interaction.GrantConsentAsync(context, ConsentResponse.Denied);
+                    await _interaction.DenyAuthorizationAsync(context, AuthorizationError.AccessDenied);
 
                     // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
-                    if (await _clientStore.IsPkceClientAsync(context.ClientId))
+                    if (context.IsNativeClient())
                     {
-                        // if the client is PKCE then we assume it's native, so this change in how to
+                        // The client is native, so this change in how to
                         // return the response is for better UX for the end user.
-                        return View("Redirect", new RedirectViewModel { RedirectUrl = model.ReturnUrl });
+                        return this.LoadingPage("Redirect", model.ReturnUrl);
                     }
 
                     return Redirect(model.ReturnUrl);
@@ -139,11 +149,11 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
 
                         if (context != null)
                         {
-                            if (await _clientStore.IsPkceClientAsync(context.ClientId))
+                            if (context.IsNativeClient())
                             {
-                                // if the client is PKCE then we assume it's native, so this change in how to
+                                // The client is native, so this change in how to
                                 // return the response is for better UX for the end user.
-                                return View("Redirect", new RedirectViewModel { RedirectUrl = model.ReturnUrl });
+                                return this.LoadingPage("Redirect", model.ReturnUrl);
                             }
 
                             // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
@@ -175,7 +185,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
                         return View("Lockout");
                     }
                 }
-                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials"));
+                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId: context?.Client.ClientId));
                 ModelState.AddModelError(string.Empty, AccountOptions.InvalidCredentialsErrorMessage);
             }
 
@@ -189,6 +199,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
         /// Show logout page
         /// </summary>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Logout(string logoutId)
         {
             // build a model so the logout page knows what to display
@@ -251,6 +262,9 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
             {
                 return View("Error");
             }
+
+            code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+
             var result = await _userManager.ConfirmEmailAsync(user, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
@@ -259,7 +273,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
-            return View();
+            return View(new ForgotPasswordViewModel());
         }
 
         [HttpPost]
@@ -269,20 +283,45 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
+                TUser user = null;
+                switch (model.Policy)
+                {
+                    case LoginResolutionPolicy.Email:
+                        try
+                        {
+                            user = await _userManager.FindByEmailAsync(model.Email);
+                        }
+                        catch (Exception ex)
+                        {
+                            // in case of multiple users with the same email this method would throw and reveal that the email is registered
+                            _logger.LogError("Error retrieving user by email ({0}) for forgot password functionality: {1}", model.Email, ex.Message);
+                            user = null;
+                        }
+                        break;
+                    case LoginResolutionPolicy.Username:
+                        try
+                        {
+                            user = await _userManager.FindByNameAsync(model.Username);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError("Error retrieving user by userName ({0}) for forgot password functionality: {1}", model.Username, ex.Message);
+                            user = null;
+                        }
+                        break;
+                }
 
                 if (user == null || !await _userManager.IsEmailConfirmedAsync(user))
                 {
-                    ModelState.AddModelError(string.Empty, _localizer["EmailNotFound"]);
-
-                    return View(model);
+                    // Don't reveal that the user does not exist
+                    return View("ForgotPasswordConfirmation");
                 }
 
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, HttpContext.Request.Scheme);
 
-                await _emailSender.SendEmailAsync(model.Email, _localizer["ResetPasswordTitle"], _localizer["ResetPasswordBody", HtmlEncoder.Default.Encode(callbackUrl)]);
-
+                await _emailSender.SendEmailAsync(user.Email, _localizer["ResetPasswordTitle"], _localizer["ResetPasswordBody", HtmlEncoder.Default.Encode(callbackUrl)]);
 
                 return View("ForgotPasswordConfirmation");
             }
@@ -312,7 +351,10 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
                 // Don't reveal that the user does not exist
                 return RedirectToAction(nameof(ResetPasswordConfirmation), "Account");
             }
-            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+
+            var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(model.Code));
+            var result = await _userManager.ResetPasswordAsync(user, code, model.Password);
+
             if (result.Succeeded)
             {
                 return RedirectToAction(nameof(ResetPasswordConfirmation), "Account");
@@ -372,8 +414,9 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             ViewData["LoginProvider"] = info.LoginProvider;
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            var userName = info.Principal.Identity.Name;
 
-            return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
+            return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email, UserName = userName });
         }
 
         [HttpPost]
@@ -548,23 +591,22 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
 
             ViewData["ReturnUrl"] = returnUrl;
 
-            switch (_loginConfiguration.ResolutionPolicy)
+            return _loginConfiguration.ResolutionPolicy switch
             {
-                case LoginResolutionPolicy.Username:
-                    return View();
-                case LoginResolutionPolicy.Email:
-                    return View("RegisterWithoutUsername");
-                default:
-                    return View("RegisterFailure");
-            }
+                LoginResolutionPolicy.Username => View(),
+                LoginResolutionPolicy.Email => View("RegisterWithoutUsername"),
+                _ => View("RegisterFailure")
+            };
         }
 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null, bool IsCalledFromRegisterWithoutUsername = false)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            if (!_registerConfiguration.Enabled) return View("RegisterFailure");
+
+            returnUrl ??= Url.Content("~/");
 
             ViewData["ReturnUrl"] = returnUrl;
 
@@ -580,18 +622,40 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
             if (result.Succeeded)
             {
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, HttpContext.Request.Scheme);
 
                 await _emailSender.SendEmailAsync(model.Email, _localizer["ConfirmEmailTitle"], _localizer["ConfirmEmailBody", HtmlEncoder.Default.Encode(callbackUrl)]);
-                await _signInManager.SignInAsync(user, isPersistent: false);
 
-                return RedirectToLocal(returnUrl);
+                if (_identityOptions.SignIn.RequireConfirmedAccount)
+                {
+                    return View("RegisterConfirmation");
+                }
+                else
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return LocalRedirect(returnUrl);
+                }
             }
 
             AddErrors(result);
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            if (IsCalledFromRegisterWithoutUsername)
+            {
+                var registerWithoutUsernameModel = new RegisterWithoutUsernameViewModel
+                {
+                    Email = model.Email,
+                    Password = model.Password,
+                    ConfirmPassword = model.ConfirmPassword
+                };
+
+                return View("RegisterWithoutUsername", registerWithoutUsernameModel);
+            }
+            else
+            {
+                return View(model);
+            }
         }
 
         [HttpPost]
@@ -607,9 +671,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
                 ConfirmPassword = model.ConfirmPassword
             };
 
-            return await Register(registerModel, returnUrl);
+            return await Register(registerModel, returnUrl, true);
         }
-        
 
         /*****************************************/
         /* helper APIs for the AccountController */
@@ -635,35 +698,40 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
         private async Task<LoginViewModel> BuildLoginViewModelAsync(string returnUrl)
         {
             var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
-            if (context?.IdP != null)
+            if (context?.IdP != null && await _schemeProvider.GetSchemeAsync(context.IdP) != null)
             {
+                var local = context.IdP == IdentityServerConstants.LocalIdentityProvider;
+
                 // this is meant to short circuit the UI and only trigger the one external IdP
-                return new LoginViewModel
+                var vm = new LoginViewModel
                 {
-                    EnableLocalLogin = false,
+                    EnableLocalLogin = local,
                     ReturnUrl = returnUrl,
                     Username = context?.LoginHint,
-                    LoginResolutionPolicy = _loginConfiguration.ResolutionPolicy,
-                    ExternalProviders = new ExternalProvider[] { new ExternalProvider { AuthenticationScheme = context.IdP } }
                 };
+
+                if (!local)
+                {
+                    vm.ExternalProviders = new[] { new ExternalProvider { AuthenticationScheme = context.IdP } };
+                }
+
+                return vm;
             }
 
             var schemes = await _schemeProvider.GetAllSchemesAsync();
 
             var providers = schemes
-                .Where(x => x.DisplayName != null ||
-                            (x.Name.Equals(AccountOptions.WindowsAuthenticationSchemeName, StringComparison.OrdinalIgnoreCase))
-                )
+                .Where(x => x.DisplayName != null)
                 .Select(x => new ExternalProvider
                 {
-                    DisplayName = x.DisplayName,
+                    DisplayName = x.DisplayName ?? x.Name,
                     AuthenticationScheme = x.Name
                 }).ToList();
 
             var allowLocal = true;
-            if (context?.ClientId != null)
+            if (context?.Client.ClientId != null)
             {
-                var client = await _clientStore.FindEnabledClientByIdAsync(context.ClientId);
+                var client = await _clientStore.FindEnabledClientByIdAsync(context.Client.ClientId);
                 if (client != null)
                 {
                     allowLocal = client.EnableLocalLogin;
@@ -681,7 +749,6 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
                 EnableLocalLogin = allowLocal && AccountOptions.AllowLocalLogin,
                 ReturnUrl = returnUrl,
                 Username = context?.LoginHint,
-                LoginResolutionPolicy = _loginConfiguration.ResolutionPolicy,
                 ExternalProviders = providers.ToArray()
             };
         }
@@ -757,6 +824,9 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Controllers
         }
     }
 }
+
+
+
 
 
 

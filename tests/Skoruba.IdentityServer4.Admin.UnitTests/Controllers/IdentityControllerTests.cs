@@ -22,12 +22,12 @@ using Skoruba.AuditLogging.EntityFramework.Repositories;
 using Skoruba.AuditLogging.EntityFramework.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfaces;
-using Skoruba.IdentityServer4.Admin.Controllers;
+using Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
-using Skoruba.IdentityServer4.Admin.Helpers;
-using Skoruba.IdentityServer4.Admin.Helpers.Localization;
+using Skoruba.IdentityServer4.Admin.UI.Helpers;
+using Skoruba.IdentityServer4.Admin.UI.Helpers.Localization;
 using Xunit;
 using System.Security.Claims;
 
@@ -35,19 +35,19 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 {
     public class IdentityControllerTests
     {
-        private IIdentityService<UserDto<string>, string, RoleDto<string>, string, string, string,
+        private IIdentityService<UserDto<string>, RoleDto<string>,
             UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
             UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
-            UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
-            UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-            RoleClaimsDto<string>> GetIdentityService(IServiceProvider services)
+            UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string>,
+            UserClaimsDto<UserClaimDto<string>, string>, UserProviderDto<string>, UserProvidersDto<UserProviderDto<string>, string>, UserChangePasswordDto<string>,
+            RoleClaimsDto<RoleClaimDto<string>, string>, UserClaimDto<string>, RoleClaimDto<string>> GetIdentityService(IServiceProvider services)
         {
-            return services.GetRequiredService<IIdentityService<UserDto<string>, string, RoleDto<string>, string, string, string,
+            return services.GetRequiredService<IIdentityService<UserDto<string>, RoleDto<string>,
                 UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
                 UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
-                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
-                UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-                RoleClaimsDto<string>>>();
+                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string>,
+                UserClaimsDto<UserClaimDto<string>, string>, UserProviderDto<string>, UserProvidersDto<UserProviderDto<string>, string>, UserChangePasswordDto<string>,
+                RoleClaimsDto<RoleClaimDto<string>, string>, UserClaimDto<string>, RoleClaimDto<string>>>();
         }
 
 
@@ -73,7 +73,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var addedUser = await identityService.GetUserAsync(userDto.Id);
 
-            userDto.ShouldBeEquivalentTo(addedUser, opts => opts.Excluding(x => x.Id));
+            userDto.Should().BeEquivalentTo(addedUser, opts => opts.Excluding(x => x.Id));
         }
 
         [Fact]
@@ -95,8 +95,8 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             // A user cannot delete own account
             var subjectClaim = new Claim(IdentityModel.JwtClaimTypes.Subject, userDto.Id);
-            ProvideControllerContextWithClaimsPrincipal(controller, subjectClaim);            
-            
+            ProvideControllerContextWithClaimsPrincipal(controller, subjectClaim);
+
             var result = await controller.UserDelete(userDto);
 
             // Assert            
@@ -144,7 +144,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var updatedUser = await identityService.GetUserAsync(updatedUserDto.Id.ToString());
 
-            updatedUserDto.ShouldBeEquivalentTo(updatedUser, opts => opts.Excluding(x => x.Id));
+            updatedUserDto.Should().BeEquivalentTo(updatedUser, opts => opts.Excluding(x => x.Id));
         }
 
         [Fact]
@@ -177,7 +177,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             userDto.Id = userId;
             var addedUser = await identityService.GetUserAsync(userDto.Id.ToString());
 
-            viewModel.ShouldBeEquivalentTo(addedUser);
+            viewModel.Should().BeEquivalentTo(addedUser);
         }
 
         [Fact]
@@ -202,7 +202,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var addedRole = await identityService.GetRoleAsync(roleDto.Id.ToString());
 
-            roleDto.ShouldBeEquivalentTo(addedRole, opts => opts.Excluding(x => x.Id));
+            roleDto.Should().BeEquivalentTo(addedRole, opts => opts.Excluding(x => x.Id));
         }
 
         [Fact]
@@ -230,7 +230,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             roleDto.Id = roleId;
             var addedRole = await identityService.GetRoleAsync(roleDto.Id.ToString());
 
-            viewModel.ShouldBeEquivalentTo(addedRole);
+            viewModel.Should().BeEquivalentTo(addedRole);
         }
 
         [Fact]
@@ -285,7 +285,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var updatedRole = await identityService.GetRoleAsync(updatedRoleDto.Id.ToString());
 
-            updatedRoleDto.ShouldBeEquivalentTo(updatedRole, opts => opts.Excluding(x => x.Id));
+            updatedRoleDto.Should().BeEquivalentTo(updatedRole, opts => opts.Excluding(x => x.Id));
         }
 
         [Fact]
@@ -315,7 +315,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var addedUserClaim = await identityService.GetUserClaimAsync(user.Id.ToString(), userClaim.Id);
 
-            userClaimsDto.ShouldBeEquivalentTo(addedUserClaim, opts => opts.Excluding(x => x.ClaimId));
+            userClaimsDto.Should().BeEquivalentTo(addedUserClaim, opts => opts.Excluding(x => x.ClaimId));
         }
 
         [Fact]
@@ -349,7 +349,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var userRole = await dbContext.UserRoles.Where(x => x.RoleId == roleDto.Id && x.UserId == userDto.Id).SingleOrDefaultAsync();
 
-            userRoleDto.ShouldBeEquivalentTo(userRole, opts => opts.Excluding(x => x.Roles)
+            userRole.Should().BeEquivalentTo(userRoleDto, opts => opts.Excluding(x => x.Roles)
                                                                    .Excluding(x => x.RolesList)
                                                                    .Excluding(x => x.PageSize)
                                                                    .Excluding(x => x.TotalCount)
@@ -452,7 +452,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             var addedRoleClaim = await identityService.GetRoleClaimAsync(role.Id.ToString(), roleClaim.Id);
 
-            roleClaimsDto.ShouldBeEquivalentTo(addedRoleClaim, opts => opts.Excluding(x => x.ClaimId)
+            roleClaimsDto.Should().BeEquivalentTo(addedRoleClaim, opts => opts.Excluding(x => x.ClaimId)
                 .Excluding(x => x.RoleName));
         }
 
@@ -549,33 +549,33 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
             userProvider.Should().BeNull();
         }
 
-        private IdentityController<UserDto<string>, string, RoleDto<string>, string, string, string,
+        private IdentityController<UserDto<string>, RoleDto<string>,
             UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
             UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
-            UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
-            UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-            RoleClaimsDto<string>> PrepareIdentityController(IServiceProvider serviceProvider)
+            UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string>,
+            UserClaimsDto<UserClaimDto<string>, string>, UserProviderDto<string>, UserProvidersDto<UserProviderDto<string>, string>, UserChangePasswordDto<string>,
+            RoleClaimsDto<RoleClaimDto<string>, string>, UserClaimDto<string>, RoleClaimDto<string>> PrepareIdentityController(IServiceProvider serviceProvider)
         {
             // Arrange
-            var localizer = serviceProvider.GetRequiredService<IGenericControllerLocalizer<IdentityController<UserDto<string>, string, RoleDto<string>, string, string, string,
+            var localizer = serviceProvider.GetRequiredService<IGenericControllerLocalizer<IdentityController<UserDto<string>, RoleDto<string>,
                 UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
                 UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
-                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
-                UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-                RoleClaimsDto<string>>>>();
+                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string>,
+                UserClaimsDto<UserClaimDto<string>, string>, UserProviderDto<string>, UserProvidersDto<UserProviderDto<string>,string>, UserChangePasswordDto<string>,
+                RoleClaimsDto<RoleClaimDto<string>, string>, UserClaimDto<string>, RoleClaimDto<string>>>>();
             var logger = serviceProvider.GetRequiredService<ILogger<ConfigurationController>>();
             var tempDataDictionaryFactory = serviceProvider.GetRequiredService<ITempDataDictionaryFactory>();
             var identityService = GetIdentityService(serviceProvider);
 
             //Get Controller
-            var controller = new IdentityController<UserDto<string>, string, RoleDto<string>, string, string, string,
+            var controller = new IdentityController<UserDto<string>, RoleDto<string>,
                 UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
                 UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
-                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
-                UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-                RoleClaimsDto<string>>(identityService, logger, localizer);
+                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string>,
+                UserClaimsDto<UserClaimDto<string>, string>, UserProviderDto<string>, UserProvidersDto<UserProviderDto<string>, string>, UserChangePasswordDto<string>,
+                RoleClaimsDto<RoleClaimDto<string>, string>, UserClaimDto<string>, RoleClaimDto<string>>(identityService, logger, localizer);
 
-            //Setup TempData for notofication in basecontroller
+            //Setup TempData for notification in basecontroller
             var httpContext = serviceProvider.GetRequiredService<IHttpContextAccessor>().HttpContext;
             var tempData = tempDataDictionaryFactory.GetTempData(httpContext);
             controller.TempData = tempData;
@@ -615,12 +615,12 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 
             services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
 
-            services.AddAdminAspNetIdentityServices<AdminIdentityDbContext, IdentityServerPersistedGrantDbContext,UserDto<string>, string, RoleDto<string>, string, string, string,
+            services.AddAdminAspNetIdentityServices<AdminIdentityDbContext, IdentityServerPersistedGrantDbContext, UserDto<string>, RoleDto<string>,
                 UserIdentity, UserIdentityRole, string, UserIdentityUserClaim, UserIdentityUserRole,
                 UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
-                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string, string>,
-                UserClaimsDto<string>, UserProviderDto<string>, UserProvidersDto<string>, UserChangePasswordDto<string>,
-                RoleClaimsDto<string>, UserClaimDto<string>, RoleClaimDto<string>>();
+                UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string>,
+                UserClaimsDto<UserClaimDto<string>, string>, UserProviderDto<string>, UserProvidersDto<UserProviderDto<string>, string>, UserChangePasswordDto<string>,
+                RoleClaimsDto<RoleClaimDto<string>, string>, UserClaimDto<string>, RoleClaimDto<string>>();
 
             services.AddIdentity<UserIdentity, UserIdentityRole>()
                 .AddEntityFrameworkStores<AdminIdentityDbContext>()

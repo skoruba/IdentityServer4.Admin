@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices.ComTypes;
-using System.Threading.Tasks;
-using IdentityServer4.AccessTokenValidation;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Skoruba.IdentityServer4.Admin.Api.Configuration.Constants;
@@ -71,7 +69,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Controllers
             var clientDto = client.ToClientApiModel<ClientDto>();
 
             await _clientService.GetClientAsync(clientDto.Id);
-            await _clientService.UpdateClientAsync(clientDto);
+            await _clientService.UpdateClientAsync(clientDto, true, true);
 
             return Ok();
         }

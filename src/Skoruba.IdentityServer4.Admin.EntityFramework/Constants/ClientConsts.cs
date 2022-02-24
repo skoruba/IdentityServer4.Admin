@@ -12,7 +12,8 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Constants
                 "SharedSecret",
                 "X509Thumbprint",
                 "X509Name",
-                "X509CertificateBase64"
+                "X509CertificateBase64",
+                "JWK"
             };
 
             return secretTypes;
@@ -46,16 +47,35 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Constants
         public static List<string> GetGrantTypes()
         {
             var allowedGrantypes = new List<string>
-                {
-                    "implicit",
-                    "client_credentials",
-                    "authorization_code",
-                    "hybrid",
-                    "password",
-                    "urn:ietf:params:oauth:grant-type:device_code"
-                };
+            {
+                "implicit",
+                "client_credentials",
+                "authorization_code",
+                "hybrid",
+                "password",
+                "urn:ietf:params:oauth:grant-type:device_code",
+                "delegation"
+            };
 
             return allowedGrantypes;
+        }
+
+        public static List<string> SigningAlgorithms()
+        {
+            var signingAlgorithms = new List<string>
+            {
+                "RS256", 
+                "RS384", 
+                "RS512", 
+                "PS256", 
+                "PS384", 
+                "PS512", 
+                "ES256", 
+                "ES384", 
+                "ES512"
+            };
+
+            return signingAlgorithms;
         }
 
         public static List<SelectItem> GetProtocolTypes()

@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Manage
 {
@@ -11,6 +11,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Manage
         public string Password { get; set; }
     }
 }
+
+
 
 
 

@@ -1,4 +1,4 @@
-@using IdentityServer4.Extensions
+﻿@using IdentityServer4.Extensions
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.Localization
 @using SkorubaIdentityServer4Admin.Admin.EntityFramework.Shared.Entities.Identity
@@ -24,23 +24,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@RootConfiguration.AdminConfiguration.PageTitle</title>
-    <link rel="icon" type="image/x-icon" href="@RootConfiguration.AdminConfiguration.FaviconUri" />
-    <link rel="shortcut icon" type="image/x-icon" href="@RootConfiguration.AdminConfiguration.FaviconUri" />
+    <link rel="icon" type="image/x-icon" href="@UrlHelper.Content(RootConfiguration.AdminConfiguration.FaviconUri)" />
+    <link rel="shortcut icon" type="image/x-icon" href="@UrlHelper.Content(@RootConfiguration.AdminConfiguration.FaviconUri)" />
 
     <environment include="Development">
         <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
+        @await Html.PartialAsync("Common/ThemeResources")
         <link href="~/dist/css/web.css" asp-append-version="true" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
         <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
+        @await Html.PartialAsync("Common/ThemeResources")
         <link href="~/dist/css/web.min.css" asp-append-version="true" rel="stylesheet" />
     </environment>
 
-    @RenderSection("styles", required: false)
+    @if (!string.IsNullOrEmpty(RootConfiguration.AdminConfiguration.CustomThemeCss))
+    {
+        <link href="@UrlHelper.Content(RootConfiguration.AdminConfiguration.CustomThemeCss)" asp-append-version="true" rel="stylesheet" />
+    }
+
+    @await RenderSectionAsync("styles", required: false)
 </head>
 <body>
 
-    <div class="menu d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <div class="menu d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom box-shadow">
         <!--Site name -->
         <h3 class="menu-logo my-0 mr-md-auto font-weight-normal"><a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@RootConfiguration.AdminConfiguration.PageTitle</a></h3>
         <!--Menu item -->
@@ -83,9 +90,12 @@
             <div class="row">
                 <div class="col-6 col-md">
                     @RootConfiguration.AdminConfiguration.PageTitle
-                    <small class="d-block mb-3 text-muted">@Localizer["FooterCopyright"] @DateTime.Now.Year</small>
+                    <small class="d-block mb-3 text-muted">@Localizer["FooterCopyright"] @DateTime.Now.Year - @await Html.PartialAsync("Common/ApplicationVersion")</small>
                 </div>
-                <div class="col-md-6 text-right">
+                <div class="col-md-3 text-right">
+                    @await Html.PartialAsync("Common/SelectTheme")
+                </div>
+                <div class="col-md-3 text-right">
                     @await Html.PartialAsync("Common/SelectLanguage")
                 </div>
             </div>
@@ -99,9 +109,11 @@
         <script src="~/dist/js/bundle.min.js" asp-append-version="true"></script>
     </environment>
 
-    @RenderSection("scripts", required: false)
+    @await RenderSectionAsync("scripts", required: false)
 </body>
 </html>
+
+
 
 
 

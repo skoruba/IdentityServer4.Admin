@@ -1,4 +1,4 @@
-param([string] $migration = 'DbInit', [string] $migrationProviderName = 'All')
+param([string] $migration = 'DbInit', [string] $migrationProviderName = 'All', [string] $targetContext = 'All')
 $projectName = "Skoruba.IdentityServer4";
 $currentPath = Get-Location
 Set-Location "../src/$projectName.Admin"
@@ -12,6 +12,7 @@ $targetContexts = @{
     IdentityServerConfigurationDbContext  = "Migrations\IdentityServerConfiguration";
     IdentityServerPersistedGrantDbContext = "Migrations\IdentityServerGrants";
     AdminAuditLogDbContext                = "Migrations\AuditLogging";
+    IdentityServerDataProtectionDbContext = "Migrations\DataProtection";
 }
 
 #Initialize the db providers and it's respective projects
@@ -24,7 +25,7 @@ $dpProviders = @{
 #Fix issue when the tools is not installed and the nuget package does not work see https://github.com/MicrosoftDocs/azure-docs/issues/40048
 Write-Host "Updating donet ef tools"
 $env:Path += "	% USERPROFILE % \.dotnet\tools";
-dotnet tool update --global dotnet-ef --version 3.1.0 
+dotnet tool update --global dotnet-ef
 
 Write-Host "Start migrate projects"
 foreach ($provider in $dpProviders.Keys) {
@@ -40,10 +41,14 @@ foreach ($provider in $dpProviders.Keys) {
         $settings | set-content appsettings.json
         if ((Test-Path $projectPath) -eq $true) {
             foreach ($context in $targetContexts.Keys) {
-                $migrationPath = $targetContexts[$context];
+                
+                if ($targetContext -eq 'All' -or $context -eq $targetContext) {
 
-                Write-Host "Migrating context " $context
-                dotnet ef migrations add $migration -c $context -o $migrationPath -p $projectPath
+                    $migrationPath = $targetContexts[$context];
+
+                    Write-Host "Migrating context " $context
+                    dotnet ef migrations add $migration -c $context -o $migrationPath -p $projectPath
+                }
             } 
         }
         

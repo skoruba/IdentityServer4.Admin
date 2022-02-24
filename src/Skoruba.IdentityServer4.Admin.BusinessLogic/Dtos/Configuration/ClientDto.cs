@@ -17,8 +17,8 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
             AllowedCorsOrigins = new List<string>();
             AllowedGrantTypes = new List<string>();
             Claims = new List<ClientClaimDto>();
-            ClientSecrets = new List<ClientSecretDto>();
             Properties = new List<ClientPropertyDto>();
+            AllowedIdentityTokenSigningAlgorithms = new List<string>();
         }
 
         public ClientType ClientType { get; set; }
@@ -101,7 +101,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
         public string AllowedScopesItems { get; set; }
 
         public List<ClientClaimDto> Claims { get; set; }
-        public List<ClientSecretDto> ClientSecrets { get; set; }
         public List<ClientPropertyDto> Properties { get; set; }
 
         public DateTime? Updated { get; set; }
@@ -112,5 +111,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration
         public int DeviceCodeLifetime { get; set; } = 300;
 
         public bool NonEditable { get; set; }
+
+        public bool RequireRequestObject { get; set; }
+
+        public List<string> AllowedIdentityTokenSigningAlgorithms { get; set; }
+
+        public string AllowedIdentityTokenSigningAlgorithmsItems { get; set; }
     }
 }

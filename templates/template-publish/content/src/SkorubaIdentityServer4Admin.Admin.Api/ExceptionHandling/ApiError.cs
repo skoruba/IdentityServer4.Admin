@@ -1,4 +1,4 @@
-namespace SkorubaIdentityServer4Admin.Admin.Api.ExceptionHandling
+﻿namespace SkorubaIdentityServer4Admin.Admin.Api.ExceptionHandling
 {
     public class ApiError
     {
@@ -7,6 +7,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.ExceptionHandling
         public string Description { get; set; }
     }
 }
+
+
 
 
 

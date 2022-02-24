@@ -1,0 +1,474 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AbsoluteRefreshTokenLifetime_Info" xml:space="preserve">
+    <value>Максимальный срок действия обновления токена в секундах. По умолчанию до 2592000 секунд / 30 дней</value>
+  </data>
+  <data name="AbsoluteRefreshTokenLifetime_Label" xml:space="preserve">
+    <value>Абсолютное обновление Срока Действия Токена</value>
+  </data>
+  <data name="AccessTokenLifetime_Info" xml:space="preserve">
+    <value>Срок действия токена доступа в секундах (по умолчанию 3600 секунд / 1 час)</value>
+  </data>
+  <data name="AccessTokenLifetime_Label" xml:space="preserve">
+    <value>Срок действия токена доступа</value>
+  </data>
+  <data name="AccessTokenTypes_Info" xml:space="preserve">
+    <value>Указывает, является ли токен доступа ссылочным токеном или cамостоятельным JWT токеном (по умолчанию до Jwt).</value>
+  </data>
+  <data name="AccessTokenTypes_Label" xml:space="preserve">
+    <value>Тип токена доступа</value>
+  </data>
+  <data name="AllowAccessTokensViaBrowser_Info" xml:space="preserve">
+    <value>Указывает, разрешено ли клиенту получать токен доступа через браузер. Целесообразно для затруднения потоков допускающих множество типов ответов (например путем отказа клиента гибридного потока, который должен испольозвать код id_token для добавления типа ответа токена и таким образом происходит утечка токена в бразуер.</value>
+  </data>
+  <data name="AllowAccessTokensViaBrowser_Label" xml:space="preserve">
+    <value>Разрешить Токен Доступа через Браузер </value>
+  </data>
+  <data name="AllowOfflineAccess_Info" xml:space="preserve">
+    <value>Указывает, может ли этот клиент запрашивать обновление токенов (запрашивать область автономного_доступа (offline_access))</value>
+  </data>
+  <data name="AllowOfflineAccess_Label" xml:space="preserve">
+    <value>Разрешить автономный доступ </value>
+  </data>
+  <data name="AllowPlainTextPkce_Info" xml:space="preserve">
+    <value>Указывает, могут ли клиенты PKCE использовать вызов обычного текстового кода (не рекомендуется - по умолчанию значение равно false)</value>
+  </data>
+  <data name="AllowPlainTextPkce_Label" xml:space="preserve">
+    <value>Позволить обычный текстовый код Pkce</value>
+  </data>
+  <data name="AllowRememberConsent_Info" xml:space="preserve">
+    <value>Указывает,может ли пользователь сохранять решения о подтверждении. По умолчанию значение равно true.</value>
+  </data>
+  <data name="AllowRememberConsent_Label" xml:space="preserve">
+    <value>Разрешить Запоминать Подтверждения </value>
+  </data>
+  <data name="AlwaysIncludeUserClaimsInIdToken_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AlwaysIncludeUserClaimsInIdToken_Label" xml:space="preserve">
+    <value>Всегда включайте Утверждения Токена в идентификатор токена (IdToken)</value>
+  </data>
+  <data name="AlwaysSendClientClaims_Info" xml:space="preserve">
+    <value>Если задано,  утверждения клиента будут отправляться для каждого потока. Если нет,  только для потока учетных данных клиента (по умолчанию значение равно false)</value>
+  </data>
+  <data name="AlwaysSendClientClaims_Label" xml:space="preserve">
+    <value>Всегда Отправляйте Утверждения Клиента</value>
+  </data>
+  <data name="AuthorizationCodeLifetime_Info" xml:space="preserve">
+    <value>Срок действия кода авторизации в секундах (по умолчанию 300 секунд / 5 минут)</value>
+  </data>
+  <data name="AuthorizationCodeLifetime_Label" xml:space="preserve">
+    <value>Срок действия кода авторизации</value>
+  </data>
+  <data name="ClientId_Info" xml:space="preserve">
+    <value>Уникальный ID клиента</value>
+  </data>
+  <data name="ClientId_Label" xml:space="preserve">
+    <value>ID Клиента</value>
+  </data>
+  <data name="ClientName_Info" xml:space="preserve">
+    <value>Отображаемое имя клиента (используемое для входа и экрана подтверждения)</value>
+  </data>
+  <data name="ClientName_Label" xml:space="preserve">
+    <value>Имя Клиента</value>
+  </data>
+  <data name="ClientUri_Info" xml:space="preserve">
+    <value>URI для дальнейшей информации о клиенте (используемый на экране подтверждения)</value>
+  </data>
+  <data name="ClientUri_Label" xml:space="preserve">
+    <value>URI Клиента</value>
+  </data>
+  <data name="Enabled_Info" xml:space="preserve">
+    <value>Указывает, включён ли клиент.  По умолчанию значение равно true.</value>
+  </data>
+  <data name="Enabled_Label" xml:space="preserve">
+    <value>Включён!</value>
+  </data>
+  <data name="EnableLocalLogin_Info" xml:space="preserve">
+    <value>Указывает, может ли этот клиент использовать локальные учетные записи или только внешние IdPs. По умолчанию значение равно true.</value>
+  </data>
+  <data name="EnableLocalLogin_Label" xml:space="preserve">
+    <value>Включить Локальный Вход </value>
+  </data>
+  <data name="IdentityTokenLifetime_Info" xml:space="preserve">
+    <value>Для определения срока действия токена в секундах (по умолчанию значение равно 300 секунд / 5 минут)</value>
+  </data>
+  <data name="IdentityTokenLifetime_Label" xml:space="preserve">
+    <value>Подлинность Срока действия Токена</value>
+  </data>
+  <data name="IncludeJwtId_Info" xml:space="preserve">
+    <value>Указывает, должны ли  JWT токены доступа иметь встроенный уникальный идентификатор (через утверждения jti).</value>
+  </data>
+  <data name="IncludeJwtId_Label" xml:space="preserve">
+    <value>Вкулючает Jwt идетнификатор (Id)</value>
+  </data>
+  <data name="LogoUri_Info" xml:space="preserve">
+    <value>URI Унифицированный индикатор ресурса для лого клиента (используется на экране подтверждения)</value>
+  </data>
+  <data name="LogoUri_Label" xml:space="preserve">
+    <value>Uri Лого </value>
+  </data>
+  <data name="RefreshTokenExpiration_Info" xml:space="preserve">
+    <value>Срок абсолютного токен обновления истекает в определенный момент времени (определяется СрокомДействияАбсолютногоОбновленияТокена)
+
+Скольжение при обновлении токена, время действия обновления токена будет обновлено (на велечину указанную в СрокеДействияСкользащегоОбновленияТокена). Срок действия не привысит СрокДействияАбсолютногоОбновленияТокена.</value>
+  </data>
+  <data name="RefreshTokenExpiration_Label" xml:space="preserve">
+    <value>Обновление Срока Действия Токена </value>
+  </data>
+  <data name="RefreshTokenUsage.Info" xml:space="preserve">
+    <value>Повторное использование обновления обработчика токена останется прежним при обновлении токенов
+
+Одноразовый обновляющий обработчик токена будет  модернизирован при обновлении токенов</value>
+  </data>
+  <data name="RefreshTokenUsage.Label" xml:space="preserve">
+    <value>Использование Обновления Токена</value>
+  </data>
+  <data name="RefreshTokenUsage_Info" xml:space="preserve">
+    <value>Повторное использование обновления обработчика токена останется прежним при обновлении токенов
+
+Одноразовый обновляющий обработчик токена будет  модернизирован при обновлении токенов</value>
+  </data>
+  <data name="RefreshTokenUsage_Label" xml:space="preserve">
+    <value>Использование Обновления Токена</value>
+  </data>
+  <data name="RequireClientSecret_Info" xml:space="preserve">
+    <value>Указывает, нужен ли этому клиенту секрет для запроса токена из конечной точки токена (по умолчанию значение равно true)</value>
+  </data>
+  <data name="RequireClientSecret_Label" xml:space="preserve">
+    <value>Требуется Секрет Клиента</value>
+  </data>
+  <data name="RequireConsent_Info" xml:space="preserve">
+    <value>Указывает, требуется ли экран подтверждения. По умолчанию значение равно true.</value>
+  </data>
+  <data name="RequireConsent_Label" xml:space="preserve">
+    <value>Требуется Подтверждение </value>
+  </data>
+  <data name="RequirePkce_Info" xml:space="preserve">
+    <value>Указывает, должны ли клиенты, использующие тип грантов на основе кода авторизации, отправлять подтверждающий ключ</value>
+  </data>
+  <data name="RequirePkce_Label" xml:space="preserve">
+    <value>Требуется Ключ проверки для обмена кодом (Pkce)</value>
+  </data>
+  <data name="SlidingRefreshTokenLifetime_Info" xml:space="preserve">
+    <value>Скользящий срок действия обновления токена в секундах. По умолчанию до 1296000 секунд / 15 дней</value>
+  </data>
+  <data name="SlidingRefreshTokenLifetime_Label" xml:space="preserve">
+    <value>Срок Действия скользящего обновления токена</value>
+  </data>
+  <data name="UpdateAccessTokenClaimsOnRefresh_Info" xml:space="preserve">
+    <value>Возвращает или задает значение, указывающее следует ли обновлять токен доступа (и его утверждения) при запросе маркера обновления.</value>
+  </data>
+  <data name="UpdateAccessTokenClaimsOnRefresh_Label" xml:space="preserve">
+    <value>Корректировка Утверждений Токена Доступа при Обновлении</value>
+  </data>
+  <data name="AllowedCorsOrigins_Info" xml:space="preserve">
+    <value>Если задано, будет использоваться реализация службы политики CORS  по умолчанию (In-Memory и EF) для построения политики CORS для клиентов JavaScript.</value>
+  </data>
+  <data name="AllowedCorsOrigins_Label" xml:space="preserve">
+    <value>Разрешенные происхождения кросс-доменных запросов (Cors Origins)</value>
+  </data>
+  <data name="AllowedGrantTypes_Info" xml:space="preserve">
+    <value>Указывает , какой тип прав позволено использовать клиенту. Используйте класс Типы Прав для общих соединений. Список Прав по умолчанию: Неявное Право - (implicit), Право Предоставление Учетных Данных Клиента - (client_credentials), Право Авторизации Кода - (authorization_code), Гибритный Грант - (hybrid),  Право Предоставления Учетных данных владельца ресурса - (пароль)</value>
+  </data>
+  <data name="AllowedGrantTypes_Label" xml:space="preserve">
+    <value>Разрешенные Типы Прав</value>
+  </data>
+  <data name="AllowedScopes_Info" xml:space="preserve">
+    <value>По умолчанию клиент не имеет доступа ни к одному ресурсу - укажите разрешенные ресурсы, добавив соответствующие имена областей</value>
+  </data>
+  <data name="AllowedScopes_Label" xml:space="preserve">
+    <value>Разрешенные области</value>
+  </data>
+  <data name="Claims_Info" xml:space="preserve">
+    <value>Позволяет настраивать утверждения для клиента (будут включены в токен доступа).</value>
+  </data>
+  <data name="Claims_Label" xml:space="preserve">
+    <value>Утверждения</value>
+  </data>
+  <data name="ClientSecrets_Info" xml:space="preserve">
+    <value>Список секретов клиента - учетные данные для доступа к конечной точке токена</value>
+  </data>
+  <data name="ClientSecrets_Label" xml:space="preserve">
+    <value>Секрет Клиента</value>
+  </data>
+  <data name="IdentityProviderRestrictions_Info" xml:space="preserve">
+    <value>Указывает, какие внешние IdPs могут использоваться с этим клиентом ( если список пустой все IdPs разрешены). По умолчанию пусто.</value>
+  </data>
+  <data name="IdentityProviderRestrictions_Label" xml:space="preserve">
+    <value>Ограничения Поставщика Цифровых Удостоверений </value>
+  </data>
+  <data name="PostLogoutRedirectUris_Info" xml:space="preserve">
+    <value>Задает разрешеннные URIs для перенаправления после выхода из системы </value>
+  </data>
+  <data name="PostLogoutRedirectUris_Label" xml:space="preserve">
+    <value>Перенаправление Выхода из системы Uris</value>
+  </data>
+  <data name="RedirectUris_Info" xml:space="preserve">
+    <value>Задает разрешенные URIs для возврата токенов или авторизации кодов</value>
+  </data>
+  <data name="RedirectUris_Label" xml:space="preserve">
+    <value>Переадресация адреса (Uri)</value>
+  </data>
+  <data name="Type_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Type_Label" xml:space="preserve">
+    <value>Тип Утверждения</value>
+  </data>
+  <data name="Value_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Value_Label" xml:space="preserve">
+    <value>Значение Утверждения</value>
+  </data>
+  <data name="SecretType_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SecretType_Label" xml:space="preserve">
+    <value>Тип Секрета</value>
+  </data>
+  <data name="SecretValue_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SecretValue_Label" xml:space="preserve">
+    <value>Значение Секрета</value>
+  </data>
+  <data name="HashType_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="HashType_Label" xml:space="preserve">
+    <value>Тип Хеша</value>
+  </data>
+  <data name="RoleNormalizedName_Info" xml:space="preserve">
+    <value>Нормализованное Имя Роли</value>
+  </data>
+  <data name="RoleNormalizedName_Label" xml:space="preserve">
+    <value>Нормализованное Имя</value>
+  </data>
+  <data name="BackChannelLogoutSessionRequired_Info" xml:space="preserve">
+    <value>Указывает, должен ли идентификатор сеанса пользователя отправляться в запросе на BackChannelLogoutUri. По умолчанию значение равно true.</value>
+  </data>
+  <data name="BackChannelLogoutSessionRequired_Label" xml:space="preserve">
+    <value>Требуется Обратный Канал Выхода из Сессии</value>
+  </data>
+  <data name="BackChannelLogoutUri_Info" xml:space="preserve">
+    <value>Указывает на выход клиента из URI  для выхода на сервер на основе протокола HTTP. Для дальнейшей информации, смотрите  спецификацию обратного канала OIDC.</value>
+  </data>
+  <data name="BackChannelLogoutUri_Label" xml:space="preserve">
+    <value>Uri Выхода из Системы Обратного Канала </value>
+  </data>
+  <data name="ClientClaimsPrefix_Info" xml:space="preserve">
+    <value>Если задано, префикс типов клиентских утверждений будет c префиксом по умолчанию _client. Смысл в том чтобы убедиться, что  они случайно не конфликтовали с утверждениями пользователя.</value>
+  </data>
+  <data name="ClientClaimsPrefix_Label" xml:space="preserve">
+    <value>Префикс Утверждений Клиента</value>
+  </data>
+  <data name="Description_Info" xml:space="preserve">
+    <value>Описание Клиента</value>
+  </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="FrontChannelLogoutSessionRequired_Info" xml:space="preserve">
+    <value>Указывает, должен ли идентификатор сеанса пользователя отправляться к FrontChannelLogoutUri. По умолчанию значение равно true.</value>
+  </data>
+  <data name="FrontChannelLogoutSessionRequired_Label" xml:space="preserve">
+    <value>Требуется Передний Канал Выхода из Сессии </value>
+  </data>
+  <data name="FrontChannelLogoutUri_Info" xml:space="preserve">
+    <value>Указывает на выход клиента из URI  для выхода на сервер на основе протокола HTTP. Для дальнейшей информации, смотрите  спецификацию переднего канала OIDC.</value>
+  </data>
+  <data name="FrontChannelLogoutUri_Label" xml:space="preserve">
+    <value>URI Выход Переднего Канала</value>
+  </data>
+  <data name="PairWiseSubjectSalt_Info" xml:space="preserve">
+    <value>Значение Соли(модификатора), используемое в генерации идентификатора парного объекта (subjectId) для пользователей этого клиента.</value>
+  </data>
+  <data name="PairWiseSubjectSalt_Label" xml:space="preserve">
+    <value>Соль(модификатор) Парного Объекта</value>
+  </data>
+  <data name="Properties_Info" xml:space="preserve">
+    <value>Словарь для хранения любых пользовательских значений для клиента.</value>
+  </data>
+  <data name="Properties_Label" xml:space="preserve">
+    <value>Свойства</value>
+  </data>
+  <data name="PropertyKey_Info" xml:space="preserve">
+    <value>Ключ</value>
+  </data>
+  <data name="PropertyKey_Label" xml:space="preserve">
+    <value>Ключ</value>
+  </data>
+  <data name="PropertyValue_Info" xml:space="preserve">
+    <value>Значение</value>
+  </data>
+  <data name="PropertyValue_Label" xml:space="preserve">
+    <value>Значение</value>
+  </data>
+  <data name="ProtocolType_Info" xml:space="preserve">
+    <value>По умолчанию OpenID Connect протокол</value>
+  </data>
+  <data name="ProtocolType_Label" xml:space="preserve">
+    <value>Тип Протокола</value>
+  </data>
+  <data name="DeviceCodeLifetime_Info" xml:space="preserve">
+    <value>Срок службы кода устройства в секундах (по умолчанию 300 секунд / 5 минут)</value>
+  </data>
+  <data name="DeviceCodeLifetime_Label" xml:space="preserve">
+    <value>Срок службы кода устройства</value>
+  </data>
+  <data name="UserCodeType_Info" xml:space="preserve">
+    <value>Определяет тип кода пользователя, который будет использоваться для клиента. В противном случае возвращается значение по умолчанию.</value>
+  </data>
+  <data name="UserCodeType_Label" xml:space="preserve">
+    <value>Тип Кода Пользователя</value>
+  </data>
+  <data name="UserSsoLifetime_Info" xml:space="preserve">
+    <value>Максимальная продолжительность (в секундах) с момента последней аутентификации пользователя. По умолчанию null</value>
+  </data>
+  <data name="UserSsoLifetime_Label" xml:space="preserve">
+    <value>Срок службы единого входа в систему (Sso) Пользователя</value>
+  </data>
+  <data name="Expiration_Info" xml:space="preserve">
+    <value>Срок действия</value>
+  </data>
+  <data name="Expiration_Label" xml:space="preserve">
+    <value>Срок действия</value>
+  </data>
+  <data name="SecretDescription_Info" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="SecretDescription_Label" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="RequireRequestObject_Info" xml:space="preserve">
+    <value>Specifies whether this client needs to wrap the authorize request parameters in a JWT (defaults to false)</value>
+  </data>
+  <data name="RequireRequestObject_Label" xml:space="preserve">
+    <value>Require Request Object</value>
+  </data>
+  <data name="SigningAlgorithms_Info" xml:space="preserve">
+    <value>List of allowed signing algorithms for identity token. If empty, will use the server default signing algorithm.</value>
+  </data>
+  <data name="SigningAlgorithms_Label" xml:space="preserve">
+    <value>Allowed Identity Token Signing Algorithms</value>
+  </data>
+</root>

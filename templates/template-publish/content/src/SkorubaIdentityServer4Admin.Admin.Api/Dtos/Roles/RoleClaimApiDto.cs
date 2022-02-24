@@ -1,12 +1,12 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Roles
 {
-    public class RoleClaimApiDto<TRoleDtoKey>
+    public class RoleClaimApiDto<TKey>
     {
         public int ClaimId { get; set; }
 
-        public TRoleDtoKey RoleId { get; set; }
+        public TKey RoleId { get; set; }
 
         [Required]
         public string ClaimType { get; set; }
@@ -16,6 +16,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Dtos.Roles
         public string ClaimValue { get; set; }
     }
 }
+
+
 
 
 

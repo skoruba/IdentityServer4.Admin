@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Skoruba.AuditLogging.EntityFramework.DbContexts;
 using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Enums;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Extensions;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Repositories.Interfaces;
 
@@ -56,7 +57,20 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Repositories
             if (logsToDelete.Count == 0) return;
 
             DbContext.AuditLog.RemoveRange(logsToDelete);
-            await DbContext.SaveChangesAsync();
+
+            await AutoSaveChangesAsync();
+        }
+
+        protected virtual async Task<int> AutoSaveChangesAsync()
+        {
+            return AutoSaveChanges ? await DbContext.SaveChangesAsync() : (int)SavedStatus.WillBeSavedExplicitly;
+        }
+
+        public bool AutoSaveChanges { get; set; } = true;
+
+        public virtual async Task<int> SaveAllChangesAsync()
+        {
+            return await DbContext.SaveChangesAsync();
         }
     }
 }

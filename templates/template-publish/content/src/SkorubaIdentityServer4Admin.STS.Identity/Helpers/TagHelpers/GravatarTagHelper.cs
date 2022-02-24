@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Razor.TagHelpers;
+﻿using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers.TagHelpers
 {
@@ -47,6 +47,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.Helpers.TagHelpers
         }
     }
 }
+
+
 
 
 

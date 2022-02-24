@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,11 +36,11 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
         {
             if (clientSecret.Type != SharedSecret) return;
 
-            if (clientSecret.HashType == ((int)HashType.Sha256).ToString())
+            if (clientSecret.HashTypeEnum == HashType.Sha256)
             {
                 clientSecret.Value = clientSecret.Value.Sha256();
             }
-            else if (clientSecret.HashType == ((int)HashType.Sha512).ToString())
+            else if (clientSecret.HashTypeEnum == HashType.Sha512)
             {
                 clientSecret.Value = clientSecret.Value.Sha512();
             }
@@ -52,8 +52,10 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             {
                 case ClientType.Empty:
                     break;
-                case ClientType.WebHybrid:
-                    client.AllowedGrantTypes.AddRange(GrantTypes.Hybrid);
+                case ClientType.Web:
+                    client.AllowedGrantTypes.AddRange(GrantTypes.Code);
+                    client.RequirePkce = true;
+                    client.RequireClientSecret = true;
                     break;
                 case ClientType.Spa:
                     client.AllowedGrantTypes.AddRange(GrantTypes.Code);
@@ -61,10 +63,12 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
                     client.RequireClientSecret = false;
                     break;
                 case ClientType.Native:
-                    client.AllowedGrantTypes.AddRange(GrantTypes.Hybrid);
+                    client.AllowedGrantTypes.AddRange(GrantTypes.Code);
+                    client.RequirePkce = true;
+                    client.RequireClientSecret = false;
                     break;
                 case ClientType.Machine:
-                    client.AllowedGrantTypes.AddRange(GrantTypes.ResourceOwnerPasswordAndClientCredentials);
+                    client.AllowedGrantTypes.AddRange(GrantTypes.ClientCredentials);
                     break;
                 case ClientType.Device:
                     client.AllowedGrantTypes.AddRange(GrantTypes.DeviceFlow);
@@ -84,6 +88,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             ComboBoxHelpers.PopulateValuesToList(client.RedirectUrisItems, client.RedirectUris);
             ComboBoxHelpers.PopulateValuesToList(client.AllowedCorsOriginsItems, client.AllowedCorsOrigins);
             ComboBoxHelpers.PopulateValuesToList(client.AllowedGrantTypesItems, client.AllowedGrantTypes);
+            ComboBoxHelpers.PopulateValuesToList(client.AllowedIdentityTokenSigningAlgorithmsItems, client.AllowedIdentityTokenSigningAlgorithms);
         }
 
         public virtual ClientCloneDto BuildClientCloneViewModel(int id, ClientDto clientDto)
@@ -163,7 +168,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return added;
         }
 
-        public virtual async Task<int> UpdateClientAsync(ClientDto client)
+        public virtual async Task<int> UpdateClientAsync(ClientDto client, bool updateClientClaims = false, bool updateClientProperties = false)
         {
             var canInsert = await CanInsertClientAsync(client);
             if (!canInsert)
@@ -175,7 +180,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
 
             var originalClient = await GetClientAsync(client.Id);
 
-            var updated = await ClientRepository.UpdateClientAsync(clientEntity);
+            var updated = await ClientRepository.UpdateClientAsync(clientEntity, updateClientClaims, updateClientProperties);
 
             await AuditEventLogger.LogEventAsync(new ClientUpdatedEvent(originalClient, client));
 
@@ -269,6 +274,13 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             return accessTokenTypes;
         }
 
+        public virtual List<string> GetSigningAlgorithms(string algorithm, int limit = 0)
+        {
+            var signingAlgorithms = ClientRepository.GetSigningAlgorithms(algorithm, limit);
+
+            return signingAlgorithms;
+        }
+
         public virtual List<SelectItemDto> GetTokenExpirations()
         {
             var tokenExpirations = ClientRepository.GetTokenExpirations().ToModel();
@@ -344,6 +356,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             clientSecretsDto.ClientId = clientId;
             clientSecretsDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
 
+            // remove secret value from dto
+            clientSecretsDto.ClientSecrets.ForEach(x => x.Value = null);
+
             await AuditEventLogger.LogEventAsync(new ClientSecretsRequestedEvent(clientSecretsDto.ClientId, clientSecretsDto.ClientSecrets.Select(x => (x.Id, x.Type, x.Expiration)).ToList()));
 
             return clientSecretsDto;
@@ -360,6 +375,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Services
             var clientSecretsDto = clientSecret.ToModel();
             clientSecretsDto.ClientId = clientSecret.Client.Id;
             clientSecretsDto.ClientName = ViewHelpers.GetClientName(clientInfo.ClientId, clientInfo.ClientName);
+
+            // remove secret value for dto
+            clientSecretsDto.Value = null;
 
             await AuditEventLogger.LogEventAsync(new ClientSecretRequestedEvent(clientSecretsDto.ClientId, clientSecretsDto.ClientSecretId, clientSecretsDto.Type, clientSecretsDto.Expiration));
 

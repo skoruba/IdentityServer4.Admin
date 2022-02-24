@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Skoruba.AuditLogging.Constants;
 using Skoruba.AuditLogging.Events;
@@ -35,6 +35,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.AuditLogging
         public string SubjectIdentifier { get; set; }
     }
 }
+
+
 
 
 

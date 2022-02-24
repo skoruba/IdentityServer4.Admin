@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ApplicationAccess" xml:space="preserve">
-    <value>Applikations Adgang</value>
+    <value>Applikations adgang</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>Nej, tillad ikke</value>
   </data>
   <data name="PersonalInformation" xml:space="preserve">
-    <value>Personlige Informationer</value>
+    <value>Personlige informationer</value>
   </data>
   <data name="Remember" xml:space="preserve">
     <value>Husk min beslutning</value>

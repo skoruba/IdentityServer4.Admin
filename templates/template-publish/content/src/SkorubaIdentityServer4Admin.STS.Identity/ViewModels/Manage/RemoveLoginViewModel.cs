@@ -1,4 +1,4 @@
-namespace SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Manage
+﻿namespace SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Manage
 {
     public class RemoveLoginViewModel
     {
@@ -6,6 +6,8 @@ namespace SkorubaIdentityServer4Admin.STS.Identity.ViewModels.Manage
         public string ProviderKey { get; set; }
     }
 }
+
+
 
 
 

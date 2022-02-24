@@ -1,0 +1,69 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common
+@using Skoruba.IdentityServer4.Admin.UI.Configuration.Constants
+@model Skoruba.IdentityServer4.Admin.BusinessLogic.Dtos.Configuration.ApiScopesDto
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = Localizer["PageTitle"];
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-12 text-center mt-1 mb-1">
+        <h2><span class="oi oi-wrench" title="Api Scopes" aria-hidden="true"></span> @Localizer["PageTitle"]</h2>
+    </div>
+
+    <div class="col-12">
+        <a asp-area="@CommonConsts.AdminUIArea" asp-action="ApiScope" class="btn btn-outline-primary mb-3"><span class="oi oi-plus"></span> @Localizer["ButtonAddNewApiScope"]</a>
+    </div>
+
+    <div class="col-12">
+        @await Html.PartialAsync("Common/Search", new Search() { Action = "ApiScopes", Controller = "Configuration" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="row table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>@Localizer["TableName"]</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var scope in Model.Scopes)
+                    {
+                        <tr>
+                            <td><a asp-area="@CommonConsts.AdminUIArea" asp-action="ApiScope" asp-route-id="@scope.Id" class="btn btn-primary">@Localizer["TableButtonEdit"]</a></td>
+                            <td>@scope.Name</td>
+                            <td><a asp-area="@CommonConsts.AdminUIArea" asp-action="ApiScopeDelete" asp-route-id="@scope.Id" class="btn btn-danger"><span class="oi oi-x"></span></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                @await Html.PartialAsync("Common/Pager", new Pager() { Action = "ApiScopes", PageSize = Model.PageSize, TotalCount = Model.TotalCount, EnableSearch = true, Search = @ViewBag.Search })
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section scripts
+	{
+    <script>
+        $(function () {
+            //Disable enter for this form
+            FormMvc.disableEnter($('#api-scope-form'));
+        });
+    </script>
+}

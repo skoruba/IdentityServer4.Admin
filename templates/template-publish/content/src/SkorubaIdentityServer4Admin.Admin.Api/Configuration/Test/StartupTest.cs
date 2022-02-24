@@ -1,5 +1,4 @@
-using IdentityServer4.AccessTokenValidation;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -20,23 +19,24 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Configuration.Test
 
         public override void RegisterDbContexts(IServiceCollection services)
         {
-            services.RegisterDbContextsStaging<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext>();
+            services.RegisterDbContextsStaging<AdminIdentityDbContext, IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext>();
         }
 
         public override void RegisterAuthentication(IServiceCollection services)
         {
-            services.AddIdentity<UserIdentity, UserIdentityRole>(options => { options.User.RequireUniqueEmail = true; })
+            services
+                .AddIdentity<UserIdentity, UserIdentityRole>(options => Configuration.GetSection(nameof(IdentityOptions)).Bind(options))
                 .AddEntityFrameworkStores<AdminIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
             services.AddAuthentication(options =>
             {
-                options.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultSignInScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultForbidScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
-            }).AddCookie(IdentityServerAuthenticationDefaults.AuthenticationScheme);
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddCookie(JwtBearerDefaults.AuthenticationScheme);
         }
 
         public override void RegisterAuthorization(IServiceCollection services)
@@ -51,6 +51,8 @@ namespace SkorubaIdentityServer4Admin.Admin.Api.Configuration.Test
         }
     }
 }
+
+
 
 
 
