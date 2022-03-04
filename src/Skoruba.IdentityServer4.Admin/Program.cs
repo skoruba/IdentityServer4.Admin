@@ -14,7 +14,7 @@ using Skoruba.IdentityServer4.Shared.Configuration.Helpers;
 
 namespace Skoruba.IdentityServer4.Admin
 {
-	public class Program
+    public class Program
     {
         private const string SeedArgs = "/seed";
         private const string MigrateOnlyArgs = "/migrateonly";

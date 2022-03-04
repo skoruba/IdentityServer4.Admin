@@ -1,26 +1,7 @@
 version: "3.4"
 services:
-  identityserver4.admin:
-    image: ${DOCKER_REGISTRY-}identityserver4-admin
-    expose:
-      - 80 
-    ports:
-      - ${ADMIN_URL_PORT}:80
-      - '443:443'
-    volumes:
-      - '/var/run/docker.sock:/tmp/docker.sock:ro'
-      - './shared/nginx/vhost.d:/etc/nginx/vhost.d'
-      - './shared/nginx/certs:/etc/nginx/certs:ro'
-    networks:
-      proxy: null
-      identityserverui:
-        aliases:
-          - sts.skoruba.local
-          - admin.skoruba.local
-          - admin-api.skoruba.local
-    restart: always
   skoruba.identityserver4.admin:
-    image: '${DOCKER_REGISTRY-}skoruba-identityserver4-admin'
+    image: '${DOCKER_REGISTRY-}identityserver4-admin:it'
     build:
       context: .
       dockerfile: src/Skoruba.IdentityServer4.Admin/Dockerfile
@@ -58,7 +39,7 @@ services:
       - './shared/identityserverdata.json:/app/identityserverdata.json'
       - './shared/nginx/certs/cacerts.crt:/usr/local/share/ca-certificates/cacerts.crt'
   identityserver4.admin.api:
-    image: ${DOCKER_REGISTRY-}identityserver4-admin-api
+    image: ${DOCKER_REGISTRY-}identityserver4-admin-api:it
     build:
       context: .
       dockerfile: src/Skoruba.IdentityServer4.Admin.Api/Dockerfile
@@ -85,7 +66,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
 
   identityserver4.sts.identity:
-    image: ${DOCKER_REGISTRY-}identityserver4-sts-identity
+    image: ${DOCKER_REGISTRY-}identityserver4-sts-identity:it
     expose:
       - 80 
       - ${BASE_URL_PORT}:80
@@ -112,10 +93,6 @@ services:
     volumes:
       - './shared/serilog.json:/app/serilog.json'
       - './shared/nginx/certs/cacerts.crt:/usr/local/share/ca-certificates/cacerts.crt'
-    networks:
-      identityserverui:
-        aliases:
-          - sts.skoruba.local
   db:
     image: mcr.microsoft.com/mssql/server
     container_name: identityserver4-db
@@ -128,8 +105,6 @@ services:
       ACCEPT_EULA: 'Y'
     volumes:
       - 'dbdata:/var/opt/mssql'
-    networks:
-      identityserverui: null
 volumes:
   dbdata:
     driver: local
