@@ -1,9 +1,11 @@
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-nanoserver-ltsc2022 AS base
+ARG BASE_TAG
+
+FROM mcr.microsoft.com/dotnet/aspnet:$BASE_TAG AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0-nanoserver-ltsc2022 AS build
+FROM mcr.microsoft.com/dotnet/sdk:$BASE_TAG AS build
 WORKDIR /src
 COPY ["src/Skoruba.IdentityServer4.Admin/Skoruba.IdentityServer4.Admin.csproj", "src/Skoruba.IdentityServer4.Admin/"]
 COPY ["src/Skoruba.IdentityServer4.Admin.EntityFramework.MySql/Skoruba.IdentityServer4.Admin.EntityFramework.MySql.csproj", "src/Skoruba.IdentityServer4.Admin.EntityFramework.MySql/"]

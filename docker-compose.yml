@@ -1,10 +1,12 @@
 version: "3.4"
 services:
   skoruba.identityserver4.admin:
-    image: '${DOCKER_REGISTRY-}identityserver4-admin:it'
+    image: '${DOCKER_REGISTRY-}identityserver4-admin:${TAG-latest}'
     build:
       context: .
       dockerfile: src/Skoruba.IdentityServer4.Admin/Dockerfile
+      args:
+        - BASE_TAG=${BASE_TAG}
     container_name: identityserver4-admin
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -39,23 +41,22 @@ services:
       - './shared/identityserverdata.json:/app/identityserverdata.json'
       - './shared/nginx/certs/cacerts.crt:/usr/local/share/ca-certificates/cacerts.crt'
   identityserver4.admin.api:
-    image: ${DOCKER_REGISTRY-}identityserver4-admin-api:it
+    image: ${DOCKER_REGISTRY-}identityserver4-admin-api:${TAG-latest}
     build:
       context: .
       dockerfile: src/Skoruba.IdentityServer4.Admin.Api/Dockerfile
+      args:
+        - BASE_TAG=${BASE_TAG}
     depends_on:
       - db
     expose:
       - 80 
-      - ${ADMIN_API_URL_PORT}:80
-      - "AdminApiConfiguration__ApiBaseUrl=${ADMIN_API_URL}"
-      - "AdminApiConfiguration__IdentityServerBaseUrl=${BASE_URL}"
     container_name: identityserver4-admin-api
     environment:
       - VIRTUAL_HOST=admin-api.skoruba.local
       - AdminApiConfiguration__RequireHttpsMetadata=false
-      - 'AdminApiConfiguration__ApiBaseUrl=https://admin-api.skoruba.local'
-      - 'AdminApiConfiguration__IdentityServerBaseUrl=https://sts.skoruba.local'
+      - "AdminApiConfiguration__ApiBaseUrl=${ADMIN_API_URL-https://admin-api.skoruba.local}"
+      - "AdminApiConfiguration__IdentityServerBaseUrl=${BASE_URL-https://skoruba.local}"
       - 'ConnectionStrings__ConfigurationDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true'
       - 'ConnectionStrings__PersistedGrantDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true'
       - 'ConnectionStrings__IdentityDbConnection=Server=db;Database=IdentityServer4Admin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true'
@@ -66,13 +67,14 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
 
   identityserver4.sts.identity:
-    image: ${DOCKER_REGISTRY-}identityserver4-sts-identity:it
+    image: ${DOCKER_REGISTRY-}identityserver4-sts-identity:${TAG-latest}
     expose:
       - 80 
-      - ${BASE_URL_PORT}:80
     build:
       context: .
       dockerfile: src/Skoruba.IdentityServer4.STS.Identity/Dockerfile
+      args:
+        - BASE_TAG=${BASE_TAG}
     container_name: identityserver4-sts-identity
     environment:
       - VIRTUAL_HOST=sts.skoruba.local
