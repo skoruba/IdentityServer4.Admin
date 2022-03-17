@@ -284,4 +284,3 @@ __pycache__/
 appsettings.*.json
 
 /shared/nginx/certs/
-*.env
