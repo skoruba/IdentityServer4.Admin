@@ -1,7 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using CertificateManager;
+using CertificateManager.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Skoruba.IdentityServer4.Shared.Configuration.Configuration.Common;
 using Skoruba.IdentityServer4.Shared.Configuration.Helpers;
@@ -21,9 +26,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// Add custom signing certificate from certification store according thumbprint or from file
         /// </summary>
         /// <param name="builder"></param>
+        /// <param name="webHostEnvironment"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public static IIdentityServerBuilder AddCustomSigningCredential(this IIdentityServerBuilder builder, IConfiguration configuration)
+        public static IIdentityServerBuilder AddCustomSigningCredential(this IIdentityServerBuilder builder, IWebHostEnvironment webHostEnvironment, IConfiguration configuration)
         {
             var certificateConfiguration = configuration.GetSection(nameof(CertificateConfiguration)).Get<CertificateConfiguration>();
             var azureKeyVaultConfiguration = configuration.GetSection(nameof(AzureKeyVaultConfiguration)).Get<AzureKeyVaultConfiguration>();
@@ -79,12 +85,17 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     throw new Exception(SigningCertificatePathIsNotSpecified);
                 }
 
-                if (File.Exists(certificateConfiguration.SigningCertificatePfxFilePath))
+                string certificateFilePath = Path.Combine(webHostEnvironment.ContentRootPath, certificateConfiguration.SigningCertificatePfxFilePath);
+                if (!File.Exists(certificateFilePath) || certificateConfiguration.NeedToCreateNewOne)
                 {
+                    CreateRsaCertificate(builder.Services, certificateConfiguration, certificateFilePath);
+                }
 
+                if (File.Exists(certificateFilePath))
+                {
                     try
                     {
-                        builder.AddSigningCredential(new X509Certificate2(certificateConfiguration.SigningCertificatePfxFilePath, certificateConfiguration.SigningCertificatePfxFilePassword));
+                        builder.AddSigningCredential(new X509Certificate2(certificateFilePath, certificateConfiguration.SigningCertificatePfxFilePassword));
                     }
                     catch (Exception e)
                     {
@@ -106,6 +117,64 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             }
 
             return builder;
+        }
+
+        /// <summary>
+        /// Create RSA Certificate For Signing Credential - https://damienbod.com/2020/02/10/create-certificates-for-identityserver4-signing-using-net-core/
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="certificateConfiguration"></param>
+        /// <param name="certificateFilePath"></param>
+        private static void CreateRsaCertificate(IServiceCollection services, CertificateConfiguration certificateConfiguration, string certificateFilePath)
+        {
+            services.AddCertificateManager();
+            var createCertificates = services.BuildServiceProvider().GetRequiredService<CreateCertificates>();
+
+            var basicConstraints = new BasicConstraints
+            {
+                CertificateAuthority = false,
+                HasPathLengthConstraint = false,
+                PathLengthConstraint = 0,
+                Critical = false
+            };
+
+            var subjectAlternativeName = new SubjectAlternativeName
+            {
+                DnsName = new List<string>
+                {
+                    certificateConfiguration.DnsName
+                }
+            };
+
+            const X509KeyUsageFlags x509KeyUsageFlags = X509KeyUsageFlags.DigitalSignature;
+
+            // only if certification authentication is used
+            var enhancedKeyUsages = new OidCollection
+            {
+                OidLookup.ClientAuthentication,
+                OidLookup.ServerAuthentication
+            };
+
+            var certificate = createCertificates.NewRsaSelfSignedCertificate(
+                new DistinguishedName { CommonName = certificateConfiguration.DnsName },
+                basicConstraints,
+                new ValidityPeriod
+                {
+                    ValidFrom = DateTimeOffset.UtcNow,
+                    ValidTo = DateTimeOffset.UtcNow.AddYears(certificateConfiguration.ValidityPeriodInYear)
+                },
+                subjectAlternativeName,
+                enhancedKeyUsages,
+                x509KeyUsageFlags,
+                new RsaConfiguration
+                {
+                    KeySize = 2048,
+                    HashAlgorithmName = HashAlgorithmName.SHA512
+                });
+
+            var iec = services.BuildServiceProvider().GetRequiredService<ImportExportCertificate>();
+            var rsaCertPfxBytes = iec.ExportSelfSignedCertificatePfx(certificateConfiguration.SigningCertificatePfxFilePassword, certificate);
+            File.WriteAllBytes(certificateFilePath, rsaCertPfxBytes);
         }
 
         /// <summary>

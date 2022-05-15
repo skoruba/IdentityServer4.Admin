@@ -100,7 +100,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
         public virtual void RegisterAuthentication(IServiceCollection services)
         {
             services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Configuration);
-            services.AddIdentityServer<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, UserIdentity>(Configuration);
+            services.AddIdentityServer<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, UserIdentity>(Environment, Configuration);
         }
 
         public virtual void RegisterAuthorization(IServiceCollection services)
