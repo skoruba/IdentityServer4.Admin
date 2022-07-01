@@ -1,0 +1,36 @@
+dotnet ef migrations add DbInit_AdminAuditLogDbContext -c AdminAuditLogDbContext -o .\Migrations\AdminAuditLogDbContext -p E:\Dev\repos\The-Good-Deeds\SSO\src\Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite\Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite.csproj -s E:\Dev\repos\The-Good-Deeds\SSO\src\Playground\Playground.csproj
+
+dotnet ef migrations add DbInit_AdminIdentityDbContext -c AdminIdentityDbContext -o .\Migrations\AdminIdentityDbContext -p E:\Dev\repos\The-Good-Deeds\SSO\src\Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite\Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite.csproj -s E:\Dev\repos\The-Good-Deeds\SSO\src\Playground\Playground.csproj
+
+dotnet ef migrations add DbInit_AdminLogDbContext -c AdminLogDbContext -o .\Migrations\AdminLogDbContext -p E:\Dev\repos\The-Good-Deeds\SSO\src\Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite\Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite.csproj -s E:\Dev\repos\The-Good-Deeds\SSO\src\Playground\Playground.csproj
+
+
+dotnet ef migrations add DbInit_IdentityServerConfigurationDbContext -c IdentityServerConfigurationDbContext -o .\Migrations\IdentityServerConfigurationDbContext -p E:\Dev\repos\The-Good-Deeds\SSO\src\Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite\Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite.csproj -s E:\Dev\repos\The-Good-Deeds\SSO\src\Playground\Playground.csproj
+
+
+dotnet ef migrations add DbInit_IdentityServerDataProtectionDbContext -c IdentityServerDataProtectionDbContext -o .\Migrations\IdentityServerDataProtectionDbContext -p E:\Dev\repos\The-Good-Deeds\SSO\src\Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite\Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite.csproj -s E:\Dev\repos\The-Good-Deeds\SSO\src\Playground\Playground.csproj
+
+
+dotnet ef migrations add DbInit_IdentityServerPersistedGrantDbContext -c IdentityServerPersistedGrantDbContext -o .\Migrations\IdentityServerPersistedGrantDbContext -p E:\Dev\repos\The-Good-Deeds\SSO\src\Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite\Skoruba.IdentityServer4.Admin.EntityFramework.Sqlite.csproj -s E:\Dev\repos\The-Good-Deeds\SSO\src\Playground\Playground.csproj
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
