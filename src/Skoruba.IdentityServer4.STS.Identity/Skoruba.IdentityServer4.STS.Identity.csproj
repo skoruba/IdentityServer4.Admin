@@ -10,6 +10,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="AspNet.Security.OAuth.GitHub" Version="6.0.3" />
+		<PackageReference Include="AspNetCore.HealthChecks.Sqlite" Version="6.0.1" />
 		<PackageReference Include="AspNetCore.HealthChecks.MySql" Version="6.0.1" />
 		<PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="6.0.1" />
 		<PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="6.0.1" />
