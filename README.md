@@ -12,7 +12,7 @@
 
 The application is written in the **Asp.Net Core MVC - using .NET 6**
 
-### 🎉  New version of Duende IdentityServer Admin UI available [here](https://github.com/skoruba/Duende.IdentityServer.Admin) ⚡
+## 🎉  New version of Duende IdentityServer Admin UI available [here](https://github.com/skoruba/Duende.IdentityServer.Admin) ⚡
 
 ## Requirements
 
