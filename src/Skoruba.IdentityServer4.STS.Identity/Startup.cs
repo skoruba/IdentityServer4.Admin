@@ -13,6 +13,7 @@ using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using System;
 using Skoruba.IdentityServer4.Shared.Configuration.Helpers;
+using IdentityServer4.Extensions;
 
 namespace Skoruba.IdentityServer4.STS.Identity
 {
@@ -59,6 +60,13 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            // support proxy
+            app.Use(async (ctx, next) =>
+            {
+                ctx.SetIdentityServerOrigin(Configuration["AdminConfiguration:IdentityServerBaseUrl"]);
+                await next();
+            });
+
             app.UseCookiePolicy();
 
             if (env.IsDevelopment())
