@@ -21,6 +21,10 @@ namespace Skoruba.IdentityServer4.Admin.Api
             {
                 DockerHelpers.ApplyDockerConfiguration(configuration);
 
+                //Disable UTC only DateTime type for PostgreSQL >= 6.0
+                //See https://github.com/skoruba/IdentityServer4.Admin/issues/996 and https://www.npgsql.org/doc/types/datetime.html
+                AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)
