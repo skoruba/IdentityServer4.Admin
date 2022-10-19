@@ -39,11 +39,12 @@ namespace Skoruba.IdentityServer4.STS.Identity
             var isDevelopment = environment == Environments.Development;
 
             var configurationBuilder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
-                .AddJsonFile("serilog.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"serilog.{environment}.json", optional: true, reloadOnChange: true);
+                .SetBasePath(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location))
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+                .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: false)
+                .AddJsonFile("serilog.json", optional: true, reloadOnChange: false)
+                .AddJsonFile($"serilog.{environment}.json", optional: true, reloadOnChange: false);
+
 
             if (isDevelopment)
             {
@@ -66,13 +67,17 @@ namespace Skoruba.IdentityServer4.STS.Identity
                  {
                      var configurationRoot = configApp.Build();
 
-                     configApp.AddJsonFile("serilog.json", optional: true, reloadOnChange: true);
+                     var environment = hostContext.HostingEnvironment;
+                     var exeLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
-                     var env = hostContext.HostingEnvironment;
+                     configApp.SetBasePath(exeLocation + "/")
+                            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                            .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                            .AddJsonFile("serilog.json", optional: true, reloadOnChange: true)
+                            .AddJsonFile($"serilog.{environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
 
-                     configApp.AddJsonFile($"serilog.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
 
-                     if (env.IsDevelopment())
+                     if (environment.IsDevelopment())
                      {
                          configApp.AddUserSecrets<Startup>(true);
                      }

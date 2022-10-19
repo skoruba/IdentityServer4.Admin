@@ -183,6 +183,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // Add health checks.
             var healthChecksBuilder = options.HealthChecksBuilderFactory?.Invoke(services) ?? services.AddHealthChecks();
+
+        
             healthChecksBuilder.AddIdSHealthChecks<TIdentityServerDbContext, TPersistedGrantDbContext,
                 TIdentityDbContext, TLogDbContext, TAuditLogDbContext,
                 TDataProtectionDbContext, TAuditLog>(options.Admin, options.ConnectionStrings, options.DatabaseProvider);
