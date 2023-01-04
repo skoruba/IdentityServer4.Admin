@@ -62,6 +62,7 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseForwardedHeaders();
             app.UseCookiePolicy();
 
             if (env.IsDevelopment())
