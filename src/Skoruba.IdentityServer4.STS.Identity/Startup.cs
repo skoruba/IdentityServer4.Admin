@@ -13,6 +13,7 @@ using Skoruba.IdentityServer4.STS.Identity.Configuration.Interfaces;
 using Skoruba.IdentityServer4.STS.Identity.Helpers;
 using System;
 using Skoruba.IdentityServer4.Shared.Configuration.Helpers;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Skoruba.IdentityServer4.STS.Identity
 {
@@ -107,6 +108,16 @@ namespace Skoruba.IdentityServer4.STS.Identity
         {
             var rootConfiguration = CreateRootConfiguration();
             services.AddAuthorizationPolicies(rootConfiguration);
+        }
+
+        public virtual void RegisterForwardedHeaders(IServiceCollection services)
+        {
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders = ForwardedHeaders.All;
+                options.KnownNetworks.Clear();
+                options.KnownProxies.Clear();
+            });
         }
 
         public virtual void UseAuthentication(IApplicationBuilder app)
