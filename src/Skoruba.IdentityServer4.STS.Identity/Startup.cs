@@ -41,6 +41,8 @@ namespace Skoruba.IdentityServer4.STS.Identity
             // Add email senders which is currently setup for SendGrid and SMTP
             services.AddEmailSenders(Configuration);
 
+            RegisterForwardedHeaders(services);
+
             // Add services for authentication, including Identity model and external providers
             RegisterAuthentication(services);
 
