@@ -14,6 +14,12 @@ namespace Skoruba.IdentityServer4.STS.Identity
         {
             var configuration = GetConfiguration(args);
 
+            if (configuration.GetSection("DatabaseProviderConfiguration:ProviderType").Value == "PostgreSQL")
+            {
+                AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+                AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
+            }
+
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
