@@ -15,6 +15,7 @@
 		<PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="6.0.1" />
 		<PackageReference Include="AspNetCore.HealthChecks.UI" Version="6.0.2" />
 		<PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.2" />
+		<PackageReference Include="CertificateManager" Version="1.0.8" />
 		<PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="6.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.1" />

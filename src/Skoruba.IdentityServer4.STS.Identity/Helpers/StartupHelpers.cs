@@ -23,6 +23,7 @@ using IdentityServer4.Configuration;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Helpers;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Identity.Web;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.Configuration;
@@ -40,6 +41,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// Register services for MVC and localization including available languages
         /// </summary>
         /// <param name="services"></param>
+        /// <param name="configuration"></param>
         public static IMvcBuilder AddMvcWithLocalization<TUser, TKey>(this IServiceCollection services, IConfiguration configuration)
             where TUser : IdentityUser<TKey>
             where TKey : IEquatable<TKey>
@@ -49,9 +51,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
             services.TryAddTransient(typeof(IGenericControllerLocalizer<>), typeof(GenericControllerLocalizer<>));
 
             var mvcBuilder = services.AddControllersWithViews(o =>
-                {
-                    o.Conventions.Add(new GenericControllerRouteConvention());
-                })
+            {
+                o.Conventions.Add(new GenericControllerRouteConvention());
+            })
                 .AddViewLocalization(
                     LanguageViewLocationExpanderFormat.Suffix,
                     opts => { opts.ResourcesPath = ConfigurationConsts.ResourcesPath; })
@@ -76,7 +78,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
 
                     // If the default culture is specified use it, otherwise use CultureConfiguration.DefaultRequestCulture ("en")
                     var defaultCultureCode = string.IsNullOrEmpty(cultureConfiguration?.DefaultCulture) ?
-                        CultureConfiguration.DefaultRequestCulture : cultureConfiguration?.DefaultCulture;
+                        CultureConfiguration.DefaultRequestCulture : cultureConfiguration.DefaultCulture;
 
                     // If the default culture is not among the supported cultures, use the first supported culture as default
                     if (!supportedCultureCodes.Contains(defaultCultureCode)) defaultCultureCode = supportedCultureCodes.FirstOrDefault();
@@ -186,6 +188,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <typeparam name="TConfigurationDbContext"></typeparam>
         /// <typeparam name="TPersistedGrantDbContext"></typeparam>
         /// <typeparam name="TIdentityDbContext"></typeparam>
+        /// <typeparam name="TDataProtectionDbContext"></typeparam>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
         public static void RegisterDbContexts<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TDataProtectionDbContext>(this IServiceCollection services, IConfiguration configuration)
@@ -224,6 +227,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <typeparam name="TConfigurationDbContext"></typeparam>
         /// <typeparam name="TPersistedGrantDbContext"></typeparam>
         /// <typeparam name="TIdentityDbContext"></typeparam>
+        /// <typeparam name="TDataProtectionDbContext"></typeparam>
         /// <param name="services"></param>
         public static void RegisterDbContextsStaging<TIdentityDbContext, TConfigurationDbContext, TPersistedGrantDbContext, TDataProtectionDbContext>(
             this IServiceCollection services)
@@ -345,9 +349,10 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         /// <typeparam name="TConfigurationDbContext"></typeparam>
         /// <typeparam name="TPersistedGrantDbContext"></typeparam>
         /// <param name="services"></param>
+        /// <param name="webHostEnvironment"></param>
         /// <param name="configuration"></param>
         public static IIdentityServerBuilder AddIdentityServer<TConfigurationDbContext, TPersistedGrantDbContext, TUserIdentity>(
-            this IServiceCollection services,
+            this IServiceCollection services, IWebHostEnvironment webHostEnvironment,
             IConfiguration configuration)
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
@@ -360,7 +365,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                 .AddOperationalStore<TPersistedGrantDbContext>()
                 .AddAspNetIdentity<TUserIdentity>();
 
-            builder.AddCustomSigningCredential(configuration);
+            builder.AddCustomSigningCredential(webHostEnvironment, configuration);
             builder.AddCustomValidationKey(configuration);
             builder.AddExtensionGrantValidator<DelegationGrantValidator>();
 
@@ -398,7 +403,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     options.Instance = externalProviderConfiguration.AzureInstance;
                     options.Domain = externalProviderConfiguration.AzureDomain;
                     options.CallbackPath = externalProviderConfiguration.AzureAdCallbackPath;
-                },  cookieScheme: null);
+                }, cookieScheme: null);
             }
         }
 
@@ -409,7 +414,8 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         public static void UseMvcLocalizationServices(this IApplicationBuilder app)
         {
             var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
-            app.UseRequestLocalization(options.Value);
+            if (options != null)
+                app.UseRequestLocalization(options.Value);
         }
 
         /// <summary>

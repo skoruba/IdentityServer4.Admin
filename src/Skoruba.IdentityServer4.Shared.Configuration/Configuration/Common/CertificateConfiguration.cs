@@ -11,11 +11,17 @@
 
         public string SigningCertificateThumbprint { get; set; }
 
+        public string DnsName { get; set; }
+
         public bool UseSigningCertificatePfxFile { get; set; }        
 
         public string SigningCertificatePfxFilePath { get; set; }
 
         public string SigningCertificatePfxFilePassword { get; set; }
+
+        public int ValidityPeriodInYear { get; set; }
+
+        public bool NeedToCreateNewOne { get; set; }
 
         public bool UseValidationCertificateThumbprint { get; set; }        
 
