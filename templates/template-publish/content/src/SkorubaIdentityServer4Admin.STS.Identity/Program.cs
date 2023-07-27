@@ -39,7 +39,7 @@ namespace SkorubaIdentityServer4Admin.STS.Identity
             var isDevelopment = environment == Environments.Development;
 
             var configurationBuilder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
+                .SetBasePath(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location))
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
                 .AddJsonFile("serilog.json", optional: true, reloadOnChange: true)

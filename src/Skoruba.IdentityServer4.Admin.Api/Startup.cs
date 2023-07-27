@@ -24,6 +24,10 @@ using Skoruba.IdentityServer4.Shared.Dtos.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.Api
 {
+    public class Ab{
+        public string A{get;set;}
+        public string B{get;set;}
+    }
     public class Startup
     {
         public Startup(IWebHostEnvironment env, IConfiguration configuration)
@@ -39,10 +43,18 @@ namespace Skoruba.IdentityServer4.Admin.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var adminApiConfiguration = Configuration.GetSection(nameof(AdminApiConfiguration)).Get<AdminApiConfiguration>();
+
+            var serilog = Configuration.GetSection("Serilog:MinimumLevel");
+
+
+            var section = Configuration.GetSection(nameof(AdminApiConfiguration));
+            
+            AdminApiConfiguration adminApiConfiguration = section.Get<AdminApiConfiguration>();
+
+            
             services.AddSingleton(adminApiConfiguration);
 
-            // Add DbContexts
+            // Add DbContextsvar section  = 
             RegisterDbContexts(services);
 
             services.AddDataProtection<IdentityServerDataProtectionDbContext>(Configuration);

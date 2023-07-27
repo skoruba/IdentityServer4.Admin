@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -14,9 +15,16 @@ namespace Skoruba.IdentityServer4.Admin.Api
         {
             var configuration = GetConfiguration(args);
 
-            Log.Logger = new LoggerConfiguration()
+            Log.Logger = (new LoggerConfiguration())
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
+
+            foreach (var file in configuration.AsEnumerable())
+            {
+                Log.Debug("*************   " + file.Key + "*************   " + file.Value);
+            }
+
+
             try
             {
                 DockerHelpers.ApplyDockerConfiguration(configuration);
@@ -37,13 +45,16 @@ namespace Skoruba.IdentityServer4.Admin.Api
         {
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var isDevelopment = environment == Environments.Development;
+            var exeLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
 
             var configurationBuilder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
+                .SetBasePath(exeLocation + "/")
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
                 .AddJsonFile("serilog.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"serilog.{environment}.json", optional: true, reloadOnChange: true);
+                .AddJsonFile($"serilog.{environment}.json", optional: true, reloadOnChange: true)
+                ;
 
             if (isDevelopment)
             {
@@ -52,12 +63,14 @@ namespace Skoruba.IdentityServer4.Admin.Api
 
             var configuration = configurationBuilder.Build();
 
+
+
             configuration.AddAzureKeyVaultConfiguration(configurationBuilder);
 
             configurationBuilder.AddCommandLine(args);
             configurationBuilder.AddEnvironmentVariables();
 
-            return configurationBuilder.Build();
+            return configuration;
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -66,13 +79,16 @@ namespace Skoruba.IdentityServer4.Admin.Api
                  {
                      var configurationRoot = configApp.Build();
 
-                     configApp.AddJsonFile("serilog.json", optional: true, reloadOnChange: true);
+                     var environment = hostContext.HostingEnvironment;
+                     var exeLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
-                     var env = hostContext.HostingEnvironment;
+                     configApp.SetBasePath(exeLocation + "/")
+                            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                            .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                            .AddJsonFile("serilog.json", optional: true, reloadOnChange: true)
+                            .AddJsonFile($"serilog.{environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
 
-                     configApp.AddJsonFile($"serilog.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
-
-                     if (env.IsDevelopment())
+                     if (environment.IsDevelopment())
                      {
                          configApp.AddUserSecrets<Startup>(true);
                      }
