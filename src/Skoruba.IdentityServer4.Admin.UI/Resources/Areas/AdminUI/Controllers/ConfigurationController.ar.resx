@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,85 +117,104 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="LoginAlreadyAssociated" xml:space="preserve">
-    <value>Een user met deze login bestaat al.</value>
+  <data name="SuccessAddApiResource" xml:space="preserve">
+    <value>مورد API {0} تم حفظه بنجاح !</value>
+    <comment>Api Resource {0} is successfully saved!</comment>
   </data>
-  <data name="PasswordMismatch" xml:space="preserve">
-    <value>Wachtwoord onjuist</value>
+  <data name="SuccessAddApiResourceProperty" xml:space="preserve">
+    <value>خاصية مورد API {0} لمورد API {0} تم حفظها بنجاح !</value>
+    <comment>Api Resource property {0} for api resource {1} is successfully saved!</comment>
   </data>
-  <data name="PasswordRequiresDigit" xml:space="preserve">
-    <value>Wachtwoorden moeten minstens 1 nummer bevatten ('0'-'9').</value>
+  <data name="SuccessAddApiScope" xml:space="preserve">
+    <value>مدى API {0} تم حفظه بنجاح !</value>
+    <comment>Api Scope {0} is successfully saved!</comment>
   </data>
-  <data name="PasswordRequiresLower" xml:space="preserve">
-    <value>Wachtwoorden moeten minstens één kleine letter bevatten ('a'-'z').</value>
+  <data name="SuccessAddApiScopeProperty" xml:space="preserve">
+    <value>خاصية مدى API {0} لمدى API {1} تم حفظها بنجاح !</value>
+    <comment>Api Scope property {0} for api scope {1} is successfully saved!</comment>
   </data>
-  <data name="PasswordRequiresNonAlphanumeric" xml:space="preserve">
-    <value>Wachtwoorden moeten minstens één niet-alphanumeriek teken bevatten.</value>
+  <data name="SuccessAddApiSecret" xml:space="preserve">
+    <value>سر API تم انشاؤه بنجاح !</value>
+    <comment>Api Secret is successfully created!</comment>
   </data>
-  <data name="PasswordRequiresUniqueChars" xml:space="preserve">
-    <value>Wachtwoorden moeten uit minstens {0} verschillende tekens bestaan.</value>
+  <data name="SuccessAddClient" xml:space="preserve">
+    <value>العميل {0} تم انشاؤه بنجاح !</value>
+    <comment>Client {0} is successfully created!</comment>
   </data>
-  <data name="PasswordRequiresUpper" xml:space="preserve">
-    <value>Wachtwoorden moeten minstens één hoofdletter bevatten ('A'-'Z').</value>
+  <data name="SuccessAddClientClaim" xml:space="preserve">
+    <value>مطالبة العميل {0} للعميل {1} تم حفظها بنجاح !</value>
+    <comment>Client claim {0} for client {1} is successfully saved!</comment>
   </data>
-  <data name="PasswordTooShort" xml:space="preserve">
-    <value>Wachtwoorden moeten een minimale lengte hebben van {0} tekens.</value>
+  <data name="SuccessAddClientProperty" xml:space="preserve">
+    <value>خاصية العميل {0} للعميل {1} تم حفظها بنجاح !</value>
+    <comment>Client property {0} for client {1} is successfully saved!</comment>
   </data>
-  <data name="RoleNotFound" xml:space="preserve">
-    <value>Role {0} bestaat niet.</value>
+  <data name="SuccessAddClientSecret" xml:space="preserve">
+    <value>سر العميل للعميل {0} تم حفظه بنجاح !</value>
+    <comment>Client secret for client {0} is successfully saved!</comment>
   </data>
-  <data name="RecoveryCodeRedemptionFailed" xml:space="preserve">
-    <value>Inwisselen van herstelcode is mislukt.</value>
+  <data name="SuccessAddIdentityResource" xml:space="preserve">
+    <value>مورد الهوية {0} تم حفظه بنجاح !</value>
+    <comment>Identity Resource {0} is successfully saved!</comment>
   </data>
-  <data name="DefaultError" xml:space="preserve">
-    <value>Onbekende fout opgetreden.</value>
+  <data name="SuccessAddIdentityResourceProperty" xml:space="preserve">
+    <value>خاصية مورد الهوية {0} تم حفظها بنجاح !</value>
+    <comment>Identity Resource property {0} for api resource {1} is successfully saved!</comment>
   </data>
-  <data name="DuplicateEmail" xml:space="preserve">
-    <value>Email '{0}' is al in gebruik.</value>
+  <data name="SuccessClientClone" xml:space="preserve">
+    <value>العميل {0} تم نسخه بنجاح !</value>
+    <comment>Client {0} is successfully cloned!</comment>
   </data>
-  <data name="DuplicateRoleName" xml:space="preserve">
-    <value>Role name '{0}' is al in gebruik.</value>
+  <data name="SuccessClientDelete" xml:space="preserve">
+    <value>العميل تم انشاؤه بنجاح !</value>
+    <comment>Client is successfully deleted!</comment>
   </data>
-  <data name="DuplicateUserName" xml:space="preserve">
-    <value>User name '{0}' is al in gebruik.</value>
+  <data name="SuccessDeleteApiResource" xml:space="preserve">
+    <value>مورد API تم حذفه بنجاح !</value>
+    <comment>Api Resource is successfully deleted!</comment>
   </data>
-  <data name="InvalidEmail" xml:space="preserve">
-    <value>Email '{0}' is ongeldig.</value>
+  <data name="SuccessDeleteApiResourceProperty" xml:space="preserve">
+    <value>خاصية مورد API تم حذفها بنجاح !</value>
+    <comment>Api resource property is successfully deleted!</comment>
   </data>
-  <data name="InvalidPasswordHasherCompatibilityMode" xml:space="preserve">
-    <value>De opgegeven PasswordHasherCompatibilityMode is ongeldig.</value>
+  <data name="SuccessDeleteApiScope" xml:space="preserve">
+    <value>مورد API تم حذفه بنجاح !</value>
+    <comment>Api Scope is successfully deleted!</comment>
   </data>
-  <data name="InvalidRoleName" xml:space="preserve">
-    <value>Role name '{0}' is ongeldig.</value>
+  <data name="SuccessDeleteApiScopeProperty" xml:space="preserve">
+    <value>خاصية مدى API تم حذفها بنجاح !</value>
+    <comment>Api Scope property is successfully deleted!</comment>
   </data>
-  <data name="InvalidToken" xml:space="preserve">
-    <value>Ongeldig token.</value>
+  <data name="SuccessDeleteApiSecret" xml:space="preserve">
+    <value>سر API تم حذفه بنجاح !</value>
+    <comment>Api Secret is successfully deleted!</comment>
   </data>
-  <data name="InvalidUserName" xml:space="preserve">
-    <value>Gebruikersnaam '{0}' is ongeldig, het moet uitsluitend uit cijfers en letters bestaan.</value>
+  <data name="SuccessDeleteClientClaim" xml:space="preserve">
+    <value>مطالبة العميل تم حذفها بنجاح !</value>
+    <comment>Client claim is successfully deleted!</comment>
   </data>
-  <data name="UserAlreadyHasPassword" xml:space="preserve">
-    <value>De user heeft al een wachtwoord ingesteld</value>
+  <data name="SuccessDeleteClientProperty" xml:space="preserve">
+    <value>خاصية العميل تم حذفها بنجاح !</value>
+    <comment>Client property is successfully deleted!</comment>
   </data>
-  <data name="UserAlreadyInRole" xml:space="preserve">
-    <value>Het user account heeft al de role '{0}' toegekend.</value>
+  <data name="SuccessDeleteClientSecret" xml:space="preserve">
+    <value>سر العميل تم حذفه بنجاح !</value>
+    <comment>Client secret is successfully deleted!</comment>
   </data>
-  <data name="UserLockedOut" xml:space="preserve">
-    <value>Het user account is geblokkeerd</value>
+  <data name="SuccessDeleteIdentityResource" xml:space="preserve">
+    <value>مورد الهوية تم حذفه بنجاح !</value>
+    <comment>Identity Resource is successfully deleted!</comment>
   </data>
-  <data name="UserLockoutNotEnabled" xml:space="preserve">
-    <value>Blokkeren staat uit voor dit user account</value>
+  <data name="SuccessDeleteIdentityResourceProperty" xml:space="preserve">
+    <value>خاصية مورد الهوية تم حذفها بنجاح !</value>
+    <comment>Identity resource property is successfully deleted!</comment>
   </data>
-  <data name="UserNameNotFound" xml:space="preserve">
-    <value>User '{0}' bestaan niet.</value>
+  <data name="SuccessTitle" xml:space="preserve">
+    <value>نجاح</value>
+    <comment>Success</comment>
   </data>
-  <data name="UserNotInRole" xml:space="preserve">
-    <value>Role '{0}' is niet toekgekend aan het user account</value>
-  </data>
-  <data name="ConcurrencyFailure" xml:space="preserve">
-    <value>Optimistic concurrency failure, object has been modified.</value>
-  </data>
-  <data name="InvalidPasswordHasherIterationCount" xml:space="preserve">
-    <value>The iteration count must be a positive integer.</value>
+  <data name="SuccessUpdateClient" xml:space="preserve">
+    <value>العميل {0} تم تحديثه بنجاح !</value>
+    <comment>Client {0} is successfully updated!</comment>
   </data>
 </root>

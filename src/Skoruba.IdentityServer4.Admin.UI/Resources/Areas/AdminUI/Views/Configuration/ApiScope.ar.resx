@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,85 +117,68 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="LoginAlreadyAssociated" xml:space="preserve">
-    <value>Een user met deze login bestaat al.</value>
+  <data name="ButtonAddApiScope" xml:space="preserve">
+    <value>حفظ مدى API</value>
+    <comment>Save Api Scope</comment>
   </data>
-  <data name="PasswordMismatch" xml:space="preserve">
-    <value>Wachtwoord onjuist</value>
+  <data name="ManageApiScopeProperties" xml:space="preserve">
+    <value>ادارة خصائص مدى API</value>
+    <comment>Manage Api Scope Properties</comment>
   </data>
-  <data name="PasswordRequiresDigit" xml:space="preserve">
-    <value>Wachtwoorden moeten minstens 1 nummer bevatten ('0'-'9').</value>
+  <data name="NavigationApiResources" xml:space="preserve">
+    <value>موارد API</value>
+    <comment>Api Resources</comment>
   </data>
-  <data name="PasswordRequiresLower" xml:space="preserve">
-    <value>Wachtwoorden moeten minstens één kleine letter bevatten ('a'-'z').</value>
+  <data name="NavigationApiScopes" xml:space="preserve">
+    <value>مديات API</value>
+    <comment>Api Scopes</comment>
   </data>
-  <data name="PasswordRequiresNonAlphanumeric" xml:space="preserve">
-    <value>Wachtwoorden moeten minstens één niet-alphanumeriek teken bevatten.</value>
+  <data name="PageTitle" xml:space="preserve">
+    <value>مديات API</value>
+    <comment>Api Scopes</comment>
   </data>
-  <data name="PasswordRequiresUniqueChars" xml:space="preserve">
-    <value>Wachtwoorden moeten uit minstens {0} verschillende tekens bestaan.</value>
+  <data name="PanelTitle" xml:space="preserve">
+    <value>مديات API</value>
+    <comment>Api Scope</comment>
   </data>
-  <data name="PasswordRequiresUpper" xml:space="preserve">
-    <value>Wachtwoorden moeten minstens één hoofdletter bevatten ('A'-'Z').</value>
+  <data name="PickerItemAlreadySelectedTitle" xml:space="preserve">
+    <value>العنصر تم اختياره مسبقا</value>
+    <comment>item already selected</comment>
   </data>
-  <data name="PasswordTooShort" xml:space="preserve">
-    <value>Wachtwoorden moeten een minimale lengte hebben van {0} tekens.</value>
+  <data name="PickerNoItemSelectedTitle" xml:space="preserve">
+    <value>لم يتم اختيار اي عنصر</value>
+    <comment>No item/s selected</comment>
   </data>
-  <data name="RoleNotFound" xml:space="preserve">
-    <value>Role {0} bestaat niet.</value>
+  <data name="PickerSearchItemPlaceholder" xml:space="preserve">
+    <value>ادخل حرفين او اكثر</value>
+    <comment>Enter 2 and more characters</comment>
   </data>
-  <data name="RecoveryCodeRedemptionFailed" xml:space="preserve">
-    <value>Inwisselen van herstelcode is mislukt.</value>
+  <data name="PickerSearchResultTitle" xml:space="preserve">
+    <value>نتيجة البحث: (اضغط على العنصر لاختياره)</value>
+    <comment>Search result: (click on the item to select)</comment>
   </data>
-  <data name="DefaultError" xml:space="preserve">
-    <value>Onbekende fout opgetreden.</value>
+  <data name="PickerSelectedItemsTitle" xml:space="preserve">
+    <value>العناصر المختارة</value>
+    <comment>Selected item/s:</comment>
   </data>
-  <data name="DuplicateEmail" xml:space="preserve">
-    <value>Email '{0}' is al in gebruik.</value>
+  <data name="PickerShowAllItemsTitle" xml:space="preserve">
+    <value>اكثر</value>
+    <comment>more</comment>
   </data>
-  <data name="DuplicateRoleName" xml:space="preserve">
-    <value>Role name '{0}' is al in gebruik.</value>
+  <data name="PickerSuggestedItemsTitle" xml:space="preserve">
+    <value>العناصر المقترحة:</value>
+    <comment>Suggested items:</comment>
   </data>
-  <data name="DuplicateUserName" xml:space="preserve">
-    <value>User name '{0}' is al in gebruik.</value>
+  <data name="TableButtonEdit" xml:space="preserve">
+    <value>تعديل</value>
+    <comment>Edit</comment>
   </data>
-  <data name="InvalidEmail" xml:space="preserve">
-    <value>Email '{0}' is ongeldig.</value>
+  <data name="TableButtonRemove" xml:space="preserve">
+    <value>حذف</value>
+    <comment>Delete</comment>
   </data>
-  <data name="InvalidPasswordHasherCompatibilityMode" xml:space="preserve">
-    <value>De opgegeven PasswordHasherCompatibilityMode is ongeldig.</value>
-  </data>
-  <data name="InvalidRoleName" xml:space="preserve">
-    <value>Role name '{0}' is ongeldig.</value>
-  </data>
-  <data name="InvalidToken" xml:space="preserve">
-    <value>Ongeldig token.</value>
-  </data>
-  <data name="InvalidUserName" xml:space="preserve">
-    <value>Gebruikersnaam '{0}' is ongeldig, het moet uitsluitend uit cijfers en letters bestaan.</value>
-  </data>
-  <data name="UserAlreadyHasPassword" xml:space="preserve">
-    <value>De user heeft al een wachtwoord ingesteld</value>
-  </data>
-  <data name="UserAlreadyInRole" xml:space="preserve">
-    <value>Het user account heeft al de role '{0}' toegekend.</value>
-  </data>
-  <data name="UserLockedOut" xml:space="preserve">
-    <value>Het user account is geblokkeerd</value>
-  </data>
-  <data name="UserLockoutNotEnabled" xml:space="preserve">
-    <value>Blokkeren staat uit voor dit user account</value>
-  </data>
-  <data name="UserNameNotFound" xml:space="preserve">
-    <value>User '{0}' bestaan niet.</value>
-  </data>
-  <data name="UserNotInRole" xml:space="preserve">
-    <value>Role '{0}' is niet toekgekend aan het user account</value>
-  </data>
-  <data name="ConcurrencyFailure" xml:space="preserve">
-    <value>Optimistic concurrency failure, object has been modified.</value>
-  </data>
-  <data name="InvalidPasswordHasherIterationCount" xml:space="preserve">
-    <value>The iteration count must be a positive integer.</value>
+  <data name="TableName" xml:space="preserve">
+    <value>الاسم</value>
+    <comment>Name</comment>
   </data>
 </root>
