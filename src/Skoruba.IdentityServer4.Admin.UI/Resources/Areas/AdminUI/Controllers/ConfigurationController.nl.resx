@@ -186,4 +186,10 @@
   <data name="SuccessUpdateClient" xml:space="preserve">
     <value>Het updaten van Client {0} is gelukt.</value>
   </data>
+  <data name="SuccessAddApiScopeProperty" xml:space="preserve">
+    <value>Het opslaan van Api Scope property {0} voor api scope {1} isgelukt.</value>
+  </data>
+  <data name="SuccessDeleteApiScopeProperty" xml:space="preserve">
+    <value>Het verwijderen van een Api Scope property is gelukt.</value>
+  </data>
 </root>
