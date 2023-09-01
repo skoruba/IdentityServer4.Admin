@@ -20,7 +20,7 @@
         "knockout": "3.5.1",
         "moment": "2.27.0",
         "moment-timezone": "0.5.31",
-        "node-sass": "4.14.1",
+        "node-sass": "7.0.0",
         "open-iconic": "1.1.1",
         "popper.js": "1.16.1",
         "tempusdominus-bootstrap-4": "5.1.2",
