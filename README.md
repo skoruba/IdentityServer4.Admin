@@ -8,7 +8,7 @@
 
 I just want to say a huge **THANK YOU** to everyone who has contributed to **IdentityServer4.Admin** over the years. Reaching almost **4,000 stars** ⭐️ on GitHub has been such an incredible milestone, and it is all thanks to this **amazing community**. I truly could not have done it without you.
 
-With **.NET 6** and **IdentityServer4** no longer supported, **I have decided to stop maintaining this repository**.
+With the end of support for **.NET 6** and **IdentityServer4**, I have made the decision to **stop maintaining this repository**.
 
 ### But do not worry—this is not goodbye!
 
@@ -18,10 +18,16 @@ This is the next evolution of this project and is **fully supported**. I would l
 
 Thanks again for everything—your contributions, feedback, and support have meant so much to me. I hope to see you over on the new project!
 
-**P.S.** If you need any help migrating to **Duende IdentityServer**, please feel free to reach out via email at [jan.skoruba@gmail.com](mailto:jan.skoruba@gmail.com) or connect with me on social media. 🚀
+### Need help migrating?
+
+If you need any assistance migrating to **Duende IdentityServer**, feel free to reach out:
+- **Email:** [jan.skoruba@gmail.com](mailto:jan.skoruba@gmail.com)
+- **Social media:** Connect with me directly!  
+
+Looking forward to seeing you in the new repository. 🚀
 
 Cheers,  
-**Jan ❤️**
+**Jan Skoruba ❤️**
 
 ## 🎉 New version of Duende IdentityServer Admin UI available [here](https://github.com/skoruba/Duende.IdentityServer.Admin) ⚡
 
