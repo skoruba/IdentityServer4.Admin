@@ -4,14 +4,32 @@
 
 > The administration for the IdentityServer4 and Asp.Net Core Identity
 
-## Project Status
+## Big Thanks 🙏🏻 and an Update on the Project ⚡️
 
-[![Build status](https://ci.appveyor.com/api/projects/status/5yg59bn70399hn6s/branch/master?svg=true)](https://ci.appveyor.com/project/JanSkoruba/identityserver4-admin/branch/master)
-[![Join the chat at https://gitter.im/skoruba/IdentityServer4.Admin](https://badges.gitter.im/skoruba/IdentityServer4.Admin.svg)](https://gitter.im/skoruba/IdentityServer4.Admin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+I just want to say a huge **THANK YOU** to everyone who has contributed to **IdentityServer4.Admin** over the years. Reaching almost **4,000 stars** ⭐️ on GitHub has been such an incredible milestone, and it is all thanks to this **amazing community**. I truly could not have done it without you.
 
-The application is written in the **Asp.Net Core MVC - using .NET 6**
+With the end of support for **.NET 6** and **IdentityServer4**, I have made the decision to **stop maintaining this repository**.
 
-## 🎉  New version of Duende IdentityServer Admin UI available [here](https://github.com/skoruba/Duende.IdentityServer.Admin) ⚡
+### But do not worry—this is not goodbye!
+
+I am excited to introduce my new project: [**Duende IdentityServer Admin**](https://github.com/skoruba/Duende.IdentityServer.Admin).
+
+This is the next evolution of this project and is **fully supported**. I would love for you to **check it out** and join me on this journey. 😊
+
+Thanks again for everything—your contributions, feedback, and support have meant so much to me. I hope to see you over on the new project!
+
+### Need help migrating?
+
+If you need any assistance migrating to **Duende IdentityServer**, feel free to reach out:
+- **Email:** [jan.skoruba@gmail.com](mailto:jan.skoruba@gmail.com)
+- **Social media:** Connect with me directly!  
+
+Looking forward to seeing you in the new repository. 🚀
+
+Cheers,  
+**Jan Skoruba ❤️**
+
+## 🎉 New version of Duende IdentityServer Admin UI available [here](https://github.com/skoruba/Duende.IdentityServer.Admin) ⚡
 
 ## Requirements
 
@@ -110,10 +128,10 @@ Thus first, we need the domain `skoruba.local` to resolve to the docker-host mac
 
 Edit your hosts file:
 
-- On Linux: `\etc\hosts` 
-- On Windows: `C:\Windows\system32\drivers\etc\hosts` 
+- On Linux: `\etc\hosts`
+- On Windows: `C:\Windows\system32\drivers\etc\hosts`
 
- and add the following entries:
+and add the following entries:
 
 ```custom
 127.0.0.1 skoruba.local sts.skoruba.local admin.skoruba.local admin-api.skoruba.local
@@ -123,7 +141,7 @@ This way your host machine resolves `skoruba.local` and its subdomains to itself
 
 ### Certificates
 
-We also need certificates in order to serve on HTTPS. We'll make our own self-signed certificates with [mkcert](https://github.com/FiloSottile/mkcert). 
+We also need certificates in order to serve on HTTPS. We'll make our own self-signed certificates with [mkcert](https://github.com/FiloSottile/mkcert).
 
 > If the domain is publicly available through DNS, you can use [Let's Encypt](https://letsencrypt.org/). Nginx-proxy has support for that, which is left out in this setup.
 
@@ -141,6 +159,7 @@ mkcert --install
 copy $env:LOCALAPPDATA\mkcert\rootCA.pem ./cacerts.pem
 copy $env:LOCALAPPDATA\mkcert\rootCA.pem ./cacerts.crt
 ```
+
 ##### Create the `skoruba.local` certificates
 
 Generate a certificate for `skoruba.local` with wildcards for the subdomains. The name of the certificate files need to match with actual domain-names in order for the nginx-proxy to pick them up correctly. We want both the crt-key and the pfx version.
@@ -155,7 +174,7 @@ mkcert -pkcs12 skoruba.local.pfx skoruba.local *.skoruba.local
 
 ### Run docker-compose
 
-- Project contains the `docker-compose.vs.debug.yml` and `docker-compose.override.yml` to enable debugging with a seeded environment. 
+- Project contains the `docker-compose.vs.debug.yml` and `docker-compose.override.yml` to enable debugging with a seeded environment.
 - The following possibility to get a running seeded and debug-able (in VS) environment:
 
 ```
@@ -166,9 +185,11 @@ docker-compose up -d
 > It is also possible to set as startup project the project called `docker-compose` in Visual Studio.
 
 ### Docker images
+
 - Docker images will be available also in [docker hub](https://hub.docker.com/u/skoruba)
-       
+
 ### Publish Docker images to Docker hub
+
 - Check the script in `build/publish-docker-images.ps1` - change the profile name according to your requirements.
 
 ## Installation of the Client Libraries
@@ -207,33 +228,38 @@ The following Gulp commands are available:
 
 > NOTE: Initial migrations are a part of the repository.
 
-  - It is possible to use powershell script in folder `build/add-migrations.ps1`.
-  - This script take two arguments:
-    - --migration (migration name)
-    - --migrationProviderName (provider type - available choices: All, SqlServer, MySql, PostgreSQL)
+- It is possible to use powershell script in folder `build/add-migrations.ps1`.
+- This script take two arguments:
 
-- For example: 
-`.\add-migrations.ps1 -migration DbInit -migrationProviderName SqlServer`
+  - --migration (migration name)
+  - --migrationProviderName (provider type - available choices: All, SqlServer, MySql, PostgreSQL)
+
+- For example:
+  `.\add-migrations.ps1 -migration DbInit -migrationProviderName SqlServer`
 
 ### Available database providers:
+
 - SqlServer
 - MySql
 - PostgreSQL
 
 > It is possible to switch the database provider via `appsettings.json`:
+
 ```
 "DatabaseProviderConfiguration": {
-        "ProviderType": "SqlServer" 
+        "ProviderType": "SqlServer"
     }
 ```
-        
+
 ### Connection strings samples for available db providers:
-**PostgreSQL**: 
+
+**PostgreSQL**:
+
 > Server=localhost;Port=5432;Database=IdentityServer4Admin;User Id=sa;Password=#;
 
-**MySql:** 
-> server=localhost;database=IdentityServer4Admin;user=root;password=#
+**MySql:**
 
+> server=localhost;database=IdentityServer4Admin;user=root;password=#
 
 ### We suggest to use seed data:
 
@@ -277,6 +303,7 @@ If your application is running in `Azure App Service`, you can specify `AzureKey
 ### Dataprotection:
 
 Enable Azure Key Vault for dataprotection with following configuration:
+
 ```
 "DataProtectionConfiguration": {
     "ProtectKeysWithAzureKeyVault": false
@@ -309,40 +336,40 @@ The you need specify the key identifier in configuration:
   - File
   - MSSqlServer
   - Seq
-  
+
 ```json
 {
-    "Serilog": {
-        "MinimumLevel": {
-            "Default": "Error",
-            "Override": {
-                "Skoruba": "Information"
-            }
-        },
-        "WriteTo": [
-            {
-                "Name": "Console"
-            },
-            {
-                "Name": "File",
-                "Args": {
-                    "path": "log.txt",
-                    "rollingInterval": "Day"
-                }
-            },
-            {
-                "Name": "MSSqlServer",
-                "Args": {
-                    "connectionString": "...",
-                    "tableName": "Log",
-                    "columnOptionsSection": {
-                        "addStandardColumns": [ "LogEvent" ],
-                        "removeStandardColumns": [ "Properties" ]
-                    }
-                }
-            }
-        ]
-    }
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Error",
+      "Override": {
+        "Skoruba": "Information"
+      }
+    },
+    "WriteTo": [
+      {
+        "Name": "Console"
+      },
+      {
+        "Name": "File",
+        "Args": {
+          "path": "log.txt",
+          "rollingInterval": "Day"
+        }
+      },
+      {
+        "Name": "MSSqlServer",
+        "Args": {
+          "connectionString": "...",
+          "tableName": "Log",
+          "columnOptionsSection": {
+            "addStandardColumns": ["LogEvent"],
+            "removeStandardColumns": ["Properties"]
+          }
+        }
+      }
+    ]
+  }
 }
 ```
 
@@ -417,6 +444,7 @@ The `Skoruba.IdentityServer4.Admin.BusinessLogic` layer contains folder called `
 ```
 await AuditEventLogger.LogEventAsync(new ClientDeletedEvent(client));
 ```
+
 Final audit log is available in the table `dbo.AuditLog`.
 
 ### Login Configuration
@@ -433,7 +461,7 @@ or using `Email`:
 
 ```
   "LoginConfiguration": {
-    "ResolutionPolicy": "Email"    
+    "ResolutionPolicy": "Email"
   }
 ```
 
@@ -464,7 +492,6 @@ or using `Email`:
 
 ![SwaggerUI-preview](docs/Images/Admin-Swagger-UI.PNG)
 
-
 ## How to configure an external provider in STS
 
 - In `Skoruba.IdentityServer4.STS.Identity/Helpers/StartupHelpers.cs` - is method called `AddExternalProviders` which contains the example with `GitHub`, `AzureAD` configured in `appsettings.json`:
@@ -480,7 +507,7 @@ or using `Email`:
         "AzureInstance": "",
         "AzureAdSecret": "",
         "AzureAdCallbackPath": "",
-        "AzureDomain": "" 
+        "AzureDomain": ""
 }
 ```
 
@@ -490,10 +517,12 @@ or using `Email`:
   - AzureAD
 
 ### List of external providers for ASP.NET Core:
-  - https://github.com/aspnet-contrib/AspNet.Security.OAuth.Providers
-  - https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/
- 
+
+- https://github.com/aspnet-contrib/AspNet.Security.OAuth.Providers
+- https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/
+
 ### Azure AD
+
 - Great article how to set up Azure AD:
   - https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-v2-aspnet-core-webapp
 
@@ -504,6 +533,7 @@ or using `Email`:
 ### SendGrid
 
 In STS project - in `appsettings.json`:
+
 ```
 "SendgridConfiguration": {
         "ApiKey": "",
@@ -538,7 +568,6 @@ In STS project - in `appsettings.json`:
 
 - AdminUI, AdminUI Api and STS contain endpoint `health`, which check databases and IdentityServer.
 
-
 ## Localizations - labels, messages
 
 - The project has following translations:
@@ -553,7 +582,7 @@ In STS project - in `appsettings.json`:
   - Finish
   - German
   - Portuguese
-  
+
 #### Feel free to send a PR with your translation. :blush:
 
 - All labels and messages are stored in the resources `.resx` - locatated in `/Resources`
@@ -567,9 +596,10 @@ In STS project - in `appsettings.json`:
 - The solution contains unit and integration tests.
 
 Integration tests use StartupTest class which is pre-configured with:
-  - `DbContext` contains setup for InMemory database
-  - `Authentication` is setup for `CookieAuthentication` - with fake login url for testing purpose only
-  - `AuthenticatedTestRequestMiddleware` - middleware for testing of authentication.
+
+- `DbContext` contains setup for InMemory database
+- `Authentication` is setup for `CookieAuthentication` - with fake login url for testing purpose only
+- `AuthenticatedTestRequestMiddleware` - middleware for testing of authentication.
 
 ## Overview
 
@@ -604,7 +634,7 @@ Integration tests use StartupTest class which is pre-configured with:
   - `Skoruba.IdentityServer4.Admin.EntityFramework.Configuration` - EF Core data layer that contains configurations
 
   - `Skoruba.IdentityServer4.Admin.EntityFramework.Identity` - EF Core data layer that contains Repositories for the Asp.Net Core Identity
-  
+
   - `Skoruba.IdentityServer4.Admin.EntityFramework.Extensions` - project that contains extensions related to EntityFramework
 
   - `Skoruba.IdentityServer4.Admin.EntityFramework.Shared` - project that contains DbContexts for the IdentityServer4, Logging and Asp.Net Core Identity, inluding shared Identity entities
@@ -615,11 +645,10 @@ Integration tests use StartupTest class which is pre-configured with:
 
   - `Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL` - project that contains migrations for PostgreSQL
 
-
 - Tests:
 
   - `Skoruba.IdentityServer4.Admin.IntegrationTests` - xUnit project that contains the integration tests for AdminUI
-  
+
   - `Skoruba.IdentityServer4.Admin.Api.IntegrationTests` - xUnit project that contains the integration tests for AdminUI Api
 
   - `Skoruba.IdentityServer4.Admin.UnitTests` - xUnit project that contains the unit tests for AdminUI
@@ -732,11 +761,13 @@ It is possible to define the configuration according the client type - by defaul
 - [x] Protect keys for dataprotection from Azure Key Vault ([#715](https://github.com/skoruba/IdentityServer4.Admin/pull/715))
 
 ### 2.0.0
+
 - [x] Update to IdentityServer4 version 4 ([#633](https://github.com/skoruba/IdentityServer4.Admin/issues/633))
 - [x] Add support for themes ([#725](https://github.com/skoruba/IdentityServer4.Admin/issues/725))
-- [x] Extract UI part into nuget package ([#770](https://github.com/skoruba/IdentityServer4.Admin/issues/770), [#409](https://github.com/skoruba/IdentityServer4.Admin/issues/409), [#55](https://github.com/skoruba/IdentityServer4.Admin/issues/55), [#322](https://github.com/skoruba/IdentityServer4.Admin/issues/322), [#28](https://github.com/skoruba/IdentityServer4.Admin/issues/28), [#133](https://github.com/skoruba/IdentityServer4.Admin/issues/133)) 
+- [x] Extract UI part into nuget package ([#770](https://github.com/skoruba/IdentityServer4.Admin/issues/770), [#409](https://github.com/skoruba/IdentityServer4.Admin/issues/409), [#55](https://github.com/skoruba/IdentityServer4.Admin/issues/55), [#322](https://github.com/skoruba/IdentityServer4.Admin/issues/322), [#28](https://github.com/skoruba/IdentityServer4.Admin/issues/28), [#133](https://github.com/skoruba/IdentityServer4.Admin/issues/133))
 
 ### 3.0.0
+
 - [ ] Connect Admin Api to the Admin UI ([#478](https://github.com/skoruba/IdentityServer4.Admin/issues/478))
 
 ### 4.0.0:
@@ -745,13 +776,11 @@ It is possible to define the configuration according the client type - by defaul
   - [ ] Second template: The administration of the IdentityServer4 (without Asp.Net Core Identity) ([#79](https://github.com/skoruba/IdentityServer4.Admin/issues/79))
 - [ ] Add windows authentication ([#479](https://github.com/skoruba/IdentityServer4.Admin/issues/479))
 
-
 ### Future:
 
 - Add UI tests ([#97](https://github.com/skoruba/IdentityServer4.Admin/issues/97), [#116](https://github.com/skoruba/IdentityServer4.Admin/issues/116))
 - Add more unit and integration tests :blush:
 - Extend administration for another protocols
-
 
 ## Licence
 
@@ -804,10 +833,12 @@ Any feedback is welcome - feel free to create an issue or send me an email - [ja
 
 ## Support and Donation 🕊️
 
-If you like my work, you can support me by donation. 👍 
+If you like my work, you can support me by donation. 👍
 
 ### Paypal
+
 https://www.paypal.me/skoruba
 
 ### Patreon
+
 https://www.patreon.com/skoruba
